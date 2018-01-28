@@ -5,8 +5,10 @@
 *.chi
 *.chs.h
 *.imports
+*.lock-*
 cabal.sandbox.config
 cabal.config
+
 
 # Dirs
 .cabal-sandbox
