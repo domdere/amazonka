@@ -62,7 +62,7 @@ data DescribeAutoScalingGroups = DescribeAutoScalingGroups'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dasgAutoScalingGroupNames' - The group names. If you omit this parameter, all Auto Scaling groups are described.
+-- * 'dasgAutoScalingGroupNames' - The names of the Auto Scaling groups. If you omit this parameter, all Auto Scaling groups are described.
 --
 -- * 'dasgNextToken' - The token for the next set of items to return. (You received this token from a previous call.)
 --
@@ -77,7 +77,7 @@ describeAutoScalingGroups =
   }
 
 
--- | The group names. If you omit this parameter, all Auto Scaling groups are described.
+-- | The names of the Auto Scaling groups. If you omit this parameter, all Auto Scaling groups are described.
 dasgAutoScalingGroupNames :: Lens' DescribeAutoScalingGroups [Text]
 dasgAutoScalingGroupNames = lens _dasgAutoScalingGroupNames (\ s a -> s{_dasgAutoScalingGroupNames = a}) . _Default . _Coerce;
 

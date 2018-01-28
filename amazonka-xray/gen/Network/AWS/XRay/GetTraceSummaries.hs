@@ -31,6 +31,8 @@
 --
 -- For a full list of indexed fields and keywords that you can use in filter expressions, see <http://docs.aws.amazon.com/xray/latest/devguide/xray-console-filters.html Using Filter Expressions> in the /AWS X-Ray Developer Guide/ .
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.XRay.GetTraceSummaries
     (
     -- * Creating a Request
@@ -55,6 +57,7 @@ module Network.AWS.XRay.GetTraceSummaries
     ) where
 
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -117,6 +120,13 @@ gtsStartTime = lens _gtsStartTime (\ s a -> s{_gtsStartTime = a}) . _Time;
 -- | The end of the time frame for which to retrieve traces.
 gtsEndTime :: Lens' GetTraceSummaries UTCTime
 gtsEndTime = lens _gtsEndTime (\ s a -> s{_gtsEndTime = a}) . _Time;
+
+instance AWSPager GetTraceSummaries where
+        page rq rs
+          | stop (rs ^. gtsrsNextToken) = Nothing
+          | stop (rs ^. gtsrsTraceSummaries) = Nothing
+          | otherwise =
+            Just $ rq & gtsNextToken .~ rs ^. gtsrsNextToken
 
 instance AWSRequest GetTraceSummaries where
         type Rs GetTraceSummaries = GetTraceSummariesResponse

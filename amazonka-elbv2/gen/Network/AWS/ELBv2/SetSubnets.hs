@@ -60,7 +60,7 @@ data SetSubnets = SetSubnets'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ssSubnetMappings' - The IDs of the subnets. You must specify subnets from at least two Availability Zones. You can specify only one subnet per Availability Zone. You must specify either subnets or subnet mappings. You cannot specify Elastic IP addresses for your subnets.
+-- * 'ssSubnetMappings' - The IDs of the subnets. You must specify subnets from at least two Availability Zones. You can specify only one subnet per Availability Zone. You must specify either subnets or subnet mappings. The load balancer is allocated one static IP address per subnet. You cannot specify your own Elastic IP addresses.
 --
 -- * 'ssLoadBalancerARN' - The Amazon Resource Name (ARN) of the load balancer.
 --
@@ -76,7 +76,7 @@ setSubnets pLoadBalancerARN_ =
   }
 
 
--- | The IDs of the subnets. You must specify subnets from at least two Availability Zones. You can specify only one subnet per Availability Zone. You must specify either subnets or subnet mappings. You cannot specify Elastic IP addresses for your subnets.
+-- | The IDs of the subnets. You must specify subnets from at least two Availability Zones. You can specify only one subnet per Availability Zone. You must specify either subnets or subnet mappings. The load balancer is allocated one static IP address per subnet. You cannot specify your own Elastic IP addresses.
 ssSubnetMappings :: Lens' SetSubnets [SubnetMapping]
 ssSubnetMappings = lens _ssSubnetMappings (\ s a -> s{_ssSubnetMappings = a}) . _Default . _Coerce;
 

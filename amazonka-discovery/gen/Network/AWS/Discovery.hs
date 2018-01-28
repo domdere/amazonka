@@ -27,7 +27,7 @@
 --
 -- /Important:/ Application Discovery Service doesn't gather sensitive information. All data is handled according to the <http://aws.amazon.com/privacy/ AWS Privacy Policy> . You can operate Application Discovery Service using offline mode to inspect collected data before it is shared with the service.
 --
--- Your AWS account must be granted access to Application Discovery Service, a process called /whitelisting/ . This is true for AWS partners and customers alike. To request access, sign up for AWS Application Discovery Service <http://aws.amazon.com/application-discovery/preview/ here> . We send you information about how to get started.
+-- Your AWS account must be granted access to Application Discovery Service, a process called /whitelisting/ . This is true for AWS partners and customers alike. To request access, <http://aws.amazon.com/application-discovery/how-to-start/ sign up for AWS Application Discovery Service> .
 --
 -- This API reference provides descriptions, syntax, and usage examples for each of the actions and data types for Application Discovery Service. The topic for each action shows the API request parameters and the response. Alternatively, you can use one of the AWS SDKs to access an API that is tailored to the programming language or platform that you're using. For more information, see <http://aws.amazon.com/tools/#SDKs AWS SDKs> .
 --

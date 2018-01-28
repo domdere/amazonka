@@ -21,6 +21,8 @@
 -- Lists all the event subscriptions for the assessment template that is specified by the ARN of the assessment template. For more information, see 'SubscribeToEvent' and 'UnsubscribeFromEvent' .
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Inspector.ListEventSubscriptions
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.Inspector.ListEventSubscriptions
 import Network.AWS.Inspector.Types
 import Network.AWS.Inspector.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -82,6 +85,13 @@ lesResourceARN = lens _lesResourceARN (\ s a -> s{_lesResourceARN = a});
 -- | You can use this parameter to indicate the maximum number of items you want in the response. The default value is 10. The maximum value is 500.
 lesMaxResults :: Lens' ListEventSubscriptions (Maybe Int)
 lesMaxResults = lens _lesMaxResults (\ s a -> s{_lesMaxResults = a});
+
+instance AWSPager ListEventSubscriptions where
+        page rq rs
+          | stop (rs ^. lesrsNextToken) = Nothing
+          | stop (rs ^. lesrsSubscriptions) = Nothing
+          | otherwise =
+            Just $ rq & lesNextToken .~ rs ^. lesrsNextToken
 
 instance AWSRequest ListEventSubscriptions where
         type Rs ListEventSubscriptions =

@@ -21,6 +21,8 @@
 -- List all Elasticsearch instance types that are supported for given ElasticsearchVersion
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.ElasticSearch.ListElasticsearchInstanceTypes
     (
     -- * Creating a Request
@@ -44,6 +46,7 @@ module Network.AWS.ElasticSearch.ListElasticsearchInstanceTypes
 import Network.AWS.ElasticSearch.Types
 import Network.AWS.ElasticSearch.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -99,6 +102,15 @@ leitMaxResults = lens _leitMaxResults (\ s a -> s{_leitMaxResults = a});
 -- | Version of Elasticsearch for which list of supported elasticsearch instance types are needed.
 leitElasticsearchVersion :: Lens' ListElasticsearchInstanceTypes Text
 leitElasticsearchVersion = lens _leitElasticsearchVersion (\ s a -> s{_leitElasticsearchVersion = a});
+
+instance AWSPager ListElasticsearchInstanceTypes
+         where
+        page rq rs
+          | stop (rs ^. leitrsNextToken) = Nothing
+          | stop (rs ^. leitrsElasticsearchInstanceTypes) =
+            Nothing
+          | otherwise =
+            Just $ rq & leitNextToken .~ rs ^. leitrsNextToken
 
 instance AWSRequest ListElasticsearchInstanceTypes
          where

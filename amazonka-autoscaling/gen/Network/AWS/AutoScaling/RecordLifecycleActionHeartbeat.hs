@@ -81,7 +81,7 @@ data RecordLifecycleActionHeartbeat = RecordLifecycleActionHeartbeat'
 --
 -- * 'rlahLifecycleHookName' - The name of the lifecycle hook.
 --
--- * 'rlahAutoScalingGroupName' - The name of the Auto Scaling group for the hook.
+-- * 'rlahAutoScalingGroupName' - The name of the Auto Scaling group.
 recordLifecycleActionHeartbeat
     :: Text -- ^ 'rlahLifecycleHookName'
     -> Text -- ^ 'rlahAutoScalingGroupName'
@@ -107,7 +107,7 @@ rlahLifecycleActionToken = lens _rlahLifecycleActionToken (\ s a -> s{_rlahLifec
 rlahLifecycleHookName :: Lens' RecordLifecycleActionHeartbeat Text
 rlahLifecycleHookName = lens _rlahLifecycleHookName (\ s a -> s{_rlahLifecycleHookName = a});
 
--- | The name of the Auto Scaling group for the hook.
+-- | The name of the Auto Scaling group.
 rlahAutoScalingGroupName :: Lens' RecordLifecycleActionHeartbeat Text
 rlahAutoScalingGroupName = lens _rlahAutoScalingGroupName (\ s a -> s{_rlahAutoScalingGroupName = a});
 

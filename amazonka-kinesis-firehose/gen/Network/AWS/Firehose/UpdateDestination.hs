@@ -37,6 +37,7 @@ module Network.AWS.Firehose.UpdateDestination
       updateDestination
     , UpdateDestination
     -- * Request Lenses
+    , udSplunkDestinationUpdate
     , udS3DestinationUpdate
     , udRedshiftDestinationUpdate
     , udElasticsearchDestinationUpdate
@@ -61,7 +62,8 @@ import Network.AWS.Response
 
 -- | /See:/ 'updateDestination' smart constructor.
 data UpdateDestination = UpdateDestination'
-  { _udS3DestinationUpdate            :: !(Maybe S3DestinationUpdate)
+  { _udSplunkDestinationUpdate        :: !(Maybe SplunkDestinationUpdate)
+  , _udS3DestinationUpdate            :: !(Maybe S3DestinationUpdate)
   , _udRedshiftDestinationUpdate      :: !(Maybe RedshiftDestinationUpdate)
   , _udElasticsearchDestinationUpdate :: !(Maybe ElasticsearchDestinationUpdate)
   , _udExtendedS3DestinationUpdate    :: !(Maybe ExtendedS3DestinationUpdate)
@@ -74,6 +76,8 @@ data UpdateDestination = UpdateDestination'
 -- | Creates a value of 'UpdateDestination' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'udSplunkDestinationUpdate' - Describes an update for a destination in Splunk.
 --
 -- * 'udS3DestinationUpdate' - [Deprecated] Describes an update for a destination in Amazon S3.
 --
@@ -95,7 +99,8 @@ updateDestination
     -> UpdateDestination
 updateDestination pDeliveryStreamName_ pCurrentDeliveryStreamVersionId_ pDestinationId_ =
   UpdateDestination'
-  { _udS3DestinationUpdate = Nothing
+  { _udSplunkDestinationUpdate = Nothing
+  , _udS3DestinationUpdate = Nothing
   , _udRedshiftDestinationUpdate = Nothing
   , _udElasticsearchDestinationUpdate = Nothing
   , _udExtendedS3DestinationUpdate = Nothing
@@ -104,6 +109,10 @@ updateDestination pDeliveryStreamName_ pCurrentDeliveryStreamVersionId_ pDestina
   , _udDestinationId = pDestinationId_
   }
 
+
+-- | Describes an update for a destination in Splunk.
+udSplunkDestinationUpdate :: Lens' UpdateDestination (Maybe SplunkDestinationUpdate)
+udSplunkDestinationUpdate = lens _udSplunkDestinationUpdate (\ s a -> s{_udSplunkDestinationUpdate = a});
 
 -- | [Deprecated] Describes an update for a destination in Amazon S3.
 udS3DestinationUpdate :: Lens' UpdateDestination (Maybe S3DestinationUpdate)
@@ -159,7 +168,9 @@ instance ToJSON UpdateDestination where
         toJSON UpdateDestination'{..}
           = object
               (catMaybes
-                 [("S3DestinationUpdate" .=) <$>
+                 [("SplunkDestinationUpdate" .=) <$>
+                    _udSplunkDestinationUpdate,
+                  ("S3DestinationUpdate" .=) <$>
                     _udS3DestinationUpdate,
                   ("RedshiftDestinationUpdate" .=) <$>
                     _udRedshiftDestinationUpdate,

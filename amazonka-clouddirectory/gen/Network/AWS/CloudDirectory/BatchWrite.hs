@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Performs all the write operations in a batch. Either all the operations succeed or none. Batch writes supports only object-related operations.
+-- Performs all the write operations in a batch. Either all the operations succeed or none.
 --
 --
 module Network.AWS.CloudDirectory.BatchWrite

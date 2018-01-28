@@ -23,9 +23,6 @@ module Network.AWS.Firehose
     -- * Errors
     -- $errors
 
-    -- ** InvalidStreamTypeException
-    , _InvalidStreamTypeException
-
     -- ** InvalidArgumentException
     , _InvalidArgumentException
 
@@ -52,9 +49,6 @@ module Network.AWS.Firehose
 
     -- ** PutRecord
     , module Network.AWS.Firehose.PutRecord
-
-    -- ** GetKinesisStream
-    , module Network.AWS.Firehose.GetKinesisStream
 
     -- ** UpdateDestination
     , module Network.AWS.Firehose.UpdateDestination
@@ -91,6 +85,9 @@ module Network.AWS.Firehose
     -- ** ElasticsearchS3BackupMode
     , ElasticsearchS3BackupMode (..)
 
+    -- ** HECEndpointType
+    , HECEndpointType (..)
+
     -- ** NoEncryptionConfig
     , NoEncryptionConfig (..)
 
@@ -105,6 +102,9 @@ module Network.AWS.Firehose
 
     -- ** S3BackupMode
     , S3BackupMode (..)
+
+    -- ** SplunkS3BackupMode
+    , SplunkS3BackupMode (..)
 
     -- ** BufferingHints
     , BufferingHints
@@ -143,6 +143,7 @@ module Network.AWS.Firehose
     -- ** DestinationDescription
     , DestinationDescription
     , destinationDescription
+    , ddSplunkDestinationDescription
     , ddS3DestinationDescription
     , ddExtendedS3DestinationDescription
     , ddElasticsearchDestinationDescription
@@ -363,43 +364,78 @@ module Network.AWS.Firehose
     -- ** S3DestinationDescription
     , S3DestinationDescription
     , s3DestinationDescription
-    , sddPrefix
-    , sddCloudWatchLoggingOptions
-    , sddRoleARN
-    , sddBucketARN
-    , sddBufferingHints
-    , sddCompressionFormat
-    , sddEncryptionConfiguration
+    , s3Prefix
+    , s3CloudWatchLoggingOptions
+    , s3RoleARN
+    , s3BucketARN
+    , s3BufferingHints
+    , s3CompressionFormat
+    , s3EncryptionConfiguration
 
     -- ** S3DestinationUpdate
     , S3DestinationUpdate
     , s3DestinationUpdate
-    , sduPrefix
-    , sduCloudWatchLoggingOptions
-    , sduEncryptionConfiguration
-    , sduCompressionFormat
-    , sduBufferingHints
-    , sduBucketARN
-    , sduRoleARN
-
-    -- ** SessionCredentials
-    , SessionCredentials
-    , sessionCredentials
-    , scAccessKeyId
-    , scSecretAccessKey
-    , scSessionToken
-    , scExpiration
+    , sPrefix
+    , sCloudWatchLoggingOptions
+    , sEncryptionConfiguration
+    , sCompressionFormat
+    , sBufferingHints
+    , sBucketARN
+    , sRoleARN
 
     -- ** SourceDescription
     , SourceDescription
     , sourceDescription
     , sdKinesisStreamSourceDescription
+
+    -- ** SplunkDestinationConfiguration
+    , SplunkDestinationConfiguration
+    , splunkDestinationConfiguration
+    , splS3BackupMode
+    , splCloudWatchLoggingOptions
+    , splHECAcknowledgmentTimeoutInSeconds
+    , splRetryOptions
+    , splProcessingConfiguration
+    , splHECEndpoint
+    , splHECEndpointType
+    , splHECToken
+    , splS3Configuration
+
+    -- ** SplunkDestinationDescription
+    , SplunkDestinationDescription
+    , splunkDestinationDescription
+    , sddS3BackupMode
+    , sddHECToken
+    , sddHECEndpointType
+    , sddCloudWatchLoggingOptions
+    , sddHECAcknowledgmentTimeoutInSeconds
+    , sddS3DestinationDescription
+    , sddHECEndpoint
+    , sddRetryOptions
+    , sddProcessingConfiguration
+
+    -- ** SplunkDestinationUpdate
+    , SplunkDestinationUpdate
+    , splunkDestinationUpdate
+    , sduS3BackupMode
+    , sduHECToken
+    , sduHECEndpointType
+    , sduCloudWatchLoggingOptions
+    , sduHECAcknowledgmentTimeoutInSeconds
+    , sduS3Update
+    , sduHECEndpoint
+    , sduRetryOptions
+    , sduProcessingConfiguration
+
+    -- ** SplunkRetryOptions
+    , SplunkRetryOptions
+    , splunkRetryOptions
+    , sroDurationInSeconds
     ) where
 
 import Network.AWS.Firehose.CreateDeliveryStream
 import Network.AWS.Firehose.DeleteDeliveryStream
 import Network.AWS.Firehose.DescribeDeliveryStream
-import Network.AWS.Firehose.GetKinesisStream
 import Network.AWS.Firehose.ListDeliveryStreams
 import Network.AWS.Firehose.PutRecord
 import Network.AWS.Firehose.PutRecordBatch

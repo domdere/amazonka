@@ -21,6 +21,8 @@
 -- Retrieves the names of facets that exist in a schema.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListFacetNames
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.CloudDirectory.ListFacetNames
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -86,6 +89,13 @@ lfnMaxResults = lens _lfnMaxResults (\ s a -> s{_lfnMaxResults = a}) . mapping _
 -- | The Amazon Resource Name (ARN) to retrieve facet names from.
 lfnSchemaARN :: Lens' ListFacetNames Text
 lfnSchemaARN = lens _lfnSchemaARN (\ s a -> s{_lfnSchemaARN = a});
+
+instance AWSPager ListFacetNames where
+        page rq rs
+          | stop (rs ^. lfnrsNextToken) = Nothing
+          | stop (rs ^. lfnrsFacetNames) = Nothing
+          | otherwise =
+            Just $ rq & lfnNextToken .~ rs ^. lfnrsNextToken
 
 instance AWSRequest ListFacetNames where
         type Rs ListFacetNames = ListFacetNamesResponse

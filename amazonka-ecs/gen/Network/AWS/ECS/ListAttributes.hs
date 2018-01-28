@@ -69,7 +69,7 @@ data ListAttributes = ListAttributes'
 --
 -- * 'laCluster' - The short name or full Amazon Resource Name (ARN) of the cluster to list attributes. If you do not specify a cluster, the default cluster is assumed.
 --
--- * 'laNextToken' - The @nextToken@ value returned from a previous paginated @ListAttributes@ request where @maxResults@ was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the @nextToken@ value. This value is @null@ when there are no more results to return.
+-- * 'laNextToken' - The @nextToken@ value returned from a previous paginated @ListAttributes@ request where @maxResults@ was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the @nextToken@ value.
 --
 -- * 'laAttributeName' - The name of the attribute with which to filter the results.
 --
@@ -98,7 +98,7 @@ laAttributeValue = lens _laAttributeValue (\ s a -> s{_laAttributeValue = a});
 laCluster :: Lens' ListAttributes (Maybe Text)
 laCluster = lens _laCluster (\ s a -> s{_laCluster = a});
 
--- | The @nextToken@ value returned from a previous paginated @ListAttributes@ request where @maxResults@ was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the @nextToken@ value. This value is @null@ when there are no more results to return.
+-- | The @nextToken@ value returned from a previous paginated @ListAttributes@ request where @maxResults@ was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the @nextToken@ value.
 laNextToken :: Lens' ListAttributes (Maybe Text)
 laNextToken = lens _laNextToken (\ s a -> s{_laNextToken = a});
 

@@ -26,10 +26,10 @@ import Network.AWS.Prelude
 -- /See:/ 'budget' smart constructor.
 data Budget = Budget'
   { _bCalculatedSpend :: !(Maybe CalculatedSpend)
+  , _bCostTypes       :: !(Maybe CostTypes)
   , _bCostFilters     :: !(Maybe (Map Text [Text]))
   , _bBudgetName      :: !Text
   , _bBudgetLimit     :: !Spend
-  , _bCostTypes       :: !CostTypes
   , _bTimeUnit        :: !TimeUnit
   , _bTimePeriod      :: !TimePeriod
   , _bBudgetType      :: !BudgetType
@@ -42,13 +42,13 @@ data Budget = Budget'
 --
 -- * 'bCalculatedSpend' - Undocumented member.
 --
+-- * 'bCostTypes' - Undocumented member.
+--
 -- * 'bCostFilters' - Undocumented member.
 --
 -- * 'bBudgetName' - Undocumented member.
 --
 -- * 'bBudgetLimit' - Undocumented member.
---
--- * 'bCostTypes' - Undocumented member.
 --
 -- * 'bTimeUnit' - Undocumented member.
 --
@@ -58,18 +58,17 @@ data Budget = Budget'
 budget
     :: Text -- ^ 'bBudgetName'
     -> Spend -- ^ 'bBudgetLimit'
-    -> CostTypes -- ^ 'bCostTypes'
     -> TimeUnit -- ^ 'bTimeUnit'
     -> TimePeriod -- ^ 'bTimePeriod'
     -> BudgetType -- ^ 'bBudgetType'
     -> Budget
-budget pBudgetName_ pBudgetLimit_ pCostTypes_ pTimeUnit_ pTimePeriod_ pBudgetType_ =
+budget pBudgetName_ pBudgetLimit_ pTimeUnit_ pTimePeriod_ pBudgetType_ =
   Budget'
   { _bCalculatedSpend = Nothing
+  , _bCostTypes = Nothing
   , _bCostFilters = Nothing
   , _bBudgetName = pBudgetName_
   , _bBudgetLimit = pBudgetLimit_
-  , _bCostTypes = pCostTypes_
   , _bTimeUnit = pTimeUnit_
   , _bTimePeriod = pTimePeriod_
   , _bBudgetType = pBudgetType_
@@ -79,6 +78,10 @@ budget pBudgetName_ pBudgetLimit_ pCostTypes_ pTimeUnit_ pTimePeriod_ pBudgetTyp
 -- | Undocumented member.
 bCalculatedSpend :: Lens' Budget (Maybe CalculatedSpend)
 bCalculatedSpend = lens _bCalculatedSpend (\ s a -> s{_bCalculatedSpend = a});
+
+-- | Undocumented member.
+bCostTypes :: Lens' Budget (Maybe CostTypes)
+bCostTypes = lens _bCostTypes (\ s a -> s{_bCostTypes = a});
 
 -- | Undocumented member.
 bCostFilters :: Lens' Budget (HashMap Text [Text])
@@ -91,10 +94,6 @@ bBudgetName = lens _bBudgetName (\ s a -> s{_bBudgetName = a});
 -- | Undocumented member.
 bBudgetLimit :: Lens' Budget Spend
 bBudgetLimit = lens _bBudgetLimit (\ s a -> s{_bBudgetLimit = a});
-
--- | Undocumented member.
-bCostTypes :: Lens' Budget CostTypes
-bCostTypes = lens _bCostTypes (\ s a -> s{_bCostTypes = a});
 
 -- | Undocumented member.
 bTimeUnit :: Lens' Budget TimeUnit
@@ -113,11 +112,10 @@ instance FromJSON Budget where
           = withObject "Budget"
               (\ x ->
                  Budget' <$>
-                   (x .:? "CalculatedSpend") <*>
+                   (x .:? "CalculatedSpend") <*> (x .:? "CostTypes") <*>
                      (x .:? "CostFilters" .!= mempty)
                      <*> (x .: "BudgetName")
                      <*> (x .: "BudgetLimit")
-                     <*> (x .: "CostTypes")
                      <*> (x .: "TimeUnit")
                      <*> (x .: "TimePeriod")
                      <*> (x .: "BudgetType"))
@@ -131,10 +129,10 @@ instance ToJSON Budget where
           = object
               (catMaybes
                  [("CalculatedSpend" .=) <$> _bCalculatedSpend,
+                  ("CostTypes" .=) <$> _bCostTypes,
                   ("CostFilters" .=) <$> _bCostFilters,
                   Just ("BudgetName" .= _bBudgetName),
                   Just ("BudgetLimit" .= _bBudgetLimit),
-                  Just ("CostTypes" .= _bCostTypes),
                   Just ("TimeUnit" .= _bTimeUnit),
                   Just ("TimePeriod" .= _bTimePeriod),
                   Just ("BudgetType" .= _bBudgetType)])
@@ -193,9 +191,17 @@ instance ToJSON CalculatedSpend where
 --
 -- /See:/ 'costTypes' smart constructor.
 data CostTypes = CostTypes'
-  { _ctIncludeTax          :: !Bool
-  , _ctIncludeSubscription :: !Bool
-  , _ctUseBlended          :: !Bool
+  { _ctUseAmortized             :: !(Maybe Bool)
+  , _ctIncludeRecurring         :: !(Maybe Bool)
+  , _ctUseBlended               :: !(Maybe Bool)
+  , _ctIncludeSupport           :: !(Maybe Bool)
+  , _ctIncludeDiscount          :: !(Maybe Bool)
+  , _ctIncludeSubscription      :: !(Maybe Bool)
+  , _ctIncludeRefund            :: !(Maybe Bool)
+  , _ctIncludeUpfront           :: !(Maybe Bool)
+  , _ctIncludeOtherSubscription :: !(Maybe Bool)
+  , _ctIncludeTax               :: !(Maybe Bool)
+  , _ctIncludeCredit            :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -203,43 +209,104 @@ data CostTypes = CostTypes'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ctIncludeTax' - Undocumented member.
+-- * 'ctUseAmortized' - A boolean value whether to include amortized costs in the cost budget.
 --
--- * 'ctIncludeSubscription' - Undocumented member.
+-- * 'ctIncludeRecurring' - A boolean value whether to include recurring costs in the cost budget.
 --
--- * 'ctUseBlended' - Undocumented member.
+-- * 'ctUseBlended' - A boolean value whether to use blended costs in the cost budget.
+--
+-- * 'ctIncludeSupport' - A boolean value whether to include support costs in the cost budget.
+--
+-- * 'ctIncludeDiscount' - A boolean value whether to include discounts in the cost budget.
+--
+-- * 'ctIncludeSubscription' - A boolean value whether to include subscriptions in the cost budget.
+--
+-- * 'ctIncludeRefund' - A boolean value whether to include refunds in the cost budget.
+--
+-- * 'ctIncludeUpfront' - A boolean value whether to include upfront costs in the cost budget.
+--
+-- * 'ctIncludeOtherSubscription' - A boolean value whether to include other subscription costs in the cost budget.
+--
+-- * 'ctIncludeTax' - A boolean value whether to include tax in the cost budget.
+--
+-- * 'ctIncludeCredit' - A boolean value whether to include credits in the cost budget.
 costTypes
-    :: Bool -- ^ 'ctIncludeTax'
-    -> Bool -- ^ 'ctIncludeSubscription'
-    -> Bool -- ^ 'ctUseBlended'
-    -> CostTypes
-costTypes pIncludeTax_ pIncludeSubscription_ pUseBlended_ =
+    :: CostTypes
+costTypes =
   CostTypes'
-  { _ctIncludeTax = pIncludeTax_
-  , _ctIncludeSubscription = pIncludeSubscription_
-  , _ctUseBlended = pUseBlended_
+  { _ctUseAmortized = Nothing
+  , _ctIncludeRecurring = Nothing
+  , _ctUseBlended = Nothing
+  , _ctIncludeSupport = Nothing
+  , _ctIncludeDiscount = Nothing
+  , _ctIncludeSubscription = Nothing
+  , _ctIncludeRefund = Nothing
+  , _ctIncludeUpfront = Nothing
+  , _ctIncludeOtherSubscription = Nothing
+  , _ctIncludeTax = Nothing
+  , _ctIncludeCredit = Nothing
   }
 
 
--- | Undocumented member.
-ctIncludeTax :: Lens' CostTypes Bool
-ctIncludeTax = lens _ctIncludeTax (\ s a -> s{_ctIncludeTax = a});
+-- | A boolean value whether to include amortized costs in the cost budget.
+ctUseAmortized :: Lens' CostTypes (Maybe Bool)
+ctUseAmortized = lens _ctUseAmortized (\ s a -> s{_ctUseAmortized = a});
 
--- | Undocumented member.
-ctIncludeSubscription :: Lens' CostTypes Bool
+-- | A boolean value whether to include recurring costs in the cost budget.
+ctIncludeRecurring :: Lens' CostTypes (Maybe Bool)
+ctIncludeRecurring = lens _ctIncludeRecurring (\ s a -> s{_ctIncludeRecurring = a});
+
+-- | A boolean value whether to use blended costs in the cost budget.
+ctUseBlended :: Lens' CostTypes (Maybe Bool)
+ctUseBlended = lens _ctUseBlended (\ s a -> s{_ctUseBlended = a});
+
+-- | A boolean value whether to include support costs in the cost budget.
+ctIncludeSupport :: Lens' CostTypes (Maybe Bool)
+ctIncludeSupport = lens _ctIncludeSupport (\ s a -> s{_ctIncludeSupport = a});
+
+-- | A boolean value whether to include discounts in the cost budget.
+ctIncludeDiscount :: Lens' CostTypes (Maybe Bool)
+ctIncludeDiscount = lens _ctIncludeDiscount (\ s a -> s{_ctIncludeDiscount = a});
+
+-- | A boolean value whether to include subscriptions in the cost budget.
+ctIncludeSubscription :: Lens' CostTypes (Maybe Bool)
 ctIncludeSubscription = lens _ctIncludeSubscription (\ s a -> s{_ctIncludeSubscription = a});
 
--- | Undocumented member.
-ctUseBlended :: Lens' CostTypes Bool
-ctUseBlended = lens _ctUseBlended (\ s a -> s{_ctUseBlended = a});
+-- | A boolean value whether to include refunds in the cost budget.
+ctIncludeRefund :: Lens' CostTypes (Maybe Bool)
+ctIncludeRefund = lens _ctIncludeRefund (\ s a -> s{_ctIncludeRefund = a});
+
+-- | A boolean value whether to include upfront costs in the cost budget.
+ctIncludeUpfront :: Lens' CostTypes (Maybe Bool)
+ctIncludeUpfront = lens _ctIncludeUpfront (\ s a -> s{_ctIncludeUpfront = a});
+
+-- | A boolean value whether to include other subscription costs in the cost budget.
+ctIncludeOtherSubscription :: Lens' CostTypes (Maybe Bool)
+ctIncludeOtherSubscription = lens _ctIncludeOtherSubscription (\ s a -> s{_ctIncludeOtherSubscription = a});
+
+-- | A boolean value whether to include tax in the cost budget.
+ctIncludeTax :: Lens' CostTypes (Maybe Bool)
+ctIncludeTax = lens _ctIncludeTax (\ s a -> s{_ctIncludeTax = a});
+
+-- | A boolean value whether to include credits in the cost budget.
+ctIncludeCredit :: Lens' CostTypes (Maybe Bool)
+ctIncludeCredit = lens _ctIncludeCredit (\ s a -> s{_ctIncludeCredit = a});
 
 instance FromJSON CostTypes where
         parseJSON
           = withObject "CostTypes"
               (\ x ->
                  CostTypes' <$>
-                   (x .: "IncludeTax") <*> (x .: "IncludeSubscription")
-                     <*> (x .: "UseBlended"))
+                   (x .:? "UseAmortized") <*> (x .:? "IncludeRecurring")
+                     <*> (x .:? "UseBlended")
+                     <*> (x .:? "IncludeSupport")
+                     <*> (x .:? "IncludeDiscount")
+                     <*> (x .:? "IncludeSubscription")
+                     <*> (x .:? "IncludeRefund")
+                     <*> (x .:? "IncludeUpfront")
+                     <*> (x .:? "IncludeOtherSubscription")
+                     <*> (x .:? "IncludeTax")
+                     <*> (x .:? "IncludeCredit"))
 
 instance Hashable CostTypes where
 
@@ -249,10 +316,19 @@ instance ToJSON CostTypes where
         toJSON CostTypes'{..}
           = object
               (catMaybes
-                 [Just ("IncludeTax" .= _ctIncludeTax),
-                  Just
-                    ("IncludeSubscription" .= _ctIncludeSubscription),
-                  Just ("UseBlended" .= _ctUseBlended)])
+                 [("UseAmortized" .=) <$> _ctUseAmortized,
+                  ("IncludeRecurring" .=) <$> _ctIncludeRecurring,
+                  ("UseBlended" .=) <$> _ctUseBlended,
+                  ("IncludeSupport" .=) <$> _ctIncludeSupport,
+                  ("IncludeDiscount" .=) <$> _ctIncludeDiscount,
+                  ("IncludeSubscription" .=) <$>
+                    _ctIncludeSubscription,
+                  ("IncludeRefund" .=) <$> _ctIncludeRefund,
+                  ("IncludeUpfront" .=) <$> _ctIncludeUpfront,
+                  ("IncludeOtherSubscription" .=) <$>
+                    _ctIncludeOtherSubscription,
+                  ("IncludeTax" .=) <$> _ctIncludeTax,
+                  ("IncludeCredit" .=) <$> _ctIncludeCredit])
 
 -- | Notification model. Each budget may contain multiple notifications with different settings.
 --

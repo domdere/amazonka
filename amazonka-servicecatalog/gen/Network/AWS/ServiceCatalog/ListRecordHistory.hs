@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Returns a paginated list of all performed requests, in the form of RecordDetails objects that are filtered as specified.
+-- Lists the specified requests or all performed requests.
 --
 --
 module Network.AWS.ServiceCatalog.ListRecordHistory
@@ -63,15 +63,15 @@ data ListRecordHistory = ListRecordHistory'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'lrhSearchFilter' - The filter to limit search results.
+-- * 'lrhSearchFilter' - The search filter to scope the results.
 --
 -- * 'lrhAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'lrhAccessLevelFilter' - The access level for obtaining results. If left unspecified, @User@ level access is used.
+-- * 'lrhAccessLevelFilter' - The access level to use to obtain results. The default is @User@ .
 --
--- * 'lrhPageToken' - The page token of the first page retrieved. If null, this retrieves the first page of size @PageSize@ .
+-- * 'lrhPageToken' - The page token for the next set of results. To retrieve the first set of results, use null.
 --
--- * 'lrhPageSize' - The maximum number of items to return in the results. If more results exist than fit in the specified @PageSize@ , the value of @NextPageToken@ in the response is non-null.
+-- * 'lrhPageSize' - The maximum number of items to return with this call.
 listRecordHistory
     :: ListRecordHistory
 listRecordHistory =
@@ -84,7 +84,7 @@ listRecordHistory =
   }
 
 
--- | The filter to limit search results.
+-- | The search filter to scope the results.
 lrhSearchFilter :: Lens' ListRecordHistory (Maybe ListRecordHistorySearchFilter)
 lrhSearchFilter = lens _lrhSearchFilter (\ s a -> s{_lrhSearchFilter = a});
 
@@ -92,15 +92,15 @@ lrhSearchFilter = lens _lrhSearchFilter (\ s a -> s{_lrhSearchFilter = a});
 lrhAcceptLanguage :: Lens' ListRecordHistory (Maybe Text)
 lrhAcceptLanguage = lens _lrhAcceptLanguage (\ s a -> s{_lrhAcceptLanguage = a});
 
--- | The access level for obtaining results. If left unspecified, @User@ level access is used.
+-- | The access level to use to obtain results. The default is @User@ .
 lrhAccessLevelFilter :: Lens' ListRecordHistory (Maybe AccessLevelFilter)
 lrhAccessLevelFilter = lens _lrhAccessLevelFilter (\ s a -> s{_lrhAccessLevelFilter = a});
 
--- | The page token of the first page retrieved. If null, this retrieves the first page of size @PageSize@ .
+-- | The page token for the next set of results. To retrieve the first set of results, use null.
 lrhPageToken :: Lens' ListRecordHistory (Maybe Text)
 lrhPageToken = lens _lrhPageToken (\ s a -> s{_lrhPageToken = a});
 
--- | The maximum number of items to return in the results. If more results exist than fit in the specified @PageSize@ , the value of @NextPageToken@ in the response is non-null.
+-- | The maximum number of items to return with this call.
 lrhPageSize :: Lens' ListRecordHistory (Maybe Natural)
 lrhPageSize = lens _lrhPageSize (\ s a -> s{_lrhPageSize = a}) . mapping _Nat;
 
@@ -157,9 +157,9 @@ data ListRecordHistoryResponse = ListRecordHistoryResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'lrhrsNextPageToken' - The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.
+-- * 'lrhrsNextPageToken' - The page token to use to retrieve the next set of results. If there are no additional results, this value is null.
 --
--- * 'lrhrsRecordDetails' - A list of record detail objects, listed in reverse chronological order.
+-- * 'lrhrsRecordDetails' - The records, in reverse chronological order.
 --
 -- * 'lrhrsResponseStatus' - -- | The response status code.
 listRecordHistoryResponse
@@ -173,11 +173,11 @@ listRecordHistoryResponse pResponseStatus_ =
   }
 
 
--- | The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.
+-- | The page token to use to retrieve the next set of results. If there are no additional results, this value is null.
 lrhrsNextPageToken :: Lens' ListRecordHistoryResponse (Maybe Text)
 lrhrsNextPageToken = lens _lrhrsNextPageToken (\ s a -> s{_lrhrsNextPageToken = a});
 
--- | A list of record detail objects, listed in reverse chronological order.
+-- | The records, in reverse chronological order.
 lrhrsRecordDetails :: Lens' ListRecordHistoryResponse [RecordDetail]
 lrhrsRecordDetails = lens _lrhrsRecordDetails (\ s a -> s{_lrhrsRecordDetails = a}) . _Default . _Coerce;
 

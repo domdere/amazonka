@@ -28,6 +28,7 @@ module Network.AWS.WorkDocs.UpdateUser
     , UpdateUser
     -- * Request Lenses
     , uuGivenName
+    , uuGrantPoweruserPrivileges
     , uuLocale
     , uuAuthenticationToken
     , uuStorageRule
@@ -53,14 +54,15 @@ import Network.AWS.WorkDocs.Types.Product
 
 -- | /See:/ 'updateUser' smart constructor.
 data UpdateUser = UpdateUser'
-  { _uuGivenName           :: !(Maybe Text)
-  , _uuLocale              :: !(Maybe LocaleType)
-  , _uuAuthenticationToken :: !(Maybe (Sensitive Text))
-  , _uuStorageRule         :: !(Maybe StorageRuleType)
-  , _uuType                :: !(Maybe UserType)
-  , _uuSurname             :: !(Maybe Text)
-  , _uuTimeZoneId          :: !(Maybe Text)
-  , _uuUserId              :: !Text
+  { _uuGivenName                :: !(Maybe Text)
+  , _uuGrantPoweruserPrivileges :: !(Maybe BooleanEnumType)
+  , _uuLocale                   :: !(Maybe LocaleType)
+  , _uuAuthenticationToken      :: !(Maybe (Sensitive Text))
+  , _uuStorageRule              :: !(Maybe StorageRuleType)
+  , _uuType                     :: !(Maybe UserType)
+  , _uuSurname                  :: !(Maybe Text)
+  , _uuTimeZoneId               :: !(Maybe Text)
+  , _uuUserId                   :: !Text
   } deriving (Eq, Show, Data, Typeable, Generic)
 
 
@@ -70,9 +72,11 @@ data UpdateUser = UpdateUser'
 --
 -- * 'uuGivenName' - The given name of the user.
 --
+-- * 'uuGrantPoweruserPrivileges' - Boolean value to determine whether the user is granted Poweruser privileges.
+--
 -- * 'uuLocale' - The locale of the user.
 --
--- * 'uuAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'uuAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'uuStorageRule' - The amount of storage for the user.
 --
@@ -89,6 +93,7 @@ updateUser
 updateUser pUserId_ =
   UpdateUser'
   { _uuGivenName = Nothing
+  , _uuGrantPoweruserPrivileges = Nothing
   , _uuLocale = Nothing
   , _uuAuthenticationToken = Nothing
   , _uuStorageRule = Nothing
@@ -103,11 +108,15 @@ updateUser pUserId_ =
 uuGivenName :: Lens' UpdateUser (Maybe Text)
 uuGivenName = lens _uuGivenName (\ s a -> s{_uuGivenName = a});
 
+-- | Boolean value to determine whether the user is granted Poweruser privileges.
+uuGrantPoweruserPrivileges :: Lens' UpdateUser (Maybe BooleanEnumType)
+uuGrantPoweruserPrivileges = lens _uuGrantPoweruserPrivileges (\ s a -> s{_uuGrantPoweruserPrivileges = a});
+
 -- | The locale of the user.
 uuLocale :: Lens' UpdateUser (Maybe LocaleType)
 uuLocale = lens _uuLocale (\ s a -> s{_uuLocale = a});
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 uuAuthenticationToken :: Lens' UpdateUser (Maybe Text)
 uuAuthenticationToken = lens _uuAuthenticationToken (\ s a -> s{_uuAuthenticationToken = a}) . mapping _Sensitive;
 
@@ -156,6 +165,8 @@ instance ToJSON UpdateUser where
           = object
               (catMaybes
                  [("GivenName" .=) <$> _uuGivenName,
+                  ("GrantPoweruserPrivileges" .=) <$>
+                    _uuGrantPoweruserPrivileges,
                   ("Locale" .=) <$> _uuLocale,
                   ("StorageRule" .=) <$> _uuStorageRule,
                   ("Type" .=) <$> _uuType,

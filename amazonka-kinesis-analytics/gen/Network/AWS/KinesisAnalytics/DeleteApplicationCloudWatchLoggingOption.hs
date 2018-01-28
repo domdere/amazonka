@@ -61,7 +61,7 @@ data DeleteApplicationCloudWatchLoggingOption = DeleteApplicationCloudWatchLoggi
 --
 -- * 'dacwloCurrentApplicationVersionId' - The version ID of the Kinesis Analytics application.
 --
--- * 'dacwloCloudWatchLoggingOptionId' - The @CloudWatchLoggingOptionId@ of the CloudWatch logging option to delete. You can use the 'DescribeApplication' operation to get the @CloudWatchLoggingOptionId@ .
+-- * 'dacwloCloudWatchLoggingOptionId' - The @CloudWatchLoggingOptionId@ of the CloudWatch logging option to delete. You can get the @CloudWatchLoggingOptionId@ by using the 'DescribeApplication' operation.
 deleteApplicationCloudWatchLoggingOption
     :: Text -- ^ 'dacwloApplicationName'
     -> Natural -- ^ 'dacwloCurrentApplicationVersionId'
@@ -83,7 +83,7 @@ dacwloApplicationName = lens _dacwloApplicationName (\ s a -> s{_dacwloApplicati
 dacwloCurrentApplicationVersionId :: Lens' DeleteApplicationCloudWatchLoggingOption Natural
 dacwloCurrentApplicationVersionId = lens _dacwloCurrentApplicationVersionId (\ s a -> s{_dacwloCurrentApplicationVersionId = a}) . _Nat;
 
--- | The @CloudWatchLoggingOptionId@ of the CloudWatch logging option to delete. You can use the 'DescribeApplication' operation to get the @CloudWatchLoggingOptionId@ .
+-- | The @CloudWatchLoggingOptionId@ of the CloudWatch logging option to delete. You can get the @CloudWatchLoggingOptionId@ by using the 'DescribeApplication' operation.
 dacwloCloudWatchLoggingOptionId :: Lens' DeleteApplicationCloudWatchLoggingOption Text
 dacwloCloudWatchLoggingOptionId = lens _dacwloCloudWatchLoggingOptionId (\ s a -> s{_dacwloCloudWatchLoggingOptionId = a});
 

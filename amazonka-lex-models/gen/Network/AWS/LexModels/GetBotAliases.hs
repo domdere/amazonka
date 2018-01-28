@@ -23,6 +23,8 @@
 --
 -- This operation requires permissions for the @lex:GetBotAliases@ action.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.LexModels.GetBotAliases
     (
     -- * Creating a Request
@@ -46,6 +48,7 @@ module Network.AWS.LexModels.GetBotAliases
 import Network.AWS.Lens
 import Network.AWS.LexModels.Types
 import Network.AWS.LexModels.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -97,6 +100,13 @@ gbaMaxResults = lens _gbaMaxResults (\ s a -> s{_gbaMaxResults = a}) . mapping _
 -- | The name of the bot.
 gbaBotName :: Lens' GetBotAliases Text
 gbaBotName = lens _gbaBotName (\ s a -> s{_gbaBotName = a});
+
+instance AWSPager GetBotAliases where
+        page rq rs
+          | stop (rs ^. gbarsNextToken) = Nothing
+          | stop (rs ^. gbarsBotAliases) = Nothing
+          | otherwise =
+            Just $ rq & gbaNextToken .~ rs ^. gbarsNextToken
 
 instance AWSRequest GetBotAliases where
         type Rs GetBotAliases = GetBotAliasesResponse

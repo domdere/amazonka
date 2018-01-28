@@ -23,6 +23,8 @@
 --
 -- This is a paginated operation, which means that each response might contain only a subset of all the clusters. When the response contains only a subset of clusters, it includes a @NextToken@ value. Use this value in a subsequent @DescribeClusters@ request to get more clusters. When you receive a response with no @NextToken@ (or an empty or null value), that means there are no more clusters to get.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudHSMv2.DescribeClusters
     (
     -- * Creating a Request
@@ -45,6 +47,7 @@ module Network.AWS.CloudHSMv2.DescribeClusters
 import Network.AWS.CloudHSMv2.Types
 import Network.AWS.CloudHSMv2.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -84,6 +87,13 @@ dcNextToken = lens _dcNextToken (\ s a -> s{_dcNextToken = a});
 -- | The maximum number of clusters to return in the response. When there are more clusters than the number you specify, the response contains a @NextToken@ value.
 dcMaxResults :: Lens' DescribeClusters (Maybe Natural)
 dcMaxResults = lens _dcMaxResults (\ s a -> s{_dcMaxResults = a}) . mapping _Nat;
+
+instance AWSPager DescribeClusters where
+        page rq rs
+          | stop (rs ^. dcrsNextToken) = Nothing
+          | stop (rs ^. dcrsClusters) = Nothing
+          | otherwise =
+            Just $ rq & dcNextToken .~ rs ^. dcrsNextToken
 
 instance AWSRequest DescribeClusters where
         type Rs DescribeClusters = DescribeClustersResponse

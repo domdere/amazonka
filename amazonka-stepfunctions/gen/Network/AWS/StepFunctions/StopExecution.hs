@@ -132,7 +132,7 @@ data StopExecutionResponse = StopExecutionResponse'
 --
 -- * 'sersResponseStatus' - -- | The response status code.
 --
--- * 'sersStopDate' - The date the execution was stopped.
+-- * 'sersStopDate' - The date the execution is stopped.
 stopExecutionResponse
     :: Int -- ^ 'sersResponseStatus'
     -> UTCTime -- ^ 'sersStopDate'
@@ -146,7 +146,7 @@ stopExecutionResponse pResponseStatus_ pStopDate_ =
 sersResponseStatus :: Lens' StopExecutionResponse Int
 sersResponseStatus = lens _sersResponseStatus (\ s a -> s{_sersResponseStatus = a});
 
--- | The date the execution was stopped.
+-- | The date the execution is stopped.
 sersStopDate :: Lens' StopExecutionResponse UTCTime
 sersStopDate = lens _sersStopDate (\ s a -> s{_sersStopDate = a}) . _Time;
 

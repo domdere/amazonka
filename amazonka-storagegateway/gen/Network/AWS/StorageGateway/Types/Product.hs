@@ -33,6 +33,7 @@ data CachediSCSIVolume = CachediSCSIVolume'
   , _cscsivVolumeARN             :: !(Maybe Text)
   , _cscsivVolumeProgress        :: !(Maybe Double)
   , _cscsivVolumeSizeInBytes     :: !(Maybe Integer)
+  , _cscsivVolumeUsedInBytes     :: !(Maybe Integer)
   , _cscsivCreatedDate           :: !(Maybe POSIX)
   , _cscsivVolumeId              :: !(Maybe Text)
   , _cscsivVolumeType            :: !(Maybe Text)
@@ -55,6 +56,8 @@ data CachediSCSIVolume = CachediSCSIVolume'
 --
 -- * 'cscsivVolumeSizeInBytes' - The size, in bytes, of the volume capacity.
 --
+-- * 'cscsivVolumeUsedInBytes' - The size of the data stored on the volume in bytes.
+--
 -- * 'cscsivCreatedDate' - The date the volume was created. Volumes created prior to March 28, 2017 don’t have this time stamp.
 --
 -- * 'cscsivVolumeId' - The unique identifier of the volume, e.g. vol-AE4B946D.
@@ -70,6 +73,7 @@ cachediSCSIVolume =
   , _cscsivVolumeARN = Nothing
   , _cscsivVolumeProgress = Nothing
   , _cscsivVolumeSizeInBytes = Nothing
+  , _cscsivVolumeUsedInBytes = Nothing
   , _cscsivCreatedDate = Nothing
   , _cscsivVolumeId = Nothing
   , _cscsivVolumeType = Nothing
@@ -100,6 +104,10 @@ cscsivVolumeProgress = lens _cscsivVolumeProgress (\ s a -> s{_cscsivVolumeProgr
 cscsivVolumeSizeInBytes :: Lens' CachediSCSIVolume (Maybe Integer)
 cscsivVolumeSizeInBytes = lens _cscsivVolumeSizeInBytes (\ s a -> s{_cscsivVolumeSizeInBytes = a});
 
+-- | The size of the data stored on the volume in bytes.
+cscsivVolumeUsedInBytes :: Lens' CachediSCSIVolume (Maybe Integer)
+cscsivVolumeUsedInBytes = lens _cscsivVolumeUsedInBytes (\ s a -> s{_cscsivVolumeUsedInBytes = a});
+
 -- | The date the volume was created. Volumes created prior to March 28, 2017 don’t have this time stamp.
 cscsivCreatedDate :: Lens' CachediSCSIVolume (Maybe UTCTime)
 cscsivCreatedDate = lens _cscsivCreatedDate (\ s a -> s{_cscsivCreatedDate = a}) . mapping _Time;
@@ -123,6 +131,7 @@ instance FromJSON CachediSCSIVolume where
                      <*> (x .:? "VolumeARN")
                      <*> (x .:? "VolumeProgress")
                      <*> (x .:? "VolumeSizeInBytes")
+                     <*> (x .:? "VolumeUsedInBytes")
                      <*> (x .:? "CreatedDate")
                      <*> (x .:? "VolumeId")
                      <*> (x .:? "VolumeType"))
@@ -486,7 +495,7 @@ instance Hashable GatewayInfo where
 
 instance NFData GatewayInfo where
 
--- | Describes file share default values. Files and folders stored as Amazon S3 objects in S3 buckets don't, by default, have Unix file permissions assigned to them. Upon discovery in an S3 bucket by Storage Gateway, the S3 objects that represent files and folders are assigned these default Unix permissions. This operation is only supported in the file gateway architecture.
+-- | Describes file share default values. Files and folders stored as Amazon S3 objects in S3 buckets don't, by default, have Unix file permissions assigned to them. Upon discovery in an S3 bucket by Storage Gateway, the S3 objects that represent files and folders are assigned these default Unix permissions. This operation is only supported in the file gateway type.
 --
 --
 --
@@ -578,6 +587,7 @@ data NFSFileShareInfo = NFSFileShareInfo'
   , _nfsfsiNFSFileShareDefaults :: !(Maybe NFSFileShareDefaults)
   , _nfsfsiLocationARN          :: !(Maybe Text)
   , _nfsfsiClientList           :: !(Maybe (List1 Text))
+  , _nfsfsiGuessMIMETypeEnabled :: !(Maybe Bool)
   , _nfsfsiReadOnly             :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -612,6 +622,8 @@ data NFSFileShareInfo = NFSFileShareInfo'
 --
 -- * 'nfsfsiClientList' - Undocumented member.
 --
+-- * 'nfsfsiGuessMIMETypeEnabled' - Enables guessing of the MIME type for uploaded objects based on file extensions: "true" to enable MIME type guessing, and otherwise "false".
+--
 -- * 'nfsfsiReadOnly' - Undocumented member.
 nFSFileShareInfo
     :: NFSFileShareInfo
@@ -630,6 +642,7 @@ nFSFileShareInfo =
   , _nfsfsiNFSFileShareDefaults = Nothing
   , _nfsfsiLocationARN = Nothing
   , _nfsfsiClientList = Nothing
+  , _nfsfsiGuessMIMETypeEnabled = Nothing
   , _nfsfsiReadOnly = Nothing
   }
 
@@ -686,6 +699,10 @@ nfsfsiLocationARN = lens _nfsfsiLocationARN (\ s a -> s{_nfsfsiLocationARN = a})
 nfsfsiClientList :: Lens' NFSFileShareInfo (Maybe (NonEmpty Text))
 nfsfsiClientList = lens _nfsfsiClientList (\ s a -> s{_nfsfsiClientList = a}) . mapping _List1;
 
+-- | Enables guessing of the MIME type for uploaded objects based on file extensions: "true" to enable MIME type guessing, and otherwise "false".
+nfsfsiGuessMIMETypeEnabled :: Lens' NFSFileShareInfo (Maybe Bool)
+nfsfsiGuessMIMETypeEnabled = lens _nfsfsiGuessMIMETypeEnabled (\ s a -> s{_nfsfsiGuessMIMETypeEnabled = a});
+
 -- | Undocumented member.
 nfsfsiReadOnly :: Lens' NFSFileShareInfo (Maybe Bool)
 nfsfsiReadOnly = lens _nfsfsiReadOnly (\ s a -> s{_nfsfsiReadOnly = a});
@@ -707,6 +724,7 @@ instance FromJSON NFSFileShareInfo where
                      <*> (x .:? "NFSFileShareDefaults")
                      <*> (x .:? "LocationARN")
                      <*> (x .:? "ClientList")
+                     <*> (x .:? "GuessMIMETypeEnabled")
                      <*> (x .:? "ReadOnly"))
 
 instance Hashable NFSFileShareInfo where
@@ -778,6 +796,7 @@ data StorediSCSIVolume = StorediSCSIVolume'
   , _sscsivVolumeARN             :: !(Maybe Text)
   , _sscsivVolumeProgress        :: !(Maybe Double)
   , _sscsivVolumeSizeInBytes     :: !(Maybe Integer)
+  , _sscsivVolumeUsedInBytes     :: !(Maybe Integer)
   , _sscsivCreatedDate           :: !(Maybe POSIX)
   , _sscsivVolumeId              :: !(Maybe Text)
   , _sscsivVolumeDiskId          :: !(Maybe Text)
@@ -803,6 +822,8 @@ data StorediSCSIVolume = StorediSCSIVolume'
 --
 -- * 'sscsivVolumeSizeInBytes' - The size of the volume in bytes.
 --
+-- * 'sscsivVolumeUsedInBytes' - The size of the data stored on the volume in bytes.
+--
 -- * 'sscsivCreatedDate' - The date the volume was created. Volumes created prior to March 28, 2017 don’t have this time stamp.
 --
 -- * 'sscsivVolumeId' - The unique identifier of the volume, e.g. vol-AE4B946D.
@@ -821,6 +842,7 @@ storediSCSIVolume =
   , _sscsivVolumeARN = Nothing
   , _sscsivVolumeProgress = Nothing
   , _sscsivVolumeSizeInBytes = Nothing
+  , _sscsivVolumeUsedInBytes = Nothing
   , _sscsivCreatedDate = Nothing
   , _sscsivVolumeId = Nothing
   , _sscsivVolumeDiskId = Nothing
@@ -856,6 +878,10 @@ sscsivVolumeProgress = lens _sscsivVolumeProgress (\ s a -> s{_sscsivVolumeProgr
 sscsivVolumeSizeInBytes :: Lens' StorediSCSIVolume (Maybe Integer)
 sscsivVolumeSizeInBytes = lens _sscsivVolumeSizeInBytes (\ s a -> s{_sscsivVolumeSizeInBytes = a});
 
+-- | The size of the data stored on the volume in bytes.
+sscsivVolumeUsedInBytes :: Lens' StorediSCSIVolume (Maybe Integer)
+sscsivVolumeUsedInBytes = lens _sscsivVolumeUsedInBytes (\ s a -> s{_sscsivVolumeUsedInBytes = a});
+
 -- | The date the volume was created. Volumes created prior to March 28, 2017 don’t have this time stamp.
 sscsivCreatedDate :: Lens' StorediSCSIVolume (Maybe UTCTime)
 sscsivCreatedDate = lens _sscsivCreatedDate (\ s a -> s{_sscsivCreatedDate = a}) . mapping _Time;
@@ -884,6 +910,7 @@ instance FromJSON StorediSCSIVolume where
                      <*> (x .:? "VolumeARN")
                      <*> (x .:? "VolumeProgress")
                      <*> (x .:? "VolumeSizeInBytes")
+                     <*> (x .:? "VolumeUsedInBytes")
                      <*> (x .:? "CreatedDate")
                      <*> (x .:? "VolumeId")
                      <*> (x .:? "VolumeDiskId")
@@ -971,7 +998,7 @@ data Tape = Tape'
 --
 -- * 'tVTLDevice' - The virtual tape library (VTL) device that the virtual tape is associated with.
 --
--- * 'tTapeUsedInBytes' - The size, in bytes, of data written to the virtual tape.
+-- * 'tTapeUsedInBytes' - The size, in bytes, of data stored on the virtual tape.
 --
 -- * 'tTapeCreatedDate' - The date the virtual tape was created.
 tape
@@ -1013,7 +1040,7 @@ tTapeSizeInBytes = lens _tTapeSizeInBytes (\ s a -> s{_tTapeSizeInBytes = a});
 tVTLDevice :: Lens' Tape (Maybe Text)
 tVTLDevice = lens _tVTLDevice (\ s a -> s{_tVTLDevice = a});
 
--- | The size, in bytes, of data written to the virtual tape.
+-- | The size, in bytes, of data stored on the virtual tape.
 tTapeUsedInBytes :: Lens' Tape (Maybe Integer)
 tTapeUsedInBytes = lens _tTapeUsedInBytes (\ s a -> s{_tTapeUsedInBytes = a});
 
@@ -1069,7 +1096,7 @@ data TapeArchive = TapeArchive'
 --
 -- * 'taCompletionTime' - The time that the archiving of the virtual tape was completed. The string format of the completion time is in the ISO8601 extended YYYY-MM-DD'T'HH:MM:SS'Z' format.
 --
--- * 'taTapeUsedInBytes' - The size, in bytes, of data written to the virtual tape.
+-- * 'taTapeUsedInBytes' - The size, in bytes, of data stored on the virtual tape.
 --
 -- * 'taTapeCreatedDate' - Undocumented member.
 --
@@ -1109,7 +1136,7 @@ taTapeSizeInBytes = lens _taTapeSizeInBytes (\ s a -> s{_taTapeSizeInBytes = a})
 taCompletionTime :: Lens' TapeArchive (Maybe UTCTime)
 taCompletionTime = lens _taCompletionTime (\ s a -> s{_taCompletionTime = a}) . mapping _Time;
 
--- | The size, in bytes, of data written to the virtual tape.
+-- | The size, in bytes, of data stored on the virtual tape.
 taTapeUsedInBytes :: Lens' TapeArchive (Maybe Integer)
 taTapeUsedInBytes = lens _taTapeUsedInBytes (\ s a -> s{_taTapeUsedInBytes = a});
 

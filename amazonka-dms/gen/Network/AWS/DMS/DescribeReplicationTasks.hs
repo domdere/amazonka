@@ -21,6 +21,8 @@
 -- Returns information about replication tasks for your account in the current region.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.DMS.DescribeReplicationTasks
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.DMS.DescribeReplicationTasks
 import Network.AWS.DMS.Types
 import Network.AWS.DMS.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -86,6 +89,13 @@ drtMarker = lens _drtMarker (\ s a -> s{_drtMarker = a});
 -- | The maximum number of records to include in the response. If more records exist than the specified @MaxRecords@ value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.  Default: 100 Constraints: Minimum 20, maximum 100.
 drtMaxRecords :: Lens' DescribeReplicationTasks (Maybe Int)
 drtMaxRecords = lens _drtMaxRecords (\ s a -> s{_drtMaxRecords = a});
+
+instance AWSPager DescribeReplicationTasks where
+        page rq rs
+          | stop (rs ^. drtsrsMarker) = Nothing
+          | stop (rs ^. drtsrsReplicationTasks) = Nothing
+          | otherwise =
+            Just $ rq & drtMarker .~ rs ^. drtsrsMarker
 
 instance AWSRequest DescribeReplicationTasks where
         type Rs DescribeReplicationTasks =

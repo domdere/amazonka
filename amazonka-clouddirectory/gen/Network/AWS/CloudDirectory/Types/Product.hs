@@ -1099,7 +1099,7 @@ instance Hashable BatchDetachObjectResponse where
 
 instance NFData BatchDetachObjectResponse where
 
--- | Detaches the specified policy from the specified directory inside a 'BatchRead' operation. For more information, see 'DetachPolicy' and 'BatchReadRequest$Operations' .
+-- | Detaches the specified policy from the specified directory inside a 'BatchWrite' operation. For more information, see 'DetachPolicy' and 'BatchWriteRequest$Operations' .
 --
 --
 --
@@ -3601,7 +3601,7 @@ data IndexAttachment = IndexAttachment'
 --
 -- * 'iaIndexedAttributes' - The indexed attribute values.
 --
--- * 'iaObjectIdentifier' - The @ObjectIdentifier@ of the object attached to the index.
+-- * 'iaObjectIdentifier' - In response to 'ListIndex' , the @ObjectIdentifier@ of the object attached to the index. In response to 'ListAttachedIndices' , the @ObjectIdentifier@ of the index attached to the object. This field will always contain the @ObjectIdentifier@ of the object on the opposite side of the attachment specified in the query.
 indexAttachment
     :: IndexAttachment
 indexAttachment =
@@ -3613,7 +3613,7 @@ indexAttachment =
 iaIndexedAttributes :: Lens' IndexAttachment [AttributeKeyAndValue]
 iaIndexedAttributes = lens _iaIndexedAttributes (\ s a -> s{_iaIndexedAttributes = a}) . _Default . _Coerce;
 
--- | The @ObjectIdentifier@ of the object attached to the index.
+-- | In response to 'ListIndex' , the @ObjectIdentifier@ of the object attached to the index. In response to 'ListAttachedIndices' , the @ObjectIdentifier@ of the index attached to the object. This field will always contain the @ObjectIdentifier@ of the object on the opposite side of the attachment specified in the query.
 iaObjectIdentifier :: Lens' IndexAttachment (Maybe Text)
 iaObjectIdentifier = lens _iaObjectIdentifier (\ s a -> s{_iaObjectIdentifier = a});
 
@@ -4012,7 +4012,7 @@ data SchemaFacet = SchemaFacet'
 --
 -- * 'sfFacetName' - The name of the facet.
 --
--- * 'sfSchemaARN' - The ARN of the schema that contains the facet.
+-- * 'sfSchemaARN' - The ARN of the schema that contains the facet with no minor component. See 'arns' and <http://docs.aws.amazon.com/directoryservice/latest/admin-guide/inplaceschemaupgrade.html In-Place Schema Upgrade> for a description of when to provide minor versions.
 schemaFacet
     :: SchemaFacet
 schemaFacet = SchemaFacet' {_sfFacetName = Nothing, _sfSchemaARN = Nothing}
@@ -4022,7 +4022,7 @@ schemaFacet = SchemaFacet' {_sfFacetName = Nothing, _sfSchemaARN = Nothing}
 sfFacetName :: Lens' SchemaFacet (Maybe Text)
 sfFacetName = lens _sfFacetName (\ s a -> s{_sfFacetName = a});
 
--- | The ARN of the schema that contains the facet.
+-- | The ARN of the schema that contains the facet with no minor component. See 'arns' and <http://docs.aws.amazon.com/directoryservice/latest/admin-guide/inplaceschemaupgrade.html In-Place Schema Upgrade> for a description of when to provide minor versions.
 sfSchemaARN :: Lens' SchemaFacet (Maybe Text)
 sfSchemaARN = lens _sfSchemaARN (\ s a -> s{_sfSchemaARN = a});
 

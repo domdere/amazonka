@@ -37,6 +37,9 @@ import Test.Tasty
 --         , requestMergeShards $
 --             mergeShards
 --
+--         , requestDescribeStreamSummary $
+--             describeStreamSummary
+--
 --         , requestGetShardIterator $
 --             getShardIterator
 --
@@ -102,6 +105,9 @@ import Test.Tasty
 --
 --         , responseMergeShards $
 --             mergeShardsResponse
+--
+--         , responseDescribeStreamSummary $
+--             describeStreamSummaryResponse
 --
 --         , responseGetShardIterator $
 --             getShardIteratorResponse
@@ -176,6 +182,11 @@ requestMergeShards :: MergeShards -> TestTree
 requestMergeShards = req
     "MergeShards"
     "fixture/MergeShards.yaml"
+
+requestDescribeStreamSummary :: DescribeStreamSummary -> TestTree
+requestDescribeStreamSummary = req
+    "DescribeStreamSummary"
+    "fixture/DescribeStreamSummary.yaml"
 
 requestGetShardIterator :: GetShardIterator -> TestTree
 requestGetShardIterator = req
@@ -289,6 +300,13 @@ responseMergeShards = res
     "fixture/MergeShardsResponse.proto"
     kinesis
     (Proxy :: Proxy MergeShards)
+
+responseDescribeStreamSummary :: DescribeStreamSummaryResponse -> TestTree
+responseDescribeStreamSummary = res
+    "DescribeStreamSummaryResponse"
+    "fixture/DescribeStreamSummaryResponse.proto"
+    kinesis
+    (Proxy :: Proxy DescribeStreamSummary)
 
 responseGetShardIterator :: GetShardIteratorResponse -> TestTree
 responseGetShardIterator = res

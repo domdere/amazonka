@@ -80,7 +80,7 @@ data UpdateFleet = UpdateFleet'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ufDomainJoinInfo' - The information needed for streaming instances to join a domain.
+-- * 'ufDomainJoinInfo' - The information needed to join a Microsoft Active Directory domain.
 --
 -- * 'ufDisconnectTimeoutInSeconds' - The time after disconnection when a session is considered to have ended, in seconds. If a user who was disconnected reconnects within this time interval, the user is connected to their previous session. Specify a value between 60 and 57600.
 --
@@ -94,13 +94,13 @@ data UpdateFleet = UpdateFleet'
 --
 -- * 'ufVPCConfig' - The VPC configuration for the fleet.
 --
--- * 'ufDisplayName' - The fleet name displayed to end users.
+-- * 'ufDisplayName' - The fleet name for display.
 --
 -- * 'ufEnableDefaultInternetAccess' - Enables or disables default internet access for the fleet.
 --
--- * 'ufImageName' - The name of the image used by the fleet.
+-- * 'ufImageName' - The name of the image used to create the fleet.
 --
--- * 'ufDescription' - The description displayed to end users.
+-- * 'ufDescription' - The description for display.
 --
 -- * 'ufComputeCapacity' - The desired capacity for the fleet.
 --
@@ -126,7 +126,7 @@ updateFleet pName_ =
   }
 
 
--- | The information needed for streaming instances to join a domain.
+-- | The information needed to join a Microsoft Active Directory domain.
 ufDomainJoinInfo :: Lens' UpdateFleet (Maybe DomainJoinInfo)
 ufDomainJoinInfo = lens _ufDomainJoinInfo (\ s a -> s{_ufDomainJoinInfo = a});
 
@@ -154,7 +154,7 @@ ufInstanceType = lens _ufInstanceType (\ s a -> s{_ufInstanceType = a});
 ufVPCConfig :: Lens' UpdateFleet (Maybe VPCConfig)
 ufVPCConfig = lens _ufVPCConfig (\ s a -> s{_ufVPCConfig = a});
 
--- | The fleet name displayed to end users.
+-- | The fleet name for display.
 ufDisplayName :: Lens' UpdateFleet (Maybe Text)
 ufDisplayName = lens _ufDisplayName (\ s a -> s{_ufDisplayName = a});
 
@@ -162,11 +162,11 @@ ufDisplayName = lens _ufDisplayName (\ s a -> s{_ufDisplayName = a});
 ufEnableDefaultInternetAccess :: Lens' UpdateFleet (Maybe Bool)
 ufEnableDefaultInternetAccess = lens _ufEnableDefaultInternetAccess (\ s a -> s{_ufEnableDefaultInternetAccess = a});
 
--- | The name of the image used by the fleet.
+-- | The name of the image used to create the fleet.
 ufImageName :: Lens' UpdateFleet (Maybe Text)
 ufImageName = lens _ufImageName (\ s a -> s{_ufImageName = a});
 
--- | The description displayed to end users.
+-- | The description for display.
 ufDescription :: Lens' UpdateFleet (Maybe Text)
 ufDescription = lens _ufDescription (\ s a -> s{_ufDescription = a});
 

@@ -50,7 +50,7 @@ import Network.AWS.Response
 
 -- | /See:/ 'getDashboard' smart constructor.
 newtype GetDashboard = GetDashboard'
-  { _gdDashboardName :: Maybe Text
+  { _gdDashboardName :: Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -60,12 +60,14 @@ newtype GetDashboard = GetDashboard'
 --
 -- * 'gdDashboardName' - The name of the dashboard to be described.
 getDashboard
-    :: GetDashboard
-getDashboard = GetDashboard' {_gdDashboardName = Nothing}
+    :: Text -- ^ 'gdDashboardName'
+    -> GetDashboard
+getDashboard pDashboardName_ =
+  GetDashboard' {_gdDashboardName = pDashboardName_}
 
 
 -- | The name of the dashboard to be described.
-gdDashboardName :: Lens' GetDashboard (Maybe Text)
+gdDashboardName :: Lens' GetDashboard Text
 gdDashboardName = lens _gdDashboardName (\ s a -> s{_gdDashboardName = a});
 
 instance AWSRequest GetDashboard where

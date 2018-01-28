@@ -21,6 +21,8 @@
 -- The @ListHITsForQualificationType@ operation returns the HITs that use the given Qualification type for a Qualification requirement. The operation returns HITs of any status, except for HITs that have been deleted with the @DeleteHIT@ operation or that have been auto-deleted.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.MechanicalTurk.ListHITsForQualificationType
     (
     -- * Creating a Request
@@ -44,6 +46,7 @@ module Network.AWS.MechanicalTurk.ListHITsForQualificationType
 import Network.AWS.Lens
 import Network.AWS.MechanicalTurk.Types
 import Network.AWS.MechanicalTurk.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -87,6 +90,14 @@ lhitfqtMaxResults = lens _lhitfqtMaxResults (\ s a -> s{_lhitfqtMaxResults = a})
 -- | The ID of the Qualification type to use when querying HITs.
 lhitfqtQualificationTypeId :: Lens' ListHITsForQualificationType Text
 lhitfqtQualificationTypeId = lens _lhitfqtQualificationTypeId (\ s a -> s{_lhitfqtQualificationTypeId = a});
+
+instance AWSPager ListHITsForQualificationType where
+        page rq rs
+          | stop (rs ^. lhitfqtrsNextToken) = Nothing
+          | stop (rs ^. lhitfqtrsHITs) = Nothing
+          | otherwise =
+            Just $ rq &
+              lhitfqtNextToken .~ rs ^. lhitfqtrsNextToken
 
 instance AWSRequest ListHITsForQualificationType
          where

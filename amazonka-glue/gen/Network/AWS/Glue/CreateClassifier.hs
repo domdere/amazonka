@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Creates a @Classifier@ in the user's account.
+-- Creates a classifier in the user's account. This may be either a @GrokClassifier@ or an @XMLClassifier@ .
 --
 --
 module Network.AWS.Glue.CreateClassifier
@@ -28,6 +28,7 @@ module Network.AWS.Glue.CreateClassifier
     , CreateClassifier
     -- * Request Lenses
     , ccGrokClassifier
+    , ccXMLClassifier
 
     -- * Destructuring the Response
     , createClassifierResponse
@@ -44,8 +45,9 @@ import Network.AWS.Request
 import Network.AWS.Response
 
 -- | /See:/ 'createClassifier' smart constructor.
-newtype CreateClassifier = CreateClassifier'
-  { _ccGrokClassifier :: Maybe CreateGrokClassifierRequest
+data CreateClassifier = CreateClassifier'
+  { _ccGrokClassifier :: !(Maybe CreateGrokClassifierRequest)
+  , _ccXMLClassifier  :: !(Maybe CreateXMLClassifierRequest)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -53,15 +55,22 @@ newtype CreateClassifier = CreateClassifier'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ccGrokClassifier' - A grok classifier to create.
+-- * 'ccGrokClassifier' - A @GrokClassifier@ object specifying the classifier to create.
+--
+-- * 'ccXMLClassifier' - An @XMLClassifier@ object specifying the classifier to create.
 createClassifier
     :: CreateClassifier
-createClassifier = CreateClassifier' {_ccGrokClassifier = Nothing}
+createClassifier =
+  CreateClassifier' {_ccGrokClassifier = Nothing, _ccXMLClassifier = Nothing}
 
 
--- | A grok classifier to create.
+-- | A @GrokClassifier@ object specifying the classifier to create.
 ccGrokClassifier :: Lens' CreateClassifier (Maybe CreateGrokClassifierRequest)
 ccGrokClassifier = lens _ccGrokClassifier (\ s a -> s{_ccGrokClassifier = a});
+
+-- | An @XMLClassifier@ object specifying the classifier to create.
+ccXMLClassifier :: Lens' CreateClassifier (Maybe CreateXMLClassifierRequest)
+ccXMLClassifier = lens _ccXMLClassifier (\ s a -> s{_ccXMLClassifier = a});
 
 instance AWSRequest CreateClassifier where
         type Rs CreateClassifier = CreateClassifierResponse
@@ -88,7 +97,8 @@ instance ToJSON CreateClassifier where
         toJSON CreateClassifier'{..}
           = object
               (catMaybes
-                 [("GrokClassifier" .=) <$> _ccGrokClassifier])
+                 [("GrokClassifier" .=) <$> _ccGrokClassifier,
+                  ("XMLClassifier" .=) <$> _ccXMLClassifier])
 
 instance ToPath CreateClassifier where
         toPath = const "/"

@@ -128,6 +128,12 @@ module Network.AWS.Organizations.Types
     , casId
     , casRequestedTimestamp
 
+    -- * EnabledServicePrincipal
+    , EnabledServicePrincipal
+    , enabledServicePrincipal
+    , espServicePrincipal
+    , espDateEnabled
+
     -- * Handshake
     , Handshake
     , handshake
@@ -357,7 +363,7 @@ _DuplicatePolicyException =
   _MatchServiceError organizations "DuplicatePolicyException"
 
 
--- | Performing this operation violates a minimum or maximum value limit. For example, attempting to removing the last SCP from an OU or root, inviting or creating too many accounts to the organization, or attaching too many policies to an account, OU, or root. This exception includes a reason that contains additional information about the violated limit.
+-- | Performing this operation violates a minimum or maximum value limit. For example, attempting to removing the last SCP from an OU or root, inviting or creating too many accounts to the organization, or attaching too many policies to an account, OU, or root. This exception includes a reason that contains additional information about the violated limit:
 --
 --
 --

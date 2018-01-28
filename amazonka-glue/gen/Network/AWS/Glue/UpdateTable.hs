@@ -27,6 +27,7 @@ module Network.AWS.Glue.UpdateTable
       updateTable
     , UpdateTable
     -- * Request Lenses
+    , utSkipArchive
     , utCatalogId
     , utDatabaseName
     , utTableInput
@@ -47,7 +48,8 @@ import Network.AWS.Response
 
 -- | /See:/ 'updateTable' smart constructor.
 data UpdateTable = UpdateTable'
-  { _utCatalogId    :: !(Maybe Text)
+  { _utSkipArchive  :: !(Maybe Bool)
+  , _utCatalogId    :: !(Maybe Text)
   , _utDatabaseName :: !Text
   , _utTableInput   :: !TableInput
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -57,9 +59,11 @@ data UpdateTable = UpdateTable'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'utSkipArchive' - By default, @UpdateTable@ always creates an archived version of the table before updating it. If @skipArchive@ is set to true, however, @UpdateTable@ does not create the archived version.
+--
 -- * 'utCatalogId' - The ID of the Data Catalog where the table resides. If none is supplied, the AWS account ID is used by default.
 --
--- * 'utDatabaseName' - The name of the catalog database in which the table resides.
+-- * 'utDatabaseName' - The name of the catalog database in which the table resides. For Hive compatibility, this name is entirely lowercase.
 --
 -- * 'utTableInput' - An updated @TableInput@ object to define the metadata table in the catalog.
 updateTable
@@ -68,17 +72,22 @@ updateTable
     -> UpdateTable
 updateTable pDatabaseName_ pTableInput_ =
   UpdateTable'
-  { _utCatalogId = Nothing
+  { _utSkipArchive = Nothing
+  , _utCatalogId = Nothing
   , _utDatabaseName = pDatabaseName_
   , _utTableInput = pTableInput_
   }
 
 
+-- | By default, @UpdateTable@ always creates an archived version of the table before updating it. If @skipArchive@ is set to true, however, @UpdateTable@ does not create the archived version.
+utSkipArchive :: Lens' UpdateTable (Maybe Bool)
+utSkipArchive = lens _utSkipArchive (\ s a -> s{_utSkipArchive = a});
+
 -- | The ID of the Data Catalog where the table resides. If none is supplied, the AWS account ID is used by default.
 utCatalogId :: Lens' UpdateTable (Maybe Text)
 utCatalogId = lens _utCatalogId (\ s a -> s{_utCatalogId = a});
 
--- | The name of the catalog database in which the table resides.
+-- | The name of the catalog database in which the table resides. For Hive compatibility, this name is entirely lowercase.
 utDatabaseName :: Lens' UpdateTable Text
 utDatabaseName = lens _utDatabaseName (\ s a -> s{_utDatabaseName = a});
 
@@ -111,7 +120,8 @@ instance ToJSON UpdateTable where
         toJSON UpdateTable'{..}
           = object
               (catMaybes
-                 [("CatalogId" .=) <$> _utCatalogId,
+                 [("SkipArchive" .=) <$> _utSkipArchive,
+                  ("CatalogId" .=) <$> _utCatalogId,
                   Just ("DatabaseName" .= _utDatabaseName),
                   Just ("TableInput" .= _utTableInput)])
 

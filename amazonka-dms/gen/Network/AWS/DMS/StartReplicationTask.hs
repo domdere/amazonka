@@ -66,7 +66,7 @@ data StartReplicationTask = StartReplicationTask'
 --
 -- * 'srtCdcStartTime' - The start time for the Change Data Capture (CDC) operation.
 --
--- * 'srtReplicationTaskARN' - The Amazon Resource Number (ARN) of the replication task to be started.
+-- * 'srtReplicationTaskARN' - The Amazon Resource Name (ARN) of the replication task to be started.
 --
 -- * 'srtStartReplicationTaskType' - The type of replication task.
 startReplicationTask
@@ -85,7 +85,7 @@ startReplicationTask pReplicationTaskARN_ pStartReplicationTaskType_ =
 srtCdcStartTime :: Lens' StartReplicationTask (Maybe UTCTime)
 srtCdcStartTime = lens _srtCdcStartTime (\ s a -> s{_srtCdcStartTime = a}) . mapping _Time;
 
--- | The Amazon Resource Number (ARN) of the replication task to be started.
+-- | The Amazon Resource Name (ARN) of the replication task to be started.
 srtReplicationTaskARN :: Lens' StartReplicationTask Text
 srtReplicationTaskARN = lens _srtReplicationTaskARN (\ s a -> s{_srtReplicationTaskARN = a});
 

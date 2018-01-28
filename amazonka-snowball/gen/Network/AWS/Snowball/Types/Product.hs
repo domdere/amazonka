@@ -1168,9 +1168,9 @@ data ShippingDetails = ShippingDetails'
 --
 -- * 'sdShippingOption' - The shipping speed for a particular job. This speed doesn't dictate how soon you'll get the Snowball from the job's creation date. This speed represents how quickly it moves to its destination while in transit. Regional shipping speeds are as follows:     * In Australia, you have access to express shipping. Typically, Snowballs shipped express are delivered in about a day.     * In the European Union (EU), you have access to express shipping. Typically, Snowballs shipped express are delivered in about a day. In addition, most countries in the EU have access to standard shipping, which typically takes less than a week, one way.     * In India, Snowballs are delivered in one to seven days.     * In the United States of America (US), you have access to one-day shipping and two-day shipping.
 --
--- * 'sdOutboundShipment' - The @Status@ and @TrackingNumber@ values for a Snowball being returned to AWS for a particular job.
+-- * 'sdOutboundShipment' - The @Status@ and @TrackingNumber@ values for a Snowball being delivered to the address that you specified for a particular job.
 --
--- * 'sdInboundShipment' - The @Status@ and @TrackingNumber@ values for a Snowball being delivered to the address that you specified for a particular job.
+-- * 'sdInboundShipment' - The @Status@ and @TrackingNumber@ values for a Snowball being returned to AWS for a particular job.
 shippingDetails
     :: ShippingDetails
 shippingDetails =
@@ -1185,11 +1185,11 @@ shippingDetails =
 sdShippingOption :: Lens' ShippingDetails (Maybe ShippingOption)
 sdShippingOption = lens _sdShippingOption (\ s a -> s{_sdShippingOption = a});
 
--- | The @Status@ and @TrackingNumber@ values for a Snowball being returned to AWS for a particular job.
+-- | The @Status@ and @TrackingNumber@ values for a Snowball being delivered to the address that you specified for a particular job.
 sdOutboundShipment :: Lens' ShippingDetails (Maybe Shipment)
 sdOutboundShipment = lens _sdOutboundShipment (\ s a -> s{_sdOutboundShipment = a});
 
--- | The @Status@ and @TrackingNumber@ values for a Snowball being delivered to the address that you specified for a particular job.
+-- | The @Status@ and @TrackingNumber@ values for a Snowball being returned to AWS for a particular job.
 sdInboundShipment :: Lens' ShippingDetails (Maybe Shipment)
 sdInboundShipment = lens _sdInboundShipment (\ s a -> s{_sdInboundShipment = a});
 

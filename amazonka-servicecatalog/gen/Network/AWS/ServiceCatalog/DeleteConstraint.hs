@@ -57,7 +57,7 @@ data DeleteConstraint = DeleteConstraint'
 --
 -- * 'dcAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'dcId' - The identifier of the constraint to delete.
+-- * 'dcId' - The identifier of the constraint.
 deleteConstraint
     :: Text -- ^ 'dcId'
     -> DeleteConstraint
@@ -69,7 +69,7 @@ deleteConstraint pId_ =
 dcAcceptLanguage :: Lens' DeleteConstraint (Maybe Text)
 dcAcceptLanguage = lens _dcAcceptLanguage (\ s a -> s{_dcAcceptLanguage = a});
 
--- | The identifier of the constraint to delete.
+-- | The identifier of the constraint.
 dcId :: Lens' DeleteConstraint Text
 dcId = lens _dcId (\ s a -> s{_dcId = a});
 

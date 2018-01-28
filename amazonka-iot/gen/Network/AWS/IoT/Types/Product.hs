@@ -182,6 +182,39 @@ instance ToJSON Action where
                   ("republish" .=) <$> _aRepublish,
                   ("sqs" .=) <$> _aSqs])
 
+-- | Contains information that allowed the authorization.
+--
+--
+--
+-- /See:/ 'allowed' smart constructor.
+newtype Allowed = Allowed'
+  { _aPolicies :: Maybe [Policy]
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'Allowed' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'aPolicies' - A list of policies that allowed the authentication.
+allowed
+    :: Allowed
+allowed = Allowed' {_aPolicies = Nothing}
+
+
+-- | A list of policies that allowed the authentication.
+aPolicies :: Lens' Allowed [Policy]
+aPolicies = lens _aPolicies (\ s a -> s{_aPolicies = a}) . _Default . _Coerce;
+
+instance FromJSON Allowed where
+        parseJSON
+          = withObject "Allowed"
+              (\ x -> Allowed' <$> (x .:? "policies" .!= mempty))
+
+instance Hashable Allowed where
+
+instance NFData Allowed where
+
 -- | The attribute payload.
 --
 --
@@ -214,6 +247,13 @@ apAttributes = lens _apAttributes (\ s a -> s{_apAttributes = a}) . _Default . _
 apMerge :: Lens' AttributePayload (Maybe Bool)
 apMerge = lens _apMerge (\ s a -> s{_apMerge = a});
 
+instance FromJSON AttributePayload where
+        parseJSON
+          = withObject "AttributePayload"
+              (\ x ->
+                 AttributePayload' <$>
+                   (x .:? "attributes" .!= mempty) <*> (x .:? "merge"))
+
 instance Hashable AttributePayload where
 
 instance NFData AttributePayload where
@@ -224,6 +264,272 @@ instance ToJSON AttributePayload where
               (catMaybes
                  [("attributes" .=) <$> _apAttributes,
                   ("merge" .=) <$> _apMerge])
+
+-- | A collection of authorization information.
+--
+--
+--
+-- /See:/ 'authInfo' smart constructor.
+data AuthInfo = AuthInfo'
+  { _aiResources  :: !(Maybe [Text])
+  , _aiActionType :: !(Maybe ActionType)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'AuthInfo' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'aiResources' - The resources for which the principal is being authorized to perform the specified action.
+--
+-- * 'aiActionType' - The type of action for which the principal is being authorized.
+authInfo
+    :: AuthInfo
+authInfo = AuthInfo' {_aiResources = Nothing, _aiActionType = Nothing}
+
+
+-- | The resources for which the principal is being authorized to perform the specified action.
+aiResources :: Lens' AuthInfo [Text]
+aiResources = lens _aiResources (\ s a -> s{_aiResources = a}) . _Default . _Coerce;
+
+-- | The type of action for which the principal is being authorized.
+aiActionType :: Lens' AuthInfo (Maybe ActionType)
+aiActionType = lens _aiActionType (\ s a -> s{_aiActionType = a});
+
+instance FromJSON AuthInfo where
+        parseJSON
+          = withObject "AuthInfo"
+              (\ x ->
+                 AuthInfo' <$>
+                   (x .:? "resources" .!= mempty) <*>
+                     (x .:? "actionType"))
+
+instance Hashable AuthInfo where
+
+instance NFData AuthInfo where
+
+instance ToJSON AuthInfo where
+        toJSON AuthInfo'{..}
+          = object
+              (catMaybes
+                 [("resources" .=) <$> _aiResources,
+                  ("actionType" .=) <$> _aiActionType])
+
+-- | The authorizer result.
+--
+--
+--
+-- /See:/ 'authResult' smart constructor.
+data AuthResult = AuthResult'
+  { _arDenied               :: !(Maybe Denied)
+  , _arAuthDecision         :: !(Maybe AuthDecision)
+  , _arAllowed              :: !(Maybe Allowed)
+  , _arMissingContextValues :: !(Maybe [Text])
+  , _arAuthInfo             :: !(Maybe AuthInfo)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'AuthResult' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'arDenied' - The policies and statements that denied the specified action.
+--
+-- * 'arAuthDecision' - The final authorization decision of this scenario. Multiple statements are taken into account when determining the authorization decision. An explicit deny statement can override multiple allow statements.
+--
+-- * 'arAllowed' - The policies and statements that allowed the specified action.
+--
+-- * 'arMissingContextValues' - Contains any missing context values found while evaluating policy.
+--
+-- * 'arAuthInfo' - Authorization information.
+authResult
+    :: AuthResult
+authResult =
+  AuthResult'
+  { _arDenied = Nothing
+  , _arAuthDecision = Nothing
+  , _arAllowed = Nothing
+  , _arMissingContextValues = Nothing
+  , _arAuthInfo = Nothing
+  }
+
+
+-- | The policies and statements that denied the specified action.
+arDenied :: Lens' AuthResult (Maybe Denied)
+arDenied = lens _arDenied (\ s a -> s{_arDenied = a});
+
+-- | The final authorization decision of this scenario. Multiple statements are taken into account when determining the authorization decision. An explicit deny statement can override multiple allow statements.
+arAuthDecision :: Lens' AuthResult (Maybe AuthDecision)
+arAuthDecision = lens _arAuthDecision (\ s a -> s{_arAuthDecision = a});
+
+-- | The policies and statements that allowed the specified action.
+arAllowed :: Lens' AuthResult (Maybe Allowed)
+arAllowed = lens _arAllowed (\ s a -> s{_arAllowed = a});
+
+-- | Contains any missing context values found while evaluating policy.
+arMissingContextValues :: Lens' AuthResult [Text]
+arMissingContextValues = lens _arMissingContextValues (\ s a -> s{_arMissingContextValues = a}) . _Default . _Coerce;
+
+-- | Authorization information.
+arAuthInfo :: Lens' AuthResult (Maybe AuthInfo)
+arAuthInfo = lens _arAuthInfo (\ s a -> s{_arAuthInfo = a});
+
+instance FromJSON AuthResult where
+        parseJSON
+          = withObject "AuthResult"
+              (\ x ->
+                 AuthResult' <$>
+                   (x .:? "denied") <*> (x .:? "authDecision") <*>
+                     (x .:? "allowed")
+                     <*> (x .:? "missingContextValues" .!= mempty)
+                     <*> (x .:? "authInfo"))
+
+instance Hashable AuthResult where
+
+instance NFData AuthResult where
+
+-- | The authorizer description.
+--
+--
+--
+-- /See:/ 'authorizerDescription' smart constructor.
+data AuthorizerDescription = AuthorizerDescription'
+  { _adStatus                 :: !(Maybe AuthorizerStatus)
+  , _adLastModifiedDate       :: !(Maybe POSIX)
+  , _adAuthorizerName         :: !(Maybe Text)
+  , _adAuthorizerFunctionARN  :: !(Maybe Text)
+  , _adAuthorizerARN          :: !(Maybe Text)
+  , _adCreationDate           :: !(Maybe POSIX)
+  , _adTokenSigningPublicKeys :: !(Maybe (Map Text Text))
+  , _adTokenKeyName           :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'AuthorizerDescription' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'adStatus' - The status of the authorizer.
+--
+-- * 'adLastModifiedDate' - The UNIX timestamp of when the authorizer was last updated.
+--
+-- * 'adAuthorizerName' - The authorizer name.
+--
+-- * 'adAuthorizerFunctionARN' - The authorizer's Lambda function ARN.
+--
+-- * 'adAuthorizerARN' - The authorizer ARN.
+--
+-- * 'adCreationDate' - The UNIX timestamp of when the authorizer was created.
+--
+-- * 'adTokenSigningPublicKeys' - The public keys used to validate the token signature returned by your custom authentication service.
+--
+-- * 'adTokenKeyName' - The key used to extract the token from the HTTP headers.
+authorizerDescription
+    :: AuthorizerDescription
+authorizerDescription =
+  AuthorizerDescription'
+  { _adStatus = Nothing
+  , _adLastModifiedDate = Nothing
+  , _adAuthorizerName = Nothing
+  , _adAuthorizerFunctionARN = Nothing
+  , _adAuthorizerARN = Nothing
+  , _adCreationDate = Nothing
+  , _adTokenSigningPublicKeys = Nothing
+  , _adTokenKeyName = Nothing
+  }
+
+
+-- | The status of the authorizer.
+adStatus :: Lens' AuthorizerDescription (Maybe AuthorizerStatus)
+adStatus = lens _adStatus (\ s a -> s{_adStatus = a});
+
+-- | The UNIX timestamp of when the authorizer was last updated.
+adLastModifiedDate :: Lens' AuthorizerDescription (Maybe UTCTime)
+adLastModifiedDate = lens _adLastModifiedDate (\ s a -> s{_adLastModifiedDate = a}) . mapping _Time;
+
+-- | The authorizer name.
+adAuthorizerName :: Lens' AuthorizerDescription (Maybe Text)
+adAuthorizerName = lens _adAuthorizerName (\ s a -> s{_adAuthorizerName = a});
+
+-- | The authorizer's Lambda function ARN.
+adAuthorizerFunctionARN :: Lens' AuthorizerDescription (Maybe Text)
+adAuthorizerFunctionARN = lens _adAuthorizerFunctionARN (\ s a -> s{_adAuthorizerFunctionARN = a});
+
+-- | The authorizer ARN.
+adAuthorizerARN :: Lens' AuthorizerDescription (Maybe Text)
+adAuthorizerARN = lens _adAuthorizerARN (\ s a -> s{_adAuthorizerARN = a});
+
+-- | The UNIX timestamp of when the authorizer was created.
+adCreationDate :: Lens' AuthorizerDescription (Maybe UTCTime)
+adCreationDate = lens _adCreationDate (\ s a -> s{_adCreationDate = a}) . mapping _Time;
+
+-- | The public keys used to validate the token signature returned by your custom authentication service.
+adTokenSigningPublicKeys :: Lens' AuthorizerDescription (HashMap Text Text)
+adTokenSigningPublicKeys = lens _adTokenSigningPublicKeys (\ s a -> s{_adTokenSigningPublicKeys = a}) . _Default . _Map;
+
+-- | The key used to extract the token from the HTTP headers.
+adTokenKeyName :: Lens' AuthorizerDescription (Maybe Text)
+adTokenKeyName = lens _adTokenKeyName (\ s a -> s{_adTokenKeyName = a});
+
+instance FromJSON AuthorizerDescription where
+        parseJSON
+          = withObject "AuthorizerDescription"
+              (\ x ->
+                 AuthorizerDescription' <$>
+                   (x .:? "status") <*> (x .:? "lastModifiedDate") <*>
+                     (x .:? "authorizerName")
+                     <*> (x .:? "authorizerFunctionArn")
+                     <*> (x .:? "authorizerArn")
+                     <*> (x .:? "creationDate")
+                     <*> (x .:? "tokenSigningPublicKeys" .!= mempty)
+                     <*> (x .:? "tokenKeyName"))
+
+instance Hashable AuthorizerDescription where
+
+instance NFData AuthorizerDescription where
+
+-- | The authorizer summary.
+--
+--
+--
+-- /See:/ 'authorizerSummary' smart constructor.
+data AuthorizerSummary = AuthorizerSummary'
+  { _asAuthorizerName :: !(Maybe Text)
+  , _asAuthorizerARN  :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'AuthorizerSummary' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'asAuthorizerName' - The authorizer name.
+--
+-- * 'asAuthorizerARN' - The authorizer ARN.
+authorizerSummary
+    :: AuthorizerSummary
+authorizerSummary =
+  AuthorizerSummary' {_asAuthorizerName = Nothing, _asAuthorizerARN = Nothing}
+
+
+-- | The authorizer name.
+asAuthorizerName :: Lens' AuthorizerSummary (Maybe Text)
+asAuthorizerName = lens _asAuthorizerName (\ s a -> s{_asAuthorizerName = a});
+
+-- | The authorizer ARN.
+asAuthorizerARN :: Lens' AuthorizerSummary (Maybe Text)
+asAuthorizerARN = lens _asAuthorizerARN (\ s a -> s{_asAuthorizerARN = a});
+
+instance FromJSON AuthorizerSummary where
+        parseJSON
+          = withObject "AuthorizerSummary"
+              (\ x ->
+                 AuthorizerSummary' <$>
+                   (x .:? "authorizerName") <*> (x .:? "authorizerArn"))
+
+instance Hashable AuthorizerSummary where
+
+instance NFData AuthorizerSummary where
 
 -- | A CA certificate.
 --
@@ -737,6 +1043,323 @@ instance ToJSON CloudwatchMetricAction where
                   Just ("metricValue" .= _cmaMetricValue),
                   Just ("metricUnit" .= _cmaMetricUnit)])
 
+-- | Describes the method to use when code signing a file.
+--
+--
+--
+-- /See:/ 'codeSigning' smart constructor.
+data CodeSigning = CodeSigning'
+  { _csCustomCodeSigning :: !(Maybe CustomCodeSigning)
+  , _csAwsSignerJobId    :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CodeSigning' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'csCustomCodeSigning' - A custom method for code signing a file.
+--
+-- * 'csAwsSignerJobId' - The ID of the AWSSignerJob which was created to sign the file.
+codeSigning
+    :: CodeSigning
+codeSigning =
+  CodeSigning' {_csCustomCodeSigning = Nothing, _csAwsSignerJobId = Nothing}
+
+
+-- | A custom method for code signing a file.
+csCustomCodeSigning :: Lens' CodeSigning (Maybe CustomCodeSigning)
+csCustomCodeSigning = lens _csCustomCodeSigning (\ s a -> s{_csCustomCodeSigning = a});
+
+-- | The ID of the AWSSignerJob which was created to sign the file.
+csAwsSignerJobId :: Lens' CodeSigning (Maybe Text)
+csAwsSignerJobId = lens _csAwsSignerJobId (\ s a -> s{_csAwsSignerJobId = a});
+
+instance FromJSON CodeSigning where
+        parseJSON
+          = withObject "CodeSigning"
+              (\ x ->
+                 CodeSigning' <$>
+                   (x .:? "customCodeSigning") <*>
+                     (x .:? "awsSignerJobId"))
+
+instance Hashable CodeSigning where
+
+instance NFData CodeSigning where
+
+instance ToJSON CodeSigning where
+        toJSON CodeSigning'{..}
+          = object
+              (catMaybes
+                 [("customCodeSigning" .=) <$> _csCustomCodeSigning,
+                  ("awsSignerJobId" .=) <$> _csAwsSignerJobId])
+
+-- | Describes the certificate chain being used when code signing a file.
+--
+--
+--
+-- /See:/ 'codeSigningCertificateChain' smart constructor.
+data CodeSigningCertificateChain = CodeSigningCertificateChain'
+  { _csccStream          :: !(Maybe Stream)
+  , _csccCertificateName :: !(Maybe Text)
+  , _csccInlineDocument  :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CodeSigningCertificateChain' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'csccStream' - A stream of the certificate chain files.
+--
+-- * 'csccCertificateName' - The name of the certificate.
+--
+-- * 'csccInlineDocument' - A base64 encoded binary representation of the code signing certificate chain.
+codeSigningCertificateChain
+    :: CodeSigningCertificateChain
+codeSigningCertificateChain =
+  CodeSigningCertificateChain'
+  { _csccStream = Nothing
+  , _csccCertificateName = Nothing
+  , _csccInlineDocument = Nothing
+  }
+
+
+-- | A stream of the certificate chain files.
+csccStream :: Lens' CodeSigningCertificateChain (Maybe Stream)
+csccStream = lens _csccStream (\ s a -> s{_csccStream = a});
+
+-- | The name of the certificate.
+csccCertificateName :: Lens' CodeSigningCertificateChain (Maybe Text)
+csccCertificateName = lens _csccCertificateName (\ s a -> s{_csccCertificateName = a});
+
+-- | A base64 encoded binary representation of the code signing certificate chain.
+csccInlineDocument :: Lens' CodeSigningCertificateChain (Maybe Text)
+csccInlineDocument = lens _csccInlineDocument (\ s a -> s{_csccInlineDocument = a});
+
+instance FromJSON CodeSigningCertificateChain where
+        parseJSON
+          = withObject "CodeSigningCertificateChain"
+              (\ x ->
+                 CodeSigningCertificateChain' <$>
+                   (x .:? "stream") <*> (x .:? "certificateName") <*>
+                     (x .:? "inlineDocument"))
+
+instance Hashable CodeSigningCertificateChain where
+
+instance NFData CodeSigningCertificateChain where
+
+instance ToJSON CodeSigningCertificateChain where
+        toJSON CodeSigningCertificateChain'{..}
+          = object
+              (catMaybes
+                 [("stream" .=) <$> _csccStream,
+                  ("certificateName" .=) <$> _csccCertificateName,
+                  ("inlineDocument" .=) <$> _csccInlineDocument])
+
+-- | Describes the signature for a file.
+--
+--
+--
+-- /See:/ 'codeSigningSignature' smart constructor.
+data CodeSigningSignature = CodeSigningSignature'
+  { _cssStream         :: !(Maybe Stream)
+  , _cssInlineDocument :: !(Maybe Base64)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CodeSigningSignature' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'cssStream' - A stream of the code signing signature.
+--
+-- * 'cssInlineDocument' - A base64 encoded binary representation of the code signing signature.-- /Note:/ This 'Lens' automatically encodes and decodes Base64 data. The underlying isomorphism will encode to Base64 representation during serialisation, and decode from Base64 representation during deserialisation. This 'Lens' accepts and returns only raw unencoded data.
+codeSigningSignature
+    :: CodeSigningSignature
+codeSigningSignature =
+  CodeSigningSignature' {_cssStream = Nothing, _cssInlineDocument = Nothing}
+
+
+-- | A stream of the code signing signature.
+cssStream :: Lens' CodeSigningSignature (Maybe Stream)
+cssStream = lens _cssStream (\ s a -> s{_cssStream = a});
+
+-- | A base64 encoded binary representation of the code signing signature.-- /Note:/ This 'Lens' automatically encodes and decodes Base64 data. The underlying isomorphism will encode to Base64 representation during serialisation, and decode from Base64 representation during deserialisation. This 'Lens' accepts and returns only raw unencoded data.
+cssInlineDocument :: Lens' CodeSigningSignature (Maybe ByteString)
+cssInlineDocument = lens _cssInlineDocument (\ s a -> s{_cssInlineDocument = a}) . mapping _Base64;
+
+instance FromJSON CodeSigningSignature where
+        parseJSON
+          = withObject "CodeSigningSignature"
+              (\ x ->
+                 CodeSigningSignature' <$>
+                   (x .:? "stream") <*> (x .:? "inlineDocument"))
+
+instance Hashable CodeSigningSignature where
+
+instance NFData CodeSigningSignature where
+
+instance ToJSON CodeSigningSignature where
+        toJSON CodeSigningSignature'{..}
+          = object
+              (catMaybes
+                 [("stream" .=) <$> _cssStream,
+                  ("inlineDocument" .=) <$> _cssInlineDocument])
+
+-- | Configuration.
+--
+--
+--
+-- /See:/ 'configuration' smart constructor.
+newtype Configuration = Configuration'
+  { _cEnabled :: Maybe Bool
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'Configuration' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'cEnabled' - True to enable the configuration.
+configuration
+    :: Configuration
+configuration = Configuration' {_cEnabled = Nothing}
+
+
+-- | True to enable the configuration.
+cEnabled :: Lens' Configuration (Maybe Bool)
+cEnabled = lens _cEnabled (\ s a -> s{_cEnabled = a});
+
+instance FromJSON Configuration where
+        parseJSON
+          = withObject "Configuration"
+              (\ x -> Configuration' <$> (x .:? "Enabled"))
+
+instance Hashable Configuration where
+
+instance NFData Configuration where
+
+instance ToJSON Configuration where
+        toJSON Configuration'{..}
+          = object (catMaybes [("Enabled" .=) <$> _cEnabled])
+
+-- | Describes a custom method used to code sign a file.
+--
+--
+--
+-- /See:/ 'customCodeSigning' smart constructor.
+data CustomCodeSigning = CustomCodeSigning'
+  { _ccsSignature          :: !(Maybe CodeSigningSignature)
+  , _ccsHashAlgorithm      :: !(Maybe Text)
+  , _ccsCertificateChain   :: !(Maybe CodeSigningCertificateChain)
+  , _ccsSignatureAlgorithm :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CustomCodeSigning' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ccsSignature' - The signature for the file.
+--
+-- * 'ccsHashAlgorithm' - The hash algorithm used to code sign the file.
+--
+-- * 'ccsCertificateChain' - The certificate chain.
+--
+-- * 'ccsSignatureAlgorithm' - The signature algorithm used to code sign the file.
+customCodeSigning
+    :: CustomCodeSigning
+customCodeSigning =
+  CustomCodeSigning'
+  { _ccsSignature = Nothing
+  , _ccsHashAlgorithm = Nothing
+  , _ccsCertificateChain = Nothing
+  , _ccsSignatureAlgorithm = Nothing
+  }
+
+
+-- | The signature for the file.
+ccsSignature :: Lens' CustomCodeSigning (Maybe CodeSigningSignature)
+ccsSignature = lens _ccsSignature (\ s a -> s{_ccsSignature = a});
+
+-- | The hash algorithm used to code sign the file.
+ccsHashAlgorithm :: Lens' CustomCodeSigning (Maybe Text)
+ccsHashAlgorithm = lens _ccsHashAlgorithm (\ s a -> s{_ccsHashAlgorithm = a});
+
+-- | The certificate chain.
+ccsCertificateChain :: Lens' CustomCodeSigning (Maybe CodeSigningCertificateChain)
+ccsCertificateChain = lens _ccsCertificateChain (\ s a -> s{_ccsCertificateChain = a});
+
+-- | The signature algorithm used to code sign the file.
+ccsSignatureAlgorithm :: Lens' CustomCodeSigning (Maybe Text)
+ccsSignatureAlgorithm = lens _ccsSignatureAlgorithm (\ s a -> s{_ccsSignatureAlgorithm = a});
+
+instance FromJSON CustomCodeSigning where
+        parseJSON
+          = withObject "CustomCodeSigning"
+              (\ x ->
+                 CustomCodeSigning' <$>
+                   (x .:? "signature") <*> (x .:? "hashAlgorithm") <*>
+                     (x .:? "certificateChain")
+                     <*> (x .:? "signatureAlgorithm"))
+
+instance Hashable CustomCodeSigning where
+
+instance NFData CustomCodeSigning where
+
+instance ToJSON CustomCodeSigning where
+        toJSON CustomCodeSigning'{..}
+          = object
+              (catMaybes
+                 [("signature" .=) <$> _ccsSignature,
+                  ("hashAlgorithm" .=) <$> _ccsHashAlgorithm,
+                  ("certificateChain" .=) <$> _ccsCertificateChain,
+                  ("signatureAlgorithm" .=) <$>
+                    _ccsSignatureAlgorithm])
+
+-- | Contains information that denied the authorization.
+--
+--
+--
+-- /See:/ 'denied' smart constructor.
+data Denied = Denied'
+  { _dImplicitDeny :: !(Maybe ImplicitDeny)
+  , _dExplicitDeny :: !(Maybe ExplicitDeny)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'Denied' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'dImplicitDeny' - Information that implicitly denies the authorization. When a policy doesn't explicitly deny or allow an action on a resource it is considered an implicit deny.
+--
+-- * 'dExplicitDeny' - Information that explicitly denies the authorization.
+denied
+    :: Denied
+denied = Denied' {_dImplicitDeny = Nothing, _dExplicitDeny = Nothing}
+
+
+-- | Information that implicitly denies the authorization. When a policy doesn't explicitly deny or allow an action on a resource it is considered an implicit deny.
+dImplicitDeny :: Lens' Denied (Maybe ImplicitDeny)
+dImplicitDeny = lens _dImplicitDeny (\ s a -> s{_dImplicitDeny = a});
+
+-- | Information that explicitly denies the authorization.
+dExplicitDeny :: Lens' Denied (Maybe ExplicitDeny)
+dExplicitDeny = lens _dExplicitDeny (\ s a -> s{_dExplicitDeny = a});
+
+instance FromJSON Denied where
+        parseJSON
+          = withObject "Denied"
+              (\ x ->
+                 Denied' <$>
+                   (x .:? "implicitDeny") <*> (x .:? "explicitDeny"))
+
+instance Hashable Denied where
+
+instance NFData Denied where
+
 -- | Describes an action to write to a DynamoDB table.
 --
 --
@@ -938,6 +1561,58 @@ instance ToJSON DynamoDBv2Action where
                  [("putItem" .=) <$> _ddaPutItem,
                   ("roleArn" .=) <$> _ddaRoleARN])
 
+-- | The policy that has the effect on the authorization results.
+--
+--
+--
+-- /See:/ 'effectivePolicy' smart constructor.
+data EffectivePolicy = EffectivePolicy'
+  { _epPolicyName     :: !(Maybe Text)
+  , _epPolicyDocument :: !(Maybe Text)
+  , _epPolicyARN      :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'EffectivePolicy' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'epPolicyName' - The policy name.
+--
+-- * 'epPolicyDocument' - The IAM policy document.
+--
+-- * 'epPolicyARN' - The policy ARN.
+effectivePolicy
+    :: EffectivePolicy
+effectivePolicy =
+  EffectivePolicy'
+  {_epPolicyName = Nothing, _epPolicyDocument = Nothing, _epPolicyARN = Nothing}
+
+
+-- | The policy name.
+epPolicyName :: Lens' EffectivePolicy (Maybe Text)
+epPolicyName = lens _epPolicyName (\ s a -> s{_epPolicyName = a});
+
+-- | The IAM policy document.
+epPolicyDocument :: Lens' EffectivePolicy (Maybe Text)
+epPolicyDocument = lens _epPolicyDocument (\ s a -> s{_epPolicyDocument = a});
+
+-- | The policy ARN.
+epPolicyARN :: Lens' EffectivePolicy (Maybe Text)
+epPolicyARN = lens _epPolicyARN (\ s a -> s{_epPolicyARN = a});
+
+instance FromJSON EffectivePolicy where
+        parseJSON
+          = withObject "EffectivePolicy"
+              (\ x ->
+                 EffectivePolicy' <$>
+                   (x .:? "policyName") <*> (x .:? "policyDocument") <*>
+                     (x .:? "policyArn"))
+
+instance Hashable EffectivePolicy where
+
+instance NFData EffectivePolicy where
+
 -- | Describes an action that writes data to an Amazon Elasticsearch Service domain.
 --
 --
@@ -1025,6 +1700,81 @@ instance ToJSON ElasticsearchAction where
                   Just ("index" .= _eaIndex), Just ("type" .= _eaType),
                   Just ("id" .= _eaId)])
 
+-- | Error information.
+--
+--
+--
+-- /See:/ 'errorInfo' smart constructor.
+data ErrorInfo = ErrorInfo'
+  { _eiCode    :: !(Maybe Text)
+  , _eiMessage :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ErrorInfo' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'eiCode' - The error code.
+--
+-- * 'eiMessage' - The error message.
+errorInfo
+    :: ErrorInfo
+errorInfo = ErrorInfo' {_eiCode = Nothing, _eiMessage = Nothing}
+
+
+-- | The error code.
+eiCode :: Lens' ErrorInfo (Maybe Text)
+eiCode = lens _eiCode (\ s a -> s{_eiCode = a});
+
+-- | The error message.
+eiMessage :: Lens' ErrorInfo (Maybe Text)
+eiMessage = lens _eiMessage (\ s a -> s{_eiMessage = a});
+
+instance FromJSON ErrorInfo where
+        parseJSON
+          = withObject "ErrorInfo"
+              (\ x ->
+                 ErrorInfo' <$> (x .:? "code") <*> (x .:? "message"))
+
+instance Hashable ErrorInfo where
+
+instance NFData ErrorInfo where
+
+-- | Information that explicitly denies authorization.
+--
+--
+--
+-- /See:/ 'explicitDeny' smart constructor.
+newtype ExplicitDeny = ExplicitDeny'
+  { _edPolicies :: Maybe [Policy]
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ExplicitDeny' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'edPolicies' - The policies that denied the authorization.
+explicitDeny
+    :: ExplicitDeny
+explicitDeny = ExplicitDeny' {_edPolicies = Nothing}
+
+
+-- | The policies that denied the authorization.
+edPolicies :: Lens' ExplicitDeny [Policy]
+edPolicies = lens _edPolicies (\ s a -> s{_edPolicies = a}) . _Default . _Coerce;
+
+instance FromJSON ExplicitDeny where
+        parseJSON
+          = withObject "ExplicitDeny"
+              (\ x ->
+                 ExplicitDeny' <$> (x .:? "policies" .!= mempty))
+
+instance Hashable ExplicitDeny where
+
+instance NFData ExplicitDeny where
+
 -- | Describes an action that writes data to an Amazon Kinesis Firehose stream.
 --
 --
@@ -1043,7 +1793,7 @@ data FirehoseAction = FirehoseAction'
 --
 -- * 'faSeparator' - A character separator that will be used to separate records written to the Firehose stream. Valid values are: '\n' (newline), '\t' (tab), '\r\n' (Windows newline), ',' (comma).
 --
--- * 'faRoleARN' - The IAM role that grants access to the Amazon Kinesis Firehost stream.
+-- * 'faRoleARN' - The IAM role that grants access to the Amazon Kinesis Firehose stream.
 --
 -- * 'faDeliveryStreamName' - The delivery stream name.
 firehoseAction
@@ -1062,7 +1812,7 @@ firehoseAction pRoleARN_ pDeliveryStreamName_ =
 faSeparator :: Lens' FirehoseAction (Maybe Text)
 faSeparator = lens _faSeparator (\ s a -> s{_faSeparator = a});
 
--- | The IAM role that grants access to the Amazon Kinesis Firehost stream.
+-- | The IAM role that grants access to the Amazon Kinesis Firehose stream.
 faRoleARN :: Lens' FirehoseAction Text
 faRoleARN = lens _faRoleARN (\ s a -> s{_faRoleARN = a});
 
@@ -1090,6 +1840,778 @@ instance ToJSON FirehoseAction where
                   Just ("roleArn" .= _faRoleARN),
                   Just
                     ("deliveryStreamName" .= _faDeliveryStreamName)])
+
+-- | The name and ARN of a group.
+--
+--
+--
+-- /See:/ 'groupNameAndARN' smart constructor.
+data GroupNameAndARN = GroupNameAndARN'
+  { _gnaaGroupARN  :: !(Maybe Text)
+  , _gnaaGroupName :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'GroupNameAndARN' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'gnaaGroupARN' - The group ARN.
+--
+-- * 'gnaaGroupName' - The group name.
+groupNameAndARN
+    :: GroupNameAndARN
+groupNameAndARN =
+  GroupNameAndARN' {_gnaaGroupARN = Nothing, _gnaaGroupName = Nothing}
+
+
+-- | The group ARN.
+gnaaGroupARN :: Lens' GroupNameAndARN (Maybe Text)
+gnaaGroupARN = lens _gnaaGroupARN (\ s a -> s{_gnaaGroupARN = a});
+
+-- | The group name.
+gnaaGroupName :: Lens' GroupNameAndARN (Maybe Text)
+gnaaGroupName = lens _gnaaGroupName (\ s a -> s{_gnaaGroupName = a});
+
+instance FromJSON GroupNameAndARN where
+        parseJSON
+          = withObject "GroupNameAndARN"
+              (\ x ->
+                 GroupNameAndARN' <$>
+                   (x .:? "groupArn") <*> (x .:? "groupName"))
+
+instance Hashable GroupNameAndARN where
+
+instance NFData GroupNameAndARN where
+
+-- | Information that implicitly denies authorization. When policy doesn't explicitly deny or allow an action on a resource it is considered an implicit deny.
+--
+--
+--
+-- /See:/ 'implicitDeny' smart constructor.
+newtype ImplicitDeny = ImplicitDeny'
+  { _idPolicies :: Maybe [Policy]
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ImplicitDeny' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'idPolicies' - Policies that don't contain a matching allow or deny statement for the specified action on the specified resource.
+implicitDeny
+    :: ImplicitDeny
+implicitDeny = ImplicitDeny' {_idPolicies = Nothing}
+
+
+-- | Policies that don't contain a matching allow or deny statement for the specified action on the specified resource.
+idPolicies :: Lens' ImplicitDeny [Policy]
+idPolicies = lens _idPolicies (\ s a -> s{_idPolicies = a}) . _Default . _Coerce;
+
+instance FromJSON ImplicitDeny where
+        parseJSON
+          = withObject "ImplicitDeny"
+              (\ x ->
+                 ImplicitDeny' <$> (x .:? "policies" .!= mempty))
+
+instance Hashable ImplicitDeny where
+
+instance NFData ImplicitDeny where
+
+-- | The @Job@ object contains details about a job.
+--
+--
+--
+-- /See:/ 'job' smart constructor.
+data Job = Job'
+  { _jobStatus                     :: !(Maybe JobStatus)
+  , _jobJobExecutionsRolloutConfig :: !(Maybe JobExecutionsRolloutConfig)
+  , _jobJobId                      :: !(Maybe Text)
+  , _jobLastUpdatedAt              :: !(Maybe POSIX)
+  , _jobJobARN                     :: !(Maybe Text)
+  , _jobCreatedAt                  :: !(Maybe POSIX)
+  , _jobDocumentParameters         :: !(Maybe (Map Text Text))
+  , _jobJobProcessDetails          :: !(Maybe JobProcessDetails)
+  , _jobPresignedURLConfig         :: !(Maybe PresignedURLConfig)
+  , _jobTargets                    :: !(Maybe (List1 Text))
+  , _jobCompletedAt                :: !(Maybe POSIX)
+  , _jobComment                    :: !(Maybe Text)
+  , _jobDescription                :: !(Maybe Text)
+  , _jobTargetSelection            :: !(Maybe TargetSelection)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'Job' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'jobStatus' - The status of the job, one of @IN_PROGRESS@ , @CANCELED@ , or @COMPLETED@ .
+--
+-- * 'jobJobExecutionsRolloutConfig' - Allows you to create a staged rollout of a job.
+--
+-- * 'jobJobId' - The unique identifier you assigned to this job when it was created.
+--
+-- * 'jobLastUpdatedAt' - The time, in milliseconds since the epoch, when the job was last updated.
+--
+-- * 'jobJobARN' - An ARN identifying the job with format "arn:aws:iot:region:account:job/jobId".
+--
+-- * 'jobCreatedAt' - The time, in milliseconds since the epoch, when the job was created.
+--
+-- * 'jobDocumentParameters' - The parameters specified for the job document.
+--
+-- * 'jobJobProcessDetails' - Details about the job process.
+--
+-- * 'jobPresignedURLConfig' - Configuration for pre-signed S3 URLs.
+--
+-- * 'jobTargets' - A list of IoT things and thing groups to which the job should be sent.
+--
+-- * 'jobCompletedAt' - The time, in milliseconds since the epoch, when the job was completed.
+--
+-- * 'jobComment' - If the job was updated, describes the reason for the update.
+--
+-- * 'jobDescription' - A short text description of the job.
+--
+-- * 'jobTargetSelection' - Specifies whether the job will continue to run (CONTINUOUS), or will be complete after all those things specified as targets have completed the job (SNAPSHOT). If continuous, the job may also be run on a thing when a change is detected in a target. For example, a job will run on a device when the thing representing the device is added to a target group, even after the job was completed by all things originally in the group.
+job
+    :: Job
+job =
+  Job'
+  { _jobStatus = Nothing
+  , _jobJobExecutionsRolloutConfig = Nothing
+  , _jobJobId = Nothing
+  , _jobLastUpdatedAt = Nothing
+  , _jobJobARN = Nothing
+  , _jobCreatedAt = Nothing
+  , _jobDocumentParameters = Nothing
+  , _jobJobProcessDetails = Nothing
+  , _jobPresignedURLConfig = Nothing
+  , _jobTargets = Nothing
+  , _jobCompletedAt = Nothing
+  , _jobComment = Nothing
+  , _jobDescription = Nothing
+  , _jobTargetSelection = Nothing
+  }
+
+
+-- | The status of the job, one of @IN_PROGRESS@ , @CANCELED@ , or @COMPLETED@ .
+jobStatus :: Lens' Job (Maybe JobStatus)
+jobStatus = lens _jobStatus (\ s a -> s{_jobStatus = a});
+
+-- | Allows you to create a staged rollout of a job.
+jobJobExecutionsRolloutConfig :: Lens' Job (Maybe JobExecutionsRolloutConfig)
+jobJobExecutionsRolloutConfig = lens _jobJobExecutionsRolloutConfig (\ s a -> s{_jobJobExecutionsRolloutConfig = a});
+
+-- | The unique identifier you assigned to this job when it was created.
+jobJobId :: Lens' Job (Maybe Text)
+jobJobId = lens _jobJobId (\ s a -> s{_jobJobId = a});
+
+-- | The time, in milliseconds since the epoch, when the job was last updated.
+jobLastUpdatedAt :: Lens' Job (Maybe UTCTime)
+jobLastUpdatedAt = lens _jobLastUpdatedAt (\ s a -> s{_jobLastUpdatedAt = a}) . mapping _Time;
+
+-- | An ARN identifying the job with format "arn:aws:iot:region:account:job/jobId".
+jobJobARN :: Lens' Job (Maybe Text)
+jobJobARN = lens _jobJobARN (\ s a -> s{_jobJobARN = a});
+
+-- | The time, in milliseconds since the epoch, when the job was created.
+jobCreatedAt :: Lens' Job (Maybe UTCTime)
+jobCreatedAt = lens _jobCreatedAt (\ s a -> s{_jobCreatedAt = a}) . mapping _Time;
+
+-- | The parameters specified for the job document.
+jobDocumentParameters :: Lens' Job (HashMap Text Text)
+jobDocumentParameters = lens _jobDocumentParameters (\ s a -> s{_jobDocumentParameters = a}) . _Default . _Map;
+
+-- | Details about the job process.
+jobJobProcessDetails :: Lens' Job (Maybe JobProcessDetails)
+jobJobProcessDetails = lens _jobJobProcessDetails (\ s a -> s{_jobJobProcessDetails = a});
+
+-- | Configuration for pre-signed S3 URLs.
+jobPresignedURLConfig :: Lens' Job (Maybe PresignedURLConfig)
+jobPresignedURLConfig = lens _jobPresignedURLConfig (\ s a -> s{_jobPresignedURLConfig = a});
+
+-- | A list of IoT things and thing groups to which the job should be sent.
+jobTargets :: Lens' Job (Maybe (NonEmpty Text))
+jobTargets = lens _jobTargets (\ s a -> s{_jobTargets = a}) . mapping _List1;
+
+-- | The time, in milliseconds since the epoch, when the job was completed.
+jobCompletedAt :: Lens' Job (Maybe UTCTime)
+jobCompletedAt = lens _jobCompletedAt (\ s a -> s{_jobCompletedAt = a}) . mapping _Time;
+
+-- | If the job was updated, describes the reason for the update.
+jobComment :: Lens' Job (Maybe Text)
+jobComment = lens _jobComment (\ s a -> s{_jobComment = a});
+
+-- | A short text description of the job.
+jobDescription :: Lens' Job (Maybe Text)
+jobDescription = lens _jobDescription (\ s a -> s{_jobDescription = a});
+
+-- | Specifies whether the job will continue to run (CONTINUOUS), or will be complete after all those things specified as targets have completed the job (SNAPSHOT). If continuous, the job may also be run on a thing when a change is detected in a target. For example, a job will run on a device when the thing representing the device is added to a target group, even after the job was completed by all things originally in the group.
+jobTargetSelection :: Lens' Job (Maybe TargetSelection)
+jobTargetSelection = lens _jobTargetSelection (\ s a -> s{_jobTargetSelection = a});
+
+instance FromJSON Job where
+        parseJSON
+          = withObject "Job"
+              (\ x ->
+                 Job' <$>
+                   (x .:? "status") <*>
+                     (x .:? "jobExecutionsRolloutConfig")
+                     <*> (x .:? "jobId")
+                     <*> (x .:? "lastUpdatedAt")
+                     <*> (x .:? "jobArn")
+                     <*> (x .:? "createdAt")
+                     <*> (x .:? "documentParameters" .!= mempty)
+                     <*> (x .:? "jobProcessDetails")
+                     <*> (x .:? "presignedUrlConfig")
+                     <*> (x .:? "targets")
+                     <*> (x .:? "completedAt")
+                     <*> (x .:? "comment")
+                     <*> (x .:? "description")
+                     <*> (x .:? "targetSelection"))
+
+instance Hashable Job where
+
+instance NFData Job where
+
+-- | The job execution object represents the execution of a job on a particular device.
+--
+--
+--
+-- /See:/ 'jobExecution' smart constructor.
+data JobExecution = JobExecution'
+  { _jeStatus          :: !(Maybe JobExecutionStatus)
+  , _jeJobId           :: !(Maybe Text)
+  , _jeLastUpdatedAt   :: !(Maybe POSIX)
+  , _jeQueuedAt        :: !(Maybe POSIX)
+  , _jeStatusDetails   :: !(Maybe JobExecutionStatusDetails)
+  , _jeThingARN        :: !(Maybe Text)
+  , _jeExecutionNumber :: !(Maybe Integer)
+  , _jeStartedAt       :: !(Maybe POSIX)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'JobExecution' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'jeStatus' - The status of the job execution (IN_PROGRESS, QUEUED, FAILED, SUCCESS, CANCELED, or REJECTED).
+--
+-- * 'jeJobId' - The unique identifier you assigned to the job when it was created.
+--
+-- * 'jeLastUpdatedAt' - The time, in milliseconds since the epoch, when the job execution was last updated.
+--
+-- * 'jeQueuedAt' - The time, in milliseconds since the epoch, when the job execution was queued.
+--
+-- * 'jeStatusDetails' - A collection of name/value pairs that describe the status of the job execution.
+--
+-- * 'jeThingARN' - The ARN of the thing on which the job execution is running.
+--
+-- * 'jeExecutionNumber' - A string (consisting of the digits "0" through "9") which identifies this particular job execution on this particular device. It can be used in commands which return or update job execution information.
+--
+-- * 'jeStartedAt' - The time, in milliseconds since the epoch, when the job execution started.
+jobExecution
+    :: JobExecution
+jobExecution =
+  JobExecution'
+  { _jeStatus = Nothing
+  , _jeJobId = Nothing
+  , _jeLastUpdatedAt = Nothing
+  , _jeQueuedAt = Nothing
+  , _jeStatusDetails = Nothing
+  , _jeThingARN = Nothing
+  , _jeExecutionNumber = Nothing
+  , _jeStartedAt = Nothing
+  }
+
+
+-- | The status of the job execution (IN_PROGRESS, QUEUED, FAILED, SUCCESS, CANCELED, or REJECTED).
+jeStatus :: Lens' JobExecution (Maybe JobExecutionStatus)
+jeStatus = lens _jeStatus (\ s a -> s{_jeStatus = a});
+
+-- | The unique identifier you assigned to the job when it was created.
+jeJobId :: Lens' JobExecution (Maybe Text)
+jeJobId = lens _jeJobId (\ s a -> s{_jeJobId = a});
+
+-- | The time, in milliseconds since the epoch, when the job execution was last updated.
+jeLastUpdatedAt :: Lens' JobExecution (Maybe UTCTime)
+jeLastUpdatedAt = lens _jeLastUpdatedAt (\ s a -> s{_jeLastUpdatedAt = a}) . mapping _Time;
+
+-- | The time, in milliseconds since the epoch, when the job execution was queued.
+jeQueuedAt :: Lens' JobExecution (Maybe UTCTime)
+jeQueuedAt = lens _jeQueuedAt (\ s a -> s{_jeQueuedAt = a}) . mapping _Time;
+
+-- | A collection of name/value pairs that describe the status of the job execution.
+jeStatusDetails :: Lens' JobExecution (Maybe JobExecutionStatusDetails)
+jeStatusDetails = lens _jeStatusDetails (\ s a -> s{_jeStatusDetails = a});
+
+-- | The ARN of the thing on which the job execution is running.
+jeThingARN :: Lens' JobExecution (Maybe Text)
+jeThingARN = lens _jeThingARN (\ s a -> s{_jeThingARN = a});
+
+-- | A string (consisting of the digits "0" through "9") which identifies this particular job execution on this particular device. It can be used in commands which return or update job execution information.
+jeExecutionNumber :: Lens' JobExecution (Maybe Integer)
+jeExecutionNumber = lens _jeExecutionNumber (\ s a -> s{_jeExecutionNumber = a});
+
+-- | The time, in milliseconds since the epoch, when the job execution started.
+jeStartedAt :: Lens' JobExecution (Maybe UTCTime)
+jeStartedAt = lens _jeStartedAt (\ s a -> s{_jeStartedAt = a}) . mapping _Time;
+
+instance FromJSON JobExecution where
+        parseJSON
+          = withObject "JobExecution"
+              (\ x ->
+                 JobExecution' <$>
+                   (x .:? "status") <*> (x .:? "jobId") <*>
+                     (x .:? "lastUpdatedAt")
+                     <*> (x .:? "queuedAt")
+                     <*> (x .:? "statusDetails")
+                     <*> (x .:? "thingArn")
+                     <*> (x .:? "executionNumber")
+                     <*> (x .:? "startedAt"))
+
+instance Hashable JobExecution where
+
+instance NFData JobExecution where
+
+-- | Details of the job execution status.
+--
+--
+--
+-- /See:/ 'jobExecutionStatusDetails' smart constructor.
+newtype JobExecutionStatusDetails = JobExecutionStatusDetails'
+  { _jesdDetailsMap :: Maybe (Map Text Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'JobExecutionStatusDetails' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'jesdDetailsMap' - The job execution status.
+jobExecutionStatusDetails
+    :: JobExecutionStatusDetails
+jobExecutionStatusDetails =
+  JobExecutionStatusDetails' {_jesdDetailsMap = Nothing}
+
+
+-- | The job execution status.
+jesdDetailsMap :: Lens' JobExecutionStatusDetails (HashMap Text Text)
+jesdDetailsMap = lens _jesdDetailsMap (\ s a -> s{_jesdDetailsMap = a}) . _Default . _Map;
+
+instance FromJSON JobExecutionStatusDetails where
+        parseJSON
+          = withObject "JobExecutionStatusDetails"
+              (\ x ->
+                 JobExecutionStatusDetails' <$>
+                   (x .:? "detailsMap" .!= mempty))
+
+instance Hashable JobExecutionStatusDetails where
+
+instance NFData JobExecutionStatusDetails where
+
+-- | The job execution summary.
+--
+--
+--
+-- /See:/ 'jobExecutionSummary' smart constructor.
+data JobExecutionSummary = JobExecutionSummary'
+  { _jesStatus          :: !(Maybe JobExecutionStatus)
+  , _jesLastUpdatedAt   :: !(Maybe POSIX)
+  , _jesQueuedAt        :: !(Maybe POSIX)
+  , _jesExecutionNumber :: !(Maybe Integer)
+  , _jesStartedAt       :: !(Maybe POSIX)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'JobExecutionSummary' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'jesStatus' - The status of the job execution.
+--
+-- * 'jesLastUpdatedAt' - The time, in milliseconds since the epoch, when the job execution was last updated.
+--
+-- * 'jesQueuedAt' - The time, in milliseconds since the epoch, when the job execution was queued.
+--
+-- * 'jesExecutionNumber' - A string (consisting of the digits "0" through "9") which identifies this particular job execution on this particular device. It can be used later in commands which return or update job execution information.
+--
+-- * 'jesStartedAt' - The time, in milliseconds since the epoch, when the job execution started.
+jobExecutionSummary
+    :: JobExecutionSummary
+jobExecutionSummary =
+  JobExecutionSummary'
+  { _jesStatus = Nothing
+  , _jesLastUpdatedAt = Nothing
+  , _jesQueuedAt = Nothing
+  , _jesExecutionNumber = Nothing
+  , _jesStartedAt = Nothing
+  }
+
+
+-- | The status of the job execution.
+jesStatus :: Lens' JobExecutionSummary (Maybe JobExecutionStatus)
+jesStatus = lens _jesStatus (\ s a -> s{_jesStatus = a});
+
+-- | The time, in milliseconds since the epoch, when the job execution was last updated.
+jesLastUpdatedAt :: Lens' JobExecutionSummary (Maybe UTCTime)
+jesLastUpdatedAt = lens _jesLastUpdatedAt (\ s a -> s{_jesLastUpdatedAt = a}) . mapping _Time;
+
+-- | The time, in milliseconds since the epoch, when the job execution was queued.
+jesQueuedAt :: Lens' JobExecutionSummary (Maybe UTCTime)
+jesQueuedAt = lens _jesQueuedAt (\ s a -> s{_jesQueuedAt = a}) . mapping _Time;
+
+-- | A string (consisting of the digits "0" through "9") which identifies this particular job execution on this particular device. It can be used later in commands which return or update job execution information.
+jesExecutionNumber :: Lens' JobExecutionSummary (Maybe Integer)
+jesExecutionNumber = lens _jesExecutionNumber (\ s a -> s{_jesExecutionNumber = a});
+
+-- | The time, in milliseconds since the epoch, when the job execution started.
+jesStartedAt :: Lens' JobExecutionSummary (Maybe UTCTime)
+jesStartedAt = lens _jesStartedAt (\ s a -> s{_jesStartedAt = a}) . mapping _Time;
+
+instance FromJSON JobExecutionSummary where
+        parseJSON
+          = withObject "JobExecutionSummary"
+              (\ x ->
+                 JobExecutionSummary' <$>
+                   (x .:? "status") <*> (x .:? "lastUpdatedAt") <*>
+                     (x .:? "queuedAt")
+                     <*> (x .:? "executionNumber")
+                     <*> (x .:? "startedAt"))
+
+instance Hashable JobExecutionSummary where
+
+instance NFData JobExecutionSummary where
+
+-- | Contains a summary of information about job executions for a specific job.
+--
+--
+--
+-- /See:/ 'jobExecutionSummaryForJob' smart constructor.
+data JobExecutionSummaryForJob = JobExecutionSummaryForJob'
+  { _jesfjJobExecutionSummary :: !(Maybe JobExecutionSummary)
+  , _jesfjThingARN            :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'JobExecutionSummaryForJob' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'jesfjJobExecutionSummary' - Contains a subset of information about a job execution.
+--
+-- * 'jesfjThingARN' - The ARN of the thing on which the job execution is running.
+jobExecutionSummaryForJob
+    :: JobExecutionSummaryForJob
+jobExecutionSummaryForJob =
+  JobExecutionSummaryForJob'
+  {_jesfjJobExecutionSummary = Nothing, _jesfjThingARN = Nothing}
+
+
+-- | Contains a subset of information about a job execution.
+jesfjJobExecutionSummary :: Lens' JobExecutionSummaryForJob (Maybe JobExecutionSummary)
+jesfjJobExecutionSummary = lens _jesfjJobExecutionSummary (\ s a -> s{_jesfjJobExecutionSummary = a});
+
+-- | The ARN of the thing on which the job execution is running.
+jesfjThingARN :: Lens' JobExecutionSummaryForJob (Maybe Text)
+jesfjThingARN = lens _jesfjThingARN (\ s a -> s{_jesfjThingARN = a});
+
+instance FromJSON JobExecutionSummaryForJob where
+        parseJSON
+          = withObject "JobExecutionSummaryForJob"
+              (\ x ->
+                 JobExecutionSummaryForJob' <$>
+                   (x .:? "jobExecutionSummary") <*> (x .:? "thingArn"))
+
+instance Hashable JobExecutionSummaryForJob where
+
+instance NFData JobExecutionSummaryForJob where
+
+-- | The job execution summary for a thing.
+--
+--
+--
+-- /See:/ 'jobExecutionSummaryForThing' smart constructor.
+data JobExecutionSummaryForThing = JobExecutionSummaryForThing'
+  { _jesftJobId               :: !(Maybe Text)
+  , _jesftJobExecutionSummary :: !(Maybe JobExecutionSummary)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'JobExecutionSummaryForThing' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'jesftJobId' - The unique identifier you assigned to this job when it was created.
+--
+-- * 'jesftJobExecutionSummary' - Contains a subset of information about a job execution.
+jobExecutionSummaryForThing
+    :: JobExecutionSummaryForThing
+jobExecutionSummaryForThing =
+  JobExecutionSummaryForThing'
+  {_jesftJobId = Nothing, _jesftJobExecutionSummary = Nothing}
+
+
+-- | The unique identifier you assigned to this job when it was created.
+jesftJobId :: Lens' JobExecutionSummaryForThing (Maybe Text)
+jesftJobId = lens _jesftJobId (\ s a -> s{_jesftJobId = a});
+
+-- | Contains a subset of information about a job execution.
+jesftJobExecutionSummary :: Lens' JobExecutionSummaryForThing (Maybe JobExecutionSummary)
+jesftJobExecutionSummary = lens _jesftJobExecutionSummary (\ s a -> s{_jesftJobExecutionSummary = a});
+
+instance FromJSON JobExecutionSummaryForThing where
+        parseJSON
+          = withObject "JobExecutionSummaryForThing"
+              (\ x ->
+                 JobExecutionSummaryForThing' <$>
+                   (x .:? "jobId") <*> (x .:? "jobExecutionSummary"))
+
+instance Hashable JobExecutionSummaryForThing where
+
+instance NFData JobExecutionSummaryForThing where
+
+-- | Allows you to create a staged rollout of a job.
+--
+--
+--
+-- /See:/ 'jobExecutionsRolloutConfig' smart constructor.
+newtype JobExecutionsRolloutConfig = JobExecutionsRolloutConfig'
+  { _jercMaximumPerMinute :: Maybe Nat
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'JobExecutionsRolloutConfig' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'jercMaximumPerMinute' - The maximum number of things that will be notified of a pending job, per minute. This parameter allows you to create a staged rollout.
+jobExecutionsRolloutConfig
+    :: JobExecutionsRolloutConfig
+jobExecutionsRolloutConfig =
+  JobExecutionsRolloutConfig' {_jercMaximumPerMinute = Nothing}
+
+
+-- | The maximum number of things that will be notified of a pending job, per minute. This parameter allows you to create a staged rollout.
+jercMaximumPerMinute :: Lens' JobExecutionsRolloutConfig (Maybe Natural)
+jercMaximumPerMinute = lens _jercMaximumPerMinute (\ s a -> s{_jercMaximumPerMinute = a}) . mapping _Nat;
+
+instance FromJSON JobExecutionsRolloutConfig where
+        parseJSON
+          = withObject "JobExecutionsRolloutConfig"
+              (\ x ->
+                 JobExecutionsRolloutConfig' <$>
+                   (x .:? "maximumPerMinute"))
+
+instance Hashable JobExecutionsRolloutConfig where
+
+instance NFData JobExecutionsRolloutConfig where
+
+instance ToJSON JobExecutionsRolloutConfig where
+        toJSON JobExecutionsRolloutConfig'{..}
+          = object
+              (catMaybes
+                 [("maximumPerMinute" .=) <$> _jercMaximumPerMinute])
+
+-- | The job process details.
+--
+--
+--
+-- /See:/ 'jobProcessDetails' smart constructor.
+data JobProcessDetails = JobProcessDetails'
+  { _jpdNumberOfRemovedThings    :: !(Maybe Int)
+  , _jpdNumberOfQueuedThings     :: !(Maybe Int)
+  , _jpdNumberOfFailedThings     :: !(Maybe Int)
+  , _jpdNumberOfSucceededThings  :: !(Maybe Int)
+  , _jpdNumberOfInProgressThings :: !(Maybe Int)
+  , _jpdNumberOfCanceledThings   :: !(Maybe Int)
+  , _jpdNumberOfRejectedThings   :: !(Maybe Int)
+  , _jpdProcessingTargets        :: !(Maybe [Text])
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'JobProcessDetails' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'jpdNumberOfRemovedThings' - The number of things that are no longer scheduled to execute the job because they have been deleted or have been removed from the group that was a target of the job.
+--
+-- * 'jpdNumberOfQueuedThings' - The number of things that are awaiting execution of the job.
+--
+-- * 'jpdNumberOfFailedThings' - The number of things that failed executing the job.
+--
+-- * 'jpdNumberOfSucceededThings' - The number of things which successfully completed the job.
+--
+-- * 'jpdNumberOfInProgressThings' - The number of things currently executing the job.
+--
+-- * 'jpdNumberOfCanceledThings' - The number of things that cancelled the job.
+--
+-- * 'jpdNumberOfRejectedThings' - The number of things that rejected the job.
+--
+-- * 'jpdProcessingTargets' - The devices on which the job is executing.
+jobProcessDetails
+    :: JobProcessDetails
+jobProcessDetails =
+  JobProcessDetails'
+  { _jpdNumberOfRemovedThings = Nothing
+  , _jpdNumberOfQueuedThings = Nothing
+  , _jpdNumberOfFailedThings = Nothing
+  , _jpdNumberOfSucceededThings = Nothing
+  , _jpdNumberOfInProgressThings = Nothing
+  , _jpdNumberOfCanceledThings = Nothing
+  , _jpdNumberOfRejectedThings = Nothing
+  , _jpdProcessingTargets = Nothing
+  }
+
+
+-- | The number of things that are no longer scheduled to execute the job because they have been deleted or have been removed from the group that was a target of the job.
+jpdNumberOfRemovedThings :: Lens' JobProcessDetails (Maybe Int)
+jpdNumberOfRemovedThings = lens _jpdNumberOfRemovedThings (\ s a -> s{_jpdNumberOfRemovedThings = a});
+
+-- | The number of things that are awaiting execution of the job.
+jpdNumberOfQueuedThings :: Lens' JobProcessDetails (Maybe Int)
+jpdNumberOfQueuedThings = lens _jpdNumberOfQueuedThings (\ s a -> s{_jpdNumberOfQueuedThings = a});
+
+-- | The number of things that failed executing the job.
+jpdNumberOfFailedThings :: Lens' JobProcessDetails (Maybe Int)
+jpdNumberOfFailedThings = lens _jpdNumberOfFailedThings (\ s a -> s{_jpdNumberOfFailedThings = a});
+
+-- | The number of things which successfully completed the job.
+jpdNumberOfSucceededThings :: Lens' JobProcessDetails (Maybe Int)
+jpdNumberOfSucceededThings = lens _jpdNumberOfSucceededThings (\ s a -> s{_jpdNumberOfSucceededThings = a});
+
+-- | The number of things currently executing the job.
+jpdNumberOfInProgressThings :: Lens' JobProcessDetails (Maybe Int)
+jpdNumberOfInProgressThings = lens _jpdNumberOfInProgressThings (\ s a -> s{_jpdNumberOfInProgressThings = a});
+
+-- | The number of things that cancelled the job.
+jpdNumberOfCanceledThings :: Lens' JobProcessDetails (Maybe Int)
+jpdNumberOfCanceledThings = lens _jpdNumberOfCanceledThings (\ s a -> s{_jpdNumberOfCanceledThings = a});
+
+-- | The number of things that rejected the job.
+jpdNumberOfRejectedThings :: Lens' JobProcessDetails (Maybe Int)
+jpdNumberOfRejectedThings = lens _jpdNumberOfRejectedThings (\ s a -> s{_jpdNumberOfRejectedThings = a});
+
+-- | The devices on which the job is executing.
+jpdProcessingTargets :: Lens' JobProcessDetails [Text]
+jpdProcessingTargets = lens _jpdProcessingTargets (\ s a -> s{_jpdProcessingTargets = a}) . _Default . _Coerce;
+
+instance FromJSON JobProcessDetails where
+        parseJSON
+          = withObject "JobProcessDetails"
+              (\ x ->
+                 JobProcessDetails' <$>
+                   (x .:? "numberOfRemovedThings") <*>
+                     (x .:? "numberOfQueuedThings")
+                     <*> (x .:? "numberOfFailedThings")
+                     <*> (x .:? "numberOfSucceededThings")
+                     <*> (x .:? "numberOfInProgressThings")
+                     <*> (x .:? "numberOfCanceledThings")
+                     <*> (x .:? "numberOfRejectedThings")
+                     <*> (x .:? "processingTargets" .!= mempty))
+
+instance Hashable JobProcessDetails where
+
+instance NFData JobProcessDetails where
+
+-- | The job summary.
+--
+--
+--
+-- /See:/ 'jobSummary' smart constructor.
+data JobSummary = JobSummary'
+  { _jsStatus          :: !(Maybe JobStatus)
+  , _jsJobId           :: !(Maybe Text)
+  , _jsLastUpdatedAt   :: !(Maybe POSIX)
+  , _jsJobARN          :: !(Maybe Text)
+  , _jsCreatedAt       :: !(Maybe POSIX)
+  , _jsThingGroupId    :: !(Maybe Text)
+  , _jsCompletedAt     :: !(Maybe POSIX)
+  , _jsTargetSelection :: !(Maybe TargetSelection)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'JobSummary' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'jsStatus' - The job summary status.
+--
+-- * 'jsJobId' - The unique identifier you assigned to this job when it was created.
+--
+-- * 'jsLastUpdatedAt' - The time, in milliseconds since the epoch, when the job was last updated.
+--
+-- * 'jsJobARN' - The job ARN.
+--
+-- * 'jsCreatedAt' - The time, in milliseconds since the epoch, when the job was created.
+--
+-- * 'jsThingGroupId' - The ID of the thing group.
+--
+-- * 'jsCompletedAt' - The time, in milliseconds since the epoch, when the job completed.
+--
+-- * 'jsTargetSelection' - Specifies whether the job will continue to run (CONTINUOUS), or will be complete after all those things specified as targets have completed the job (SNAPSHOT). If continuous, the job may also be run on a thing when a change is detected in a target. For example, a job will run on a thing when the thing is added to a target group, even after the job was completed by all things originally in the group.
+jobSummary
+    :: JobSummary
+jobSummary =
+  JobSummary'
+  { _jsStatus = Nothing
+  , _jsJobId = Nothing
+  , _jsLastUpdatedAt = Nothing
+  , _jsJobARN = Nothing
+  , _jsCreatedAt = Nothing
+  , _jsThingGroupId = Nothing
+  , _jsCompletedAt = Nothing
+  , _jsTargetSelection = Nothing
+  }
+
+
+-- | The job summary status.
+jsStatus :: Lens' JobSummary (Maybe JobStatus)
+jsStatus = lens _jsStatus (\ s a -> s{_jsStatus = a});
+
+-- | The unique identifier you assigned to this job when it was created.
+jsJobId :: Lens' JobSummary (Maybe Text)
+jsJobId = lens _jsJobId (\ s a -> s{_jsJobId = a});
+
+-- | The time, in milliseconds since the epoch, when the job was last updated.
+jsLastUpdatedAt :: Lens' JobSummary (Maybe UTCTime)
+jsLastUpdatedAt = lens _jsLastUpdatedAt (\ s a -> s{_jsLastUpdatedAt = a}) . mapping _Time;
+
+-- | The job ARN.
+jsJobARN :: Lens' JobSummary (Maybe Text)
+jsJobARN = lens _jsJobARN (\ s a -> s{_jsJobARN = a});
+
+-- | The time, in milliseconds since the epoch, when the job was created.
+jsCreatedAt :: Lens' JobSummary (Maybe UTCTime)
+jsCreatedAt = lens _jsCreatedAt (\ s a -> s{_jsCreatedAt = a}) . mapping _Time;
+
+-- | The ID of the thing group.
+jsThingGroupId :: Lens' JobSummary (Maybe Text)
+jsThingGroupId = lens _jsThingGroupId (\ s a -> s{_jsThingGroupId = a});
+
+-- | The time, in milliseconds since the epoch, when the job completed.
+jsCompletedAt :: Lens' JobSummary (Maybe UTCTime)
+jsCompletedAt = lens _jsCompletedAt (\ s a -> s{_jsCompletedAt = a}) . mapping _Time;
+
+-- | Specifies whether the job will continue to run (CONTINUOUS), or will be complete after all those things specified as targets have completed the job (SNAPSHOT). If continuous, the job may also be run on a thing when a change is detected in a target. For example, a job will run on a thing when the thing is added to a target group, even after the job was completed by all things originally in the group.
+jsTargetSelection :: Lens' JobSummary (Maybe TargetSelection)
+jsTargetSelection = lens _jsTargetSelection (\ s a -> s{_jsTargetSelection = a});
+
+instance FromJSON JobSummary where
+        parseJSON
+          = withObject "JobSummary"
+              (\ x ->
+                 JobSummary' <$>
+                   (x .:? "status") <*> (x .:? "jobId") <*>
+                     (x .:? "lastUpdatedAt")
+                     <*> (x .:? "jobArn")
+                     <*> (x .:? "createdAt")
+                     <*> (x .:? "thingGroupId")
+                     <*> (x .:? "completedAt")
+                     <*> (x .:? "targetSelection"))
+
+instance Hashable JobSummary where
+
+instance NFData JobSummary where
 
 -- | Describes a key pair.
 --
@@ -1237,6 +2759,100 @@ instance ToJSON LambdaAction where
           = object
               (catMaybes [Just ("functionArn" .= _laFunctionARN)])
 
+-- | A log target.
+--
+--
+--
+-- /See:/ 'logTarget' smart constructor.
+data LogTarget = LogTarget'
+  { _ltTargetName :: !(Maybe Text)
+  , _ltTargetType :: !LogTargetType
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'LogTarget' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ltTargetName' - The target name.
+--
+-- * 'ltTargetType' - The target type.
+logTarget
+    :: LogTargetType -- ^ 'ltTargetType'
+    -> LogTarget
+logTarget pTargetType_ =
+  LogTarget' {_ltTargetName = Nothing, _ltTargetType = pTargetType_}
+
+
+-- | The target name.
+ltTargetName :: Lens' LogTarget (Maybe Text)
+ltTargetName = lens _ltTargetName (\ s a -> s{_ltTargetName = a});
+
+-- | The target type.
+ltTargetType :: Lens' LogTarget LogTargetType
+ltTargetType = lens _ltTargetType (\ s a -> s{_ltTargetType = a});
+
+instance FromJSON LogTarget where
+        parseJSON
+          = withObject "LogTarget"
+              (\ x ->
+                 LogTarget' <$>
+                   (x .:? "targetName") <*> (x .: "targetType"))
+
+instance Hashable LogTarget where
+
+instance NFData LogTarget where
+
+instance ToJSON LogTarget where
+        toJSON LogTarget'{..}
+          = object
+              (catMaybes
+                 [("targetName" .=) <$> _ltTargetName,
+                  Just ("targetType" .= _ltTargetType)])
+
+-- | The target configuration.
+--
+--
+--
+-- /See:/ 'logTargetConfiguration' smart constructor.
+data LogTargetConfiguration = LogTargetConfiguration'
+  { _ltcLogLevel  :: !(Maybe LogLevel)
+  , _ltcLogTarget :: !(Maybe LogTarget)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'LogTargetConfiguration' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ltcLogLevel' - The logging level.
+--
+-- * 'ltcLogTarget' - A log target
+logTargetConfiguration
+    :: LogTargetConfiguration
+logTargetConfiguration =
+  LogTargetConfiguration' {_ltcLogLevel = Nothing, _ltcLogTarget = Nothing}
+
+
+-- | The logging level.
+ltcLogLevel :: Lens' LogTargetConfiguration (Maybe LogLevel)
+ltcLogLevel = lens _ltcLogLevel (\ s a -> s{_ltcLogLevel = a});
+
+-- | A log target
+ltcLogTarget :: Lens' LogTargetConfiguration (Maybe LogTarget)
+ltcLogTarget = lens _ltcLogTarget (\ s a -> s{_ltcLogTarget = a});
+
+instance FromJSON LogTargetConfiguration where
+        parseJSON
+          = withObject "LogTargetConfiguration"
+              (\ x ->
+                 LogTargetConfiguration' <$>
+                   (x .:? "logLevel") <*> (x .:? "logTarget"))
+
+instance Hashable LogTargetConfiguration where
+
+instance NFData LogTargetConfiguration where
+
 -- | Describes the logging options payload.
 --
 --
@@ -1252,7 +2868,7 @@ data LoggingOptionsPayload = LoggingOptionsPayload'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'lopLogLevel' - The logging level.
+-- * 'lopLogLevel' - The log level.
 --
 -- * 'lopRoleARN' - The ARN of the IAM role that grants access.
 loggingOptionsPayload
@@ -1262,7 +2878,7 @@ loggingOptionsPayload pRoleARN_ =
   LoggingOptionsPayload' {_lopLogLevel = Nothing, _lopRoleARN = pRoleARN_}
 
 
--- | The logging level.
+-- | The log level.
 lopLogLevel :: Lens' LoggingOptionsPayload (Maybe LogLevel)
 lopLogLevel = lens _lopLogLevel (\ s a -> s{_lopLogLevel = a});
 
@@ -1281,7 +2897,291 @@ instance ToJSON LoggingOptionsPayload where
                  [("logLevel" .=) <$> _lopLogLevel,
                   Just ("roleArn" .= _lopRoleARN)])
 
--- | A certificate that has been transfered but not yet accepted.
+-- | Describes a file to be associated with an OTA update.
+--
+--
+--
+-- /See:/ 'oTAUpdateFile' smart constructor.
+data OTAUpdateFile = OTAUpdateFile'
+  { _otaufFileVersion :: !(Maybe Text)
+  , _otaufAttributes  :: !(Maybe (Map Text Text))
+  , _otaufFileSource  :: !(Maybe Stream)
+  , _otaufCodeSigning :: !(Maybe CodeSigning)
+  , _otaufFileName    :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'OTAUpdateFile' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'otaufFileVersion' - The file version.
+--
+-- * 'otaufAttributes' - A list of name/attribute pairs.
+--
+-- * 'otaufFileSource' - The source of the file.
+--
+-- * 'otaufCodeSigning' - The code signing method of the file.
+--
+-- * 'otaufFileName' - The name of the file.
+oTAUpdateFile
+    :: OTAUpdateFile
+oTAUpdateFile =
+  OTAUpdateFile'
+  { _otaufFileVersion = Nothing
+  , _otaufAttributes = Nothing
+  , _otaufFileSource = Nothing
+  , _otaufCodeSigning = Nothing
+  , _otaufFileName = Nothing
+  }
+
+
+-- | The file version.
+otaufFileVersion :: Lens' OTAUpdateFile (Maybe Text)
+otaufFileVersion = lens _otaufFileVersion (\ s a -> s{_otaufFileVersion = a});
+
+-- | A list of name/attribute pairs.
+otaufAttributes :: Lens' OTAUpdateFile (HashMap Text Text)
+otaufAttributes = lens _otaufAttributes (\ s a -> s{_otaufAttributes = a}) . _Default . _Map;
+
+-- | The source of the file.
+otaufFileSource :: Lens' OTAUpdateFile (Maybe Stream)
+otaufFileSource = lens _otaufFileSource (\ s a -> s{_otaufFileSource = a});
+
+-- | The code signing method of the file.
+otaufCodeSigning :: Lens' OTAUpdateFile (Maybe CodeSigning)
+otaufCodeSigning = lens _otaufCodeSigning (\ s a -> s{_otaufCodeSigning = a});
+
+-- | The name of the file.
+otaufFileName :: Lens' OTAUpdateFile (Maybe Text)
+otaufFileName = lens _otaufFileName (\ s a -> s{_otaufFileName = a});
+
+instance FromJSON OTAUpdateFile where
+        parseJSON
+          = withObject "OTAUpdateFile"
+              (\ x ->
+                 OTAUpdateFile' <$>
+                   (x .:? "fileVersion") <*>
+                     (x .:? "attributes" .!= mempty)
+                     <*> (x .:? "fileSource")
+                     <*> (x .:? "codeSigning")
+                     <*> (x .:? "fileName"))
+
+instance Hashable OTAUpdateFile where
+
+instance NFData OTAUpdateFile where
+
+instance ToJSON OTAUpdateFile where
+        toJSON OTAUpdateFile'{..}
+          = object
+              (catMaybes
+                 [("fileVersion" .=) <$> _otaufFileVersion,
+                  ("attributes" .=) <$> _otaufAttributes,
+                  ("fileSource" .=) <$> _otaufFileSource,
+                  ("codeSigning" .=) <$> _otaufCodeSigning,
+                  ("fileName" .=) <$> _otaufFileName])
+
+-- | Information about an OTA update.
+--
+--
+--
+-- /See:/ 'oTAUpdateInfo' smart constructor.
+data OTAUpdateInfo = OTAUpdateInfo'
+  { _otauiLastModifiedDate     :: !(Maybe POSIX)
+  , _otauiAwsIotJobId          :: !(Maybe Text)
+  , _otauiOtaUpdateFiles       :: !(Maybe (List1 OTAUpdateFile))
+  , _otauiOtaUpdateStatus      :: !(Maybe OTAUpdateStatus)
+  , _otauiTargets              :: !(Maybe (List1 Text))
+  , _otauiAwsIotJobARN         :: !(Maybe Text)
+  , _otauiCreationDate         :: !(Maybe POSIX)
+  , _otauiAdditionalParameters :: !(Maybe (Map Text Text))
+  , _otauiOtaUpdateId          :: !(Maybe Text)
+  , _otauiErrorInfo            :: !(Maybe ErrorInfo)
+  , _otauiOtaUpdateARN         :: !(Maybe Text)
+  , _otauiDescription          :: !(Maybe Text)
+  , _otauiTargetSelection      :: !(Maybe TargetSelection)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'OTAUpdateInfo' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'otauiLastModifiedDate' - The date when the OTA update was last updated.
+--
+-- * 'otauiAwsIotJobId' - The AWS IoT job ID associated with the OTA update.
+--
+-- * 'otauiOtaUpdateFiles' - A list of files associated with the OTA update.
+--
+-- * 'otauiOtaUpdateStatus' - The status of the OTA update.
+--
+-- * 'otauiTargets' - The targets of the OTA update.
+--
+-- * 'otauiAwsIotJobARN' - The AWS IoT job ARN associated with the OTA update.
+--
+-- * 'otauiCreationDate' - The date when the OTA update was created.
+--
+-- * 'otauiAdditionalParameters' - A collection of name/value pairs
+--
+-- * 'otauiOtaUpdateId' - The OTA update ID.
+--
+-- * 'otauiErrorInfo' - Error information associated with the OTA update.
+--
+-- * 'otauiOtaUpdateARN' - The OTA update ARN.
+--
+-- * 'otauiDescription' - A description of the OTA update.
+--
+-- * 'otauiTargetSelection' - Specifies whether the OTA update will continue to run (CONTINUOUS), or will be complete after all those things specified as targets have completed the OTA update (SNAPSHOT). If continuous, the OTA update may also be run on a thing when a change is detected in a target. For example, an OTA update will run on a thing when the thing is added to a target group, even after the OTA update was completed by all things originally in the group.
+oTAUpdateInfo
+    :: OTAUpdateInfo
+oTAUpdateInfo =
+  OTAUpdateInfo'
+  { _otauiLastModifiedDate = Nothing
+  , _otauiAwsIotJobId = Nothing
+  , _otauiOtaUpdateFiles = Nothing
+  , _otauiOtaUpdateStatus = Nothing
+  , _otauiTargets = Nothing
+  , _otauiAwsIotJobARN = Nothing
+  , _otauiCreationDate = Nothing
+  , _otauiAdditionalParameters = Nothing
+  , _otauiOtaUpdateId = Nothing
+  , _otauiErrorInfo = Nothing
+  , _otauiOtaUpdateARN = Nothing
+  , _otauiDescription = Nothing
+  , _otauiTargetSelection = Nothing
+  }
+
+
+-- | The date when the OTA update was last updated.
+otauiLastModifiedDate :: Lens' OTAUpdateInfo (Maybe UTCTime)
+otauiLastModifiedDate = lens _otauiLastModifiedDate (\ s a -> s{_otauiLastModifiedDate = a}) . mapping _Time;
+
+-- | The AWS IoT job ID associated with the OTA update.
+otauiAwsIotJobId :: Lens' OTAUpdateInfo (Maybe Text)
+otauiAwsIotJobId = lens _otauiAwsIotJobId (\ s a -> s{_otauiAwsIotJobId = a});
+
+-- | A list of files associated with the OTA update.
+otauiOtaUpdateFiles :: Lens' OTAUpdateInfo (Maybe (NonEmpty OTAUpdateFile))
+otauiOtaUpdateFiles = lens _otauiOtaUpdateFiles (\ s a -> s{_otauiOtaUpdateFiles = a}) . mapping _List1;
+
+-- | The status of the OTA update.
+otauiOtaUpdateStatus :: Lens' OTAUpdateInfo (Maybe OTAUpdateStatus)
+otauiOtaUpdateStatus = lens _otauiOtaUpdateStatus (\ s a -> s{_otauiOtaUpdateStatus = a});
+
+-- | The targets of the OTA update.
+otauiTargets :: Lens' OTAUpdateInfo (Maybe (NonEmpty Text))
+otauiTargets = lens _otauiTargets (\ s a -> s{_otauiTargets = a}) . mapping _List1;
+
+-- | The AWS IoT job ARN associated with the OTA update.
+otauiAwsIotJobARN :: Lens' OTAUpdateInfo (Maybe Text)
+otauiAwsIotJobARN = lens _otauiAwsIotJobARN (\ s a -> s{_otauiAwsIotJobARN = a});
+
+-- | The date when the OTA update was created.
+otauiCreationDate :: Lens' OTAUpdateInfo (Maybe UTCTime)
+otauiCreationDate = lens _otauiCreationDate (\ s a -> s{_otauiCreationDate = a}) . mapping _Time;
+
+-- | A collection of name/value pairs
+otauiAdditionalParameters :: Lens' OTAUpdateInfo (HashMap Text Text)
+otauiAdditionalParameters = lens _otauiAdditionalParameters (\ s a -> s{_otauiAdditionalParameters = a}) . _Default . _Map;
+
+-- | The OTA update ID.
+otauiOtaUpdateId :: Lens' OTAUpdateInfo (Maybe Text)
+otauiOtaUpdateId = lens _otauiOtaUpdateId (\ s a -> s{_otauiOtaUpdateId = a});
+
+-- | Error information associated with the OTA update.
+otauiErrorInfo :: Lens' OTAUpdateInfo (Maybe ErrorInfo)
+otauiErrorInfo = lens _otauiErrorInfo (\ s a -> s{_otauiErrorInfo = a});
+
+-- | The OTA update ARN.
+otauiOtaUpdateARN :: Lens' OTAUpdateInfo (Maybe Text)
+otauiOtaUpdateARN = lens _otauiOtaUpdateARN (\ s a -> s{_otauiOtaUpdateARN = a});
+
+-- | A description of the OTA update.
+otauiDescription :: Lens' OTAUpdateInfo (Maybe Text)
+otauiDescription = lens _otauiDescription (\ s a -> s{_otauiDescription = a});
+
+-- | Specifies whether the OTA update will continue to run (CONTINUOUS), or will be complete after all those things specified as targets have completed the OTA update (SNAPSHOT). If continuous, the OTA update may also be run on a thing when a change is detected in a target. For example, an OTA update will run on a thing when the thing is added to a target group, even after the OTA update was completed by all things originally in the group.
+otauiTargetSelection :: Lens' OTAUpdateInfo (Maybe TargetSelection)
+otauiTargetSelection = lens _otauiTargetSelection (\ s a -> s{_otauiTargetSelection = a});
+
+instance FromJSON OTAUpdateInfo where
+        parseJSON
+          = withObject "OTAUpdateInfo"
+              (\ x ->
+                 OTAUpdateInfo' <$>
+                   (x .:? "lastModifiedDate") <*> (x .:? "awsIotJobId")
+                     <*> (x .:? "otaUpdateFiles")
+                     <*> (x .:? "otaUpdateStatus")
+                     <*> (x .:? "targets")
+                     <*> (x .:? "awsIotJobArn")
+                     <*> (x .:? "creationDate")
+                     <*> (x .:? "additionalParameters" .!= mempty)
+                     <*> (x .:? "otaUpdateId")
+                     <*> (x .:? "errorInfo")
+                     <*> (x .:? "otaUpdateArn")
+                     <*> (x .:? "description")
+                     <*> (x .:? "targetSelection"))
+
+instance Hashable OTAUpdateInfo where
+
+instance NFData OTAUpdateInfo where
+
+-- | An OTA update summary.
+--
+--
+--
+-- /See:/ 'oTAUpdateSummary' smart constructor.
+data OTAUpdateSummary = OTAUpdateSummary'
+  { _otausCreationDate :: !(Maybe POSIX)
+  , _otausOtaUpdateId  :: !(Maybe Text)
+  , _otausOtaUpdateARN :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'OTAUpdateSummary' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'otausCreationDate' - The date when the OTA update was created.
+--
+-- * 'otausOtaUpdateId' - The OTA update ID.
+--
+-- * 'otausOtaUpdateARN' - The OTA update ARN.
+oTAUpdateSummary
+    :: OTAUpdateSummary
+oTAUpdateSummary =
+  OTAUpdateSummary'
+  { _otausCreationDate = Nothing
+  , _otausOtaUpdateId = Nothing
+  , _otausOtaUpdateARN = Nothing
+  }
+
+
+-- | The date when the OTA update was created.
+otausCreationDate :: Lens' OTAUpdateSummary (Maybe UTCTime)
+otausCreationDate = lens _otausCreationDate (\ s a -> s{_otausCreationDate = a}) . mapping _Time;
+
+-- | The OTA update ID.
+otausOtaUpdateId :: Lens' OTAUpdateSummary (Maybe Text)
+otausOtaUpdateId = lens _otausOtaUpdateId (\ s a -> s{_otausOtaUpdateId = a});
+
+-- | The OTA update ARN.
+otausOtaUpdateARN :: Lens' OTAUpdateSummary (Maybe Text)
+otausOtaUpdateARN = lens _otausOtaUpdateARN (\ s a -> s{_otausOtaUpdateARN = a});
+
+instance FromJSON OTAUpdateSummary where
+        parseJSON
+          = withObject "OTAUpdateSummary"
+              (\ x ->
+                 OTAUpdateSummary' <$>
+                   (x .:? "creationDate") <*> (x .:? "otaUpdateId") <*>
+                     (x .:? "otaUpdateArn"))
+
+instance Hashable OTAUpdateSummary where
+
+instance NFData OTAUpdateSummary where
+
+-- | A certificate that has been transferred but not yet accepted.
 --
 --
 --
@@ -1460,6 +3360,56 @@ instance Hashable PolicyVersion where
 
 instance NFData PolicyVersion where
 
+-- | Configuration for pre-signed S3 URLs.
+--
+--
+--
+-- /See:/ 'presignedURLConfig' smart constructor.
+data PresignedURLConfig = PresignedURLConfig'
+  { _pucExpiresInSec :: !(Maybe Nat)
+  , _pucRoleARN      :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'PresignedURLConfig' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'pucExpiresInSec' - How long (in seconds) pre-signed URLs are valid. Valid values are 60 - 3600, the default value is 3600 seconds. Pre-signed URLs are generated when Jobs receives an MQTT request for the job document.
+--
+-- * 'pucRoleARN' - The ARN of an IAM role that grants grants permission to download files from the S3 bucket where the job data/updates are stored. The role must also grant permission for IoT to download the files.
+presignedURLConfig
+    :: PresignedURLConfig
+presignedURLConfig =
+  PresignedURLConfig' {_pucExpiresInSec = Nothing, _pucRoleARN = Nothing}
+
+
+-- | How long (in seconds) pre-signed URLs are valid. Valid values are 60 - 3600, the default value is 3600 seconds. Pre-signed URLs are generated when Jobs receives an MQTT request for the job document.
+pucExpiresInSec :: Lens' PresignedURLConfig (Maybe Natural)
+pucExpiresInSec = lens _pucExpiresInSec (\ s a -> s{_pucExpiresInSec = a}) . mapping _Nat;
+
+-- | The ARN of an IAM role that grants grants permission to download files from the S3 bucket where the job data/updates are stored. The role must also grant permission for IoT to download the files.
+pucRoleARN :: Lens' PresignedURLConfig (Maybe Text)
+pucRoleARN = lens _pucRoleARN (\ s a -> s{_pucRoleARN = a});
+
+instance FromJSON PresignedURLConfig where
+        parseJSON
+          = withObject "PresignedURLConfig"
+              (\ x ->
+                 PresignedURLConfig' <$>
+                   (x .:? "expiresInSec") <*> (x .:? "roleArn"))
+
+instance Hashable PresignedURLConfig where
+
+instance NFData PresignedURLConfig where
+
+instance ToJSON PresignedURLConfig where
+        toJSON PresignedURLConfig'{..}
+          = object
+              (catMaybes
+                 [("expiresInSec" .=) <$> _pucExpiresInSec,
+                  ("roleArn" .=) <$> _pucRoleARN])
+
 -- | The input for the DynamoActionVS action that specifies the DynamoDB table to which the message data will be written.
 --
 --
@@ -1498,6 +3448,56 @@ instance ToJSON PutItemInput where
         toJSON PutItemInput'{..}
           = object
               (catMaybes [Just ("tableName" .= _piiTableName)])
+
+-- | The registration configuration.
+--
+--
+--
+-- /See:/ 'registrationConfig' smart constructor.
+data RegistrationConfig = RegistrationConfig'
+  { _rcTemplateBody :: !(Maybe Text)
+  , _rcRoleARN      :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'RegistrationConfig' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rcTemplateBody' - The template body.
+--
+-- * 'rcRoleARN' - The ARN of the role.
+registrationConfig
+    :: RegistrationConfig
+registrationConfig =
+  RegistrationConfig' {_rcTemplateBody = Nothing, _rcRoleARN = Nothing}
+
+
+-- | The template body.
+rcTemplateBody :: Lens' RegistrationConfig (Maybe Text)
+rcTemplateBody = lens _rcTemplateBody (\ s a -> s{_rcTemplateBody = a});
+
+-- | The ARN of the role.
+rcRoleARN :: Lens' RegistrationConfig (Maybe Text)
+rcRoleARN = lens _rcRoleARN (\ s a -> s{_rcRoleARN = a});
+
+instance FromJSON RegistrationConfig where
+        parseJSON
+          = withObject "RegistrationConfig"
+              (\ x ->
+                 RegistrationConfig' <$>
+                   (x .:? "templateBody") <*> (x .:? "roleArn"))
+
+instance Hashable RegistrationConfig where
+
+instance NFData RegistrationConfig where
+
+instance ToJSON RegistrationConfig where
+        toJSON RegistrationConfig'{..}
+          = object
+              (catMaybes
+                 [("templateBody" .=) <$> _rcTemplateBody,
+                  ("roleArn" .=) <$> _rcRoleARN])
 
 -- | Describes an action to republish to another topic.
 --
@@ -1550,6 +3550,88 @@ instance ToJSON RepublishAction where
               (catMaybes
                  [Just ("roleArn" .= _raRoleARN),
                   Just ("topic" .= _raTopic)])
+
+-- | Role alias description.
+--
+--
+--
+-- /See:/ 'roleAliasDescription' smart constructor.
+data RoleAliasDescription = RoleAliasDescription'
+  { _radLastModifiedDate          :: !(Maybe POSIX)
+  , _radRoleAlias                 :: !(Maybe Text)
+  , _radOwner                     :: !(Maybe Text)
+  , _radCreationDate              :: !(Maybe POSIX)
+  , _radCredentialDurationSeconds :: !(Maybe Nat)
+  , _radRoleARN                   :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'RoleAliasDescription' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'radLastModifiedDate' - The UNIX timestamp of when the role alias was last modified.
+--
+-- * 'radRoleAlias' - The role alias.
+--
+-- * 'radOwner' - The role alias owner.
+--
+-- * 'radCreationDate' - The UNIX timestamp of when the role alias was created.
+--
+-- * 'radCredentialDurationSeconds' - The number of seconds for which the credential is valid.
+--
+-- * 'radRoleARN' - The role ARN.
+roleAliasDescription
+    :: RoleAliasDescription
+roleAliasDescription =
+  RoleAliasDescription'
+  { _radLastModifiedDate = Nothing
+  , _radRoleAlias = Nothing
+  , _radOwner = Nothing
+  , _radCreationDate = Nothing
+  , _radCredentialDurationSeconds = Nothing
+  , _radRoleARN = Nothing
+  }
+
+
+-- | The UNIX timestamp of when the role alias was last modified.
+radLastModifiedDate :: Lens' RoleAliasDescription (Maybe UTCTime)
+radLastModifiedDate = lens _radLastModifiedDate (\ s a -> s{_radLastModifiedDate = a}) . mapping _Time;
+
+-- | The role alias.
+radRoleAlias :: Lens' RoleAliasDescription (Maybe Text)
+radRoleAlias = lens _radRoleAlias (\ s a -> s{_radRoleAlias = a});
+
+-- | The role alias owner.
+radOwner :: Lens' RoleAliasDescription (Maybe Text)
+radOwner = lens _radOwner (\ s a -> s{_radOwner = a});
+
+-- | The UNIX timestamp of when the role alias was created.
+radCreationDate :: Lens' RoleAliasDescription (Maybe UTCTime)
+radCreationDate = lens _radCreationDate (\ s a -> s{_radCreationDate = a}) . mapping _Time;
+
+-- | The number of seconds for which the credential is valid.
+radCredentialDurationSeconds :: Lens' RoleAliasDescription (Maybe Natural)
+radCredentialDurationSeconds = lens _radCredentialDurationSeconds (\ s a -> s{_radCredentialDurationSeconds = a}) . mapping _Nat;
+
+-- | The role ARN.
+radRoleARN :: Lens' RoleAliasDescription (Maybe Text)
+radRoleARN = lens _radRoleARN (\ s a -> s{_radRoleARN = a});
+
+instance FromJSON RoleAliasDescription where
+        parseJSON
+          = withObject "RoleAliasDescription"
+              (\ x ->
+                 RoleAliasDescription' <$>
+                   (x .:? "lastModifiedDate") <*> (x .:? "roleAlias")
+                     <*> (x .:? "owner")
+                     <*> (x .:? "creationDate")
+                     <*> (x .:? "credentialDurationSeconds")
+                     <*> (x .:? "roleArn"))
+
+instance Hashable RoleAliasDescription where
+
+instance NFData RoleAliasDescription where
 
 -- | Describes an action to write data to an Amazon S3 bucket.
 --
@@ -1626,6 +3708,67 @@ instance ToJSON S3Action where
                   Just ("roleArn" .= _sRoleARN),
                   Just ("bucketName" .= _sBucketName),
                   Just ("key" .= _sKey)])
+
+-- | The location in S3 the contains the files to stream.
+--
+--
+--
+-- /See:/ 's3Location' smart constructor.
+data S3Location = S3Location'
+  { _slVersion :: !(Maybe Text)
+  , _slBucket  :: !Text
+  , _slKey     :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'S3Location' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'slVersion' - The file version.
+--
+-- * 'slBucket' - The S3 bucket that contains the file to stream.
+--
+-- * 'slKey' - The name of the file within the S3 bucket to stream.
+s3Location
+    :: Text -- ^ 'slBucket'
+    -> Text -- ^ 'slKey'
+    -> S3Location
+s3Location pBucket_ pKey_ =
+  S3Location' {_slVersion = Nothing, _slBucket = pBucket_, _slKey = pKey_}
+
+
+-- | The file version.
+slVersion :: Lens' S3Location (Maybe Text)
+slVersion = lens _slVersion (\ s a -> s{_slVersion = a});
+
+-- | The S3 bucket that contains the file to stream.
+slBucket :: Lens' S3Location Text
+slBucket = lens _slBucket (\ s a -> s{_slBucket = a});
+
+-- | The name of the file within the S3 bucket to stream.
+slKey :: Lens' S3Location Text
+slKey = lens _slKey (\ s a -> s{_slKey = a});
+
+instance FromJSON S3Location where
+        parseJSON
+          = withObject "S3Location"
+              (\ x ->
+                 S3Location' <$>
+                   (x .:? "version") <*> (x .: "bucket") <*>
+                     (x .: "key"))
+
+instance Hashable S3Location where
+
+instance NFData S3Location where
+
+instance ToJSON S3Location where
+        toJSON S3Location'{..}
+          = object
+              (catMaybes
+                 [("version" .=) <$> _slVersion,
+                  Just ("bucket" .= _slBucket),
+                  Just ("key" .= _slKey)])
 
 -- | Describes an action to publish to an Amazon SNS topic.
 --
@@ -1805,6 +3948,267 @@ instance ToJSON SqsAction where
                   Just ("roleArn" .= _saRoleARN),
                   Just ("queueUrl" .= _saQueueURL)])
 
+-- | Describes a group of files that can be streamed.
+--
+--
+--
+-- /See:/ 'stream' smart constructor.
+data Stream = Stream'
+  { _sFileId   :: !(Maybe Nat)
+  , _sStreamId :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'Stream' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'sFileId' - The ID of a file associated with a stream.
+--
+-- * 'sStreamId' - The stream ID.
+stream
+    :: Stream
+stream = Stream' {_sFileId = Nothing, _sStreamId = Nothing}
+
+
+-- | The ID of a file associated with a stream.
+sFileId :: Lens' Stream (Maybe Natural)
+sFileId = lens _sFileId (\ s a -> s{_sFileId = a}) . mapping _Nat;
+
+-- | The stream ID.
+sStreamId :: Lens' Stream (Maybe Text)
+sStreamId = lens _sStreamId (\ s a -> s{_sStreamId = a});
+
+instance FromJSON Stream where
+        parseJSON
+          = withObject "Stream"
+              (\ x ->
+                 Stream' <$> (x .:? "fileId") <*> (x .:? "streamId"))
+
+instance Hashable Stream where
+
+instance NFData Stream where
+
+instance ToJSON Stream where
+        toJSON Stream'{..}
+          = object
+              (catMaybes
+                 [("fileId" .=) <$> _sFileId,
+                  ("streamId" .=) <$> _sStreamId])
+
+-- | Represents a file to stream.
+--
+--
+--
+-- /See:/ 'streamFile' smart constructor.
+data StreamFile = StreamFile'
+  { _sfS3Location :: !(Maybe S3Location)
+  , _sfFileId     :: !(Maybe Nat)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'StreamFile' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'sfS3Location' - The location of the file in S3.
+--
+-- * 'sfFileId' - The file ID.
+streamFile
+    :: StreamFile
+streamFile = StreamFile' {_sfS3Location = Nothing, _sfFileId = Nothing}
+
+
+-- | The location of the file in S3.
+sfS3Location :: Lens' StreamFile (Maybe S3Location)
+sfS3Location = lens _sfS3Location (\ s a -> s{_sfS3Location = a});
+
+-- | The file ID.
+sfFileId :: Lens' StreamFile (Maybe Natural)
+sfFileId = lens _sfFileId (\ s a -> s{_sfFileId = a}) . mapping _Nat;
+
+instance FromJSON StreamFile where
+        parseJSON
+          = withObject "StreamFile"
+              (\ x ->
+                 StreamFile' <$>
+                   (x .:? "s3Location") <*> (x .:? "fileId"))
+
+instance Hashable StreamFile where
+
+instance NFData StreamFile where
+
+instance ToJSON StreamFile where
+        toJSON StreamFile'{..}
+          = object
+              (catMaybes
+                 [("s3Location" .=) <$> _sfS3Location,
+                  ("fileId" .=) <$> _sfFileId])
+
+-- | Information about a stream.
+--
+--
+--
+-- /See:/ 'streamInfo' smart constructor.
+data StreamInfo = StreamInfo'
+  { _siLastUpdatedAt :: !(Maybe POSIX)
+  , _siCreatedAt     :: !(Maybe POSIX)
+  , _siStreamVersion :: !(Maybe Nat)
+  , _siStreamARN     :: !(Maybe Text)
+  , _siFiles         :: !(Maybe (List1 StreamFile))
+  , _siDescription   :: !(Maybe Text)
+  , _siStreamId      :: !(Maybe Text)
+  , _siRoleARN       :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'StreamInfo' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'siLastUpdatedAt' - The date when the stream was last updated.
+--
+-- * 'siCreatedAt' - The date when the stream was created.
+--
+-- * 'siStreamVersion' - The stream version.
+--
+-- * 'siStreamARN' - The stream ARN.
+--
+-- * 'siFiles' - The files to stream.
+--
+-- * 'siDescription' - The description of the stream.
+--
+-- * 'siStreamId' - The stream ID.
+--
+-- * 'siRoleARN' - An IAM role AWS IoT assumes to access your S3 files.
+streamInfo
+    :: StreamInfo
+streamInfo =
+  StreamInfo'
+  { _siLastUpdatedAt = Nothing
+  , _siCreatedAt = Nothing
+  , _siStreamVersion = Nothing
+  , _siStreamARN = Nothing
+  , _siFiles = Nothing
+  , _siDescription = Nothing
+  , _siStreamId = Nothing
+  , _siRoleARN = Nothing
+  }
+
+
+-- | The date when the stream was last updated.
+siLastUpdatedAt :: Lens' StreamInfo (Maybe UTCTime)
+siLastUpdatedAt = lens _siLastUpdatedAt (\ s a -> s{_siLastUpdatedAt = a}) . mapping _Time;
+
+-- | The date when the stream was created.
+siCreatedAt :: Lens' StreamInfo (Maybe UTCTime)
+siCreatedAt = lens _siCreatedAt (\ s a -> s{_siCreatedAt = a}) . mapping _Time;
+
+-- | The stream version.
+siStreamVersion :: Lens' StreamInfo (Maybe Natural)
+siStreamVersion = lens _siStreamVersion (\ s a -> s{_siStreamVersion = a}) . mapping _Nat;
+
+-- | The stream ARN.
+siStreamARN :: Lens' StreamInfo (Maybe Text)
+siStreamARN = lens _siStreamARN (\ s a -> s{_siStreamARN = a});
+
+-- | The files to stream.
+siFiles :: Lens' StreamInfo (Maybe (NonEmpty StreamFile))
+siFiles = lens _siFiles (\ s a -> s{_siFiles = a}) . mapping _List1;
+
+-- | The description of the stream.
+siDescription :: Lens' StreamInfo (Maybe Text)
+siDescription = lens _siDescription (\ s a -> s{_siDescription = a});
+
+-- | The stream ID.
+siStreamId :: Lens' StreamInfo (Maybe Text)
+siStreamId = lens _siStreamId (\ s a -> s{_siStreamId = a});
+
+-- | An IAM role AWS IoT assumes to access your S3 files.
+siRoleARN :: Lens' StreamInfo (Maybe Text)
+siRoleARN = lens _siRoleARN (\ s a -> s{_siRoleARN = a});
+
+instance FromJSON StreamInfo where
+        parseJSON
+          = withObject "StreamInfo"
+              (\ x ->
+                 StreamInfo' <$>
+                   (x .:? "lastUpdatedAt") <*> (x .:? "createdAt") <*>
+                     (x .:? "streamVersion")
+                     <*> (x .:? "streamArn")
+                     <*> (x .:? "files")
+                     <*> (x .:? "description")
+                     <*> (x .:? "streamId")
+                     <*> (x .:? "roleArn"))
+
+instance Hashable StreamInfo where
+
+instance NFData StreamInfo where
+
+-- | A summary of a stream.
+--
+--
+--
+-- /See:/ 'streamSummary' smart constructor.
+data StreamSummary = StreamSummary'
+  { _ssStreamVersion :: !(Maybe Nat)
+  , _ssStreamARN     :: !(Maybe Text)
+  , _ssDescription   :: !(Maybe Text)
+  , _ssStreamId      :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'StreamSummary' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ssStreamVersion' - The stream version.
+--
+-- * 'ssStreamARN' - The stream ARN.
+--
+-- * 'ssDescription' - A description of the stream.
+--
+-- * 'ssStreamId' - The stream ID.
+streamSummary
+    :: StreamSummary
+streamSummary =
+  StreamSummary'
+  { _ssStreamVersion = Nothing
+  , _ssStreamARN = Nothing
+  , _ssDescription = Nothing
+  , _ssStreamId = Nothing
+  }
+
+
+-- | The stream version.
+ssStreamVersion :: Lens' StreamSummary (Maybe Natural)
+ssStreamVersion = lens _ssStreamVersion (\ s a -> s{_ssStreamVersion = a}) . mapping _Nat;
+
+-- | The stream ARN.
+ssStreamARN :: Lens' StreamSummary (Maybe Text)
+ssStreamARN = lens _ssStreamARN (\ s a -> s{_ssStreamARN = a});
+
+-- | A description of the stream.
+ssDescription :: Lens' StreamSummary (Maybe Text)
+ssDescription = lens _ssDescription (\ s a -> s{_ssDescription = a});
+
+-- | The stream ID.
+ssStreamId :: Lens' StreamSummary (Maybe Text)
+ssStreamId = lens _ssStreamId (\ s a -> s{_ssStreamId = a});
+
+instance FromJSON StreamSummary where
+        parseJSON
+          = withObject "StreamSummary"
+              (\ x ->
+                 StreamSummary' <$>
+                   (x .:? "streamVersion") <*> (x .:? "streamArn") <*>
+                     (x .:? "description")
+                     <*> (x .:? "streamId"))
+
+instance Hashable StreamSummary where
+
+instance NFData StreamSummary where
+
 -- | The properties of the thing, including thing name, thing type name, and a list of thing attributes.
 --
 --
@@ -1812,6 +4216,7 @@ instance ToJSON SqsAction where
 -- /See:/ 'thingAttribute' smart constructor.
 data ThingAttribute = ThingAttribute'
   { _taThingTypeName :: !(Maybe Text)
+  , _taThingARN      :: !(Maybe Text)
   , _taAttributes    :: !(Maybe (Map Text Text))
   , _taVersion       :: !(Maybe Integer)
   , _taThingName     :: !(Maybe Text)
@@ -1824,6 +4229,8 @@ data ThingAttribute = ThingAttribute'
 --
 -- * 'taThingTypeName' - The name of the thing type, if the thing has been associated with a type.
 --
+-- * 'taThingARN' - The thing ARN.
+--
 -- * 'taAttributes' - A list of thing attributes which are name-value pairs.
 --
 -- * 'taVersion' - The version of the thing record in the registry.
@@ -1834,6 +4241,7 @@ thingAttribute
 thingAttribute =
   ThingAttribute'
   { _taThingTypeName = Nothing
+  , _taThingARN = Nothing
   , _taAttributes = Nothing
   , _taVersion = Nothing
   , _taThingName = Nothing
@@ -1843,6 +4251,10 @@ thingAttribute =
 -- | The name of the thing type, if the thing has been associated with a type.
 taThingTypeName :: Lens' ThingAttribute (Maybe Text)
 taThingTypeName = lens _taThingTypeName (\ s a -> s{_taThingTypeName = a});
+
+-- | The thing ARN.
+taThingARN :: Lens' ThingAttribute (Maybe Text)
+taThingARN = lens _taThingARN (\ s a -> s{_taThingARN = a});
 
 -- | A list of thing attributes which are name-value pairs.
 taAttributes :: Lens' ThingAttribute (HashMap Text Text)
@@ -1861,7 +4273,7 @@ instance FromJSON ThingAttribute where
           = withObject "ThingAttribute"
               (\ x ->
                  ThingAttribute' <$>
-                   (x .:? "thingTypeName") <*>
+                   (x .:? "thingTypeName") <*> (x .:? "thingArn") <*>
                      (x .:? "attributes" .!= mempty)
                      <*> (x .:? "version")
                      <*> (x .:? "thingName"))
@@ -1869,6 +4281,240 @@ instance FromJSON ThingAttribute where
 instance Hashable ThingAttribute where
 
 instance NFData ThingAttribute where
+
+-- | The thing search index document.
+--
+--
+--
+-- /See:/ 'thingDocument' smart constructor.
+data ThingDocument = ThingDocument'
+  { _tdThingGroupNames :: !(Maybe [Text])
+  , _tdThingTypeName   :: !(Maybe Text)
+  , _tdShadow          :: !(Maybe Text)
+  , _tdAttributes      :: !(Maybe (Map Text Text))
+  , _tdThingName       :: !(Maybe Text)
+  , _tdThingId         :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ThingDocument' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'tdThingGroupNames' - Thing group names.
+--
+-- * 'tdThingTypeName' - The thing type name.
+--
+-- * 'tdShadow' - The thing shadow.
+--
+-- * 'tdAttributes' - The attributes.
+--
+-- * 'tdThingName' - The thing name.
+--
+-- * 'tdThingId' - The thing ID.
+thingDocument
+    :: ThingDocument
+thingDocument =
+  ThingDocument'
+  { _tdThingGroupNames = Nothing
+  , _tdThingTypeName = Nothing
+  , _tdShadow = Nothing
+  , _tdAttributes = Nothing
+  , _tdThingName = Nothing
+  , _tdThingId = Nothing
+  }
+
+
+-- | Thing group names.
+tdThingGroupNames :: Lens' ThingDocument [Text]
+tdThingGroupNames = lens _tdThingGroupNames (\ s a -> s{_tdThingGroupNames = a}) . _Default . _Coerce;
+
+-- | The thing type name.
+tdThingTypeName :: Lens' ThingDocument (Maybe Text)
+tdThingTypeName = lens _tdThingTypeName (\ s a -> s{_tdThingTypeName = a});
+
+-- | The thing shadow.
+tdShadow :: Lens' ThingDocument (Maybe Text)
+tdShadow = lens _tdShadow (\ s a -> s{_tdShadow = a});
+
+-- | The attributes.
+tdAttributes :: Lens' ThingDocument (HashMap Text Text)
+tdAttributes = lens _tdAttributes (\ s a -> s{_tdAttributes = a}) . _Default . _Map;
+
+-- | The thing name.
+tdThingName :: Lens' ThingDocument (Maybe Text)
+tdThingName = lens _tdThingName (\ s a -> s{_tdThingName = a});
+
+-- | The thing ID.
+tdThingId :: Lens' ThingDocument (Maybe Text)
+tdThingId = lens _tdThingId (\ s a -> s{_tdThingId = a});
+
+instance FromJSON ThingDocument where
+        parseJSON
+          = withObject "ThingDocument"
+              (\ x ->
+                 ThingDocument' <$>
+                   (x .:? "thingGroupNames" .!= mempty) <*>
+                     (x .:? "thingTypeName")
+                     <*> (x .:? "shadow")
+                     <*> (x .:? "attributes" .!= mempty)
+                     <*> (x .:? "thingName")
+                     <*> (x .:? "thingId"))
+
+instance Hashable ThingDocument where
+
+instance NFData ThingDocument where
+
+-- | Thing group metadata.
+--
+--
+--
+-- /See:/ 'thingGroupMetadata' smart constructor.
+data ThingGroupMetadata = ThingGroupMetadata'
+  { _tgmRootToParentThingGroups :: !(Maybe [GroupNameAndARN])
+  , _tgmParentGroupName         :: !(Maybe Text)
+  , _tgmCreationDate            :: !(Maybe POSIX)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ThingGroupMetadata' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'tgmRootToParentThingGroups' - The root parent thing group.
+--
+-- * 'tgmParentGroupName' - The parent thing group name.
+--
+-- * 'tgmCreationDate' - The UNIX timestamp of when the thing group was created.
+thingGroupMetadata
+    :: ThingGroupMetadata
+thingGroupMetadata =
+  ThingGroupMetadata'
+  { _tgmRootToParentThingGroups = Nothing
+  , _tgmParentGroupName = Nothing
+  , _tgmCreationDate = Nothing
+  }
+
+
+-- | The root parent thing group.
+tgmRootToParentThingGroups :: Lens' ThingGroupMetadata [GroupNameAndARN]
+tgmRootToParentThingGroups = lens _tgmRootToParentThingGroups (\ s a -> s{_tgmRootToParentThingGroups = a}) . _Default . _Coerce;
+
+-- | The parent thing group name.
+tgmParentGroupName :: Lens' ThingGroupMetadata (Maybe Text)
+tgmParentGroupName = lens _tgmParentGroupName (\ s a -> s{_tgmParentGroupName = a});
+
+-- | The UNIX timestamp of when the thing group was created.
+tgmCreationDate :: Lens' ThingGroupMetadata (Maybe UTCTime)
+tgmCreationDate = lens _tgmCreationDate (\ s a -> s{_tgmCreationDate = a}) . mapping _Time;
+
+instance FromJSON ThingGroupMetadata where
+        parseJSON
+          = withObject "ThingGroupMetadata"
+              (\ x ->
+                 ThingGroupMetadata' <$>
+                   (x .:? "rootToParentThingGroups" .!= mempty) <*>
+                     (x .:? "parentGroupName")
+                     <*> (x .:? "creationDate"))
+
+instance Hashable ThingGroupMetadata where
+
+instance NFData ThingGroupMetadata where
+
+-- | Thing group properties.
+--
+--
+--
+-- /See:/ 'thingGroupProperties' smart constructor.
+data ThingGroupProperties = ThingGroupProperties'
+  { _tgpAttributePayload      :: !(Maybe AttributePayload)
+  , _tgpThingGroupDescription :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ThingGroupProperties' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'tgpAttributePayload' - The thing group attributes in JSON format.
+--
+-- * 'tgpThingGroupDescription' - The thing group description.
+thingGroupProperties
+    :: ThingGroupProperties
+thingGroupProperties =
+  ThingGroupProperties'
+  {_tgpAttributePayload = Nothing, _tgpThingGroupDescription = Nothing}
+
+
+-- | The thing group attributes in JSON format.
+tgpAttributePayload :: Lens' ThingGroupProperties (Maybe AttributePayload)
+tgpAttributePayload = lens _tgpAttributePayload (\ s a -> s{_tgpAttributePayload = a});
+
+-- | The thing group description.
+tgpThingGroupDescription :: Lens' ThingGroupProperties (Maybe Text)
+tgpThingGroupDescription = lens _tgpThingGroupDescription (\ s a -> s{_tgpThingGroupDescription = a});
+
+instance FromJSON ThingGroupProperties where
+        parseJSON
+          = withObject "ThingGroupProperties"
+              (\ x ->
+                 ThingGroupProperties' <$>
+                   (x .:? "attributePayload") <*>
+                     (x .:? "thingGroupDescription"))
+
+instance Hashable ThingGroupProperties where
+
+instance NFData ThingGroupProperties where
+
+instance ToJSON ThingGroupProperties where
+        toJSON ThingGroupProperties'{..}
+          = object
+              (catMaybes
+                 [("attributePayload" .=) <$> _tgpAttributePayload,
+                  ("thingGroupDescription" .=) <$>
+                    _tgpThingGroupDescription])
+
+-- | Thing indexing configuration.
+--
+--
+--
+-- /See:/ 'thingIndexingConfiguration' smart constructor.
+newtype ThingIndexingConfiguration = ThingIndexingConfiguration'
+  { _ticThingIndexingMode :: Maybe ThingIndexingMode
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ThingIndexingConfiguration' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ticThingIndexingMode' - Thing indexing mode. Valid values are:      * REGISTRY – Your thing index will contain only registry data.     * REGISTRY_AND_SHADOW - Your thing index will contain registry and shadow data.     * OFF - Thing indexing is disabled.
+thingIndexingConfiguration
+    :: ThingIndexingConfiguration
+thingIndexingConfiguration =
+  ThingIndexingConfiguration' {_ticThingIndexingMode = Nothing}
+
+
+-- | Thing indexing mode. Valid values are:      * REGISTRY – Your thing index will contain only registry data.     * REGISTRY_AND_SHADOW - Your thing index will contain registry and shadow data.     * OFF - Thing indexing is disabled.
+ticThingIndexingMode :: Lens' ThingIndexingConfiguration (Maybe ThingIndexingMode)
+ticThingIndexingMode = lens _ticThingIndexingMode (\ s a -> s{_ticThingIndexingMode = a});
+
+instance FromJSON ThingIndexingConfiguration where
+        parseJSON
+          = withObject "ThingIndexingConfiguration"
+              (\ x ->
+                 ThingIndexingConfiguration' <$>
+                   (x .:? "thingIndexingMode"))
+
+instance Hashable ThingIndexingConfiguration where
+
+instance NFData ThingIndexingConfiguration where
+
+instance ToJSON ThingIndexingConfiguration where
+        toJSON ThingIndexingConfiguration'{..}
+          = object
+              (catMaybes
+                 [("thingIndexingMode" .=) <$> _ticThingIndexingMode])
 
 -- | The definition of the thing type, including thing type name and description.
 --
@@ -1879,6 +4525,7 @@ data ThingTypeDefinition = ThingTypeDefinition'
   { _ttdThingTypeProperties :: !(Maybe ThingTypeProperties)
   , _ttdThingTypeName       :: !(Maybe Text)
   , _ttdThingTypeMetadata   :: !(Maybe ThingTypeMetadata)
+  , _ttdThingTypeARN        :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1891,6 +4538,8 @@ data ThingTypeDefinition = ThingTypeDefinition'
 -- * 'ttdThingTypeName' - The name of the thing type.
 --
 -- * 'ttdThingTypeMetadata' - The ThingTypeMetadata contains additional information about the thing type including: creation date and time, a value indicating whether the thing type is deprecated, and a date and time when it was deprecated.
+--
+-- * 'ttdThingTypeARN' - The thing type ARN.
 thingTypeDefinition
     :: ThingTypeDefinition
 thingTypeDefinition =
@@ -1898,6 +4547,7 @@ thingTypeDefinition =
   { _ttdThingTypeProperties = Nothing
   , _ttdThingTypeName = Nothing
   , _ttdThingTypeMetadata = Nothing
+  , _ttdThingTypeARN = Nothing
   }
 
 
@@ -1913,6 +4563,10 @@ ttdThingTypeName = lens _ttdThingTypeName (\ s a -> s{_ttdThingTypeName = a});
 ttdThingTypeMetadata :: Lens' ThingTypeDefinition (Maybe ThingTypeMetadata)
 ttdThingTypeMetadata = lens _ttdThingTypeMetadata (\ s a -> s{_ttdThingTypeMetadata = a});
 
+-- | The thing type ARN.
+ttdThingTypeARN :: Lens' ThingTypeDefinition (Maybe Text)
+ttdThingTypeARN = lens _ttdThingTypeARN (\ s a -> s{_ttdThingTypeARN = a});
+
 instance FromJSON ThingTypeDefinition where
         parseJSON
           = withObject "ThingTypeDefinition"
@@ -1920,7 +4574,8 @@ instance FromJSON ThingTypeDefinition where
                  ThingTypeDefinition' <$>
                    (x .:? "thingTypeProperties") <*>
                      (x .:? "thingTypeName")
-                     <*> (x .:? "thingTypeMetadata"))
+                     <*> (x .:? "thingTypeMetadata")
+                     <*> (x .:? "thingTypeArn"))
 
 instance Hashable ThingTypeDefinition where
 
@@ -2044,6 +4699,7 @@ data TopicRule = TopicRule'
   { _trCreatedAt        :: !(Maybe POSIX)
   , _trActions          :: !(Maybe [Action])
   , _trAwsIotSqlVersion :: !(Maybe Text)
+  , _trErrorAction      :: !(Maybe Action)
   , _trRuleDisabled     :: !(Maybe Bool)
   , _trRuleName         :: !(Maybe Text)
   , _trSql              :: !(Maybe Text)
@@ -2061,6 +4717,8 @@ data TopicRule = TopicRule'
 --
 -- * 'trAwsIotSqlVersion' - The version of the SQL rules engine to use when evaluating the rule.
 --
+-- * 'trErrorAction' - The action to perform when an error occurs.
+--
 -- * 'trRuleDisabled' - Specifies whether the rule is disabled.
 --
 -- * 'trRuleName' - The name of the rule.
@@ -2075,6 +4733,7 @@ topicRule =
   { _trCreatedAt = Nothing
   , _trActions = Nothing
   , _trAwsIotSqlVersion = Nothing
+  , _trErrorAction = Nothing
   , _trRuleDisabled = Nothing
   , _trRuleName = Nothing
   , _trSql = Nothing
@@ -2093,6 +4752,10 @@ trActions = lens _trActions (\ s a -> s{_trActions = a}) . _Default . _Coerce;
 -- | The version of the SQL rules engine to use when evaluating the rule.
 trAwsIotSqlVersion :: Lens' TopicRule (Maybe Text)
 trAwsIotSqlVersion = lens _trAwsIotSqlVersion (\ s a -> s{_trAwsIotSqlVersion = a});
+
+-- | The action to perform when an error occurs.
+trErrorAction :: Lens' TopicRule (Maybe Action)
+trErrorAction = lens _trErrorAction (\ s a -> s{_trErrorAction = a});
 
 -- | Specifies whether the rule is disabled.
 trRuleDisabled :: Lens' TopicRule (Maybe Bool)
@@ -2117,6 +4780,7 @@ instance FromJSON TopicRule where
                  TopicRule' <$>
                    (x .:? "createdAt") <*> (x .:? "actions" .!= mempty)
                      <*> (x .:? "awsIotSqlVersion")
+                     <*> (x .:? "errorAction")
                      <*> (x .:? "ruleDisabled")
                      <*> (x .:? "ruleName")
                      <*> (x .:? "sql")
@@ -2206,6 +4870,7 @@ instance NFData TopicRuleListItem where
 -- /See:/ 'topicRulePayload' smart constructor.
 data TopicRulePayload = TopicRulePayload'
   { _trpAwsIotSqlVersion :: !(Maybe Text)
+  , _trpErrorAction      :: !(Maybe Action)
   , _trpRuleDisabled     :: !(Maybe Bool)
   , _trpDescription      :: !(Maybe Text)
   , _trpSql              :: !Text
@@ -2218,6 +4883,8 @@ data TopicRulePayload = TopicRulePayload'
 -- Use one of the following lenses to modify other fields as desired:
 --
 -- * 'trpAwsIotSqlVersion' - The version of the SQL rules engine to use when evaluating the rule.
+--
+-- * 'trpErrorAction' - The action to take when an error occurs.
 --
 -- * 'trpRuleDisabled' - Specifies whether the rule is disabled.
 --
@@ -2232,6 +4899,7 @@ topicRulePayload
 topicRulePayload pSql_ =
   TopicRulePayload'
   { _trpAwsIotSqlVersion = Nothing
+  , _trpErrorAction = Nothing
   , _trpRuleDisabled = Nothing
   , _trpDescription = Nothing
   , _trpSql = pSql_
@@ -2242,6 +4910,10 @@ topicRulePayload pSql_ =
 -- | The version of the SQL rules engine to use when evaluating the rule.
 trpAwsIotSqlVersion :: Lens' TopicRulePayload (Maybe Text)
 trpAwsIotSqlVersion = lens _trpAwsIotSqlVersion (\ s a -> s{_trpAwsIotSqlVersion = a});
+
+-- | The action to take when an error occurs.
+trpErrorAction :: Lens' TopicRulePayload (Maybe Action)
+trpErrorAction = lens _trpErrorAction (\ s a -> s{_trpErrorAction = a});
 
 -- | Specifies whether the rule is disabled.
 trpRuleDisabled :: Lens' TopicRulePayload (Maybe Bool)
@@ -2268,6 +4940,7 @@ instance ToJSON TopicRulePayload where
           = object
               (catMaybes
                  [("awsIotSqlVersion" .=) <$> _trpAwsIotSqlVersion,
+                  ("errorAction" .=) <$> _trpErrorAction,
                   ("ruleDisabled" .=) <$> _trpRuleDisabled,
                   ("description" .=) <$> _trpDescription,
                   Just ("sql" .= _trpSql),

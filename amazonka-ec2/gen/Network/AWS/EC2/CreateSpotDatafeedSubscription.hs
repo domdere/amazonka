@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Creates a data feed for Spot instances, enabling you to view Spot instance usage logs. You can create one data feed per AWS account. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-data-feeds.html Spot Instance Data Feed> in the /Amazon Elastic Compute Cloud User Guide/ .
+-- Creates a data feed for Spot Instances, enabling you to view Spot Instance usage logs. You can create one data feed per AWS account. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-data-feeds.html Spot Instance Data Feed> in the /Amazon Elastic Compute Cloud User Guide/ .
 --
 --
 module Network.AWS.EC2.CreateSpotDatafeedSubscription
@@ -66,7 +66,7 @@ data CreateSpotDatafeedSubscription = CreateSpotDatafeedSubscription'
 --
 -- * 'csdsDryRun' - Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is @DryRunOperation@ . Otherwise, it is @UnauthorizedOperation@ .
 --
--- * 'csdsBucket' - The Amazon S3 bucket in which to store the Spot instance data feed.
+-- * 'csdsBucket' - The Amazon S3 bucket in which to store the Spot Instance data feed.
 createSpotDatafeedSubscription
     :: Text -- ^ 'csdsBucket'
     -> CreateSpotDatafeedSubscription
@@ -83,7 +83,7 @@ csdsPrefix = lens _csdsPrefix (\ s a -> s{_csdsPrefix = a});
 csdsDryRun :: Lens' CreateSpotDatafeedSubscription (Maybe Bool)
 csdsDryRun = lens _csdsDryRun (\ s a -> s{_csdsDryRun = a});
 
--- | The Amazon S3 bucket in which to store the Spot instance data feed.
+-- | The Amazon S3 bucket in which to store the Spot Instance data feed.
 csdsBucket :: Lens' CreateSpotDatafeedSubscription Text
 csdsBucket = lens _csdsBucket (\ s a -> s{_csdsBucket = a});
 
@@ -135,7 +135,7 @@ data CreateSpotDatafeedSubscriptionResponse = CreateSpotDatafeedSubscriptionResp
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'csdsrsSpotDatafeedSubscription' - The Spot instance data feed subscription.
+-- * 'csdsrsSpotDatafeedSubscription' - The Spot Instance data feed subscription.
 --
 -- * 'csdsrsResponseStatus' - -- | The response status code.
 createSpotDatafeedSubscriptionResponse
@@ -148,7 +148,7 @@ createSpotDatafeedSubscriptionResponse pResponseStatus_ =
   }
 
 
--- | The Spot instance data feed subscription.
+-- | The Spot Instance data feed subscription.
 csdsrsSpotDatafeedSubscription :: Lens' CreateSpotDatafeedSubscriptionResponse (Maybe SpotDatafeedSubscription)
 csdsrsSpotDatafeedSubscription = lens _csdsrsSpotDatafeedSubscription (\ s a -> s{_csdsrsSpotDatafeedSubscription = a});
 

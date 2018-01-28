@@ -719,16 +719,28 @@ instance NFData AssociationVersionInfo where
 --
 -- /See:/ 'automationExecution' smart constructor.
 data AutomationExecution = AutomationExecution'
-  { _aeDocumentName              :: !(Maybe Text)
-  , _aeExecutionEndTime          :: !(Maybe POSIX)
-  , _aeFailureMessage            :: !(Maybe Text)
-  , _aeAutomationExecutionStatus :: !(Maybe AutomationExecutionStatus)
-  , _aeOutputs                   :: !(Maybe (Map Text [Text]))
-  , _aeExecutionStartTime        :: !(Maybe POSIX)
-  , _aeParameters                :: !(Maybe (Map Text [Text]))
-  , _aeDocumentVersion           :: !(Maybe Text)
-  , _aeAutomationExecutionId     :: !(Maybe Text)
-  , _aeStepExecutions            :: !(Maybe [StepExecution])
+  { _aeCurrentStepName             :: !(Maybe Text)
+  , _aeTargetParameterName         :: !(Maybe Text)
+  , _aeExecutedBy                  :: !(Maybe Text)
+  , _aeDocumentName                :: !(Maybe Text)
+  , _aeExecutionEndTime            :: !(Maybe POSIX)
+  , _aeFailureMessage              :: !(Maybe Text)
+  , _aeMode                        :: !(Maybe ExecutionMode)
+  , _aeStepExecutionsTruncated     :: !(Maybe Bool)
+  , _aeAutomationExecutionStatus   :: !(Maybe AutomationExecutionStatus)
+  , _aeParentAutomationExecutionId :: !(Maybe Text)
+  , _aeOutputs                     :: !(Maybe (Map Text [Text]))
+  , _aeMaxErrors                   :: !(Maybe Text)
+  , _aeExecutionStartTime          :: !(Maybe POSIX)
+  , _aeCurrentAction               :: !(Maybe Text)
+  , _aeTargets                     :: !(Maybe [Target])
+  , _aeResolvedTargets             :: !(Maybe ResolvedTargets)
+  , _aeParameters                  :: !(Maybe (Map Text [Text]))
+  , _aeDocumentVersion             :: !(Maybe Text)
+  , _aeAutomationExecutionId       :: !(Maybe Text)
+  , _aeStepExecutions              :: !(Maybe [StepExecution])
+  , _aeMaxConcurrency              :: !(Maybe Text)
+  , _aeTarget                      :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -736,17 +748,37 @@ data AutomationExecution = AutomationExecution'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'aeCurrentStepName' - The name of the currently executing step.
+--
+-- * 'aeTargetParameterName' - The parameter name.
+--
+-- * 'aeExecutedBy' - The Amazon Resource Name (ARN) of the user who executed the automation.
+--
 -- * 'aeDocumentName' - The name of the Automation document used during the execution.
 --
 -- * 'aeExecutionEndTime' - The time the execution finished.
 --
 -- * 'aeFailureMessage' - A message describing why an execution has failed, if the status is set to Failed.
 --
+-- * 'aeMode' - The automation execution mode.
+--
+-- * 'aeStepExecutionsTruncated' - A boolean value that indicates if the response contains the full list of the Automation step executions. If true, use the DescribeAutomationStepExecutions API action to get the full list of step executions.
+--
 -- * 'aeAutomationExecutionStatus' - The execution status of the Automation.
+--
+-- * 'aeParentAutomationExecutionId' - The AutomationExecutionId of the parent automation.
 --
 -- * 'aeOutputs' - The list of execution outputs as defined in the automation document.
 --
+-- * 'aeMaxErrors' - The MaxErrors value specified by the user when the execution started.
+--
 -- * 'aeExecutionStartTime' - The time the execution started.
+--
+-- * 'aeCurrentAction' - The action of the currently executing step.
+--
+-- * 'aeTargets' - The specified targets.
+--
+-- * 'aeResolvedTargets' - A list of resolved targets in the rate control execution.
 --
 -- * 'aeParameters' - The key-value map of execution parameters, which were supplied when calling StartAutomationExecution.
 --
@@ -755,22 +787,50 @@ data AutomationExecution = AutomationExecution'
 -- * 'aeAutomationExecutionId' - The execution ID.
 --
 -- * 'aeStepExecutions' - A list of details about the current state of all steps that comprise an execution. An Automation document contains a list of steps that are executed in order.
+--
+-- * 'aeMaxConcurrency' - The MaxConcurrency value specified by the user when the execution started.
+--
+-- * 'aeTarget' - The target of the execution.
 automationExecution
     :: AutomationExecution
 automationExecution =
   AutomationExecution'
-  { _aeDocumentName = Nothing
+  { _aeCurrentStepName = Nothing
+  , _aeTargetParameterName = Nothing
+  , _aeExecutedBy = Nothing
+  , _aeDocumentName = Nothing
   , _aeExecutionEndTime = Nothing
   , _aeFailureMessage = Nothing
+  , _aeMode = Nothing
+  , _aeStepExecutionsTruncated = Nothing
   , _aeAutomationExecutionStatus = Nothing
+  , _aeParentAutomationExecutionId = Nothing
   , _aeOutputs = Nothing
+  , _aeMaxErrors = Nothing
   , _aeExecutionStartTime = Nothing
+  , _aeCurrentAction = Nothing
+  , _aeTargets = Nothing
+  , _aeResolvedTargets = Nothing
   , _aeParameters = Nothing
   , _aeDocumentVersion = Nothing
   , _aeAutomationExecutionId = Nothing
   , _aeStepExecutions = Nothing
+  , _aeMaxConcurrency = Nothing
+  , _aeTarget = Nothing
   }
 
+
+-- | The name of the currently executing step.
+aeCurrentStepName :: Lens' AutomationExecution (Maybe Text)
+aeCurrentStepName = lens _aeCurrentStepName (\ s a -> s{_aeCurrentStepName = a});
+
+-- | The parameter name.
+aeTargetParameterName :: Lens' AutomationExecution (Maybe Text)
+aeTargetParameterName = lens _aeTargetParameterName (\ s a -> s{_aeTargetParameterName = a});
+
+-- | The Amazon Resource Name (ARN) of the user who executed the automation.
+aeExecutedBy :: Lens' AutomationExecution (Maybe Text)
+aeExecutedBy = lens _aeExecutedBy (\ s a -> s{_aeExecutedBy = a});
 
 -- | The name of the Automation document used during the execution.
 aeDocumentName :: Lens' AutomationExecution (Maybe Text)
@@ -784,17 +844,45 @@ aeExecutionEndTime = lens _aeExecutionEndTime (\ s a -> s{_aeExecutionEndTime = 
 aeFailureMessage :: Lens' AutomationExecution (Maybe Text)
 aeFailureMessage = lens _aeFailureMessage (\ s a -> s{_aeFailureMessage = a});
 
+-- | The automation execution mode.
+aeMode :: Lens' AutomationExecution (Maybe ExecutionMode)
+aeMode = lens _aeMode (\ s a -> s{_aeMode = a});
+
+-- | A boolean value that indicates if the response contains the full list of the Automation step executions. If true, use the DescribeAutomationStepExecutions API action to get the full list of step executions.
+aeStepExecutionsTruncated :: Lens' AutomationExecution (Maybe Bool)
+aeStepExecutionsTruncated = lens _aeStepExecutionsTruncated (\ s a -> s{_aeStepExecutionsTruncated = a});
+
 -- | The execution status of the Automation.
 aeAutomationExecutionStatus :: Lens' AutomationExecution (Maybe AutomationExecutionStatus)
 aeAutomationExecutionStatus = lens _aeAutomationExecutionStatus (\ s a -> s{_aeAutomationExecutionStatus = a});
+
+-- | The AutomationExecutionId of the parent automation.
+aeParentAutomationExecutionId :: Lens' AutomationExecution (Maybe Text)
+aeParentAutomationExecutionId = lens _aeParentAutomationExecutionId (\ s a -> s{_aeParentAutomationExecutionId = a});
 
 -- | The list of execution outputs as defined in the automation document.
 aeOutputs :: Lens' AutomationExecution (HashMap Text [Text])
 aeOutputs = lens _aeOutputs (\ s a -> s{_aeOutputs = a}) . _Default . _Map;
 
+-- | The MaxErrors value specified by the user when the execution started.
+aeMaxErrors :: Lens' AutomationExecution (Maybe Text)
+aeMaxErrors = lens _aeMaxErrors (\ s a -> s{_aeMaxErrors = a});
+
 -- | The time the execution started.
 aeExecutionStartTime :: Lens' AutomationExecution (Maybe UTCTime)
 aeExecutionStartTime = lens _aeExecutionStartTime (\ s a -> s{_aeExecutionStartTime = a}) . mapping _Time;
+
+-- | The action of the currently executing step.
+aeCurrentAction :: Lens' AutomationExecution (Maybe Text)
+aeCurrentAction = lens _aeCurrentAction (\ s a -> s{_aeCurrentAction = a});
+
+-- | The specified targets.
+aeTargets :: Lens' AutomationExecution [Target]
+aeTargets = lens _aeTargets (\ s a -> s{_aeTargets = a}) . _Default . _Coerce;
+
+-- | A list of resolved targets in the rate control execution.
+aeResolvedTargets :: Lens' AutomationExecution (Maybe ResolvedTargets)
+aeResolvedTargets = lens _aeResolvedTargets (\ s a -> s{_aeResolvedTargets = a});
 
 -- | The key-value map of execution parameters, which were supplied when calling StartAutomationExecution.
 aeParameters :: Lens' AutomationExecution (HashMap Text [Text])
@@ -812,20 +900,41 @@ aeAutomationExecutionId = lens _aeAutomationExecutionId (\ s a -> s{_aeAutomatio
 aeStepExecutions :: Lens' AutomationExecution [StepExecution]
 aeStepExecutions = lens _aeStepExecutions (\ s a -> s{_aeStepExecutions = a}) . _Default . _Coerce;
 
+-- | The MaxConcurrency value specified by the user when the execution started.
+aeMaxConcurrency :: Lens' AutomationExecution (Maybe Text)
+aeMaxConcurrency = lens _aeMaxConcurrency (\ s a -> s{_aeMaxConcurrency = a});
+
+-- | The target of the execution.
+aeTarget :: Lens' AutomationExecution (Maybe Text)
+aeTarget = lens _aeTarget (\ s a -> s{_aeTarget = a});
+
 instance FromJSON AutomationExecution where
         parseJSON
           = withObject "AutomationExecution"
               (\ x ->
                  AutomationExecution' <$>
-                   (x .:? "DocumentName") <*> (x .:? "ExecutionEndTime")
+                   (x .:? "CurrentStepName") <*>
+                     (x .:? "TargetParameterName")
+                     <*> (x .:? "ExecutedBy")
+                     <*> (x .:? "DocumentName")
+                     <*> (x .:? "ExecutionEndTime")
                      <*> (x .:? "FailureMessage")
+                     <*> (x .:? "Mode")
+                     <*> (x .:? "StepExecutionsTruncated")
                      <*> (x .:? "AutomationExecutionStatus")
+                     <*> (x .:? "ParentAutomationExecutionId")
                      <*> (x .:? "Outputs" .!= mempty)
+                     <*> (x .:? "MaxErrors")
                      <*> (x .:? "ExecutionStartTime")
+                     <*> (x .:? "CurrentAction")
+                     <*> (x .:? "Targets" .!= mempty)
+                     <*> (x .:? "ResolvedTargets")
                      <*> (x .:? "Parameters" .!= mempty)
                      <*> (x .:? "DocumentVersion")
                      <*> (x .:? "AutomationExecutionId")
-                     <*> (x .:? "StepExecutions" .!= mempty))
+                     <*> (x .:? "StepExecutions" .!= mempty)
+                     <*> (x .:? "MaxConcurrency")
+                     <*> (x .:? "Target"))
 
 instance Hashable AutomationExecution where
 
@@ -846,7 +955,7 @@ data AutomationExecutionFilter = AutomationExecutionFilter'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'aefKey' - The aspect of the Automation execution information that should be limited.
+-- * 'aefKey' - One or more keys to limit the results. Valid filter keys include the following: DocumentNamePrefix, ExecutionStatus, ExecutionId, ParentExecutionId, CurrentAction, StartTimeBefore, StartTimeAfter.
 --
 -- * 'aefValues' - The values used to limit the execution information associated with the filter's key.
 automationExecutionFilter
@@ -857,7 +966,7 @@ automationExecutionFilter pKey_ pValues_ =
   AutomationExecutionFilter' {_aefKey = pKey_, _aefValues = _List1 # pValues_}
 
 
--- | The aspect of the Automation execution information that should be limited.
+-- | One or more keys to limit the results. Valid filter keys include the following: DocumentNamePrefix, ExecutionStatus, ExecutionId, ParentExecutionId, CurrentAction, StartTimeBefore, StartTimeAfter.
 aefKey :: Lens' AutomationExecutionFilter AutomationExecutionFilterKey
 aefKey = lens _aefKey (\ s a -> s{_aefKey = a});
 
@@ -882,21 +991,36 @@ instance ToJSON AutomationExecutionFilter where
 --
 -- /See:/ 'automationExecutionMetadata' smart constructor.
 data AutomationExecutionMetadata = AutomationExecutionMetadata'
-  { _aemLogFile                   :: !(Maybe Text)
-  , _aemExecutedBy                :: !(Maybe Text)
-  , _aemDocumentName              :: !(Maybe Text)
-  , _aemExecutionEndTime          :: !(Maybe POSIX)
-  , _aemAutomationExecutionStatus :: !(Maybe AutomationExecutionStatus)
-  , _aemOutputs                   :: !(Maybe (Map Text [Text]))
-  , _aemExecutionStartTime        :: !(Maybe POSIX)
-  , _aemDocumentVersion           :: !(Maybe Text)
-  , _aemAutomationExecutionId     :: !(Maybe Text)
+  { _aemCurrentStepName             :: !(Maybe Text)
+  , _aemTargetParameterName         :: !(Maybe Text)
+  , _aemLogFile                     :: !(Maybe Text)
+  , _aemExecutedBy                  :: !(Maybe Text)
+  , _aemDocumentName                :: !(Maybe Text)
+  , _aemExecutionEndTime            :: !(Maybe POSIX)
+  , _aemFailureMessage              :: !(Maybe Text)
+  , _aemMode                        :: !(Maybe ExecutionMode)
+  , _aemAutomationExecutionStatus   :: !(Maybe AutomationExecutionStatus)
+  , _aemParentAutomationExecutionId :: !(Maybe Text)
+  , _aemOutputs                     :: !(Maybe (Map Text [Text]))
+  , _aemMaxErrors                   :: !(Maybe Text)
+  , _aemExecutionStartTime          :: !(Maybe POSIX)
+  , _aemCurrentAction               :: !(Maybe Text)
+  , _aemTargets                     :: !(Maybe [Target])
+  , _aemResolvedTargets             :: !(Maybe ResolvedTargets)
+  , _aemDocumentVersion             :: !(Maybe Text)
+  , _aemAutomationExecutionId       :: !(Maybe Text)
+  , _aemMaxConcurrency              :: !(Maybe Text)
+  , _aemTarget                      :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
 -- | Creates a value of 'AutomationExecutionMetadata' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'aemCurrentStepName' - The name of the currently executing step.
+--
+-- * 'aemTargetParameterName' - The list of execution outputs as defined in the Automation document.
 --
 -- * 'aemLogFile' - An Amazon S3 bucket where execution information is stored.
 --
@@ -906,30 +1030,67 @@ data AutomationExecutionMetadata = AutomationExecutionMetadata'
 --
 -- * 'aemExecutionEndTime' - The time the execution finished. This is not populated if the execution is still in progress.
 --
+-- * 'aemFailureMessage' - The list of execution outputs as defined in the Automation document.
+--
+-- * 'aemMode' - The Automation execution mode.
+--
 -- * 'aemAutomationExecutionStatus' - The status of the execution. Valid values include: Running, Succeeded, Failed, Timed out, or Cancelled.
+--
+-- * 'aemParentAutomationExecutionId' - The ExecutionId of the parent Automation.
 --
 -- * 'aemOutputs' - The list of execution outputs as defined in the Automation document.
 --
+-- * 'aemMaxErrors' - The MaxErrors value specified by the user when starting the Automation.
+--
 -- * 'aemExecutionStartTime' - The time the execution started.>
+--
+-- * 'aemCurrentAction' - The action of the currently executing step.
+--
+-- * 'aemTargets' - The targets defined by the user when starting the Automation.
+--
+-- * 'aemResolvedTargets' - A list of targets that resolved during the execution.
 --
 -- * 'aemDocumentVersion' - The document version used during the execution.
 --
 -- * 'aemAutomationExecutionId' - The execution ID.
+--
+-- * 'aemMaxConcurrency' - The MaxConcurrency value specified by the user when starting the Automation.
+--
+-- * 'aemTarget' - The list of execution outputs as defined in the Automation document.
 automationExecutionMetadata
     :: AutomationExecutionMetadata
 automationExecutionMetadata =
   AutomationExecutionMetadata'
-  { _aemLogFile = Nothing
+  { _aemCurrentStepName = Nothing
+  , _aemTargetParameterName = Nothing
+  , _aemLogFile = Nothing
   , _aemExecutedBy = Nothing
   , _aemDocumentName = Nothing
   , _aemExecutionEndTime = Nothing
+  , _aemFailureMessage = Nothing
+  , _aemMode = Nothing
   , _aemAutomationExecutionStatus = Nothing
+  , _aemParentAutomationExecutionId = Nothing
   , _aemOutputs = Nothing
+  , _aemMaxErrors = Nothing
   , _aemExecutionStartTime = Nothing
+  , _aemCurrentAction = Nothing
+  , _aemTargets = Nothing
+  , _aemResolvedTargets = Nothing
   , _aemDocumentVersion = Nothing
   , _aemAutomationExecutionId = Nothing
+  , _aemMaxConcurrency = Nothing
+  , _aemTarget = Nothing
   }
 
+
+-- | The name of the currently executing step.
+aemCurrentStepName :: Lens' AutomationExecutionMetadata (Maybe Text)
+aemCurrentStepName = lens _aemCurrentStepName (\ s a -> s{_aemCurrentStepName = a});
+
+-- | The list of execution outputs as defined in the Automation document.
+aemTargetParameterName :: Lens' AutomationExecutionMetadata (Maybe Text)
+aemTargetParameterName = lens _aemTargetParameterName (\ s a -> s{_aemTargetParameterName = a});
 
 -- | An Amazon S3 bucket where execution information is stored.
 aemLogFile :: Lens' AutomationExecutionMetadata (Maybe Text)
@@ -947,17 +1108,45 @@ aemDocumentName = lens _aemDocumentName (\ s a -> s{_aemDocumentName = a});
 aemExecutionEndTime :: Lens' AutomationExecutionMetadata (Maybe UTCTime)
 aemExecutionEndTime = lens _aemExecutionEndTime (\ s a -> s{_aemExecutionEndTime = a}) . mapping _Time;
 
+-- | The list of execution outputs as defined in the Automation document.
+aemFailureMessage :: Lens' AutomationExecutionMetadata (Maybe Text)
+aemFailureMessage = lens _aemFailureMessage (\ s a -> s{_aemFailureMessage = a});
+
+-- | The Automation execution mode.
+aemMode :: Lens' AutomationExecutionMetadata (Maybe ExecutionMode)
+aemMode = lens _aemMode (\ s a -> s{_aemMode = a});
+
 -- | The status of the execution. Valid values include: Running, Succeeded, Failed, Timed out, or Cancelled.
 aemAutomationExecutionStatus :: Lens' AutomationExecutionMetadata (Maybe AutomationExecutionStatus)
 aemAutomationExecutionStatus = lens _aemAutomationExecutionStatus (\ s a -> s{_aemAutomationExecutionStatus = a});
+
+-- | The ExecutionId of the parent Automation.
+aemParentAutomationExecutionId :: Lens' AutomationExecutionMetadata (Maybe Text)
+aemParentAutomationExecutionId = lens _aemParentAutomationExecutionId (\ s a -> s{_aemParentAutomationExecutionId = a});
 
 -- | The list of execution outputs as defined in the Automation document.
 aemOutputs :: Lens' AutomationExecutionMetadata (HashMap Text [Text])
 aemOutputs = lens _aemOutputs (\ s a -> s{_aemOutputs = a}) . _Default . _Map;
 
+-- | The MaxErrors value specified by the user when starting the Automation.
+aemMaxErrors :: Lens' AutomationExecutionMetadata (Maybe Text)
+aemMaxErrors = lens _aemMaxErrors (\ s a -> s{_aemMaxErrors = a});
+
 -- | The time the execution started.>
 aemExecutionStartTime :: Lens' AutomationExecutionMetadata (Maybe UTCTime)
 aemExecutionStartTime = lens _aemExecutionStartTime (\ s a -> s{_aemExecutionStartTime = a}) . mapping _Time;
+
+-- | The action of the currently executing step.
+aemCurrentAction :: Lens' AutomationExecutionMetadata (Maybe Text)
+aemCurrentAction = lens _aemCurrentAction (\ s a -> s{_aemCurrentAction = a});
+
+-- | The targets defined by the user when starting the Automation.
+aemTargets :: Lens' AutomationExecutionMetadata [Target]
+aemTargets = lens _aemTargets (\ s a -> s{_aemTargets = a}) . _Default . _Coerce;
+
+-- | A list of targets that resolved during the execution.
+aemResolvedTargets :: Lens' AutomationExecutionMetadata (Maybe ResolvedTargets)
+aemResolvedTargets = lens _aemResolvedTargets (\ s a -> s{_aemResolvedTargets = a});
 
 -- | The document version used during the execution.
 aemDocumentVersion :: Lens' AutomationExecutionMetadata (Maybe Text)
@@ -967,19 +1156,39 @@ aemDocumentVersion = lens _aemDocumentVersion (\ s a -> s{_aemDocumentVersion = 
 aemAutomationExecutionId :: Lens' AutomationExecutionMetadata (Maybe Text)
 aemAutomationExecutionId = lens _aemAutomationExecutionId (\ s a -> s{_aemAutomationExecutionId = a});
 
+-- | The MaxConcurrency value specified by the user when starting the Automation.
+aemMaxConcurrency :: Lens' AutomationExecutionMetadata (Maybe Text)
+aemMaxConcurrency = lens _aemMaxConcurrency (\ s a -> s{_aemMaxConcurrency = a});
+
+-- | The list of execution outputs as defined in the Automation document.
+aemTarget :: Lens' AutomationExecutionMetadata (Maybe Text)
+aemTarget = lens _aemTarget (\ s a -> s{_aemTarget = a});
+
 instance FromJSON AutomationExecutionMetadata where
         parseJSON
           = withObject "AutomationExecutionMetadata"
               (\ x ->
                  AutomationExecutionMetadata' <$>
-                   (x .:? "LogFile") <*> (x .:? "ExecutedBy") <*>
-                     (x .:? "DocumentName")
+                   (x .:? "CurrentStepName") <*>
+                     (x .:? "TargetParameterName")
+                     <*> (x .:? "LogFile")
+                     <*> (x .:? "ExecutedBy")
+                     <*> (x .:? "DocumentName")
                      <*> (x .:? "ExecutionEndTime")
+                     <*> (x .:? "FailureMessage")
+                     <*> (x .:? "Mode")
                      <*> (x .:? "AutomationExecutionStatus")
+                     <*> (x .:? "ParentAutomationExecutionId")
                      <*> (x .:? "Outputs" .!= mempty)
+                     <*> (x .:? "MaxErrors")
                      <*> (x .:? "ExecutionStartTime")
+                     <*> (x .:? "CurrentAction")
+                     <*> (x .:? "Targets" .!= mempty)
+                     <*> (x .:? "ResolvedTargets")
                      <*> (x .:? "DocumentVersion")
-                     <*> (x .:? "AutomationExecutionId"))
+                     <*> (x .:? "AutomationExecutionId")
+                     <*> (x .:? "MaxConcurrency")
+                     <*> (x .:? "Target"))
 
 instance Hashable AutomationExecutionMetadata where
 
@@ -2147,9 +2356,11 @@ data DocumentDescription = DocumentDescription'
   , _dSchemaVersion   :: !(Maybe Text)
   , _dSha1            :: !(Maybe Text)
   , _dDefaultVersion  :: !(Maybe Text)
+  , _dTargetType      :: !(Maybe Text)
   , _dOwner           :: !(Maybe Text)
   , _dPlatformTypes   :: !(Maybe [PlatformType])
   , _dCreatedDate     :: !(Maybe POSIX)
+  , _dDocumentFormat  :: !(Maybe DocumentFormat)
   , _dName            :: !(Maybe Text)
   , _dHashType        :: !(Maybe DocumentHashType)
   , _dParameters      :: !(Maybe [DocumentParameter])
@@ -2176,11 +2387,15 @@ data DocumentDescription = DocumentDescription'
 --
 -- * 'dDefaultVersion' - The default version.
 --
+-- * 'dTargetType' - The target type which defines the kinds of resources the document can run on. For example, /AWS::EC2::Instance. For a list of valid resource types, see <http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html AWS Resource Types Reference> in the /AWS CloudFormation User Guide/ .
+--
 -- * 'dOwner' - The AWS user account that created the document.
 --
 -- * 'dPlatformTypes' - The list of OS platforms compatible with this Systems Manager document.
 --
 -- * 'dCreatedDate' - The date when the document was created.
+--
+-- * 'dDocumentFormat' - The document format, either JSON or YAML.
 --
 -- * 'dName' - The name of the Systems Manager document.
 --
@@ -2205,9 +2420,11 @@ documentDescription =
   , _dSchemaVersion = Nothing
   , _dSha1 = Nothing
   , _dDefaultVersion = Nothing
+  , _dTargetType = Nothing
   , _dOwner = Nothing
   , _dPlatformTypes = Nothing
   , _dCreatedDate = Nothing
+  , _dDocumentFormat = Nothing
   , _dName = Nothing
   , _dHashType = Nothing
   , _dParameters = Nothing
@@ -2242,6 +2459,10 @@ dSha1 = lens _dSha1 (\ s a -> s{_dSha1 = a});
 dDefaultVersion :: Lens' DocumentDescription (Maybe Text)
 dDefaultVersion = lens _dDefaultVersion (\ s a -> s{_dDefaultVersion = a});
 
+-- | The target type which defines the kinds of resources the document can run on. For example, /AWS::EC2::Instance. For a list of valid resource types, see <http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html AWS Resource Types Reference> in the /AWS CloudFormation User Guide/ .
+dTargetType :: Lens' DocumentDescription (Maybe Text)
+dTargetType = lens _dTargetType (\ s a -> s{_dTargetType = a});
+
 -- | The AWS user account that created the document.
 dOwner :: Lens' DocumentDescription (Maybe Text)
 dOwner = lens _dOwner (\ s a -> s{_dOwner = a});
@@ -2253,6 +2474,10 @@ dPlatformTypes = lens _dPlatformTypes (\ s a -> s{_dPlatformTypes = a}) . _Defau
 -- | The date when the document was created.
 dCreatedDate :: Lens' DocumentDescription (Maybe UTCTime)
 dCreatedDate = lens _dCreatedDate (\ s a -> s{_dCreatedDate = a}) . mapping _Time;
+
+-- | The document format, either JSON or YAML.
+dDocumentFormat :: Lens' DocumentDescription (Maybe DocumentFormat)
+dDocumentFormat = lens _dDocumentFormat (\ s a -> s{_dDocumentFormat = a});
 
 -- | The name of the Systems Manager document.
 dName :: Lens' DocumentDescription (Maybe Text)
@@ -2292,9 +2517,11 @@ instance FromJSON DocumentDescription where
                      <*> (x .:? "SchemaVersion")
                      <*> (x .:? "Sha1")
                      <*> (x .:? "DefaultVersion")
+                     <*> (x .:? "TargetType")
                      <*> (x .:? "Owner")
                      <*> (x .:? "PlatformTypes" .!= mempty)
                      <*> (x .:? "CreatedDate")
+                     <*> (x .:? "DocumentFormat")
                      <*> (x .:? "Name")
                      <*> (x .:? "HashType")
                      <*> (x .:? "Parameters" .!= mempty)
@@ -2359,8 +2586,10 @@ instance ToJSON DocumentFilter where
 data DocumentIdentifier = DocumentIdentifier'
   { _diDocumentType    :: !(Maybe DocumentType)
   , _diSchemaVersion   :: !(Maybe Text)
+  , _diTargetType      :: !(Maybe Text)
   , _diOwner           :: !(Maybe Text)
   , _diPlatformTypes   :: !(Maybe [PlatformType])
+  , _diDocumentFormat  :: !(Maybe DocumentFormat)
   , _diName            :: !(Maybe Text)
   , _diDocumentVersion :: !(Maybe Text)
   , _diTags            :: !(Maybe [Tag])
@@ -2375,9 +2604,13 @@ data DocumentIdentifier = DocumentIdentifier'
 --
 -- * 'diSchemaVersion' - The schema version.
 --
+-- * 'diTargetType' - The target type which defines the kinds of resources the document can run on. For example, /AWS::EC2::Instance. For a list of valid resource types, see <http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html AWS Resource Types Reference> in the /AWS CloudFormation User Guide/ .
+--
 -- * 'diOwner' - The AWS user account that created the document.
 --
 -- * 'diPlatformTypes' - The operating system platform.
+--
+-- * 'diDocumentFormat' - The document format, either JSON or YAML.
 --
 -- * 'diName' - The name of the Systems Manager document.
 --
@@ -2390,8 +2623,10 @@ documentIdentifier =
   DocumentIdentifier'
   { _diDocumentType = Nothing
   , _diSchemaVersion = Nothing
+  , _diTargetType = Nothing
   , _diOwner = Nothing
   , _diPlatformTypes = Nothing
+  , _diDocumentFormat = Nothing
   , _diName = Nothing
   , _diDocumentVersion = Nothing
   , _diTags = Nothing
@@ -2406,6 +2641,10 @@ diDocumentType = lens _diDocumentType (\ s a -> s{_diDocumentType = a});
 diSchemaVersion :: Lens' DocumentIdentifier (Maybe Text)
 diSchemaVersion = lens _diSchemaVersion (\ s a -> s{_diSchemaVersion = a});
 
+-- | The target type which defines the kinds of resources the document can run on. For example, /AWS::EC2::Instance. For a list of valid resource types, see <http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html AWS Resource Types Reference> in the /AWS CloudFormation User Guide/ .
+diTargetType :: Lens' DocumentIdentifier (Maybe Text)
+diTargetType = lens _diTargetType (\ s a -> s{_diTargetType = a});
+
 -- | The AWS user account that created the document.
 diOwner :: Lens' DocumentIdentifier (Maybe Text)
 diOwner = lens _diOwner (\ s a -> s{_diOwner = a});
@@ -2413,6 +2652,10 @@ diOwner = lens _diOwner (\ s a -> s{_diOwner = a});
 -- | The operating system platform.
 diPlatformTypes :: Lens' DocumentIdentifier [PlatformType]
 diPlatformTypes = lens _diPlatformTypes (\ s a -> s{_diPlatformTypes = a}) . _Default . _Coerce;
+
+-- | The document format, either JSON or YAML.
+diDocumentFormat :: Lens' DocumentIdentifier (Maybe DocumentFormat)
+diDocumentFormat = lens _diDocumentFormat (\ s a -> s{_diDocumentFormat = a});
 
 -- | The name of the Systems Manager document.
 diName :: Lens' DocumentIdentifier (Maybe Text)
@@ -2432,8 +2675,10 @@ instance FromJSON DocumentIdentifier where
               (\ x ->
                  DocumentIdentifier' <$>
                    (x .:? "DocumentType") <*> (x .:? "SchemaVersion")
+                     <*> (x .:? "TargetType")
                      <*> (x .:? "Owner")
                      <*> (x .:? "PlatformTypes" .!= mempty)
+                     <*> (x .:? "DocumentFormat")
                      <*> (x .:? "Name")
                      <*> (x .:? "DocumentVersion")
                      <*> (x .:? "Tags" .!= mempty))
@@ -2574,6 +2819,7 @@ instance NFData DocumentParameter where
 -- /See:/ 'documentVersionInfo' smart constructor.
 data DocumentVersionInfo = DocumentVersionInfo'
   { _dviCreatedDate      :: !(Maybe POSIX)
+  , _dviDocumentFormat   :: !(Maybe DocumentFormat)
   , _dviName             :: !(Maybe Text)
   , _dviDocumentVersion  :: !(Maybe Text)
   , _dviIsDefaultVersion :: !(Maybe Bool)
@@ -2586,6 +2832,8 @@ data DocumentVersionInfo = DocumentVersionInfo'
 --
 -- * 'dviCreatedDate' - The date the document was created.
 --
+-- * 'dviDocumentFormat' - The document format, either JSON or YAML.
+--
 -- * 'dviName' - The document name.
 --
 -- * 'dviDocumentVersion' - The document version.
@@ -2596,6 +2844,7 @@ documentVersionInfo
 documentVersionInfo =
   DocumentVersionInfo'
   { _dviCreatedDate = Nothing
+  , _dviDocumentFormat = Nothing
   , _dviName = Nothing
   , _dviDocumentVersion = Nothing
   , _dviIsDefaultVersion = Nothing
@@ -2605,6 +2854,10 @@ documentVersionInfo =
 -- | The date the document was created.
 dviCreatedDate :: Lens' DocumentVersionInfo (Maybe UTCTime)
 dviCreatedDate = lens _dviCreatedDate (\ s a -> s{_dviCreatedDate = a}) . mapping _Time;
+
+-- | The document format, either JSON or YAML.
+dviDocumentFormat :: Lens' DocumentVersionInfo (Maybe DocumentFormat)
+dviDocumentFormat = lens _dviDocumentFormat (\ s a -> s{_dviDocumentFormat = a});
 
 -- | The document name.
 dviName :: Lens' DocumentVersionInfo (Maybe Text)
@@ -2623,8 +2876,9 @@ instance FromJSON DocumentVersionInfo where
           = withObject "DocumentVersionInfo"
               (\ x ->
                  DocumentVersionInfo' <$>
-                   (x .:? "CreatedDate") <*> (x .:? "Name") <*>
-                     (x .:? "DocumentVersion")
+                   (x .:? "CreatedDate") <*> (x .:? "DocumentFormat")
+                     <*> (x .:? "Name")
+                     <*> (x .:? "DocumentVersion")
                      <*> (x .:? "IsDefaultVersion"))
 
 instance Hashable DocumentVersionInfo where
@@ -3609,6 +3863,49 @@ instance ToJSON InstancePatchStateFilter where
                   Just ("Values" .= _ipsfValues),
                   Just ("Type" .= _ipsfType)])
 
+-- | Specifies the inventory type and attribute for the aggregation execution.
+--
+--
+--
+-- /See:/ 'inventoryAggregator' smart constructor.
+data InventoryAggregator = InventoryAggregator'
+  { _iaAggregators :: !(Maybe (List1 InventoryAggregator))
+  , _iaExpression  :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'InventoryAggregator' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'iaAggregators' - Nested aggregators to further refine aggregation for an inventory type.
+--
+-- * 'iaExpression' - The inventory type and attribute name for aggregation.
+inventoryAggregator
+    :: InventoryAggregator
+inventoryAggregator =
+  InventoryAggregator' {_iaAggregators = Nothing, _iaExpression = Nothing}
+
+
+-- | Nested aggregators to further refine aggregation for an inventory type.
+iaAggregators :: Lens' InventoryAggregator (Maybe (NonEmpty InventoryAggregator))
+iaAggregators = lens _iaAggregators (\ s a -> s{_iaAggregators = a}) . mapping _List1;
+
+-- | The inventory type and attribute name for aggregation.
+iaExpression :: Lens' InventoryAggregator (Maybe Text)
+iaExpression = lens _iaExpression (\ s a -> s{_iaExpression = a});
+
+instance Hashable InventoryAggregator where
+
+instance NFData InventoryAggregator where
+
+instance ToJSON InventoryAggregator where
+        toJSON InventoryAggregator'{..}
+          = object
+              (catMaybes
+                 [("Aggregators" .=) <$> _iaAggregators,
+                  ("Expression" .=) <$> _iaExpression])
+
 -- | One or more filters. Use a filter to return a more specific list of results.
 --
 --
@@ -3798,9 +4095,10 @@ instance NFData InventoryItemAttribute where
 --
 -- /See:/ 'inventoryItemSchema' smart constructor.
 data InventoryItemSchema = InventoryItemSchema'
-  { _iisVersion    :: !(Maybe Text)
-  , _iisTypeName   :: !Text
-  , _iisAttributes :: !(List1 InventoryItemAttribute)
+  { _iisVersion     :: !(Maybe Text)
+  , _iisDisplayName :: !(Maybe Text)
+  , _iisTypeName    :: !Text
+  , _iisAttributes  :: !(List1 InventoryItemAttribute)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -3809,6 +4107,8 @@ data InventoryItemSchema = InventoryItemSchema'
 -- Use one of the following lenses to modify other fields as desired:
 --
 -- * 'iisVersion' - The schema version for the inventory item.
+--
+-- * 'iisDisplayName' - The alias name of the inventory type. The alias name is used for display purposes.
 --
 -- * 'iisTypeName' - The name of the inventory type. Default inventory item type names start with AWS. Custom inventory type names will start with Custom. Default inventory item types include the following: AWS:AWSComponent, AWS:Application, AWS:InstanceInformation, AWS:Network, and AWS:WindowsUpdate.
 --
@@ -3820,6 +4120,7 @@ inventoryItemSchema
 inventoryItemSchema pTypeName_ pAttributes_ =
   InventoryItemSchema'
   { _iisVersion = Nothing
+  , _iisDisplayName = Nothing
   , _iisTypeName = pTypeName_
   , _iisAttributes = _List1 # pAttributes_
   }
@@ -3828,6 +4129,10 @@ inventoryItemSchema pTypeName_ pAttributes_ =
 -- | The schema version for the inventory item.
 iisVersion :: Lens' InventoryItemSchema (Maybe Text)
 iisVersion = lens _iisVersion (\ s a -> s{_iisVersion = a});
+
+-- | The alias name of the inventory type. The alias name is used for display purposes.
+iisDisplayName :: Lens' InventoryItemSchema (Maybe Text)
+iisDisplayName = lens _iisDisplayName (\ s a -> s{_iisDisplayName = a});
 
 -- | The name of the inventory type. Default inventory item type names start with AWS. Custom inventory type names will start with Custom. Default inventory item types include the following: AWS:AWSComponent, AWS:Application, AWS:InstanceInformation, AWS:Network, and AWS:WindowsUpdate.
 iisTypeName :: Lens' InventoryItemSchema Text
@@ -3842,8 +4147,9 @@ instance FromJSON InventoryItemSchema where
           = withObject "InventoryItemSchema"
               (\ x ->
                  InventoryItemSchema' <$>
-                   (x .:? "Version") <*> (x .: "TypeName") <*>
-                     (x .: "Attributes"))
+                   (x .:? "Version") <*> (x .:? "DisplayName") <*>
+                     (x .: "TypeName")
+                     <*> (x .: "Attributes"))
 
 instance Hashable InventoryItemSchema where
 
@@ -3864,7 +4170,7 @@ data InventoryResultEntity = InventoryResultEntity'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ireData' - The data section in the inventory result entity json.
+-- * 'ireData' - The data section in the inventory result entity JSON.
 --
 -- * 'ireId' - ID of the inventory result entity. For example, for managed instance inventory the result will be the managed instance ID. For EC2 instance inventory, the result will be the instance ID.
 inventoryResultEntity
@@ -3873,7 +4179,7 @@ inventoryResultEntity =
   InventoryResultEntity' {_ireData = Nothing, _ireId = Nothing}
 
 
--- | The data section in the inventory result entity json.
+-- | The data section in the inventory result entity JSON.
 ireData :: Lens' InventoryResultEntity (HashMap Text InventoryResultItem)
 ireData = lens _ireData (\ s a -> s{_ireData = a}) . _Default . _Map;
 
@@ -5235,7 +5541,7 @@ data NotificationConfig = NotificationConfig'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ncNotificationEvents' - The different events for which you can receive notifications. These events include the following: All (events), InProgress, Success, TimedOut, Cancelled, Failed. To learn more about these events, see <http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-commands.html Setting Up Events and Notifications> in the /Amazon EC2 Systems Manager User Guide/ .
+-- * 'ncNotificationEvents' - The different events for which you can receive notifications. These events include the following: All (events), InProgress, Success, TimedOut, Cancelled, Failed. To learn more about these events, see <http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-commands.html Setting Up Events and Notifications> in the /AWS Systems Manager User Guide/ .
 --
 -- * 'ncNotificationType' - Command: Receive notification when the status of a command changes. Invocation: For commands sent to multiple instances, receive notification on a per-instance basis when the status of a command changes.
 --
@@ -5250,7 +5556,7 @@ notificationConfig =
   }
 
 
--- | The different events for which you can receive notifications. These events include the following: All (events), InProgress, Success, TimedOut, Cancelled, Failed. To learn more about these events, see <http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-commands.html Setting Up Events and Notifications> in the /Amazon EC2 Systems Manager User Guide/ .
+-- | The different events for which you can receive notifications. These events include the following: All (events), InProgress, Success, TimedOut, Cancelled, Failed. To learn more about these events, see <http://docs.aws.amazon.com/systems-manager/latest/userguide/monitor-commands.html Setting Up Events and Notifications> in the /AWS Systems Manager User Guide/ .
 ncNotificationEvents :: Lens' NotificationConfig [NotificationEvent]
 ncNotificationEvents = lens _ncNotificationEvents (\ s a -> s{_ncNotificationEvents = a}) . _Default . _Coerce;
 
@@ -5605,7 +5911,7 @@ instance ToJSON ParameterStringFilter where
                   ("Option" .=) <$> _psfOption,
                   Just ("Key" .= _psfKey)])
 
--- | One or more filters. Use a filter to return a more specific list of results.
+-- | This data type is deprecated. Instead, use 'ParameterStringFilter' .
 --
 --
 --
@@ -5816,7 +6122,7 @@ data PatchBaselineIdentity = PatchBaselineIdentity'
 --
 -- * 'pbiBaselineDescription' - The description of the patch baseline.
 --
--- * 'pbiOperatingSystem' - Defines the operating system the patch baseline applies to. Supported operating systems include WINDOWS, AMAZON_LINUX, UBUNTU and REDHAT_ENTERPRISE_LINUX. The Default value is WINDOWS.
+-- * 'pbiOperatingSystem' - Defines the operating system the patch baseline applies to. The Default value is WINDOWS.
 --
 -- * 'pbiDefaultBaseline' - Whether this is the default baseline. Note that Systems Manager supports creating multiple default patch baselines. For example, you can create a default patch baseline for each operating system.
 --
@@ -5841,7 +6147,7 @@ pbiBaselineName = lens _pbiBaselineName (\ s a -> s{_pbiBaselineName = a});
 pbiBaselineDescription :: Lens' PatchBaselineIdentity (Maybe Text)
 pbiBaselineDescription = lens _pbiBaselineDescription (\ s a -> s{_pbiBaselineDescription = a});
 
--- | Defines the operating system the patch baseline applies to. Supported operating systems include WINDOWS, AMAZON_LINUX, UBUNTU and REDHAT_ENTERPRISE_LINUX. The Default value is WINDOWS.
+-- | Defines the operating system the patch baseline applies to. The Default value is WINDOWS.
 pbiOperatingSystem :: Lens' PatchBaselineIdentity (Maybe OperatingSystem)
 pbiOperatingSystem = lens _pbiOperatingSystem (\ s a -> s{_pbiOperatingSystem = a});
 
@@ -5959,6 +6265,242 @@ instance NFData PatchComplianceData where
 -- | Defines a patch filter.
 --
 --
+-- A patch filter consists of key/value pairs, but not all keys are valid for all operating system types. For example, the key @PRODUCT@ is valid for all supported operating system types. The key @MSRC_SEVERITY@ , however, is valid only for Windows operating systems, and the key @SECTION@ is valid only for Ubuntu operating systems.
+--
+-- Refer to the following sections for information about which keys may be used with each major operating system, and which values are valid for each key.
+--
+-- __Windows Operating Systems__
+--
+-- The supported keys for Windows operating systems are @PRODUCT@ , @CLASSIFICATION@ , and @MSRC_SEVERITY@ . See the following lists for valid values for each of these keys.
+--
+-- /Supported key:/ @PRODUCT@
+--
+-- /Supported values:/
+--
+--     * @Windows7@
+--
+--     * @Windows8@
+--
+--     * @Windows8.1@
+--
+--     * @Windows8Embedded@
+--
+--     * @Windows10@
+--
+--     * @Windows10LTSB@
+--
+--     * @WindowsServer2008@
+--
+--     * @WindowsServer2008R2@
+--
+--     * @WindowsServer2012@
+--
+--     * @WindowsServer2012R2@
+--
+--     * @WindowsServer2016@
+--
+--
+--
+-- /Supported key:/ @CLASSIFICATION@
+--
+-- /Supported values:/
+--
+--     * @CriticalUpdates@
+--
+--     * @DefinitionUpdates@
+--
+--     * @Drivers@
+--
+--     * @FeaturePacks@
+--
+--     * @SecurityUpdates@
+--
+--     * @ServicePacks@
+--
+--     * @Tools@
+--
+--     * @UpdateRollups@
+--
+--     * @Updates@
+--
+--     * @Upgrades@
+--
+--
+--
+-- /Supported key:/ @MSRC_SEVERITY@
+--
+-- /Supported values:/
+--
+--     * @Critical@
+--
+--     * @Important@
+--
+--     * @Moderate@
+--
+--     * @Low@
+--
+--     * @Unspecified@
+--
+--
+--
+-- __Ubuntu Operating Systems__
+--
+-- The supported keys for Ubuntu operating systems are @PRODUCT@ , @PRIORITY@ , and @SECTION@ . See the following lists for valid values for each of these keys.
+--
+-- /Supported key:/ @PRODUCT@
+--
+-- /Supported values:/
+--
+--     * @Ubuntu14.04@
+--
+--     * @Ubuntu16.04@
+--
+--
+--
+-- /Supported key:/ @PRIORITY@
+--
+-- /Supported values:/
+--
+--     * @Required@
+--
+--     * @Important@
+--
+--     * @Standard@
+--
+--     * @Optional@
+--
+--     * @Extra@
+--
+--
+--
+-- /Supported key:/ @SECTION@
+--
+-- Only the length of the key value is validated. Minimum length is 1. Maximum length is 64.
+--
+-- __Amazon Linux Operating Systems__
+--
+-- The supported keys for Amazon Linux operating systems are @PRODUCT@ , @CLASSIFICATION@ , and @SEVERITY@ . See the following lists for valid values for each of these keys.
+--
+-- /Supported key:/ @PRODUCT@
+--
+-- /Supported values:/
+--
+--     * @AmazonLinux2012.03@
+--
+--     * @AmazonLinux2012.09@
+--
+--     * @AmazonLinux2013.03@
+--
+--     * @AmazonLinux2013.09@
+--
+--     * @AmazonLinux2014.03@
+--
+--     * @AmazonLinux2014.09@
+--
+--     * @AmazonLinux2015.03@
+--
+--     * @AmazonLinux2015.09@
+--
+--     * @AmazonLinux2016.03@
+--
+--     * @AmazonLinux2016.09@
+--
+--     * @AmazonLinux2017.03@
+--
+--     * @AmazonLinux2017.09@
+--
+--
+--
+-- /Supported key:/ @CLASSIFICATION@
+--
+-- /Supported values:/
+--
+--     * @Security@
+--
+--     * @Bugfix@
+--
+--     * @Enhancement@
+--
+--     * @Recommended@
+--
+--     * @Newpackage@
+--
+--
+--
+-- /Supported key:/ @SEVERITY@
+--
+-- /Supported values:/
+--
+--     * @Critical@
+--
+--     * @Important@
+--
+--     * @Medium@
+--
+--     * @Low@
+--
+--
+--
+-- __RedHat Enterprise Linux (RHEL) Operating Systems__
+--
+-- The supported keys for RedHat Enterprise Linux operating systems are @PRODUCT@ , @CLASSIFICATION@ , and @SEVERITY@ . See the following lists for valid values for each of these keys.
+--
+-- /Supported key:/ @PRODUCT@
+--
+-- /Supported values:/
+--
+--     * @RedhatEnterpriseLinux6.5@
+--
+--     * @RedhatEnterpriseLinux6.6@
+--
+--     * @RedhatEnterpriseLinux6.7@
+--
+--     * @RedhatEnterpriseLinux6.8@
+--
+--     * @RedhatEnterpriseLinux6.9@
+--
+--     * @RedhatEnterpriseLinux7.0@
+--
+--     * @RedhatEnterpriseLinux7.1@
+--
+--     * @RedhatEnterpriseLinux7.2@
+--
+--     * @RedhatEnterpriseLinux7.3@
+--
+--     * @RedhatEnterpriseLinux7.4@
+--
+--
+--
+-- /Supported key:/ @CLASSIFICATION@
+--
+-- /Supported values:/
+--
+--     * @Security@
+--
+--     * @Bugfix@
+--
+--     * @Enhancement@
+--
+--     * @Recommended@
+--
+--     * @Newpackage@
+--
+--
+--
+-- /Supported key:/ @SEVERITY@
+--
+-- /Supported values:/
+--
+--     * @Critical@
+--
+--     * @Important@
+--
+--     * @Medium@
+--
+--     * @Low@
+--
+--
+--
 --
 -- /See:/ 'patchFilter' smart constructor.
 data PatchFilter = PatchFilter'
@@ -5971,9 +6513,9 @@ data PatchFilter = PatchFilter'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'pfKey' - The key for the filter (PRODUCT, CLASSIFICATION, MSRC_SEVERITY, PATCH_ID)
+-- * 'pfKey' - The key for the filter. See 'PatchFilter' for lists of valid keys for each operating system type.
 --
--- * 'pfValues' - The value for the filter key.
+-- * 'pfValues' - The value for the filter key. See 'PatchFilter' for lists of valid values for each key based on operating system type.
 patchFilter
     :: PatchFilterKey -- ^ 'pfKey'
     -> NonEmpty Text -- ^ 'pfValues'
@@ -5982,11 +6524,11 @@ patchFilter pKey_ pValues_ =
   PatchFilter' {_pfKey = pKey_, _pfValues = _List1 # pValues_}
 
 
--- | The key for the filter (PRODUCT, CLASSIFICATION, MSRC_SEVERITY, PATCH_ID)
+-- | The key for the filter. See 'PatchFilter' for lists of valid keys for each operating system type.
 pfKey :: Lens' PatchFilter PatchFilterKey
 pfKey = lens _pfKey (\ s a -> s{_pfKey = a});
 
--- | The value for the filter key.
+-- | The value for the filter key. See 'PatchFilter' for lists of valid values for each key based on operating system type.
 pfValues :: Lens' PatchFilter (NonEmpty Text)
 pfValues = lens _pfValues (\ s a -> s{_pfValues = a}) . _List1;
 
@@ -6296,6 +6838,50 @@ instance FromJSON PatchStatus where
 instance Hashable PatchStatus where
 
 instance NFData PatchStatus where
+
+-- | Information about targets that resolved during the Automation execution.
+--
+--
+--
+-- /See:/ 'resolvedTargets' smart constructor.
+data ResolvedTargets = ResolvedTargets'
+  { _rtTruncated       :: !(Maybe Bool)
+  , _rtParameterValues :: !(Maybe [Text])
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ResolvedTargets' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rtTruncated' - A boolean value indicating whether the resolved target list is truncated.
+--
+-- * 'rtParameterValues' - A list of parameter values sent to targets that resolved during the Automation execution.
+resolvedTargets
+    :: ResolvedTargets
+resolvedTargets =
+  ResolvedTargets' {_rtTruncated = Nothing, _rtParameterValues = Nothing}
+
+
+-- | A boolean value indicating whether the resolved target list is truncated.
+rtTruncated :: Lens' ResolvedTargets (Maybe Bool)
+rtTruncated = lens _rtTruncated (\ s a -> s{_rtTruncated = a});
+
+-- | A list of parameter values sent to targets that resolved during the Automation execution.
+rtParameterValues :: Lens' ResolvedTargets [Text]
+rtParameterValues = lens _rtParameterValues (\ s a -> s{_rtParameterValues = a}) . _Default . _Coerce;
+
+instance FromJSON ResolvedTargets where
+        parseJSON
+          = withObject "ResolvedTargets"
+              (\ x ->
+                 ResolvedTargets' <$>
+                   (x .:? "Truncated") <*>
+                     (x .:? "ParameterValues" .!= mempty))
+
+instance Hashable ResolvedTargets where
+
+instance NFData ResolvedTargets where
 
 -- | Compliance summary information for a specific resource.
 --
@@ -6785,17 +7371,22 @@ instance NFData SeveritySummary where
 --
 -- /See:/ 'stepExecution' smart constructor.
 data StepExecution = StepExecution'
-  { _seFailureDetails     :: !(Maybe FailureDetails)
-  , _seInputs             :: !(Maybe (Map Text Text))
-  , _seStepName           :: !(Maybe Text)
-  , _seExecutionEndTime   :: !(Maybe POSIX)
-  , _seFailureMessage     :: !(Maybe Text)
-  , _seResponse           :: !(Maybe Text)
-  , _seAction             :: !(Maybe Text)
-  , _seResponseCode       :: !(Maybe Text)
-  , _seStepStatus         :: !(Maybe AutomationExecutionStatus)
-  , _seOutputs            :: !(Maybe (Map Text [Text]))
-  , _seExecutionStartTime :: !(Maybe POSIX)
+  { _seFailureDetails       :: !(Maybe FailureDetails)
+  , _seInputs               :: !(Maybe (Map Text Text))
+  , _seStepName             :: !(Maybe Text)
+  , _seExecutionEndTime     :: !(Maybe POSIX)
+  , _seFailureMessage       :: !(Maybe Text)
+  , _seResponse             :: !(Maybe Text)
+  , _seAction               :: !(Maybe Text)
+  , _seResponseCode         :: !(Maybe Text)
+  , _seStepStatus           :: !(Maybe AutomationExecutionStatus)
+  , _seOverriddenParameters :: !(Maybe (Map Text [Text]))
+  , _seOutputs              :: !(Maybe (Map Text [Text]))
+  , _seExecutionStartTime   :: !(Maybe POSIX)
+  , _seMaxAttempts          :: !(Maybe Int)
+  , _seStepExecutionId      :: !(Maybe Text)
+  , _seTimeoutSeconds       :: !(Maybe Integer)
+  , _seOnFailure            :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -6821,9 +7412,19 @@ data StepExecution = StepExecution'
 --
 -- * 'seStepStatus' - The execution status for this step. Valid values include: Pending, InProgress, Success, Cancelled, Failed, and TimedOut.
 --
+-- * 'seOverriddenParameters' - A user-specified list of parameters to override when executing a step.
+--
 -- * 'seOutputs' - Returned values from the execution of the step.
 --
 -- * 'seExecutionStartTime' - If a step has begun execution, this contains the time the step started. If the step is in Pending status, this field is not populated.
+--
+-- * 'seMaxAttempts' - The maximum number of tries to run the action of the step. The default value is 1.
+--
+-- * 'seStepExecutionId' - The unique ID of a step execution.
+--
+-- * 'seTimeoutSeconds' - The timeout seconds of the step.
+--
+-- * 'seOnFailure' - The action to take if the step fails. The default value is Abort.
 stepExecution
     :: StepExecution
 stepExecution =
@@ -6837,8 +7438,13 @@ stepExecution =
   , _seAction = Nothing
   , _seResponseCode = Nothing
   , _seStepStatus = Nothing
+  , _seOverriddenParameters = Nothing
   , _seOutputs = Nothing
   , _seExecutionStartTime = Nothing
+  , _seMaxAttempts = Nothing
+  , _seStepExecutionId = Nothing
+  , _seTimeoutSeconds = Nothing
+  , _seOnFailure = Nothing
   }
 
 
@@ -6878,6 +7484,10 @@ seResponseCode = lens _seResponseCode (\ s a -> s{_seResponseCode = a});
 seStepStatus :: Lens' StepExecution (Maybe AutomationExecutionStatus)
 seStepStatus = lens _seStepStatus (\ s a -> s{_seStepStatus = a});
 
+-- | A user-specified list of parameters to override when executing a step.
+seOverriddenParameters :: Lens' StepExecution (HashMap Text [Text])
+seOverriddenParameters = lens _seOverriddenParameters (\ s a -> s{_seOverriddenParameters = a}) . _Default . _Map;
+
 -- | Returned values from the execution of the step.
 seOutputs :: Lens' StepExecution (HashMap Text [Text])
 seOutputs = lens _seOutputs (\ s a -> s{_seOutputs = a}) . _Default . _Map;
@@ -6885,6 +7495,22 @@ seOutputs = lens _seOutputs (\ s a -> s{_seOutputs = a}) . _Default . _Map;
 -- | If a step has begun execution, this contains the time the step started. If the step is in Pending status, this field is not populated.
 seExecutionStartTime :: Lens' StepExecution (Maybe UTCTime)
 seExecutionStartTime = lens _seExecutionStartTime (\ s a -> s{_seExecutionStartTime = a}) . mapping _Time;
+
+-- | The maximum number of tries to run the action of the step. The default value is 1.
+seMaxAttempts :: Lens' StepExecution (Maybe Int)
+seMaxAttempts = lens _seMaxAttempts (\ s a -> s{_seMaxAttempts = a});
+
+-- | The unique ID of a step execution.
+seStepExecutionId :: Lens' StepExecution (Maybe Text)
+seStepExecutionId = lens _seStepExecutionId (\ s a -> s{_seStepExecutionId = a});
+
+-- | The timeout seconds of the step.
+seTimeoutSeconds :: Lens' StepExecution (Maybe Integer)
+seTimeoutSeconds = lens _seTimeoutSeconds (\ s a -> s{_seTimeoutSeconds = a});
+
+-- | The action to take if the step fails. The default value is Abort.
+seOnFailure :: Lens' StepExecution (Maybe Text)
+seOnFailure = lens _seOnFailure (\ s a -> s{_seOnFailure = a});
 
 instance FromJSON StepExecution where
         parseJSON
@@ -6900,12 +7526,62 @@ instance FromJSON StepExecution where
                      <*> (x .:? "Action")
                      <*> (x .:? "ResponseCode")
                      <*> (x .:? "StepStatus")
+                     <*> (x .:? "OverriddenParameters" .!= mempty)
                      <*> (x .:? "Outputs" .!= mempty)
-                     <*> (x .:? "ExecutionStartTime"))
+                     <*> (x .:? "ExecutionStartTime")
+                     <*> (x .:? "MaxAttempts")
+                     <*> (x .:? "StepExecutionId")
+                     <*> (x .:? "TimeoutSeconds")
+                     <*> (x .:? "OnFailure"))
 
 instance Hashable StepExecution where
 
 instance NFData StepExecution where
+
+-- | A filter to limit the amount of step execution information returned by the call.
+--
+--
+--
+-- /See:/ 'stepExecutionFilter' smart constructor.
+data StepExecutionFilter = StepExecutionFilter'
+  { _sefKey    :: !StepExecutionFilterKey
+  , _sefValues :: !(List1 Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'StepExecutionFilter' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'sefKey' - One or more keys to limit the results. Valid filter keys include the following: StepName, Action, StepExecutionId, StepExecutionStatus, StartTimeBefore, StartTimeAfter.
+--
+-- * 'sefValues' - The values of the filter key.
+stepExecutionFilter
+    :: StepExecutionFilterKey -- ^ 'sefKey'
+    -> NonEmpty Text -- ^ 'sefValues'
+    -> StepExecutionFilter
+stepExecutionFilter pKey_ pValues_ =
+  StepExecutionFilter' {_sefKey = pKey_, _sefValues = _List1 # pValues_}
+
+
+-- | One or more keys to limit the results. Valid filter keys include the following: StepName, Action, StepExecutionId, StepExecutionStatus, StartTimeBefore, StartTimeAfter.
+sefKey :: Lens' StepExecutionFilter StepExecutionFilterKey
+sefKey = lens _sefKey (\ s a -> s{_sefKey = a});
+
+-- | The values of the filter key.
+sefValues :: Lens' StepExecutionFilter (NonEmpty Text)
+sefValues = lens _sefValues (\ s a -> s{_sefValues = a}) . _List1;
+
+instance Hashable StepExecutionFilter where
+
+instance NFData StepExecutionFilter where
+
+instance ToJSON StepExecutionFilter where
+        toJSON StepExecutionFilter'{..}
+          = object
+              (catMaybes
+                 [Just ("Key" .= _sefKey),
+                  Just ("Values" .= _sefValues)])
 
 -- | Metadata that you assign to your AWS resources. Tags enable you to categorize your resources in different ways, for example, by purpose, owner, or environment. In Systems Manager, you can apply tags to documents, managed instances, Maintenance Windows, Parameter Store parameters, and patch baselines.
 --

@@ -448,6 +448,39 @@ instance ToHeader     ExecutionStatus
 instance FromJSON ExecutionStatus where
     parseJSON = parseJSONText "ExecutionStatus"
 
+data InteractionMode
+  = Interactive
+  | NoVideo
+  | VideoOnly
+  deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
+
+
+instance FromText InteractionMode where
+    parser = takeLowerText >>= \case
+        "interactive" -> pure Interactive
+        "no_video" -> pure NoVideo
+        "video_only" -> pure VideoOnly
+        e -> fromTextError $ "Failure parsing InteractionMode from value: '" <> e
+           <> "'. Accepted values: interactive, no_video, video_only"
+
+instance ToText InteractionMode where
+    toText = \case
+        Interactive -> "INTERACTIVE"
+        NoVideo -> "NO_VIDEO"
+        VideoOnly -> "VIDEO_ONLY"
+
+instance Hashable     InteractionMode
+instance NFData       InteractionMode
+instance ToByteString InteractionMode
+instance ToQuery      InteractionMode
+instance ToHeader     InteractionMode
+
+instance ToJSON InteractionMode where
+    toJSON = toJSONText
+
+instance FromJSON InteractionMode where
+    parseJSON = parseJSONText "InteractionMode"
+
 data NetworkProfileType
   = Curated
   | Private
@@ -681,8 +714,11 @@ data TestType
   | BuiltinFuzz
   | Calabash
   | Instrumentation
+  | RemoteAccessRecord
+  | RemoteAccessReplay
   | Uiautomation
   | Uiautomator
+  | WebPerformanceProfile
   | Xctest
   | XctestUi
   deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
@@ -700,12 +736,15 @@ instance FromText TestType where
         "builtin_fuzz" -> pure BuiltinFuzz
         "calabash" -> pure Calabash
         "instrumentation" -> pure Instrumentation
+        "remote_access_record" -> pure RemoteAccessRecord
+        "remote_access_replay" -> pure RemoteAccessReplay
         "uiautomation" -> pure Uiautomation
         "uiautomator" -> pure Uiautomator
+        "web_performance_profile" -> pure WebPerformanceProfile
         "xctest" -> pure Xctest
         "xctest_ui" -> pure XctestUi
         e -> fromTextError $ "Failure parsing TestType from value: '" <> e
-           <> "'. Accepted values: appium_java_junit, appium_java_testng, appium_python, appium_web_java_junit, appium_web_java_testng, appium_web_python, builtin_explorer, builtin_fuzz, calabash, instrumentation, uiautomation, uiautomator, xctest, xctest_ui"
+           <> "'. Accepted values: appium_java_junit, appium_java_testng, appium_python, appium_web_java_junit, appium_web_java_testng, appium_web_python, builtin_explorer, builtin_fuzz, calabash, instrumentation, remote_access_record, remote_access_replay, uiautomation, uiautomator, web_performance_profile, xctest, xctest_ui"
 
 instance ToText TestType where
     toText = \case
@@ -719,8 +758,11 @@ instance ToText TestType where
         BuiltinFuzz -> "BUILTIN_FUZZ"
         Calabash -> "CALABASH"
         Instrumentation -> "INSTRUMENTATION"
+        RemoteAccessRecord -> "REMOTE_ACCESS_RECORD"
+        RemoteAccessReplay -> "REMOTE_ACCESS_REPLAY"
         Uiautomation -> "UIAUTOMATION"
         Uiautomator -> "UIAUTOMATOR"
+        WebPerformanceProfile -> "WEB_PERFORMANCE_PROFILE"
         Xctest -> "XCTEST"
         XctestUi -> "XCTEST_UI"
 

@@ -60,7 +60,7 @@ newtype StopReplicationTask = StopReplicationTask'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'sReplicationTaskARN' - The Amazon Resource Number(ARN) of the replication task to be stopped.
+-- * 'sReplicationTaskARN' - The Amazon Resource Name(ARN) of the replication task to be stopped.
 stopReplicationTask
     :: Text -- ^ 'sReplicationTaskARN'
     -> StopReplicationTask
@@ -68,7 +68,7 @@ stopReplicationTask pReplicationTaskARN_ =
   StopReplicationTask' {_sReplicationTaskARN = pReplicationTaskARN_}
 
 
--- | The Amazon Resource Number(ARN) of the replication task to be stopped.
+-- | The Amazon Resource Name(ARN) of the replication task to be stopped.
 sReplicationTaskARN :: Lens' StopReplicationTask Text
 sReplicationTaskARN = lens _sReplicationTaskARN (\ s a -> s{_sReplicationTaskARN = a});
 

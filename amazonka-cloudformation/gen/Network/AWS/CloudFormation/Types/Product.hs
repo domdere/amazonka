@@ -371,6 +371,7 @@ instance NFData Output where
 -- /See:/ 'parameter' smart constructor.
 data Parameter = Parameter'
   { _pParameterValue   :: !(Maybe Text)
+  , _pResolvedValue    :: !(Maybe Text)
   , _pParameterKey     :: !(Maybe Text)
   , _pUsePreviousValue :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -380,7 +381,9 @@ data Parameter = Parameter'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'pParameterValue' - The value associated with the parameter.
+-- * 'pParameterValue' - The input value associated with the parameter.
+--
+-- * 'pResolvedValue' - Read-only. The value that corresponds to a Systems Manager parameter key. This field is returned only for <http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html#aws-ssm-parameter-types @SSM@ parameter types> in the template.
 --
 -- * 'pParameterKey' - The key associated with the parameter. If you don't specify a key and value for a particular parameter, AWS CloudFormation uses the default value that is specified in your template.
 --
@@ -390,14 +393,19 @@ parameter
 parameter =
   Parameter'
   { _pParameterValue = Nothing
+  , _pResolvedValue = Nothing
   , _pParameterKey = Nothing
   , _pUsePreviousValue = Nothing
   }
 
 
--- | The value associated with the parameter.
+-- | The input value associated with the parameter.
 pParameterValue :: Lens' Parameter (Maybe Text)
 pParameterValue = lens _pParameterValue (\ s a -> s{_pParameterValue = a});
+
+-- | Read-only. The value that corresponds to a Systems Manager parameter key. This field is returned only for <http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html#aws-ssm-parameter-types @SSM@ parameter types> in the template.
+pResolvedValue :: Lens' Parameter (Maybe Text)
+pResolvedValue = lens _pResolvedValue (\ s a -> s{_pResolvedValue = a});
 
 -- | The key associated with the parameter. If you don't specify a key and value for a particular parameter, AWS CloudFormation uses the default value that is specified in your template.
 pParameterKey :: Lens' Parameter (Maybe Text)
@@ -410,7 +418,8 @@ pUsePreviousValue = lens _pUsePreviousValue (\ s a -> s{_pUsePreviousValue = a})
 instance FromXML Parameter where
         parseXML x
           = Parameter' <$>
-              (x .@? "ParameterValue") <*> (x .@? "ParameterKey")
+              (x .@? "ParameterValue") <*> (x .@? "ResolvedValue")
+                <*> (x .@? "ParameterKey")
                 <*> (x .@? "UsePreviousValue")
 
 instance Hashable Parameter where
@@ -421,6 +430,7 @@ instance ToQuery Parameter where
         toQuery Parameter'{..}
           = mconcat
               ["ParameterValue" =: _pParameterValue,
+               "ResolvedValue" =: _pResolvedValue,
                "ParameterKey" =: _pParameterKey,
                "UsePreviousValue" =: _pUsePreviousValue]
 
@@ -1217,12 +1227,13 @@ instance NFData StackEvent where
 --
 -- /See:/ 'stackInstance' smart constructor.
 data StackInstance = StackInstance'
-  { _siStatus       :: !(Maybe StackInstanceStatus)
-  , _siAccount      :: !(Maybe Text)
-  , _siRegion       :: !(Maybe Text)
-  , _siStatusReason :: !(Maybe Text)
-  , _siStackId      :: !(Maybe Text)
-  , _siStackSetId   :: !(Maybe Text)
+  { _siStatus             :: !(Maybe StackInstanceStatus)
+  , _siAccount            :: !(Maybe Text)
+  , _siRegion             :: !(Maybe Text)
+  , _siStatusReason       :: !(Maybe Text)
+  , _siStackId            :: !(Maybe Text)
+  , _siParameterOverrides :: !(Maybe [Parameter])
+  , _siStackSetId         :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1240,6 +1251,8 @@ data StackInstance = StackInstance'
 --
 -- * 'siStackId' - The ID of the stack instance.
 --
+-- * 'siParameterOverrides' - A list of parameters from the stack set template whose values have been overridden in this stack instance.
+--
 -- * 'siStackSetId' - The name or unique ID of the stack set that the stack instance is associated with.
 stackInstance
     :: StackInstance
@@ -1250,6 +1263,7 @@ stackInstance =
   , _siRegion = Nothing
   , _siStatusReason = Nothing
   , _siStackId = Nothing
+  , _siParameterOverrides = Nothing
   , _siStackSetId = Nothing
   }
 
@@ -1274,6 +1288,10 @@ siStatusReason = lens _siStatusReason (\ s a -> s{_siStatusReason = a});
 siStackId :: Lens' StackInstance (Maybe Text)
 siStackId = lens _siStackId (\ s a -> s{_siStackId = a});
 
+-- | A list of parameters from the stack set template whose values have been overridden in this stack instance.
+siParameterOverrides :: Lens' StackInstance [Parameter]
+siParameterOverrides = lens _siParameterOverrides (\ s a -> s{_siParameterOverrides = a}) . _Default . _Coerce;
+
 -- | The name or unique ID of the stack set that the stack instance is associated with.
 siStackSetId :: Lens' StackInstance (Maybe Text)
 siStackSetId = lens _siStackSetId (\ s a -> s{_siStackSetId = a});
@@ -1285,6 +1303,9 @@ instance FromXML StackInstance where
                 (x .@? "Region")
                 <*> (x .@? "StatusReason")
                 <*> (x .@? "StackId")
+                <*>
+                (x .@? "ParameterOverrides" .!@ mempty >>=
+                   may (parseXMLList "member"))
                 <*> (x .@? "StackSetId")
 
 instance Hashable StackInstance where

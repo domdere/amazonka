@@ -59,7 +59,7 @@ data UpdateDatabase = UpdateDatabase'
 --
 -- * 'udCatalogId' - The ID of the Data Catalog in which the metadata database resides. If none is supplied, the AWS account ID is used by default.
 --
--- * 'udName' - The name of the metadata database to update in the catalog.
+-- * 'udName' - The name of the database to update in the catalog. For Hive compatibility, this is folded to lowercase.
 --
 -- * 'udDatabaseInput' - A @DatabaseInput@ object specifying the new definition of the metadata database in the catalog.
 updateDatabase
@@ -75,7 +75,7 @@ updateDatabase pName_ pDatabaseInput_ =
 udCatalogId :: Lens' UpdateDatabase (Maybe Text)
 udCatalogId = lens _udCatalogId (\ s a -> s{_udCatalogId = a});
 
--- | The name of the metadata database to update in the catalog.
+-- | The name of the database to update in the catalog. For Hive compatibility, this is folded to lowercase.
 udName :: Lens' UpdateDatabase Text
 udName = lens _udName (\ s a -> s{_udName = a});
 

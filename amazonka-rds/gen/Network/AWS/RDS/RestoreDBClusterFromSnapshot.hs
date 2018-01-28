@@ -94,7 +94,7 @@ data RestoreDBClusterFromSnapshot = RestoreDBClusterFromSnapshot'
 --
 -- * 'rdbcfsAvailabilityZones' - Provides the list of EC2 Availability Zones that instances in the restored DB cluster can be created in.
 --
--- * 'rdbcfsKMSKeyId' - The KMS key identifier to use when restoring an encrypted DB cluster from a DB snapshot or DB cluster snapshot. The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are restoring a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KMS encryption key. If you do not specify a value for the @KmsKeyId@ parameter, then the following will occur:     * If the DB snapshot or DB cluster snapshot in @SnapshotIdentifier@ is encrypted, then the restored DB cluster is encrypted using the KMS key that was used to encrypt the DB snapshot or DB cluster snapshot.     * If the DB snapshot or DB cluster snapshot in @SnapshotIdentifier@ is not encrypted, then the restored DB cluster is not encrypted.
+-- * 'rdbcfsKMSKeyId' - The AWS KMS key identifier to use when restoring an encrypted DB cluster from a DB snapshot or DB cluster snapshot. The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are restoring a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KMS encryption key. If you do not specify a value for the @KmsKeyId@ parameter, then the following will occur:     * If the DB snapshot or DB cluster snapshot in @SnapshotIdentifier@ is encrypted, then the restored DB cluster is encrypted using the KMS key that was used to encrypt the DB snapshot or DB cluster snapshot.     * If the DB snapshot or DB cluster snapshot in @SnapshotIdentifier@ is not encrypted, then the restored DB cluster is not encrypted.
 --
 -- * 'rdbcfsVPCSecurityGroupIds' - A list of VPC security groups that the new DB cluster will belong to.
 --
@@ -106,7 +106,7 @@ data RestoreDBClusterFromSnapshot = RestoreDBClusterFromSnapshot'
 --
 -- * 'rdbcfsPort' - The port number on which the new DB cluster accepts connections. Constraints: Value must be @1150-65535@  Default: The same port as the original DB cluster.
 --
--- * 'rdbcfsEnableIAMDatabaseAuthentication' - A Boolean value that is true to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. Default: @false@
+-- * 'rdbcfsEnableIAMDatabaseAuthentication' - True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. Default: @false@
 --
 -- * 'rdbcfsDBClusterIdentifier' - The name of the DB cluster to create from the DB snapshot or DB cluster snapshot. This parameter isn't case-sensitive. Constraints:     * Must contain from 1 to 255 letters, numbers, or hyphens     * First character must be a letter     * Cannot end with a hyphen or contain two consecutive hyphens Example: @my-snapshot-id@
 --
@@ -148,7 +148,7 @@ rdbcfsDBSubnetGroupName = lens _rdbcfsDBSubnetGroupName (\ s a -> s{_rdbcfsDBSub
 rdbcfsAvailabilityZones :: Lens' RestoreDBClusterFromSnapshot [Text]
 rdbcfsAvailabilityZones = lens _rdbcfsAvailabilityZones (\ s a -> s{_rdbcfsAvailabilityZones = a}) . _Default . _Coerce;
 
--- | The KMS key identifier to use when restoring an encrypted DB cluster from a DB snapshot or DB cluster snapshot. The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are restoring a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KMS encryption key. If you do not specify a value for the @KmsKeyId@ parameter, then the following will occur:     * If the DB snapshot or DB cluster snapshot in @SnapshotIdentifier@ is encrypted, then the restored DB cluster is encrypted using the KMS key that was used to encrypt the DB snapshot or DB cluster snapshot.     * If the DB snapshot or DB cluster snapshot in @SnapshotIdentifier@ is not encrypted, then the restored DB cluster is not encrypted.
+-- | The AWS KMS key identifier to use when restoring an encrypted DB cluster from a DB snapshot or DB cluster snapshot. The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are restoring a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KMS encryption key. If you do not specify a value for the @KmsKeyId@ parameter, then the following will occur:     * If the DB snapshot or DB cluster snapshot in @SnapshotIdentifier@ is encrypted, then the restored DB cluster is encrypted using the KMS key that was used to encrypt the DB snapshot or DB cluster snapshot.     * If the DB snapshot or DB cluster snapshot in @SnapshotIdentifier@ is not encrypted, then the restored DB cluster is not encrypted.
 rdbcfsKMSKeyId :: Lens' RestoreDBClusterFromSnapshot (Maybe Text)
 rdbcfsKMSKeyId = lens _rdbcfsKMSKeyId (\ s a -> s{_rdbcfsKMSKeyId = a});
 
@@ -172,7 +172,7 @@ rdbcfsTags = lens _rdbcfsTags (\ s a -> s{_rdbcfsTags = a}) . _Default . _Coerce
 rdbcfsPort :: Lens' RestoreDBClusterFromSnapshot (Maybe Int)
 rdbcfsPort = lens _rdbcfsPort (\ s a -> s{_rdbcfsPort = a});
 
--- | A Boolean value that is true to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. Default: @false@
+-- | True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. Default: @false@
 rdbcfsEnableIAMDatabaseAuthentication :: Lens' RestoreDBClusterFromSnapshot (Maybe Bool)
 rdbcfsEnableIAMDatabaseAuthentication = lens _rdbcfsEnableIAMDatabaseAuthentication (\ s a -> s{_rdbcfsEnableIAMDatabaseAuthentication = a});
 

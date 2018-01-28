@@ -37,6 +37,12 @@ import Test.Tasty
 --         , requestUpdateItem $
 --             updateItem
 --
+--         , requestListGlobalTables $
+--             listGlobalTables
+--
+--         , requestUpdateGlobalTable $
+--             updateGlobalTable
+--
 --         , requestDeleteTable $
 --             deleteTable
 --
@@ -46,8 +52,20 @@ import Test.Tasty
 --         , requestBatchGetItem $
 --             batchGetItem
 --
+--         , requestListBackups $
+--             listBackups
+--
+--         , requestDeleteBackup $
+--             deleteBackup
+--
+--         , requestCreateBackup $
+--             createBackup
+--
 --         , requestListTagsOfResource $
 --             listTagsOfResource
+--
+--         , requestDescribeGlobalTable $
+--             describeGlobalTable
 --
 --         , requestDescribeTable $
 --             describeTable
@@ -57,6 +75,9 @@ import Test.Tasty
 --
 --         , requestGetItem $
 --             getItem
+--
+--         , requestDescribeBackup $
+--             describeBackup
 --
 --         , requestBatchWriteItem $
 --             batchWriteItem
@@ -76,14 +97,23 @@ import Test.Tasty
 --         , requestDescribeTimeToLive $
 --             describeTimeToLive
 --
+--         , requestDescribeContinuousBackups $
+--             describeContinuousBackups
+--
 --         , requestTagResource $
 --             tagResource
 --
 --         , requestUntagResource $
 --             untagResource
 --
+--         , requestRestoreTableFromBackup $
+--             restoreTableFromBackup
+--
 --         , requestUpdateTimeToLive $
 --             updateTimeToLive
+--
+--         , requestCreateGlobalTable $
+--             createGlobalTable
 --
 --           ]
 
@@ -97,6 +127,12 @@ import Test.Tasty
 --         , responseUpdateItem $
 --             updateItemResponse
 --
+--         , responseListGlobalTables $
+--             listGlobalTablesResponse
+--
+--         , responseUpdateGlobalTable $
+--             updateGlobalTableResponse
+--
 --         , responseDeleteTable $
 --             deleteTableResponse
 --
@@ -106,8 +142,20 @@ import Test.Tasty
 --         , responseBatchGetItem $
 --             batchGetItemResponse
 --
+--         , responseListBackups $
+--             listBackupsResponse
+--
+--         , responseDeleteBackup $
+--             deleteBackupResponse
+--
+--         , responseCreateBackup $
+--             createBackupResponse
+--
 --         , responseListTagsOfResource $
 --             listTagsOfResourceResponse
+--
+--         , responseDescribeGlobalTable $
+--             describeGlobalTableResponse
 --
 --         , responseDescribeTable $
 --             describeTableResponse
@@ -117,6 +165,9 @@ import Test.Tasty
 --
 --         , responseGetItem $
 --             getItemResponse
+--
+--         , responseDescribeBackup $
+--             describeBackupResponse
 --
 --         , responseBatchWriteItem $
 --             batchWriteItemResponse
@@ -136,14 +187,23 @@ import Test.Tasty
 --         , responseDescribeTimeToLive $
 --             describeTimeToLiveResponse
 --
+--         , responseDescribeContinuousBackups $
+--             describeContinuousBackupsResponse
+--
 --         , responseTagResource $
 --             tagResourceResponse
 --
 --         , responseUntagResource $
 --             untagResourceResponse
 --
+--         , responseRestoreTableFromBackup $
+--             restoreTableFromBackupResponse
+--
 --         , responseUpdateTimeToLive $
 --             updateTimeToLiveResponse
+--
+--         , responseCreateGlobalTable $
+--             createGlobalTableResponse
 --
 --           ]
 --     ]
@@ -165,6 +225,16 @@ requestUpdateItem = req
     "UpdateItem"
     "fixture/UpdateItem.yaml"
 
+requestListGlobalTables :: ListGlobalTables -> TestTree
+requestListGlobalTables = req
+    "ListGlobalTables"
+    "fixture/ListGlobalTables.yaml"
+
+requestUpdateGlobalTable :: UpdateGlobalTable -> TestTree
+requestUpdateGlobalTable = req
+    "UpdateGlobalTable"
+    "fixture/UpdateGlobalTable.yaml"
+
 requestDeleteTable :: DeleteTable -> TestTree
 requestDeleteTable = req
     "DeleteTable"
@@ -180,10 +250,30 @@ requestBatchGetItem = req
     "BatchGetItem"
     "fixture/BatchGetItem.yaml"
 
+requestListBackups :: ListBackups -> TestTree
+requestListBackups = req
+    "ListBackups"
+    "fixture/ListBackups.yaml"
+
+requestDeleteBackup :: DeleteBackup -> TestTree
+requestDeleteBackup = req
+    "DeleteBackup"
+    "fixture/DeleteBackup.yaml"
+
+requestCreateBackup :: CreateBackup -> TestTree
+requestCreateBackup = req
+    "CreateBackup"
+    "fixture/CreateBackup.yaml"
+
 requestListTagsOfResource :: ListTagsOfResource -> TestTree
 requestListTagsOfResource = req
     "ListTagsOfResource"
     "fixture/ListTagsOfResource.yaml"
+
+requestDescribeGlobalTable :: DescribeGlobalTable -> TestTree
+requestDescribeGlobalTable = req
+    "DescribeGlobalTable"
+    "fixture/DescribeGlobalTable.yaml"
 
 requestDescribeTable :: DescribeTable -> TestTree
 requestDescribeTable = req
@@ -199,6 +289,11 @@ requestGetItem :: GetItem -> TestTree
 requestGetItem = req
     "GetItem"
     "fixture/GetItem.yaml"
+
+requestDescribeBackup :: DescribeBackup -> TestTree
+requestDescribeBackup = req
+    "DescribeBackup"
+    "fixture/DescribeBackup.yaml"
 
 requestBatchWriteItem :: BatchWriteItem -> TestTree
 requestBatchWriteItem = req
@@ -230,6 +325,11 @@ requestDescribeTimeToLive = req
     "DescribeTimeToLive"
     "fixture/DescribeTimeToLive.yaml"
 
+requestDescribeContinuousBackups :: DescribeContinuousBackups -> TestTree
+requestDescribeContinuousBackups = req
+    "DescribeContinuousBackups"
+    "fixture/DescribeContinuousBackups.yaml"
+
 requestTagResource :: TagResource -> TestTree
 requestTagResource = req
     "TagResource"
@@ -240,10 +340,20 @@ requestUntagResource = req
     "UntagResource"
     "fixture/UntagResource.yaml"
 
+requestRestoreTableFromBackup :: RestoreTableFromBackup -> TestTree
+requestRestoreTableFromBackup = req
+    "RestoreTableFromBackup"
+    "fixture/RestoreTableFromBackup.yaml"
+
 requestUpdateTimeToLive :: UpdateTimeToLive -> TestTree
 requestUpdateTimeToLive = req
     "UpdateTimeToLive"
     "fixture/UpdateTimeToLive.yaml"
+
+requestCreateGlobalTable :: CreateGlobalTable -> TestTree
+requestCreateGlobalTable = req
+    "CreateGlobalTable"
+    "fixture/CreateGlobalTable.yaml"
 
 -- Responses
 
@@ -268,6 +378,20 @@ responseUpdateItem = res
     dynamoDB
     (Proxy :: Proxy UpdateItem)
 
+responseListGlobalTables :: ListGlobalTablesResponse -> TestTree
+responseListGlobalTables = res
+    "ListGlobalTablesResponse"
+    "fixture/ListGlobalTablesResponse.proto"
+    dynamoDB
+    (Proxy :: Proxy ListGlobalTables)
+
+responseUpdateGlobalTable :: UpdateGlobalTableResponse -> TestTree
+responseUpdateGlobalTable = res
+    "UpdateGlobalTableResponse"
+    "fixture/UpdateGlobalTableResponse.proto"
+    dynamoDB
+    (Proxy :: Proxy UpdateGlobalTable)
+
 responseDeleteTable :: DeleteTableResponse -> TestTree
 responseDeleteTable = res
     "DeleteTableResponse"
@@ -289,12 +413,40 @@ responseBatchGetItem = res
     dynamoDB
     (Proxy :: Proxy BatchGetItem)
 
+responseListBackups :: ListBackupsResponse -> TestTree
+responseListBackups = res
+    "ListBackupsResponse"
+    "fixture/ListBackupsResponse.proto"
+    dynamoDB
+    (Proxy :: Proxy ListBackups)
+
+responseDeleteBackup :: DeleteBackupResponse -> TestTree
+responseDeleteBackup = res
+    "DeleteBackupResponse"
+    "fixture/DeleteBackupResponse.proto"
+    dynamoDB
+    (Proxy :: Proxy DeleteBackup)
+
+responseCreateBackup :: CreateBackupResponse -> TestTree
+responseCreateBackup = res
+    "CreateBackupResponse"
+    "fixture/CreateBackupResponse.proto"
+    dynamoDB
+    (Proxy :: Proxy CreateBackup)
+
 responseListTagsOfResource :: ListTagsOfResourceResponse -> TestTree
 responseListTagsOfResource = res
     "ListTagsOfResourceResponse"
     "fixture/ListTagsOfResourceResponse.proto"
     dynamoDB
     (Proxy :: Proxy ListTagsOfResource)
+
+responseDescribeGlobalTable :: DescribeGlobalTableResponse -> TestTree
+responseDescribeGlobalTable = res
+    "DescribeGlobalTableResponse"
+    "fixture/DescribeGlobalTableResponse.proto"
+    dynamoDB
+    (Proxy :: Proxy DescribeGlobalTable)
 
 responseDescribeTable :: DescribeTableResponse -> TestTree
 responseDescribeTable = res
@@ -316,6 +468,13 @@ responseGetItem = res
     "fixture/GetItemResponse.proto"
     dynamoDB
     (Proxy :: Proxy GetItem)
+
+responseDescribeBackup :: DescribeBackupResponse -> TestTree
+responseDescribeBackup = res
+    "DescribeBackupResponse"
+    "fixture/DescribeBackupResponse.proto"
+    dynamoDB
+    (Proxy :: Proxy DescribeBackup)
 
 responseBatchWriteItem :: BatchWriteItemResponse -> TestTree
 responseBatchWriteItem = res
@@ -359,6 +518,13 @@ responseDescribeTimeToLive = res
     dynamoDB
     (Proxy :: Proxy DescribeTimeToLive)
 
+responseDescribeContinuousBackups :: DescribeContinuousBackupsResponse -> TestTree
+responseDescribeContinuousBackups = res
+    "DescribeContinuousBackupsResponse"
+    "fixture/DescribeContinuousBackupsResponse.proto"
+    dynamoDB
+    (Proxy :: Proxy DescribeContinuousBackups)
+
 responseTagResource :: TagResourceResponse -> TestTree
 responseTagResource = res
     "TagResourceResponse"
@@ -373,9 +539,23 @@ responseUntagResource = res
     dynamoDB
     (Proxy :: Proxy UntagResource)
 
+responseRestoreTableFromBackup :: RestoreTableFromBackupResponse -> TestTree
+responseRestoreTableFromBackup = res
+    "RestoreTableFromBackupResponse"
+    "fixture/RestoreTableFromBackupResponse.proto"
+    dynamoDB
+    (Proxy :: Proxy RestoreTableFromBackup)
+
 responseUpdateTimeToLive :: UpdateTimeToLiveResponse -> TestTree
 responseUpdateTimeToLive = res
     "UpdateTimeToLiveResponse"
     "fixture/UpdateTimeToLiveResponse.proto"
     dynamoDB
     (Proxy :: Proxy UpdateTimeToLive)
+
+responseCreateGlobalTable :: CreateGlobalTableResponse -> TestTree
+responseCreateGlobalTable = res
+    "CreateGlobalTableResponse"
+    "fixture/CreateGlobalTableResponse.proto"
+    dynamoDB
+    (Proxy :: Proxy CreateGlobalTable)

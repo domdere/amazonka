@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Creates a volume on a specified gateway. This operation is only supported in the stored volume gateway architecture.
+-- Creates a volume on a specified gateway. This operation is only supported in the stored volume gateway type.
 --
 --
 -- The size of the volume to create is inferred from the disk size. You can choose to preserve existing data on the disk, create volume from an existing snapshot, or create an empty volume. If you choose to create an empty gateway volume, then any existing data on the disk is erased.

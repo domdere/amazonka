@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Deletes tags from a WorkSpace.
+-- Deletes the specified tags from a WorkSpace.
 --
 --
 module Network.AWS.WorkSpaces.DeleteTags
@@ -44,11 +44,7 @@ import Network.AWS.Response
 import Network.AWS.WorkSpaces.Types
 import Network.AWS.WorkSpaces.Types.Product
 
--- | The request of the 'DeleteTags' operation.
---
---
---
--- /See:/ 'deleteTags' smart constructor.
+-- | /See:/ 'deleteTags' smart constructor.
 data DeleteTags = DeleteTags'
   { _dResourceId :: !Text
   , _dTagKeys    :: ![Text]
@@ -59,9 +55,9 @@ data DeleteTags = DeleteTags'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dResourceId' - The resource ID of the request.
+-- * 'dResourceId' - The ID of the resource.
 --
--- * 'dTagKeys' - The tag keys of the request.
+-- * 'dTagKeys' - The tag keys.
 deleteTags
     :: Text -- ^ 'dResourceId'
     -> DeleteTags
@@ -69,11 +65,11 @@ deleteTags pResourceId_ =
   DeleteTags' {_dResourceId = pResourceId_, _dTagKeys = mempty}
 
 
--- | The resource ID of the request.
+-- | The ID of the resource.
 dResourceId :: Lens' DeleteTags Text
 dResourceId = lens _dResourceId (\ s a -> s{_dResourceId = a});
 
--- | The tag keys of the request.
+-- | The tag keys.
 dTagKeys :: Lens' DeleteTags [Text]
 dTagKeys = lens _dTagKeys (\ s a -> s{_dTagKeys = a}) . _Coerce;
 
@@ -111,11 +107,7 @@ instance ToPath DeleteTags where
 instance ToQuery DeleteTags where
         toQuery = const mempty
 
--- | The result of the 'DeleteTags' operation.
---
---
---
--- /See:/ 'deleteTagsResponse' smart constructor.
+-- | /See:/ 'deleteTagsResponse' smart constructor.
 newtype DeleteTagsResponse = DeleteTagsResponse'
   { _drsResponseStatus :: Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)

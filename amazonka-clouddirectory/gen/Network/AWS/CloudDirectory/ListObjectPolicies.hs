@@ -21,6 +21,8 @@
 -- Returns policies attached to an object in pagination fashion.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListObjectPolicies
     (
     -- * Creating a Request
@@ -45,6 +47,7 @@ module Network.AWS.CloudDirectory.ListObjectPolicies
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -105,6 +108,13 @@ lDirectoryARN = lens _lDirectoryARN (\ s a -> s{_lDirectoryARN = a});
 -- | Reference that identifies the object for which policies will be listed.
 lObjectReference :: Lens' ListObjectPolicies ObjectReference
 lObjectReference = lens _lObjectReference (\ s a -> s{_lObjectReference = a});
+
+instance AWSPager ListObjectPolicies where
+        page rq rs
+          | stop (rs ^. loprsNextToken) = Nothing
+          | stop (rs ^. loprsAttachedPolicyIds) = Nothing
+          | otherwise =
+            Just $ rq & lNextToken .~ rs ^. loprsNextToken
 
 instance AWSRequest ListObjectPolicies where
         type Rs ListObjectPolicies =

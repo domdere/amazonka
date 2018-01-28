@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Describes the status of the specified copy product operation.
+-- Gets the status of the specified copy product operation.
 --
 --
 module Network.AWS.ServiceCatalog.DescribeCopyProductStatus
@@ -60,7 +60,7 @@ data DescribeCopyProductStatus = DescribeCopyProductStatus'
 --
 -- * 'dcpsAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'dcpsCopyProductToken' - The token returned from the call to @CopyProduct@ that initiated the operation.
+-- * 'dcpsCopyProductToken' - The token for the copy product operation. This token is returned by 'CopyProduct' .
 describeCopyProductStatus
     :: Text -- ^ 'dcpsCopyProductToken'
     -> DescribeCopyProductStatus
@@ -73,7 +73,7 @@ describeCopyProductStatus pCopyProductToken_ =
 dcpsAcceptLanguage :: Lens' DescribeCopyProductStatus (Maybe Text)
 dcpsAcceptLanguage = lens _dcpsAcceptLanguage (\ s a -> s{_dcpsAcceptLanguage = a});
 
--- | The token returned from the call to @CopyProduct@ that initiated the operation.
+-- | The token for the copy product operation. This token is returned by 'CopyProduct' .
 dcpsCopyProductToken :: Lens' DescribeCopyProductStatus Text
 dcpsCopyProductToken = lens _dcpsCopyProductToken (\ s a -> s{_dcpsCopyProductToken = a});
 
@@ -130,7 +130,7 @@ data DescribeCopyProductStatusResponse = DescribeCopyProductStatusResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dcpsrsTargetProductId' - The ID of the copied product.
+-- * 'dcpsrsTargetProductId' - The identifier of the copied product.
 --
 -- * 'dcpsrsCopyProductStatus' - The status of the copy product operation.
 --
@@ -149,7 +149,7 @@ describeCopyProductStatusResponse pResponseStatus_ =
   }
 
 
--- | The ID of the copied product.
+-- | The identifier of the copied product.
 dcpsrsTargetProductId :: Lens' DescribeCopyProductStatusResponse (Maybe Text)
 dcpsrsTargetProductId = lens _dcpsrsTargetProductId (\ s a -> s{_dcpsrsTargetProductId = a});
 

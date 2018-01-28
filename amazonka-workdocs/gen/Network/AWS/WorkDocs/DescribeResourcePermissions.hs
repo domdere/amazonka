@@ -27,6 +27,7 @@ module Network.AWS.WorkDocs.DescribeResourcePermissions
       describeResourcePermissions
     , DescribeResourcePermissions
     -- * Request Lenses
+    , drpPrincipalId
     , drpAuthenticationToken
     , drpMarker
     , drpLimit
@@ -50,7 +51,8 @@ import Network.AWS.WorkDocs.Types.Product
 
 -- | /See:/ 'describeResourcePermissions' smart constructor.
 data DescribeResourcePermissions = DescribeResourcePermissions'
-  { _drpAuthenticationToken :: !(Maybe (Sensitive Text))
+  { _drpPrincipalId         :: !(Maybe Text)
+  , _drpAuthenticationToken :: !(Maybe (Sensitive Text))
   , _drpMarker              :: !(Maybe Text)
   , _drpLimit               :: !(Maybe Nat)
   , _drpResourceId          :: !Text
@@ -61,7 +63,9 @@ data DescribeResourcePermissions = DescribeResourcePermissions'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'drpAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'drpPrincipalId' - The ID of the principal to filter permissions by.
+--
+-- * 'drpAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'drpMarker' - The marker for the next set of results. (You received this marker from a previous call)
 --
@@ -73,14 +77,19 @@ describeResourcePermissions
     -> DescribeResourcePermissions
 describeResourcePermissions pResourceId_ =
   DescribeResourcePermissions'
-  { _drpAuthenticationToken = Nothing
+  { _drpPrincipalId = Nothing
+  , _drpAuthenticationToken = Nothing
   , _drpMarker = Nothing
   , _drpLimit = Nothing
   , _drpResourceId = pResourceId_
   }
 
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | The ID of the principal to filter permissions by.
+drpPrincipalId :: Lens' DescribeResourcePermissions (Maybe Text)
+drpPrincipalId = lens _drpPrincipalId (\ s a -> s{_drpPrincipalId = a});
+
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 drpAuthenticationToken :: Lens' DescribeResourcePermissions (Maybe Text)
 drpAuthenticationToken = lens _drpAuthenticationToken (\ s a -> s{_drpAuthenticationToken = a}) . mapping _Sensitive;
 
@@ -127,7 +136,8 @@ instance ToPath DescribeResourcePermissions where
 instance ToQuery DescribeResourcePermissions where
         toQuery DescribeResourcePermissions'{..}
           = mconcat
-              ["marker" =: _drpMarker, "limit" =: _drpLimit]
+              ["principalId" =: _drpPrincipalId,
+               "marker" =: _drpMarker, "limit" =: _drpLimit]
 
 -- | /See:/ 'describeResourcePermissionsResponse' smart constructor.
 data DescribeResourcePermissionsResponse = DescribeResourcePermissionsResponse'

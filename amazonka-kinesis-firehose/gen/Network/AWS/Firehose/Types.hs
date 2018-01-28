@@ -16,7 +16,6 @@ module Network.AWS.Firehose.Types
       firehose
 
     -- * Errors
-    , _InvalidStreamTypeException
     , _InvalidArgumentException
     , _ConcurrentModificationException
     , _ServiceUnavailableException
@@ -39,6 +38,9 @@ module Network.AWS.Firehose.Types
     -- * ElasticsearchS3BackupMode
     , ElasticsearchS3BackupMode (..)
 
+    -- * HECEndpointType
+    , HECEndpointType (..)
+
     -- * NoEncryptionConfig
     , NoEncryptionConfig (..)
 
@@ -53,6 +55,9 @@ module Network.AWS.Firehose.Types
 
     -- * S3BackupMode
     , S3BackupMode (..)
+
+    -- * SplunkS3BackupMode
+    , SplunkS3BackupMode (..)
 
     -- * BufferingHints
     , BufferingHints
@@ -91,6 +96,7 @@ module Network.AWS.Firehose.Types
     -- * DestinationDescription
     , DestinationDescription
     , destinationDescription
+    , ddSplunkDestinationDescription
     , ddS3DestinationDescription
     , ddExtendedS3DestinationDescription
     , ddElasticsearchDestinationDescription
@@ -311,37 +317,73 @@ module Network.AWS.Firehose.Types
     -- * S3DestinationDescription
     , S3DestinationDescription
     , s3DestinationDescription
-    , sddPrefix
-    , sddCloudWatchLoggingOptions
-    , sddRoleARN
-    , sddBucketARN
-    , sddBufferingHints
-    , sddCompressionFormat
-    , sddEncryptionConfiguration
+    , s3Prefix
+    , s3CloudWatchLoggingOptions
+    , s3RoleARN
+    , s3BucketARN
+    , s3BufferingHints
+    , s3CompressionFormat
+    , s3EncryptionConfiguration
 
     -- * S3DestinationUpdate
     , S3DestinationUpdate
     , s3DestinationUpdate
-    , sduPrefix
-    , sduCloudWatchLoggingOptions
-    , sduEncryptionConfiguration
-    , sduCompressionFormat
-    , sduBufferingHints
-    , sduBucketARN
-    , sduRoleARN
-
-    -- * SessionCredentials
-    , SessionCredentials
-    , sessionCredentials
-    , scAccessKeyId
-    , scSecretAccessKey
-    , scSessionToken
-    , scExpiration
+    , sPrefix
+    , sCloudWatchLoggingOptions
+    , sEncryptionConfiguration
+    , sCompressionFormat
+    , sBufferingHints
+    , sBucketARN
+    , sRoleARN
 
     -- * SourceDescription
     , SourceDescription
     , sourceDescription
     , sdKinesisStreamSourceDescription
+
+    -- * SplunkDestinationConfiguration
+    , SplunkDestinationConfiguration
+    , splunkDestinationConfiguration
+    , splS3BackupMode
+    , splCloudWatchLoggingOptions
+    , splHECAcknowledgmentTimeoutInSeconds
+    , splRetryOptions
+    , splProcessingConfiguration
+    , splHECEndpoint
+    , splHECEndpointType
+    , splHECToken
+    , splS3Configuration
+
+    -- * SplunkDestinationDescription
+    , SplunkDestinationDescription
+    , splunkDestinationDescription
+    , sddS3BackupMode
+    , sddHECToken
+    , sddHECEndpointType
+    , sddCloudWatchLoggingOptions
+    , sddHECAcknowledgmentTimeoutInSeconds
+    , sddS3DestinationDescription
+    , sddHECEndpoint
+    , sddRetryOptions
+    , sddProcessingConfiguration
+
+    -- * SplunkDestinationUpdate
+    , SplunkDestinationUpdate
+    , splunkDestinationUpdate
+    , sduS3BackupMode
+    , sduHECToken
+    , sduHECEndpointType
+    , sduCloudWatchLoggingOptions
+    , sduHECAcknowledgmentTimeoutInSeconds
+    , sduS3Update
+    , sduHECEndpoint
+    , sduRetryOptions
+    , sduProcessingConfiguration
+
+    -- * SplunkRetryOptions
+    , SplunkRetryOptions
+    , splunkRetryOptions
+    , sroDurationInSeconds
     ) where
 
 import Network.AWS.Firehose.Types.Product
@@ -385,12 +427,6 @@ firehose =
       | has (hasStatus 500) e = Just "general_server_error"
       | has (hasStatus 509) e = Just "limit_exceeded"
       | otherwise = Nothing
-
-
--- | Prism for InvalidStreamTypeException' errors.
-_InvalidStreamTypeException :: AsError a => Getting (First ServiceError) a ServiceError
-_InvalidStreamTypeException =
-  _MatchServiceError firehose "InvalidStreamTypeException"
 
 
 -- | The specified input parameter has a value that is not valid.

@@ -27,6 +27,7 @@ module Network.AWS.SSM.GetInventory
       getInventory
     , GetInventory
     -- * Request Lenses
+    , giAggregators
     , giFilters
     , giResultAttributes
     , giNextToken
@@ -50,7 +51,8 @@ import Network.AWS.SSM.Types.Product
 
 -- | /See:/ 'getInventory' smart constructor.
 data GetInventory = GetInventory'
-  { _giFilters          :: !(Maybe (List1 InventoryFilter))
+  { _giAggregators      :: !(Maybe (List1 InventoryAggregator))
+  , _giFilters          :: !(Maybe (List1 InventoryFilter))
   , _giResultAttributes :: !(Maybe (List1 ResultAttribute))
   , _giNextToken        :: !(Maybe Text)
   , _giMaxResults       :: !(Maybe Nat)
@@ -60,6 +62,8 @@ data GetInventory = GetInventory'
 -- | Creates a value of 'GetInventory' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'giAggregators' - Returns counts of inventory types based on one or more expressions. For example, if you aggregate by using an expression that uses the @AWS:InstanceInformation.PlatformType@ type, you can see a count of how many Windows and Linux instances exist in your inventoried fleet.
 --
 -- * 'giFilters' - One or more filters. Use a filter to return a more specific list of results.
 --
@@ -72,12 +76,17 @@ getInventory
     :: GetInventory
 getInventory =
   GetInventory'
-  { _giFilters = Nothing
+  { _giAggregators = Nothing
+  , _giFilters = Nothing
   , _giResultAttributes = Nothing
   , _giNextToken = Nothing
   , _giMaxResults = Nothing
   }
 
+
+-- | Returns counts of inventory types based on one or more expressions. For example, if you aggregate by using an expression that uses the @AWS:InstanceInformation.PlatformType@ type, you can see a count of how many Windows and Linux instances exist in your inventoried fleet.
+giAggregators :: Lens' GetInventory (Maybe (NonEmpty InventoryAggregator))
+giAggregators = lens _giAggregators (\ s a -> s{_giAggregators = a}) . mapping _List1;
 
 -- | One or more filters. Use a filter to return a more specific list of results.
 giFilters :: Lens' GetInventory (Maybe (NonEmpty InventoryFilter))
@@ -122,7 +131,8 @@ instance ToJSON GetInventory where
         toJSON GetInventory'{..}
           = object
               (catMaybes
-                 [("Filters" .=) <$> _giFilters,
+                 [("Aggregators" .=) <$> _giAggregators,
+                  ("Filters" .=) <$> _giFilters,
                   ("ResultAttributes" .=) <$> _giResultAttributes,
                   ("NextToken" .=) <$> _giNextToken,
                   ("MaxResults" .=) <$> _giMaxResults])

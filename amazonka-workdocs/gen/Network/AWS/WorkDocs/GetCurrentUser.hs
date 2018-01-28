@@ -54,7 +54,7 @@ newtype GetCurrentUser = GetCurrentUser'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'gcuAuthenticationToken' - Amazon WorkDocs authentication token.
+-- * 'gcuAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 getCurrentUser
     :: Text -- ^ 'gcuAuthenticationToken'
     -> GetCurrentUser
@@ -62,7 +62,7 @@ getCurrentUser pAuthenticationToken_ =
   GetCurrentUser' {_gcuAuthenticationToken = _Sensitive # pAuthenticationToken_}
 
 
--- | Amazon WorkDocs authentication token.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 gcuAuthenticationToken :: Lens' GetCurrentUser Text
 gcuAuthenticationToken = lens _gcuAuthenticationToken (\ s a -> s{_gcuAuthenticationToken = a}) . _Sensitive;
 

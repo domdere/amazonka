@@ -29,6 +29,8 @@
 --
 -- This operation requires permission for the @lex:GetBots@ action.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.LexModels.GetBots
     (
     -- * Creating a Request
@@ -51,6 +53,7 @@ module Network.AWS.LexModels.GetBots
 import Network.AWS.Lens
 import Network.AWS.LexModels.Types
 import Network.AWS.LexModels.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -90,6 +93,13 @@ gbNextToken = lens _gbNextToken (\ s a -> s{_gbNextToken = a});
 -- | The maximum number of bots to return in the response that the request will return. The default is 10.
 gbMaxResults :: Lens' GetBots (Maybe Natural)
 gbMaxResults = lens _gbMaxResults (\ s a -> s{_gbMaxResults = a}) . mapping _Nat;
+
+instance AWSPager GetBots where
+        page rq rs
+          | stop (rs ^. gbsrsNextToken) = Nothing
+          | stop (rs ^. gbsrsBots) = Nothing
+          | otherwise =
+            Just $ rq & gbNextToken .~ rs ^. gbsrsNextToken
 
 instance AWSRequest GetBots where
         type Rs GetBots = GetBotsResponse

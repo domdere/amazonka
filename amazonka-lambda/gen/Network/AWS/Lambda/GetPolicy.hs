@@ -39,6 +39,7 @@ module Network.AWS.Lambda.GetPolicy
     , GetPolicyResponse
     -- * Response Lenses
     , gprsPolicy
+    , gprsRevisionId
     , gprsResponseStatus
     ) where
 
@@ -89,7 +90,8 @@ instance AWSRequest GetPolicy where
           = receiveJSON
               (\ s h x ->
                  GetPolicyResponse' <$>
-                   (x .?> "Policy") <*> (pure (fromEnum s)))
+                   (x .?> "Policy") <*> (x .?> "RevisionId") <*>
+                     (pure (fromEnum s)))
 
 instance Hashable GetPolicy where
 
@@ -115,6 +117,7 @@ instance ToQuery GetPolicy where
 -- /See:/ 'getPolicyResponse' smart constructor.
 data GetPolicyResponse = GetPolicyResponse'
   { _gprsPolicy         :: !(Maybe Text)
+  , _gprsRevisionId     :: !(Maybe Text)
   , _gprsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -125,18 +128,27 @@ data GetPolicyResponse = GetPolicyResponse'
 --
 -- * 'gprsPolicy' - The resource policy associated with the specified function. The response returns the same as a string using a backslash ("\") as an escape character in the JSON.
 --
+-- * 'gprsRevisionId' - Represents the latest updated revision of the function or alias.
+--
 -- * 'gprsResponseStatus' - -- | The response status code.
 getPolicyResponse
     :: Int -- ^ 'gprsResponseStatus'
     -> GetPolicyResponse
 getPolicyResponse pResponseStatus_ =
   GetPolicyResponse'
-  {_gprsPolicy = Nothing, _gprsResponseStatus = pResponseStatus_}
+  { _gprsPolicy = Nothing
+  , _gprsRevisionId = Nothing
+  , _gprsResponseStatus = pResponseStatus_
+  }
 
 
 -- | The resource policy associated with the specified function. The response returns the same as a string using a backslash ("\") as an escape character in the JSON.
 gprsPolicy :: Lens' GetPolicyResponse (Maybe Text)
 gprsPolicy = lens _gprsPolicy (\ s a -> s{_gprsPolicy = a});
+
+-- | Represents the latest updated revision of the function or alias.
+gprsRevisionId :: Lens' GetPolicyResponse (Maybe Text)
+gprsRevisionId = lens _gprsRevisionId (\ s a -> s{_gprsRevisionId = a});
 
 -- | -- | The response status code.
 gprsResponseStatus :: Lens' GetPolicyResponse Int

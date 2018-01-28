@@ -67,15 +67,15 @@ data DescribeActivities = DescribeActivities'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'daStartTime' - The timestamp that determines the starting time of the activities; the response includes the activities performed after the specified timestamp.
+-- * 'daStartTime' - The timestamp that determines the starting time of the activities. The response includes the activities performed after the specified timestamp.
 --
--- * 'daAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'daAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'daUserId' - The ID of the user who performed the action. The response includes activities pertaining to this user. This is an optional parameter and is only applicable for administrative API (SigV4) requests.
 --
--- * 'daMarker' - The marker for the next set of results. (You received this marker from a previous call.)
+-- * 'daMarker' - The marker for the next set of results.
 --
--- * 'daEndTime' - The timestamp that determines the end time of the activities; the response includes the activities performed before the specified timestamp.
+-- * 'daEndTime' - The timestamp that determines the end time of the activities. The response includes the activities performed before the specified timestamp.
 --
 -- * 'daLimit' - The maximum number of items to return.
 --
@@ -94,11 +94,11 @@ describeActivities =
   }
 
 
--- | The timestamp that determines the starting time of the activities; the response includes the activities performed after the specified timestamp.
+-- | The timestamp that determines the starting time of the activities. The response includes the activities performed after the specified timestamp.
 daStartTime :: Lens' DescribeActivities (Maybe UTCTime)
 daStartTime = lens _daStartTime (\ s a -> s{_daStartTime = a}) . mapping _Time;
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 daAuthenticationToken :: Lens' DescribeActivities (Maybe Text)
 daAuthenticationToken = lens _daAuthenticationToken (\ s a -> s{_daAuthenticationToken = a}) . mapping _Sensitive;
 
@@ -106,11 +106,11 @@ daAuthenticationToken = lens _daAuthenticationToken (\ s a -> s{_daAuthenticatio
 daUserId :: Lens' DescribeActivities (Maybe Text)
 daUserId = lens _daUserId (\ s a -> s{_daUserId = a});
 
--- | The marker for the next set of results. (You received this marker from a previous call.)
+-- | The marker for the next set of results.
 daMarker :: Lens' DescribeActivities (Maybe Text)
 daMarker = lens _daMarker (\ s a -> s{_daMarker = a});
 
--- | The timestamp that determines the end time of the activities; the response includes the activities performed before the specified timestamp.
+-- | The timestamp that determines the end time of the activities. The response includes the activities performed before the specified timestamp.
 daEndTime :: Lens' DescribeActivities (Maybe UTCTime)
 daEndTime = lens _daEndTime (\ s a -> s{_daEndTime = a}) . mapping _Time;
 

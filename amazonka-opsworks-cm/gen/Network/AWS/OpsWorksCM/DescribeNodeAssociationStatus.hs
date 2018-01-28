@@ -136,7 +136,7 @@ data DescribeNodeAssociationStatusResponse = DescribeNodeAssociationStatusRespon
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dnasrsEngineAttributes' - Attributes specific to the node association.
+-- * 'dnasrsEngineAttributes' - Attributes specific to the node association. In Puppet, the attibute PUPPET_NODE_CERT contains the signed certificate (the result of the CSR).
 --
 -- * 'dnasrsResponseStatus' - -- | The response status code.
 --
@@ -153,7 +153,7 @@ describeNodeAssociationStatusResponse pResponseStatus_ pNodeAssociationStatus_ =
   }
 
 
--- | Attributes specific to the node association.
+-- | Attributes specific to the node association. In Puppet, the attibute PUPPET_NODE_CERT contains the signed certificate (the result of the CSR).
 dnasrsEngineAttributes :: Lens' DescribeNodeAssociationStatusResponse [EngineAttribute]
 dnasrsEngineAttributes = lens _dnasrsEngineAttributes (\ s a -> s{_dnasrsEngineAttributes = a}) . _Default . _Coerce;
 

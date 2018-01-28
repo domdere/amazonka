@@ -25,7 +25,7 @@
 --
 -- An AWS account has full permission to perform all operations (actions). However, AWS Identity and Access Management (IAM) users don't have any permissions by default. You must grant them explicit permission to perform specific actions. For more information, see <http://docs.aws.amazon.com/amazonglacier/latest/dev/using-iam-with-amazon-glacier.html Access Control Using AWS Identity and Access Management (IAM)> .
 --
--- For information about the underlying REST API, see <http://docs.aws.amazon.com/amazonglacier/latest/dev/api-describe-job-get.html Working with Archives in Amazon Glacier> in the /Amazon Glacier Developer Guide/ .
+-- For more information about using this operation, see the documentation for the underlying REST API <http://docs.aws.amazon.com/amazonglacier/latest/dev/api-describe-job-get.html Describe Job> in the /Amazon Glacier Developer Guide/ .
 --
 module Network.AWS.Glacier.DescribeJob
     (
@@ -43,7 +43,9 @@ module Network.AWS.Glacier.DescribeJob
     -- * Response Lenses
     , gjdSHA256TreeHash
     , gjdArchiveId
+    , gjdSelectParameters
     , gjdJobId
+    , gjdJobOutputPath
     , gjdRetrievalByteRange
     , gjdInventoryRetrievalParameters
     , gjdAction
@@ -51,6 +53,7 @@ module Network.AWS.Glacier.DescribeJob
     , gjdSNSTopic
     , gjdStatusMessage
     , gjdVaultARN
+    , gjdOutputLocation
     , gjdTier
     , gjdArchiveSHA256TreeHash
     , gjdCreationDate

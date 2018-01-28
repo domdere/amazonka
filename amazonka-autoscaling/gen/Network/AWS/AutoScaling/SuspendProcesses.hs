@@ -61,7 +61,7 @@ data SuspendProcesses = SuspendProcesses'
 --
 -- * 'spScalingProcesses' - One or more of the following processes. If you omit this parameter, all processes are specified.     * @Launch@      * @Terminate@      * @HealthCheck@      * @ReplaceUnhealthy@      * @AZRebalance@      * @AlarmNotification@      * @ScheduledActions@      * @AddToLoadBalancer@
 --
--- * 'spAutoScalingGroupName' - The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+-- * 'spAutoScalingGroupName' - The name of the Auto Scaling group.
 suspendProcesses
     :: Text -- ^ 'spAutoScalingGroupName'
     -> SuspendProcesses
@@ -76,7 +76,7 @@ suspendProcesses pAutoScalingGroupName_ =
 spScalingProcesses :: Lens' SuspendProcesses [Text]
 spScalingProcesses = lens _spScalingProcesses (\ s a -> s{_spScalingProcesses = a}) . _Default . _Coerce;
 
--- | The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+-- | The name of the Auto Scaling group.
 spAutoScalingGroupName :: Lens' SuspendProcesses Text
 spAutoScalingGroupName = lens _spAutoScalingGroupName (\ s a -> s{_spAutoScalingGroupName = a});
 

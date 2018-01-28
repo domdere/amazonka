@@ -99,7 +99,7 @@ data PutScalingPolicy = PutScalingPolicy'
 --
 -- * 'pspMinAdjustmentMagnitude' - The minimum number of instances to scale. If the value of @AdjustmentType@ is @PercentChangeInCapacity@ , the scaling policy changes the @DesiredCapacity@ of the Auto Scaling group by at least this many instances. Otherwise, the error is @ValidationError@ . This parameter is supported if the policy type is @SimpleScaling@ or @StepScaling@ .
 --
--- * 'pspAutoScalingGroupName' - The name or ARN of the group.
+-- * 'pspAutoScalingGroupName' - The name of the Auto Scaling group.
 --
 -- * 'pspPolicyName' - The name of the policy.
 putScalingPolicy
@@ -163,7 +163,7 @@ pspMetricAggregationType = lens _pspMetricAggregationType (\ s a -> s{_pspMetric
 pspMinAdjustmentMagnitude :: Lens' PutScalingPolicy (Maybe Int)
 pspMinAdjustmentMagnitude = lens _pspMinAdjustmentMagnitude (\ s a -> s{_pspMinAdjustmentMagnitude = a});
 
--- | The name or ARN of the group.
+-- | The name of the Auto Scaling group.
 pspAutoScalingGroupName :: Lens' PutScalingPolicy Text
 pspAutoScalingGroupName = lens _pspAutoScalingGroupName (\ s a -> s{_pspAutoScalingGroupName = a});
 

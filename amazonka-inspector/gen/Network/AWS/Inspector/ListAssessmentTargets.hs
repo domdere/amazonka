@@ -21,6 +21,8 @@
 -- Lists the ARNs of the assessment targets within this AWS account. For more information about assessment targets, see <http://docs.aws.amazon.com/inspector/latest/userguide/inspector_applications.html Amazon Inspector Assessment Targets> .
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Inspector.ListAssessmentTargets
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.Inspector.ListAssessmentTargets
 import Network.AWS.Inspector.Types
 import Network.AWS.Inspector.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -82,6 +85,13 @@ lFilter = lens _lFilter (\ s a -> s{_lFilter = a});
 -- | You can use this parameter to indicate the maximum number of items you want in the response. The default value is 10. The maximum value is 500.
 lMaxResults :: Lens' ListAssessmentTargets (Maybe Int)
 lMaxResults = lens _lMaxResults (\ s a -> s{_lMaxResults = a});
+
+instance AWSPager ListAssessmentTargets where
+        page rq rs
+          | stop (rs ^. lrsNextToken) = Nothing
+          | stop (rs ^. lrsAssessmentTargetARNs) = Nothing
+          | otherwise =
+            Just $ rq & lNextToken .~ rs ^. lrsNextToken
 
 instance AWSRequest ListAssessmentTargets where
         type Rs ListAssessmentTargets =

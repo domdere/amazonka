@@ -18,8 +18,10 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Compares a face in the /source/ input image with each face detected in the /target/ input image.
+-- Compares a face in the /source/ input image with each of the 100 largest faces detected in the /target/ input image.
 --
+--
+-- You pass the input and target images either as base64-encoded image bytes or as a references to images in an Amazon S3 bucket. If you use the Amazon CLI to call Amazon Rekognition operations, passing image bytes is not supported. The image must be either a PNG or JPEG formatted file.
 --
 -- In response, the operation returns an array of face matches ordered by similarity score in descending order. For each face match, the response provides a bounding box of the face, facial landmarks, pose details (pitch, role, and yaw), quality (brightness and sharpness), and confidence value (indicating the level of confidence that the bounding box contains a face). The response also provides a similarity score, which indicates how closely the faces match.
 --
@@ -27,7 +29,9 @@
 --
 -- If the image doesn't contain Exif metadata, @CompareFaces@ returns orientation information for the source and target images. Use these values to display the images with the correct image orientation.
 --
--- For an example, see 'get-started-exercise-compare-faces' .
+-- If no faces are detected in the source or target images, @CompareFaces@ returns an @InvalidParameterException@ error.
+--
+-- For an example, see 'faces-compare-images' .
 --
 -- This operation requires permissions to perform the @rekognition:CompareFaces@ action.
 --
@@ -74,9 +78,9 @@ data CompareFaces = CompareFaces'
 --
 -- * 'cfSimilarityThreshold' - The minimum level of confidence in the face matches that a match must meet to be included in the @FaceMatches@ array.
 --
--- * 'cfSourceImage' - The source image, either as bytes or as an S3 object.
+-- * 'cfSourceImage' - The input image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing base64-encoded image bytes is not supported.
 --
--- * 'cfTargetImage' - The target image, either as bytes or as an S3 object.
+-- * 'cfTargetImage' - The target image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing base64-encoded image bytes is not supported.
 compareFaces
     :: Image -- ^ 'cfSourceImage'
     -> Image -- ^ 'cfTargetImage'
@@ -93,11 +97,11 @@ compareFaces pSourceImage_ pTargetImage_ =
 cfSimilarityThreshold :: Lens' CompareFaces (Maybe Double)
 cfSimilarityThreshold = lens _cfSimilarityThreshold (\ s a -> s{_cfSimilarityThreshold = a});
 
--- | The source image, either as bytes or as an S3 object.
+-- | The input image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing base64-encoded image bytes is not supported.
 cfSourceImage :: Lens' CompareFaces Image
 cfSourceImage = lens _cfSourceImage (\ s a -> s{_cfSourceImage = a});
 
--- | The target image, either as bytes or as an S3 object.
+-- | The target image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing base64-encoded image bytes is not supported.
 cfTargetImage :: Lens' CompareFaces Image
 cfTargetImage = lens _cfTargetImage (\ s a -> s{_cfTargetImage = a});
 

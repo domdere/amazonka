@@ -21,6 +21,8 @@
 -- The @ListHITs@ operation returns all of a Requester's HITs. The operation returns HITs of any status, except for HITs that have been deleted of with the DeleteHIT operation or that have been auto-deleted.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.MechanicalTurk.ListHITs
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.MechanicalTurk.ListHITs
 import Network.AWS.Lens
 import Network.AWS.MechanicalTurk.Types
 import Network.AWS.MechanicalTurk.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -73,6 +76,13 @@ lhitNextToken = lens _lhitNextToken (\ s a -> s{_lhitNextToken = a});
 -- | Undocumented member.
 lhitMaxResults :: Lens' ListHITs (Maybe Natural)
 lhitMaxResults = lens _lhitMaxResults (\ s a -> s{_lhitMaxResults = a}) . mapping _Nat;
+
+instance AWSPager ListHITs where
+        page rq rs
+          | stop (rs ^. lhitrsNextToken) = Nothing
+          | stop (rs ^. lhitrsHITs) = Nothing
+          | otherwise =
+            Just $ rq & lhitNextToken .~ rs ^. lhitrsNextToken
 
 instance AWSRequest ListHITs where
         type Rs ListHITs = ListHITsResponse

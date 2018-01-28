@@ -66,7 +66,7 @@ data CreateNotificationSubscription = CreateNotificationSubscription'
 --
 -- * 'cnsEndpoint' - The endpoint to receive the notifications. If the protocol is HTTPS, the endpoint is a URL that begins with "https://".
 --
--- * 'cnsProtocol' - The protocol to use. The supported value is https, which delivers JSON-encoded messasges using HTTPS POST.
+-- * 'cnsProtocol' - The protocol to use. The supported value is https, which delivers JSON-encoded messages using HTTPS POST.
 --
 -- * 'cnsSubscriptionType' - The notification type.
 createNotificationSubscription
@@ -92,7 +92,7 @@ cnsOrganizationId = lens _cnsOrganizationId (\ s a -> s{_cnsOrganizationId = a})
 cnsEndpoint :: Lens' CreateNotificationSubscription Text
 cnsEndpoint = lens _cnsEndpoint (\ s a -> s{_cnsEndpoint = a});
 
--- | The protocol to use. The supported value is https, which delivers JSON-encoded messasges using HTTPS POST.
+-- | The protocol to use. The supported value is https, which delivers JSON-encoded messages using HTTPS POST.
 cnsProtocol :: Lens' CreateNotificationSubscription SubscriptionProtocolType
 cnsProtocol = lens _cnsProtocol (\ s a -> s{_cnsProtocol = a});
 

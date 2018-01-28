@@ -17,6 +17,7 @@ module Network.AWS.WAF.Types
 
     -- * Errors
     , _WAFInvalidAccountException
+    , _WAFSubscriptionNotFoundException
     , _WAFReferencedItemException
     , _WAFInvalidRegexPatternException
     , _WAFInvalidOperationException
@@ -65,16 +66,20 @@ module Network.AWS.WAF.Types
     -- * WafActionType
     , WafActionType (..)
 
+    -- * WafOverrideActionType
+    , WafOverrideActionType (..)
+
     -- * WafRuleType
     , WafRuleType (..)
 
     -- * ActivatedRule
     , ActivatedRule
     , activatedRule
+    , arOverrideAction
+    , arAction
     , arType
     , arPriority
     , arRuleId
-    , arAction
 
     -- * ByteMatchSet
     , ByteMatchSet
@@ -245,6 +250,25 @@ module Network.AWS.WAF.Types
     , rRuleId
     , rPredicates
 
+    -- * RuleGroup
+    , RuleGroup
+    , ruleGroup
+    , rgMetricName
+    , rgName
+    , rgRuleGroupId
+
+    -- * RuleGroupSummary
+    , RuleGroupSummary
+    , ruleGroupSummary
+    , rgsRuleGroupId
+    , rgsName
+
+    -- * RuleGroupUpdate
+    , RuleGroupUpdate
+    , ruleGroupUpdate
+    , rguAction
+    , rguActivatedRule
+
     -- * RuleSummary
     , RuleSummary
     , ruleSummary
@@ -260,6 +284,7 @@ module Network.AWS.WAF.Types
     -- * SampledHTTPRequest
     , SampledHTTPRequest
     , sampledHTTPRequest
+    , shttprRuleWithinRuleGroup
     , shttprAction
     , shttprTimestamp
     , shttprRequest
@@ -317,6 +342,13 @@ module Network.AWS.WAF.Types
     , simtFieldToMatch
     , simtTextTransformation
 
+    -- * SubscribedRuleGroupSummary
+    , SubscribedRuleGroupSummary
+    , subscribedRuleGroupSummary
+    , srgsRuleGroupId
+    , srgsName
+    , srgsMetricName
+
     -- * TimeWindow
     , TimeWindow
     , timeWindow
@@ -327,6 +359,11 @@ module Network.AWS.WAF.Types
     , WafAction
     , wafAction
     , waType
+
+    -- * WafOverrideAction
+    , WafOverrideAction
+    , wafOverrideAction
+    , woaType
 
     -- * WebACL
     , WebACL
@@ -424,6 +461,14 @@ waf =
 _WAFInvalidAccountException :: AsError a => Getting (First ServiceError) a ServiceError
 _WAFInvalidAccountException =
   _MatchServiceError waf "WAFInvalidAccountException"
+
+
+-- | The specified subscription does not exist.
+--
+--
+_WAFSubscriptionNotFoundException :: AsError a => Getting (First ServiceError) a ServiceError
+_WAFSubscriptionNotFoundException =
+  _MatchServiceError waf "WAFSubscriptionNotFoundException"
 
 
 -- | The operation failed because you tried to delete an object that is still in use. For example:

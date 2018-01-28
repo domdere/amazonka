@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Retrieve detailed information about the provisioned product.
+-- Gets information about the specified provisioned product.
 --
 --
 module Network.AWS.ServiceCatalog.DescribeProvisionedProduct
@@ -123,7 +123,7 @@ data DescribeProvisionedProductResponse = DescribeProvisionedProductResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'drsProvisionedProductDetail' - Detailed provisioned product information.
+-- * 'drsProvisionedProductDetail' - Information about the provisioned product.
 --
 -- * 'drsResponseStatus' - -- | The response status code.
 describeProvisionedProductResponse
@@ -136,7 +136,7 @@ describeProvisionedProductResponse pResponseStatus_ =
   }
 
 
--- | Detailed provisioned product information.
+-- | Information about the provisioned product.
 drsProvisionedProductDetail :: Lens' DescribeProvisionedProductResponse (Maybe ProvisionedProductDetail)
 drsProvisionedProductDetail = lens _drsProvisionedProductDetail (\ s a -> s{_drsProvisionedProductDetail = a});
 

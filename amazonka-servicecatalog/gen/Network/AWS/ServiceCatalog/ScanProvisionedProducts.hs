@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Returns a paginated list of all the ProvisionedProduct objects that are currently available (not terminated).
+-- Lists the provisioned products that are available (not terminated).
 --
 --
 module Network.AWS.ServiceCatalog.ScanProvisionedProducts
@@ -63,11 +63,11 @@ data ScanProvisionedProducts = ScanProvisionedProducts'
 --
 -- * 'sppAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'sppAccessLevelFilter' - The access level for obtaining results. If left unspecified, @User@ level access is used.
+-- * 'sppAccessLevelFilter' - The access level to use to obtain results. The default is @User@ .
 --
--- * 'sppPageToken' - The page token of the first page retrieved. If null, this retrieves the first page of size @PageSize@ .
+-- * 'sppPageToken' - The page token for the next set of results. To retrieve the first set of results, use null.
 --
--- * 'sppPageSize' - The maximum number of items to return in the results. If more results exist than fit in the specified @PageSize@ , the value of @NextPageToken@ in the response is non-null.
+-- * 'sppPageSize' - The maximum number of items to return with this call.
 scanProvisionedProducts
     :: ScanProvisionedProducts
 scanProvisionedProducts =
@@ -83,15 +83,15 @@ scanProvisionedProducts =
 sppAcceptLanguage :: Lens' ScanProvisionedProducts (Maybe Text)
 sppAcceptLanguage = lens _sppAcceptLanguage (\ s a -> s{_sppAcceptLanguage = a});
 
--- | The access level for obtaining results. If left unspecified, @User@ level access is used.
+-- | The access level to use to obtain results. The default is @User@ .
 sppAccessLevelFilter :: Lens' ScanProvisionedProducts (Maybe AccessLevelFilter)
 sppAccessLevelFilter = lens _sppAccessLevelFilter (\ s a -> s{_sppAccessLevelFilter = a});
 
--- | The page token of the first page retrieved. If null, this retrieves the first page of size @PageSize@ .
+-- | The page token for the next set of results. To retrieve the first set of results, use null.
 sppPageToken :: Lens' ScanProvisionedProducts (Maybe Text)
 sppPageToken = lens _sppPageToken (\ s a -> s{_sppPageToken = a});
 
--- | The maximum number of items to return in the results. If more results exist than fit in the specified @PageSize@ , the value of @NextPageToken@ in the response is non-null.
+-- | The maximum number of items to return with this call.
 sppPageSize :: Lens' ScanProvisionedProducts (Maybe Natural)
 sppPageSize = lens _sppPageSize (\ s a -> s{_sppPageSize = a}) . mapping _Nat;
 
@@ -148,9 +148,9 @@ data ScanProvisionedProductsResponse = ScanProvisionedProductsResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'spprsNextPageToken' - The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.
+-- * 'spprsNextPageToken' - The page token to use to retrieve the next set of results. If there are no additional results, this value is null.
 --
--- * 'spprsProvisionedProducts' - A list of ProvisionedProduct detail objects.
+-- * 'spprsProvisionedProducts' - Information about the provisioned products.
 --
 -- * 'spprsResponseStatus' - -- | The response status code.
 scanProvisionedProductsResponse
@@ -164,11 +164,11 @@ scanProvisionedProductsResponse pResponseStatus_ =
   }
 
 
--- | The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.
+-- | The page token to use to retrieve the next set of results. If there are no additional results, this value is null.
 spprsNextPageToken :: Lens' ScanProvisionedProductsResponse (Maybe Text)
 spprsNextPageToken = lens _spprsNextPageToken (\ s a -> s{_spprsNextPageToken = a});
 
--- | A list of ProvisionedProduct detail objects.
+-- | Information about the provisioned products.
 spprsProvisionedProducts :: Lens' ScanProvisionedProductsResponse [ProvisionedProductDetail]
 spprsProvisionedProducts = lens _spprsProvisionedProducts (\ s a -> s{_spprsProvisionedProducts = a}) . _Default . _Coerce;
 

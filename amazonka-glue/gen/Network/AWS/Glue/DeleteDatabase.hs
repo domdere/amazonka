@@ -57,7 +57,7 @@ data DeleteDatabase = DeleteDatabase'
 --
 -- * 'ddCatalogId' - The ID of the Data Catalog in which the database resides. If none is supplied, the AWS account ID is used by default.
 --
--- * 'ddName' - The name of the Database to delete.
+-- * 'ddName' - The name of the Database to delete. For Hive compatibility, this must be all lowercase.
 deleteDatabase
     :: Text -- ^ 'ddName'
     -> DeleteDatabase
@@ -69,7 +69,7 @@ deleteDatabase pName_ =
 ddCatalogId :: Lens' DeleteDatabase (Maybe Text)
 ddCatalogId = lens _ddCatalogId (\ s a -> s{_ddCatalogId = a});
 
--- | The name of the Database to delete.
+-- | The name of the Database to delete. For Hive compatibility, this must be all lowercase.
 ddName :: Lens' DeleteDatabase Text
 ddName = lens _ddName (\ s a -> s{_ddName = a});
 

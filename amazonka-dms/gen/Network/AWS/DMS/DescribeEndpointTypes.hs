@@ -21,6 +21,8 @@
 -- Returns information about the type of endpoints available.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.DMS.DescribeEndpointTypes
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.DMS.DescribeEndpointTypes
 import Network.AWS.DMS.Types
 import Network.AWS.DMS.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -86,6 +89,13 @@ detMarker = lens _detMarker (\ s a -> s{_detMarker = a});
 -- | The maximum number of records to include in the response. If more records exist than the specified @MaxRecords@ value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.  Default: 100 Constraints: Minimum 20, maximum 100.
 detMaxRecords :: Lens' DescribeEndpointTypes (Maybe Int)
 detMaxRecords = lens _detMaxRecords (\ s a -> s{_detMaxRecords = a});
+
+instance AWSPager DescribeEndpointTypes where
+        page rq rs
+          | stop (rs ^. detrsMarker) = Nothing
+          | stop (rs ^. detrsSupportedEndpointTypes) = Nothing
+          | otherwise =
+            Just $ rq & detMarker .~ rs ^. detrsMarker
 
 instance AWSRequest DescribeEndpointTypes where
         type Rs DescribeEndpointTypes =

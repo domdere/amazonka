@@ -37,6 +37,7 @@ module Network.AWS.CognitoIdentityProvider.UpdateUserPoolClient
     , uupcReadAttributes
     , uupcAllowedOAuthScopes
     , uupcAllowedOAuthFlows
+    , uupcAnalyticsConfiguration
     , uupcClientName
     , uupcCallbackURLs
     , uupcUserPoolId
@@ -73,6 +74,7 @@ data UpdateUserPoolClient = UpdateUserPoolClient'
   , _uupcReadAttributes                  :: !(Maybe [Text])
   , _uupcAllowedOAuthScopes              :: !(Maybe [Text])
   , _uupcAllowedOAuthFlows               :: !(Maybe [OAuthFlowType])
+  , _uupcAnalyticsConfiguration          :: !(Maybe AnalyticsConfigurationType)
   , _uupcClientName                      :: !(Maybe Text)
   , _uupcCallbackURLs                    :: !(Maybe [Text])
   , _uupcUserPoolId                      :: !Text
@@ -104,6 +106,8 @@ data UpdateUserPoolClient = UpdateUserPoolClient'
 --
 -- * 'uupcAllowedOAuthFlows' - Set to @code@ to initiate a code grant flow, which provides an authorization code as the response. This code can be exchanged for access tokens with the token endpoint. Set to @token@ to specify that the client should get the access token (and, optionally, ID token, based on scopes) directly.
 --
+-- * 'uupcAnalyticsConfiguration' - The Amazon Pinpoint analytics configuration for collecting metrics for this user pool.
+--
 -- * 'uupcClientName' - The client name from the update user pool client request.
 --
 -- * 'uupcCallbackURLs' - A list of allowed callback URLs for the identity providers.
@@ -127,6 +131,7 @@ updateUserPoolClient pUserPoolId_ pClientId_ =
   , _uupcReadAttributes = Nothing
   , _uupcAllowedOAuthScopes = Nothing
   , _uupcAllowedOAuthFlows = Nothing
+  , _uupcAnalyticsConfiguration = Nothing
   , _uupcClientName = Nothing
   , _uupcCallbackURLs = Nothing
   , _uupcUserPoolId = pUserPoolId_
@@ -173,6 +178,10 @@ uupcAllowedOAuthScopes = lens _uupcAllowedOAuthScopes (\ s a -> s{_uupcAllowedOA
 -- | Set to @code@ to initiate a code grant flow, which provides an authorization code as the response. This code can be exchanged for access tokens with the token endpoint. Set to @token@ to specify that the client should get the access token (and, optionally, ID token, based on scopes) directly.
 uupcAllowedOAuthFlows :: Lens' UpdateUserPoolClient [OAuthFlowType]
 uupcAllowedOAuthFlows = lens _uupcAllowedOAuthFlows (\ s a -> s{_uupcAllowedOAuthFlows = a}) . _Default . _Coerce;
+
+-- | The Amazon Pinpoint analytics configuration for collecting metrics for this user pool.
+uupcAnalyticsConfiguration :: Lens' UpdateUserPoolClient (Maybe AnalyticsConfigurationType)
+uupcAnalyticsConfiguration = lens _uupcAnalyticsConfiguration (\ s a -> s{_uupcAnalyticsConfiguration = a});
 
 -- | The client name from the update user pool client request.
 uupcClientName :: Lens' UpdateUserPoolClient (Maybe Text)
@@ -233,6 +242,8 @@ instance ToJSON UpdateUserPoolClient where
                   ("AllowedOAuthScopes" .=) <$>
                     _uupcAllowedOAuthScopes,
                   ("AllowedOAuthFlows" .=) <$> _uupcAllowedOAuthFlows,
+                  ("AnalyticsConfiguration" .=) <$>
+                    _uupcAnalyticsConfiguration,
                   ("ClientName" .=) <$> _uupcClientName,
                   ("CallbackURLs" .=) <$> _uupcCallbackURLs,
                   Just ("UserPoolId" .= _uupcUserPoolId),

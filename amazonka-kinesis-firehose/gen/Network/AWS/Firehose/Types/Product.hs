@@ -328,7 +328,8 @@ instance NFData DeliveryStreamDescription where
 --
 -- /See:/ 'destinationDescription' smart constructor.
 data DestinationDescription = DestinationDescription'
-  { _ddS3DestinationDescription :: !(Maybe S3DestinationDescription)
+  { _ddSplunkDestinationDescription :: !(Maybe SplunkDestinationDescription)
+  , _ddS3DestinationDescription :: !(Maybe S3DestinationDescription)
   , _ddExtendedS3DestinationDescription :: !(Maybe ExtendedS3DestinationDescription)
   , _ddElasticsearchDestinationDescription :: !(Maybe ElasticsearchDestinationDescription)
   , _ddRedshiftDestinationDescription :: !(Maybe RedshiftDestinationDescription)
@@ -339,6 +340,8 @@ data DestinationDescription = DestinationDescription'
 -- | Creates a value of 'DestinationDescription' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ddSplunkDestinationDescription' - The destination in Splunk.
 --
 -- * 'ddS3DestinationDescription' - [Deprecated] The destination in Amazon S3.
 --
@@ -354,13 +357,18 @@ destinationDescription
     -> DestinationDescription
 destinationDescription pDestinationId_ =
   DestinationDescription'
-  { _ddS3DestinationDescription = Nothing
+  { _ddSplunkDestinationDescription = Nothing
+  , _ddS3DestinationDescription = Nothing
   , _ddExtendedS3DestinationDescription = Nothing
   , _ddElasticsearchDestinationDescription = Nothing
   , _ddRedshiftDestinationDescription = Nothing
   , _ddDestinationId = pDestinationId_
   }
 
+
+-- | The destination in Splunk.
+ddSplunkDestinationDescription :: Lens' DestinationDescription (Maybe SplunkDestinationDescription)
+ddSplunkDestinationDescription = lens _ddSplunkDestinationDescription (\ s a -> s{_ddSplunkDestinationDescription = a});
 
 -- | [Deprecated] The destination in Amazon S3.
 ddS3DestinationDescription :: Lens' DestinationDescription (Maybe S3DestinationDescription)
@@ -387,8 +395,9 @@ instance FromJSON DestinationDescription where
           = withObject "DestinationDescription"
               (\ x ->
                  DestinationDescription' <$>
-                   (x .:? "S3DestinationDescription") <*>
-                     (x .:? "ExtendedS3DestinationDescription")
+                   (x .:? "SplunkDestinationDescription") <*>
+                     (x .:? "S3DestinationDescription")
+                     <*> (x .:? "ExtendedS3DestinationDescription")
                      <*> (x .:? "ElasticsearchDestinationDescription")
                      <*> (x .:? "RedshiftDestinationDescription")
                      <*> (x .: "DestinationId"))
@@ -2236,13 +2245,13 @@ instance ToJSON S3DestinationConfiguration where
 --
 -- /See:/ 's3DestinationDescription' smart constructor.
 data S3DestinationDescription = S3DestinationDescription'
-  { _sddPrefix                   :: !(Maybe Text)
-  , _sddCloudWatchLoggingOptions :: !(Maybe CloudWatchLoggingOptions)
-  , _sddRoleARN                  :: !Text
-  , _sddBucketARN                :: !Text
-  , _sddBufferingHints           :: !BufferingHints
-  , _sddCompressionFormat        :: !CompressionFormat
-  , _sddEncryptionConfiguration  :: !EncryptionConfiguration
+  { _s3Prefix                   :: !(Maybe Text)
+  , _s3CloudWatchLoggingOptions :: !(Maybe CloudWatchLoggingOptions)
+  , _s3RoleARN                  :: !Text
+  , _s3BucketARN                :: !Text
+  , _s3BufferingHints           :: !BufferingHints
+  , _s3CompressionFormat        :: !CompressionFormat
+  , _s3EncryptionConfiguration  :: !EncryptionConfiguration
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -2250,65 +2259,65 @@ data S3DestinationDescription = S3DestinationDescription'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'sddPrefix' - The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered S3 files. You can specify an extra prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a folder in the S3 bucket. For more information, see <http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html Amazon S3 Object Name Format> in the /Amazon Kinesis Firehose Developer Guide/ .
+-- * 's3Prefix' - The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered S3 files. You can specify an extra prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a folder in the S3 bucket. For more information, see <http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html Amazon S3 Object Name Format> in the /Amazon Kinesis Firehose Developer Guide/ .
 --
--- * 'sddCloudWatchLoggingOptions' - The CloudWatch logging options for your delivery stream.
+-- * 's3CloudWatchLoggingOptions' - The CloudWatch logging options for your delivery stream.
 --
--- * 'sddRoleARN' - The ARN of the AWS credentials.
+-- * 's3RoleARN' - The ARN of the AWS credentials.
 --
--- * 'sddBucketARN' - The ARN of the S3 bucket.
+-- * 's3BucketARN' - The ARN of the S3 bucket.
 --
--- * 'sddBufferingHints' - The buffering option. If no value is specified, __BufferingHints__ object default values are used.
+-- * 's3BufferingHints' - The buffering option. If no value is specified, __BufferingHints__ object default values are used.
 --
--- * 'sddCompressionFormat' - The compression format. If no value is specified, the default is @UNCOMPRESSED@ .
+-- * 's3CompressionFormat' - The compression format. If no value is specified, the default is @UNCOMPRESSED@ .
 --
--- * 'sddEncryptionConfiguration' - The encryption configuration. If no value is specified, the default is no encryption.
+-- * 's3EncryptionConfiguration' - The encryption configuration. If no value is specified, the default is no encryption.
 s3DestinationDescription
-    :: Text -- ^ 'sddRoleARN'
-    -> Text -- ^ 'sddBucketARN'
-    -> BufferingHints -- ^ 'sddBufferingHints'
-    -> CompressionFormat -- ^ 'sddCompressionFormat'
-    -> EncryptionConfiguration -- ^ 'sddEncryptionConfiguration'
+    :: Text -- ^ 's3RoleARN'
+    -> Text -- ^ 's3BucketARN'
+    -> BufferingHints -- ^ 's3BufferingHints'
+    -> CompressionFormat -- ^ 's3CompressionFormat'
+    -> EncryptionConfiguration -- ^ 's3EncryptionConfiguration'
     -> S3DestinationDescription
 s3DestinationDescription pRoleARN_ pBucketARN_ pBufferingHints_ pCompressionFormat_ pEncryptionConfiguration_ =
   S3DestinationDescription'
-  { _sddPrefix = Nothing
-  , _sddCloudWatchLoggingOptions = Nothing
-  , _sddRoleARN = pRoleARN_
-  , _sddBucketARN = pBucketARN_
-  , _sddBufferingHints = pBufferingHints_
-  , _sddCompressionFormat = pCompressionFormat_
-  , _sddEncryptionConfiguration = pEncryptionConfiguration_
+  { _s3Prefix = Nothing
+  , _s3CloudWatchLoggingOptions = Nothing
+  , _s3RoleARN = pRoleARN_
+  , _s3BucketARN = pBucketARN_
+  , _s3BufferingHints = pBufferingHints_
+  , _s3CompressionFormat = pCompressionFormat_
+  , _s3EncryptionConfiguration = pEncryptionConfiguration_
   }
 
 
 -- | The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered S3 files. You can specify an extra prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a folder in the S3 bucket. For more information, see <http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html Amazon S3 Object Name Format> in the /Amazon Kinesis Firehose Developer Guide/ .
-sddPrefix :: Lens' S3DestinationDescription (Maybe Text)
-sddPrefix = lens _sddPrefix (\ s a -> s{_sddPrefix = a});
+s3Prefix :: Lens' S3DestinationDescription (Maybe Text)
+s3Prefix = lens _s3Prefix (\ s a -> s{_s3Prefix = a});
 
 -- | The CloudWatch logging options for your delivery stream.
-sddCloudWatchLoggingOptions :: Lens' S3DestinationDescription (Maybe CloudWatchLoggingOptions)
-sddCloudWatchLoggingOptions = lens _sddCloudWatchLoggingOptions (\ s a -> s{_sddCloudWatchLoggingOptions = a});
+s3CloudWatchLoggingOptions :: Lens' S3DestinationDescription (Maybe CloudWatchLoggingOptions)
+s3CloudWatchLoggingOptions = lens _s3CloudWatchLoggingOptions (\ s a -> s{_s3CloudWatchLoggingOptions = a});
 
 -- | The ARN of the AWS credentials.
-sddRoleARN :: Lens' S3DestinationDescription Text
-sddRoleARN = lens _sddRoleARN (\ s a -> s{_sddRoleARN = a});
+s3RoleARN :: Lens' S3DestinationDescription Text
+s3RoleARN = lens _s3RoleARN (\ s a -> s{_s3RoleARN = a});
 
 -- | The ARN of the S3 bucket.
-sddBucketARN :: Lens' S3DestinationDescription Text
-sddBucketARN = lens _sddBucketARN (\ s a -> s{_sddBucketARN = a});
+s3BucketARN :: Lens' S3DestinationDescription Text
+s3BucketARN = lens _s3BucketARN (\ s a -> s{_s3BucketARN = a});
 
 -- | The buffering option. If no value is specified, __BufferingHints__ object default values are used.
-sddBufferingHints :: Lens' S3DestinationDescription BufferingHints
-sddBufferingHints = lens _sddBufferingHints (\ s a -> s{_sddBufferingHints = a});
+s3BufferingHints :: Lens' S3DestinationDescription BufferingHints
+s3BufferingHints = lens _s3BufferingHints (\ s a -> s{_s3BufferingHints = a});
 
 -- | The compression format. If no value is specified, the default is @UNCOMPRESSED@ .
-sddCompressionFormat :: Lens' S3DestinationDescription CompressionFormat
-sddCompressionFormat = lens _sddCompressionFormat (\ s a -> s{_sddCompressionFormat = a});
+s3CompressionFormat :: Lens' S3DestinationDescription CompressionFormat
+s3CompressionFormat = lens _s3CompressionFormat (\ s a -> s{_s3CompressionFormat = a});
 
 -- | The encryption configuration. If no value is specified, the default is no encryption.
-sddEncryptionConfiguration :: Lens' S3DestinationDescription EncryptionConfiguration
-sddEncryptionConfiguration = lens _sddEncryptionConfiguration (\ s a -> s{_sddEncryptionConfiguration = a});
+s3EncryptionConfiguration :: Lens' S3DestinationDescription EncryptionConfiguration
+s3EncryptionConfiguration = lens _s3EncryptionConfiguration (\ s a -> s{_s3EncryptionConfiguration = a});
 
 instance FromJSON S3DestinationDescription where
         parseJSON
@@ -2333,13 +2342,13 @@ instance NFData S3DestinationDescription where
 --
 -- /See:/ 's3DestinationUpdate' smart constructor.
 data S3DestinationUpdate = S3DestinationUpdate'
-  { _sduPrefix                   :: !(Maybe Text)
-  , _sduCloudWatchLoggingOptions :: !(Maybe CloudWatchLoggingOptions)
-  , _sduEncryptionConfiguration  :: !(Maybe EncryptionConfiguration)
-  , _sduCompressionFormat        :: !(Maybe CompressionFormat)
-  , _sduBufferingHints           :: !(Maybe BufferingHints)
-  , _sduBucketARN                :: !(Maybe Text)
-  , _sduRoleARN                  :: !(Maybe Text)
+  { _sPrefix                   :: !(Maybe Text)
+  , _sCloudWatchLoggingOptions :: !(Maybe CloudWatchLoggingOptions)
+  , _sEncryptionConfiguration  :: !(Maybe EncryptionConfiguration)
+  , _sCompressionFormat        :: !(Maybe CompressionFormat)
+  , _sBufferingHints           :: !(Maybe BufferingHints)
+  , _sBucketARN                :: !(Maybe Text)
+  , _sRoleARN                  :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -2347,60 +2356,60 @@ data S3DestinationUpdate = S3DestinationUpdate'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'sduPrefix' - The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered S3 files. You can specify an extra prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a folder in the S3 bucket. For more information, see <http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html Amazon S3 Object Name Format> in the /Amazon Kinesis Firehose Developer Guide/ .
+-- * 'sPrefix' - The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered S3 files. You can specify an extra prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a folder in the S3 bucket. For more information, see <http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html Amazon S3 Object Name Format> in the /Amazon Kinesis Firehose Developer Guide/ .
 --
--- * 'sduCloudWatchLoggingOptions' - The CloudWatch logging options for your delivery stream.
+-- * 'sCloudWatchLoggingOptions' - The CloudWatch logging options for your delivery stream.
 --
--- * 'sduEncryptionConfiguration' - The encryption configuration. If no value is specified, the default is no encryption.
+-- * 'sEncryptionConfiguration' - The encryption configuration. If no value is specified, the default is no encryption.
 --
--- * 'sduCompressionFormat' - The compression format. If no value is specified, the default is @UNCOMPRESSED@ . The compression formats @SNAPPY@ or @ZIP@ cannot be specified for Amazon Redshift destinations because they are not supported by the Amazon Redshift @COPY@ operation that reads from the S3 bucket.
+-- * 'sCompressionFormat' - The compression format. If no value is specified, the default is @UNCOMPRESSED@ . The compression formats @SNAPPY@ or @ZIP@ cannot be specified for Amazon Redshift destinations because they are not supported by the Amazon Redshift @COPY@ operation that reads from the S3 bucket.
 --
--- * 'sduBufferingHints' - The buffering option. If no value is specified, __BufferingHints__ object default values are used.
+-- * 'sBufferingHints' - The buffering option. If no value is specified, __BufferingHints__ object default values are used.
 --
--- * 'sduBucketARN' - The ARN of the S3 bucket.
+-- * 'sBucketARN' - The ARN of the S3 bucket.
 --
--- * 'sduRoleARN' - The ARN of the AWS credentials.
+-- * 'sRoleARN' - The ARN of the AWS credentials.
 s3DestinationUpdate
     :: S3DestinationUpdate
 s3DestinationUpdate =
   S3DestinationUpdate'
-  { _sduPrefix = Nothing
-  , _sduCloudWatchLoggingOptions = Nothing
-  , _sduEncryptionConfiguration = Nothing
-  , _sduCompressionFormat = Nothing
-  , _sduBufferingHints = Nothing
-  , _sduBucketARN = Nothing
-  , _sduRoleARN = Nothing
+  { _sPrefix = Nothing
+  , _sCloudWatchLoggingOptions = Nothing
+  , _sEncryptionConfiguration = Nothing
+  , _sCompressionFormat = Nothing
+  , _sBufferingHints = Nothing
+  , _sBucketARN = Nothing
+  , _sRoleARN = Nothing
   }
 
 
 -- | The "YYYY/MM/DD/HH" time format prefix is automatically used for delivered S3 files. You can specify an extra prefix to be added in front of the time format prefix. If the prefix ends with a slash, it appears as a folder in the S3 bucket. For more information, see <http://docs.aws.amazon.com/firehose/latest/dev/basic-deliver.html Amazon S3 Object Name Format> in the /Amazon Kinesis Firehose Developer Guide/ .
-sduPrefix :: Lens' S3DestinationUpdate (Maybe Text)
-sduPrefix = lens _sduPrefix (\ s a -> s{_sduPrefix = a});
+sPrefix :: Lens' S3DestinationUpdate (Maybe Text)
+sPrefix = lens _sPrefix (\ s a -> s{_sPrefix = a});
 
 -- | The CloudWatch logging options for your delivery stream.
-sduCloudWatchLoggingOptions :: Lens' S3DestinationUpdate (Maybe CloudWatchLoggingOptions)
-sduCloudWatchLoggingOptions = lens _sduCloudWatchLoggingOptions (\ s a -> s{_sduCloudWatchLoggingOptions = a});
+sCloudWatchLoggingOptions :: Lens' S3DestinationUpdate (Maybe CloudWatchLoggingOptions)
+sCloudWatchLoggingOptions = lens _sCloudWatchLoggingOptions (\ s a -> s{_sCloudWatchLoggingOptions = a});
 
 -- | The encryption configuration. If no value is specified, the default is no encryption.
-sduEncryptionConfiguration :: Lens' S3DestinationUpdate (Maybe EncryptionConfiguration)
-sduEncryptionConfiguration = lens _sduEncryptionConfiguration (\ s a -> s{_sduEncryptionConfiguration = a});
+sEncryptionConfiguration :: Lens' S3DestinationUpdate (Maybe EncryptionConfiguration)
+sEncryptionConfiguration = lens _sEncryptionConfiguration (\ s a -> s{_sEncryptionConfiguration = a});
 
 -- | The compression format. If no value is specified, the default is @UNCOMPRESSED@ . The compression formats @SNAPPY@ or @ZIP@ cannot be specified for Amazon Redshift destinations because they are not supported by the Amazon Redshift @COPY@ operation that reads from the S3 bucket.
-sduCompressionFormat :: Lens' S3DestinationUpdate (Maybe CompressionFormat)
-sduCompressionFormat = lens _sduCompressionFormat (\ s a -> s{_sduCompressionFormat = a});
+sCompressionFormat :: Lens' S3DestinationUpdate (Maybe CompressionFormat)
+sCompressionFormat = lens _sCompressionFormat (\ s a -> s{_sCompressionFormat = a});
 
 -- | The buffering option. If no value is specified, __BufferingHints__ object default values are used.
-sduBufferingHints :: Lens' S3DestinationUpdate (Maybe BufferingHints)
-sduBufferingHints = lens _sduBufferingHints (\ s a -> s{_sduBufferingHints = a});
+sBufferingHints :: Lens' S3DestinationUpdate (Maybe BufferingHints)
+sBufferingHints = lens _sBufferingHints (\ s a -> s{_sBufferingHints = a});
 
 -- | The ARN of the S3 bucket.
-sduBucketARN :: Lens' S3DestinationUpdate (Maybe Text)
-sduBucketARN = lens _sduBucketARN (\ s a -> s{_sduBucketARN = a});
+sBucketARN :: Lens' S3DestinationUpdate (Maybe Text)
+sBucketARN = lens _sBucketARN (\ s a -> s{_sBucketARN = a});
 
 -- | The ARN of the AWS credentials.
-sduRoleARN :: Lens' S3DestinationUpdate (Maybe Text)
-sduRoleARN = lens _sduRoleARN (\ s a -> s{_sduRoleARN = a});
+sRoleARN :: Lens' S3DestinationUpdate (Maybe Text)
+sRoleARN = lens _sRoleARN (\ s a -> s{_sRoleARN = a});
 
 instance Hashable S3DestinationUpdate where
 
@@ -2410,79 +2419,15 @@ instance ToJSON S3DestinationUpdate where
         toJSON S3DestinationUpdate'{..}
           = object
               (catMaybes
-                 [("Prefix" .=) <$> _sduPrefix,
+                 [("Prefix" .=) <$> _sPrefix,
                   ("CloudWatchLoggingOptions" .=) <$>
-                    _sduCloudWatchLoggingOptions,
+                    _sCloudWatchLoggingOptions,
                   ("EncryptionConfiguration" .=) <$>
-                    _sduEncryptionConfiguration,
-                  ("CompressionFormat" .=) <$> _sduCompressionFormat,
-                  ("BufferingHints" .=) <$> _sduBufferingHints,
-                  ("BucketARN" .=) <$> _sduBucketARN,
-                  ("RoleARN" .=) <$> _sduRoleARN])
-
--- | /See:/ 'sessionCredentials' smart constructor.
-data SessionCredentials = SessionCredentials'
-  { _scAccessKeyId     :: !Text
-  , _scSecretAccessKey :: !Text
-  , _scSessionToken    :: !Text
-  , _scExpiration      :: !POSIX
-  } deriving (Eq, Read, Show, Data, Typeable, Generic)
-
-
--- | Creates a value of 'SessionCredentials' with the minimum fields required to make a request.
---
--- Use one of the following lenses to modify other fields as desired:
---
--- * 'scAccessKeyId' - Undocumented member.
---
--- * 'scSecretAccessKey' - Undocumented member.
---
--- * 'scSessionToken' - Undocumented member.
---
--- * 'scExpiration' - Undocumented member.
-sessionCredentials
-    :: Text -- ^ 'scAccessKeyId'
-    -> Text -- ^ 'scSecretAccessKey'
-    -> Text -- ^ 'scSessionToken'
-    -> UTCTime -- ^ 'scExpiration'
-    -> SessionCredentials
-sessionCredentials pAccessKeyId_ pSecretAccessKey_ pSessionToken_ pExpiration_ =
-  SessionCredentials'
-  { _scAccessKeyId = pAccessKeyId_
-  , _scSecretAccessKey = pSecretAccessKey_
-  , _scSessionToken = pSessionToken_
-  , _scExpiration = _Time # pExpiration_
-  }
-
-
--- | Undocumented member.
-scAccessKeyId :: Lens' SessionCredentials Text
-scAccessKeyId = lens _scAccessKeyId (\ s a -> s{_scAccessKeyId = a});
-
--- | Undocumented member.
-scSecretAccessKey :: Lens' SessionCredentials Text
-scSecretAccessKey = lens _scSecretAccessKey (\ s a -> s{_scSecretAccessKey = a});
-
--- | Undocumented member.
-scSessionToken :: Lens' SessionCredentials Text
-scSessionToken = lens _scSessionToken (\ s a -> s{_scSessionToken = a});
-
--- | Undocumented member.
-scExpiration :: Lens' SessionCredentials UTCTime
-scExpiration = lens _scExpiration (\ s a -> s{_scExpiration = a}) . _Time;
-
-instance FromJSON SessionCredentials where
-        parseJSON
-          = withObject "SessionCredentials"
-              (\ x ->
-                 SessionCredentials' <$>
-                   (x .: "AccessKeyId") <*> (x .: "SecretAccessKey") <*>
-                     (x .: "SessionToken")
-                     <*> (x .: "Expiration"))
-
-instance Hashable SessionCredentials where
-
-instance NFData SessionCredentials where
+                    _sEncryptionConfiguration,
+                  ("CompressionFormat" .=) <$> _sCompressionFormat,
+                  ("BufferingHints" .=) <$> _sBufferingHints,
+                  ("BucketARN" .=) <$> _sBucketARN,
+                  ("RoleARN" .=) <$> _sRoleARN])
 
 -- | Details about a Kinesis stream used as the source for a Kinesis Firehose delivery stream.
 --
@@ -2519,3 +2464,381 @@ instance FromJSON SourceDescription where
 instance Hashable SourceDescription where
 
 instance NFData SourceDescription where
+
+-- | Describes the configuration of a destination in Splunk.
+--
+--
+--
+-- /See:/ 'splunkDestinationConfiguration' smart constructor.
+data SplunkDestinationConfiguration = SplunkDestinationConfiguration'
+  { _splS3BackupMode                      :: !(Maybe SplunkS3BackupMode)
+  , _splCloudWatchLoggingOptions          :: !(Maybe CloudWatchLoggingOptions)
+  , _splHECAcknowledgmentTimeoutInSeconds :: !(Maybe Nat)
+  , _splRetryOptions                      :: !(Maybe SplunkRetryOptions)
+  , _splProcessingConfiguration           :: !(Maybe ProcessingConfiguration)
+  , _splHECEndpoint                       :: !Text
+  , _splHECEndpointType                   :: !HECEndpointType
+  , _splHECToken                          :: !Text
+  , _splS3Configuration                   :: !S3DestinationConfiguration
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'SplunkDestinationConfiguration' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'splS3BackupMode' - Defines how documents should be delivered to Amazon S3. When set to @FailedDocumentsOnly@ , Kinesis Firehose writes any data that could not be indexed to the configured Amazon S3 destination. When set to @AllDocuments@ , Kinesis Firehose delivers all incoming records to Amazon S3, and also writes failed documents to Amazon S3. Default value is @FailedDocumentsOnly@ .
+--
+-- * 'splCloudWatchLoggingOptions' - The CloudWatch logging options for your delivery stream.
+--
+-- * 'splHECAcknowledgmentTimeoutInSeconds' - The amount of time that Kinesis Firehose waits to receive an acknowledgment from Splunk after it sends it data. At the end of the timeout period Kinesis Firehose either tries to send the data again or considers it an error, based on your retry settings.
+--
+-- * 'splRetryOptions' - The retry behavior in case Kinesis Firehose is unable to deliver data to Splunk or if it doesn't receive an acknowledgment of receipt from Splunk.
+--
+-- * 'splProcessingConfiguration' - The data processing configuration.
+--
+-- * 'splHECEndpoint' - The HTTP Event Collector (HEC) endpoint to which Kinesis Firehose sends your data.
+--
+-- * 'splHECEndpointType' - This type can be either "Raw" or "Event".
+--
+-- * 'splHECToken' - This is a GUID you obtain from your Splunk cluster when you create a new HEC endpoint.
+--
+-- * 'splS3Configuration' - The configuration for the backup Amazon S3 location.
+splunkDestinationConfiguration
+    :: Text -- ^ 'splHECEndpoint'
+    -> HECEndpointType -- ^ 'splHECEndpointType'
+    -> Text -- ^ 'splHECToken'
+    -> S3DestinationConfiguration -- ^ 'splS3Configuration'
+    -> SplunkDestinationConfiguration
+splunkDestinationConfiguration pHECEndpoint_ pHECEndpointType_ pHECToken_ pS3Configuration_ =
+  SplunkDestinationConfiguration'
+  { _splS3BackupMode = Nothing
+  , _splCloudWatchLoggingOptions = Nothing
+  , _splHECAcknowledgmentTimeoutInSeconds = Nothing
+  , _splRetryOptions = Nothing
+  , _splProcessingConfiguration = Nothing
+  , _splHECEndpoint = pHECEndpoint_
+  , _splHECEndpointType = pHECEndpointType_
+  , _splHECToken = pHECToken_
+  , _splS3Configuration = pS3Configuration_
+  }
+
+
+-- | Defines how documents should be delivered to Amazon S3. When set to @FailedDocumentsOnly@ , Kinesis Firehose writes any data that could not be indexed to the configured Amazon S3 destination. When set to @AllDocuments@ , Kinesis Firehose delivers all incoming records to Amazon S3, and also writes failed documents to Amazon S3. Default value is @FailedDocumentsOnly@ .
+splS3BackupMode :: Lens' SplunkDestinationConfiguration (Maybe SplunkS3BackupMode)
+splS3BackupMode = lens _splS3BackupMode (\ s a -> s{_splS3BackupMode = a});
+
+-- | The CloudWatch logging options for your delivery stream.
+splCloudWatchLoggingOptions :: Lens' SplunkDestinationConfiguration (Maybe CloudWatchLoggingOptions)
+splCloudWatchLoggingOptions = lens _splCloudWatchLoggingOptions (\ s a -> s{_splCloudWatchLoggingOptions = a});
+
+-- | The amount of time that Kinesis Firehose waits to receive an acknowledgment from Splunk after it sends it data. At the end of the timeout period Kinesis Firehose either tries to send the data again or considers it an error, based on your retry settings.
+splHECAcknowledgmentTimeoutInSeconds :: Lens' SplunkDestinationConfiguration (Maybe Natural)
+splHECAcknowledgmentTimeoutInSeconds = lens _splHECAcknowledgmentTimeoutInSeconds (\ s a -> s{_splHECAcknowledgmentTimeoutInSeconds = a}) . mapping _Nat;
+
+-- | The retry behavior in case Kinesis Firehose is unable to deliver data to Splunk or if it doesn't receive an acknowledgment of receipt from Splunk.
+splRetryOptions :: Lens' SplunkDestinationConfiguration (Maybe SplunkRetryOptions)
+splRetryOptions = lens _splRetryOptions (\ s a -> s{_splRetryOptions = a});
+
+-- | The data processing configuration.
+splProcessingConfiguration :: Lens' SplunkDestinationConfiguration (Maybe ProcessingConfiguration)
+splProcessingConfiguration = lens _splProcessingConfiguration (\ s a -> s{_splProcessingConfiguration = a});
+
+-- | The HTTP Event Collector (HEC) endpoint to which Kinesis Firehose sends your data.
+splHECEndpoint :: Lens' SplunkDestinationConfiguration Text
+splHECEndpoint = lens _splHECEndpoint (\ s a -> s{_splHECEndpoint = a});
+
+-- | This type can be either "Raw" or "Event".
+splHECEndpointType :: Lens' SplunkDestinationConfiguration HECEndpointType
+splHECEndpointType = lens _splHECEndpointType (\ s a -> s{_splHECEndpointType = a});
+
+-- | This is a GUID you obtain from your Splunk cluster when you create a new HEC endpoint.
+splHECToken :: Lens' SplunkDestinationConfiguration Text
+splHECToken = lens _splHECToken (\ s a -> s{_splHECToken = a});
+
+-- | The configuration for the backup Amazon S3 location.
+splS3Configuration :: Lens' SplunkDestinationConfiguration S3DestinationConfiguration
+splS3Configuration = lens _splS3Configuration (\ s a -> s{_splS3Configuration = a});
+
+instance Hashable SplunkDestinationConfiguration
+         where
+
+instance NFData SplunkDestinationConfiguration where
+
+instance ToJSON SplunkDestinationConfiguration where
+        toJSON SplunkDestinationConfiguration'{..}
+          = object
+              (catMaybes
+                 [("S3BackupMode" .=) <$> _splS3BackupMode,
+                  ("CloudWatchLoggingOptions" .=) <$>
+                    _splCloudWatchLoggingOptions,
+                  ("HECAcknowledgmentTimeoutInSeconds" .=) <$>
+                    _splHECAcknowledgmentTimeoutInSeconds,
+                  ("RetryOptions" .=) <$> _splRetryOptions,
+                  ("ProcessingConfiguration" .=) <$>
+                    _splProcessingConfiguration,
+                  Just ("HECEndpoint" .= _splHECEndpoint),
+                  Just ("HECEndpointType" .= _splHECEndpointType),
+                  Just ("HECToken" .= _splHECToken),
+                  Just ("S3Configuration" .= _splS3Configuration)])
+
+-- | Describes a destination in Splunk.
+--
+--
+--
+-- /See:/ 'splunkDestinationDescription' smart constructor.
+data SplunkDestinationDescription = SplunkDestinationDescription'
+  { _sddS3BackupMode                      :: !(Maybe SplunkS3BackupMode)
+  , _sddHECToken                          :: !(Maybe Text)
+  , _sddHECEndpointType                   :: !(Maybe HECEndpointType)
+  , _sddCloudWatchLoggingOptions          :: !(Maybe CloudWatchLoggingOptions)
+  , _sddHECAcknowledgmentTimeoutInSeconds :: !(Maybe Nat)
+  , _sddS3DestinationDescription          :: !(Maybe S3DestinationDescription)
+  , _sddHECEndpoint                       :: !(Maybe Text)
+  , _sddRetryOptions                      :: !(Maybe SplunkRetryOptions)
+  , _sddProcessingConfiguration           :: !(Maybe ProcessingConfiguration)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'SplunkDestinationDescription' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'sddS3BackupMode' - Defines how documents should be delivered to Amazon S3. When set to @FailedDocumentsOnly@ , Kinesis Firehose writes any data that could not be indexed to the configured Amazon S3 destination. When set to @AllDocuments@ , Kinesis Firehose delivers all incoming records to Amazon S3, and also writes failed documents to Amazon S3. Default value is @FailedDocumentsOnly@ .
+--
+-- * 'sddHECToken' - This is a GUID you obtain from your Splunk cluster when you create a new HEC endpoint.
+--
+-- * 'sddHECEndpointType' - This type can be either "Raw" or "Event".
+--
+-- * 'sddCloudWatchLoggingOptions' - The CloudWatch logging options for your delivery stream.
+--
+-- * 'sddHECAcknowledgmentTimeoutInSeconds' - The amount of time that Kinesis Firehose waits to receive an acknowledgment from Splunk after it sends it data. At the end of the timeout period Kinesis Firehose either tries to send the data again or considers it an error, based on your retry settings.
+--
+-- * 'sddS3DestinationDescription' - The Amazon S3 destination.>
+--
+-- * 'sddHECEndpoint' - The HTTP Event Collector (HEC) endpoint to which Kinesis Firehose sends your data.
+--
+-- * 'sddRetryOptions' - The retry behavior in case Kinesis Firehose is unable to deliver data to Splunk or if it doesn't receive an acknowledgment of receipt from Splunk.
+--
+-- * 'sddProcessingConfiguration' - The data processing configuration.
+splunkDestinationDescription
+    :: SplunkDestinationDescription
+splunkDestinationDescription =
+  SplunkDestinationDescription'
+  { _sddS3BackupMode = Nothing
+  , _sddHECToken = Nothing
+  , _sddHECEndpointType = Nothing
+  , _sddCloudWatchLoggingOptions = Nothing
+  , _sddHECAcknowledgmentTimeoutInSeconds = Nothing
+  , _sddS3DestinationDescription = Nothing
+  , _sddHECEndpoint = Nothing
+  , _sddRetryOptions = Nothing
+  , _sddProcessingConfiguration = Nothing
+  }
+
+
+-- | Defines how documents should be delivered to Amazon S3. When set to @FailedDocumentsOnly@ , Kinesis Firehose writes any data that could not be indexed to the configured Amazon S3 destination. When set to @AllDocuments@ , Kinesis Firehose delivers all incoming records to Amazon S3, and also writes failed documents to Amazon S3. Default value is @FailedDocumentsOnly@ .
+sddS3BackupMode :: Lens' SplunkDestinationDescription (Maybe SplunkS3BackupMode)
+sddS3BackupMode = lens _sddS3BackupMode (\ s a -> s{_sddS3BackupMode = a});
+
+-- | This is a GUID you obtain from your Splunk cluster when you create a new HEC endpoint.
+sddHECToken :: Lens' SplunkDestinationDescription (Maybe Text)
+sddHECToken = lens _sddHECToken (\ s a -> s{_sddHECToken = a});
+
+-- | This type can be either "Raw" or "Event".
+sddHECEndpointType :: Lens' SplunkDestinationDescription (Maybe HECEndpointType)
+sddHECEndpointType = lens _sddHECEndpointType (\ s a -> s{_sddHECEndpointType = a});
+
+-- | The CloudWatch logging options for your delivery stream.
+sddCloudWatchLoggingOptions :: Lens' SplunkDestinationDescription (Maybe CloudWatchLoggingOptions)
+sddCloudWatchLoggingOptions = lens _sddCloudWatchLoggingOptions (\ s a -> s{_sddCloudWatchLoggingOptions = a});
+
+-- | The amount of time that Kinesis Firehose waits to receive an acknowledgment from Splunk after it sends it data. At the end of the timeout period Kinesis Firehose either tries to send the data again or considers it an error, based on your retry settings.
+sddHECAcknowledgmentTimeoutInSeconds :: Lens' SplunkDestinationDescription (Maybe Natural)
+sddHECAcknowledgmentTimeoutInSeconds = lens _sddHECAcknowledgmentTimeoutInSeconds (\ s a -> s{_sddHECAcknowledgmentTimeoutInSeconds = a}) . mapping _Nat;
+
+-- | The Amazon S3 destination.>
+sddS3DestinationDescription :: Lens' SplunkDestinationDescription (Maybe S3DestinationDescription)
+sddS3DestinationDescription = lens _sddS3DestinationDescription (\ s a -> s{_sddS3DestinationDescription = a});
+
+-- | The HTTP Event Collector (HEC) endpoint to which Kinesis Firehose sends your data.
+sddHECEndpoint :: Lens' SplunkDestinationDescription (Maybe Text)
+sddHECEndpoint = lens _sddHECEndpoint (\ s a -> s{_sddHECEndpoint = a});
+
+-- | The retry behavior in case Kinesis Firehose is unable to deliver data to Splunk or if it doesn't receive an acknowledgment of receipt from Splunk.
+sddRetryOptions :: Lens' SplunkDestinationDescription (Maybe SplunkRetryOptions)
+sddRetryOptions = lens _sddRetryOptions (\ s a -> s{_sddRetryOptions = a});
+
+-- | The data processing configuration.
+sddProcessingConfiguration :: Lens' SplunkDestinationDescription (Maybe ProcessingConfiguration)
+sddProcessingConfiguration = lens _sddProcessingConfiguration (\ s a -> s{_sddProcessingConfiguration = a});
+
+instance FromJSON SplunkDestinationDescription where
+        parseJSON
+          = withObject "SplunkDestinationDescription"
+              (\ x ->
+                 SplunkDestinationDescription' <$>
+                   (x .:? "S3BackupMode") <*> (x .:? "HECToken") <*>
+                     (x .:? "HECEndpointType")
+                     <*> (x .:? "CloudWatchLoggingOptions")
+                     <*> (x .:? "HECAcknowledgmentTimeoutInSeconds")
+                     <*> (x .:? "S3DestinationDescription")
+                     <*> (x .:? "HECEndpoint")
+                     <*> (x .:? "RetryOptions")
+                     <*> (x .:? "ProcessingConfiguration"))
+
+instance Hashable SplunkDestinationDescription where
+
+instance NFData SplunkDestinationDescription where
+
+-- | Describes an update for a destination in Splunk.
+--
+--
+--
+-- /See:/ 'splunkDestinationUpdate' smart constructor.
+data SplunkDestinationUpdate = SplunkDestinationUpdate'
+  { _sduS3BackupMode                      :: !(Maybe SplunkS3BackupMode)
+  , _sduHECToken                          :: !(Maybe Text)
+  , _sduHECEndpointType                   :: !(Maybe HECEndpointType)
+  , _sduCloudWatchLoggingOptions          :: !(Maybe CloudWatchLoggingOptions)
+  , _sduHECAcknowledgmentTimeoutInSeconds :: !(Maybe Nat)
+  , _sduS3Update                          :: !(Maybe S3DestinationUpdate)
+  , _sduHECEndpoint                       :: !(Maybe Text)
+  , _sduRetryOptions                      :: !(Maybe SplunkRetryOptions)
+  , _sduProcessingConfiguration           :: !(Maybe ProcessingConfiguration)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'SplunkDestinationUpdate' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'sduS3BackupMode' - Defines how documents should be delivered to Amazon S3. When set to @FailedDocumentsOnly@ , Kinesis Firehose writes any data that could not be indexed to the configured Amazon S3 destination. When set to @AllDocuments@ , Kinesis Firehose delivers all incoming records to Amazon S3, and also writes failed documents to Amazon S3. Default value is @FailedDocumentsOnly@ .
+--
+-- * 'sduHECToken' - This is a GUID you obtain from your Splunk cluster when you create a new HEC endpoint.
+--
+-- * 'sduHECEndpointType' - This type can be either "Raw" or "Event".
+--
+-- * 'sduCloudWatchLoggingOptions' - The CloudWatch logging options for your delivery stream.
+--
+-- * 'sduHECAcknowledgmentTimeoutInSeconds' - The amount of time that Kinesis Firehose waits to receive an acknowledgment from Splunk after it sends it data. At the end of the timeout period Kinesis Firehose either tries to send the data again or considers it an error, based on your retry settings.
+--
+-- * 'sduS3Update' - Your update to the configuration of the backup Amazon S3 location.
+--
+-- * 'sduHECEndpoint' - The HTTP Event Collector (HEC) endpoint to which Kinesis Firehose sends your data.
+--
+-- * 'sduRetryOptions' - The retry behavior in case Kinesis Firehose is unable to deliver data to Splunk or if it doesn't receive an acknowledgment of receipt from Splunk.
+--
+-- * 'sduProcessingConfiguration' - The data processing configuration.
+splunkDestinationUpdate
+    :: SplunkDestinationUpdate
+splunkDestinationUpdate =
+  SplunkDestinationUpdate'
+  { _sduS3BackupMode = Nothing
+  , _sduHECToken = Nothing
+  , _sduHECEndpointType = Nothing
+  , _sduCloudWatchLoggingOptions = Nothing
+  , _sduHECAcknowledgmentTimeoutInSeconds = Nothing
+  , _sduS3Update = Nothing
+  , _sduHECEndpoint = Nothing
+  , _sduRetryOptions = Nothing
+  , _sduProcessingConfiguration = Nothing
+  }
+
+
+-- | Defines how documents should be delivered to Amazon S3. When set to @FailedDocumentsOnly@ , Kinesis Firehose writes any data that could not be indexed to the configured Amazon S3 destination. When set to @AllDocuments@ , Kinesis Firehose delivers all incoming records to Amazon S3, and also writes failed documents to Amazon S3. Default value is @FailedDocumentsOnly@ .
+sduS3BackupMode :: Lens' SplunkDestinationUpdate (Maybe SplunkS3BackupMode)
+sduS3BackupMode = lens _sduS3BackupMode (\ s a -> s{_sduS3BackupMode = a});
+
+-- | This is a GUID you obtain from your Splunk cluster when you create a new HEC endpoint.
+sduHECToken :: Lens' SplunkDestinationUpdate (Maybe Text)
+sduHECToken = lens _sduHECToken (\ s a -> s{_sduHECToken = a});
+
+-- | This type can be either "Raw" or "Event".
+sduHECEndpointType :: Lens' SplunkDestinationUpdate (Maybe HECEndpointType)
+sduHECEndpointType = lens _sduHECEndpointType (\ s a -> s{_sduHECEndpointType = a});
+
+-- | The CloudWatch logging options for your delivery stream.
+sduCloudWatchLoggingOptions :: Lens' SplunkDestinationUpdate (Maybe CloudWatchLoggingOptions)
+sduCloudWatchLoggingOptions = lens _sduCloudWatchLoggingOptions (\ s a -> s{_sduCloudWatchLoggingOptions = a});
+
+-- | The amount of time that Kinesis Firehose waits to receive an acknowledgment from Splunk after it sends it data. At the end of the timeout period Kinesis Firehose either tries to send the data again or considers it an error, based on your retry settings.
+sduHECAcknowledgmentTimeoutInSeconds :: Lens' SplunkDestinationUpdate (Maybe Natural)
+sduHECAcknowledgmentTimeoutInSeconds = lens _sduHECAcknowledgmentTimeoutInSeconds (\ s a -> s{_sduHECAcknowledgmentTimeoutInSeconds = a}) . mapping _Nat;
+
+-- | Your update to the configuration of the backup Amazon S3 location.
+sduS3Update :: Lens' SplunkDestinationUpdate (Maybe S3DestinationUpdate)
+sduS3Update = lens _sduS3Update (\ s a -> s{_sduS3Update = a});
+
+-- | The HTTP Event Collector (HEC) endpoint to which Kinesis Firehose sends your data.
+sduHECEndpoint :: Lens' SplunkDestinationUpdate (Maybe Text)
+sduHECEndpoint = lens _sduHECEndpoint (\ s a -> s{_sduHECEndpoint = a});
+
+-- | The retry behavior in case Kinesis Firehose is unable to deliver data to Splunk or if it doesn't receive an acknowledgment of receipt from Splunk.
+sduRetryOptions :: Lens' SplunkDestinationUpdate (Maybe SplunkRetryOptions)
+sduRetryOptions = lens _sduRetryOptions (\ s a -> s{_sduRetryOptions = a});
+
+-- | The data processing configuration.
+sduProcessingConfiguration :: Lens' SplunkDestinationUpdate (Maybe ProcessingConfiguration)
+sduProcessingConfiguration = lens _sduProcessingConfiguration (\ s a -> s{_sduProcessingConfiguration = a});
+
+instance Hashable SplunkDestinationUpdate where
+
+instance NFData SplunkDestinationUpdate where
+
+instance ToJSON SplunkDestinationUpdate where
+        toJSON SplunkDestinationUpdate'{..}
+          = object
+              (catMaybes
+                 [("S3BackupMode" .=) <$> _sduS3BackupMode,
+                  ("HECToken" .=) <$> _sduHECToken,
+                  ("HECEndpointType" .=) <$> _sduHECEndpointType,
+                  ("CloudWatchLoggingOptions" .=) <$>
+                    _sduCloudWatchLoggingOptions,
+                  ("HECAcknowledgmentTimeoutInSeconds" .=) <$>
+                    _sduHECAcknowledgmentTimeoutInSeconds,
+                  ("S3Update" .=) <$> _sduS3Update,
+                  ("HECEndpoint" .=) <$> _sduHECEndpoint,
+                  ("RetryOptions" .=) <$> _sduRetryOptions,
+                  ("ProcessingConfiguration" .=) <$>
+                    _sduProcessingConfiguration])
+
+-- | Configures retry behavior in case Kinesis Firehose is unable to deliver documents to Splunk or if it doesn't receive an acknowledgment from Splunk.
+--
+--
+--
+-- /See:/ 'splunkRetryOptions' smart constructor.
+newtype SplunkRetryOptions = SplunkRetryOptions'
+  { _sroDurationInSeconds :: Maybe Nat
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'SplunkRetryOptions' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'sroDurationInSeconds' - The total amount of time that Kinesis Firehose spends on retries. This duration starts after the initial attempt to send data to Splunk fails and doesn't include the periods during which Kinesis Firehose waits for acknowledgment from Splunk after each attempt.
+splunkRetryOptions
+    :: SplunkRetryOptions
+splunkRetryOptions = SplunkRetryOptions' {_sroDurationInSeconds = Nothing}
+
+
+-- | The total amount of time that Kinesis Firehose spends on retries. This duration starts after the initial attempt to send data to Splunk fails and doesn't include the periods during which Kinesis Firehose waits for acknowledgment from Splunk after each attempt.
+sroDurationInSeconds :: Lens' SplunkRetryOptions (Maybe Natural)
+sroDurationInSeconds = lens _sroDurationInSeconds (\ s a -> s{_sroDurationInSeconds = a}) . mapping _Nat;
+
+instance FromJSON SplunkRetryOptions where
+        parseJSON
+          = withObject "SplunkRetryOptions"
+              (\ x ->
+                 SplunkRetryOptions' <$> (x .:? "DurationInSeconds"))
+
+instance Hashable SplunkRetryOptions where
+
+instance NFData SplunkRetryOptions where
+
+instance ToJSON SplunkRetryOptions where
+        toJSON SplunkRetryOptions'{..}
+          = object
+              (catMaybes
+                 [("DurationInSeconds" .=) <$> _sroDurationInSeconds])

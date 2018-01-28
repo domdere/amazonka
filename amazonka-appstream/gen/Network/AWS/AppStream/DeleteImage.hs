@@ -18,7 +18,9 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Undocumented operation.
+-- Deletes the specified image. You cannot delete an image that is currently in use. After you delete an image, you cannot provision new capacity using the image.
+--
+--
 module Network.AWS.AppStream.DeleteImage
     (
     -- * Creating a Request
@@ -52,14 +54,14 @@ newtype DeleteImage = DeleteImage'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'diName' - Undocumented member.
+-- * 'diName' - The name of the image.
 deleteImage
     :: Text -- ^ 'diName'
     -> DeleteImage
 deleteImage pName_ = DeleteImage' {_diName = pName_}
 
 
--- | Undocumented member.
+-- | The name of the image.
 diName :: Lens' DeleteImage Text
 diName = lens _diName (\ s a -> s{_diName = a});
 
@@ -107,7 +109,7 @@ data DeleteImageResponse = DeleteImageResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dirsImage' - Undocumented member.
+-- * 'dirsImage' - Information about the image.
 --
 -- * 'dirsResponseStatus' - -- | The response status code.
 deleteImageResponse
@@ -118,7 +120,7 @@ deleteImageResponse pResponseStatus_ =
   {_dirsImage = Nothing, _dirsResponseStatus = pResponseStatus_}
 
 
--- | Undocumented member.
+-- | Information about the image.
 dirsImage :: Lens' DeleteImageResponse (Maybe Image)
 dirsImage = lens _dirsImage (\ s a -> s{_dirsImage = a});
 

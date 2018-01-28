@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Retrieves metadata for a specified @Crawler@ .
+-- Retrieves metadata for a specified crawler.
 --
 --
 module Network.AWS.Glue.GetCrawler
@@ -54,14 +54,14 @@ newtype GetCrawler = GetCrawler'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'gccName' - Name of the @Crawler@ to retrieve metadata for.
+-- * 'gccName' - Name of the crawler to retrieve metadata for.
 getCrawler
     :: Text -- ^ 'gccName'
     -> GetCrawler
 getCrawler pName_ = GetCrawler' {_gccName = pName_}
 
 
--- | Name of the @Crawler@ to retrieve metadata for.
+-- | Name of the crawler to retrieve metadata for.
 gccName :: Lens' GetCrawler Text
 gccName = lens _gccName (\ s a -> s{_gccName = a});
 
@@ -108,7 +108,7 @@ data GetCrawlerResponse = GetCrawlerResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'getersCrawler' - The metadata for the specified @Crawler@ .
+-- * 'getersCrawler' - The metadata for the specified crawler.
 --
 -- * 'getersResponseStatus' - -- | The response status code.
 getCrawlerResponse
@@ -119,7 +119,7 @@ getCrawlerResponse pResponseStatus_ =
   {_getersCrawler = Nothing, _getersResponseStatus = pResponseStatus_}
 
 
--- | The metadata for the specified @Crawler@ .
+-- | The metadata for the specified crawler.
 getersCrawler :: Lens' GetCrawlerResponse (Maybe Crawler)
 getersCrawler = lens _getersCrawler (\ s a -> s{_getersCrawler = a});
 

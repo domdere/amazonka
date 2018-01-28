@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Creates tags for a WorkSpace.
+-- Creates tags for the specified WorkSpace.
 --
 --
 module Network.AWS.WorkSpaces.CreateTags
@@ -44,11 +44,7 @@ import Network.AWS.Response
 import Network.AWS.WorkSpaces.Types
 import Network.AWS.WorkSpaces.Types.Product
 
--- | The request of the 'CreateTags' operation.
---
---
---
--- /See:/ 'createTags' smart constructor.
+-- | /See:/ 'createTags' smart constructor.
 data CreateTags = CreateTags'
   { _ctResourceId :: !Text
   , _ctTags       :: ![Tag]
@@ -59,9 +55,9 @@ data CreateTags = CreateTags'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ctResourceId' - The resource ID of the request.
+-- * 'ctResourceId' - The ID of the resource.
 --
--- * 'ctTags' - The tags of the request.
+-- * 'ctTags' - The tags. Each resource can have a maximum of 50 tags.
 createTags
     :: Text -- ^ 'ctResourceId'
     -> CreateTags
@@ -69,11 +65,11 @@ createTags pResourceId_ =
   CreateTags' {_ctResourceId = pResourceId_, _ctTags = mempty}
 
 
--- | The resource ID of the request.
+-- | The ID of the resource.
 ctResourceId :: Lens' CreateTags Text
 ctResourceId = lens _ctResourceId (\ s a -> s{_ctResourceId = a});
 
--- | The tags of the request.
+-- | The tags. Each resource can have a maximum of 50 tags.
 ctTags :: Lens' CreateTags [Tag]
 ctTags = lens _ctTags (\ s a -> s{_ctTags = a}) . _Coerce;
 
@@ -111,11 +107,7 @@ instance ToPath CreateTags where
 instance ToQuery CreateTags where
         toQuery = const mempty
 
--- | The result of the 'CreateTags' operation.
---
---
---
--- /See:/ 'createTagsResponse' smart constructor.
+-- | /See:/ 'createTagsResponse' smart constructor.
 newtype CreateTagsResponse = CreateTagsResponse'
   { _ctrsResponseStatus :: Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)

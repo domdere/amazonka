@@ -36,10 +36,12 @@ module Network.AWS.Lambda.GetAlias
     , aliasConfiguration
     , AliasConfiguration
     -- * Response Lenses
+    , acRoutingConfig
     , acName
     , acFunctionVersion
     , acAliasARN
     , acDescription
+    , acRevisionId
     ) where
 
 import Network.AWS.Lambda.Types

@@ -249,13 +249,13 @@ data CommentMetadata = CommentMetadata'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cmCommentStatus' - Undocumented member.
+-- * 'cmCommentStatus' - The status of the comment.
 --
 -- * 'cmContributor' - The user who made the comment.
 --
 -- * 'cmCommentId' - The ID of the comment.
 --
--- * 'cmCreatedTimestamp' - Undocumented member.
+-- * 'cmCreatedTimestamp' - The timestamp that the comment was created.
 --
 -- * 'cmRecipientId' - The ID of the user being replied to.
 commentMetadata
@@ -270,7 +270,7 @@ commentMetadata =
   }
 
 
--- | Undocumented member.
+-- | The status of the comment.
 cmCommentStatus :: Lens' CommentMetadata (Maybe CommentStatusType)
 cmCommentStatus = lens _cmCommentStatus (\ s a -> s{_cmCommentStatus = a});
 
@@ -282,7 +282,7 @@ cmContributor = lens _cmContributor (\ s a -> s{_cmContributor = a});
 cmCommentId :: Lens' CommentMetadata (Maybe Text)
 cmCommentId = lens _cmCommentId (\ s a -> s{_cmCommentId = a});
 
--- | Undocumented member.
+-- | The timestamp that the comment was created.
 cmCreatedTimestamp :: Lens' CommentMetadata (Maybe UTCTime)
 cmCreatedTimestamp = lens _cmCreatedTimestamp (\ s a -> s{_cmCreatedTimestamp = a}) . mapping _Time;
 
@@ -437,21 +437,21 @@ data DocumentVersionMetadata = DocumentVersionMetadata'
 --
 -- * 'dvmSignature' - The signature of the document.
 --
--- * 'dvmContentCreatedTimestamp' - The time stamp when the content of the document was originally created.
+-- * 'dvmContentCreatedTimestamp' - The timestamp when the content of the document was originally created.
 --
 -- * 'dvmSize' - The size of the document, in bytes.
 --
 -- * 'dvmName' - The name of the version.
 --
--- * 'dvmModifiedTimestamp' - The time stamp when the document was last uploaded.
+-- * 'dvmModifiedTimestamp' - The timestamp when the document was last uploaded.
 --
 -- * 'dvmSource' - The source of the document.
 --
 -- * 'dvmId' - The ID of the version.
 --
--- * 'dvmCreatedTimestamp' - The time stamp when the document was first uploaded.
+-- * 'dvmCreatedTimestamp' - The timestamp when the document was first uploaded.
 --
--- * 'dvmContentModifiedTimestamp' - The time stamp when the content of the document was modified.
+-- * 'dvmContentModifiedTimestamp' - The timestamp when the content of the document was modified.
 --
 -- * 'dvmCreatorId' - The ID of the creator.
 --
@@ -488,7 +488,7 @@ dvmStatus = lens _dvmStatus (\ s a -> s{_dvmStatus = a});
 dvmSignature :: Lens' DocumentVersionMetadata (Maybe Text)
 dvmSignature = lens _dvmSignature (\ s a -> s{_dvmSignature = a});
 
--- | The time stamp when the content of the document was originally created.
+-- | The timestamp when the content of the document was originally created.
 dvmContentCreatedTimestamp :: Lens' DocumentVersionMetadata (Maybe UTCTime)
 dvmContentCreatedTimestamp = lens _dvmContentCreatedTimestamp (\ s a -> s{_dvmContentCreatedTimestamp = a}) . mapping _Time;
 
@@ -500,7 +500,7 @@ dvmSize = lens _dvmSize (\ s a -> s{_dvmSize = a});
 dvmName :: Lens' DocumentVersionMetadata (Maybe Text)
 dvmName = lens _dvmName (\ s a -> s{_dvmName = a});
 
--- | The time stamp when the document was last uploaded.
+-- | The timestamp when the document was last uploaded.
 dvmModifiedTimestamp :: Lens' DocumentVersionMetadata (Maybe UTCTime)
 dvmModifiedTimestamp = lens _dvmModifiedTimestamp (\ s a -> s{_dvmModifiedTimestamp = a}) . mapping _Time;
 
@@ -512,11 +512,11 @@ dvmSource = lens _dvmSource (\ s a -> s{_dvmSource = a}) . _Default . _Map;
 dvmId :: Lens' DocumentVersionMetadata (Maybe Text)
 dvmId = lens _dvmId (\ s a -> s{_dvmId = a});
 
--- | The time stamp when the document was first uploaded.
+-- | The timestamp when the document was first uploaded.
 dvmCreatedTimestamp :: Lens' DocumentVersionMetadata (Maybe UTCTime)
 dvmCreatedTimestamp = lens _dvmCreatedTimestamp (\ s a -> s{_dvmCreatedTimestamp = a}) . mapping _Time;
 
--- | The time stamp when the content of the document was modified.
+-- | The timestamp when the content of the document was modified.
 dvmContentModifiedTimestamp :: Lens' DocumentVersionMetadata (Maybe UTCTime)
 dvmContentModifiedTimestamp = lens _dvmContentModifiedTimestamp (\ s a -> s{_dvmContentModifiedTimestamp = a}) . mapping _Time;
 
@@ -718,7 +718,50 @@ instance Hashable GroupMetadata where
 
 instance NFData GroupMetadata where
 
--- | Describes the users and/or user groups.
+-- | Set of options which defines notification preferences of given action.
+--
+--
+--
+-- /See:/ 'notificationOptions' smart constructor.
+data NotificationOptions = NotificationOptions'
+  { _noEmailMessage :: !(Maybe (Sensitive Text))
+  , _noSendEmail    :: !(Maybe Bool)
+  } deriving (Eq, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'NotificationOptions' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'noEmailMessage' - Text value to be included in the email body.
+--
+-- * 'noSendEmail' - Boolean value to indicate an email notification should be sent to the receipients.
+notificationOptions
+    :: NotificationOptions
+notificationOptions =
+  NotificationOptions' {_noEmailMessage = Nothing, _noSendEmail = Nothing}
+
+
+-- | Text value to be included in the email body.
+noEmailMessage :: Lens' NotificationOptions (Maybe Text)
+noEmailMessage = lens _noEmailMessage (\ s a -> s{_noEmailMessage = a}) . mapping _Sensitive;
+
+-- | Boolean value to indicate an email notification should be sent to the receipients.
+noSendEmail :: Lens' NotificationOptions (Maybe Bool)
+noSendEmail = lens _noSendEmail (\ s a -> s{_noSendEmail = a});
+
+instance Hashable NotificationOptions where
+
+instance NFData NotificationOptions where
+
+instance ToJSON NotificationOptions where
+        toJSON NotificationOptions'{..}
+          = object
+              (catMaybes
+                 [("EmailMessage" .=) <$> _noEmailMessage,
+                  ("SendEmail" .=) <$> _noSendEmail])
+
+-- | Describes the users or user groups.
 --
 --
 --
@@ -883,7 +926,7 @@ data ResourceMetadata = ResourceMetadata'
 --
 -- * 'rmType' - The type of resource.
 --
--- * 'rmOriginalName' - The original name of the resource prior to a rename operation.
+-- * 'rmOriginalName' - The original name of the resource before a rename operation.
 --
 -- * 'rmParentId' - The parent ID of the resource before a rename operation.
 resourceMetadata
@@ -920,7 +963,7 @@ rmId = lens _rmId (\ s a -> s{_rmId = a});
 rmType :: Lens' ResourceMetadata (Maybe ResourceType)
 rmType = lens _rmType (\ s a -> s{_rmType = a});
 
--- | The original name of the resource prior to a rename operation.
+-- | The original name of the resource before a rename operation.
 rmOriginalName :: Lens' ResourceMetadata (Maybe Text)
 rmOriginalName = lens _rmOriginalName (\ s a -> s{_rmOriginalName = a});
 
@@ -1479,7 +1522,7 @@ data UserMetadata = UserMetadata'
 --
 -- * 'umGivenName' - The given name of the user before a rename operation.
 --
--- * 'umUsername' - The username of the user.
+-- * 'umUsername' - The name of the user.
 --
 -- * 'umEmailAddress' - The email address of the user.
 --
@@ -1502,7 +1545,7 @@ userMetadata =
 umGivenName :: Lens' UserMetadata (Maybe Text)
 umGivenName = lens _umGivenName (\ s a -> s{_umGivenName = a});
 
--- | The username of the user.
+-- | The name of the user.
 umUsername :: Lens' UserMetadata (Maybe Text)
 umUsername = lens _umUsername (\ s a -> s{_umUsername = a});
 
@@ -1547,7 +1590,7 @@ data UserStorageMetadata = UserStorageMetadata'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'usmStorageUtilizedInBytes' - The amount of storage utilized, in bytes.
+-- * 'usmStorageUtilizedInBytes' - The amount of storage used, in bytes.
 --
 -- * 'usmStorageRule' - The storage for a user.
 userStorageMetadata
@@ -1557,7 +1600,7 @@ userStorageMetadata =
   {_usmStorageUtilizedInBytes = Nothing, _usmStorageRule = Nothing}
 
 
--- | The amount of storage utilized, in bytes.
+-- | The amount of storage used, in bytes.
 usmStorageUtilizedInBytes :: Lens' UserStorageMetadata (Maybe Integer)
 usmStorageUtilizedInBytes = lens _usmStorageUtilizedInBytes (\ s a -> s{_usmStorageUtilizedInBytes = a});
 

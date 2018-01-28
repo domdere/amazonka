@@ -21,6 +21,8 @@
 -- Returns information about the replication subnet groups.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.DMS.DescribeReplicationSubnetGroups
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.DMS.DescribeReplicationSubnetGroups
 import Network.AWS.DMS.Types
 import Network.AWS.DMS.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -86,6 +89,15 @@ drsgMarker = lens _drsgMarker (\ s a -> s{_drsgMarker = a});
 -- | The maximum number of records to include in the response. If more records exist than the specified @MaxRecords@ value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.  Default: 100 Constraints: Minimum 20, maximum 100.
 drsgMaxRecords :: Lens' DescribeReplicationSubnetGroups (Maybe Int)
 drsgMaxRecords = lens _drsgMaxRecords (\ s a -> s{_drsgMaxRecords = a});
+
+instance AWSPager DescribeReplicationSubnetGroups
+         where
+        page rq rs
+          | stop (rs ^. drsgsrsMarker) = Nothing
+          | stop (rs ^. drsgsrsReplicationSubnetGroups) =
+            Nothing
+          | otherwise =
+            Just $ rq & drsgMarker .~ rs ^. drsgsrsMarker
 
 instance AWSRequest DescribeReplicationSubnetGroups
          where

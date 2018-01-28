@@ -147,7 +147,7 @@ data ListKeyPoliciesResponse = ListKeyPoliciesResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'lkprsPolicyNames' - A list of policy names. Currently, there is only one policy and it is named "Default".
+-- * 'lkprsPolicyNames' - A list of key policy names. Currently, there is only one key policy per CMK and it is always named @default@ .
 --
 -- * 'lkprsTruncated' - A flag that indicates whether there are more items in the list. When this value is true, the list in this response is truncated. To get more items, pass the value of the @NextMarker@ element in this response to the @Marker@ parameter in a subsequent request.
 --
@@ -166,7 +166,7 @@ listKeyPoliciesResponse pResponseStatus_ =
   }
 
 
--- | A list of policy names. Currently, there is only one policy and it is named "Default".
+-- | A list of key policy names. Currently, there is only one key policy per CMK and it is always named @default@ .
 lkprsPolicyNames :: Lens' ListKeyPoliciesResponse [Text]
 lkprsPolicyNames = lens _lkprsPolicyNames (\ s a -> s{_lkprsPolicyNames = a}) . _Default . _Coerce;
 

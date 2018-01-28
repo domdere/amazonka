@@ -58,9 +58,9 @@ data ApplicationDetail = ApplicationDetail'
 --
 -- * 'adApplicationCode' - Returns the application code that you provided to perform data analysis on any of the in-application streams in your application.
 --
--- * 'adCreateTimestamp' - Timestamp when the application version was created.
+-- * 'adCreateTimestamp' - Time stamp when the application version was created.
 --
--- * 'adLastUpdateTimestamp' - Timestamp when the application was last updated.
+-- * 'adLastUpdateTimestamp' - Time stamp when the application was last updated.
 --
 -- * 'adApplicationName' - Name of the application.
 --
@@ -116,11 +116,11 @@ adInputDescriptions = lens _adInputDescriptions (\ s a -> s{_adInputDescriptions
 adApplicationCode :: Lens' ApplicationDetail (Maybe Text)
 adApplicationCode = lens _adApplicationCode (\ s a -> s{_adApplicationCode = a});
 
--- | Timestamp when the application version was created.
+-- | Time stamp when the application version was created.
 adCreateTimestamp :: Lens' ApplicationDetail (Maybe UTCTime)
 adCreateTimestamp = lens _adCreateTimestamp (\ s a -> s{_adCreateTimestamp = a}) . mapping _Time;
 
--- | Timestamp when the application was last updated.
+-- | Time stamp when the application was last updated.
 adLastUpdateTimestamp :: Lens' ApplicationDetail (Maybe UTCTime)
 adLastUpdateTimestamp = lens _adLastUpdateTimestamp (\ s a -> s{_adLastUpdateTimestamp = a}) . mapping _Time;
 
@@ -587,15 +587,15 @@ data Input = Input'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'iInputParallelism' - Describes the number of in-application streams to create.  Data from your source will be routed to these in-application input streams. (see <http://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-input.html Configuring Application Input> .
+-- * 'iInputParallelism' - Describes the number of in-application streams to create.  Data from your source is routed to these in-application input streams. (see <http://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-input.html Configuring Application Input> .
 --
--- * 'iInputProcessingConfiguration' - The 'InputProcessingConfiguration' for the Input. An input processor transforms records as they are received from the stream, before the application's SQL code executes. Currently, the only input processing configuration available is 'InputLambdaProcessor' .
+-- * 'iInputProcessingConfiguration' - The 'InputProcessingConfiguration' for the input. An input processor transforms records as they are received from the stream, before the application's SQL code executes. Currently, the only input processing configuration available is 'InputLambdaProcessor' .
 --
 -- * 'iKinesisStreamsInput' - If the streaming source is an Amazon Kinesis stream, identifies the stream's Amazon Resource Name (ARN) and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf. Note: Either @KinesisStreamsInput@ or @KinesisFirehoseInput@ is required.
 --
--- * 'iKinesisFirehoseInput' - If the streaming source is an Amazon Kinesis Firehose delivery stream, identifies the Firehose delivery stream's ARN and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf. Note: Either @KinesisStreamsInput@ or @KinesisFirehoseInput@ is required.
+-- * 'iKinesisFirehoseInput' - If the streaming source is an Amazon Kinesis Firehose delivery stream, identifies the delivery stream's ARN and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf. Note: Either @KinesisStreamsInput@ or @KinesisFirehoseInput@ is required.
 --
--- * 'iNamePrefix' - Name prefix to use when creating in-application stream. Suppose you specify a prefix "MyInApplicationStream". Amazon Kinesis Analytics will then create one or more (as per the @InputParallelism@ count you specified) in-application streams with names "MyInApplicationStream_001", "MyInApplicationStream_002" and so on.
+-- * 'iNamePrefix' - Name prefix to use when creating an in-application stream. Suppose that you specify a prefix "MyInApplicationStream." Amazon Kinesis Analytics then creates one or more (as per the @InputParallelism@ count you specified) in-application streams with names "MyInApplicationStream_001," "MyInApplicationStream_002," and so on.
 --
 -- * 'iInputSchema' - Describes the format of the data in the streaming source, and how each data element maps to corresponding columns in the in-application stream that is being created. Also used to describe the format of the reference data source.
 input
@@ -613,11 +613,11 @@ input pNamePrefix_ pInputSchema_ =
   }
 
 
--- | Describes the number of in-application streams to create.  Data from your source will be routed to these in-application input streams. (see <http://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-input.html Configuring Application Input> .
+-- | Describes the number of in-application streams to create.  Data from your source is routed to these in-application input streams. (see <http://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-input.html Configuring Application Input> .
 iInputParallelism :: Lens' Input (Maybe InputParallelism)
 iInputParallelism = lens _iInputParallelism (\ s a -> s{_iInputParallelism = a});
 
--- | The 'InputProcessingConfiguration' for the Input. An input processor transforms records as they are received from the stream, before the application's SQL code executes. Currently, the only input processing configuration available is 'InputLambdaProcessor' .
+-- | The 'InputProcessingConfiguration' for the input. An input processor transforms records as they are received from the stream, before the application's SQL code executes. Currently, the only input processing configuration available is 'InputLambdaProcessor' .
 iInputProcessingConfiguration :: Lens' Input (Maybe InputProcessingConfiguration)
 iInputProcessingConfiguration = lens _iInputProcessingConfiguration (\ s a -> s{_iInputProcessingConfiguration = a});
 
@@ -625,11 +625,11 @@ iInputProcessingConfiguration = lens _iInputProcessingConfiguration (\ s a -> s{
 iKinesisStreamsInput :: Lens' Input (Maybe KinesisStreamsInput)
 iKinesisStreamsInput = lens _iKinesisStreamsInput (\ s a -> s{_iKinesisStreamsInput = a});
 
--- | If the streaming source is an Amazon Kinesis Firehose delivery stream, identifies the Firehose delivery stream's ARN and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf. Note: Either @KinesisStreamsInput@ or @KinesisFirehoseInput@ is required.
+-- | If the streaming source is an Amazon Kinesis Firehose delivery stream, identifies the delivery stream's ARN and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf. Note: Either @KinesisStreamsInput@ or @KinesisFirehoseInput@ is required.
 iKinesisFirehoseInput :: Lens' Input (Maybe KinesisFirehoseInput)
 iKinesisFirehoseInput = lens _iKinesisFirehoseInput (\ s a -> s{_iKinesisFirehoseInput = a});
 
--- | Name prefix to use when creating in-application stream. Suppose you specify a prefix "MyInApplicationStream". Amazon Kinesis Analytics will then create one or more (as per the @InputParallelism@ count you specified) in-application streams with names "MyInApplicationStream_001", "MyInApplicationStream_002" and so on.
+-- | Name prefix to use when creating an in-application stream. Suppose that you specify a prefix "MyInApplicationStream." Amazon Kinesis Analytics then creates one or more (as per the @InputParallelism@ count you specified) in-application streams with names "MyInApplicationStream_001," "MyInApplicationStream_002," and so on.
 iNamePrefix :: Lens' Input Text
 iNamePrefix = lens _iNamePrefix (\ s a -> s{_iNamePrefix = a});
 
@@ -734,11 +734,11 @@ data InputDescription = InputDescription'
 --
 -- * 'idInAppStreamNames' - Returns the in-application stream names that are mapped to the stream source.
 --
--- * 'idKinesisFirehoseInputDescription' - If an Amazon Kinesis Firehose delivery stream is configured as a streaming source, provides the Firehose delivery stream's Amazon Resource Name (ARN) and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf.
+-- * 'idKinesisFirehoseInputDescription' - If an Amazon Kinesis Firehose delivery stream is configured as a streaming source, provides the delivery stream's ARN and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf.
 --
 -- * 'idInputSchema' - Describes the format of the data in the streaming source, and how each data element maps to corresponding columns in the in-application stream that is being created.
 --
--- * 'idKinesisStreamsInputDescription' - If an Amazon Kinesis stream is configured as streaming source, provides Amazon Kinesis stream's ARN and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf.
+-- * 'idKinesisStreamsInputDescription' - If an Amazon Kinesis stream is configured as streaming source, provides Amazon Kinesis stream's Amazon Resource Name (ARN) and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf.
 --
 -- * 'idNamePrefix' - In-application name prefix.
 --
@@ -775,7 +775,7 @@ idInputId = lens _idInputId (\ s a -> s{_idInputId = a});
 idInAppStreamNames :: Lens' InputDescription [Text]
 idInAppStreamNames = lens _idInAppStreamNames (\ s a -> s{_idInAppStreamNames = a}) . _Default . _Coerce;
 
--- | If an Amazon Kinesis Firehose delivery stream is configured as a streaming source, provides the Firehose delivery stream's Amazon Resource Name (ARN) and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf.
+-- | If an Amazon Kinesis Firehose delivery stream is configured as a streaming source, provides the delivery stream's ARN and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf.
 idKinesisFirehoseInputDescription :: Lens' InputDescription (Maybe KinesisFirehoseInputDescription)
 idKinesisFirehoseInputDescription = lens _idKinesisFirehoseInputDescription (\ s a -> s{_idKinesisFirehoseInputDescription = a});
 
@@ -783,7 +783,7 @@ idKinesisFirehoseInputDescription = lens _idKinesisFirehoseInputDescription (\ s
 idInputSchema :: Lens' InputDescription (Maybe SourceSchema)
 idInputSchema = lens _idInputSchema (\ s a -> s{_idInputSchema = a});
 
--- | If an Amazon Kinesis stream is configured as streaming source, provides Amazon Kinesis stream's ARN and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf.
+-- | If an Amazon Kinesis stream is configured as streaming source, provides Amazon Kinesis stream's Amazon Resource Name (ARN) and an IAM role that enables Amazon Kinesis Analytics to access the stream on your behalf.
 idKinesisStreamsInputDescription :: Lens' InputDescription (Maybe KinesisStreamsInputDescription)
 idKinesisStreamsInputDescription = lens _idKinesisStreamsInputDescription (\ s a -> s{_idKinesisStreamsInputDescription = a});
 
@@ -815,7 +815,7 @@ instance Hashable InputDescription where
 
 instance NFData InputDescription where
 
--- | An object that contains the ARN of the <https://aws.amazon.com/documentation/lambda/ AWS Lambda> function that is used to preprocess records in the stream, and the ARN of the IAM role used to access the AWS Lambda function.
+-- | An object that contains the Amazon Resource Name (ARN) of the <https://aws.amazon.com/documentation/lambda/ AWS Lambda> function that is used to preprocess records in the stream, and the ARN of the IAM role that is used to access the AWS Lambda function.
 --
 --
 --
@@ -832,7 +832,7 @@ data InputLambdaProcessor = InputLambdaProcessor'
 --
 -- * 'ilpResourceARN' - The ARN of the <https://aws.amazon.com/documentation/lambda/ AWS Lambda> function that operates on records in the stream.
 --
--- * 'ilpRoleARN' - The ARN of the IAM role used to access the AWS Lambda function.
+-- * 'ilpRoleARN' - The ARN of the IAM role that is used to access the AWS Lambda function.
 inputLambdaProcessor
     :: Text -- ^ 'ilpResourceARN'
     -> Text -- ^ 'ilpRoleARN'
@@ -846,7 +846,7 @@ inputLambdaProcessor pResourceARN_ pRoleARN_ =
 ilpResourceARN :: Lens' InputLambdaProcessor Text
 ilpResourceARN = lens _ilpResourceARN (\ s a -> s{_ilpResourceARN = a});
 
--- | The ARN of the IAM role used to access the AWS Lambda function.
+-- | The ARN of the IAM role that is used to access the AWS Lambda function.
 ilpRoleARN :: Lens' InputLambdaProcessor Text
 ilpRoleARN = lens _ilpRoleARN (\ s a -> s{_ilpRoleARN = a});
 
@@ -861,7 +861,7 @@ instance ToJSON InputLambdaProcessor where
                  [Just ("ResourceARN" .= _ilpResourceARN),
                   Just ("RoleARN" .= _ilpRoleARN)])
 
--- | An object that contains the ARN of the <https://aws.amazon.com/documentation/lambda/ AWS Lambda> function that is used to preprocess records in the stream, and the ARN of the IAM role used to access the AWS Lambda expression.
+-- | An object that contains the Amazon Resource Name (ARN) of the <https://aws.amazon.com/documentation/lambda/ AWS Lambda> function that is used to preprocess records in the stream, and the ARN of the IAM role that is used to access the AWS Lambda expression.
 --
 --
 --
@@ -878,7 +878,7 @@ data InputLambdaProcessorDescription = InputLambdaProcessorDescription'
 --
 -- * 'ilpdResourceARN' - The ARN of the <https://aws.amazon.com/documentation/lambda/ AWS Lambda> function that is used to preprocess the records in the stream.
 --
--- * 'ilpdRoleARN' - The ARN of the IAM role used to access the AWS Lambda function.
+-- * 'ilpdRoleARN' - The ARN of the IAM role that is used to access the AWS Lambda function.
 inputLambdaProcessorDescription
     :: InputLambdaProcessorDescription
 inputLambdaProcessorDescription =
@@ -890,7 +890,7 @@ inputLambdaProcessorDescription =
 ilpdResourceARN :: Lens' InputLambdaProcessorDescription (Maybe Text)
 ilpdResourceARN = lens _ilpdResourceARN (\ s a -> s{_ilpdResourceARN = a});
 
--- | The ARN of the IAM role used to access the AWS Lambda function.
+-- | The ARN of the IAM role that is used to access the AWS Lambda function.
 ilpdRoleARN :: Lens' InputLambdaProcessorDescription (Maybe Text)
 ilpdRoleARN = lens _ilpdRoleARN (\ s a -> s{_ilpdRoleARN = a});
 
@@ -922,9 +922,9 @@ data InputLambdaProcessorUpdate = InputLambdaProcessorUpdate'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ilpuRoleARNUpdate' - The ARN of the new IAM role used to access the AWS Lambda function.
+-- * 'ilpuRoleARNUpdate' - The ARN of the new IAM role that is used to access the AWS Lambda function.
 --
--- * 'ilpuResourceARNUpdate' - The ARN of the new <https://aws.amazon.com/documentation/lambda/ AWS Lambda> function that is used to preprocess the records in the stream.
+-- * 'ilpuResourceARNUpdate' - The Amazon Resource Name (ARN) of the new <https://aws.amazon.com/documentation/lambda/ AWS Lambda> function that is used to preprocess the records in the stream.
 inputLambdaProcessorUpdate
     :: InputLambdaProcessorUpdate
 inputLambdaProcessorUpdate =
@@ -932,11 +932,11 @@ inputLambdaProcessorUpdate =
   {_ilpuRoleARNUpdate = Nothing, _ilpuResourceARNUpdate = Nothing}
 
 
--- | The ARN of the new IAM role used to access the AWS Lambda function.
+-- | The ARN of the new IAM role that is used to access the AWS Lambda function.
 ilpuRoleARNUpdate :: Lens' InputLambdaProcessorUpdate (Maybe Text)
 ilpuRoleARNUpdate = lens _ilpuRoleARNUpdate (\ s a -> s{_ilpuRoleARNUpdate = a});
 
--- | The ARN of the new <https://aws.amazon.com/documentation/lambda/ AWS Lambda> function that is used to preprocess the records in the stream.
+-- | The Amazon Resource Name (ARN) of the new <https://aws.amazon.com/documentation/lambda/ AWS Lambda> function that is used to preprocess the records in the stream.
 ilpuResourceARNUpdate :: Lens' InputLambdaProcessorUpdate (Maybe Text)
 ilpuResourceARNUpdate = lens _ilpuResourceARNUpdate (\ s a -> s{_ilpuResourceARNUpdate = a});
 
@@ -1021,7 +1021,7 @@ instance ToJSON InputParallelismUpdate where
           = object
               (catMaybes [("CountUpdate" .=) <$> _ipuCountUpdate])
 
--- | Provides a description of a processor that is used to preprocess the records in the stream prior to being processed by your application code. Currently, the only input processor available is <https://aws.amazon.com/documentation/lambda/ AWS Lambda> .
+-- | Provides a description of a processor that is used to preprocess the records in the stream before being processed by your application code. Currently, the only input processor available is <https://aws.amazon.com/documentation/lambda/ AWS Lambda> .
 --
 --
 --
@@ -1035,7 +1035,7 @@ newtype InputProcessingConfiguration = InputProcessingConfiguration'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ipcInputLambdaProcessor' - The 'InputLambdaProcessor' that is used to preprocess the records in the stream prior to being processed by your application code.
+-- * 'ipcInputLambdaProcessor' - The 'InputLambdaProcessor' that is used to preprocess the records in the stream before being processed by your application code.
 inputProcessingConfiguration
     :: InputLambdaProcessor -- ^ 'ipcInputLambdaProcessor'
     -> InputProcessingConfiguration
@@ -1044,7 +1044,7 @@ inputProcessingConfiguration pInputLambdaProcessor_ =
   {_ipcInputLambdaProcessor = pInputLambdaProcessor_}
 
 
--- | The 'InputLambdaProcessor' that is used to preprocess the records in the stream prior to being processed by your application code.
+-- | The 'InputLambdaProcessor' that is used to preprocess the records in the stream before being processed by your application code.
 ipcInputLambdaProcessor :: Lens' InputProcessingConfiguration InputLambdaProcessor
 ipcInputLambdaProcessor = lens _ipcInputLambdaProcessor (\ s a -> s{_ipcInputLambdaProcessor = a});
 
@@ -1218,14 +1218,14 @@ newtype InputStartingPositionConfiguration = InputStartingPositionConfiguration'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ispcInputStartingPosition' - The starting position on the stream.     * @NOW@ - Start reading just after the most recent record in the stream, start at the request timestamp that the customer issued.     * @TRIM_HORIZON@ - Start reading at the last untrimmed record in the stream, which is the oldest record available in the stream. This option is not available for an Amazon Kinesis Firehose delivery stream.     * @LAST_STOPPED_POINT@ - Resume reading from where the application last stopped reading.
+-- * 'ispcInputStartingPosition' - The starting position on the stream.     * @NOW@ - Start reading just after the most recent record in the stream, start at the request time stamp that the customer issued.     * @TRIM_HORIZON@ - Start reading at the last untrimmed record in the stream, which is the oldest record available in the stream. This option is not available for an Amazon Kinesis Firehose delivery stream.     * @LAST_STOPPED_POINT@ - Resume reading from where the application last stopped reading.
 inputStartingPositionConfiguration
     :: InputStartingPositionConfiguration
 inputStartingPositionConfiguration =
   InputStartingPositionConfiguration' {_ispcInputStartingPosition = Nothing}
 
 
--- | The starting position on the stream.     * @NOW@ - Start reading just after the most recent record in the stream, start at the request timestamp that the customer issued.     * @TRIM_HORIZON@ - Start reading at the last untrimmed record in the stream, which is the oldest record available in the stream. This option is not available for an Amazon Kinesis Firehose delivery stream.     * @LAST_STOPPED_POINT@ - Resume reading from where the application last stopped reading.
+-- | The starting position on the stream.     * @NOW@ - Start reading just after the most recent record in the stream, start at the request time stamp that the customer issued.     * @TRIM_HORIZON@ - Start reading at the last untrimmed record in the stream, which is the oldest record available in the stream. This option is not available for an Amazon Kinesis Firehose delivery stream.     * @LAST_STOPPED_POINT@ - Resume reading from where the application last stopped reading.
 ispcInputStartingPosition :: Lens' InputStartingPositionConfiguration (Maybe InputStartingPosition)
 ispcInputStartingPosition = lens _ispcInputStartingPosition (\ s a -> s{_ispcInputStartingPosition = a});
 
@@ -1273,7 +1273,7 @@ data InputUpdate = InputUpdate'
 --
 -- * 'iuInputProcessingConfigurationUpdate' - Describes updates for an input processing configuration.
 --
--- * 'iuKinesisStreamsInputUpdate' - If a Amazon Kinesis stream is the streaming source to be updated, provides an updated stream ARN and IAM role ARN.
+-- * 'iuKinesisStreamsInputUpdate' - If an Amazon Kinesis stream is the streaming source to be updated, provides an updated stream Amazon Resource Name (ARN) and IAM role ARN.
 --
 -- * 'iuInputParallelismUpdate' - Describes the parallelism updates (the number in-application streams Amazon Kinesis Analytics creates for the specific streaming source).
 --
@@ -1281,7 +1281,7 @@ data InputUpdate = InputUpdate'
 --
 -- * 'iuInputSchemaUpdate' - Describes the data format on the streaming source, and how record elements on the streaming source map to columns of the in-application stream that is created.
 --
--- * 'iuKinesisFirehoseInputUpdate' - If an Amazon Kinesis Firehose delivery stream is the streaming source to be updated, provides an updated stream Amazon Resource Name (ARN) and IAM role ARN.
+-- * 'iuKinesisFirehoseInputUpdate' - If an Amazon Kinesis Firehose delivery stream is the streaming source to be updated, provides an updated stream ARN and IAM role ARN.
 --
 -- * 'iuInputId' - Input ID of the application input to be updated.
 inputUpdate
@@ -1303,7 +1303,7 @@ inputUpdate pInputId_ =
 iuInputProcessingConfigurationUpdate :: Lens' InputUpdate (Maybe InputProcessingConfigurationUpdate)
 iuInputProcessingConfigurationUpdate = lens _iuInputProcessingConfigurationUpdate (\ s a -> s{_iuInputProcessingConfigurationUpdate = a});
 
--- | If a Amazon Kinesis stream is the streaming source to be updated, provides an updated stream ARN and IAM role ARN.
+-- | If an Amazon Kinesis stream is the streaming source to be updated, provides an updated stream Amazon Resource Name (ARN) and IAM role ARN.
 iuKinesisStreamsInputUpdate :: Lens' InputUpdate (Maybe KinesisStreamsInputUpdate)
 iuKinesisStreamsInputUpdate = lens _iuKinesisStreamsInputUpdate (\ s a -> s{_iuKinesisStreamsInputUpdate = a});
 
@@ -1319,7 +1319,7 @@ iuNamePrefixUpdate = lens _iuNamePrefixUpdate (\ s a -> s{_iuNamePrefixUpdate = 
 iuInputSchemaUpdate :: Lens' InputUpdate (Maybe InputSchemaUpdate)
 iuInputSchemaUpdate = lens _iuInputSchemaUpdate (\ s a -> s{_iuInputSchemaUpdate = a});
 
--- | If an Amazon Kinesis Firehose delivery stream is the streaming source to be updated, provides an updated stream Amazon Resource Name (ARN) and IAM role ARN.
+-- | If an Amazon Kinesis Firehose delivery stream is the streaming source to be updated, provides an updated stream ARN and IAM role ARN.
 iuKinesisFirehoseInputUpdate :: Lens' InputUpdate (Maybe KinesisFirehoseInputUpdate)
 iuKinesisFirehoseInputUpdate = lens _iuKinesisFirehoseInputUpdate (\ s a -> s{_iuKinesisFirehoseInputUpdate = a});
 
@@ -1389,7 +1389,7 @@ instance ToJSON JSONMappingParameters where
               (catMaybes
                  [Just ("RecordRowPath" .= _jmpRecordRowPath)])
 
--- | Identifies an Amazon Kinesis Firehose delivery stream as the streaming source. You provide the Firehose delivery stream's Amazon Resource Name (ARN) and an IAM role ARN that enables Amazon Kinesis Analytics to access the stream on your behalf.
+-- | Identifies an Amazon Kinesis Firehose delivery stream as the streaming source. You provide the delivery stream's Amazon Resource Name (ARN) and an IAM role ARN that enables Amazon Kinesis Analytics to access the stream on your behalf.
 --
 --
 --
@@ -1404,7 +1404,7 @@ data KinesisFirehoseInput = KinesisFirehoseInput'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'kfiResourceARN' - ARN of the input Firehose delivery stream.
+-- * 'kfiResourceARN' - ARN of the input delivery stream.
 --
 -- * 'kfiRoleARN' - ARN of the IAM role that Amazon Kinesis Analytics can assume to access the stream on your behalf. You need to make sure the role has necessary permissions to access the stream.
 kinesisFirehoseInput
@@ -1416,7 +1416,7 @@ kinesisFirehoseInput pResourceARN_ pRoleARN_ =
   {_kfiResourceARN = pResourceARN_, _kfiRoleARN = pRoleARN_}
 
 
--- | ARN of the input Firehose delivery stream.
+-- | ARN of the input delivery stream.
 kfiResourceARN :: Lens' KinesisFirehoseInput Text
 kfiResourceARN = lens _kfiResourceARN (\ s a -> s{_kfiResourceARN = a});
 
@@ -1496,9 +1496,9 @@ data KinesisFirehoseInputUpdate = KinesisFirehoseInputUpdate'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'kfiuRoleARNUpdate' - Amazon Resource Name (ARN) of the IAM role that Amazon Kinesis Analytics can assume to access the stream on your behalf. You need to grant necessary permissions to this role.
+-- * 'kfiuRoleARNUpdate' - ARN of the IAM role that Amazon Kinesis Analytics can assume to access the stream on your behalf. You need to grant necessary permissions to this role.
 --
--- * 'kfiuResourceARNUpdate' - ARN of the input Amazon Kinesis Firehose delivery stream to read.
+-- * 'kfiuResourceARNUpdate' - Amazon Resource Name (ARN) of the input Amazon Kinesis Firehose delivery stream to read.
 kinesisFirehoseInputUpdate
     :: KinesisFirehoseInputUpdate
 kinesisFirehoseInputUpdate =
@@ -1506,11 +1506,11 @@ kinesisFirehoseInputUpdate =
   {_kfiuRoleARNUpdate = Nothing, _kfiuResourceARNUpdate = Nothing}
 
 
--- | Amazon Resource Name (ARN) of the IAM role that Amazon Kinesis Analytics can assume to access the stream on your behalf. You need to grant necessary permissions to this role.
+-- | ARN of the IAM role that Amazon Kinesis Analytics can assume to access the stream on your behalf. You need to grant necessary permissions to this role.
 kfiuRoleARNUpdate :: Lens' KinesisFirehoseInputUpdate (Maybe Text)
 kfiuRoleARNUpdate = lens _kfiuRoleARNUpdate (\ s a -> s{_kfiuRoleARNUpdate = a});
 
--- | ARN of the input Amazon Kinesis Firehose delivery stream to read.
+-- | Amazon Resource Name (ARN) of the input Amazon Kinesis Firehose delivery stream to read.
 kfiuResourceARNUpdate :: Lens' KinesisFirehoseInputUpdate (Maybe Text)
 kfiuResourceARNUpdate = lens _kfiuResourceARNUpdate (\ s a -> s{_kfiuResourceARNUpdate = a});
 
@@ -1662,7 +1662,7 @@ instance ToJSON KinesisFirehoseOutputUpdate where
                  [("RoleARNUpdate" .=) <$> _kfouRoleARNUpdate,
                   ("ResourceARNUpdate" .=) <$> _kfouResourceARNUpdate])
 
--- | Identifies an Amazon Kinesis stream as the streaming source. You provide the stream's ARN and an IAM role ARN that enables Amazon Kinesis Analytics to access the stream on your behalf.
+-- | Identifies an Amazon Kinesis stream as the streaming source. You provide the stream's Amazon Resource Name (ARN) and an IAM role ARN that enables Amazon Kinesis Analytics to access the stream on your behalf.
 --
 --
 --
@@ -1798,7 +1798,7 @@ instance ToJSON KinesisStreamsInputUpdate where
                  [("RoleARNUpdate" .=) <$> _ksiuRoleARNUpdate,
                   ("ResourceARNUpdate" .=) <$> _ksiuResourceARNUpdate])
 
--- | When configuring application output, identifies a Amazon Kinesis stream as the destination. You provide the stream Amazon Resource Name (ARN) and also an IAM role ARN that Amazon Kinesis Analytics can use to write to the stream on your behalf.
+-- | When configuring application output, identifies an Amazon Kinesis stream as the destination. You provide the stream Amazon Resource Name (ARN) and also an IAM role ARN that Amazon Kinesis Analytics can use to write to the stream on your behalf.
 --
 --
 --
@@ -1934,6 +1934,138 @@ instance ToJSON KinesisStreamsOutputUpdate where
                  [("RoleARNUpdate" .=) <$> _ksouRoleARNUpdate,
                   ("ResourceARNUpdate" .=) <$> _ksouResourceARNUpdate])
 
+-- | When configuring application output, identifies an AWS Lambda function as the destination. You provide the function Amazon Resource Name (ARN) and also an IAM role ARN that Amazon Kinesis Analytics can use to write to the function on your behalf.
+--
+--
+--
+-- /See:/ 'lambdaOutput' smart constructor.
+data LambdaOutput = LambdaOutput'
+  { _loResourceARN :: !Text
+  , _loRoleARN     :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'LambdaOutput' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'loResourceARN' - Amazon Resource Name (ARN) of the destination Lambda function to write to.
+--
+-- * 'loRoleARN' - ARN of the IAM role that Amazon Kinesis Analytics can assume to write to the destination function on your behalf. You need to grant the necessary permissions to this role.
+lambdaOutput
+    :: Text -- ^ 'loResourceARN'
+    -> Text -- ^ 'loRoleARN'
+    -> LambdaOutput
+lambdaOutput pResourceARN_ pRoleARN_ =
+  LambdaOutput' {_loResourceARN = pResourceARN_, _loRoleARN = pRoleARN_}
+
+
+-- | Amazon Resource Name (ARN) of the destination Lambda function to write to.
+loResourceARN :: Lens' LambdaOutput Text
+loResourceARN = lens _loResourceARN (\ s a -> s{_loResourceARN = a});
+
+-- | ARN of the IAM role that Amazon Kinesis Analytics can assume to write to the destination function on your behalf. You need to grant the necessary permissions to this role.
+loRoleARN :: Lens' LambdaOutput Text
+loRoleARN = lens _loRoleARN (\ s a -> s{_loRoleARN = a});
+
+instance Hashable LambdaOutput where
+
+instance NFData LambdaOutput where
+
+instance ToJSON LambdaOutput where
+        toJSON LambdaOutput'{..}
+          = object
+              (catMaybes
+                 [Just ("ResourceARN" .= _loResourceARN),
+                  Just ("RoleARN" .= _loRoleARN)])
+
+-- | For an application output, describes the AWS Lambda function configured as its destination.
+--
+--
+--
+-- /See:/ 'lambdaOutputDescription' smart constructor.
+data LambdaOutputDescription = LambdaOutputDescription'
+  { _lodResourceARN :: !(Maybe Text)
+  , _lodRoleARN     :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'LambdaOutputDescription' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'lodResourceARN' - Amazon Resource Name (ARN) of the destination Lambda function.
+--
+-- * 'lodRoleARN' - ARN of the IAM role that Amazon Kinesis Analytics can assume to write to the destination function.
+lambdaOutputDescription
+    :: LambdaOutputDescription
+lambdaOutputDescription =
+  LambdaOutputDescription' {_lodResourceARN = Nothing, _lodRoleARN = Nothing}
+
+
+-- | Amazon Resource Name (ARN) of the destination Lambda function.
+lodResourceARN :: Lens' LambdaOutputDescription (Maybe Text)
+lodResourceARN = lens _lodResourceARN (\ s a -> s{_lodResourceARN = a});
+
+-- | ARN of the IAM role that Amazon Kinesis Analytics can assume to write to the destination function.
+lodRoleARN :: Lens' LambdaOutputDescription (Maybe Text)
+lodRoleARN = lens _lodRoleARN (\ s a -> s{_lodRoleARN = a});
+
+instance FromJSON LambdaOutputDescription where
+        parseJSON
+          = withObject "LambdaOutputDescription"
+              (\ x ->
+                 LambdaOutputDescription' <$>
+                   (x .:? "ResourceARN") <*> (x .:? "RoleARN"))
+
+instance Hashable LambdaOutputDescription where
+
+instance NFData LambdaOutputDescription where
+
+-- | When updating an output configuration using the 'UpdateApplication' operation, provides information about an AWS Lambda function configured as the destination.
+--
+--
+--
+-- /See:/ 'lambdaOutputUpdate' smart constructor.
+data LambdaOutputUpdate = LambdaOutputUpdate'
+  { _louRoleARNUpdate     :: !(Maybe Text)
+  , _louResourceARNUpdate :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'LambdaOutputUpdate' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'louRoleARNUpdate' - ARN of the IAM role that Amazon Kinesis Analytics can assume to write to the destination function on your behalf. You need to grant the necessary permissions to this role.
+--
+-- * 'louResourceARNUpdate' - Amazon Resource Name (ARN) of the destination Lambda function.
+lambdaOutputUpdate
+    :: LambdaOutputUpdate
+lambdaOutputUpdate =
+  LambdaOutputUpdate'
+  {_louRoleARNUpdate = Nothing, _louResourceARNUpdate = Nothing}
+
+
+-- | ARN of the IAM role that Amazon Kinesis Analytics can assume to write to the destination function on your behalf. You need to grant the necessary permissions to this role.
+louRoleARNUpdate :: Lens' LambdaOutputUpdate (Maybe Text)
+louRoleARNUpdate = lens _louRoleARNUpdate (\ s a -> s{_louRoleARNUpdate = a});
+
+-- | Amazon Resource Name (ARN) of the destination Lambda function.
+louResourceARNUpdate :: Lens' LambdaOutputUpdate (Maybe Text)
+louResourceARNUpdate = lens _louResourceARNUpdate (\ s a -> s{_louResourceARNUpdate = a});
+
+instance Hashable LambdaOutputUpdate where
+
+instance NFData LambdaOutputUpdate where
+
+instance ToJSON LambdaOutputUpdate where
+        toJSON LambdaOutputUpdate'{..}
+          = object
+              (catMaybes
+                 [("RoleARNUpdate" .=) <$> _louRoleARNUpdate,
+                  ("ResourceARNUpdate" .=) <$> _louResourceARNUpdate])
+
 -- | When configuring application input at the time of creating or updating an application, provides additional mapping information specific to the record format (such as JSON, CSV, or record fields delimited by some delimiter) on the streaming source.
 --
 --
@@ -1998,7 +2130,8 @@ instance ToJSON MappingParameters where
 --
 -- /See:/ 'output' smart constructor.
 data Output = Output'
-  { _oKinesisStreamsOutput  :: !(Maybe KinesisStreamsOutput)
+  { _oLambdaOutput          :: !(Maybe LambdaOutput)
+  , _oKinesisStreamsOutput  :: !(Maybe KinesisStreamsOutput)
   , _oKinesisFirehoseOutput :: !(Maybe KinesisFirehoseOutput)
   , _oName                  :: !Text
   , _oDestinationSchema     :: !DestinationSchema
@@ -2009,25 +2142,32 @@ data Output = Output'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'oLambdaOutput' - Identifies an AWS Lambda function as the destination.
+--
 -- * 'oKinesisStreamsOutput' - Identifies an Amazon Kinesis stream as the destination.
 --
 -- * 'oKinesisFirehoseOutput' - Identifies an Amazon Kinesis Firehose delivery stream as the destination.
 --
 -- * 'oName' - Name of the in-application stream.
 --
--- * 'oDestinationSchema' - Undocumented member.
+-- * 'oDestinationSchema' - Describes the data format when records are written to the destination. For more information, see <http://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-output.html Configuring Application Output> .
 output
     :: Text -- ^ 'oName'
     -> DestinationSchema -- ^ 'oDestinationSchema'
     -> Output
 output pName_ pDestinationSchema_ =
   Output'
-  { _oKinesisStreamsOutput = Nothing
+  { _oLambdaOutput = Nothing
+  , _oKinesisStreamsOutput = Nothing
   , _oKinesisFirehoseOutput = Nothing
   , _oName = pName_
   , _oDestinationSchema = pDestinationSchema_
   }
 
+
+-- | Identifies an AWS Lambda function as the destination.
+oLambdaOutput :: Lens' Output (Maybe LambdaOutput)
+oLambdaOutput = lens _oLambdaOutput (\ s a -> s{_oLambdaOutput = a});
 
 -- | Identifies an Amazon Kinesis stream as the destination.
 oKinesisStreamsOutput :: Lens' Output (Maybe KinesisStreamsOutput)
@@ -2041,7 +2181,7 @@ oKinesisFirehoseOutput = lens _oKinesisFirehoseOutput (\ s a -> s{_oKinesisFireh
 oName :: Lens' Output Text
 oName = lens _oName (\ s a -> s{_oName = a});
 
--- | Undocumented member.
+-- | Describes the data format when records are written to the destination. For more information, see <http://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-output.html Configuring Application Output> .
 oDestinationSchema :: Lens' Output DestinationSchema
 oDestinationSchema = lens _oDestinationSchema (\ s a -> s{_oDestinationSchema = a});
 
@@ -2053,7 +2193,8 @@ instance ToJSON Output where
         toJSON Output'{..}
           = object
               (catMaybes
-                 [("KinesisStreamsOutput" .=) <$>
+                 [("LambdaOutput" .=) <$> _oLambdaOutput,
+                  ("KinesisStreamsOutput" .=) <$>
                     _oKinesisStreamsOutput,
                   ("KinesisFirehoseOutput" .=) <$>
                     _oKinesisFirehoseOutput,
@@ -2071,6 +2212,7 @@ data OutputDescription = OutputDescription'
   , _odKinesisFirehoseOutputDescription :: !(Maybe KinesisFirehoseOutputDescription)
   , _odKinesisStreamsOutputDescription :: !(Maybe KinesisStreamsOutputDescription)
   , _odName :: !(Maybe Text)
+  , _odLambdaOutputDescription :: !(Maybe LambdaOutputDescription)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -2087,6 +2229,8 @@ data OutputDescription = OutputDescription'
 -- * 'odKinesisStreamsOutputDescription' - Describes Amazon Kinesis stream configured as the destination where output is written.
 --
 -- * 'odName' - Name of the in-application stream configured as output.
+--
+-- * 'odLambdaOutputDescription' - Describes the AWS Lambda function configured as the destination where output is written.
 outputDescription
     :: OutputDescription
 outputDescription =
@@ -2096,6 +2240,7 @@ outputDescription =
   , _odKinesisFirehoseOutputDescription = Nothing
   , _odKinesisStreamsOutputDescription = Nothing
   , _odName = Nothing
+  , _odLambdaOutputDescription = Nothing
   }
 
 
@@ -2119,6 +2264,10 @@ odKinesisStreamsOutputDescription = lens _odKinesisStreamsOutputDescription (\ s
 odName :: Lens' OutputDescription (Maybe Text)
 odName = lens _odName (\ s a -> s{_odName = a});
 
+-- | Describes the AWS Lambda function configured as the destination where output is written.
+odLambdaOutputDescription :: Lens' OutputDescription (Maybe LambdaOutputDescription)
+odLambdaOutputDescription = lens _odLambdaOutputDescription (\ s a -> s{_odLambdaOutputDescription = a});
+
 instance FromJSON OutputDescription where
         parseJSON
           = withObject "OutputDescription"
@@ -2127,7 +2276,8 @@ instance FromJSON OutputDescription where
                    (x .:? "OutputId") <*> (x .:? "DestinationSchema")
                      <*> (x .:? "KinesisFirehoseOutputDescription")
                      <*> (x .:? "KinesisStreamsOutputDescription")
-                     <*> (x .:? "Name"))
+                     <*> (x .:? "Name")
+                     <*> (x .:? "LambdaOutputDescription"))
 
 instance Hashable OutputDescription where
 
@@ -2143,6 +2293,7 @@ data OutputUpdate = OutputUpdate'
   , _ouDestinationSchemaUpdate     :: !(Maybe DestinationSchema)
   , _ouKinesisFirehoseOutputUpdate :: !(Maybe KinesisFirehoseOutputUpdate)
   , _ouNameUpdate                  :: !(Maybe Text)
+  , _ouLambdaOutputUpdate          :: !(Maybe LambdaOutputUpdate)
   , _ouOutputId                    :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -2153,11 +2304,13 @@ data OutputUpdate = OutputUpdate'
 --
 -- * 'ouKinesisStreamsOutputUpdate' - Describes an Amazon Kinesis stream as the destination for the output.
 --
--- * 'ouDestinationSchemaUpdate' - Undocumented member.
+-- * 'ouDestinationSchemaUpdate' - Describes the data format when records are written to the destination. For more information, see <http://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-output.html Configuring Application Output> .
 --
--- * 'ouKinesisFirehoseOutputUpdate' - Describes a Amazon Kinesis Firehose delivery stream as the destination for the output.
+-- * 'ouKinesisFirehoseOutputUpdate' - Describes an Amazon Kinesis Firehose delivery stream as the destination for the output.
 --
 -- * 'ouNameUpdate' - If you want to specify a different in-application stream for this output configuration, use this field to specify the new in-application stream name.
+--
+-- * 'ouLambdaOutputUpdate' - Describes an AWS Lambda function as the destination for the output.
 --
 -- * 'ouOutputId' - Identifies the specific output configuration that you want to update.
 outputUpdate
@@ -2169,6 +2322,7 @@ outputUpdate pOutputId_ =
   , _ouDestinationSchemaUpdate = Nothing
   , _ouKinesisFirehoseOutputUpdate = Nothing
   , _ouNameUpdate = Nothing
+  , _ouLambdaOutputUpdate = Nothing
   , _ouOutputId = pOutputId_
   }
 
@@ -2177,17 +2331,21 @@ outputUpdate pOutputId_ =
 ouKinesisStreamsOutputUpdate :: Lens' OutputUpdate (Maybe KinesisStreamsOutputUpdate)
 ouKinesisStreamsOutputUpdate = lens _ouKinesisStreamsOutputUpdate (\ s a -> s{_ouKinesisStreamsOutputUpdate = a});
 
--- | Undocumented member.
+-- | Describes the data format when records are written to the destination. For more information, see <http://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-output.html Configuring Application Output> .
 ouDestinationSchemaUpdate :: Lens' OutputUpdate (Maybe DestinationSchema)
 ouDestinationSchemaUpdate = lens _ouDestinationSchemaUpdate (\ s a -> s{_ouDestinationSchemaUpdate = a});
 
--- | Describes a Amazon Kinesis Firehose delivery stream as the destination for the output.
+-- | Describes an Amazon Kinesis Firehose delivery stream as the destination for the output.
 ouKinesisFirehoseOutputUpdate :: Lens' OutputUpdate (Maybe KinesisFirehoseOutputUpdate)
 ouKinesisFirehoseOutputUpdate = lens _ouKinesisFirehoseOutputUpdate (\ s a -> s{_ouKinesisFirehoseOutputUpdate = a});
 
 -- | If you want to specify a different in-application stream for this output configuration, use this field to specify the new in-application stream name.
 ouNameUpdate :: Lens' OutputUpdate (Maybe Text)
 ouNameUpdate = lens _ouNameUpdate (\ s a -> s{_ouNameUpdate = a});
+
+-- | Describes an AWS Lambda function as the destination for the output.
+ouLambdaOutputUpdate :: Lens' OutputUpdate (Maybe LambdaOutputUpdate)
+ouLambdaOutputUpdate = lens _ouLambdaOutputUpdate (\ s a -> s{_ouLambdaOutputUpdate = a});
 
 -- | Identifies the specific output configuration that you want to update.
 ouOutputId :: Lens' OutputUpdate Text
@@ -2208,6 +2366,7 @@ instance ToJSON OutputUpdate where
                   ("KinesisFirehoseOutputUpdate" .=) <$>
                     _ouKinesisFirehoseOutputUpdate,
                   ("NameUpdate" .=) <$> _ouNameUpdate,
+                  ("LambdaOutputUpdate" .=) <$> _ouLambdaOutputUpdate,
                   Just ("OutputId" .= _ouOutputId)])
 
 -- | Describes the mapping of each data element in the streaming source to the corresponding column in the in-application stream.
@@ -2288,7 +2447,7 @@ data RecordFormat = RecordFormat'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'rfMappingParameters' - Undocumented member.
+-- * 'rfMappingParameters' - When configuring application input at the time of creating or updating an application, provides additional mapping information specific to the record format (such as JSON, CSV, or record fields delimited by some delimiter) on the streaming source.
 --
 -- * 'rfRecordFormatType' - The type of record format.
 recordFormat
@@ -2299,7 +2458,7 @@ recordFormat pRecordFormatType_ =
   {_rfMappingParameters = Nothing, _rfRecordFormatType = pRecordFormatType_}
 
 
--- | Undocumented member.
+-- | When configuring application input at the time of creating or updating an application, provides additional mapping information specific to the record format (such as JSON, CSV, or record fields delimited by some delimiter) on the streaming source.
 rfMappingParameters :: Lens' RecordFormat (Maybe MappingParameters)
 rfMappingParameters = lens _rfMappingParameters (\ s a -> s{_rfMappingParameters = a});
 
@@ -2342,11 +2501,11 @@ data ReferenceDataSource = ReferenceDataSource'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'rdsS3ReferenceDataSource' - Undocumented member.
+-- * 'rdsS3ReferenceDataSource' - Identifies the S3 bucket and object that contains the reference data. Also identifies the IAM role Amazon Kinesis Analytics can assume to read this object on your behalf. An Amazon Kinesis Analytics application loads reference data only once. If the data changes, you call the 'UpdateApplication' operation to trigger reloading of data into your application.
 --
 -- * 'rdsTableName' - Name of the in-application table to create.
 --
--- * 'rdsReferenceSchema' - Undocumented member.
+-- * 'rdsReferenceSchema' - Describes the format of the data in the streaming source, and how each data element maps to corresponding columns created in the in-application stream.
 referenceDataSource
     :: Text -- ^ 'rdsTableName'
     -> SourceSchema -- ^ 'rdsReferenceSchema'
@@ -2359,7 +2518,7 @@ referenceDataSource pTableName_ pReferenceSchema_ =
   }
 
 
--- | Undocumented member.
+-- | Identifies the S3 bucket and object that contains the reference data. Also identifies the IAM role Amazon Kinesis Analytics can assume to read this object on your behalf. An Amazon Kinesis Analytics application loads reference data only once. If the data changes, you call the 'UpdateApplication' operation to trigger reloading of data into your application.
 rdsS3ReferenceDataSource :: Lens' ReferenceDataSource (Maybe S3ReferenceDataSource)
 rdsS3ReferenceDataSource = lens _rdsS3ReferenceDataSource (\ s a -> s{_rdsS3ReferenceDataSource = a});
 
@@ -2367,7 +2526,7 @@ rdsS3ReferenceDataSource = lens _rdsS3ReferenceDataSource (\ s a -> s{_rdsS3Refe
 rdsTableName :: Lens' ReferenceDataSource Text
 rdsTableName = lens _rdsTableName (\ s a -> s{_rdsTableName = a});
 
--- | Undocumented member.
+-- | Describes the format of the data in the streaming source, and how each data element maps to corresponding columns created in the in-application stream.
 rdsReferenceSchema :: Lens' ReferenceDataSource SourceSchema
 rdsReferenceSchema = lens _rdsReferenceSchema (\ s a -> s{_rdsReferenceSchema = a});
 
@@ -2401,7 +2560,7 @@ data ReferenceDataSourceDescription = ReferenceDataSourceDescription'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'rdsdReferenceSchema' - Undocumented member.
+-- * 'rdsdReferenceSchema' - Describes the format of the data in the streaming source, and how each data element maps to corresponding columns created in the in-application stream.
 --
 -- * 'rdsdReferenceId' - ID of the reference data source. This is the ID that Amazon Kinesis Analytics assigns when you add the reference data source to your application using the 'AddApplicationReferenceDataSource' operation.
 --
@@ -2422,7 +2581,7 @@ referenceDataSourceDescription pReferenceId_ pTableName_ pS3ReferenceDataSourceD
   }
 
 
--- | Undocumented member.
+-- | Describes the format of the data in the streaming source, and how each data element maps to corresponding columns created in the in-application stream.
 rdsdReferenceSchema :: Lens' ReferenceDataSourceDescription (Maybe SourceSchema)
 rdsdReferenceSchema = lens _rdsdReferenceSchema (\ s a -> s{_rdsdReferenceSchema = a});
 
@@ -2474,7 +2633,7 @@ data ReferenceDataSourceUpdate = ReferenceDataSourceUpdate'
 --
 -- * 'rdsuS3ReferenceDataSourceUpdate' - Describes the S3 bucket name, object key name, and IAM role that Amazon Kinesis Analytics can assume to read the Amazon S3 object on your behalf and populate the in-application reference table.
 --
--- * 'rdsuReferenceSchemaUpdate' - Undocumented member.
+-- * 'rdsuReferenceSchemaUpdate' - Describes the format of the data in the streaming source, and how each data element maps to corresponding columns created in the in-application stream.
 --
 -- * 'rdsuReferenceId' - ID of the reference data source being updated. You can use the 'DescribeApplication' operation to get this value.
 referenceDataSourceUpdate
@@ -2497,7 +2656,7 @@ rdsuTableNameUpdate = lens _rdsuTableNameUpdate (\ s a -> s{_rdsuTableNameUpdate
 rdsuS3ReferenceDataSourceUpdate :: Lens' ReferenceDataSourceUpdate (Maybe S3ReferenceDataSourceUpdate)
 rdsuS3ReferenceDataSourceUpdate = lens _rdsuS3ReferenceDataSourceUpdate (\ s a -> s{_rdsuS3ReferenceDataSourceUpdate = a});
 
--- | Undocumented member.
+-- | Describes the format of the data in the streaming source, and how each data element maps to corresponding columns created in the in-application stream.
 rdsuReferenceSchemaUpdate :: Lens' ReferenceDataSourceUpdate (Maybe SourceSchema)
 rdsuReferenceSchemaUpdate = lens _rdsuReferenceSchemaUpdate (\ s a -> s{_rdsuReferenceSchemaUpdate = a});
 
@@ -2520,7 +2679,11 @@ instance ToJSON ReferenceDataSourceUpdate where
                     _rdsuReferenceSchemaUpdate,
                   Just ("ReferenceId" .= _rdsuReferenceId)])
 
--- | /See:/ 's3Configuration' smart constructor.
+-- | Provides a description of an Amazon S3 data source, including the Amazon Resource Name (ARN) of the S3 bucket, the ARN of the IAM role that is used to access the bucket, and the name of the S3 object that contains the data.
+--
+--
+--
+-- /See:/ 's3Configuration' smart constructor.
 data S3Configuration = S3Configuration'
   { _scRoleARN   :: !Text
   , _scBucketARN :: !Text
@@ -2532,11 +2695,11 @@ data S3Configuration = S3Configuration'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'scRoleARN' - Undocumented member.
+-- * 'scRoleARN' - IAM ARN of the role used to access the data.
 --
--- * 'scBucketARN' - Undocumented member.
+-- * 'scBucketARN' - ARN of the S3 bucket that contains the data.
 --
--- * 'scFileKey' - Undocumented member.
+-- * 'scFileKey' - The name of the object that contains the data.
 s3Configuration
     :: Text -- ^ 'scRoleARN'
     -> Text -- ^ 'scBucketARN'
@@ -2547,15 +2710,15 @@ s3Configuration pRoleARN_ pBucketARN_ pFileKey_ =
   {_scRoleARN = pRoleARN_, _scBucketARN = pBucketARN_, _scFileKey = pFileKey_}
 
 
--- | Undocumented member.
+-- | IAM ARN of the role used to access the data.
 scRoleARN :: Lens' S3Configuration Text
 scRoleARN = lens _scRoleARN (\ s a -> s{_scRoleARN = a});
 
--- | Undocumented member.
+-- | ARN of the S3 bucket that contains the data.
 scBucketARN :: Lens' S3Configuration Text
 scBucketARN = lens _scBucketARN (\ s a -> s{_scBucketARN = a});
 
--- | Undocumented member.
+-- | The name of the object that contains the data.
 scFileKey :: Lens' S3Configuration Text
 scFileKey = lens _scFileKey (\ s a -> s{_scFileKey = a});
 

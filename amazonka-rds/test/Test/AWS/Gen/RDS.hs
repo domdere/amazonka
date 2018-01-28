@@ -295,6 +295,9 @@ import Test.Tasty
 --         , requestDescribeDBInstances $
 --             describeDBInstances
 --
+--         , requestRestoreDBInstanceFromS3 $
+--             restoreDBInstanceFromS3
+--
 --         , requestDownloadDBLogFilePortion $
 --             downloadDBLogFilePortion
 --
@@ -567,6 +570,9 @@ import Test.Tasty
 --
 --         , responseDescribeDBInstances $
 --             describeDBInstancesResponse
+--
+--         , responseRestoreDBInstanceFromS3 $
+--             restoreDBInstanceFromS3Response
 --
 --         , responseDownloadDBLogFilePortion $
 --             downloadDBLogFilePortionResponse
@@ -1020,6 +1026,11 @@ requestDescribeDBInstances :: DescribeDBInstances -> TestTree
 requestDescribeDBInstances = req
     "DescribeDBInstances"
     "fixture/DescribeDBInstances.yaml"
+
+requestRestoreDBInstanceFromS3 :: RestoreDBInstanceFromS3 -> TestTree
+requestRestoreDBInstanceFromS3 = req
+    "RestoreDBInstanceFromS3"
+    "fixture/RestoreDBInstanceFromS3.yaml"
 
 requestDownloadDBLogFilePortion :: DownloadDBLogFilePortion -> TestTree
 requestDownloadDBLogFilePortion = req
@@ -1650,6 +1661,13 @@ responseDescribeDBInstances = res
     "fixture/DescribeDBInstancesResponse.proto"
     rds
     (Proxy :: Proxy DescribeDBInstances)
+
+responseRestoreDBInstanceFromS3 :: RestoreDBInstanceFromS3Response -> TestTree
+responseRestoreDBInstanceFromS3 = res
+    "RestoreDBInstanceFromS3Response"
+    "fixture/RestoreDBInstanceFromS3Response.proto"
+    rds
+    (Proxy :: Proxy RestoreDBInstanceFromS3)
 
 responseDownloadDBLogFilePortion :: DownloadDBLogFilePortionResponse -> TestTree
 responseDownloadDBLogFilePortion = res

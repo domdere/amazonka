@@ -63,7 +63,7 @@ data CloneReceiptRuleSet = CloneReceiptRuleSet'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cRuleSetName' - The name of the rule set to create. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
+-- * 'cRuleSetName' - The name of the rule set to create. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
 --
 -- * 'cOriginalRuleSetName' - The name of the rule set to clone.
 cloneReceiptRuleSet
@@ -75,7 +75,7 @@ cloneReceiptRuleSet pRuleSetName_ pOriginalRuleSetName_ =
   {_cRuleSetName = pRuleSetName_, _cOriginalRuleSetName = pOriginalRuleSetName_}
 
 
--- | The name of the rule set to create. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
+-- | The name of the rule set to create. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
 cRuleSetName :: Lens' CloneReceiptRuleSet Text
 cRuleSetName = lens _cRuleSetName (\ s a -> s{_cRuleSetName = a});
 

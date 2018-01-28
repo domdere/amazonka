@@ -84,7 +84,7 @@ data ActivityListItem = ActivityListItem'
 --
 -- * 'aliName' - The name of the activity. A name must /not/ contain:     * whitespace     * brackets @< > { } [ ]@      * wildcard characters @? *@      * special characters @" # % \ ^ | ~ ` $ & , ; : /@      * control characters (@U+0000-001F@ , @U+007F-009F@ )
 --
--- * 'aliCreationDate' - The date the activity was created.
+-- * 'aliCreationDate' - The date the activity is created.
 activityListItem
     :: Text -- ^ 'aliActivityARN'
     -> Text -- ^ 'aliName'
@@ -106,7 +106,7 @@ aliActivityARN = lens _aliActivityARN (\ s a -> s{_aliActivityARN = a});
 aliName :: Lens' ActivityListItem Text
 aliName = lens _aliName (\ s a -> s{_aliName = a});
 
--- | The date the activity was created.
+-- | The date the activity is created.
 aliCreationDate :: Lens' ActivityListItem UTCTime
 aliCreationDate = lens _aliCreationDate (\ s a -> s{_aliCreationDate = a}) . _Time;
 
@@ -248,14 +248,14 @@ newtype ActivityStartedEventDetails = ActivityStartedEventDetails'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'asedWorkerName' - The name of the worker that the task was assigned to. These names are provided by the workers when calling 'GetActivityTask' .
+-- * 'asedWorkerName' - The name of the worker that the task is assigned to. These names are provided by the workers when calling 'GetActivityTask' .
 activityStartedEventDetails
     :: ActivityStartedEventDetails
 activityStartedEventDetails =
   ActivityStartedEventDetails' {_asedWorkerName = Nothing}
 
 
--- | The name of the worker that the task was assigned to. These names are provided by the workers when calling 'GetActivityTask' .
+-- | The name of the worker that the task is assigned to. These names are provided by the workers when calling 'GetActivityTask' .
 asedWorkerName :: Lens' ActivityStartedEventDetails (Maybe Text)
 asedWorkerName = lens _asedWorkerName (\ s a -> s{_asedWorkerName = a});
 
@@ -1284,7 +1284,7 @@ data StateMachineListItem = StateMachineListItem'
 --
 -- * 'smliName' - The name of the state machine. A name must /not/ contain:     * whitespace     * brackets @< > { } [ ]@      * wildcard characters @? *@      * special characters @" # % \ ^ | ~ ` $ & , ; : /@      * control characters (@U+0000-001F@ , @U+007F-009F@ )
 --
--- * 'smliCreationDate' - The date the state machine was created.
+-- * 'smliCreationDate' - The date the state machine is created.
 stateMachineListItem
     :: Text -- ^ 'smliStateMachineARN'
     -> Text -- ^ 'smliName'
@@ -1306,7 +1306,7 @@ smliStateMachineARN = lens _smliStateMachineARN (\ s a -> s{_smliStateMachineARN
 smliName :: Lens' StateMachineListItem Text
 smliName = lens _smliName (\ s a -> s{_smliName = a});
 
--- | The date the state machine was created.
+-- | The date the state machine is created.
 smliCreationDate :: Lens' StateMachineListItem UTCTime
 smliCreationDate = lens _smliCreationDate (\ s a -> s{_smliCreationDate = a}) . _Time;
 

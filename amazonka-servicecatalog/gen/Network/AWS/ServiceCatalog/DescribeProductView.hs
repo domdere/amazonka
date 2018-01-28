@@ -18,10 +18,8 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Retrieves information about a specified product.
+-- Gets information about the specified product.
 --
---
--- This operation is functionally identical to 'DescribeProduct' except that it takes as input @ProductViewId@ instead of @ProductId@ .
 --
 module Network.AWS.ServiceCatalog.DescribeProductView
     (
@@ -61,7 +59,7 @@ data DescribeProductView = DescribeProductView'
 --
 -- * 'dpvAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'dpvId' - The @ProductViewId@ of the product to describe.
+-- * 'dpvId' - The product view identifier.
 describeProductView
     :: Text -- ^ 'dpvId'
     -> DescribeProductView
@@ -73,7 +71,7 @@ describeProductView pId_ =
 dpvAcceptLanguage :: Lens' DescribeProductView (Maybe Text)
 dpvAcceptLanguage = lens _dpvAcceptLanguage (\ s a -> s{_dpvAcceptLanguage = a});
 
--- | The @ProductViewId@ of the product to describe.
+-- | The product view identifier.
 dpvId :: Lens' DescribeProductView Text
 dpvId = lens _dpvId (\ s a -> s{_dpvId = a});
 
@@ -128,9 +126,9 @@ data DescribeProductViewResponse = DescribeProductViewResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dpvrsProductViewSummary' - The summary metadata about the specified product.
+-- * 'dpvrsProductViewSummary' - Summary information about the product.
 --
--- * 'dpvrsProvisioningArtifacts' - A list of provisioning artifact objects for the specified product. The @ProvisioningArtifacts@ represent the ways in which the specified product can be provisioned.
+-- * 'dpvrsProvisioningArtifacts' - Information about the provisioning artifacts for the product.
 --
 -- * 'dpvrsResponseStatus' - -- | The response status code.
 describeProductViewResponse
@@ -144,11 +142,11 @@ describeProductViewResponse pResponseStatus_ =
   }
 
 
--- | The summary metadata about the specified product.
+-- | Summary information about the product.
 dpvrsProductViewSummary :: Lens' DescribeProductViewResponse (Maybe ProductViewSummary)
 dpvrsProductViewSummary = lens _dpvrsProductViewSummary (\ s a -> s{_dpvrsProductViewSummary = a});
 
--- | A list of provisioning artifact objects for the specified product. The @ProvisioningArtifacts@ represent the ways in which the specified product can be provisioned.
+-- | Information about the provisioning artifacts for the product.
 dpvrsProvisioningArtifacts :: Lens' DescribeProductViewResponse [ProvisioningArtifact]
 dpvrsProvisioningArtifacts = lens _dpvrsProvisioningArtifacts (\ s a -> s{_dpvrsProvisioningArtifacts = a}) . _Default . _Coerce;
 

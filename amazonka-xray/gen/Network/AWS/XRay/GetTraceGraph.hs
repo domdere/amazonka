@@ -21,6 +21,8 @@
 -- Retrieves a service graph for one or more specific trace IDs.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.XRay.GetTraceGraph
     (
     -- * Creating a Request
@@ -40,6 +42,7 @@ module Network.AWS.XRay.GetTraceGraph
     ) where
 
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -72,6 +75,13 @@ gtgNextToken = lens _gtgNextToken (\ s a -> s{_gtgNextToken = a});
 -- | Trace IDs of requests for which to generate a service graph.
 gtgTraceIds :: Lens' GetTraceGraph [Text]
 gtgTraceIds = lens _gtgTraceIds (\ s a -> s{_gtgTraceIds = a}) . _Coerce;
+
+instance AWSPager GetTraceGraph where
+        page rq rs
+          | stop (rs ^. gtgrsNextToken) = Nothing
+          | stop (rs ^. gtgrsServices) = Nothing
+          | otherwise =
+            Just $ rq & gtgNextToken .~ rs ^. gtgrsNextToken
 
 instance AWSRequest GetTraceGraph where
         type Rs GetTraceGraph = GetTraceGraphResponse

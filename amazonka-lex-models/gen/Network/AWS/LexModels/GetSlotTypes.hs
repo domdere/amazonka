@@ -29,6 +29,8 @@
 --
 -- The operation requires permission for the @lex:GetSlotTypes@ action.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.LexModels.GetSlotTypes
     (
     -- * Creating a Request
@@ -51,6 +53,7 @@ module Network.AWS.LexModels.GetSlotTypes
 import Network.AWS.Lens
 import Network.AWS.LexModels.Types
 import Network.AWS.LexModels.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -93,6 +96,13 @@ gstNextToken = lens _gstNextToken (\ s a -> s{_gstNextToken = a});
 -- | The maximum number of slot types to return in the response. The default is 10.
 gstMaxResults :: Lens' GetSlotTypes (Maybe Natural)
 gstMaxResults = lens _gstMaxResults (\ s a -> s{_gstMaxResults = a}) . mapping _Nat;
+
+instance AWSPager GetSlotTypes where
+        page rq rs
+          | stop (rs ^. gstrsNextToken) = Nothing
+          | stop (rs ^. gstrsSlotTypes) = Nothing
+          | otherwise =
+            Just $ rq & gstNextToken .~ rs ^. gstrsNextToken
 
 instance AWSRequest GetSlotTypes where
         type Rs GetSlotTypes = GetSlotTypesResponse

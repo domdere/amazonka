@@ -13,17 +13,7 @@
 --
 -- __AWS Service Catalog__
 --
--- __Overview__
---
--- <https://aws.amazon.com/servicecatalog/ AWS Service Catalog> allows organizations to create and manage catalogs of IT services that are approved for use on AWS. This documentation provides reference material for the AWS Service Catalog end user API. To get the most out of this documentation, be familiar with the terminology discussed in <http://docs.aws.amazon.com/servicecatalog/latest/adminguide/what-is_concepts.html AWS Service Catalog Concepts> .
---
--- /Additional Resources/
---
---     * <http://docs.aws.amazon.com/servicecatalog/latest/adminguide/introduction.html AWS Service Catalog Administrator Guide>
---
---     * <http://docs.aws.amazon.com/servicecatalog/latest/userguide/introduction.html AWS Service Catalog User Guide>
---
---
+-- <https://aws.amazon.com/servicecatalog/ AWS Service Catalog> enables organizations to create and manage catalogs of IT services that are approved for use on AWS. To get the most out of this documentation, you should be familiar with the terminology discussed in <http://docs.aws.amazon.com/servicecatalog/latest/adminguide/what-is_concepts.html AWS Service Catalog Concepts> .
 --
 module Network.AWS.ServiceCatalog
     (
@@ -93,7 +83,7 @@ module Network.AWS.ServiceCatalog
     -- ** DisassociateProductFromPortfolio
     , module Network.AWS.ServiceCatalog.DisassociateProductFromPortfolio
 
-    -- ** ListConstraintsForPortfolio
+    -- ** ListConstraintsForPortfolio (Paginated)
     , module Network.AWS.ServiceCatalog.ListConstraintsForPortfolio
 
     -- ** DescribeRecord
@@ -105,7 +95,7 @@ module Network.AWS.ServiceCatalog
     -- ** CreateProvisioningArtifact
     , module Network.AWS.ServiceCatalog.CreateProvisioningArtifact
 
-    -- ** ListPortfolios
+    -- ** ListPortfolios (Paginated)
     , module Network.AWS.ServiceCatalog.ListPortfolios
 
     -- ** DescribeProductView
@@ -144,7 +134,7 @@ module Network.AWS.ServiceCatalog
     -- ** AssociateProductWithPortfolio
     , module Network.AWS.ServiceCatalog.AssociateProductWithPortfolio
 
-    -- ** ListAcceptedPortfolioShares
+    -- ** ListAcceptedPortfolioShares (Paginated)
     , module Network.AWS.ServiceCatalog.ListAcceptedPortfolioShares
 
     -- ** AcceptPortfolioShare
@@ -153,7 +143,7 @@ module Network.AWS.ServiceCatalog
     -- ** ScanProvisionedProducts
     , module Network.AWS.ServiceCatalog.ScanProvisionedProducts
 
-    -- ** ListPrincipalsForPortfolio
+    -- ** ListPrincipalsForPortfolio (Paginated)
     , module Network.AWS.ServiceCatalog.ListPrincipalsForPortfolio
 
     -- ** DeleteProduct
@@ -171,10 +161,10 @@ module Network.AWS.ServiceCatalog
     -- ** UpdateTagOption
     , module Network.AWS.ServiceCatalog.UpdateTagOption
 
-    -- ** ListTagOptions
+    -- ** ListTagOptions (Paginated)
     , module Network.AWS.ServiceCatalog.ListTagOptions
 
-    -- ** SearchProductsAsAdmin
+    -- ** SearchProductsAsAdmin (Paginated)
     , module Network.AWS.ServiceCatalog.SearchProductsAsAdmin
 
     -- ** DeletePortfolio
@@ -183,7 +173,7 @@ module Network.AWS.ServiceCatalog
     -- ** UpdatePortfolio
     , module Network.AWS.ServiceCatalog.UpdatePortfolio
 
-    -- ** ListPortfoliosForProduct
+    -- ** ListPortfoliosForProduct (Paginated)
     , module Network.AWS.ServiceCatalog.ListPortfoliosForProduct
 
     -- ** DescribeProductAsAdmin
@@ -213,10 +203,10 @@ module Network.AWS.ServiceCatalog
     -- ** CreatePortfolio
     , module Network.AWS.ServiceCatalog.CreatePortfolio
 
-    -- ** ListLaunchPaths
+    -- ** ListLaunchPaths (Paginated)
     , module Network.AWS.ServiceCatalog.ListLaunchPaths
 
-    -- ** ListResourcesForTagOption
+    -- ** ListResourcesForTagOption (Paginated)
     , module Network.AWS.ServiceCatalog.ListResourcesForTagOption
 
     -- * Types
@@ -379,6 +369,7 @@ module Network.AWS.ServiceCatalog
     , ProvisioningArtifactDetail
     , provisioningArtifactDetail
     , padCreatedTime
+    , padActive
     , padName
     , padId
     , padType

@@ -52,6 +52,7 @@ module Network.AWS.AutoScaling.UpdateAutoScalingGroup
     , uasgMinSize
     , uasgLaunchConfigurationName
     , uasgHealthCheckType
+    , uasgLaunchTemplate
     , uasgPlacementGroup
     , uasgAutoScalingGroupName
 
@@ -69,19 +70,20 @@ import Network.AWS.Response
 
 -- | /See:/ 'updateAutoScalingGroup' smart constructor.
 data UpdateAutoScalingGroup = UpdateAutoScalingGroup'
-  { _uasgTerminationPolicies              :: !(Maybe [Text])
-  , _uasgHealthCheckGracePeriod           :: !(Maybe Int)
+  { _uasgTerminationPolicies :: !(Maybe [Text])
+  , _uasgHealthCheckGracePeriod :: !(Maybe Int)
   , _uasgNewInstancesProtectedFromScaleIn :: !(Maybe Bool)
-  , _uasgVPCZoneIdentifier                :: !(Maybe Text)
-  , _uasgDefaultCooldown                  :: !(Maybe Int)
-  , _uasgMaxSize                          :: !(Maybe Int)
-  , _uasgAvailabilityZones                :: !(Maybe (List1 Text))
-  , _uasgDesiredCapacity                  :: !(Maybe Int)
-  , _uasgMinSize                          :: !(Maybe Int)
-  , _uasgLaunchConfigurationName          :: !(Maybe Text)
-  , _uasgHealthCheckType                  :: !(Maybe Text)
-  , _uasgPlacementGroup                   :: !(Maybe Text)
-  , _uasgAutoScalingGroupName             :: !Text
+  , _uasgVPCZoneIdentifier :: !(Maybe Text)
+  , _uasgDefaultCooldown :: !(Maybe Int)
+  , _uasgMaxSize :: !(Maybe Int)
+  , _uasgAvailabilityZones :: !(Maybe (List1 Text))
+  , _uasgDesiredCapacity :: !(Maybe Int)
+  , _uasgMinSize :: !(Maybe Int)
+  , _uasgLaunchConfigurationName :: !(Maybe Text)
+  , _uasgHealthCheckType :: !(Maybe Text)
+  , _uasgLaunchTemplate :: !(Maybe LaunchTemplateSpecification)
+  , _uasgPlacementGroup :: !(Maybe Text)
+  , _uasgAutoScalingGroupName :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -107,9 +109,11 @@ data UpdateAutoScalingGroup = UpdateAutoScalingGroup'
 --
 -- * 'uasgMinSize' - The minimum size of the Auto Scaling group.
 --
--- * 'uasgLaunchConfigurationName' - The name of the launch configuration.
+-- * 'uasgLaunchConfigurationName' - The name of the launch configuration. You must specify either a launch configuration or a launch template.
 --
 -- * 'uasgHealthCheckType' - The service to use for the health checks. The valid values are @EC2@ and @ELB@ .
+--
+-- * 'uasgLaunchTemplate' - The launch template to use to specify the updates. You must specify a launch configuration or a launch template.
 --
 -- * 'uasgPlacementGroup' - The name of the placement group into which you'll launch your instances, if any. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html Placement Groups> in the /Amazon Elastic Compute Cloud User Guide/ .
 --
@@ -130,6 +134,7 @@ updateAutoScalingGroup pAutoScalingGroupName_ =
   , _uasgMinSize = Nothing
   , _uasgLaunchConfigurationName = Nothing
   , _uasgHealthCheckType = Nothing
+  , _uasgLaunchTemplate = Nothing
   , _uasgPlacementGroup = Nothing
   , _uasgAutoScalingGroupName = pAutoScalingGroupName_
   }
@@ -171,13 +176,17 @@ uasgDesiredCapacity = lens _uasgDesiredCapacity (\ s a -> s{_uasgDesiredCapacity
 uasgMinSize :: Lens' UpdateAutoScalingGroup (Maybe Int)
 uasgMinSize = lens _uasgMinSize (\ s a -> s{_uasgMinSize = a});
 
--- | The name of the launch configuration.
+-- | The name of the launch configuration. You must specify either a launch configuration or a launch template.
 uasgLaunchConfigurationName :: Lens' UpdateAutoScalingGroup (Maybe Text)
 uasgLaunchConfigurationName = lens _uasgLaunchConfigurationName (\ s a -> s{_uasgLaunchConfigurationName = a});
 
 -- | The service to use for the health checks. The valid values are @EC2@ and @ELB@ .
 uasgHealthCheckType :: Lens' UpdateAutoScalingGroup (Maybe Text)
 uasgHealthCheckType = lens _uasgHealthCheckType (\ s a -> s{_uasgHealthCheckType = a});
+
+-- | The launch template to use to specify the updates. You must specify a launch configuration or a launch template.
+uasgLaunchTemplate :: Lens' UpdateAutoScalingGroup (Maybe LaunchTemplateSpecification)
+uasgLaunchTemplate = lens _uasgLaunchTemplate (\ s a -> s{_uasgLaunchTemplate = a});
 
 -- | The name of the placement group into which you'll launch your instances, if any. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html Placement Groups> in the /Amazon Elastic Compute Cloud User Guide/ .
 uasgPlacementGroup :: Lens' UpdateAutoScalingGroup (Maybe Text)
@@ -228,6 +237,7 @@ instance ToQuery UpdateAutoScalingGroup where
                "LaunchConfigurationName" =:
                  _uasgLaunchConfigurationName,
                "HealthCheckType" =: _uasgHealthCheckType,
+               "LaunchTemplate" =: _uasgLaunchTemplate,
                "PlacementGroup" =: _uasgPlacementGroup,
                "AutoScalingGroupName" =: _uasgAutoScalingGroupName]
 

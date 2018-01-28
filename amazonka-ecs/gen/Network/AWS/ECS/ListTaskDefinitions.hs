@@ -70,7 +70,7 @@ data ListTaskDefinitions = ListTaskDefinitions'
 --
 -- * 'ltdFamilyPrefix' - The full family name with which to filter the @ListTaskDefinitions@ results. Specifying a @familyPrefix@ limits the listed task definitions to task definition revisions that belong to that family.
 --
--- * 'ltdNextToken' - The @nextToken@ value returned from a previous paginated @ListTaskDefinitions@ request where @maxResults@ was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the @nextToken@ value. This value is @null@ when there are no more results to return.
+-- * 'ltdNextToken' - The @nextToken@ value returned from a previous paginated @ListTaskDefinitions@ request where @maxResults@ was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the @nextToken@ value.
 --
 -- * 'ltdSort' - The order in which to sort the results. Valid values are @ASC@ and @DESC@ . By default (@ASC@ ), task definitions are listed lexicographically by family name and in ascending numerical order by revision so that the newest task definitions in a family are listed last. Setting this parameter to @DESC@ reverses the sort order on family name and revision so that the newest task definitions in a family are listed first.
 --
@@ -95,7 +95,7 @@ ltdStatus = lens _ltdStatus (\ s a -> s{_ltdStatus = a});
 ltdFamilyPrefix :: Lens' ListTaskDefinitions (Maybe Text)
 ltdFamilyPrefix = lens _ltdFamilyPrefix (\ s a -> s{_ltdFamilyPrefix = a});
 
--- | The @nextToken@ value returned from a previous paginated @ListTaskDefinitions@ request where @maxResults@ was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the @nextToken@ value. This value is @null@ when there are no more results to return.
+-- | The @nextToken@ value returned from a previous paginated @ListTaskDefinitions@ request where @maxResults@ was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the @nextToken@ value.
 ltdNextToken :: Lens' ListTaskDefinitions (Maybe Text)
 ltdNextToken = lens _ltdNextToken (\ s a -> s{_ltdNextToken = a});
 

@@ -21,6 +21,7 @@ module Network.AWS.SSM.Types
     , _HierarchyTypeMismatchException
     , _InvalidSchedule
     , _UnsupportedParameterType
+    , _InvalidAutomationStatusUpdateException
     , _InvalidPluginName
     , _FeatureNotAvailableException
     , _InvalidAutomationSignalException
@@ -97,6 +98,7 @@ module Network.AWS.SSM.Types
     , _SubTypeCountLimitExceededException
     , _TooManyTagsError
     , _DocumentPermissionLimit
+    , _AutomationStepNotFoundException
     , _DuplicateDocumentContent
     , _DocumentAlreadyExists
     , _DocumentLimitExceeded
@@ -143,6 +145,9 @@ module Network.AWS.SSM.Types
     -- * DocumentFilterKey
     , DocumentFilterKey (..)
 
+    -- * DocumentFormat
+    , DocumentFormat (..)
+
     -- * DocumentHashType
     , DocumentHashType (..)
 
@@ -157,6 +162,9 @@ module Network.AWS.SSM.Types
 
     -- * DocumentType
     , DocumentType (..)
+
+    -- * ExecutionMode
+    , ExecutionMode (..)
 
     -- * Fault
     , Fault (..)
@@ -232,6 +240,12 @@ module Network.AWS.SSM.Types
 
     -- * SignalType
     , SignalType (..)
+
+    -- * StepExecutionFilterKey
+    , StepExecutionFilterKey (..)
+
+    -- * StopType
+    , StopType (..)
 
     -- * Activation
     , Activation
@@ -318,16 +332,28 @@ module Network.AWS.SSM.Types
     -- * AutomationExecution
     , AutomationExecution
     , automationExecution
+    , aeCurrentStepName
+    , aeTargetParameterName
+    , aeExecutedBy
     , aeDocumentName
     , aeExecutionEndTime
     , aeFailureMessage
+    , aeMode
+    , aeStepExecutionsTruncated
     , aeAutomationExecutionStatus
+    , aeParentAutomationExecutionId
     , aeOutputs
+    , aeMaxErrors
     , aeExecutionStartTime
+    , aeCurrentAction
+    , aeTargets
+    , aeResolvedTargets
     , aeParameters
     , aeDocumentVersion
     , aeAutomationExecutionId
     , aeStepExecutions
+    , aeMaxConcurrency
+    , aeTarget
 
     -- * AutomationExecutionFilter
     , AutomationExecutionFilter
@@ -338,15 +364,26 @@ module Network.AWS.SSM.Types
     -- * AutomationExecutionMetadata
     , AutomationExecutionMetadata
     , automationExecutionMetadata
+    , aemCurrentStepName
+    , aemTargetParameterName
     , aemLogFile
     , aemExecutedBy
     , aemDocumentName
     , aemExecutionEndTime
+    , aemFailureMessage
+    , aemMode
     , aemAutomationExecutionStatus
+    , aemParentAutomationExecutionId
     , aemOutputs
+    , aemMaxErrors
     , aemExecutionStartTime
+    , aemCurrentAction
+    , aemTargets
+    , aemResolvedTargets
     , aemDocumentVersion
     , aemAutomationExecutionId
+    , aemMaxConcurrency
+    , aemTarget
 
     -- * Command
     , Command
@@ -494,9 +531,11 @@ module Network.AWS.SSM.Types
     , dSchemaVersion
     , dSha1
     , dDefaultVersion
+    , dTargetType
     , dOwner
     , dPlatformTypes
     , dCreatedDate
+    , dDocumentFormat
     , dName
     , dHashType
     , dParameters
@@ -516,8 +555,10 @@ module Network.AWS.SSM.Types
     , documentIdentifier
     , diDocumentType
     , diSchemaVersion
+    , diTargetType
     , diOwner
     , diPlatformTypes
+    , diDocumentFormat
     , diName
     , diDocumentVersion
     , diTags
@@ -540,6 +581,7 @@ module Network.AWS.SSM.Types
     , DocumentVersionInfo
     , documentVersionInfo
     , dviCreatedDate
+    , dviDocumentFormat
     , dviName
     , dviDocumentVersion
     , dviIsDefaultVersion
@@ -663,6 +705,12 @@ module Network.AWS.SSM.Types
     , ipsfValues
     , ipsfType
 
+    -- * InventoryAggregator
+    , InventoryAggregator
+    , inventoryAggregator
+    , iaAggregators
+    , iaExpression
+
     -- * InventoryFilter
     , InventoryFilter
     , inventoryFilter
@@ -690,6 +738,7 @@ module Network.AWS.SSM.Types
     , InventoryItemSchema
     , inventoryItemSchema
     , iisVersion
+    , iisDisplayName
     , iisTypeName
     , iisAttributes
 
@@ -979,6 +1028,12 @@ module Network.AWS.SSM.Types
     , psDeploymentStatus
     , psComplianceLevel
 
+    -- * ResolvedTargets
+    , ResolvedTargets
+    , resolvedTargets
+    , rtTruncated
+    , rtParameterValues
+
     -- * ResourceComplianceSummaryItem
     , ResourceComplianceSummaryItem
     , resourceComplianceSummaryItem
@@ -1049,8 +1104,19 @@ module Network.AWS.SSM.Types
     , seAction
     , seResponseCode
     , seStepStatus
+    , seOverriddenParameters
     , seOutputs
     , seExecutionStartTime
+    , seMaxAttempts
+    , seStepExecutionId
+    , seTimeoutSeconds
+    , seOnFailure
+
+    -- * StepExecutionFilter
+    , StepExecutionFilter
+    , stepExecutionFilter
+    , sefKey
+    , sefValues
 
     -- * Tag
     , Tag
@@ -1143,6 +1209,14 @@ _InvalidSchedule = _MatchServiceError ssm "InvalidSchedule"
 --
 _UnsupportedParameterType :: AsError a => Getting (First ServiceError) a ServiceError
 _UnsupportedParameterType = _MatchServiceError ssm "UnsupportedParameterType"
+
+
+-- | The specified update status operation is not valid.
+--
+--
+_InvalidAutomationStatusUpdateException :: AsError a => Getting (First ServiceError) a ServiceError
+_InvalidAutomationStatusUpdateException =
+  _MatchServiceError ssm "InvalidAutomationStatusUpdateException"
 
 
 -- | The plugin name is not valid.
@@ -1286,8 +1360,10 @@ _InvalidResultAttributeException =
   _MatchServiceError ssm "InvalidResultAttributeException"
 
 
--- | Error returned when the caller has exceeded the default resource limits (e.g. too many Maintenance Windows have been created).
+-- | Error returned when the caller has exceeded the default resource limits. For example, too many Maintenance Windows or Patch baselines have been created.
 --
+--
+-- For information about resource limits in Systems Manager, see <http://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html#limits_ssm AWS Systems Manager Limits> .
 --
 _ResourceLimitExceededException :: AsError a => Getting (First ServiceError) a ServiceError
 _ResourceLimitExceededException =
@@ -1406,8 +1482,10 @@ _ResourceDataSyncAlreadyExistsException =
   _MatchServiceError ssm "ResourceDataSyncAlreadyExistsException"
 
 
--- | Error returned when the ID specified for a resource (e.g. a Maintenance Window) doesn't exist.
+-- | Error returned when the ID specified for a resource, such as a Maintenance Window or Patch baseline, doesn't exist.
 --
+--
+-- For information about resource limits in Systems Manager, see <http://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html#limits_ssm AWS Systems Manager Limits> .
 --
 _DoesNotExistException :: AsError a => Getting (First ServiceError) a ServiceError
 _DoesNotExistException = _MatchServiceError ssm "DoesNotExistException"
@@ -1539,7 +1617,7 @@ _AssociationVersionLimitExceeded =
   _MatchServiceError ssm "AssociationVersionLimitExceeded"
 
 
--- | The role name can't contain invalid characters. Also verify that you specified an IAM role for notifications that includes the required trust policy. For information about configuring the IAM role for Run Command notifications, see <http://docs.aws.amazon.com/systems-manager/latest/userguide/rc-sns-notifications.html Configuring Amazon SNS Notifications for Run Command> in the /Amazon EC2 Systems Manager User Guide/ .
+-- | The role name can't contain invalid characters. Also verify that you specified an IAM role for notifications that includes the required trust policy. For information about configuring the IAM role for Run Command notifications, see <http://docs.aws.amazon.com/systems-manager/latest/userguide/rc-sns-notifications.html Configuring Amazon SNS Notifications for Run Command> in the /AWS Systems Manager User Guide/ .
 --
 --
 _InvalidRole :: AsError a => Getting (First ServiceError) a ServiceError
@@ -1604,12 +1682,8 @@ _InvalidTarget :: AsError a => Getting (First ServiceError) a ServiceError
 _InvalidTarget = _MatchServiceError ssm "InvalidTarget"
 
 
--- | A hierarchy can have a maximum of five levels. For example:
+-- | A hierarchy can have a maximum of 15 levels. For more information, see <http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-working.html Working with Systems Manager Parameters> .
 --
---
--- /Finance/Prod/IAD/OS/WinServ2016/license15
---
--- For more information, see <http://docs.aws.amazon.com/systems-manager/latest/userguide/sysman-paramstore-working.html Working with Systems Manager Parameters> .
 --
 _HierarchyLevelLimitExceededException :: AsError a => Getting (First ServiceError) a ServiceError
 _HierarchyLevelLimitExceededException =
@@ -1717,6 +1791,14 @@ _TooManyTagsError = _MatchServiceError ssm "TooManyTagsError"
 --
 _DocumentPermissionLimit :: AsError a => Getting (First ServiceError) a ServiceError
 _DocumentPermissionLimit = _MatchServiceError ssm "DocumentPermissionLimit"
+
+
+-- | The specified step name and execution ID don't exist. Verify the information and try again.
+--
+--
+_AutomationStepNotFoundException :: AsError a => Getting (First ServiceError) a ServiceError
+_AutomationStepNotFoundException =
+  _MatchServiceError ssm "AutomationStepNotFoundException"
 
 
 -- | The content of the association document matches another document. Change the content of the document and try again.

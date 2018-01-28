@@ -20,7 +20,9 @@ module Network.AWS.WorkSpaces.Types.Sum where
 import Network.AWS.Prelude
 
 data Compute
-  = Performance
+  = Graphics
+  | Performance
+  | Power
   | Standard
   | Value
   deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
@@ -28,15 +30,19 @@ data Compute
 
 instance FromText Compute where
     parser = takeLowerText >>= \case
+        "graphics" -> pure Graphics
         "performance" -> pure Performance
+        "power" -> pure Power
         "standard" -> pure Standard
         "value" -> pure Value
         e -> fromTextError $ "Failure parsing Compute from value: '" <> e
-           <> "'. Accepted values: performance, standard, value"
+           <> "'. Accepted values: graphics, performance, power, standard, value"
 
 instance ToText Compute where
     toText = \case
+        Graphics -> "GRAPHICS"
         Performance -> "PERFORMANCE"
+        Power -> "POWER"
         Standard -> "STANDARD"
         Value -> "VALUE"
 
@@ -45,6 +51,9 @@ instance NFData       Compute
 instance ToByteString Compute
 instance ToQuery      Compute
 instance ToHeader     Compute
+
+instance ToJSON Compute where
+    toJSON = toJSONText
 
 instance FromJSON Compute where
     parseJSON = parseJSONText "Compute"
@@ -78,6 +87,63 @@ instance ToHeader     ConnectionState
 
 instance FromJSON ConnectionState where
     parseJSON = parseJSONText "ConnectionState"
+
+data ModificationResourceEnum
+  = ComputeType
+  | RootVolume
+  | UserVolume
+  deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
+
+
+instance FromText ModificationResourceEnum where
+    parser = takeLowerText >>= \case
+        "compute_type" -> pure ComputeType
+        "root_volume" -> pure RootVolume
+        "user_volume" -> pure UserVolume
+        e -> fromTextError $ "Failure parsing ModificationResourceEnum from value: '" <> e
+           <> "'. Accepted values: compute_type, root_volume, user_volume"
+
+instance ToText ModificationResourceEnum where
+    toText = \case
+        ComputeType -> "COMPUTE_TYPE"
+        RootVolume -> "ROOT_VOLUME"
+        UserVolume -> "USER_VOLUME"
+
+instance Hashable     ModificationResourceEnum
+instance NFData       ModificationResourceEnum
+instance ToByteString ModificationResourceEnum
+instance ToQuery      ModificationResourceEnum
+instance ToHeader     ModificationResourceEnum
+
+instance FromJSON ModificationResourceEnum where
+    parseJSON = parseJSONText "ModificationResourceEnum"
+
+data ModificationStateEnum
+  = UpdateInProgress
+  | UpdateInitiated
+  deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
+
+
+instance FromText ModificationStateEnum where
+    parser = takeLowerText >>= \case
+        "update_in_progress" -> pure UpdateInProgress
+        "update_initiated" -> pure UpdateInitiated
+        e -> fromTextError $ "Failure parsing ModificationStateEnum from value: '" <> e
+           <> "'. Accepted values: update_in_progress, update_initiated"
+
+instance ToText ModificationStateEnum where
+    toText = \case
+        UpdateInProgress -> "UPDATE_IN_PROGRESS"
+        UpdateInitiated -> "UPDATE_INITIATED"
+
+instance Hashable     ModificationStateEnum
+instance NFData       ModificationStateEnum
+instance ToByteString ModificationStateEnum
+instance ToQuery      ModificationStateEnum
+instance ToHeader     ModificationStateEnum
+
+instance FromJSON ModificationStateEnum where
+    parseJSON = parseJSONText "ModificationStateEnum"
 
 data RunningMode
   = AlwaysOn
@@ -187,6 +253,7 @@ data WorkspaceState
   | WSTerminated
   | WSTerminating
   | WSUnhealthy
+  | WSUpdating
   deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
 
 
@@ -206,8 +273,9 @@ instance FromText WorkspaceState where
         "terminated" -> pure WSTerminated
         "terminating" -> pure WSTerminating
         "unhealthy" -> pure WSUnhealthy
+        "updating" -> pure WSUpdating
         e -> fromTextError $ "Failure parsing WorkspaceState from value: '" <> e
-           <> "'. Accepted values: available, error, impaired, maintenance, pending, rebooting, rebuilding, starting, stopped, stopping, suspended, terminated, terminating, unhealthy"
+           <> "'. Accepted values: available, error, impaired, maintenance, pending, rebooting, rebuilding, starting, stopped, stopping, suspended, terminated, terminating, unhealthy, updating"
 
 instance ToText WorkspaceState where
     toText = \case
@@ -225,6 +293,7 @@ instance ToText WorkspaceState where
         WSTerminated -> "TERMINATED"
         WSTerminating -> "TERMINATING"
         WSUnhealthy -> "UNHEALTHY"
+        WSUpdating -> "UPDATING"
 
 instance Hashable     WorkspaceState
 instance NFData       WorkspaceState

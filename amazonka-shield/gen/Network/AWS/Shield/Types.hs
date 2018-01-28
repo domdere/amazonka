@@ -26,8 +26,20 @@ module Network.AWS.Shield.Types
     , _LockedSubscriptionException
     , _ResourceNotFoundException
 
+    -- * AttackLayer
+    , AttackLayer (..)
+
+    -- * AttackPropertyIdentifier
+    , AttackPropertyIdentifier (..)
+
     -- * SubResourceType
     , SubResourceType (..)
+
+    -- * SubscriptionState
+    , SubscriptionState (..)
+
+    -- * Unit
+    , Unit (..)
 
     -- * AttackDetail
     , AttackDetail
@@ -36,9 +48,19 @@ module Network.AWS.Shield.Types
     , adStartTime
     , adSubResources
     , adMitigations
+    , adAttackProperties
     , adAttackCounters
     , adResourceARN
     , adEndTime
+
+    -- * AttackProperty
+    , AttackProperty
+    , attackProperty
+    , apAttackLayer
+    , apTopContributors
+    , apAttackPropertyIdentifier
+    , apTotal
+    , apUnit
 
     -- * AttackSummary
     , AttackSummary
@@ -53,6 +75,12 @@ module Network.AWS.Shield.Types
     , AttackVectorDescription
     , attackVectorDescription
     , avdVectorType
+
+    -- * Contributor
+    , Contributor
+    , contributor
+    , cValue
+    , cName
 
     -- * Mitigation
     , Mitigation
@@ -164,6 +192,10 @@ _InvalidParameterException =
 -- | Exception that indicates that the operation would exceed a limit.
 --
 --
+-- @Type@ is the type of limit that would be exceeded.
+--
+-- @Limit@ is the threshold that would be exceeded.
+--
 _LimitsExceededException :: AsError a => Getting (First ServiceError) a ServiceError
 _LimitsExceededException = _MatchServiceError shield "LimitsExceededException"
 
@@ -198,7 +230,7 @@ _InvalidOperationException =
   _MatchServiceError shield "InvalidOperationException"
 
 
--- | Exception that indicates that the subscription has been modified by another client. You can retry the request.
+-- | Exception that indicates that the subscription you are trying to delete has not yet completed the 1-year commitment. You cannot delete this subscription.
 --
 --
 _LockedSubscriptionException :: AsError a => Getting (First ServiceError) a ServiceError

@@ -65,7 +65,7 @@ data DescribeLoadBalancers = DescribeLoadBalancers'
 --
 -- * 'dlbMaxRecords' - The maximum number of items to return with this call. The default value is 50 and the maximum value is 100.
 --
--- * 'dlbAutoScalingGroupName' - The name of the group.
+-- * 'dlbAutoScalingGroupName' - The name of the Auto Scaling group.
 describeLoadBalancers
     :: Text -- ^ 'dlbAutoScalingGroupName'
     -> DescribeLoadBalancers
@@ -85,7 +85,7 @@ dlbNextToken = lens _dlbNextToken (\ s a -> s{_dlbNextToken = a});
 dlbMaxRecords :: Lens' DescribeLoadBalancers (Maybe Int)
 dlbMaxRecords = lens _dlbMaxRecords (\ s a -> s{_dlbMaxRecords = a});
 
--- | The name of the group.
+-- | The name of the Auto Scaling group.
 dlbAutoScalingGroupName :: Lens' DescribeLoadBalancers Text
 dlbAutoScalingGroupName = lens _dlbAutoScalingGroupName (\ s a -> s{_dlbAutoScalingGroupName = a});
 

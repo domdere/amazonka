@@ -23,6 +23,8 @@
 --
 -- The @GetBotChannelAssociations@ operation requires permissions for the @lex:GetBotChannelAssociations@ action.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.LexModels.GetBotChannelAssociations
     (
     -- * Creating a Request
@@ -47,6 +49,7 @@ module Network.AWS.LexModels.GetBotChannelAssociations
 import Network.AWS.Lens
 import Network.AWS.LexModels.Types
 import Network.AWS.LexModels.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -107,6 +110,14 @@ gbcaBotName = lens _gbcaBotName (\ s a -> s{_gbcaBotName = a});
 -- | An alias pointing to the specific version of the Amazon Lex bot to which this association is being made.
 gbcaBotAlias :: Lens' GetBotChannelAssociations Text
 gbcaBotAlias = lens _gbcaBotAlias (\ s a -> s{_gbcaBotAlias = a});
+
+instance AWSPager GetBotChannelAssociations where
+        page rq rs
+          | stop (rs ^. gbcasrsNextToken) = Nothing
+          | stop (rs ^. gbcasrsBotChannelAssociations) =
+            Nothing
+          | otherwise =
+            Just $ rq & gbcaNextToken .~ rs ^. gbcasrsNextToken
 
 instance AWSRequest GetBotChannelAssociations where
         type Rs GetBotChannelAssociations =

@@ -36,6 +36,7 @@ module Network.AWS.APIGateway.GetStage
     -- * Response Lenses
     , sDeploymentId
     , sVariables
+    , sAccessLogSettings
     , sDocumentationVersion
     , sClientCertificateId
     , sCreatedDate
@@ -43,9 +44,11 @@ module Network.AWS.APIGateway.GetStage
     , sMethodSettings
     , sLastUpdatedDate
     , sCacheClusterSize
+    , sCanarySettings
     , sCacheClusterEnabled
     , sStageName
     , sDescription
+    , sTags
     ) where
 
 import Network.AWS.APIGateway.Types
@@ -55,7 +58,7 @@ import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
 
--- | Requests Amazon API Gateway to get information about a 'Stage' resource.
+-- | Requests API Gateway to get information about a 'Stage' resource.
 --
 --
 --

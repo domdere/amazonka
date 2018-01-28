@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Disassociates a node from a Chef server, and removes the node from the Chef server's managed nodes. After a node is disassociated, the node key pair is no longer valid for accessing the Chef API. For more information about how to associate a node, see 'AssociateNode' .
+-- Disassociates a node from an AWS OpsWorks CM server, and removes the node from the server's managed nodes. After a node is disassociated, the node key pair is no longer valid for accessing the configuration manager's API. For more information about how to associate a node, see 'AssociateNode' .
 --
 --
 -- A node can can only be disassociated from a server that is in a @HEALTHY@ state. Otherwise, an @InvalidStateException@ is thrown. A @ResourceNotFoundException@ is thrown when the server does not exist. A @ValidationException@ is raised when parameters of the request are not valid.
@@ -60,11 +60,11 @@ data DisassociateNode = DisassociateNode'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dnEngineAttributes' - Engine attributes used for disassociating the node.  __Attributes accepted in a DisassociateNode request:__      * @CHEF_ORGANIZATION@ : The Chef organization with which the node was associated. By default only one organization named @default@ can exist.
+-- * 'dnEngineAttributes' - Engine attributes that are used for disassociating the node. No attributes are required for Puppet.  __Attributes required in a DisassociateNode request for Chef__      * @CHEF_ORGANIZATION@ : The Chef organization with which the node was associated. By default only one organization named @default@ can exist.
 --
 -- * 'dnServerName' - The name of the server from which to disassociate the node.
 --
--- * 'dnNodeName' - The name of the Chef client node.
+-- * 'dnNodeName' - The name of the client node.
 disassociateNode
     :: Text -- ^ 'dnServerName'
     -> Text -- ^ 'dnNodeName'
@@ -77,7 +77,7 @@ disassociateNode pServerName_ pNodeName_ =
   }
 
 
--- | Engine attributes used for disassociating the node.  __Attributes accepted in a DisassociateNode request:__      * @CHEF_ORGANIZATION@ : The Chef organization with which the node was associated. By default only one organization named @default@ can exist.
+-- | Engine attributes that are used for disassociating the node. No attributes are required for Puppet.  __Attributes required in a DisassociateNode request for Chef__      * @CHEF_ORGANIZATION@ : The Chef organization with which the node was associated. By default only one organization named @default@ can exist.
 dnEngineAttributes :: Lens' DisassociateNode [EngineAttribute]
 dnEngineAttributes = lens _dnEngineAttributes (\ s a -> s{_dnEngineAttributes = a}) . _Default . _Coerce;
 
@@ -85,7 +85,7 @@ dnEngineAttributes = lens _dnEngineAttributes (\ s a -> s{_dnEngineAttributes = 
 dnServerName :: Lens' DisassociateNode Text
 dnServerName = lens _dnServerName (\ s a -> s{_dnServerName = a});
 
--- | The name of the Chef client node.
+-- | The name of the client node.
 dnNodeName :: Lens' DisassociateNode Text
 dnNodeName = lens _dnNodeName (\ s a -> s{_dnNodeName = a});
 

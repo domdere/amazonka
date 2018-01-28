@@ -86,11 +86,11 @@ data RestoreDBClusterToPointInTime = RestoreDBClusterToPointInTime'
 --
 -- * 'rdctpitDBSubnetGroupName' - The DB subnet group name to use for the new DB cluster. Constraints: If supplied, must match the name of an existing DBSubnetGroup. Example: @mySubnetgroup@
 --
--- * 'rdctpitKMSKeyId' - The KMS key identifier to use when restoring an encrypted DB cluster from an encrypted DB cluster. The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are restoring a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KMS encryption key. You can restore to a new DB cluster and encrypt the new DB cluster with a KMS key that is different than the KMS key used to encrypt the source DB cluster. The new DB cluster is encrypted with the KMS key identified by the @KmsKeyId@ parameter. If you do not specify a value for the @KmsKeyId@ parameter, then the following will occur:     * If the DB cluster is encrypted, then the restored DB cluster is encrypted using the KMS key that was used to encrypt the source DB cluster.     * If the DB cluster is not encrypted, then the restored DB cluster is not encrypted. If @DBClusterIdentifier@ refers to a DB cluster that is not encrypted, then the restore request is rejected.
+-- * 'rdctpitKMSKeyId' - The AWS KMS key identifier to use when restoring an encrypted DB cluster from an encrypted DB cluster. The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are restoring a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KMS encryption key. You can restore to a new DB cluster and encrypt the new DB cluster with a KMS key that is different than the KMS key used to encrypt the source DB cluster. The new DB cluster is encrypted with the KMS key identified by the @KmsKeyId@ parameter. If you do not specify a value for the @KmsKeyId@ parameter, then the following will occur:     * If the DB cluster is encrypted, then the restored DB cluster is encrypted using the KMS key that was used to encrypt the source DB cluster.     * If the DB cluster is not encrypted, then the restored DB cluster is not encrypted. If @DBClusterIdentifier@ refers to a DB cluster that is not encrypted, then the restore request is rejected.
 --
 -- * 'rdctpitVPCSecurityGroupIds' - A list of VPC security groups that the new DB cluster belongs to.
 --
--- * 'rdctpitRestoreType' - The type of restore to be performed. You can specify one of the following values:     * @full-copy@ - The new DB cluster is restored as a full copy of the source DB cluster.     * @copy-on-write@ - The new DB cluster is restored as a clone of the source DB cluster. Constraints: You cannot specify @copy-on-write@ if the engine version of the source DB cluster is earlier than 1.11. If you don't specify a @RestoreType@ value, then the new DB cluster is restored as a full copy of the source DB cluster.
+-- * 'rdctpitRestoreType' - The type of restore to be performed. You can specify one of the following values:     * @full-copy@ - The new DB cluster is restored as a full copy of the source DB cluster.     * @copy-on-write@ - The new DB cluster is restored as a clone of the source DB cluster. Constraints: You can't specify @copy-on-write@ if the engine version of the source DB cluster is earlier than 1.11. If you don't specify a @RestoreType@ value, then the new DB cluster is restored as a full copy of the source DB cluster.
 --
 -- * 'rdctpitOptionGroupName' - The name of the option group for the new DB cluster.
 --
@@ -100,7 +100,7 @@ data RestoreDBClusterToPointInTime = RestoreDBClusterToPointInTime'
 --
 -- * 'rdctpitPort' - The port number on which the new DB cluster accepts connections. Constraints: Value must be @1150-65535@  Default: The same port as the original DB cluster.
 --
--- * 'rdctpitEnableIAMDatabaseAuthentication' - A Boolean value that is true to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. Default: @false@
+-- * 'rdctpitEnableIAMDatabaseAuthentication' - True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. Default: @false@
 --
 -- * 'rdctpitDBClusterIdentifier' - The name of the new DB cluster to be created. Constraints:     * Must contain from 1 to 63 letters, numbers, or hyphens     * First character must be a letter     * Cannot end with a hyphen or contain two consecutive hyphens
 --
@@ -134,7 +134,7 @@ rdctpitUseLatestRestorableTime = lens _rdctpitUseLatestRestorableTime (\ s a -> 
 rdctpitDBSubnetGroupName :: Lens' RestoreDBClusterToPointInTime (Maybe Text)
 rdctpitDBSubnetGroupName = lens _rdctpitDBSubnetGroupName (\ s a -> s{_rdctpitDBSubnetGroupName = a});
 
--- | The KMS key identifier to use when restoring an encrypted DB cluster from an encrypted DB cluster. The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are restoring a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KMS encryption key. You can restore to a new DB cluster and encrypt the new DB cluster with a KMS key that is different than the KMS key used to encrypt the source DB cluster. The new DB cluster is encrypted with the KMS key identified by the @KmsKeyId@ parameter. If you do not specify a value for the @KmsKeyId@ parameter, then the following will occur:     * If the DB cluster is encrypted, then the restored DB cluster is encrypted using the KMS key that was used to encrypt the source DB cluster.     * If the DB cluster is not encrypted, then the restored DB cluster is not encrypted. If @DBClusterIdentifier@ refers to a DB cluster that is not encrypted, then the restore request is rejected.
+-- | The AWS KMS key identifier to use when restoring an encrypted DB cluster from an encrypted DB cluster. The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are restoring a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KMS encryption key. You can restore to a new DB cluster and encrypt the new DB cluster with a KMS key that is different than the KMS key used to encrypt the source DB cluster. The new DB cluster is encrypted with the KMS key identified by the @KmsKeyId@ parameter. If you do not specify a value for the @KmsKeyId@ parameter, then the following will occur:     * If the DB cluster is encrypted, then the restored DB cluster is encrypted using the KMS key that was used to encrypt the source DB cluster.     * If the DB cluster is not encrypted, then the restored DB cluster is not encrypted. If @DBClusterIdentifier@ refers to a DB cluster that is not encrypted, then the restore request is rejected.
 rdctpitKMSKeyId :: Lens' RestoreDBClusterToPointInTime (Maybe Text)
 rdctpitKMSKeyId = lens _rdctpitKMSKeyId (\ s a -> s{_rdctpitKMSKeyId = a});
 
@@ -142,7 +142,7 @@ rdctpitKMSKeyId = lens _rdctpitKMSKeyId (\ s a -> s{_rdctpitKMSKeyId = a});
 rdctpitVPCSecurityGroupIds :: Lens' RestoreDBClusterToPointInTime [Text]
 rdctpitVPCSecurityGroupIds = lens _rdctpitVPCSecurityGroupIds (\ s a -> s{_rdctpitVPCSecurityGroupIds = a}) . _Default . _Coerce;
 
--- | The type of restore to be performed. You can specify one of the following values:     * @full-copy@ - The new DB cluster is restored as a full copy of the source DB cluster.     * @copy-on-write@ - The new DB cluster is restored as a clone of the source DB cluster. Constraints: You cannot specify @copy-on-write@ if the engine version of the source DB cluster is earlier than 1.11. If you don't specify a @RestoreType@ value, then the new DB cluster is restored as a full copy of the source DB cluster.
+-- | The type of restore to be performed. You can specify one of the following values:     * @full-copy@ - The new DB cluster is restored as a full copy of the source DB cluster.     * @copy-on-write@ - The new DB cluster is restored as a clone of the source DB cluster. Constraints: You can't specify @copy-on-write@ if the engine version of the source DB cluster is earlier than 1.11. If you don't specify a @RestoreType@ value, then the new DB cluster is restored as a full copy of the source DB cluster.
 rdctpitRestoreType :: Lens' RestoreDBClusterToPointInTime (Maybe Text)
 rdctpitRestoreType = lens _rdctpitRestoreType (\ s a -> s{_rdctpitRestoreType = a});
 
@@ -162,7 +162,7 @@ rdctpitTags = lens _rdctpitTags (\ s a -> s{_rdctpitTags = a}) . _Default . _Coe
 rdctpitPort :: Lens' RestoreDBClusterToPointInTime (Maybe Int)
 rdctpitPort = lens _rdctpitPort (\ s a -> s{_rdctpitPort = a});
 
--- | A Boolean value that is true to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. Default: @false@
+-- | True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. Default: @false@
 rdctpitEnableIAMDatabaseAuthentication :: Lens' RestoreDBClusterToPointInTime (Maybe Bool)
 rdctpitEnableIAMDatabaseAuthentication = lens _rdctpitEnableIAMDatabaseAuthentication (\ s a -> s{_rdctpitEnableIAMDatabaseAuthentication = a});
 

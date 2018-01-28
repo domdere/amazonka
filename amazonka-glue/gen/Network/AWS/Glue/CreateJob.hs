@@ -80,15 +80,15 @@ data CreateJob = CreateJob'
 --
 -- * 'cjExecutionProperty' - An ExecutionProperty specifying the maximum number of concurrent runs allowed for this job.
 --
--- * 'cjAllocatedCapacity' - The number of capacity units allocated to this job.
+-- * 'cjAllocatedCapacity' - The number of AWS Glue data processing units (DPUs) to allocate to this Job. From 2 to 100 DPUs can be allocated; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <https://aws.amazon.com/glue/pricing/ AWS Glue pricing page> .
 --
--- * 'cjDefaultArguments' - The default parameters for this job.
+-- * 'cjDefaultArguments' - The default arguments for this job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html Calling AWS Glue APIs in Python> topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-glue-arguments.html Special Parameters Used by AWS Glue> topic in the developer guide.
 --
 -- * 'cjDescription' - Description of the job.
 --
--- * 'cjName' - The name you assign to this job.
+-- * 'cjName' - The name you assign to this job. It must be unique in your account.
 --
--- * 'cjRole' - The role associated with this job.
+-- * 'cjRole' - The name of the IAM role associated with this job.
 --
 -- * 'cjCommand' - The JobCommand that executes this job.
 createJob
@@ -127,11 +127,11 @@ cjMaxRetries = lens _cjMaxRetries (\ s a -> s{_cjMaxRetries = a});
 cjExecutionProperty :: Lens' CreateJob (Maybe ExecutionProperty)
 cjExecutionProperty = lens _cjExecutionProperty (\ s a -> s{_cjExecutionProperty = a});
 
--- | The number of capacity units allocated to this job.
+-- | The number of AWS Glue data processing units (DPUs) to allocate to this Job. From 2 to 100 DPUs can be allocated; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <https://aws.amazon.com/glue/pricing/ AWS Glue pricing page> .
 cjAllocatedCapacity :: Lens' CreateJob (Maybe Int)
 cjAllocatedCapacity = lens _cjAllocatedCapacity (\ s a -> s{_cjAllocatedCapacity = a});
 
--- | The default parameters for this job.
+-- | The default arguments for this job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html Calling AWS Glue APIs in Python> topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-glue-arguments.html Special Parameters Used by AWS Glue> topic in the developer guide.
 cjDefaultArguments :: Lens' CreateJob (HashMap Text Text)
 cjDefaultArguments = lens _cjDefaultArguments (\ s a -> s{_cjDefaultArguments = a}) . _Default . _Map;
 
@@ -139,11 +139,11 @@ cjDefaultArguments = lens _cjDefaultArguments (\ s a -> s{_cjDefaultArguments = 
 cjDescription :: Lens' CreateJob (Maybe Text)
 cjDescription = lens _cjDescription (\ s a -> s{_cjDescription = a});
 
--- | The name you assign to this job.
+-- | The name you assign to this job. It must be unique in your account.
 cjName :: Lens' CreateJob Text
 cjName = lens _cjName (\ s a -> s{_cjName = a});
 
--- | The role associated with this job.
+-- | The name of the IAM role associated with this job.
 cjRole :: Lens' CreateJob Text
 cjRole = lens _cjRole (\ s a -> s{_cjRole = a});
 
@@ -204,7 +204,7 @@ data CreateJobResponse = CreateJobResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cjrsName' - The unique name of the new job that has been created.
+-- * 'cjrsName' - The unique name that was provided.
 --
 -- * 'cjrsResponseStatus' - -- | The response status code.
 createJobResponse
@@ -215,7 +215,7 @@ createJobResponse pResponseStatus_ =
   {_cjrsName = Nothing, _cjrsResponseStatus = pResponseStatus_}
 
 
--- | The unique name of the new job that has been created.
+-- | The unique name that was provided.
 cjrsName :: Lens' CreateJobResponse (Maybe Text)
 cjrsName = lens _cjrsName (\ s a -> s{_cjrsName = a});
 

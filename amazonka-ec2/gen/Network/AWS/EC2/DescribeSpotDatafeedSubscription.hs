@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Describes the data feed for Spot instances. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-data-feeds.html Spot Instance Data Feed> in the /Amazon Elastic Compute Cloud User Guide/ .
+-- Describes the data feed for Spot Instances. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-data-feeds.html Spot Instance Data Feed> in the /Amazon Elastic Compute Cloud User Guide/ .
 --
 --
 module Network.AWS.EC2.DescribeSpotDatafeedSubscription
@@ -119,7 +119,7 @@ data DescribeSpotDatafeedSubscriptionResponse = DescribeSpotDatafeedSubscription
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dsdsrsSpotDatafeedSubscription' - The Spot instance data feed subscription.
+-- * 'dsdsrsSpotDatafeedSubscription' - The Spot Instance data feed subscription.
 --
 -- * 'dsdsrsResponseStatus' - -- | The response status code.
 describeSpotDatafeedSubscriptionResponse
@@ -132,7 +132,7 @@ describeSpotDatafeedSubscriptionResponse pResponseStatus_ =
   }
 
 
--- | The Spot instance data feed subscription.
+-- | The Spot Instance data feed subscription.
 dsdsrsSpotDatafeedSubscription :: Lens' DescribeSpotDatafeedSubscriptionResponse (Maybe SpotDatafeedSubscription)
 dsdsrsSpotDatafeedSubscription = lens _dsdsrsSpotDatafeedSubscription (\ s a -> s{_dsdsrsSpotDatafeedSubscription = a});
 

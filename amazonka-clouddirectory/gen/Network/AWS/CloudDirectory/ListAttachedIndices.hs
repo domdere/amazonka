@@ -18,9 +18,11 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Lists indices attached to an object.
+-- Lists indices attached to the specified object.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListAttachedIndices
     (
     -- * Creating a Request
@@ -45,6 +47,7 @@ module Network.AWS.CloudDirectory.ListAttachedIndices
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -105,6 +108,13 @@ laiDirectoryARN = lens _laiDirectoryARN (\ s a -> s{_laiDirectoryARN = a});
 -- | A reference to the object that has indices attached.
 laiTargetReference :: Lens' ListAttachedIndices ObjectReference
 laiTargetReference = lens _laiTargetReference (\ s a -> s{_laiTargetReference = a});
+
+instance AWSPager ListAttachedIndices where
+        page rq rs
+          | stop (rs ^. lairsNextToken) = Nothing
+          | stop (rs ^. lairsIndexAttachments) = Nothing
+          | otherwise =
+            Just $ rq & laiNextToken .~ rs ^. lairsNextToken
 
 instance AWSRequest ListAttachedIndices where
         type Rs ListAttachedIndices =

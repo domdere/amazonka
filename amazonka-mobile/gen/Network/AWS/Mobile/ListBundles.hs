@@ -21,6 +21,8 @@
 -- List all available bundles.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Mobile.ListBundles
     (
     -- * Creating a Request
@@ -42,6 +44,7 @@ module Network.AWS.Mobile.ListBundles
 import Network.AWS.Lens
 import Network.AWS.Mobile.Types
 import Network.AWS.Mobile.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -76,6 +79,13 @@ lbNextToken = lens _lbNextToken (\ s a -> s{_lbNextToken = a});
 -- | Maximum number of records to list in a single response.
 lbMaxResults :: Lens' ListBundles (Maybe Int)
 lbMaxResults = lens _lbMaxResults (\ s a -> s{_lbMaxResults = a});
+
+instance AWSPager ListBundles where
+        page rq rs
+          | stop (rs ^. lbrsNextToken) = Nothing
+          | stop (rs ^. lbrsBundleList) = Nothing
+          | otherwise =
+            Just $ rq & lbNextToken .~ rs ^. lbrsNextToken
 
 instance AWSRequest ListBundles where
         type Rs ListBundles = ListBundlesResponse

@@ -63,7 +63,7 @@ data DescribeComments = DescribeComments'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dcAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'dcAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'dcMarker' - The marker for the next set of results. This marker was received from a previous call.
 --
@@ -86,7 +86,7 @@ describeComments pDocumentId_ pVersionId_ =
   }
 
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 dcAuthenticationToken :: Lens' DescribeComments (Maybe Text)
 dcAuthenticationToken = lens _dcAuthenticationToken (\ s a -> s{_dcAuthenticationToken = a}) . mapping _Sensitive;
 

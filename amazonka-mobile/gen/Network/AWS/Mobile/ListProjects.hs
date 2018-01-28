@@ -21,6 +21,8 @@
 -- Lists projects in AWS Mobile Hub.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Mobile.ListProjects
     (
     -- * Creating a Request
@@ -42,6 +44,7 @@ module Network.AWS.Mobile.ListProjects
 import Network.AWS.Lens
 import Network.AWS.Mobile.Types
 import Network.AWS.Mobile.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -76,6 +79,13 @@ lpNextToken = lens _lpNextToken (\ s a -> s{_lpNextToken = a});
 -- | Maximum number of records to list in a single response.
 lpMaxResults :: Lens' ListProjects (Maybe Int)
 lpMaxResults = lens _lpMaxResults (\ s a -> s{_lpMaxResults = a});
+
+instance AWSPager ListProjects where
+        page rq rs
+          | stop (rs ^. lprsNextToken) = Nothing
+          | stop (rs ^. lprsProjects) = Nothing
+          | otherwise =
+            Just $ rq & lpNextToken .~ rs ^. lprsNextToken
 
 instance AWSRequest ListProjects where
         type Rs ListProjects = ListProjectsResponse

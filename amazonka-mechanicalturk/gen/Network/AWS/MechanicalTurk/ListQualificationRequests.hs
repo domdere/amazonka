@@ -21,6 +21,8 @@
 -- The @ListQualificationRequests@ operation retrieves requests for Qualifications of a particular Qualification type. The owner of the Qualification type calls this operation to poll for pending requests, and accepts them using the AcceptQualification operation.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.MechanicalTurk.ListQualificationRequests
     (
     -- * Creating a Request
@@ -44,6 +46,7 @@ module Network.AWS.MechanicalTurk.ListQualificationRequests
 import Network.AWS.Lens
 import Network.AWS.MechanicalTurk.Types
 import Network.AWS.MechanicalTurk.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -86,6 +89,13 @@ lqrQualificationTypeId = lens _lqrQualificationTypeId (\ s a -> s{_lqrQualificat
 -- | The maximum number of results to return in a single call.
 lqrMaxResults :: Lens' ListQualificationRequests (Maybe Natural)
 lqrMaxResults = lens _lqrMaxResults (\ s a -> s{_lqrMaxResults = a}) . mapping _Nat;
+
+instance AWSPager ListQualificationRequests where
+        page rq rs
+          | stop (rs ^. lqrrsNextToken) = Nothing
+          | stop (rs ^. lqrrsQualificationRequests) = Nothing
+          | otherwise =
+            Just $ rq & lqrNextToken .~ rs ^. lqrrsNextToken
 
 instance AWSRequest ListQualificationRequests where
         type Rs ListQualificationRequests =

@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Lists all provisioning artifacts associated with the specified product.
+-- Lists all provisioning artifacts (also known as versions) for the specified product.
 --
 --
 module Network.AWS.ServiceCatalog.ListProvisioningArtifacts
@@ -127,9 +127,9 @@ data ListProvisioningArtifactsResponse = ListProvisioningArtifactsResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'lrsNextPageToken' - The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.
+-- * 'lrsNextPageToken' - The page token to use to retrieve the next set of results. If there are no additional results, this value is null.
 --
--- * 'lrsProvisioningArtifactDetails' - List of detailed provisioning artifact information objects.
+-- * 'lrsProvisioningArtifactDetails' - Information about the provisioning artifacts.
 --
 -- * 'lrsResponseStatus' - -- | The response status code.
 listProvisioningArtifactsResponse
@@ -143,11 +143,11 @@ listProvisioningArtifactsResponse pResponseStatus_ =
   }
 
 
--- | The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.
+-- | The page token to use to retrieve the next set of results. If there are no additional results, this value is null.
 lrsNextPageToken :: Lens' ListProvisioningArtifactsResponse (Maybe Text)
 lrsNextPageToken = lens _lrsNextPageToken (\ s a -> s{_lrsNextPageToken = a});
 
--- | List of detailed provisioning artifact information objects.
+-- | Information about the provisioning artifacts.
 lrsProvisioningArtifactDetails :: Lens' ListProvisioningArtifactsResponse [ProvisioningArtifactDetail]
 lrsProvisioningArtifactDetails = lens _lrsProvisioningArtifactDetails (\ s a -> s{_lrsProvisioningArtifactDetails = a}) . _Default . _Coerce;
 

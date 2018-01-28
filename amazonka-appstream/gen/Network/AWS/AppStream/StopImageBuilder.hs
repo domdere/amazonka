@@ -18,7 +18,9 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Undocumented operation.
+-- Stops the specified image builder.
+--
+--
 module Network.AWS.AppStream.StopImageBuilder
     (
     -- * Creating a Request
@@ -52,14 +54,14 @@ newtype StopImageBuilder = StopImageBuilder'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'stoName' - Undocumented member.
+-- * 'stoName' - The name of the image builder.
 stopImageBuilder
     :: Text -- ^ 'stoName'
     -> StopImageBuilder
 stopImageBuilder pName_ = StopImageBuilder' {_stoName = pName_}
 
 
--- | Undocumented member.
+-- | The name of the image builder.
 stoName :: Lens' StopImageBuilder Text
 stoName = lens _stoName (\ s a -> s{_stoName = a});
 
@@ -107,7 +109,7 @@ data StopImageBuilderResponse = StopImageBuilderResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'sibrsImageBuilder' - Undocumented member.
+-- * 'sibrsImageBuilder' - Information about the image builder.
 --
 -- * 'sibrsResponseStatus' - -- | The response status code.
 stopImageBuilderResponse
@@ -118,7 +120,7 @@ stopImageBuilderResponse pResponseStatus_ =
   {_sibrsImageBuilder = Nothing, _sibrsResponseStatus = pResponseStatus_}
 
 
--- | Undocumented member.
+-- | Information about the image builder.
 sibrsImageBuilder :: Lens' StopImageBuilderResponse (Maybe ImageBuilder)
 sibrsImageBuilder = lens _sibrsImageBuilder (\ s a -> s{_sibrsImageBuilder = a});
 

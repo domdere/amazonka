@@ -58,7 +58,7 @@ data GetDatabase = GetDatabase'
 --
 -- * 'gddCatalogId' - The ID of the Data Catalog in which the database resides. If none is supplied, the AWS account ID is used by default.
 --
--- * 'gddName' - The name of the database to retrieve.
+-- * 'gddName' - The name of the database to retrieve. For Hive compatibility, this should be all lowercase.
 getDatabase
     :: Text -- ^ 'gddName'
     -> GetDatabase
@@ -69,7 +69,7 @@ getDatabase pName_ = GetDatabase' {_gddCatalogId = Nothing, _gddName = pName_}
 gddCatalogId :: Lens' GetDatabase (Maybe Text)
 gddCatalogId = lens _gddCatalogId (\ s a -> s{_gddCatalogId = a});
 
--- | The name of the database to retrieve.
+-- | The name of the database to retrieve. For Hive compatibility, this should be all lowercase.
 gddName :: Lens' GetDatabase Text
 gddName = lens _gddName (\ s a -> s{_gddName = a});
 

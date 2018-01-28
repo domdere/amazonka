@@ -34,22 +34,22 @@ module Network.AWS.XRay
     -- * Operations
     -- $operations
 
-    -- ** GetServiceGraph
+    -- ** GetServiceGraph (Paginated)
     , module Network.AWS.XRay.GetServiceGraph
 
-    -- ** GetTraceSummaries
+    -- ** GetTraceSummaries (Paginated)
     , module Network.AWS.XRay.GetTraceSummaries
 
     -- ** PutTraceSegments
     , module Network.AWS.XRay.PutTraceSegments
 
-    -- ** BatchGetTraces
+    -- ** BatchGetTraces (Paginated)
     , module Network.AWS.XRay.BatchGetTraces
 
     -- ** PutTelemetryRecords
     , module Network.AWS.XRay.PutTelemetryRecords
 
-    -- ** GetTraceGraph
+    -- ** GetTraceGraph (Paginated)
     , module Network.AWS.XRay.GetTraceGraph
 
     -- * Types
@@ -172,8 +172,8 @@ module Network.AWS.XRay
     , trSegmentsSentCount
     , trSegmentsSpilloverCount
     , trSegmentsRejectedCount
-    , trTimestamp
     , trBackendConnectionErrors
+    , trTimestamp
 
     -- ** Trace
     , Trace

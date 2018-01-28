@@ -338,7 +338,8 @@ instance NFData DirectoryConnectSettingsDescription
 --
 -- /See:/ 'directoryDescription' smart constructor.
 data DirectoryDescription = DirectoryDescription'
-  { _ddRadiusStatus :: !(Maybe RadiusStatus)
+  { _ddEdition :: !(Maybe DirectoryEdition)
+  , _ddRadiusStatus :: !(Maybe RadiusStatus)
   , _ddStage :: !(Maybe DirectoryStage)
   , _ddDirectoryId :: !(Maybe Text)
   , _ddAccessURL :: !(Maybe Text)
@@ -363,6 +364,8 @@ data DirectoryDescription = DirectoryDescription'
 -- | Creates a value of 'DirectoryDescription' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ddEdition' - The edition associated with this directory.
 --
 -- * 'ddRadiusStatus' - The status of the RADIUS MFA server connection.
 --
@@ -405,7 +408,8 @@ directoryDescription
     :: DirectoryDescription
 directoryDescription =
   DirectoryDescription'
-  { _ddRadiusStatus = Nothing
+  { _ddEdition = Nothing
+  , _ddRadiusStatus = Nothing
   , _ddStage = Nothing
   , _ddDirectoryId = Nothing
   , _ddAccessURL = Nothing
@@ -426,6 +430,10 @@ directoryDescription =
   , _ddDescription = Nothing
   }
 
+
+-- | The edition associated with this directory.
+ddEdition :: Lens' DirectoryDescription (Maybe DirectoryEdition)
+ddEdition = lens _ddEdition (\ s a -> s{_ddEdition = a});
 
 -- | The status of the RADIUS MFA server connection.
 ddRadiusStatus :: Lens' DirectoryDescription (Maybe RadiusStatus)
@@ -508,8 +516,9 @@ instance FromJSON DirectoryDescription where
           = withObject "DirectoryDescription"
               (\ x ->
                  DirectoryDescription' <$>
-                   (x .:? "RadiusStatus") <*> (x .:? "Stage") <*>
-                     (x .:? "DirectoryId")
+                   (x .:? "Edition") <*> (x .:? "RadiusStatus") <*>
+                     (x .:? "Stage")
+                     <*> (x .:? "DirectoryId")
                      <*> (x .:? "AccessUrl")
                      <*> (x .:? "ShortName")
                      <*> (x .:? "Size")
@@ -706,7 +715,7 @@ data DirectoryVPCSettingsDescription = DirectoryVPCSettingsDescription'
 --
 -- * 'dvsdVPCId' - The identifier of the VPC that the directory is in.
 --
--- * 'dvsdSecurityGroupId' - The security group identifier for the directory. If the directory was created before 8/1/2014, this is the identifier of the directory members security group that was created when the directory was created. If the directory was created after this date, this value is null.
+-- * 'dvsdSecurityGroupId' - The domain controller security group identifier for the directory.
 --
 -- * 'dvsdAvailabilityZones' - The list of Availability Zones that the directory is in.
 directoryVPCSettingsDescription
@@ -728,7 +737,7 @@ dvsdSubnetIds = lens _dvsdSubnetIds (\ s a -> s{_dvsdSubnetIds = a}) . _Default 
 dvsdVPCId :: Lens' DirectoryVPCSettingsDescription (Maybe Text)
 dvsdVPCId = lens _dvsdVPCId (\ s a -> s{_dvsdVPCId = a});
 
--- | The security group identifier for the directory. If the directory was created before 8/1/2014, this is the identifier of the directory members security group that was created when the directory was created. If the directory was created after this date, this value is null.
+-- | The domain controller security group identifier for the directory.
 dvsdSecurityGroupId :: Lens' DirectoryVPCSettingsDescription (Maybe Text)
 dvsdSecurityGroupId = lens _dvsdSecurityGroupId (\ s a -> s{_dvsdSecurityGroupId = a});
 

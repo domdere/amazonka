@@ -21,6 +21,133 @@ import Network.AWS.Batch.Types.Sum
 import Network.AWS.Lens
 import Network.AWS.Prelude
 
+-- | An object representing an AWS Batch array job.
+--
+--
+--
+-- /See:/ 'arrayProperties' smart constructor.
+newtype ArrayProperties = ArrayProperties'
+  { _apSize :: Maybe Int
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ArrayProperties' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'apSize' - The size of the array job.
+arrayProperties
+    :: ArrayProperties
+arrayProperties = ArrayProperties' {_apSize = Nothing}
+
+
+-- | The size of the array job.
+apSize :: Lens' ArrayProperties (Maybe Int)
+apSize = lens _apSize (\ s a -> s{_apSize = a});
+
+instance Hashable ArrayProperties where
+
+instance NFData ArrayProperties where
+
+instance ToJSON ArrayProperties where
+        toJSON ArrayProperties'{..}
+          = object (catMaybes [("size" .=) <$> _apSize])
+
+-- | An object representing the array properties of a job.
+--
+--
+--
+-- /See:/ 'arrayPropertiesDetail' smart constructor.
+data ArrayPropertiesDetail = ArrayPropertiesDetail'
+  { _apdSize          :: !(Maybe Int)
+  , _apdStatusSummary :: !(Maybe (Map Text Int))
+  , _apdIndex         :: !(Maybe Int)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ArrayPropertiesDetail' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'apdSize' - The size of the array job. This parameter is returned for parent array jobs.
+--
+-- * 'apdStatusSummary' - A summary of the number of array job children in each available job status. This parameter is returned for parent array jobs.
+--
+-- * 'apdIndex' - The job index within the array that is associated with this job. This parameter is returned for array job children.
+arrayPropertiesDetail
+    :: ArrayPropertiesDetail
+arrayPropertiesDetail =
+  ArrayPropertiesDetail'
+  {_apdSize = Nothing, _apdStatusSummary = Nothing, _apdIndex = Nothing}
+
+
+-- | The size of the array job. This parameter is returned for parent array jobs.
+apdSize :: Lens' ArrayPropertiesDetail (Maybe Int)
+apdSize = lens _apdSize (\ s a -> s{_apdSize = a});
+
+-- | A summary of the number of array job children in each available job status. This parameter is returned for parent array jobs.
+apdStatusSummary :: Lens' ArrayPropertiesDetail (HashMap Text Int)
+apdStatusSummary = lens _apdStatusSummary (\ s a -> s{_apdStatusSummary = a}) . _Default . _Map;
+
+-- | The job index within the array that is associated with this job. This parameter is returned for array job children.
+apdIndex :: Lens' ArrayPropertiesDetail (Maybe Int)
+apdIndex = lens _apdIndex (\ s a -> s{_apdIndex = a});
+
+instance FromJSON ArrayPropertiesDetail where
+        parseJSON
+          = withObject "ArrayPropertiesDetail"
+              (\ x ->
+                 ArrayPropertiesDetail' <$>
+                   (x .:? "size") <*> (x .:? "statusSummary" .!= mempty)
+                     <*> (x .:? "index"))
+
+instance Hashable ArrayPropertiesDetail where
+
+instance NFData ArrayPropertiesDetail where
+
+-- | An object representing the array properties of a job.
+--
+--
+--
+-- /See:/ 'arrayPropertiesSummary' smart constructor.
+data ArrayPropertiesSummary = ArrayPropertiesSummary'
+  { _apsSize  :: !(Maybe Int)
+  , _apsIndex :: !(Maybe Int)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ArrayPropertiesSummary' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'apsSize' - The size of the array job. This parameter is returned for parent array jobs.
+--
+-- * 'apsIndex' - The job index within the array that is associated with this job. This parameter is returned for children of array jobs.
+arrayPropertiesSummary
+    :: ArrayPropertiesSummary
+arrayPropertiesSummary =
+  ArrayPropertiesSummary' {_apsSize = Nothing, _apsIndex = Nothing}
+
+
+-- | The size of the array job. This parameter is returned for parent array jobs.
+apsSize :: Lens' ArrayPropertiesSummary (Maybe Int)
+apsSize = lens _apsSize (\ s a -> s{_apsSize = a});
+
+-- | The job index within the array that is associated with this job. This parameter is returned for children of array jobs.
+apsIndex :: Lens' ArrayPropertiesSummary (Maybe Int)
+apsIndex = lens _apsIndex (\ s a -> s{_apsIndex = a});
+
+instance FromJSON ArrayPropertiesSummary where
+        parseJSON
+          = withObject "ArrayPropertiesSummary"
+              (\ x ->
+                 ArrayPropertiesSummary' <$>
+                   (x .:? "size") <*> (x .:? "index"))
+
+instance Hashable ArrayPropertiesSummary where
+
+instance NFData ArrayPropertiesSummary where
+
 -- | An object representing the details of a container that is part of a job attempt.
 --
 --
@@ -111,9 +238,9 @@ data AttemptDetail = AttemptDetail'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'adStoppedAt' - The Unix timestamp for when the attempt was stopped (when the task transitioned from the @RUNNING@ state to the @STOPPED@ state).
+-- * 'adStoppedAt' - The Unix time stamp for when the attempt was stopped (when the attempt transitioned from the @RUNNING@ state to a terminal state, such as @SUCCEEDED@ or @FAILED@ ).
 --
--- * 'adStartedAt' - The Unix timestamp for when the attempt was started (when the task transitioned from the @PENDING@ state to the @RUNNING@ state).
+-- * 'adStartedAt' - The Unix time stamp for when the attempt was started (when the attempt transitioned from the @STARTING@ state to the @RUNNING@ state).
 --
 -- * 'adContainer' - Details about the container in this job attempt.
 --
@@ -129,11 +256,11 @@ attemptDetail =
   }
 
 
--- | The Unix timestamp for when the attempt was stopped (when the task transitioned from the @RUNNING@ state to the @STOPPED@ state).
+-- | The Unix time stamp for when the attempt was stopped (when the attempt transitioned from the @RUNNING@ state to a terminal state, such as @SUCCEEDED@ or @FAILED@ ).
 adStoppedAt :: Lens' AttemptDetail (Maybe Integer)
 adStoppedAt = lens _adStoppedAt (\ s a -> s{_adStoppedAt = a});
 
--- | The Unix timestamp for when the attempt was started (when the task transitioned from the @PENDING@ state to the @RUNNING@ state).
+-- | The Unix time stamp for when the attempt was started (when the attempt transitioned from the @STARTING@ state to the @RUNNING@ state).
 adStartedAt :: Lens' AttemptDetail (Maybe Integer)
 adStartedAt = lens _adStartedAt (\ s a -> s{_adStartedAt = a});
 
@@ -814,7 +941,7 @@ data ContainerProperties = ContainerProperties'
 --
 -- * 'cpCommand' - The command that is passed to the container. This parameter maps to @Cmd@ in the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container Create a container> section of the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/ Docker Remote API> and the @COMMAND@ parameter to <https://docs.docker.com/engine/reference/run/ docker run> . For more information, see <https://docs.docker.com/engine/reference/builder/#cmd https://docs.docker.com/engine/reference/builder/#cmd> .
 --
--- * 'cpEnvironment' - The environment variables to pass to a container. This parameter maps to @Env@ in the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container Create a container> section of the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/ Docker Remote API> and the @--env@ option to <https://docs.docker.com/engine/reference/run/ docker run> . /Important:/ We do not recommend using plain text environment variables for sensitive information, such as credential data.
+-- * 'cpEnvironment' - The environment variables to pass to a container. This parameter maps to @Env@ in the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container Create a container> section of the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/ Docker Remote API> and the @--env@ option to <https://docs.docker.com/engine/reference/run/ docker run> . /Important:/ We do not recommend using plaintext environment variables for sensitive information, such as credential data.
 --
 -- * 'cpUlimits' - A list of @ulimits@ to set in the container. This parameter maps to @Ulimits@ in the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container Create a container> section of the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/ Docker Remote API> and the @--ulimit@ option to <https://docs.docker.com/engine/reference/run/ docker run> .
 --
@@ -832,7 +959,7 @@ data ContainerProperties = ContainerProperties'
 --
 -- * 'cpImage' - The image used to start a container. This string is passed directly to the Docker daemon. Images in the Docker Hub registry are available by default. Other repositories are specified with @/repository-url/ //image/ :/tag/ @ . Up to 255 letters (uppercase and lowercase), numbers, hyphens, underscores, colons, periods, forward slashes, and number signs are allowed. This parameter maps to @Image@ in the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container Create a container> section of the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/ Docker Remote API> and the @IMAGE@ parameter of <https://docs.docker.com/engine/reference/run/ docker run> .     * Images in Amazon ECR repositories use the full registry and repository URI (for example, @012345678910.dkr.ecr.<region-name>.amazonaws.com/<repository-name>@ ).      * Images in official repositories on Docker Hub use a single name (for example, @ubuntu@ or @mongo@ ).     * Images in other repositories on Docker Hub are qualified with an organization name (for example, @amazon/amazon-ecs-agent@ ).     * Images in other online repositories are qualified further by a domain name (for example, @quay.io/assemblyline/ubuntu@ ).
 --
--- * 'cpVcpus' - The number of vCPUs reserved for the container. This parameter maps to @CpuShares@ in the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container Create a container> section of the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/ Docker Remote API> and the @--cpu-shares@ option to <https://docs.docker.com/engine/reference/run/ docker run> . Each vCPU is equivalent to 1,024 CPU shares. You must specify at least 1 vCPU.
+-- * 'cpVcpus' - The number of vCPUs reserved for the container. This parameter maps to @CpuShares@ in the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container Create a container> section of the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/ Docker Remote API> and the @--cpu-shares@ option to <https://docs.docker.com/engine/reference/run/ docker run> . Each vCPU is equivalent to 1,024 CPU shares. You must specify at least one vCPU.
 --
 -- * 'cpMemory' - The hard limit (in MiB) of memory to present to the container. If your container attempts to exceed the memory specified here, the container is killed. This parameter maps to @Memory@ in the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container Create a container> section of the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/ Docker Remote API> and the @--memory@ option to <https://docs.docker.com/engine/reference/run/ docker run> . You must specify at least 4 MiB of memory for a job.
 containerProperties
@@ -861,7 +988,7 @@ containerProperties pImage_ pVcpus_ pMemory_ =
 cpCommand :: Lens' ContainerProperties [Text]
 cpCommand = lens _cpCommand (\ s a -> s{_cpCommand = a}) . _Default . _Coerce;
 
--- | The environment variables to pass to a container. This parameter maps to @Env@ in the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container Create a container> section of the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/ Docker Remote API> and the @--env@ option to <https://docs.docker.com/engine/reference/run/ docker run> . /Important:/ We do not recommend using plain text environment variables for sensitive information, such as credential data.
+-- | The environment variables to pass to a container. This parameter maps to @Env@ in the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container Create a container> section of the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/ Docker Remote API> and the @--env@ option to <https://docs.docker.com/engine/reference/run/ docker run> . /Important:/ We do not recommend using plaintext environment variables for sensitive information, such as credential data.
 cpEnvironment :: Lens' ContainerProperties [KeyValuePair]
 cpEnvironment = lens _cpEnvironment (\ s a -> s{_cpEnvironment = a}) . _Default . _Coerce;
 
@@ -897,7 +1024,7 @@ cpVolumes = lens _cpVolumes (\ s a -> s{_cpVolumes = a}) . _Default . _Coerce;
 cpImage :: Lens' ContainerProperties Text
 cpImage = lens _cpImage (\ s a -> s{_cpImage = a});
 
--- | The number of vCPUs reserved for the container. This parameter maps to @CpuShares@ in the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container Create a container> section of the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/ Docker Remote API> and the @--cpu-shares@ option to <https://docs.docker.com/engine/reference/run/ docker run> . Each vCPU is equivalent to 1,024 CPU shares. You must specify at least 1 vCPU.
+-- | The number of vCPUs reserved for the container. This parameter maps to @CpuShares@ in the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/#create-a-container Create a container> section of the <https://docs.docker.com/engine/reference/api/docker_remote_api_v1.23/ Docker Remote API> and the @--cpu-shares@ option to <https://docs.docker.com/engine/reference/run/ docker run> . Each vCPU is equivalent to 1,024 CPU shares. You must specify at least one vCPU.
 cpVcpus :: Lens' ContainerProperties Int
 cpVcpus = lens _cpVcpus (\ s a -> s{_cpVcpus = a});
 
@@ -945,6 +1072,49 @@ instance ToJSON ContainerProperties where
                   Just ("vcpus" .= _cpVcpus),
                   Just ("memory" .= _cpMemory)])
 
+-- | An object representing summary details of a container within a job.
+--
+--
+--
+-- /See:/ 'containerSummary' smart constructor.
+data ContainerSummary = ContainerSummary'
+  { _csReason   :: !(Maybe Text)
+  , _csExitCode :: !(Maybe Int)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ContainerSummary' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'csReason' - A short (255 max characters) human-readable string to provide additional details about a running or stopped container.
+--
+-- * 'csExitCode' - The exit code to return upon completion.
+containerSummary
+    :: ContainerSummary
+containerSummary =
+  ContainerSummary' {_csReason = Nothing, _csExitCode = Nothing}
+
+
+-- | A short (255 max characters) human-readable string to provide additional details about a running or stopped container.
+csReason :: Lens' ContainerSummary (Maybe Text)
+csReason = lens _csReason (\ s a -> s{_csReason = a});
+
+-- | The exit code to return upon completion.
+csExitCode :: Lens' ContainerSummary (Maybe Int)
+csExitCode = lens _csExitCode (\ s a -> s{_csExitCode = a});
+
+instance FromJSON ContainerSummary where
+        parseJSON
+          = withObject "ContainerSummary"
+              (\ x ->
+                 ContainerSummary' <$>
+                   (x .:? "reason") <*> (x .:? "exitCode"))
+
+instance Hashable ContainerSummary where
+
+instance NFData ContainerSummary where
+
 -- | The contents of the @host@ parameter determine whether your data volume persists on the host container instance and where it is stored. If the host parameter is empty, then the Docker daemon assigns a host path for your data volume, but the data is not guaranteed to persist after the containers associated with it stop running.
 --
 --
@@ -989,14 +1159,14 @@ instance ToJSON Host where
 --
 -- /See:/ 'jobDefinition' smart constructor.
 data JobDefinition = JobDefinition'
-  { _jStatus              :: !(Maybe Text)
-  , _jRetryStrategy       :: !(Maybe RetryStrategy)
-  , _jParameters          :: !(Maybe (Map Text Text))
-  , _jContainerProperties :: !(Maybe ContainerProperties)
-  , _jJobDefinitionName   :: !Text
-  , _jJobDefinitionARN    :: !Text
-  , _jRevision            :: !Int
-  , _jType                :: !Text
+  { _jobStatus              :: !(Maybe Text)
+  , _jobRetryStrategy       :: !(Maybe RetryStrategy)
+  , _jobParameters          :: !(Maybe (Map Text Text))
+  , _jobContainerProperties :: !(Maybe ContainerProperties)
+  , _jobJobDefinitionName   :: !Text
+  , _jobJobDefinitionARN    :: !Text
+  , _jobRevision            :: !Int
+  , _jobType                :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1004,71 +1174,71 @@ data JobDefinition = JobDefinition'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'jStatus' - The status of the job definition.
+-- * 'jobStatus' - The status of the job definition.
 --
--- * 'jRetryStrategy' - The retry strategy to use for failed jobs that are submitted with this job definition.
+-- * 'jobRetryStrategy' - The retry strategy to use for failed jobs that are submitted with this job definition.
 --
--- * 'jParameters' - Default parameters or parameter substitution placeholders that are set in the job definition. Parameters are specified as a key-value pair mapping. Parameters in a @SubmitJob@ request override any corresponding parameter defaults from the job definition.
+-- * 'jobParameters' - Default parameters or parameter substitution placeholders that are set in the job definition. Parameters are specified as a key-value pair mapping. Parameters in a @SubmitJob@ request override any corresponding parameter defaults from the job definition.
 --
--- * 'jContainerProperties' - An object with various properties specific to container-based jobs.
+-- * 'jobContainerProperties' - An object with various properties specific to container-based jobs.
 --
--- * 'jJobDefinitionName' - The name of the job definition.
+-- * 'jobJobDefinitionName' - The name of the job definition.
 --
--- * 'jJobDefinitionARN' - The Amazon Resource Name (ARN) for the job definition.
+-- * 'jobJobDefinitionARN' - The Amazon Resource Name (ARN) for the job definition.
 --
--- * 'jRevision' - The revision of the job definition.
+-- * 'jobRevision' - The revision of the job definition.
 --
--- * 'jType' - The type of job definition.
+-- * 'jobType' - The type of job definition.
 jobDefinition
-    :: Text -- ^ 'jJobDefinitionName'
-    -> Text -- ^ 'jJobDefinitionARN'
-    -> Int -- ^ 'jRevision'
-    -> Text -- ^ 'jType'
+    :: Text -- ^ 'jobJobDefinitionName'
+    -> Text -- ^ 'jobJobDefinitionARN'
+    -> Int -- ^ 'jobRevision'
+    -> Text -- ^ 'jobType'
     -> JobDefinition
 jobDefinition pJobDefinitionName_ pJobDefinitionARN_ pRevision_ pType_ =
   JobDefinition'
-  { _jStatus = Nothing
-  , _jRetryStrategy = Nothing
-  , _jParameters = Nothing
-  , _jContainerProperties = Nothing
-  , _jJobDefinitionName = pJobDefinitionName_
-  , _jJobDefinitionARN = pJobDefinitionARN_
-  , _jRevision = pRevision_
-  , _jType = pType_
+  { _jobStatus = Nothing
+  , _jobRetryStrategy = Nothing
+  , _jobParameters = Nothing
+  , _jobContainerProperties = Nothing
+  , _jobJobDefinitionName = pJobDefinitionName_
+  , _jobJobDefinitionARN = pJobDefinitionARN_
+  , _jobRevision = pRevision_
+  , _jobType = pType_
   }
 
 
 -- | The status of the job definition.
-jStatus :: Lens' JobDefinition (Maybe Text)
-jStatus = lens _jStatus (\ s a -> s{_jStatus = a});
+jobStatus :: Lens' JobDefinition (Maybe Text)
+jobStatus = lens _jobStatus (\ s a -> s{_jobStatus = a});
 
 -- | The retry strategy to use for failed jobs that are submitted with this job definition.
-jRetryStrategy :: Lens' JobDefinition (Maybe RetryStrategy)
-jRetryStrategy = lens _jRetryStrategy (\ s a -> s{_jRetryStrategy = a});
+jobRetryStrategy :: Lens' JobDefinition (Maybe RetryStrategy)
+jobRetryStrategy = lens _jobRetryStrategy (\ s a -> s{_jobRetryStrategy = a});
 
 -- | Default parameters or parameter substitution placeholders that are set in the job definition. Parameters are specified as a key-value pair mapping. Parameters in a @SubmitJob@ request override any corresponding parameter defaults from the job definition.
-jParameters :: Lens' JobDefinition (HashMap Text Text)
-jParameters = lens _jParameters (\ s a -> s{_jParameters = a}) . _Default . _Map;
+jobParameters :: Lens' JobDefinition (HashMap Text Text)
+jobParameters = lens _jobParameters (\ s a -> s{_jobParameters = a}) . _Default . _Map;
 
 -- | An object with various properties specific to container-based jobs.
-jContainerProperties :: Lens' JobDefinition (Maybe ContainerProperties)
-jContainerProperties = lens _jContainerProperties (\ s a -> s{_jContainerProperties = a});
+jobContainerProperties :: Lens' JobDefinition (Maybe ContainerProperties)
+jobContainerProperties = lens _jobContainerProperties (\ s a -> s{_jobContainerProperties = a});
 
 -- | The name of the job definition.
-jJobDefinitionName :: Lens' JobDefinition Text
-jJobDefinitionName = lens _jJobDefinitionName (\ s a -> s{_jJobDefinitionName = a});
+jobJobDefinitionName :: Lens' JobDefinition Text
+jobJobDefinitionName = lens _jobJobDefinitionName (\ s a -> s{_jobJobDefinitionName = a});
 
 -- | The Amazon Resource Name (ARN) for the job definition.
-jJobDefinitionARN :: Lens' JobDefinition Text
-jJobDefinitionARN = lens _jJobDefinitionARN (\ s a -> s{_jJobDefinitionARN = a});
+jobJobDefinitionARN :: Lens' JobDefinition Text
+jobJobDefinitionARN = lens _jobJobDefinitionARN (\ s a -> s{_jobJobDefinitionARN = a});
 
 -- | The revision of the job definition.
-jRevision :: Lens' JobDefinition Int
-jRevision = lens _jRevision (\ s a -> s{_jRevision = a});
+jobRevision :: Lens' JobDefinition Int
+jobRevision = lens _jobRevision (\ s a -> s{_jobRevision = a});
 
 -- | The type of job definition.
-jType :: Lens' JobDefinition Text
-jType = lens _jType (\ s a -> s{_jType = a});
+jobType :: Lens' JobDefinition Text
+jobType = lens _jobType (\ s a -> s{_jobType = a});
 
 instance FromJSON JobDefinition where
         parseJSON
@@ -1092,8 +1262,9 @@ instance NFData JobDefinition where
 --
 --
 -- /See:/ 'jobDependency' smart constructor.
-newtype JobDependency = JobDependency'
-  { _jJobId :: Maybe Text
+data JobDependency = JobDependency'
+  { _jJobId :: !(Maybe Text)
+  , _jType  :: !(Maybe ArrayJobDependency)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1102,19 +1273,27 @@ newtype JobDependency = JobDependency'
 -- Use one of the following lenses to modify other fields as desired:
 --
 -- * 'jJobId' - The job ID of the AWS Batch job associated with this dependency.
+--
+-- * 'jType' - The type of the job dependency.
 jobDependency
     :: JobDependency
-jobDependency = JobDependency' {_jJobId = Nothing}
+jobDependency = JobDependency' {_jJobId = Nothing, _jType = Nothing}
 
 
 -- | The job ID of the AWS Batch job associated with this dependency.
 jJobId :: Lens' JobDependency (Maybe Text)
 jJobId = lens _jJobId (\ s a -> s{_jJobId = a});
 
+-- | The type of the job dependency.
+jType :: Lens' JobDependency (Maybe ArrayJobDependency)
+jType = lens _jType (\ s a -> s{_jType = a});
+
 instance FromJSON JobDependency where
         parseJSON
           = withObject "JobDependency"
-              (\ x -> JobDependency' <$> (x .:? "jobId"))
+              (\ x ->
+                 JobDependency' <$>
+                   (x .:? "jobId") <*> (x .:? "type"))
 
 instance Hashable JobDependency where
 
@@ -1122,7 +1301,9 @@ instance NFData JobDependency where
 
 instance ToJSON JobDependency where
         toJSON JobDependency'{..}
-          = object (catMaybes [("jobId" .=) <$> _jJobId])
+          = object
+              (catMaybes
+                 [("jobId" .=) <$> _jJobId, ("type" .=) <$> _jType])
 
 -- | An object representing an AWS Batch job.
 --
@@ -1130,20 +1311,21 @@ instance ToJSON JobDependency where
 --
 -- /See:/ 'jobDetail' smart constructor.
 data JobDetail = JobDetail'
-  { _jdStoppedAt     :: !(Maybe Integer)
-  , _jdCreatedAt     :: !(Maybe Integer)
-  , _jdRetryStrategy :: !(Maybe RetryStrategy)
-  , _jdAttempts      :: !(Maybe [AttemptDetail])
-  , _jdDependsOn     :: !(Maybe [JobDependency])
-  , _jdContainer     :: !(Maybe ContainerDetail)
-  , _jdParameters    :: !(Maybe (Map Text Text))
-  , _jdStatusReason  :: !(Maybe Text)
-  , _jdJobName       :: !Text
-  , _jdJobId         :: !Text
-  , _jdJobQueue      :: !Text
-  , _jdStatus        :: !JobStatus
-  , _jdStartedAt     :: !Integer
-  , _jdJobDefinition :: !Text
+  { _jdStoppedAt       :: !(Maybe Integer)
+  , _jdCreatedAt       :: !(Maybe Integer)
+  , _jdRetryStrategy   :: !(Maybe RetryStrategy)
+  , _jdAttempts        :: !(Maybe [AttemptDetail])
+  , _jdDependsOn       :: !(Maybe [JobDependency])
+  , _jdContainer       :: !(Maybe ContainerDetail)
+  , _jdParameters      :: !(Maybe (Map Text Text))
+  , _jdStatusReason    :: !(Maybe Text)
+  , _jdArrayProperties :: !(Maybe ArrayPropertiesDetail)
+  , _jdJobName         :: !Text
+  , _jdJobId           :: !Text
+  , _jdJobQueue        :: !Text
+  , _jdStatus          :: !JobStatus
+  , _jdStartedAt       :: !Integer
+  , _jdJobDefinition   :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1151,9 +1333,9 @@ data JobDetail = JobDetail'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'jdStoppedAt' - The Unix timestamp for when the job was stopped (when the task transitioned from the @RUNNING@ state to the @STOPPED@ state).
+-- * 'jdStoppedAt' - The Unix time stamp for when the job was stopped (when the job transitioned from the @RUNNING@ state to a terminal state, such as @SUCCEEDED@ or @FAILED@ ).
 --
--- * 'jdCreatedAt' - The Unix timestamp for when the job was created (when the task entered the @PENDING@ state).
+-- * 'jdCreatedAt' - The Unix time stamp for when the job was created. For non-array jobs and parent array jobs, this is when the job entered the @SUBMITTED@ state (at the time 'SubmitJob' was called). For array child jobs, this is when the child job was spawned by its parent and entered the @PENDING@ state.
 --
 -- * 'jdRetryStrategy' - The retry strategy to use for this job if an attempt fails.
 --
@@ -1167,6 +1349,8 @@ data JobDetail = JobDetail'
 --
 -- * 'jdStatusReason' - A short, human-readable string to provide additional details about the current status of the job.
 --
+-- * 'jdArrayProperties' - The array properties of the job, if it is an array job.
+--
 -- * 'jdJobName' - The name of the job.
 --
 -- * 'jdJobId' - The ID for the job.
@@ -1175,7 +1359,7 @@ data JobDetail = JobDetail'
 --
 -- * 'jdStatus' - The current status for the job.
 --
--- * 'jdStartedAt' - The Unix timestamp for when the job was started (when the task transitioned from the @PENDING@ state to the @RUNNING@ state).
+-- * 'jdStartedAt' - The Unix time stamp for when the job was started (when the job transitioned from the @STARTING@ state to the @RUNNING@ state).
 --
 -- * 'jdJobDefinition' - The job definition that is used by this job.
 jobDetail
@@ -1196,6 +1380,7 @@ jobDetail pJobName_ pJobId_ pJobQueue_ pStatus_ pStartedAt_ pJobDefinition_ =
   , _jdContainer = Nothing
   , _jdParameters = Nothing
   , _jdStatusReason = Nothing
+  , _jdArrayProperties = Nothing
   , _jdJobName = pJobName_
   , _jdJobId = pJobId_
   , _jdJobQueue = pJobQueue_
@@ -1205,11 +1390,11 @@ jobDetail pJobName_ pJobId_ pJobQueue_ pStatus_ pStartedAt_ pJobDefinition_ =
   }
 
 
--- | The Unix timestamp for when the job was stopped (when the task transitioned from the @RUNNING@ state to the @STOPPED@ state).
+-- | The Unix time stamp for when the job was stopped (when the job transitioned from the @RUNNING@ state to a terminal state, such as @SUCCEEDED@ or @FAILED@ ).
 jdStoppedAt :: Lens' JobDetail (Maybe Integer)
 jdStoppedAt = lens _jdStoppedAt (\ s a -> s{_jdStoppedAt = a});
 
--- | The Unix timestamp for when the job was created (when the task entered the @PENDING@ state).
+-- | The Unix time stamp for when the job was created. For non-array jobs and parent array jobs, this is when the job entered the @SUBMITTED@ state (at the time 'SubmitJob' was called). For array child jobs, this is when the child job was spawned by its parent and entered the @PENDING@ state.
 jdCreatedAt :: Lens' JobDetail (Maybe Integer)
 jdCreatedAt = lens _jdCreatedAt (\ s a -> s{_jdCreatedAt = a});
 
@@ -1237,6 +1422,10 @@ jdParameters = lens _jdParameters (\ s a -> s{_jdParameters = a}) . _Default . _
 jdStatusReason :: Lens' JobDetail (Maybe Text)
 jdStatusReason = lens _jdStatusReason (\ s a -> s{_jdStatusReason = a});
 
+-- | The array properties of the job, if it is an array job.
+jdArrayProperties :: Lens' JobDetail (Maybe ArrayPropertiesDetail)
+jdArrayProperties = lens _jdArrayProperties (\ s a -> s{_jdArrayProperties = a});
+
 -- | The name of the job.
 jdJobName :: Lens' JobDetail Text
 jdJobName = lens _jdJobName (\ s a -> s{_jdJobName = a});
@@ -1253,7 +1442,7 @@ jdJobQueue = lens _jdJobQueue (\ s a -> s{_jdJobQueue = a});
 jdStatus :: Lens' JobDetail JobStatus
 jdStatus = lens _jdStatus (\ s a -> s{_jdStatus = a});
 
--- | The Unix timestamp for when the job was started (when the task transitioned from the @PENDING@ state to the @RUNNING@ state).
+-- | The Unix time stamp for when the job was started (when the job transitioned from the @STARTING@ state to the @RUNNING@ state).
 jdStartedAt :: Lens' JobDetail Integer
 jdStartedAt = lens _jdStartedAt (\ s a -> s{_jdStartedAt = a});
 
@@ -1273,6 +1462,7 @@ instance FromJSON JobDetail where
                      <*> (x .:? "container")
                      <*> (x .:? "parameters" .!= mempty)
                      <*> (x .:? "statusReason")
+                     <*> (x .:? "arrayProperties")
                      <*> (x .: "jobName")
                      <*> (x .: "jobId")
                      <*> (x .: "jobQueue")
@@ -1385,14 +1575,35 @@ instance NFData JobQueueDetail where
 --
 -- /See:/ 'jobSummary' smart constructor.
 data JobSummary = JobSummary'
-  { _jsJobId   :: !Text
-  , _jsJobName :: !Text
+  { _jsStoppedAt       :: !(Maybe Integer)
+  , _jsStatus          :: !(Maybe JobStatus)
+  , _jsCreatedAt       :: !(Maybe Integer)
+  , _jsStartedAt       :: !(Maybe Integer)
+  , _jsContainer       :: !(Maybe ContainerSummary)
+  , _jsStatusReason    :: !(Maybe Text)
+  , _jsArrayProperties :: !(Maybe ArrayPropertiesSummary)
+  , _jsJobId           :: !Text
+  , _jsJobName         :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
 -- | Creates a value of 'JobSummary' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'jsStoppedAt' - The Unix time stamp for when the job was stopped (when the job transitioned from the @RUNNING@ state to a terminal state, such as @SUCCEEDED@ or @FAILED@ ).
+--
+-- * 'jsStatus' - The current status for the job.
+--
+-- * 'jsCreatedAt' - The Unix time stamp for when the job was created. For non-array jobs and parent array jobs, this is when the job entered the @SUBMITTED@ state (at the time 'SubmitJob' was called). For array child jobs, this is when the child job was spawned by its parent and entered the @PENDING@ state.
+--
+-- * 'jsStartedAt' - The Unix time stamp for when the job was started (when the job transitioned from the @STARTING@ state to the @RUNNING@ state).
+--
+-- * 'jsContainer' - An object representing the details of the container that is associated with the job.
+--
+-- * 'jsStatusReason' - A short, human-readable string to provide additional details about the current status of the job.
+--
+-- * 'jsArrayProperties' - The array properties of the job, if it is an array job.
 --
 -- * 'jsJobId' - The ID of the job.
 --
@@ -1402,8 +1613,46 @@ jobSummary
     -> Text -- ^ 'jsJobName'
     -> JobSummary
 jobSummary pJobId_ pJobName_ =
-  JobSummary' {_jsJobId = pJobId_, _jsJobName = pJobName_}
+  JobSummary'
+  { _jsStoppedAt = Nothing
+  , _jsStatus = Nothing
+  , _jsCreatedAt = Nothing
+  , _jsStartedAt = Nothing
+  , _jsContainer = Nothing
+  , _jsStatusReason = Nothing
+  , _jsArrayProperties = Nothing
+  , _jsJobId = pJobId_
+  , _jsJobName = pJobName_
+  }
 
+
+-- | The Unix time stamp for when the job was stopped (when the job transitioned from the @RUNNING@ state to a terminal state, such as @SUCCEEDED@ or @FAILED@ ).
+jsStoppedAt :: Lens' JobSummary (Maybe Integer)
+jsStoppedAt = lens _jsStoppedAt (\ s a -> s{_jsStoppedAt = a});
+
+-- | The current status for the job.
+jsStatus :: Lens' JobSummary (Maybe JobStatus)
+jsStatus = lens _jsStatus (\ s a -> s{_jsStatus = a});
+
+-- | The Unix time stamp for when the job was created. For non-array jobs and parent array jobs, this is when the job entered the @SUBMITTED@ state (at the time 'SubmitJob' was called). For array child jobs, this is when the child job was spawned by its parent and entered the @PENDING@ state.
+jsCreatedAt :: Lens' JobSummary (Maybe Integer)
+jsCreatedAt = lens _jsCreatedAt (\ s a -> s{_jsCreatedAt = a});
+
+-- | The Unix time stamp for when the job was started (when the job transitioned from the @STARTING@ state to the @RUNNING@ state).
+jsStartedAt :: Lens' JobSummary (Maybe Integer)
+jsStartedAt = lens _jsStartedAt (\ s a -> s{_jsStartedAt = a});
+
+-- | An object representing the details of the container that is associated with the job.
+jsContainer :: Lens' JobSummary (Maybe ContainerSummary)
+jsContainer = lens _jsContainer (\ s a -> s{_jsContainer = a});
+
+-- | A short, human-readable string to provide additional details about the current status of the job.
+jsStatusReason :: Lens' JobSummary (Maybe Text)
+jsStatusReason = lens _jsStatusReason (\ s a -> s{_jsStatusReason = a});
+
+-- | The array properties of the job, if it is an array job.
+jsArrayProperties :: Lens' JobSummary (Maybe ArrayPropertiesSummary)
+jsArrayProperties = lens _jsArrayProperties (\ s a -> s{_jsArrayProperties = a});
 
 -- | The ID of the job.
 jsJobId :: Lens' JobSummary Text
@@ -1417,7 +1666,15 @@ instance FromJSON JobSummary where
         parseJSON
           = withObject "JobSummary"
               (\ x ->
-                 JobSummary' <$> (x .: "jobId") <*> (x .: "jobName"))
+                 JobSummary' <$>
+                   (x .:? "stoppedAt") <*> (x .:? "status") <*>
+                     (x .:? "createdAt")
+                     <*> (x .:? "startedAt")
+                     <*> (x .:? "container")
+                     <*> (x .:? "statusReason")
+                     <*> (x .:? "arrayProperties")
+                     <*> (x .: "jobId")
+                     <*> (x .: "jobName"))
 
 instance Hashable JobSummary where
 
@@ -1438,19 +1695,19 @@ data KeyValuePair = KeyValuePair'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'kvpValue' - The value of the key value pair. For environment variables, this is the value of the environment variable.
+-- * 'kvpValue' - The value of the key-value pair. For environment variables, this is the value of the environment variable.
 --
--- * 'kvpName' - The name of the key value pair. For environment variables, this is the name of the environment variable.
+-- * 'kvpName' - The name of the key-value pair. For environment variables, this is the name of the environment variable.
 keyValuePair
     :: KeyValuePair
 keyValuePair = KeyValuePair' {_kvpValue = Nothing, _kvpName = Nothing}
 
 
--- | The value of the key value pair. For environment variables, this is the value of the environment variable.
+-- | The value of the key-value pair. For environment variables, this is the value of the environment variable.
 kvpValue :: Lens' KeyValuePair (Maybe Text)
 kvpValue = lens _kvpValue (\ s a -> s{_kvpValue = a});
 
--- | The name of the key value pair. For environment variables, this is the name of the environment variable.
+-- | The name of the key-value pair. For environment variables, this is the name of the environment variable.
 kvpName :: Lens' KeyValuePair (Maybe Text)
 kvpName = lens _kvpName (\ s a -> s{_kvpName = a});
 
@@ -1545,13 +1802,13 @@ newtype RetryStrategy = RetryStrategy'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'rsAttempts' - The number of times to move a job to the @RUNNABLE@ status. You may specify between 1 and 10 attempts. If @attempts@ is greater than one, the job is retried if it fails until it has moved to @RUNNABLE@ that many times.
+-- * 'rsAttempts' - The number of times to move a job to the @RUNNABLE@ status. You may specify between 1 and 10 attempts. If the value of @attempts@ is greater than one, the job is retried if it fails until it has moved to @RUNNABLE@ that many times.
 retryStrategy
     :: RetryStrategy
 retryStrategy = RetryStrategy' {_rsAttempts = Nothing}
 
 
--- | The number of times to move a job to the @RUNNABLE@ status. You may specify between 1 and 10 attempts. If @attempts@ is greater than one, the job is retried if it fails until it has moved to @RUNNABLE@ that many times.
+-- | The number of times to move a job to the @RUNNABLE@ status. You may specify between 1 and 10 attempts. If the value of @attempts@ is greater than one, the job is retried if it fails until it has moved to @RUNNABLE@ that many times.
 rsAttempts :: Lens' RetryStrategy (Maybe Int)
 rsAttempts = lens _rsAttempts (\ s a -> s{_rsAttempts = a});
 
@@ -1649,7 +1906,7 @@ data Volume = Volume'
 --
 -- * 'vName' - The name of the volume. Up to 255 letters (uppercase and lowercase), numbers, hyphens, and underscores are allowed. This name is referenced in the @sourceVolume@ parameter of container definition @mountPoints@ .
 --
--- * 'vHost' - The contents of the @host@ parameter determine whether your data volume persists on the host container instance and where it is stored. If the host parameter is empty, then the Docker daemon assigns a host path for your data volume, but the data is not guaranteed to persist after the containers associated with it stop running.
+-- * 'vHost' - The contents of the @host@ parameter determine whether your data volume persists on the host container instance and where it is stored. If the host parameter is empty, then the Docker daemon assigns a host path for your data volume. However, the data is not guaranteed to persist after the containers associated with it stop running.
 volume
     :: Volume
 volume = Volume' {_vName = Nothing, _vHost = Nothing}
@@ -1659,7 +1916,7 @@ volume = Volume' {_vName = Nothing, _vHost = Nothing}
 vName :: Lens' Volume (Maybe Text)
 vName = lens _vName (\ s a -> s{_vName = a});
 
--- | The contents of the @host@ parameter determine whether your data volume persists on the host container instance and where it is stored. If the host parameter is empty, then the Docker daemon assigns a host path for your data volume, but the data is not guaranteed to persist after the containers associated with it stop running.
+-- | The contents of the @host@ parameter determine whether your data volume persists on the host container instance and where it is stored. If the host parameter is empty, then the Docker daemon assigns a host path for your data volume. However, the data is not guaranteed to persist after the containers associated with it stop running.
 vHost :: Lens' Volume (Maybe Host)
 vHost = lens _vHost (\ s a -> s{_vHost = a});
 

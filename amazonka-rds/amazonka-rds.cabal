@@ -131,6 +131,7 @@ library
         , Network.AWS.RDS.RestoreDBClusterFromSnapshot
         , Network.AWS.RDS.RestoreDBClusterToPointInTime
         , Network.AWS.RDS.RestoreDBInstanceFromDBSnapshot
+        , Network.AWS.RDS.RestoreDBInstanceFromS3
         , Network.AWS.RDS.RestoreDBInstanceToPointInTime
         , Network.AWS.RDS.RevokeDBSecurityGroupIngress
         , Network.AWS.RDS.StartDBInstance

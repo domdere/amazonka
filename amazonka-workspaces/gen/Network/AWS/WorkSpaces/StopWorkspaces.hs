@@ -18,8 +18,10 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Stops the specified WorkSpaces. The WorkSpaces must have a running mode of AutoStop and a state of AVAILABLE, IMPAIRED, UNHEALTHY, or ERROR.
+-- Stops the specified WorkSpaces.
 --
+--
+-- You cannot stop a WorkSpace unless it has a running mode of @AutoStop@ and a state of @AVAILABLE@ , @IMPAIRED@ , @UNHEALTHY@ , or @ERROR@ .
 --
 module Network.AWS.WorkSpaces.StopWorkspaces
     (
@@ -54,7 +56,7 @@ newtype StopWorkspaces = StopWorkspaces'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'swStopWorkspaceRequests' - The requests.
+-- * 'swStopWorkspaceRequests' - The WorkSpaces to stop.
 stopWorkspaces
     :: NonEmpty StopRequest -- ^ 'swStopWorkspaceRequests'
     -> StopWorkspaces
@@ -62,7 +64,7 @@ stopWorkspaces pStopWorkspaceRequests_ =
   StopWorkspaces' {_swStopWorkspaceRequests = _List1 # pStopWorkspaceRequests_}
 
 
--- | The requests.
+-- | The WorkSpaces to stop.
 swStopWorkspaceRequests :: Lens' StopWorkspaces (NonEmpty StopRequest)
 swStopWorkspaceRequests = lens _swStopWorkspaceRequests (\ s a -> s{_swStopWorkspaceRequests = a}) . _List1;
 
@@ -114,7 +116,7 @@ data StopWorkspacesResponse = StopWorkspacesResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'srsFailedRequests' - The failed requests.
+-- * 'srsFailedRequests' - Information about the WorkSpaces that could not be stopped.
 --
 -- * 'srsResponseStatus' - -- | The response status code.
 stopWorkspacesResponse
@@ -125,7 +127,7 @@ stopWorkspacesResponse pResponseStatus_ =
   {_srsFailedRequests = Nothing, _srsResponseStatus = pResponseStatus_}
 
 
--- | The failed requests.
+-- | Information about the WorkSpaces that could not be stopped.
 srsFailedRequests :: Lens' StopWorkspacesResponse [FailedWorkspaceChangeRequest]
 srsFailedRequests = lens _srsFailedRequests (\ s a -> s{_srsFailedRequests = a}) . _Default . _Coerce;
 

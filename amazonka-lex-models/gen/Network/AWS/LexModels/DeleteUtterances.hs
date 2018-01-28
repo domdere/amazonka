@@ -21,7 +21,7 @@
 -- Deletes stored utterances.
 --
 --
--- Amazon Lex stores the utterances that users send to your bot unless the @childDirected@ field in the bot is set to @true@ . Utterances are stored for 15 days for use with the 'GetUtterancesView' operation, and then stored indefinately for use in improving the ability of your bot to respond to user input.
+-- Amazon Lex stores the utterances that users send to your bot unless the @childDirected@ field in the bot is set to @true@ . Utterances are stored for 15 days for use with the 'GetUtterancesView' operation, and then stored indefinitely for use in improving the ability of your bot to respond to user input.
 --
 -- Use the @DeleteStoredUtterances@ operation to manually delete stored utterances for a specific user.
 --

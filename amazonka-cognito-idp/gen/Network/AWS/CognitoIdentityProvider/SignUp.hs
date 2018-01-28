@@ -27,6 +27,8 @@ module Network.AWS.CognitoIdentityProvider.SignUp
       signUp
     , SignUp
     -- * Request Lenses
+    , suAnalyticsMetadata
+    , suUserContextData
     , suUserAttributes
     , suSecretHash
     , suValidationData
@@ -57,18 +59,24 @@ import Network.AWS.Response
 --
 -- /See:/ 'signUp' smart constructor.
 data SignUp = SignUp'
-  { _suUserAttributes :: !(Maybe [AttributeType])
-  , _suSecretHash     :: !(Maybe (Sensitive Text))
-  , _suValidationData :: !(Maybe [AttributeType])
-  , _suClientId       :: !(Sensitive Text)
-  , _suUsername       :: !(Sensitive Text)
-  , _suPassword       :: !(Sensitive Text)
+  { _suAnalyticsMetadata :: !(Maybe AnalyticsMetadataType)
+  , _suUserContextData   :: !(Maybe UserContextDataType)
+  , _suUserAttributes    :: !(Maybe [AttributeType])
+  , _suSecretHash        :: !(Maybe (Sensitive Text))
+  , _suValidationData    :: !(Maybe [AttributeType])
+  , _suClientId          :: !(Sensitive Text)
+  , _suUsername          :: !(Sensitive Text)
+  , _suPassword          :: !(Sensitive Text)
   } deriving (Eq, Show, Data, Typeable, Generic)
 
 
 -- | Creates a value of 'SignUp' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'suAnalyticsMetadata' - The Amazon Pinpoint analytics metadata for collecting metrics for @SignUp@ calls.
+--
+-- * 'suUserContextData' - Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.
 --
 -- * 'suUserAttributes' - An array of name-value pairs representing user attributes. For custom attributes, you must prepend the @custom:@ prefix to the attribute name.
 --
@@ -88,7 +96,9 @@ signUp
     -> SignUp
 signUp pClientId_ pUsername_ pPassword_ =
   SignUp'
-  { _suUserAttributes = Nothing
+  { _suAnalyticsMetadata = Nothing
+  , _suUserContextData = Nothing
+  , _suUserAttributes = Nothing
   , _suSecretHash = Nothing
   , _suValidationData = Nothing
   , _suClientId = _Sensitive # pClientId_
@@ -96,6 +106,14 @@ signUp pClientId_ pUsername_ pPassword_ =
   , _suPassword = _Sensitive # pPassword_
   }
 
+
+-- | The Amazon Pinpoint analytics metadata for collecting metrics for @SignUp@ calls.
+suAnalyticsMetadata :: Lens' SignUp (Maybe AnalyticsMetadataType)
+suAnalyticsMetadata = lens _suAnalyticsMetadata (\ s a -> s{_suAnalyticsMetadata = a});
+
+-- | Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.
+suUserContextData :: Lens' SignUp (Maybe UserContextDataType)
+suUserContextData = lens _suUserContextData (\ s a -> s{_suUserContextData = a});
 
 -- | An array of name-value pairs representing user attributes. For custom attributes, you must prepend the @custom:@ prefix to the attribute name.
 suUserAttributes :: Lens' SignUp [AttributeType]
@@ -150,7 +168,9 @@ instance ToJSON SignUp where
         toJSON SignUp'{..}
           = object
               (catMaybes
-                 [("UserAttributes" .=) <$> _suUserAttributes,
+                 [("AnalyticsMetadata" .=) <$> _suAnalyticsMetadata,
+                  ("UserContextData" .=) <$> _suUserContextData,
+                  ("UserAttributes" .=) <$> _suUserAttributes,
                   ("SecretHash" .=) <$> _suSecretHash,
                   ("ValidationData" .=) <$> _suValidationData,
                   Just ("ClientId" .= _suClientId),

@@ -184,6 +184,36 @@ instance ToJSON ElasticsearchS3BackupMode where
 instance FromJSON ElasticsearchS3BackupMode where
     parseJSON = parseJSONText "ElasticsearchS3BackupMode"
 
+data HECEndpointType
+  = Event
+  | Raw
+  deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
+
+
+instance FromText HECEndpointType where
+    parser = takeLowerText >>= \case
+        "event" -> pure Event
+        "raw" -> pure Raw
+        e -> fromTextError $ "Failure parsing HECEndpointType from value: '" <> e
+           <> "'. Accepted values: event, raw"
+
+instance ToText HECEndpointType where
+    toText = \case
+        Event -> "Event"
+        Raw -> "Raw"
+
+instance Hashable     HECEndpointType
+instance NFData       HECEndpointType
+instance ToByteString HECEndpointType
+instance ToQuery      HECEndpointType
+instance ToHeader     HECEndpointType
+
+instance ToJSON HECEndpointType where
+    toJSON = toJSONText
+
+instance FromJSON HECEndpointType where
+    parseJSON = parseJSONText "HECEndpointType"
+
 data NoEncryptionConfig =
   NoEncryption
   deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
@@ -212,22 +242,31 @@ instance FromJSON NoEncryptionConfig where
     parseJSON = parseJSONText "NoEncryptionConfig"
 
 data ProcessorParameterName
-  = LambdaARN
+  = BufferIntervalInSeconds
+  | BufferSizeInMBs
+  | LambdaARN
   | NumberOfRetries
+  | RoleARN
   deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
 
 
 instance FromText ProcessorParameterName where
     parser = takeLowerText >>= \case
+        "bufferintervalinseconds" -> pure BufferIntervalInSeconds
+        "buffersizeinmbs" -> pure BufferSizeInMBs
         "lambdaarn" -> pure LambdaARN
         "numberofretries" -> pure NumberOfRetries
+        "rolearn" -> pure RoleARN
         e -> fromTextError $ "Failure parsing ProcessorParameterName from value: '" <> e
-           <> "'. Accepted values: lambdaarn, numberofretries"
+           <> "'. Accepted values: bufferintervalinseconds, buffersizeinmbs, lambdaarn, numberofretries, rolearn"
 
 instance ToText ProcessorParameterName where
     toText = \case
+        BufferIntervalInSeconds -> "BufferIntervalInSeconds"
+        BufferSizeInMBs -> "BufferSizeInMBs"
         LambdaARN -> "LambdaArn"
         NumberOfRetries -> "NumberOfRetries"
+        RoleARN -> "RoleArn"
 
 instance Hashable     ProcessorParameterName
 instance NFData       ProcessorParameterName
@@ -327,3 +366,33 @@ instance ToJSON S3BackupMode where
 
 instance FromJSON S3BackupMode where
     parseJSON = parseJSONText "S3BackupMode"
+
+data SplunkS3BackupMode
+  = AllEvents
+  | FailedEventsOnly
+  deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
+
+
+instance FromText SplunkS3BackupMode where
+    parser = takeLowerText >>= \case
+        "allevents" -> pure AllEvents
+        "failedeventsonly" -> pure FailedEventsOnly
+        e -> fromTextError $ "Failure parsing SplunkS3BackupMode from value: '" <> e
+           <> "'. Accepted values: allevents, failedeventsonly"
+
+instance ToText SplunkS3BackupMode where
+    toText = \case
+        AllEvents -> "AllEvents"
+        FailedEventsOnly -> "FailedEventsOnly"
+
+instance Hashable     SplunkS3BackupMode
+instance NFData       SplunkS3BackupMode
+instance ToByteString SplunkS3BackupMode
+instance ToQuery      SplunkS3BackupMode
+instance ToHeader     SplunkS3BackupMode
+
+instance ToJSON SplunkS3BackupMode where
+    toJSON = toJSONText
+
+instance FromJSON SplunkS3BackupMode where
+    parseJSON = parseJSONText "SplunkS3BackupMode"

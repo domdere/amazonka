@@ -106,6 +106,9 @@ module Network.AWS.CodeBuild
     -- ** DeleteWebhook
     , module Network.AWS.CodeBuild.DeleteWebhook
 
+    -- ** InvalidateProjectCache
+    , module Network.AWS.CodeBuild.InvalidateProjectCache
+
     -- ** BatchDeleteBuilds
     , module Network.AWS.CodeBuild.BatchDeleteBuilds
 
@@ -131,6 +134,9 @@ module Network.AWS.CodeBuild
 
     -- ** BuildPhaseType
     , BuildPhaseType (..)
+
+    -- ** CacheType
+    , CacheType (..)
 
     -- ** ComputeType
     , ComputeType (..)
@@ -172,9 +178,12 @@ module Network.AWS.CodeBuild
     , bArtifacts
     , bEnvironment
     , bInitiator
+    , bNetworkInterface
     , bCurrentPhase
+    , bCache
     , bSourceVersion
     , bLogs
+    , bVpcConfig
     , bEndTime
     , bProjectName
     , bBuildStatus
@@ -208,6 +217,7 @@ module Network.AWS.CodeBuild
     -- ** EnvironmentImage
     , EnvironmentImage
     , environmentImage
+    , eiVersions
     , eiName
     , eiDescription
 
@@ -237,6 +247,12 @@ module Network.AWS.CodeBuild
     , llGroupName
     , llStreamName
 
+    -- ** NetworkInterface
+    , NetworkInterface
+    , networkInterface
+    , niSubnetId
+    , niNetworkInterfaceId
+
     -- ** PhaseContext
     , PhaseContext
     , phaseContext
@@ -250,8 +266,11 @@ module Network.AWS.CodeBuild
     , pArtifacts
     , pEnvironment
     , pCreated
+    , pCache
     , pName
+    , pVpcConfig
     , pSource
+    , pBadge
     , pEncryptionKey
     , pLastModified
     , pWebhook
@@ -270,10 +289,23 @@ module Network.AWS.CodeBuild
     , paNamespaceType
     , paType
 
+    -- ** ProjectBadge
+    , ProjectBadge
+    , projectBadge
+    , pbBadgeEnabled
+    , pbBadgeRequestURL
+
+    -- ** ProjectCache
+    , ProjectCache
+    , projectCache
+    , pcLocation
+    , pcType
+
     -- ** ProjectEnvironment
     , ProjectEnvironment
     , projectEnvironment
     , pePrivilegedMode
+    , peCertificate
     , peEnvironmentVariables
     , peType
     , peImage
@@ -282,9 +314,11 @@ module Network.AWS.CodeBuild
     -- ** ProjectSource
     , ProjectSource
     , projectSource
+    , psInsecureSSL
     , psLocation
     , psAuth
     , psBuildspec
+    , psGitCloneDepth
     , psType
 
     -- ** SourceAuth
@@ -299,10 +333,19 @@ module Network.AWS.CodeBuild
     , tagValue
     , tagKey
 
+    -- ** VPCConfig
+    , VPCConfig
+    , vpcConfig
+    , vcSecurityGroupIds
+    , vcVpcId
+    , vcSubnets
+
     -- ** Webhook
     , Webhook
     , webhook
     , wUrl
+    , wSecret
+    , wPayloadURL
     ) where
 
 import Network.AWS.CodeBuild.BatchDeleteBuilds
@@ -312,6 +355,7 @@ import Network.AWS.CodeBuild.CreateProject
 import Network.AWS.CodeBuild.CreateWebhook
 import Network.AWS.CodeBuild.DeleteProject
 import Network.AWS.CodeBuild.DeleteWebhook
+import Network.AWS.CodeBuild.InvalidateProjectCache
 import Network.AWS.CodeBuild.ListBuilds
 import Network.AWS.CodeBuild.ListBuildsForProject
 import Network.AWS.CodeBuild.ListCuratedEnvironmentImages

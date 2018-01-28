@@ -21,6 +21,8 @@
 -- Retrieves metadata for all runs of a given job.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Glue.GetJobRuns
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.Glue.GetJobRuns
 import Network.AWS.Glue.Types
 import Network.AWS.Glue.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -83,6 +86,13 @@ gjrMaxResults = lens _gjrMaxResults (\ s a -> s{_gjrMaxResults = a}) . mapping _
 -- | The name of the job for which to retrieve all job runs.
 gjrJobName :: Lens' GetJobRuns Text
 gjrJobName = lens _gjrJobName (\ s a -> s{_gjrJobName = a});
+
+instance AWSPager GetJobRuns where
+        page rq rs
+          | stop (rs ^. gjrrsNextToken) = Nothing
+          | stop (rs ^. gjrrsJobRuns) = Nothing
+          | otherwise =
+            Just $ rq & gjrNextToken .~ rs ^. gjrrsNextToken
 
 instance AWSRequest GetJobRuns where
         type Rs GetJobRuns = GetJobRunsResponse

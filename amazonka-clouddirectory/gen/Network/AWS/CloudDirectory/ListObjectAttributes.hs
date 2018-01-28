@@ -21,6 +21,8 @@
 -- Lists all attributes that are associated with an object.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListObjectAttributes
     (
     -- * Creating a Request
@@ -46,6 +48,7 @@ module Network.AWS.CloudDirectory.ListObjectAttributes
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -114,6 +117,13 @@ loaDirectoryARN = lens _loaDirectoryARN (\ s a -> s{_loaDirectoryARN = a});
 -- | The reference that identifies the object whose attributes will be listed.
 loaObjectReference :: Lens' ListObjectAttributes ObjectReference
 loaObjectReference = lens _loaObjectReference (\ s a -> s{_loaObjectReference = a});
+
+instance AWSPager ListObjectAttributes where
+        page rq rs
+          | stop (rs ^. loarsNextToken) = Nothing
+          | stop (rs ^. loarsAttributes) = Nothing
+          | otherwise =
+            Just $ rq & loaNextToken .~ rs ^. loarsNextToken
 
 instance AWSRequest ListObjectAttributes where
         type Rs ListObjectAttributes =

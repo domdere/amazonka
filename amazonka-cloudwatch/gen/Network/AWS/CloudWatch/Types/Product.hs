@@ -449,6 +449,7 @@ data MetricAlarm = MetricAlarm'
   , _maOKActions                          :: !(Maybe [Text])
   , _maEvaluateLowSampleCountPercentile   :: !(Maybe Text)
   , _maStateValue                         :: !(Maybe StateValue)
+  , _maDatapointsToAlarm                  :: !(Maybe Nat)
   , _maThreshold                          :: !(Maybe Double)
   , _maAlarmConfigurationUpdatedTimestamp :: !(Maybe ISO8601)
   , _maActionsEnabled                     :: !(Maybe Bool)
@@ -492,6 +493,8 @@ data MetricAlarm = MetricAlarm'
 --
 -- * 'maStateValue' - The state value for the alarm.
 --
+-- * 'maDatapointsToAlarm' - The number of datapoints that must be breaching to trigger the alarm.
+--
 -- * 'maThreshold' - The value to compare with the specified statistic.
 --
 -- * 'maAlarmConfigurationUpdatedTimestamp' - The time stamp of the last update to the alarm configuration.
@@ -531,6 +534,7 @@ metricAlarm =
   , _maOKActions = Nothing
   , _maEvaluateLowSampleCountPercentile = Nothing
   , _maStateValue = Nothing
+  , _maDatapointsToAlarm = Nothing
   , _maThreshold = Nothing
   , _maAlarmConfigurationUpdatedTimestamp = Nothing
   , _maActionsEnabled = Nothing
@@ -593,6 +597,10 @@ maEvaluateLowSampleCountPercentile = lens _maEvaluateLowSampleCountPercentile (\
 -- | The state value for the alarm.
 maStateValue :: Lens' MetricAlarm (Maybe StateValue)
 maStateValue = lens _maStateValue (\ s a -> s{_maStateValue = a});
+
+-- | The number of datapoints that must be breaching to trigger the alarm.
+maDatapointsToAlarm :: Lens' MetricAlarm (Maybe Natural)
+maDatapointsToAlarm = lens _maDatapointsToAlarm (\ s a -> s{_maDatapointsToAlarm = a}) . mapping _Nat;
 
 -- | The value to compare with the specified statistic.
 maThreshold :: Lens' MetricAlarm (Maybe Double)
@@ -659,6 +667,7 @@ instance FromXML MetricAlarm where
                    may (parseXMLList "member"))
                 <*> (x .@? "EvaluateLowSampleCountPercentile")
                 <*> (x .@? "StateValue")
+                <*> (x .@? "DatapointsToAlarm")
                 <*> (x .@? "Threshold")
                 <*> (x .@? "AlarmConfigurationUpdatedTimestamp")
                 <*> (x .@? "ActionsEnabled")

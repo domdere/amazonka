@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Updates an existing constraint.
+-- Updates the specified constraint.
 --
 --
 module Network.AWS.ServiceCatalog.UpdateConstraint
@@ -62,9 +62,9 @@ data UpdateConstraint = UpdateConstraint'
 --
 -- * 'ucAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'ucDescription' - The updated text description of the constraint.
+-- * 'ucDescription' - The updated description of the constraint.
 --
--- * 'ucId' - The identifier of the constraint to update.
+-- * 'ucId' - The identifier of the constraint.
 updateConstraint
     :: Text -- ^ 'ucId'
     -> UpdateConstraint
@@ -77,11 +77,11 @@ updateConstraint pId_ =
 ucAcceptLanguage :: Lens' UpdateConstraint (Maybe Text)
 ucAcceptLanguage = lens _ucAcceptLanguage (\ s a -> s{_ucAcceptLanguage = a});
 
--- | The updated text description of the constraint.
+-- | The updated description of the constraint.
 ucDescription :: Lens' UpdateConstraint (Maybe Text)
 ucDescription = lens _ucDescription (\ s a -> s{_ucDescription = a});
 
--- | The identifier of the constraint to update.
+-- | The identifier of the constraint.
 ucId :: Lens' UpdateConstraint Text
 ucId = lens _ucId (\ s a -> s{_ucId = a});
 
@@ -139,9 +139,9 @@ data UpdateConstraintResponse = UpdateConstraintResponse'
 --
 -- * 'ucrsStatus' - The status of the current request.
 --
--- * 'ucrsConstraintDetail' - The resulting detailed constraint information.
+-- * 'ucrsConstraintDetail' - Information about the constraint.
 --
--- * 'ucrsConstraintParameters' - The resulting updated constraint parameters.
+-- * 'ucrsConstraintParameters' - The constraint parameters.
 --
 -- * 'ucrsResponseStatus' - -- | The response status code.
 updateConstraintResponse
@@ -160,11 +160,11 @@ updateConstraintResponse pResponseStatus_ =
 ucrsStatus :: Lens' UpdateConstraintResponse (Maybe RequestStatus)
 ucrsStatus = lens _ucrsStatus (\ s a -> s{_ucrsStatus = a});
 
--- | The resulting detailed constraint information.
+-- | Information about the constraint.
 ucrsConstraintDetail :: Lens' UpdateConstraintResponse (Maybe ConstraintDetail)
 ucrsConstraintDetail = lens _ucrsConstraintDetail (\ s a -> s{_ucrsConstraintDetail = a});
 
--- | The resulting updated constraint parameters.
+-- | The constraint parameters.
 ucrsConstraintParameters :: Lens' UpdateConstraintResponse (Maybe Text)
 ucrsConstraintParameters = lens _ucrsConstraintParameters (\ s a -> s{_ucrsConstraintParameters = a});
 

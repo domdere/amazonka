@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Returns metadata for faces in the specified collection. This metadata includes information such as the bounding box coordinates, the confidence (that the bounding box contains a face), and face ID. For an example, see 'example3' .
+-- Returns metadata for faces in the specified collection. This metadata includes information such as the bounding box coordinates, the confidence (that the bounding box contains a face), and face ID. For an example, see 'list-faces-in-collection-procedure' .
 --
 --
 -- This operation requires permissions to perform the @rekognition:ListFaces@ action.
@@ -39,6 +39,7 @@ module Network.AWS.Rekognition.ListFaces
     , listFacesResponse
     , ListFacesResponse
     -- * Response Lenses
+    , lfrsFaceModelVersion
     , lfrsNextToken
     , lfrsFaces
     , lfrsResponseStatus
@@ -106,7 +107,8 @@ instance AWSRequest ListFaces where
           = receiveJSON
               (\ s h x ->
                  ListFacesResponse' <$>
-                   (x .?> "NextToken") <*> (x .?> "Faces" .!@ mempty)
+                   (x .?> "FaceModelVersion") <*> (x .?> "NextToken")
+                     <*> (x .?> "Faces" .!@ mempty)
                      <*> (pure (fromEnum s)))
 
 instance Hashable ListFaces where
@@ -138,15 +140,18 @@ instance ToQuery ListFaces where
 
 -- | /See:/ 'listFacesResponse' smart constructor.
 data ListFacesResponse = ListFacesResponse'
-  { _lfrsNextToken      :: !(Maybe Text)
-  , _lfrsFaces          :: !(Maybe [Face])
-  , _lfrsResponseStatus :: !Int
+  { _lfrsFaceModelVersion :: !(Maybe Text)
+  , _lfrsNextToken        :: !(Maybe Text)
+  , _lfrsFaces            :: !(Maybe [Face])
+  , _lfrsResponseStatus   :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
 -- | Creates a value of 'ListFacesResponse' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'lfrsFaceModelVersion' - Version number of the face detection model associated with the input collection (@CollectionId@ ).
 --
 -- * 'lfrsNextToken' - If the response is truncated, Amazon Rekognition returns this token that you can use in the subsequent request to retrieve the next set of faces.
 --
@@ -158,11 +163,16 @@ listFacesResponse
     -> ListFacesResponse
 listFacesResponse pResponseStatus_ =
   ListFacesResponse'
-  { _lfrsNextToken = Nothing
+  { _lfrsFaceModelVersion = Nothing
+  , _lfrsNextToken = Nothing
   , _lfrsFaces = Nothing
   , _lfrsResponseStatus = pResponseStatus_
   }
 
+
+-- | Version number of the face detection model associated with the input collection (@CollectionId@ ).
+lfrsFaceModelVersion :: Lens' ListFacesResponse (Maybe Text)
+lfrsFaceModelVersion = lens _lfrsFaceModelVersion (\ s a -> s{_lfrsFaceModelVersion = a});
 
 -- | If the response is truncated, Amazon Rekognition returns this token that you can use in the subsequent request to retrieve the next set of faces.
 lfrsNextToken :: Lens' ListFacesResponse (Maybe Text)

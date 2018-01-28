@@ -43,6 +43,7 @@ module Network.AWS.AutoScaling.CreateAutoScalingGroup
     , casgLaunchConfigurationName
     , casgLifecycleHookSpecificationList
     , casgHealthCheckType
+    , casgLaunchTemplate
     , casgPlacementGroup
     , casgLoadBalancerNames
     , casgTags
@@ -76,6 +77,7 @@ data CreateAutoScalingGroup = CreateAutoScalingGroup'
   , _casgLaunchConfigurationName :: !(Maybe Text)
   , _casgLifecycleHookSpecificationList :: !(Maybe [LifecycleHookSpecification])
   , _casgHealthCheckType :: !(Maybe Text)
+  , _casgLaunchTemplate :: !(Maybe LaunchTemplateSpecification)
   , _casgPlacementGroup :: !(Maybe Text)
   , _casgLoadBalancerNames :: !(Maybe [Text])
   , _casgTags :: !(Maybe [Tag])
@@ -89,7 +91,7 @@ data CreateAutoScalingGroup = CreateAutoScalingGroup'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'casgInstanceId' - The ID of the instance used to create a launch configuration for the group. Alternatively, specify a launch configuration instead of an EC2 instance. When you specify an ID of an instance, Auto Scaling creates a new launch configuration and associates it with the group. This launch configuration derives its attributes from the specified instance, with the exception of the block device mapping. For more information, see <http://docs.aws.amazon.com/autoscaling/latest/userguide/create-asg-from-instance.html Create an Auto Scaling Group Using an EC2 Instance> in the /Auto Scaling User Guide/ .
+-- * 'casgInstanceId' - The ID of the instance used to create a launch configuration for the group. You must specify one of the following: an EC2 instance, a launch configuration, or a launch template. When you specify an ID of an instance, Auto Scaling creates a new launch configuration and associates it with the group. This launch configuration derives its attributes from the specified instance, with the exception of the block device mapping. For more information, see <http://docs.aws.amazon.com/autoscaling/latest/userguide/create-asg-from-instance.html Create an Auto Scaling Group Using an EC2 Instance> in the /Auto Scaling User Guide/ .
 --
 -- * 'casgTerminationPolicies' - One or more termination policies used to select the instance to terminate. These policies are executed in the order that they are listed. For more information, see <http://docs.aws.amazon.com/autoscaling/latest/userguide/as-instance-termination.html Controlling Which Instances Auto Scaling Terminates During Scale In> in the /Auto Scaling User Guide/ .
 --
@@ -107,11 +109,13 @@ data CreateAutoScalingGroup = CreateAutoScalingGroup'
 --
 -- * 'casgDesiredCapacity' - The number of EC2 instances that should be running in the group. This number must be greater than or equal to the minimum size of the group and less than or equal to the maximum size of the group. If you do not specify a desired capacity, the default is the minimum size of the group.
 --
--- * 'casgLaunchConfigurationName' - The name of the launch configuration. Alternatively, specify an EC2 instance instead of a launch configuration.
+-- * 'casgLaunchConfigurationName' - The name of the launch configuration. You must specify one of the following: a launch configuration, a launch template, or an EC2 instance.
 --
 -- * 'casgLifecycleHookSpecificationList' - One or more lifecycle hooks.
 --
 -- * 'casgHealthCheckType' - The service to use for the health checks. The valid values are @EC2@ and @ELB@ . By default, health checks use Amazon EC2 instance status checks to determine the health of an instance. For more information, see <http://docs.aws.amazon.com/autoscaling/latest/userguide/healthcheck.html Health Checks> in the /Auto Scaling User Guide/ .
+--
+-- * 'casgLaunchTemplate' - The launch template to use to launch instances. You must specify one of the following: a launch template, a launch configuration, or an EC2 instance.
 --
 -- * 'casgPlacementGroup' - The name of the placement group into which you'll launch your instances, if any. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html Placement Groups> in the /Amazon Elastic Compute Cloud User Guide/ .
 --
@@ -119,7 +123,7 @@ data CreateAutoScalingGroup = CreateAutoScalingGroup'
 --
 -- * 'casgTags' - One or more tags. For more information, see <http://docs.aws.amazon.com/autoscaling/latest/userguide/autoscaling-tagging.html Tagging Auto Scaling Groups and Instances> in the /Auto Scaling User Guide/ .
 --
--- * 'casgAutoScalingGroupName' - The name of the group. This name must be unique within the scope of your AWS account.
+-- * 'casgAutoScalingGroupName' - The name of the Auto Scaling group. This name must be unique within the scope of your AWS account.
 --
 -- * 'casgMinSize' - The minimum size of the group.
 --
@@ -143,6 +147,7 @@ createAutoScalingGroup pAutoScalingGroupName_ pMinSize_ pMaxSize_ =
   , _casgLaunchConfigurationName = Nothing
   , _casgLifecycleHookSpecificationList = Nothing
   , _casgHealthCheckType = Nothing
+  , _casgLaunchTemplate = Nothing
   , _casgPlacementGroup = Nothing
   , _casgLoadBalancerNames = Nothing
   , _casgTags = Nothing
@@ -152,7 +157,7 @@ createAutoScalingGroup pAutoScalingGroupName_ pMinSize_ pMaxSize_ =
   }
 
 
--- | The ID of the instance used to create a launch configuration for the group. Alternatively, specify a launch configuration instead of an EC2 instance. When you specify an ID of an instance, Auto Scaling creates a new launch configuration and associates it with the group. This launch configuration derives its attributes from the specified instance, with the exception of the block device mapping. For more information, see <http://docs.aws.amazon.com/autoscaling/latest/userguide/create-asg-from-instance.html Create an Auto Scaling Group Using an EC2 Instance> in the /Auto Scaling User Guide/ .
+-- | The ID of the instance used to create a launch configuration for the group. You must specify one of the following: an EC2 instance, a launch configuration, or a launch template. When you specify an ID of an instance, Auto Scaling creates a new launch configuration and associates it with the group. This launch configuration derives its attributes from the specified instance, with the exception of the block device mapping. For more information, see <http://docs.aws.amazon.com/autoscaling/latest/userguide/create-asg-from-instance.html Create an Auto Scaling Group Using an EC2 Instance> in the /Auto Scaling User Guide/ .
 casgInstanceId :: Lens' CreateAutoScalingGroup (Maybe Text)
 casgInstanceId = lens _casgInstanceId (\ s a -> s{_casgInstanceId = a});
 
@@ -188,7 +193,7 @@ casgAvailabilityZones = lens _casgAvailabilityZones (\ s a -> s{_casgAvailabilit
 casgDesiredCapacity :: Lens' CreateAutoScalingGroup (Maybe Int)
 casgDesiredCapacity = lens _casgDesiredCapacity (\ s a -> s{_casgDesiredCapacity = a});
 
--- | The name of the launch configuration. Alternatively, specify an EC2 instance instead of a launch configuration.
+-- | The name of the launch configuration. You must specify one of the following: a launch configuration, a launch template, or an EC2 instance.
 casgLaunchConfigurationName :: Lens' CreateAutoScalingGroup (Maybe Text)
 casgLaunchConfigurationName = lens _casgLaunchConfigurationName (\ s a -> s{_casgLaunchConfigurationName = a});
 
@@ -199,6 +204,10 @@ casgLifecycleHookSpecificationList = lens _casgLifecycleHookSpecificationList (\
 -- | The service to use for the health checks. The valid values are @EC2@ and @ELB@ . By default, health checks use Amazon EC2 instance status checks to determine the health of an instance. For more information, see <http://docs.aws.amazon.com/autoscaling/latest/userguide/healthcheck.html Health Checks> in the /Auto Scaling User Guide/ .
 casgHealthCheckType :: Lens' CreateAutoScalingGroup (Maybe Text)
 casgHealthCheckType = lens _casgHealthCheckType (\ s a -> s{_casgHealthCheckType = a});
+
+-- | The launch template to use to launch instances. You must specify one of the following: a launch template, a launch configuration, or an EC2 instance.
+casgLaunchTemplate :: Lens' CreateAutoScalingGroup (Maybe LaunchTemplateSpecification)
+casgLaunchTemplate = lens _casgLaunchTemplate (\ s a -> s{_casgLaunchTemplate = a});
 
 -- | The name of the placement group into which you'll launch your instances, if any. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html Placement Groups> in the /Amazon Elastic Compute Cloud User Guide/ .
 casgPlacementGroup :: Lens' CreateAutoScalingGroup (Maybe Text)
@@ -212,7 +221,7 @@ casgLoadBalancerNames = lens _casgLoadBalancerNames (\ s a -> s{_casgLoadBalance
 casgTags :: Lens' CreateAutoScalingGroup [Tag]
 casgTags = lens _casgTags (\ s a -> s{_casgTags = a}) . _Default . _Coerce;
 
--- | The name of the group. This name must be unique within the scope of your AWS account.
+-- | The name of the Auto Scaling group. This name must be unique within the scope of your AWS account.
 casgAutoScalingGroupName :: Lens' CreateAutoScalingGroup Text
 casgAutoScalingGroupName = lens _casgAutoScalingGroupName (\ s a -> s{_casgAutoScalingGroupName = a});
 
@@ -271,6 +280,7 @@ instance ToQuery CreateAutoScalingGroup where
                    (toQueryList "member" <$>
                       _casgLifecycleHookSpecificationList),
                "HealthCheckType" =: _casgHealthCheckType,
+               "LaunchTemplate" =: _casgLaunchTemplate,
                "PlacementGroup" =: _casgPlacementGroup,
                "LoadBalancerNames" =:
                  toQuery

@@ -26,6 +26,7 @@ module Network.AWS.APIGateway.GetDocumentationParts
     , GetDocumentationParts
     -- * Request Lenses
     , gdpPath
+    , gdpLocationStatus
     , gdpNameQuery
     , gdpLimit
     , gdpType
@@ -54,12 +55,13 @@ import Network.AWS.Response
 --
 -- /See:/ 'getDocumentationParts' smart constructor.
 data GetDocumentationParts = GetDocumentationParts'
-  { _gdpPath      :: !(Maybe Text)
-  , _gdpNameQuery :: !(Maybe Text)
-  , _gdpLimit     :: !(Maybe Int)
-  , _gdpType      :: !(Maybe DocumentationPartType)
-  , _gdpPosition  :: !(Maybe Text)
-  , _gdpRestAPIId :: !Text
+  { _gdpPath           :: !(Maybe Text)
+  , _gdpLocationStatus :: !(Maybe LocationStatusType)
+  , _gdpNameQuery      :: !(Maybe Text)
+  , _gdpLimit          :: !(Maybe Int)
+  , _gdpType           :: !(Maybe DocumentationPartType)
+  , _gdpPosition       :: !(Maybe Text)
+  , _gdpRestAPIId      :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -68,6 +70,8 @@ data GetDocumentationParts = GetDocumentationParts'
 -- Use one of the following lenses to modify other fields as desired:
 --
 -- * 'gdpPath' - The path of API entities of the to-be-retrieved documentation parts.
+--
+-- * 'gdpLocationStatus' - The status of the API documentation parts to retrieve. Valid values are @DOCUMENTED@ for retrieving 'DocumentationPart' resources with content and @UNDOCUMENTED@ for 'DocumentationPart' resources without content.
 --
 -- * 'gdpNameQuery' - The name of API entities of the to-be-retrieved documentation parts.
 --
@@ -84,6 +88,7 @@ getDocumentationParts
 getDocumentationParts pRestAPIId_ =
   GetDocumentationParts'
   { _gdpPath = Nothing
+  , _gdpLocationStatus = Nothing
   , _gdpNameQuery = Nothing
   , _gdpLimit = Nothing
   , _gdpType = Nothing
@@ -95,6 +100,10 @@ getDocumentationParts pRestAPIId_ =
 -- | The path of API entities of the to-be-retrieved documentation parts.
 gdpPath :: Lens' GetDocumentationParts (Maybe Text)
 gdpPath = lens _gdpPath (\ s a -> s{_gdpPath = a});
+
+-- | The status of the API documentation parts to retrieve. Valid values are @DOCUMENTED@ for retrieving 'DocumentationPart' resources with content and @UNDOCUMENTED@ for 'DocumentationPart' resources without content.
+gdpLocationStatus :: Lens' GetDocumentationParts (Maybe LocationStatusType)
+gdpLocationStatus = lens _gdpLocationStatus (\ s a -> s{_gdpLocationStatus = a});
 
 -- | The name of API entities of the to-be-retrieved documentation parts.
 gdpNameQuery :: Lens' GetDocumentationParts (Maybe Text)
@@ -146,9 +155,10 @@ instance ToPath GetDocumentationParts where
 instance ToQuery GetDocumentationParts where
         toQuery GetDocumentationParts'{..}
           = mconcat
-              ["path" =: _gdpPath, "name" =: _gdpNameQuery,
-               "limit" =: _gdpLimit, "type" =: _gdpType,
-               "position" =: _gdpPosition]
+              ["path" =: _gdpPath,
+               "locationStatus" =: _gdpLocationStatus,
+               "name" =: _gdpNameQuery, "limit" =: _gdpLimit,
+               "type" =: _gdpType, "position" =: _gdpPosition]
 
 -- | The collection of documentation parts of an API.
 --

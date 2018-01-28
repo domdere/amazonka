@@ -27,6 +27,7 @@ module Network.AWS.ECS.DescribeClusters
       describeClusters
     , DescribeClusters
     -- * Request Lenses
+    , dcInclude
     , dcClusters
 
     -- * Destructuring the Response
@@ -46,8 +47,9 @@ import Network.AWS.Request
 import Network.AWS.Response
 
 -- | /See:/ 'describeClusters' smart constructor.
-newtype DescribeClusters = DescribeClusters'
-  { _dcClusters :: Maybe [Text]
+data DescribeClusters = DescribeClusters'
+  { _dcInclude  :: !(Maybe [ClusterField])
+  , _dcClusters :: !(Maybe [Text])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -55,11 +57,18 @@ newtype DescribeClusters = DescribeClusters'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'dcInclude' - Additional information about your clusters to be separated by launch type, including:     * runningEC2TasksCount     * runningFargateTasksCount     * pendingEC2TasksCount     * pendingFargateTasksCount     * activeEC2ServiceCount     * activeFargateServiceCount     * drainingEC2ServiceCount     * drainingFargateServiceCount
+--
 -- * 'dcClusters' - A list of up to 100 cluster names or full cluster Amazon Resource Name (ARN) entries. If you do not specify a cluster, the default cluster is assumed.
 describeClusters
     :: DescribeClusters
-describeClusters = DescribeClusters' {_dcClusters = Nothing}
+describeClusters =
+  DescribeClusters' {_dcInclude = Nothing, _dcClusters = Nothing}
 
+
+-- | Additional information about your clusters to be separated by launch type, including:     * runningEC2TasksCount     * runningFargateTasksCount     * pendingEC2TasksCount     * pendingFargateTasksCount     * activeEC2ServiceCount     * activeFargateServiceCount     * drainingEC2ServiceCount     * drainingFargateServiceCount
+dcInclude :: Lens' DescribeClusters [ClusterField]
+dcInclude = lens _dcInclude (\ s a -> s{_dcInclude = a}) . _Default . _Coerce;
 
 -- | A list of up to 100 cluster names or full cluster Amazon Resource Name (ARN) entries. If you do not specify a cluster, the default cluster is assumed.
 dcClusters :: Lens' DescribeClusters [Text]
@@ -93,7 +102,9 @@ instance ToHeaders DescribeClusters where
 instance ToJSON DescribeClusters where
         toJSON DescribeClusters'{..}
           = object
-              (catMaybes [("clusters" .=) <$> _dcClusters])
+              (catMaybes
+                 [("include" .=) <$> _dcInclude,
+                  ("clusters" .=) <$> _dcClusters])
 
 instance ToPath DescribeClusters where
         toPath = const "/"

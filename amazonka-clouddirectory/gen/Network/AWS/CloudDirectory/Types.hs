@@ -36,6 +36,7 @@ module Network.AWS.CloudDirectory.Types
     , _FacetInUseException
     , _FacetValidationException
     , _StillContainsLinksException
+    , _IncompatibleSchemaException
     , _NotNodeException
     , _InvalidNextTokenException
     , _ObjectAlreadyDetachedException
@@ -857,6 +858,15 @@ _FacetValidationException =
 _StillContainsLinksException :: AsError a => Getting (First ServiceError) a ServiceError
 _StillContainsLinksException =
   _MatchServiceError cloudDirectory "StillContainsLinksException" .
+  hasStatus 400
+
+
+-- | Indicates a failure occurred while performing a check for backward compatibility between the specified schema and the schema that is currently applied to the directory.
+--
+--
+_IncompatibleSchemaException :: AsError a => Getting (First ServiceError) a ServiceError
+_IncompatibleSchemaException =
+  _MatchServiceError cloudDirectory "IncompatibleSchemaException" .
   hasStatus 400
 
 

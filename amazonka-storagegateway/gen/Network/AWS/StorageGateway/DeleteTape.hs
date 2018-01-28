@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Deletes the specified virtual tape. This operation is only supported in the tape gateway architecture.
+-- Deletes the specified virtual tape. This operation is only supported in the tape gateway type.
 --
 --
 module Network.AWS.StorageGateway.DeleteTape

@@ -23,6 +23,8 @@
 --
 -- This requires permission for the lambda:ListAliases action.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Lambda.ListAliases
     (
     -- * Creating a Request
@@ -46,6 +48,7 @@ module Network.AWS.Lambda.ListAliases
 import Network.AWS.Lambda.Types
 import Network.AWS.Lambda.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -97,6 +100,13 @@ laFunctionVersion = lens _laFunctionVersion (\ s a -> s{_laFunctionVersion = a})
 -- | Lambda function name for which the alias is created. Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.
 laFunctionName :: Lens' ListAliases Text
 laFunctionName = lens _laFunctionName (\ s a -> s{_laFunctionName = a});
+
+instance AWSPager ListAliases where
+        page rq rs
+          | stop (rs ^. larsNextMarker) = Nothing
+          | stop (rs ^. larsAliases) = Nothing
+          | otherwise =
+            Just $ rq & laMarker .~ rs ^. larsNextMarker
 
 instance AWSRequest ListAliases where
         type Rs ListAliases = ListAliasesResponse

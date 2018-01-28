@@ -108,15 +108,15 @@ data RestoreDBClusterFromS3 = RestoreDBClusterFromS3'
 --
 -- * 'rdcfsDBSubnetGroupName' - A DB subnet group to associate with the restored DB cluster. Constraints: If supplied, must match the name of an existing DBSubnetGroup.  Example: @mySubnetgroup@
 --
--- * 'rdcfsPreferredMaintenanceWindow' - The weekly time range during which system maintenance can occur, in Universal Coordinated Time (UTC). Format: @ddd:hh24:mi-ddd:hh24:mi@  Default: A 30-minute window selected at random from an 8-hour block of time per AWS Region, occurring on a random day of the week. To see the time blocks available, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html Adjusting the Preferred Maintenance Window> in the /Amazon RDS User Guide./  Valid Days: Mon, Tue, Wed, Thu, Fri, Sat, Sun Constraints: Minimum 30-minute window.
+-- * 'rdcfsPreferredMaintenanceWindow' - The weekly time range during which system maintenance can occur, in Universal Coordinated Time (UTC). Format: @ddd:hh24:mi-ddd:hh24:mi@  The default is a 30-minute window selected at random from an 8-hour block of time for each AWS Region, occurring on a random day of the week. To see the time blocks available, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html Adjusting the Preferred Maintenance Window> in the /Amazon RDS User Guide./  Valid Days: Mon, Tue, Wed, Thu, Fri, Sat, Sun. Constraints: Minimum 30-minute window.
 --
 -- * 'rdcfsAvailabilityZones' - A list of EC2 Availability Zones that instances in the restored DB cluster can be created in.
 --
 -- * 'rdcfsCharacterSetName' - A value that indicates that the restored DB cluster should be associated with the specified CharacterSet.
 --
--- * 'rdcfsKMSKeyId' - The KMS key identifier for an encrypted DB cluster. The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are creating a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KM encryption key. If the @StorageEncrypted@ parameter is true, and you do not specify a value for the @KmsKeyId@ parameter, then Amazon RDS will use your default encryption key. AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default encryption key for each AWS Region.
+-- * 'rdcfsKMSKeyId' - The AWS KMS key identifier for an encrypted DB cluster. The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are creating a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KM encryption key. If the @StorageEncrypted@ parameter is true, and you do not specify a value for the @KmsKeyId@ parameter, then Amazon RDS will use your default encryption key. AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default encryption key for each AWS Region.
 --
--- * 'rdcfsPreferredBackupWindow' - The daily time range during which automated backups are created if automated backups are enabled using the @BackupRetentionPeriod@ parameter.  Default: A 30-minute window selected at random from an 8-hour block of time per AWS Region. To see the time blocks available, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html Adjusting the Preferred Maintenance Window> in the /Amazon RDS User Guide./  Constraints:     * Must be in the format @hh24:mi-hh24:mi@ .     * Times should be in Universal Coordinated Time (UTC).     * Must not conflict with the preferred maintenance window.     * Must be at least 30 minutes.
+-- * 'rdcfsPreferredBackupWindow' - The daily time range during which automated backups are created if automated backups are enabled using the @BackupRetentionPeriod@ parameter.  The default is a 30-minute window selected at random from an 8-hour block of time for each AWS Region. To see the time blocks available, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html Adjusting the Preferred Maintenance Window> in the /Amazon RDS User Guide./  Constraints:     * Must be in the format @hh24:mi-hh24:mi@ .     * Must be in Universal Coordinated Time (UTC).     * Must not conflict with the preferred maintenance window.     * Must be at least 30 minutes.
 --
 -- * 'rdcfsBackupRetentionPeriod' - The number of days for which automated backups of the restored DB cluster are retained. You must specify a minimum value of 1. Default: 1 Constraints:     * Must be a value from 1 to 35
 --
@@ -128,17 +128,17 @@ data RestoreDBClusterFromS3 = RestoreDBClusterFromS3'
 --
 -- * 'rdcfsS3Prefix' - The prefix for all of the file names that contain the data used to create the Amazon Aurora DB cluster. If you do not specify a __SourceS3Prefix__ value, then the Amazon Aurora DB cluster is created by using all of the files in the Amazon S3 bucket.
 --
--- * 'rdcfsOptionGroupName' - A value that indicates that the restored DB cluster should be associated with the specified option group. Permanent options cannot be removed from an option group. An option group cannot be removed from a DB cluster once it is associated with a DB cluster.
+-- * 'rdcfsOptionGroupName' - A value that indicates that the restored DB cluster should be associated with the specified option group. Permanent options can't be removed from an option group. An option group can't be removed from a DB cluster once it is associated with a DB cluster.
 --
 -- * 'rdcfsTags' - Undocumented member.
 --
 -- * 'rdcfsPort' - The port number on which the instances in the restored DB cluster accept connections. Default: @3306@
 --
--- * 'rdcfsEnableIAMDatabaseAuthentication' - A Boolean value that is true to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. Default: @false@
+-- * 'rdcfsEnableIAMDatabaseAuthentication' - True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. Default: @false@
 --
--- * 'rdcfsDBClusterIdentifier' - The name of the DB cluster to create from the source data in the S3 bucket. This parameter is isn't case-sensitive. Constraints:     * Must contain from 1 to 63 letters, numbers, or hyphens.     * First character must be a letter.     * Cannot end with a hyphen or contain two consecutive hyphens. Example: @my-cluster1@
+-- * 'rdcfsDBClusterIdentifier' - The name of the DB cluster to create from the source data in the Amazon S3 bucket. This parameter is isn't case-sensitive. Constraints:     * Must contain from 1 to 63 letters, numbers, or hyphens.     * First character must be a letter.     * Cannot end with a hyphen or contain two consecutive hyphens. Example: @my-cluster1@
 --
--- * 'rdcfsEngine' - The name of the database engine to be used for the restored DB cluster. Valid Values: @aurora@
+-- * 'rdcfsEngine' - The name of the database engine to be used for the restored DB cluster. Valid Values: @aurora@ , @aurora-postgresql@
 --
 -- * 'rdcfsMasterUsername' - The name of the master user for the restored DB cluster. Constraints:     * Must be 1 to 16 letters or numbers.     * First character must be a letter.     * Cannot be a reserved word for the chosen database engine.
 --
@@ -203,7 +203,7 @@ rdcfsStorageEncrypted = lens _rdcfsStorageEncrypted (\ s a -> s{_rdcfsStorageEnc
 rdcfsDBSubnetGroupName :: Lens' RestoreDBClusterFromS3 (Maybe Text)
 rdcfsDBSubnetGroupName = lens _rdcfsDBSubnetGroupName (\ s a -> s{_rdcfsDBSubnetGroupName = a});
 
--- | The weekly time range during which system maintenance can occur, in Universal Coordinated Time (UTC). Format: @ddd:hh24:mi-ddd:hh24:mi@  Default: A 30-minute window selected at random from an 8-hour block of time per AWS Region, occurring on a random day of the week. To see the time blocks available, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html Adjusting the Preferred Maintenance Window> in the /Amazon RDS User Guide./  Valid Days: Mon, Tue, Wed, Thu, Fri, Sat, Sun Constraints: Minimum 30-minute window.
+-- | The weekly time range during which system maintenance can occur, in Universal Coordinated Time (UTC). Format: @ddd:hh24:mi-ddd:hh24:mi@  The default is a 30-minute window selected at random from an 8-hour block of time for each AWS Region, occurring on a random day of the week. To see the time blocks available, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html Adjusting the Preferred Maintenance Window> in the /Amazon RDS User Guide./  Valid Days: Mon, Tue, Wed, Thu, Fri, Sat, Sun. Constraints: Minimum 30-minute window.
 rdcfsPreferredMaintenanceWindow :: Lens' RestoreDBClusterFromS3 (Maybe Text)
 rdcfsPreferredMaintenanceWindow = lens _rdcfsPreferredMaintenanceWindow (\ s a -> s{_rdcfsPreferredMaintenanceWindow = a});
 
@@ -215,11 +215,11 @@ rdcfsAvailabilityZones = lens _rdcfsAvailabilityZones (\ s a -> s{_rdcfsAvailabi
 rdcfsCharacterSetName :: Lens' RestoreDBClusterFromS3 (Maybe Text)
 rdcfsCharacterSetName = lens _rdcfsCharacterSetName (\ s a -> s{_rdcfsCharacterSetName = a});
 
--- | The KMS key identifier for an encrypted DB cluster. The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are creating a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KM encryption key. If the @StorageEncrypted@ parameter is true, and you do not specify a value for the @KmsKeyId@ parameter, then Amazon RDS will use your default encryption key. AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default encryption key for each AWS Region.
+-- | The AWS KMS key identifier for an encrypted DB cluster. The KMS key identifier is the Amazon Resource Name (ARN) for the KMS encryption key. If you are creating a DB cluster with the same AWS account that owns the KMS encryption key used to encrypt the new DB cluster, then you can use the KMS key alias instead of the ARN for the KM encryption key. If the @StorageEncrypted@ parameter is true, and you do not specify a value for the @KmsKeyId@ parameter, then Amazon RDS will use your default encryption key. AWS KMS creates the default encryption key for your AWS account. Your AWS account has a different default encryption key for each AWS Region.
 rdcfsKMSKeyId :: Lens' RestoreDBClusterFromS3 (Maybe Text)
 rdcfsKMSKeyId = lens _rdcfsKMSKeyId (\ s a -> s{_rdcfsKMSKeyId = a});
 
--- | The daily time range during which automated backups are created if automated backups are enabled using the @BackupRetentionPeriod@ parameter.  Default: A 30-minute window selected at random from an 8-hour block of time per AWS Region. To see the time blocks available, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html Adjusting the Preferred Maintenance Window> in the /Amazon RDS User Guide./  Constraints:     * Must be in the format @hh24:mi-hh24:mi@ .     * Times should be in Universal Coordinated Time (UTC).     * Must not conflict with the preferred maintenance window.     * Must be at least 30 minutes.
+-- | The daily time range during which automated backups are created if automated backups are enabled using the @BackupRetentionPeriod@ parameter.  The default is a 30-minute window selected at random from an 8-hour block of time for each AWS Region. To see the time blocks available, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/AdjustingTheMaintenanceWindow.html Adjusting the Preferred Maintenance Window> in the /Amazon RDS User Guide./  Constraints:     * Must be in the format @hh24:mi-hh24:mi@ .     * Must be in Universal Coordinated Time (UTC).     * Must not conflict with the preferred maintenance window.     * Must be at least 30 minutes.
 rdcfsPreferredBackupWindow :: Lens' RestoreDBClusterFromS3 (Maybe Text)
 rdcfsPreferredBackupWindow = lens _rdcfsPreferredBackupWindow (\ s a -> s{_rdcfsPreferredBackupWindow = a});
 
@@ -243,7 +243,7 @@ rdcfsDBClusterParameterGroupName = lens _rdcfsDBClusterParameterGroupName (\ s a
 rdcfsS3Prefix :: Lens' RestoreDBClusterFromS3 (Maybe Text)
 rdcfsS3Prefix = lens _rdcfsS3Prefix (\ s a -> s{_rdcfsS3Prefix = a});
 
--- | A value that indicates that the restored DB cluster should be associated with the specified option group. Permanent options cannot be removed from an option group. An option group cannot be removed from a DB cluster once it is associated with a DB cluster.
+-- | A value that indicates that the restored DB cluster should be associated with the specified option group. Permanent options can't be removed from an option group. An option group can't be removed from a DB cluster once it is associated with a DB cluster.
 rdcfsOptionGroupName :: Lens' RestoreDBClusterFromS3 (Maybe Text)
 rdcfsOptionGroupName = lens _rdcfsOptionGroupName (\ s a -> s{_rdcfsOptionGroupName = a});
 
@@ -255,15 +255,15 @@ rdcfsTags = lens _rdcfsTags (\ s a -> s{_rdcfsTags = a}) . _Default . _Coerce;
 rdcfsPort :: Lens' RestoreDBClusterFromS3 (Maybe Int)
 rdcfsPort = lens _rdcfsPort (\ s a -> s{_rdcfsPort = a});
 
--- | A Boolean value that is true to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. Default: @false@
+-- | True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. Default: @false@
 rdcfsEnableIAMDatabaseAuthentication :: Lens' RestoreDBClusterFromS3 (Maybe Bool)
 rdcfsEnableIAMDatabaseAuthentication = lens _rdcfsEnableIAMDatabaseAuthentication (\ s a -> s{_rdcfsEnableIAMDatabaseAuthentication = a});
 
--- | The name of the DB cluster to create from the source data in the S3 bucket. This parameter is isn't case-sensitive. Constraints:     * Must contain from 1 to 63 letters, numbers, or hyphens.     * First character must be a letter.     * Cannot end with a hyphen or contain two consecutive hyphens. Example: @my-cluster1@
+-- | The name of the DB cluster to create from the source data in the Amazon S3 bucket. This parameter is isn't case-sensitive. Constraints:     * Must contain from 1 to 63 letters, numbers, or hyphens.     * First character must be a letter.     * Cannot end with a hyphen or contain two consecutive hyphens. Example: @my-cluster1@
 rdcfsDBClusterIdentifier :: Lens' RestoreDBClusterFromS3 Text
 rdcfsDBClusterIdentifier = lens _rdcfsDBClusterIdentifier (\ s a -> s{_rdcfsDBClusterIdentifier = a});
 
--- | The name of the database engine to be used for the restored DB cluster. Valid Values: @aurora@
+-- | The name of the database engine to be used for the restored DB cluster. Valid Values: @aurora@ , @aurora-postgresql@
 rdcfsEngine :: Lens' RestoreDBClusterFromS3 Text
 rdcfsEngine = lens _rdcfsEngine (\ s a -> s{_rdcfsEngine = a});
 

@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Retrieves detailed information about the specified provisioning artifact.
+-- Gets information about the specified provisioning artifact (also known as a version) for the specified product.
 --
 --
 module Network.AWS.ServiceCatalog.DescribeProvisioningArtifact
@@ -62,11 +62,11 @@ data DescribeProvisioningArtifact = DescribeProvisioningArtifact'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dpaVerbose' - Enable a verbose level of details for the provisioning artifact.
+-- * 'dpaVerbose' - Indicates whether a verbose level of detail is enabled.
 --
 -- * 'dpaAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'dpaProvisioningArtifactId' - The identifier of the provisioning artifact. This is sometimes referred to as the product version.
+-- * 'dpaProvisioningArtifactId' - The identifier of the provisioning artifact.
 --
 -- * 'dpaProductId' - The product identifier.
 describeProvisioningArtifact
@@ -82,7 +82,7 @@ describeProvisioningArtifact pProvisioningArtifactId_ pProductId_ =
   }
 
 
--- | Enable a verbose level of details for the provisioning artifact.
+-- | Indicates whether a verbose level of detail is enabled.
 dpaVerbose :: Lens' DescribeProvisioningArtifact (Maybe Bool)
 dpaVerbose = lens _dpaVerbose (\ s a -> s{_dpaVerbose = a});
 
@@ -90,7 +90,7 @@ dpaVerbose = lens _dpaVerbose (\ s a -> s{_dpaVerbose = a});
 dpaAcceptLanguage :: Lens' DescribeProvisioningArtifact (Maybe Text)
 dpaAcceptLanguage = lens _dpaAcceptLanguage (\ s a -> s{_dpaAcceptLanguage = a});
 
--- | The identifier of the provisioning artifact. This is sometimes referred to as the product version.
+-- | The identifier of the provisioning artifact.
 dpaProvisioningArtifactId :: Lens' DescribeProvisioningArtifact Text
 dpaProvisioningArtifactId = lens _dpaProvisioningArtifactId (\ s a -> s{_dpaProvisioningArtifactId = a});
 
@@ -157,9 +157,9 @@ data DescribeProvisioningArtifactResponse = DescribeProvisioningArtifactResponse
 --
 -- * 'dpaprsStatus' - The status of the current request.
 --
--- * 'dpaprsInfo' - Additional information about the provisioning artifact.
+-- * 'dpaprsInfo' - The URL of the CloudFormation template in Amazon S3.
 --
--- * 'dpaprsProvisioningArtifactDetail' - Detailed provisioning artifact information.
+-- * 'dpaprsProvisioningArtifactDetail' - Information about the provisioning artifact.
 --
 -- * 'dpaprsResponseStatus' - -- | The response status code.
 describeProvisioningArtifactResponse
@@ -178,11 +178,11 @@ describeProvisioningArtifactResponse pResponseStatus_ =
 dpaprsStatus :: Lens' DescribeProvisioningArtifactResponse (Maybe RequestStatus)
 dpaprsStatus = lens _dpaprsStatus (\ s a -> s{_dpaprsStatus = a});
 
--- | Additional information about the provisioning artifact.
+-- | The URL of the CloudFormation template in Amazon S3.
 dpaprsInfo :: Lens' DescribeProvisioningArtifactResponse (HashMap Text Text)
 dpaprsInfo = lens _dpaprsInfo (\ s a -> s{_dpaprsInfo = a}) . _Default . _Map;
 
--- | Detailed provisioning artifact information.
+-- | Information about the provisioning artifact.
 dpaprsProvisioningArtifactDetail :: Lens' DescribeProvisioningArtifactResponse (Maybe ProvisioningArtifactDetail)
 dpaprsProvisioningArtifactDetail = lens _dpaprsProvisioningArtifactDetail (\ s a -> s{_dpaprsProvisioningArtifactDetail = a});
 

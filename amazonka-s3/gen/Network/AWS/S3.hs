@@ -307,6 +307,12 @@ module Network.AWS.S3
     -- ** ExpirationStatus
     , ExpirationStatus (..)
 
+    -- ** ExpressionType
+    , ExpressionType (..)
+
+    -- ** FileHeaderInfo
+    , FileHeaderInfo (..)
+
     -- ** FilterRuleName
     , FilterRuleName (..)
 
@@ -352,6 +358,9 @@ module Network.AWS.S3
     -- ** Protocol
     , Protocol (..)
 
+    -- ** QuoteFields
+    , QuoteFields (..)
+
     -- ** ReplicationRuleStatus
     , ReplicationRuleStatus (..)
 
@@ -363,6 +372,9 @@ module Network.AWS.S3
 
     -- ** RequestPayer
     , RequestPayer (..)
+
+    -- ** RestoreRequestType
+    , RestoreRequestType (..)
 
     -- ** ServerSideEncryption
     , ServerSideEncryption (..)
@@ -472,6 +484,25 @@ module Network.AWS.S3
     , crAllowedMethods
     , crAllowedOrigins
 
+    -- ** CSVInput
+    , CSVInput
+    , csvInput
+    , ciQuoteCharacter
+    , ciRecordDelimiter
+    , ciFileHeaderInfo
+    , ciQuoteEscapeCharacter
+    , ciComments
+    , ciFieldDelimiter
+
+    -- ** CSVOutput
+    , CSVOutput
+    , csvOutput
+    , coQuoteCharacter
+    , coQuoteFields
+    , coRecordDelimiter
+    , coQuoteEscapeCharacter
+    , coFieldDelimiter
+
     -- ** CommonPrefix
     , CommonPrefix
     , commonPrefix
@@ -543,6 +574,13 @@ module Network.AWS.S3
     , dEncryptionConfiguration
     , dBucket
 
+    -- ** Encryption
+    , Encryption
+    , encryption
+    , eKMSKeyId
+    , eKMSContext
+    , eEncryptionType
+
     -- ** EncryptionConfiguration
     , EncryptionConfiguration
     , encryptionConfiguration
@@ -589,6 +627,11 @@ module Network.AWS.S3
     , initiator
     , iDisplayName
     , iId
+
+    -- ** InputSerialization
+    , InputSerialization
+    , inputSerialization
+    , isCSV
 
     -- ** InventoryConfiguration
     , InventoryConfiguration
@@ -679,6 +722,12 @@ module Network.AWS.S3
     , leTargetGrants
     , leTargetPrefix
 
+    -- ** MetadataEntry
+    , MetadataEntry
+    , metadataEntry
+    , meValue
+    , meName
+
     -- ** MetricsAndOperator
     , MetricsAndOperator
     , metricsAndOperator
@@ -759,6 +808,16 @@ module Network.AWS.S3
     , ovStorageClass
     , ovLastModified
 
+    -- ** OutputLocation
+    , OutputLocation
+    , outputLocation
+    , olS3
+
+    -- ** OutputSerialization
+    , OutputSerialization
+    , outputSerialization
+    , osCSV
+
     -- ** Owner
     , Owner
     , owner
@@ -819,8 +878,13 @@ module Network.AWS.S3
     -- ** RestoreRequest
     , RestoreRequest
     , restoreRequest
-    , rrGlacierJobParameters
     , rrDays
+    , rrSelectParameters
+    , rrOutputLocation
+    , rrTier
+    , rrGlacierJobParameters
+    , rrType
+    , rrDescription
 
     -- ** RoutingRule
     , RoutingRule
@@ -832,6 +896,18 @@ module Network.AWS.S3
     , S3KeyFilter
     , s3KeyFilter
     , skfFilterRules
+
+    -- ** S3Location
+    , S3Location
+    , s3Location
+    , slCannedACL
+    , slAccessControlList
+    , slUserMetadata
+    , slEncryption
+    , slStorageClass
+    , slTagging
+    , slBucketName
+    , slPrefix
 
     -- ** S3ServiceError
     , S3ServiceError
@@ -849,6 +925,14 @@ module Network.AWS.S3
     -- ** SSES3
     , SSES3
     , sSES3
+
+    -- ** SelectParameters
+    , SelectParameters
+    , selectParameters
+    , spInputSerialization
+    , spExpressionType
+    , spExpression
+    , spOutputSerialization
 
     -- ** ServerSideEncryptionByDefault
     , ServerSideEncryptionByDefault

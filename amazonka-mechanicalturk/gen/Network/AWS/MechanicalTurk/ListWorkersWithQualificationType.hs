@@ -21,6 +21,8 @@
 -- The @ListWorkersWithQualificationType@ operation returns all of the Workers that have been associated with a given Qualification type.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.MechanicalTurk.ListWorkersWithQualificationType
     (
     -- * Creating a Request
@@ -45,6 +47,7 @@ module Network.AWS.MechanicalTurk.ListWorkersWithQualificationType
 import Network.AWS.Lens
 import Network.AWS.MechanicalTurk.Types
 import Network.AWS.MechanicalTurk.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -96,6 +99,14 @@ lwwqtMaxResults = lens _lwwqtMaxResults (\ s a -> s{_lwwqtMaxResults = a}) . map
 -- | The ID of the Qualification type of the Qualifications to return.
 lwwqtQualificationTypeId :: Lens' ListWorkersWithQualificationType Text
 lwwqtQualificationTypeId = lens _lwwqtQualificationTypeId (\ s a -> s{_lwwqtQualificationTypeId = a});
+
+instance AWSPager ListWorkersWithQualificationType
+         where
+        page rq rs
+          | stop (rs ^. lwwqtrsNextToken) = Nothing
+          | stop (rs ^. lwwqtrsQualifications) = Nothing
+          | otherwise =
+            Just $ rq & lwwqtNextToken .~ rs ^. lwwqtrsNextToken
 
 instance AWSRequest ListWorkersWithQualificationType
          where

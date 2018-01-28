@@ -55,6 +55,7 @@ module Network.AWS.Lambda.GetFunctionConfiguration
     , fcCodeSha256
     , fcTracingConfig
     , fcDescription
+    , fcRevisionId
     , fcMasterARN
     ) where
 

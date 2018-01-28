@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- If the specified @Crawler@ is running, stops the crawl.
+-- If the specified crawler is running, stops the crawl.
 --
 --
 module Network.AWS.Glue.StopCrawler
@@ -53,14 +53,14 @@ newtype StopCrawler = StopCrawler'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'sName' - Name of the @Crawler@ to stop.
+-- * 'sName' - Name of the crawler to stop.
 stopCrawler
     :: Text -- ^ 'sName'
     -> StopCrawler
 stopCrawler pName_ = StopCrawler' {_sName = pName_}
 
 
--- | Name of the @Crawler@ to stop.
+-- | Name of the crawler to stop.
 sName :: Lens' StopCrawler Text
 sName = lens _sName (\ s a -> s{_sName = a});
 

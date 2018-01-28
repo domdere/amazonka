@@ -61,7 +61,7 @@ data AttachInstances = AttachInstances'
 --
 -- * 'aiInstanceIds' - One or more instance IDs.
 --
--- * 'aiAutoScalingGroupName' - The name of the group.
+-- * 'aiAutoScalingGroupName' - The name of the Auto Scaling group.
 attachInstances
     :: Text -- ^ 'aiAutoScalingGroupName'
     -> AttachInstances
@@ -74,7 +74,7 @@ attachInstances pAutoScalingGroupName_ =
 aiInstanceIds :: Lens' AttachInstances [Text]
 aiInstanceIds = lens _aiInstanceIds (\ s a -> s{_aiInstanceIds = a}) . _Default . _Coerce;
 
--- | The name of the group.
+-- | The name of the Auto Scaling group.
 aiAutoScalingGroupName :: Lens' AttachInstances Text
 aiAutoScalingGroupName = lens _aiAutoScalingGroupName (\ s a -> s{_aiAutoScalingGroupName = a});
 

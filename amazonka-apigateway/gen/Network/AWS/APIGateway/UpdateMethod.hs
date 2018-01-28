@@ -38,6 +38,7 @@ module Network.AWS.APIGateway.UpdateMethod
     -- * Response Lenses
     , mMethodResponses
     , mHttpMethod
+    , mAuthorizationScopes
     , mRequestValidatorId
     , mRequestModels
     , mRequestParameters

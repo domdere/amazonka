@@ -35,7 +35,9 @@ data CertificateDetail = CertificateDetail'
   , _cdCreatedAt               :: !(Maybe POSIX)
   , _cdCertificateARN          :: !(Maybe Text)
   , _cdSerial                  :: !(Maybe Text)
+  , _cdExtendedKeyUsages       :: !(Maybe [ExtendedKeyUsage])
   , _cdImportedAt              :: !(Maybe POSIX)
+  , _cdKeyUsages               :: !(Maybe [KeyUsage])
   , _cdRevokedAt               :: !(Maybe POSIX)
   , _cdNotBefore               :: !(Maybe POSIX)
   , _cdRevocationReason        :: !(Maybe RevocationReason)
@@ -71,7 +73,11 @@ data CertificateDetail = CertificateDetail'
 --
 -- * 'cdSerial' - The serial number of the certificate.
 --
+-- * 'cdExtendedKeyUsages' - Contains a list of Extended Key Usage X.509 v3 extension objects. Each object specifies a purpose for which the certificate public key can be used and consists of a name and an object identifier (OID).
+--
 -- * 'cdImportedAt' - The date and time at which the certificate was imported. This value exists only when the certificate type is @IMPORTED@ .
+--
+-- * 'cdKeyUsages' - A list of Key Usage X.509 v3 extension objects. Each object is a string value that identifies the purpose of the public key contained in the certificate. Possible extension values include DIGITAL_SIGNATURE, KEY_ENCHIPHERMENT, NON_REPUDIATION, and more.
 --
 -- * 'cdRevokedAt' - The time at which the certificate was revoked. This value exists only when the certificate status is @REVOKED@ .
 --
@@ -83,7 +89,7 @@ data CertificateDetail = CertificateDetail'
 --
 -- * 'cdRenewalSummary' - Contains information about the status of ACM's <http://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html managed renewal> for the certificate. This field exists only when the certificate type is @AMAZON_ISSUED@ .
 --
--- * 'cdKeyAlgorithm' - The algorithm that was used to generate the key pair (the public and private key).
+-- * 'cdKeyAlgorithm' - The algorithm that was used to generate the public-private key pair.
 --
 -- * 'cdType' - The source of the certificate. For certificates provided by ACM, this value is @AMAZON_ISSUED@ . For certificates that you imported with 'ImportCertificate' , this value is @IMPORTED@ . ACM does not provide <http://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html managed renewal> for imported certificates. For more information about the differences between certificates that you import and those that ACM provides, see <http://docs.aws.amazon.com/acm/latest/userguide/import-certificate.html Importing Certificates> in the /AWS Certificate Manager User Guide/ .
 --
@@ -108,7 +114,9 @@ certificateDetail =
   , _cdCreatedAt = Nothing
   , _cdCertificateARN = Nothing
   , _cdSerial = Nothing
+  , _cdExtendedKeyUsages = Nothing
   , _cdImportedAt = Nothing
+  , _cdKeyUsages = Nothing
   , _cdRevokedAt = Nothing
   , _cdNotBefore = Nothing
   , _cdRevocationReason = Nothing
@@ -156,9 +164,17 @@ cdCertificateARN = lens _cdCertificateARN (\ s a -> s{_cdCertificateARN = a});
 cdSerial :: Lens' CertificateDetail (Maybe Text)
 cdSerial = lens _cdSerial (\ s a -> s{_cdSerial = a});
 
+-- | Contains a list of Extended Key Usage X.509 v3 extension objects. Each object specifies a purpose for which the certificate public key can be used and consists of a name and an object identifier (OID).
+cdExtendedKeyUsages :: Lens' CertificateDetail [ExtendedKeyUsage]
+cdExtendedKeyUsages = lens _cdExtendedKeyUsages (\ s a -> s{_cdExtendedKeyUsages = a}) . _Default . _Coerce;
+
 -- | The date and time at which the certificate was imported. This value exists only when the certificate type is @IMPORTED@ .
 cdImportedAt :: Lens' CertificateDetail (Maybe UTCTime)
 cdImportedAt = lens _cdImportedAt (\ s a -> s{_cdImportedAt = a}) . mapping _Time;
+
+-- | A list of Key Usage X.509 v3 extension objects. Each object is a string value that identifies the purpose of the public key contained in the certificate. Possible extension values include DIGITAL_SIGNATURE, KEY_ENCHIPHERMENT, NON_REPUDIATION, and more.
+cdKeyUsages :: Lens' CertificateDetail [KeyUsage]
+cdKeyUsages = lens _cdKeyUsages (\ s a -> s{_cdKeyUsages = a}) . _Default . _Coerce;
 
 -- | The time at which the certificate was revoked. This value exists only when the certificate status is @REVOKED@ .
 cdRevokedAt :: Lens' CertificateDetail (Maybe UTCTime)
@@ -180,7 +196,7 @@ cdDomainName = lens _cdDomainName (\ s a -> s{_cdDomainName = a});
 cdRenewalSummary :: Lens' CertificateDetail (Maybe RenewalSummary)
 cdRenewalSummary = lens _cdRenewalSummary (\ s a -> s{_cdRenewalSummary = a});
 
--- | The algorithm that was used to generate the key pair (the public and private key).
+-- | The algorithm that was used to generate the public-private key pair.
 cdKeyAlgorithm :: Lens' CertificateDetail (Maybe KeyAlgorithm)
 cdKeyAlgorithm = lens _cdKeyAlgorithm (\ s a -> s{_cdKeyAlgorithm = a});
 
@@ -220,7 +236,9 @@ instance FromJSON CertificateDetail where
                      <*> (x .:? "CreatedAt")
                      <*> (x .:? "CertificateArn")
                      <*> (x .:? "Serial")
+                     <*> (x .:? "ExtendedKeyUsages" .!= mempty)
                      <*> (x .:? "ImportedAt")
+                     <*> (x .:? "KeyUsages" .!= mempty)
                      <*> (x .:? "RevokedAt")
                      <*> (x .:? "NotBefore")
                      <*> (x .:? "RevocationReason")
@@ -288,6 +306,8 @@ instance NFData CertificateSummary where
 -- /See:/ 'domainValidation' smart constructor.
 data DomainValidation = DomainValidation'
   { _dvValidationEmails :: !(Maybe [Text])
+  , _dvValidationMethod :: !(Maybe ValidationMethod)
+  , _dvResourceRecord   :: !(Maybe ResourceRecord)
   , _dvValidationStatus :: !(Maybe DomainStatus)
   , _dvValidationDomain :: !(Maybe Text)
   , _dvDomainName       :: !Text
@@ -300,7 +320,11 @@ data DomainValidation = DomainValidation'
 --
 -- * 'dvValidationEmails' - A list of email addresses that ACM used to send domain validation emails.
 --
--- * 'dvValidationStatus' - The validation status of the domain name.
+-- * 'dvValidationMethod' - Specifies the domain validation method.
+--
+-- * 'dvResourceRecord' - Contains the CNAME record that you add to your DNS database for domain validation. For more information, see <http://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-dns.html Use DNS to Validate Domain Ownership> .
+--
+-- * 'dvValidationStatus' - The validation status of the domain name. This can be one of the following values:     * @PENDING_VALIDATION@      * SUCCESS     * FAILED
 --
 -- * 'dvValidationDomain' - The domain name that ACM used to send domain validation emails.
 --
@@ -311,6 +335,8 @@ domainValidation
 domainValidation pDomainName_ =
   DomainValidation'
   { _dvValidationEmails = Nothing
+  , _dvValidationMethod = Nothing
+  , _dvResourceRecord = Nothing
   , _dvValidationStatus = Nothing
   , _dvValidationDomain = Nothing
   , _dvDomainName = pDomainName_
@@ -321,7 +347,15 @@ domainValidation pDomainName_ =
 dvValidationEmails :: Lens' DomainValidation [Text]
 dvValidationEmails = lens _dvValidationEmails (\ s a -> s{_dvValidationEmails = a}) . _Default . _Coerce;
 
--- | The validation status of the domain name.
+-- | Specifies the domain validation method.
+dvValidationMethod :: Lens' DomainValidation (Maybe ValidationMethod)
+dvValidationMethod = lens _dvValidationMethod (\ s a -> s{_dvValidationMethod = a});
+
+-- | Contains the CNAME record that you add to your DNS database for domain validation. For more information, see <http://docs.aws.amazon.com/acm/latest/userguide/gs-acm-validate-dns.html Use DNS to Validate Domain Ownership> .
+dvResourceRecord :: Lens' DomainValidation (Maybe ResourceRecord)
+dvResourceRecord = lens _dvResourceRecord (\ s a -> s{_dvResourceRecord = a});
+
+-- | The validation status of the domain name. This can be one of the following values:     * @PENDING_VALIDATION@      * SUCCESS     * FAILED
 dvValidationStatus :: Lens' DomainValidation (Maybe DomainStatus)
 dvValidationStatus = lens _dvValidationStatus (\ s a -> s{_dvValidationStatus = a});
 
@@ -339,7 +373,9 @@ instance FromJSON DomainValidation where
               (\ x ->
                  DomainValidation' <$>
                    (x .:? "ValidationEmails" .!= mempty) <*>
-                     (x .:? "ValidationStatus")
+                     (x .:? "ValidationMethod")
+                     <*> (x .:? "ResourceRecord")
+                     <*> (x .:? "ValidationStatus")
                      <*> (x .:? "ValidationDomain")
                      <*> (x .: "DomainName"))
 
@@ -347,7 +383,7 @@ instance Hashable DomainValidation where
 
 instance NFData DomainValidation where
 
--- | Contains information about the domain names that you want ACM to use to send you emails to validate your ownership of the domain.
+-- | Contains information about the domain names that you want ACM to use to send you emails that enable you to validate domain ownership.
 --
 --
 --
@@ -392,6 +428,133 @@ instance ToJSON DomainValidationOption where
               (catMaybes
                  [Just ("DomainName" .= _dvoDomainName),
                   Just ("ValidationDomain" .= _dvoValidationDomain)])
+
+-- | The Extended Key Usage X.509 v3 extension defines one or more purposes for which the public key can be used. This is in addition to or in place of the basic purposes specified by the Key Usage extension.
+--
+--
+--
+-- /See:/ 'extendedKeyUsage' smart constructor.
+data ExtendedKeyUsage = ExtendedKeyUsage'
+  { _ekuOId  :: !(Maybe Text)
+  , _ekuName :: !(Maybe ExtendedKeyUsageName)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ExtendedKeyUsage' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ekuOId' - An object identifier (OID) for the extension value. OIDs are strings of numbers separated by periods. The following OIDs are defined in RFC 3280 and RFC 5280.      * @1.3.6.1.5.5.7.3.1 (TLS_WEB_SERVER_AUTHENTICATION)@      * @1.3.6.1.5.5.7.3.2 (TLS_WEB_CLIENT_AUTHENTICATION)@      * @1.3.6.1.5.5.7.3.3 (CODE_SIGNING)@      * @1.3.6.1.5.5.7.3.4 (EMAIL_PROTECTION)@      * @1.3.6.1.5.5.7.3.8 (TIME_STAMPING)@      * @1.3.6.1.5.5.7.3.9 (OCSP_SIGNING)@      * @1.3.6.1.5.5.7.3.5 (IPSEC_END_SYSTEM)@      * @1.3.6.1.5.5.7.3.6 (IPSEC_TUNNEL)@      * @1.3.6.1.5.5.7.3.7 (IPSEC_USER)@
+--
+-- * 'ekuName' - The name of an Extended Key Usage value.
+extendedKeyUsage
+    :: ExtendedKeyUsage
+extendedKeyUsage = ExtendedKeyUsage' {_ekuOId = Nothing, _ekuName = Nothing}
+
+
+-- | An object identifier (OID) for the extension value. OIDs are strings of numbers separated by periods. The following OIDs are defined in RFC 3280 and RFC 5280.      * @1.3.6.1.5.5.7.3.1 (TLS_WEB_SERVER_AUTHENTICATION)@      * @1.3.6.1.5.5.7.3.2 (TLS_WEB_CLIENT_AUTHENTICATION)@      * @1.3.6.1.5.5.7.3.3 (CODE_SIGNING)@      * @1.3.6.1.5.5.7.3.4 (EMAIL_PROTECTION)@      * @1.3.6.1.5.5.7.3.8 (TIME_STAMPING)@      * @1.3.6.1.5.5.7.3.9 (OCSP_SIGNING)@      * @1.3.6.1.5.5.7.3.5 (IPSEC_END_SYSTEM)@      * @1.3.6.1.5.5.7.3.6 (IPSEC_TUNNEL)@      * @1.3.6.1.5.5.7.3.7 (IPSEC_USER)@
+ekuOId :: Lens' ExtendedKeyUsage (Maybe Text)
+ekuOId = lens _ekuOId (\ s a -> s{_ekuOId = a});
+
+-- | The name of an Extended Key Usage value.
+ekuName :: Lens' ExtendedKeyUsage (Maybe ExtendedKeyUsageName)
+ekuName = lens _ekuName (\ s a -> s{_ekuName = a});
+
+instance FromJSON ExtendedKeyUsage where
+        parseJSON
+          = withObject "ExtendedKeyUsage"
+              (\ x ->
+                 ExtendedKeyUsage' <$>
+                   (x .:? "OID") <*> (x .:? "Name"))
+
+instance Hashable ExtendedKeyUsage where
+
+instance NFData ExtendedKeyUsage where
+
+-- | This structure can be used in the 'ListCertificates' action to filter the output of the certificate list.
+--
+--
+--
+-- /See:/ 'filters' smart constructor.
+data Filters = Filters'
+  { _fKeyTypes         :: !(Maybe [KeyAlgorithm])
+  , _fKeyUsage         :: !(Maybe [KeyUsageName])
+  , _fExtendedKeyUsage :: !(Maybe [ExtendedKeyUsageName])
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'Filters' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'fKeyTypes' - Specify one or more algorithms that can be used to generate key pairs.
+--
+-- * 'fKeyUsage' - Specify one or more 'KeyUsage' extension values.
+--
+-- * 'fExtendedKeyUsage' - Specify one or more 'ExtendedKeyUsage' extension values.
+filters
+    :: Filters
+filters =
+  Filters'
+  {_fKeyTypes = Nothing, _fKeyUsage = Nothing, _fExtendedKeyUsage = Nothing}
+
+
+-- | Specify one or more algorithms that can be used to generate key pairs.
+fKeyTypes :: Lens' Filters [KeyAlgorithm]
+fKeyTypes = lens _fKeyTypes (\ s a -> s{_fKeyTypes = a}) . _Default . _Coerce;
+
+-- | Specify one or more 'KeyUsage' extension values.
+fKeyUsage :: Lens' Filters [KeyUsageName]
+fKeyUsage = lens _fKeyUsage (\ s a -> s{_fKeyUsage = a}) . _Default . _Coerce;
+
+-- | Specify one or more 'ExtendedKeyUsage' extension values.
+fExtendedKeyUsage :: Lens' Filters [ExtendedKeyUsageName]
+fExtendedKeyUsage = lens _fExtendedKeyUsage (\ s a -> s{_fExtendedKeyUsage = a}) . _Default . _Coerce;
+
+instance Hashable Filters where
+
+instance NFData Filters where
+
+instance ToJSON Filters where
+        toJSON Filters'{..}
+          = object
+              (catMaybes
+                 [("keyTypes" .=) <$> _fKeyTypes,
+                  ("keyUsage" .=) <$> _fKeyUsage,
+                  ("extendedKeyUsage" .=) <$> _fExtendedKeyUsage])
+
+-- | The Key Usage X.509 v3 extension defines the purpose of the public key contained in the certificate.
+--
+--
+--
+-- /See:/ 'keyUsage' smart constructor.
+newtype KeyUsage = KeyUsage'
+  { _kuName :: Maybe KeyUsageName
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'KeyUsage' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'kuName' - A string value that contains a Key Usage extension name.
+keyUsage
+    :: KeyUsage
+keyUsage = KeyUsage' {_kuName = Nothing}
+
+
+-- | A string value that contains a Key Usage extension name.
+kuName :: Lens' KeyUsage (Maybe KeyUsageName)
+kuName = lens _kuName (\ s a -> s{_kuName = a});
+
+instance FromJSON KeyUsage where
+        parseJSON
+          = withObject "KeyUsage"
+              (\ x -> KeyUsage' <$> (x .:? "Name"))
+
+instance Hashable KeyUsage where
+
+instance NFData KeyUsage where
 
 -- | Contains information about the status of ACM's <http://docs.aws.amazon.com/acm/latest/userguide/acm-renewal.html managed renewal> for the certificate. This structure exists only when the certificate type is @AMAZON_ISSUED@ .
 --
@@ -441,6 +604,59 @@ instance FromJSON RenewalSummary where
 instance Hashable RenewalSummary where
 
 instance NFData RenewalSummary where
+
+-- | Contains a DNS record value that you can use to can use to validate ownership or control of a domain. This is used by the 'DescribeCertificate' action.
+--
+--
+--
+-- /See:/ 'resourceRecord' smart constructor.
+data ResourceRecord = ResourceRecord'
+  { _rrName  :: !Text
+  , _rrType  :: !RecordType
+  , _rrValue :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ResourceRecord' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rrName' - The name of the DNS record to create in your domain. This is supplied by ACM.
+--
+-- * 'rrType' - The type of DNS record. Currently this can be @CNAME@ .
+--
+-- * 'rrValue' - The value of the CNAME record to add to your DNS database. This is supplied by ACM.
+resourceRecord
+    :: Text -- ^ 'rrName'
+    -> RecordType -- ^ 'rrType'
+    -> Text -- ^ 'rrValue'
+    -> ResourceRecord
+resourceRecord pName_ pType_ pValue_ =
+  ResourceRecord' {_rrName = pName_, _rrType = pType_, _rrValue = pValue_}
+
+
+-- | The name of the DNS record to create in your domain. This is supplied by ACM.
+rrName :: Lens' ResourceRecord Text
+rrName = lens _rrName (\ s a -> s{_rrName = a});
+
+-- | The type of DNS record. Currently this can be @CNAME@ .
+rrType :: Lens' ResourceRecord RecordType
+rrType = lens _rrType (\ s a -> s{_rrType = a});
+
+-- | The value of the CNAME record to add to your DNS database. This is supplied by ACM.
+rrValue :: Lens' ResourceRecord Text
+rrValue = lens _rrValue (\ s a -> s{_rrValue = a});
+
+instance FromJSON ResourceRecord where
+        parseJSON
+          = withObject "ResourceRecord"
+              (\ x ->
+                 ResourceRecord' <$>
+                   (x .: "Name") <*> (x .: "Type") <*> (x .: "Value"))
+
+instance Hashable ResourceRecord where
+
+instance NFData ResourceRecord where
 
 -- | A key-value pair that identifies or specifies metadata about an ACM resource.
 --

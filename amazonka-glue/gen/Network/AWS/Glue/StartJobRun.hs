@@ -60,11 +60,11 @@ data StartJobRun = StartJobRun'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'sjrArguments' - Specific arguments for this job run.
+-- * 'sjrArguments' - The job arguments specifically for this run. They override the equivalent default arguments set for the job itself. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html Calling AWS Glue APIs in Python> topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-glue-arguments.html Special Parameters Used by AWS Glue> topic in the developer guide.
 --
--- * 'sjrAllocatedCapacity' - The infrastructure capacity to allocate to this job.
+-- * 'sjrAllocatedCapacity' - The number of AWS Glue data processing units (DPUs) to allocate to this JobRun. From 2 to 100 DPUs can be allocated; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <https://aws.amazon.com/glue/pricing/ AWS Glue pricing page> .
 --
--- * 'sjrJobRunId' - The ID of the job run to start.
+-- * 'sjrJobRunId' - The ID of a previous JobRun to retry.
 --
 -- * 'sjrJobName' - The name of the job to start.
 startJobRun
@@ -79,15 +79,15 @@ startJobRun pJobName_ =
   }
 
 
--- | Specific arguments for this job run.
+-- | The job arguments specifically for this run. They override the equivalent default arguments set for the job itself. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html Calling AWS Glue APIs in Python> topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-glue-arguments.html Special Parameters Used by AWS Glue> topic in the developer guide.
 sjrArguments :: Lens' StartJobRun (HashMap Text Text)
 sjrArguments = lens _sjrArguments (\ s a -> s{_sjrArguments = a}) . _Default . _Map;
 
--- | The infrastructure capacity to allocate to this job.
+-- | The number of AWS Glue data processing units (DPUs) to allocate to this JobRun. From 2 to 100 DPUs can be allocated; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <https://aws.amazon.com/glue/pricing/ AWS Glue pricing page> .
 sjrAllocatedCapacity :: Lens' StartJobRun (Maybe Int)
 sjrAllocatedCapacity = lens _sjrAllocatedCapacity (\ s a -> s{_sjrAllocatedCapacity = a});
 
--- | The ID of the job run to start.
+-- | The ID of a previous JobRun to retry.
 sjrJobRunId :: Lens' StartJobRun (Maybe Text)
 sjrJobRunId = lens _sjrJobRunId (\ s a -> s{_sjrJobRunId = a});
 

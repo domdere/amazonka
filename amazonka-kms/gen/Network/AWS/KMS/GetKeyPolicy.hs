@@ -58,7 +58,7 @@ data GetKeyPolicy = GetKeyPolicy'
 --
 -- * 'gkpKeyId' - A unique identifier for the customer master key (CMK). Specify the key ID or the Amazon Resource Name (ARN) of the CMK. For example:     * Key ID: @1234abcd-12ab-34cd-56ef-1234567890ab@      * Key ARN: @arn:aws:kms:us-east-2:111122223333:key/1234abcd-12ab-34cd-56ef-1234567890ab@  To get the key ID and key ARN for a CMK, use 'ListKeys' or 'DescribeKey' .
 --
--- * 'gkpPolicyName' - Specifies the name of the policy. The only valid name is @default@ . To get the names of key policies, use 'ListKeyPolicies' .
+-- * 'gkpPolicyName' - Specifies the name of the key policy. The only valid name is @default@ . To get the names of key policies, use 'ListKeyPolicies' .
 getKeyPolicy
     :: Text -- ^ 'gkpKeyId'
     -> Text -- ^ 'gkpPolicyName'
@@ -71,7 +71,7 @@ getKeyPolicy pKeyId_ pPolicyName_ =
 gkpKeyId :: Lens' GetKeyPolicy Text
 gkpKeyId = lens _gkpKeyId (\ s a -> s{_gkpKeyId = a});
 
--- | Specifies the name of the policy. The only valid name is @default@ . To get the names of key policies, use 'ListKeyPolicies' .
+-- | Specifies the name of the key policy. The only valid name is @default@ . To get the names of key policies, use 'ListKeyPolicies' .
 gkpPolicyName :: Lens' GetKeyPolicy Text
 gkpPolicyName = lens _gkpPolicyName (\ s a -> s{_gkpPolicyName = a});
 
@@ -121,7 +121,7 @@ data GetKeyPolicyResponse = GetKeyPolicyResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'gkprsPolicy' - A policy document in JSON format.
+-- * 'gkprsPolicy' - A key policy document in JSON format.
 --
 -- * 'gkprsResponseStatus' - -- | The response status code.
 getKeyPolicyResponse
@@ -132,7 +132,7 @@ getKeyPolicyResponse pResponseStatus_ =
   {_gkprsPolicy = Nothing, _gkprsResponseStatus = pResponseStatus_}
 
 
--- | A policy document in JSON format.
+-- | A key policy document in JSON format.
 gkprsPolicy :: Lens' GetKeyPolicyResponse (Maybe Text)
 gkprsPolicy = lens _gkprsPolicy (\ s a -> s{_gkprsPolicy = a});
 

@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Starts an existing trigger.
+-- Starts an existing trigger. See <http://docs.aws.amazon.com/glue/latest/dg/trigger-job.html Triggering Jobs> for information about how different types of trigger are started.
 --
 --
 module Network.AWS.Glue.StartTrigger

@@ -18,6 +18,7 @@ module Network.AWS.CodeDeploy.Types
     -- * Errors
     , _LifecycleHookLimitExceededException
     , _InvalidTimeRangeException
+    , _InvalidComputePlatformException
     , _InvalidTagException
     , _InvalidFileExistsBehaviorException
     , _InvalidAlarmConfigException
@@ -26,6 +27,7 @@ module Network.AWS.CodeDeploy.Types
     , _InvalidDeploymentGroupNameException
     , _InvalidInstanceTypeException
     , _IAMSessionARNAlreadyRegisteredException
+    , _InvalidTrafficRoutingConfigurationException
     , _DescriptionTooLongException
     , _InvalidIAMUserARNException
     , _InvalidOnPremisesTagCombinationException
@@ -41,6 +43,7 @@ module Network.AWS.CodeDeploy.Types
     , _IAMUserARNAlreadyRegisteredException
     , _InvalidIAMSessionARNException
     , _InstanceLimitExceededException
+    , _InvalidLifecycleEventHookExecutionIdException
     , _InvalidDeploymentStyleException
     , _InvalidDeployedStateFilterException
     , _InvalidAutoScalingGroupException
@@ -51,9 +54,13 @@ module Network.AWS.CodeDeploy.Types
     , _UnsupportedActionForDeploymentTypeException
     , _ResourceValidationException
     , _InvalidEC2TagCombinationException
+    , _InvalidLifecycleEventHookExecutionStatusException
     , _AlarmsLimitExceededException
+    , _OperationNotSupportedException
     , _InvalidTagFilterException
     , _InvalidTriggerConfigException
+    , _InvalidIgnoreApplicationStopFailuresValueException
+    , _InvalidUpdateOutdatedInstancesOnlyValueException
     , _TagRequiredException
     , _DeploymentGroupNameRequiredException
     , _BucketNameFilterRequiredException
@@ -64,9 +71,11 @@ module Network.AWS.CodeDeploy.Types
     , _RevisionDoesNotExistException
     , _DeploymentGroupLimitExceededException
     , _DeploymentGroupDoesNotExistException
+    , _ThrottlingException
     , _InvalidDeploymentConfigNameException
     , _DeploymentConfigNameRequiredException
     , _DeploymentIdRequiredException
+    , _InvalidInstanceIdException
     , _DeploymentIsNotInReadyStateException
     , _InvalidNextTokenException
     , _InstanceIdRequiredException
@@ -80,6 +89,7 @@ module Network.AWS.CodeDeploy.Types
     , _RevisionRequiredException
     , _InstanceDoesNotExistException
     , _DeploymentConfigInUseException
+    , _InvalidInputException
     , _InvalidEC2TagException
     , _InvalidInstanceNameException
     , _InstanceNameRequiredException
@@ -95,8 +105,11 @@ module Network.AWS.CodeDeploy.Types
     , _ApplicationLimitExceededException
     , _TagSetListLimitExceededException
     , _InvalidOperationException
+    , _GitHubAccountTokenNameRequiredException
     , _InvalidDeploymentInstanceTypeException
     , _IAMARNRequiredException
+    , _InvalidGitHubAccountTokenNameException
+    , _LifecycleEventAlreadyCompletedException
     , _InvalidKeyPrefixFilterException
 
     -- * ApplicationRevisionSortBy
@@ -107,6 +120,9 @@ module Network.AWS.CodeDeploy.Types
 
     -- * BundleType
     , BundleType (..)
+
+    -- * ComputePlatform
+    , ComputePlatform (..)
 
     -- * DeployErrorCode
     , DeployErrorCode (..)
@@ -171,6 +187,9 @@ module Network.AWS.CodeDeploy.Types
     -- * TagFilterType
     , TagFilterType (..)
 
+    -- * TrafficRoutingType
+    , TrafficRoutingType (..)
+
     -- * TriggerEventType
     , TriggerEventType (..)
 
@@ -190,6 +209,7 @@ module Network.AWS.CodeDeploy.Types
     , ApplicationInfo
     , applicationInfo
     , aiLinkedToGitHub
+    , aiComputePlatform
     , aiApplicationId
     , aiApplicationName
     , aiGitHubAccountName
@@ -224,7 +244,9 @@ module Network.AWS.CodeDeploy.Types
     , DeploymentConfigInfo
     , deploymentConfigInfo
     , dciDeploymentConfigName
+    , dciComputePlatform
     , dciMinimumHealthyHosts
+    , dciTrafficRoutingConfig
     , dciDeploymentConfigId
     , dciCreateTime
 
@@ -236,6 +258,7 @@ module Network.AWS.CodeDeploy.Types
     , dgiDeploymentConfigName
     , dgiLastAttemptedDeployment
     , dgiOnPremisesTagSet
+    , dgiComputePlatform
     , dgiTargetRevision
     , dgiEc2TagFilters
     , dgiBlueGreenDeploymentConfiguration
@@ -258,8 +281,10 @@ module Network.AWS.CodeDeploy.Types
     , diStatus
     , diDeploymentId
     , diDeploymentConfigName
+    , diComputePlatform
     , diPreviousRevision
     , diInstanceTerminationWaitTimeStarted
+    , diDeploymentStatusMessages
     , diStartTime
     , diCompleteTime
     , diBlueGreenDeploymentConfiguration
@@ -408,6 +433,12 @@ module Network.AWS.CodeDeploy.Types
     , onPremisesTagSet
     , optsOnPremisesTagSetList
 
+    -- * RawString
+    , RawString
+    , rawString
+    , rsContent
+    , rsSha256
+
     -- * RevisionInfo
     , RevisionInfo
     , revisionInfo
@@ -417,6 +448,7 @@ module Network.AWS.CodeDeploy.Types
     -- * RevisionLocation
     , RevisionLocation
     , revisionLocation
+    , rlString
     , rlRevisionType
     , rlS3Location
     , rlGitHubLocation
@@ -462,11 +494,30 @@ module Network.AWS.CodeDeploy.Types
     , tiTagFilters
     , tiAutoScalingGroups
 
+    -- * TimeBasedCanary
+    , TimeBasedCanary
+    , timeBasedCanary
+    , tbcCanaryInterval
+    , tbcCanaryPercentage
+
+    -- * TimeBasedLinear
+    , TimeBasedLinear
+    , timeBasedLinear
+    , tblLinearInterval
+    , tblLinearPercentage
+
     -- * TimeRange
     , TimeRange
     , timeRange
     , trStart
     , trEnd
+
+    -- * TrafficRoutingConfig
+    , TrafficRoutingConfig
+    , trafficRoutingConfig
+    , trcTimeBasedCanary
+    , trcTimeBasedLinear
+    , trcType
 
     -- * TriggerConfig
     , TriggerConfig
@@ -533,6 +584,14 @@ _LifecycleHookLimitExceededException =
 _InvalidTimeRangeException :: AsError a => Getting (First ServiceError) a ServiceError
 _InvalidTimeRangeException =
   _MatchServiceError codeDeploy "InvalidTimeRangeException"
+
+
+-- | The computePlatform is invalid. The computePlatform should be @Lambda@ or @Server@ .
+--
+--
+_InvalidComputePlatformException :: AsError a => Getting (First ServiceError) a ServiceError
+_InvalidComputePlatformException =
+  _MatchServiceError codeDeploy "InvalidComputePlatformException"
 
 
 -- | The specified tag was specified in an invalid format.
@@ -608,6 +667,14 @@ _InvalidInstanceTypeException =
 _IAMSessionARNAlreadyRegisteredException :: AsError a => Getting (First ServiceError) a ServiceError
 _IAMSessionARNAlreadyRegisteredException =
   _MatchServiceError codeDeploy "IamSessionArnAlreadyRegisteredException"
+
+
+-- | The configuration that specifies how traffic is routed during a deployment is invalid.
+--
+--
+_InvalidTrafficRoutingConfigurationException :: AsError a => Getting (First ServiceError) a ServiceError
+_InvalidTrafficRoutingConfigurationException =
+  _MatchServiceError codeDeploy "InvalidTrafficRoutingConfigurationException"
 
 
 -- | The description is too long.
@@ -740,6 +807,14 @@ _InstanceLimitExceededException =
   _MatchServiceError codeDeploy "InstanceLimitExceededException"
 
 
+-- | A lifecycle event hook is invalid. Review the @hooks@ section in your AppSpec file to ensure the lifecycle events and @hooks@ functions are valid.
+--
+--
+_InvalidLifecycleEventHookExecutionIdException :: AsError a => Getting (First ServiceError) a ServiceError
+_InvalidLifecycleEventHookExecutionIdException =
+  _MatchServiceError codeDeploy "InvalidLifecycleEventHookExecutionIdException"
+
+
 -- | An invalid deployment style was specified. Valid deployment types include "IN_PLACE" and "BLUE_GREEN". Valid deployment options include "WITH_TRAFFIC_CONTROL" and "WITHOUT_TRAFFIC_CONTROL".
 --
 --
@@ -820,12 +895,30 @@ _InvalidEC2TagCombinationException =
   _MatchServiceError codeDeploy "InvalidEC2TagCombinationException"
 
 
+-- | The result of a Lambda validation function that verifies a lifecycle event is invalid. It should return @Succeeded@ or @Failed@ .
+--
+--
+_InvalidLifecycleEventHookExecutionStatusException :: AsError a => Getting (First ServiceError) a ServiceError
+_InvalidLifecycleEventHookExecutionStatusException =
+  _MatchServiceError
+    codeDeploy
+    "InvalidLifecycleEventHookExecutionStatusException"
+
+
 -- | The maximum number of alarms for a deployment group (10) was exceeded.
 --
 --
 _AlarmsLimitExceededException :: AsError a => Getting (First ServiceError) a ServiceError
 _AlarmsLimitExceededException =
   _MatchServiceError codeDeploy "AlarmsLimitExceededException"
+
+
+-- | The API used does not support the deployment.
+--
+--
+_OperationNotSupportedException :: AsError a => Getting (First ServiceError) a ServiceError
+_OperationNotSupportedException =
+  _MatchServiceError codeDeploy "OperationNotSupportedException"
 
 
 -- | The specified tag filter was specified in an invalid format.
@@ -842,6 +935,26 @@ _InvalidTagFilterException =
 _InvalidTriggerConfigException :: AsError a => Getting (First ServiceError) a ServiceError
 _InvalidTriggerConfigException =
   _MatchServiceError codeDeploy "InvalidTriggerConfigException"
+
+
+-- | The IgnoreApplicationStopFailures value is invalid. For AWS Lambda deployments, @false@ is expected. For EC2/On-premises deployments, @true@ or @false@ is expected.
+--
+--
+_InvalidIgnoreApplicationStopFailuresValueException :: AsError a => Getting (First ServiceError) a ServiceError
+_InvalidIgnoreApplicationStopFailuresValueException =
+  _MatchServiceError
+    codeDeploy
+    "InvalidIgnoreApplicationStopFailuresValueException"
+
+
+-- | The UpdateOutdatedInstancesOnly value is invalid. For AWS Lambda deployments, @false@ is expected. For EC2/On-premises deployments, @true@ or @false@ is expected.
+--
+--
+_InvalidUpdateOutdatedInstancesOnlyValueException :: AsError a => Getting (First ServiceError) a ServiceError
+_InvalidUpdateOutdatedInstancesOnlyValueException =
+  _MatchServiceError
+    codeDeploy
+    "InvalidUpdateOutdatedInstancesOnlyValueException"
 
 
 -- | A tag was not specified.
@@ -922,6 +1035,13 @@ _DeploymentGroupDoesNotExistException =
   _MatchServiceError codeDeploy "DeploymentGroupDoesNotExistException"
 
 
+-- | An API function was called too frequently.
+--
+--
+_ThrottlingException :: AsError a => Getting (First ServiceError) a ServiceError
+_ThrottlingException = _MatchServiceError codeDeploy "ThrottlingException"
+
+
 -- | The deployment configuration name was specified in an invalid format.
 --
 --
@@ -944,6 +1064,14 @@ _DeploymentConfigNameRequiredException =
 _DeploymentIdRequiredException :: AsError a => Getting (First ServiceError) a ServiceError
 _DeploymentIdRequiredException =
   _MatchServiceError codeDeploy "DeploymentIdRequiredException"
+
+
+-- |
+--
+--
+_InvalidInstanceIdException :: AsError a => Getting (First ServiceError) a ServiceError
+_InvalidInstanceIdException =
+  _MatchServiceError codeDeploy "InvalidInstanceIdException"
 
 
 -- | The deployment does not have a status of Ready and can't continue yet.
@@ -1048,6 +1176,13 @@ _InstanceDoesNotExistException =
 _DeploymentConfigInUseException :: AsError a => Getting (First ServiceError) a ServiceError
 _DeploymentConfigInUseException =
   _MatchServiceError codeDeploy "DeploymentConfigInUseException"
+
+
+-- | The specified input was specified in an invalid format.
+--
+--
+_InvalidInputException :: AsError a => Getting (First ServiceError) a ServiceError
+_InvalidInputException = _MatchServiceError codeDeploy "InvalidInputException"
 
 
 -- | The tag was specified in an invalid format.
@@ -1169,6 +1304,14 @@ _InvalidOperationException =
   _MatchServiceError codeDeploy "InvalidOperationException"
 
 
+-- | The call is missing a required GitHub account connection name.
+--
+--
+_GitHubAccountTokenNameRequiredException :: AsError a => Getting (First ServiceError) a ServiceError
+_GitHubAccountTokenNameRequiredException =
+  _MatchServiceError codeDeploy "GitHubAccountTokenNameRequiredException"
+
+
 -- | An instance type was specified for an in-place deployment. Instance types are supported for blue/green deployments only.
 --
 --
@@ -1183,6 +1326,22 @@ _InvalidDeploymentInstanceTypeException =
 _IAMARNRequiredException :: AsError a => Getting (First ServiceError) a ServiceError
 _IAMARNRequiredException =
   _MatchServiceError codeDeploy "IamArnRequiredException"
+
+
+-- | The format of the specified GitHub account connection name is invalid.
+--
+--
+_InvalidGitHubAccountTokenNameException :: AsError a => Getting (First ServiceError) a ServiceError
+_InvalidGitHubAccountTokenNameException =
+  _MatchServiceError codeDeploy "InvalidGitHubAccountTokenNameException"
+
+
+-- | An attempt to return the status of an already completed lifecycle event occurred.
+--
+--
+_LifecycleEventAlreadyCompletedException :: AsError a => Getting (First ServiceError) a ServiceError
+_LifecycleEventAlreadyCompletedException =
+  _MatchServiceError codeDeploy "LifecycleEventAlreadyCompletedException"
 
 
 -- | The specified key prefix filter was specified in an invalid format.

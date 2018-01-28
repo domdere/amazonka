@@ -38,6 +38,7 @@ module Network.AWS.SES.DescribeConfigurationSet
     -- * Response Lenses
     , dcsrsTrackingOptions
     , dcsrsConfigurationSet
+    , dcsrsReputationOptions
     , dcsrsEventDestinations
     , dcsrsResponseStatus
     ) where
@@ -95,6 +96,7 @@ instance AWSRequest DescribeConfigurationSet where
                  DescribeConfigurationSetResponse' <$>
                    (x .@? "TrackingOptions") <*>
                      (x .@? "ConfigurationSet")
+                     <*> (x .@? "ReputationOptions")
                      <*>
                      (x .@? "EventDestinations" .!@ mempty >>=
                         may (parseXMLList "member"))
@@ -130,6 +132,7 @@ instance ToQuery DescribeConfigurationSet where
 data DescribeConfigurationSetResponse = DescribeConfigurationSetResponse'
   { _dcsrsTrackingOptions   :: !(Maybe TrackingOptions)
   , _dcsrsConfigurationSet  :: !(Maybe ConfigurationSet)
+  , _dcsrsReputationOptions :: !(Maybe ReputationOptions)
   , _dcsrsEventDestinations :: !(Maybe [EventDestination])
   , _dcsrsResponseStatus    :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -143,6 +146,8 @@ data DescribeConfigurationSetResponse = DescribeConfigurationSetResponse'
 --
 -- * 'dcsrsConfigurationSet' - The configuration set object associated with the specified configuration set.
 --
+-- * 'dcsrsReputationOptions' - An object that represents the reputation settings for the configuration set.
+--
 -- * 'dcsrsEventDestinations' - A list of event destinations associated with the configuration set.
 --
 -- * 'dcsrsResponseStatus' - -- | The response status code.
@@ -153,6 +158,7 @@ describeConfigurationSetResponse pResponseStatus_ =
   DescribeConfigurationSetResponse'
   { _dcsrsTrackingOptions = Nothing
   , _dcsrsConfigurationSet = Nothing
+  , _dcsrsReputationOptions = Nothing
   , _dcsrsEventDestinations = Nothing
   , _dcsrsResponseStatus = pResponseStatus_
   }
@@ -165,6 +171,10 @@ dcsrsTrackingOptions = lens _dcsrsTrackingOptions (\ s a -> s{_dcsrsTrackingOpti
 -- | The configuration set object associated with the specified configuration set.
 dcsrsConfigurationSet :: Lens' DescribeConfigurationSetResponse (Maybe ConfigurationSet)
 dcsrsConfigurationSet = lens _dcsrsConfigurationSet (\ s a -> s{_dcsrsConfigurationSet = a});
+
+-- | An object that represents the reputation settings for the configuration set.
+dcsrsReputationOptions :: Lens' DescribeConfigurationSetResponse (Maybe ReputationOptions)
+dcsrsReputationOptions = lens _dcsrsReputationOptions (\ s a -> s{_dcsrsReputationOptions = a});
 
 -- | A list of event destinations associated with the configuration set.
 dcsrsEventDestinations :: Lens' DescribeConfigurationSetResponse [EventDestination]

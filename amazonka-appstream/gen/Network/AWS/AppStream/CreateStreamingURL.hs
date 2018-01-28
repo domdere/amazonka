@@ -21,8 +21,6 @@
 -- Creates a URL to start a streaming session for the specified user.
 --
 --
--- By default, the URL is valid only for one minute from the time that it is generated.
---
 module Network.AWS.AppStream.CreateStreamingURL
     (
     -- * Creating a Request
@@ -67,11 +65,11 @@ data CreateStreamingURL = CreateStreamingURL'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'csuSessionContext' - The session context of the streaming URL.
+-- * 'csuSessionContext' - The session context. For more information, see <http://docs.aws.amazon.com/appstream2/latest/developerguide/managing-stacks-fleets.html#managing-stacks-fleets-parameters Session Context> in the /Amazon AppStream 2.0 Developer Guide/ .
 --
--- * 'csuApplicationId' - The ID of the application that must be launched after the session starts.
+-- * 'csuApplicationId' - The name of the application to launch after the session starts. This is the name that you specified as __Name__ in the Image Assistant.
 --
--- * 'csuValidity' - The time that the streaming URL will be valid, in seconds. Specify a value between 1 and 604800 seconds.
+-- * 'csuValidity' - The time that the streaming URL will be valid, in seconds. Specify a value between 1 and 604800 seconds. The default is 60 seconds.
 --
 -- * 'csuStackName' - The name of the stack.
 --
@@ -94,15 +92,15 @@ createStreamingURL pStackName_ pFleetName_ pUserId_ =
   }
 
 
--- | The session context of the streaming URL.
+-- | The session context. For more information, see <http://docs.aws.amazon.com/appstream2/latest/developerguide/managing-stacks-fleets.html#managing-stacks-fleets-parameters Session Context> in the /Amazon AppStream 2.0 Developer Guide/ .
 csuSessionContext :: Lens' CreateStreamingURL (Maybe Text)
 csuSessionContext = lens _csuSessionContext (\ s a -> s{_csuSessionContext = a});
 
--- | The ID of the application that must be launched after the session starts.
+-- | The name of the application to launch after the session starts. This is the name that you specified as __Name__ in the Image Assistant.
 csuApplicationId :: Lens' CreateStreamingURL (Maybe Text)
 csuApplicationId = lens _csuApplicationId (\ s a -> s{_csuApplicationId = a});
 
--- | The time that the streaming URL will be valid, in seconds. Specify a value between 1 and 604800 seconds.
+-- | The time that the streaming URL will be valid, in seconds. Specify a value between 1 and 604800 seconds. The default is 60 seconds.
 csuValidity :: Lens' CreateStreamingURL (Maybe Integer)
 csuValidity = lens _csuValidity (\ s a -> s{_csuValidity = a});
 

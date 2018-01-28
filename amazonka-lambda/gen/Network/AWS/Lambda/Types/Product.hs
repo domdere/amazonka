@@ -27,10 +27,11 @@ import Network.AWS.Prelude
 --
 -- /See:/ 'accountLimit' smart constructor.
 data AccountLimit = AccountLimit'
-  { _alConcurrentExecutions :: !(Maybe Int)
-  , _alTotalCodeSize        :: !(Maybe Integer)
-  , _alCodeSizeUnzipped     :: !(Maybe Integer)
-  , _alCodeSizeZipped       :: !(Maybe Integer)
+  { _alConcurrentExecutions           :: !(Maybe Int)
+  , _alTotalCodeSize                  :: !(Maybe Integer)
+  , _alUnreservedConcurrentExecutions :: !(Maybe Nat)
+  , _alCodeSizeUnzipped               :: !(Maybe Integer)
+  , _alCodeSizeZipped                 :: !(Maybe Integer)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -38,9 +39,11 @@ data AccountLimit = AccountLimit'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'alConcurrentExecutions' - Number of simultaneous executions of your function per region. For more information or to request a limit increase for concurrent executions, see <http://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html Lambda Function Concurrent Executions> . The default limit is 100.
+-- * 'alConcurrentExecutions' - Number of simultaneous executions of your function per region. For more information or to request a limit increase for concurrent executions, see <http://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html Lambda Function Concurrent Executions> . The default limit is 1000.
 --
 -- * 'alTotalCodeSize' - Maximum size, in bytes, of a code package you can upload per region. The default size is 75 GB.
+--
+-- * 'alUnreservedConcurrentExecutions' - The number of concurrent executions available to functions that do not have concurrency limits set. For more information, see 'concurrent-executions' .
 --
 -- * 'alCodeSizeUnzipped' - Size, in bytes, of code/dependencies that you can zip into a deployment package (uncompressed zip/jar size) for uploading. The default limit is 250 MB.
 --
@@ -51,18 +54,23 @@ accountLimit =
   AccountLimit'
   { _alConcurrentExecutions = Nothing
   , _alTotalCodeSize = Nothing
+  , _alUnreservedConcurrentExecutions = Nothing
   , _alCodeSizeUnzipped = Nothing
   , _alCodeSizeZipped = Nothing
   }
 
 
--- | Number of simultaneous executions of your function per region. For more information or to request a limit increase for concurrent executions, see <http://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html Lambda Function Concurrent Executions> . The default limit is 100.
+-- | Number of simultaneous executions of your function per region. For more information or to request a limit increase for concurrent executions, see <http://docs.aws.amazon.com/lambda/latest/dg/concurrent-executions.html Lambda Function Concurrent Executions> . The default limit is 1000.
 alConcurrentExecutions :: Lens' AccountLimit (Maybe Int)
 alConcurrentExecutions = lens _alConcurrentExecutions (\ s a -> s{_alConcurrentExecutions = a});
 
 -- | Maximum size, in bytes, of a code package you can upload per region. The default size is 75 GB.
 alTotalCodeSize :: Lens' AccountLimit (Maybe Integer)
 alTotalCodeSize = lens _alTotalCodeSize (\ s a -> s{_alTotalCodeSize = a});
+
+-- | The number of concurrent executions available to functions that do not have concurrency limits set. For more information, see 'concurrent-executions' .
+alUnreservedConcurrentExecutions :: Lens' AccountLimit (Maybe Natural)
+alUnreservedConcurrentExecutions = lens _alUnreservedConcurrentExecutions (\ s a -> s{_alUnreservedConcurrentExecutions = a}) . mapping _Nat;
 
 -- | Size, in bytes, of code/dependencies that you can zip into a deployment package (uncompressed zip/jar size) for uploading. The default limit is 250 MB.
 alCodeSizeUnzipped :: Lens' AccountLimit (Maybe Integer)
@@ -79,6 +87,7 @@ instance FromJSON AccountLimit where
                  AccountLimit' <$>
                    (x .:? "ConcurrentExecutions") <*>
                      (x .:? "TotalCodeSize")
+                     <*> (x .:? "UnreservedConcurrentExecutions")
                      <*> (x .:? "CodeSizeUnzipped")
                      <*> (x .:? "CodeSizeZipped"))
 
@@ -135,16 +144,20 @@ instance NFData AccountUsage where
 --
 -- /See:/ 'aliasConfiguration' smart constructor.
 data AliasConfiguration = AliasConfiguration'
-  { _acName            :: !(Maybe Text)
+  { _acRoutingConfig   :: !(Maybe AliasRoutingConfiguration)
+  , _acName            :: !(Maybe Text)
   , _acFunctionVersion :: !(Maybe Text)
   , _acAliasARN        :: !(Maybe Text)
   , _acDescription     :: !(Maybe Text)
+  , _acRevisionId      :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
 -- | Creates a value of 'AliasConfiguration' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'acRoutingConfig' - Specifies an additional function versions the alias points to, allowing you to dictate what percentage of traffic will invoke each version. For more information, see 'lambda-traffic-shifting-using-aliases' .
 --
 -- * 'acName' - Alias name.
 --
@@ -153,16 +166,24 @@ data AliasConfiguration = AliasConfiguration'
 -- * 'acAliasARN' - Lambda function ARN that is qualified using the alias name as the suffix. For example, if you create an alias called @BETA@ that points to a helloworld function version, the ARN is @arn:aws:lambda:aws-regions:acct-id:function:helloworld:BETA@ .
 --
 -- * 'acDescription' - Alias description.
+--
+-- * 'acRevisionId' - Represents the latest updated revision of the function or alias.
 aliasConfiguration
     :: AliasConfiguration
 aliasConfiguration =
   AliasConfiguration'
-  { _acName = Nothing
+  { _acRoutingConfig = Nothing
+  , _acName = Nothing
   , _acFunctionVersion = Nothing
   , _acAliasARN = Nothing
   , _acDescription = Nothing
+  , _acRevisionId = Nothing
   }
 
+
+-- | Specifies an additional function versions the alias points to, allowing you to dictate what percentage of traffic will invoke each version. For more information, see 'lambda-traffic-shifting-using-aliases' .
+acRoutingConfig :: Lens' AliasConfiguration (Maybe AliasRoutingConfiguration)
+acRoutingConfig = lens _acRoutingConfig (\ s a -> s{_acRoutingConfig = a});
 
 -- | Alias name.
 acName :: Lens' AliasConfiguration (Maybe Text)
@@ -180,18 +201,98 @@ acAliasARN = lens _acAliasARN (\ s a -> s{_acAliasARN = a});
 acDescription :: Lens' AliasConfiguration (Maybe Text)
 acDescription = lens _acDescription (\ s a -> s{_acDescription = a});
 
+-- | Represents the latest updated revision of the function or alias.
+acRevisionId :: Lens' AliasConfiguration (Maybe Text)
+acRevisionId = lens _acRevisionId (\ s a -> s{_acRevisionId = a});
+
 instance FromJSON AliasConfiguration where
         parseJSON
           = withObject "AliasConfiguration"
               (\ x ->
                  AliasConfiguration' <$>
-                   (x .:? "Name") <*> (x .:? "FunctionVersion") <*>
-                     (x .:? "AliasArn")
-                     <*> (x .:? "Description"))
+                   (x .:? "RoutingConfig") <*> (x .:? "Name") <*>
+                     (x .:? "FunctionVersion")
+                     <*> (x .:? "AliasArn")
+                     <*> (x .:? "Description")
+                     <*> (x .:? "RevisionId"))
 
 instance Hashable AliasConfiguration where
 
 instance NFData AliasConfiguration where
+
+-- | The parent object that implements what percentage of traffic will invoke each function version. For more information, see 'lambda-traffic-shifting-using-aliases' .
+--
+--
+--
+-- /See:/ 'aliasRoutingConfiguration' smart constructor.
+newtype AliasRoutingConfiguration = AliasRoutingConfiguration'
+  { _arcAdditionalVersionWeights :: Maybe (Map Text Double)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'AliasRoutingConfiguration' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'arcAdditionalVersionWeights' - Set this value to dictate what percentage of traffic will invoke the updated function version. If set to an empty string, 100 percent of traffic will invoke @function-version@ . For more information, see 'lambda-traffic-shifting-using-aliases' .
+aliasRoutingConfiguration
+    :: AliasRoutingConfiguration
+aliasRoutingConfiguration =
+  AliasRoutingConfiguration' {_arcAdditionalVersionWeights = Nothing}
+
+
+-- | Set this value to dictate what percentage of traffic will invoke the updated function version. If set to an empty string, 100 percent of traffic will invoke @function-version@ . For more information, see 'lambda-traffic-shifting-using-aliases' .
+arcAdditionalVersionWeights :: Lens' AliasRoutingConfiguration (HashMap Text Double)
+arcAdditionalVersionWeights = lens _arcAdditionalVersionWeights (\ s a -> s{_arcAdditionalVersionWeights = a}) . _Default . _Map;
+
+instance FromJSON AliasRoutingConfiguration where
+        parseJSON
+          = withObject "AliasRoutingConfiguration"
+              (\ x ->
+                 AliasRoutingConfiguration' <$>
+                   (x .:? "AdditionalVersionWeights" .!= mempty))
+
+instance Hashable AliasRoutingConfiguration where
+
+instance NFData AliasRoutingConfiguration where
+
+instance ToJSON AliasRoutingConfiguration where
+        toJSON AliasRoutingConfiguration'{..}
+          = object
+              (catMaybes
+                 [("AdditionalVersionWeights" .=) <$>
+                    _arcAdditionalVersionWeights])
+
+-- | /See:/ 'concurrency' smart constructor.
+newtype Concurrency = Concurrency'
+  { _cReservedConcurrentExecutions :: Maybe Nat
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'Concurrency' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'cReservedConcurrentExecutions' - The number of concurrent executions reserved for this function. For more information, see 'concurrent-executions' .
+concurrency
+    :: Concurrency
+concurrency = Concurrency' {_cReservedConcurrentExecutions = Nothing}
+
+
+-- | The number of concurrent executions reserved for this function. For more information, see 'concurrent-executions' .
+cReservedConcurrentExecutions :: Lens' Concurrency (Maybe Natural)
+cReservedConcurrentExecutions = lens _cReservedConcurrentExecutions (\ s a -> s{_cReservedConcurrentExecutions = a}) . mapping _Nat;
+
+instance FromJSON Concurrency where
+        parseJSON
+          = withObject "Concurrency"
+              (\ x ->
+                 Concurrency' <$>
+                   (x .:? "ReservedConcurrentExecutions"))
+
+instance Hashable Concurrency where
+
+instance NFData Concurrency where
 
 -- | The parent object that contains the target ARN (Amazon Resource Name) of an Amazon SQS queue or Amazon SNS topic.
 --
@@ -582,6 +683,7 @@ data FunctionConfiguration = FunctionConfiguration'
   , _fcCodeSha256       :: !(Maybe Text)
   , _fcTracingConfig    :: !(Maybe TracingConfigResponse)
   , _fcDescription      :: !(Maybe Text)
+  , _fcRevisionId       :: !(Maybe Text)
   , _fcMasterARN        :: !(Maybe Text)
   } deriving (Eq, Show, Data, Typeable, Generic)
 
@@ -624,6 +726,8 @@ data FunctionConfiguration = FunctionConfiguration'
 --
 -- * 'fcDescription' - The user-provided description.
 --
+-- * 'fcRevisionId' - Represents the latest updated revision of the function or alias.
+--
 -- * 'fcMasterARN' - Returns the ARN (Amazon Resource Name) of the master function.
 functionConfiguration
     :: FunctionConfiguration
@@ -646,6 +750,7 @@ functionConfiguration =
   , _fcCodeSha256 = Nothing
   , _fcTracingConfig = Nothing
   , _fcDescription = Nothing
+  , _fcRevisionId = Nothing
   , _fcMasterARN = Nothing
   }
 
@@ -718,6 +823,10 @@ fcTracingConfig = lens _fcTracingConfig (\ s a -> s{_fcTracingConfig = a});
 fcDescription :: Lens' FunctionConfiguration (Maybe Text)
 fcDescription = lens _fcDescription (\ s a -> s{_fcDescription = a});
 
+-- | Represents the latest updated revision of the function or alias.
+fcRevisionId :: Lens' FunctionConfiguration (Maybe Text)
+fcRevisionId = lens _fcRevisionId (\ s a -> s{_fcRevisionId = a});
+
 -- | Returns the ARN (Amazon Resource Name) of the master function.
 fcMasterARN :: Lens' FunctionConfiguration (Maybe Text)
 fcMasterARN = lens _fcMasterARN (\ s a -> s{_fcMasterARN = a});
@@ -743,6 +852,7 @@ instance FromJSON FunctionConfiguration where
                      <*> (x .:? "CodeSha256")
                      <*> (x .:? "TracingConfig")
                      <*> (x .:? "Description")
+                     <*> (x .:? "RevisionId")
                      <*> (x .:? "MasterArn"))
 
 instance Hashable FunctionConfiguration where

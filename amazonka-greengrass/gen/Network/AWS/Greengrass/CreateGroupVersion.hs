@@ -26,6 +26,7 @@ module Network.AWS.Greengrass.CreateGroupVersion
     , CreateGroupVersion
     -- * Request Lenses
     , cgvAmznClientToken
+    , cgvResourceDefinitionVersionARN
     , cgvSubscriptionDefinitionVersionARN
     , cgvCoreDefinitionVersionARN
     , cgvDeviceDefinitionVersionARN
@@ -54,6 +55,7 @@ import Network.AWS.Response
 -- | /See:/ 'createGroupVersion' smart constructor.
 data CreateGroupVersion = CreateGroupVersion'
   { _cgvAmznClientToken                  :: !(Maybe Text)
+  , _cgvResourceDefinitionVersionARN     :: !(Maybe Text)
   , _cgvSubscriptionDefinitionVersionARN :: !(Maybe Text)
   , _cgvCoreDefinitionVersionARN         :: !(Maybe Text)
   , _cgvDeviceDefinitionVersionARN       :: !(Maybe Text)
@@ -69,6 +71,8 @@ data CreateGroupVersion = CreateGroupVersion'
 --
 -- * 'cgvAmznClientToken' - The client token used to request idempotent operations.
 --
+-- * 'cgvResourceDefinitionVersionARN' - Resource definition version arn for this group.
+--
 -- * 'cgvSubscriptionDefinitionVersionARN' - Subscription definition version arn for this group.
 --
 -- * 'cgvCoreDefinitionVersionARN' - Core definition version arn for this group.
@@ -77,7 +81,7 @@ data CreateGroupVersion = CreateGroupVersion'
 --
 -- * 'cgvFunctionDefinitionVersionARN' - Function definition version arn for this group.
 --
--- * 'cgvLoggerDefinitionVersionARN' - Logger definitionv ersion arn for this group.
+-- * 'cgvLoggerDefinitionVersionARN' - Logger definition version arn for this group.
 --
 -- * 'cgvGroupId' - The unique Id of the AWS Greengrass Group
 createGroupVersion
@@ -86,6 +90,7 @@ createGroupVersion
 createGroupVersion pGroupId_ =
   CreateGroupVersion'
   { _cgvAmznClientToken = Nothing
+  , _cgvResourceDefinitionVersionARN = Nothing
   , _cgvSubscriptionDefinitionVersionARN = Nothing
   , _cgvCoreDefinitionVersionARN = Nothing
   , _cgvDeviceDefinitionVersionARN = Nothing
@@ -98,6 +103,10 @@ createGroupVersion pGroupId_ =
 -- | The client token used to request idempotent operations.
 cgvAmznClientToken :: Lens' CreateGroupVersion (Maybe Text)
 cgvAmznClientToken = lens _cgvAmznClientToken (\ s a -> s{_cgvAmznClientToken = a});
+
+-- | Resource definition version arn for this group.
+cgvResourceDefinitionVersionARN :: Lens' CreateGroupVersion (Maybe Text)
+cgvResourceDefinitionVersionARN = lens _cgvResourceDefinitionVersionARN (\ s a -> s{_cgvResourceDefinitionVersionARN = a});
 
 -- | Subscription definition version arn for this group.
 cgvSubscriptionDefinitionVersionARN :: Lens' CreateGroupVersion (Maybe Text)
@@ -115,7 +124,7 @@ cgvDeviceDefinitionVersionARN = lens _cgvDeviceDefinitionVersionARN (\ s a -> s{
 cgvFunctionDefinitionVersionARN :: Lens' CreateGroupVersion (Maybe Text)
 cgvFunctionDefinitionVersionARN = lens _cgvFunctionDefinitionVersionARN (\ s a -> s{_cgvFunctionDefinitionVersionARN = a});
 
--- | Logger definitionv ersion arn for this group.
+-- | Logger definition version arn for this group.
 cgvLoggerDefinitionVersionARN :: Lens' CreateGroupVersion (Maybe Text)
 cgvLoggerDefinitionVersionARN = lens _cgvLoggerDefinitionVersionARN (\ s a -> s{_cgvLoggerDefinitionVersionARN = a});
 
@@ -151,7 +160,9 @@ instance ToJSON CreateGroupVersion where
         toJSON CreateGroupVersion'{..}
           = object
               (catMaybes
-                 [("SubscriptionDefinitionVersionArn" .=) <$>
+                 [("ResourceDefinitionVersionArn" .=) <$>
+                    _cgvResourceDefinitionVersionARN,
+                  ("SubscriptionDefinitionVersionArn" .=) <$>
                     _cgvSubscriptionDefinitionVersionARN,
                   ("CoreDefinitionVersionArn" .=) <$>
                     _cgvCoreDefinitionVersionARN,

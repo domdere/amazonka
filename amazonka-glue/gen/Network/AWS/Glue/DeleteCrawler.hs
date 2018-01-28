@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Removes a specified @Crawler@ from the metadata store, unless the @Crawler@ state is @RUNNING@ .
+-- Removes a specified crawler from the Data Catalog, unless the crawler state is @RUNNING@ .
 --
 --
 module Network.AWS.Glue.DeleteCrawler
@@ -53,14 +53,14 @@ newtype DeleteCrawler = DeleteCrawler'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dcName' - Name of the @Crawler@ to remove.
+-- * 'dcName' - Name of the crawler to remove.
 deleteCrawler
     :: Text -- ^ 'dcName'
     -> DeleteCrawler
 deleteCrawler pName_ = DeleteCrawler' {_dcName = pName_}
 
 
--- | Name of the @Crawler@ to remove.
+-- | Name of the crawler to remove.
 dcName :: Lens' DeleteCrawler Text
 dcName = lens _dcName (\ s a -> s{_dcName = a});
 

@@ -18,16 +18,18 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Returns an array of celebrities recognized in the input image. The image is passed either as base64-encoded image bytes or as a reference to an image in an Amazon S3 bucket. The image must be either a PNG or JPEG formatted file. For more information, see 'celebrity-recognition' .
+-- Returns an array of celebrities recognized in the input image. For more information, see 'celebrities' .
 --
 --
--- @RecognizeCelebrities@ returns the 15 largest faces in the image. It lists recognized celebrities in the @CelebrityFaces@ list and unrecognized faces in the @UnrecognizedFaces@ list. The operation doesn't return celebrities whose face sizes are smaller than the largest 15 faces in the image.
+-- @RecognizeCelebrities@ returns the 100 largest faces in the image. It lists recognized celebrities in the @CelebrityFaces@ array and unrecognized faces in the @UnrecognizedFaces@ array. @RecognizeCelebrities@ doesn't return celebrities whose faces are not amongst the largest 100 faces in the image.
 --
--- For each celebrity recognized, the API returns a @Celebrity@ object. The @Celebrity@ object contains the celebrity name, ID, URL links to additional information, match confidence, and a @ComparedFace@ object that you can use to locate the celebrity's face on the image.
+-- For each celebrity recognized, the @RecognizeCelebrities@ returns a @Celebrity@ object. The @Celebrity@ object contains the celebrity name, ID, URL links to additional information, match confidence, and a @ComparedFace@ object that you can use to locate the celebrity's face on the image.
 --
 -- Rekognition does not retain information about which images a celebrity has been recognized in. Your application must store this information and use the @Celebrity@ ID property as a unique identifier for the celebrity. If you don't store the celebrity name or additional information URLs returned by @RecognizeCelebrities@ , you will need the ID to identify the celebrity in a call to the operation.
 --
--- For an example, see 'recognize-celebrities-tutorial' .
+-- You pass the imput image either as base64-encoded image bytes or as a reference to an image in an Amazon S3 bucket. If you use the Amazon CLI to call Amazon Rekognition operations, passing image bytes is not supported. The image must be either a PNG or JPEG formatted file.
+--
+-- For an example, see 'celebrities-procedure-image' .
 --
 -- This operation requires permissions to perform the @rekognition:RecognizeCelebrities@ operation.
 --
@@ -66,14 +68,14 @@ newtype RecognizeCelebrities = RecognizeCelebrities'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'rcImage' - The input image to use for celebrity recognition.
+-- * 'rcImage' - The input image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing base64-encoded image bytes is not supported.
 recognizeCelebrities
     :: Image -- ^ 'rcImage'
     -> RecognizeCelebrities
 recognizeCelebrities pImage_ = RecognizeCelebrities' {_rcImage = pImage_}
 
 
--- | The input image to use for celebrity recognition.
+-- | The input image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing base64-encoded image bytes is not supported.
 rcImage :: Lens' RecognizeCelebrities Image
 rcImage = lens _rcImage (\ s a -> s{_rcImage = a});
 

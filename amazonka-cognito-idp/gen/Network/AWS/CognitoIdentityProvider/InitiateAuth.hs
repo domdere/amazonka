@@ -28,6 +28,8 @@ module Network.AWS.CognitoIdentityProvider.InitiateAuth
     , InitiateAuth
     -- * Request Lenses
     , iaClientMetadata
+    , iaAnalyticsMetadata
+    , iaUserContextData
     , iaAuthParameters
     , iaAuthFlow
     , iaClientId
@@ -56,10 +58,12 @@ import Network.AWS.Response
 --
 -- /See:/ 'initiateAuth' smart constructor.
 data InitiateAuth = InitiateAuth'
-  { _iaClientMetadata :: !(Maybe (Map Text Text))
-  , _iaAuthParameters :: !(Maybe (Map Text Text))
-  , _iaAuthFlow       :: !AuthFlowType
-  , _iaClientId       :: !(Sensitive Text)
+  { _iaClientMetadata    :: !(Maybe (Map Text Text))
+  , _iaAnalyticsMetadata :: !(Maybe AnalyticsMetadataType)
+  , _iaUserContextData   :: !(Maybe UserContextDataType)
+  , _iaAuthParameters    :: !(Maybe (Map Text Text))
+  , _iaAuthFlow          :: !AuthFlowType
+  , _iaClientId          :: !(Sensitive Text)
   } deriving (Eq, Show, Data, Typeable, Generic)
 
 
@@ -68,6 +72,10 @@ data InitiateAuth = InitiateAuth'
 -- Use one of the following lenses to modify other fields as desired:
 --
 -- * 'iaClientMetadata' - This is a random key-value pair map which can contain any key and will be passed to your PreAuthentication Lambda trigger as-is. It can be used to implement additional validations around authentication.
+--
+-- * 'iaAnalyticsMetadata' - The Amazon Pinpoint analytics metadata for collecting metrics for @InitiateAuth@ calls.
+--
+-- * 'iaUserContextData' - Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.
 --
 -- * 'iaAuthParameters' - The authentication parameters. These are inputs corresponding to the @AuthFlow@ that you are invoking. The required values depend on the value of @AuthFlow@ :     * For @USER_SRP_AUTH@ : @USERNAME@ (required), @SRP_A@ (required), @SECRET_HASH@ (required if the app client is configured with a client secret), @DEVICE_KEY@      * For @REFRESH_TOKEN_AUTH/REFRESH_TOKEN@ : @USERNAME@ (required), @SECRET_HASH@ (required if the app client is configured with a client secret), @REFRESH_TOKEN@ (required), @DEVICE_KEY@      * For @CUSTOM_AUTH@ : @USERNAME@ (required), @SECRET_HASH@ (if app client is configured with client secret), @DEVICE_KEY@
 --
@@ -81,6 +89,8 @@ initiateAuth
 initiateAuth pAuthFlow_ pClientId_ =
   InitiateAuth'
   { _iaClientMetadata = Nothing
+  , _iaAnalyticsMetadata = Nothing
+  , _iaUserContextData = Nothing
   , _iaAuthParameters = Nothing
   , _iaAuthFlow = pAuthFlow_
   , _iaClientId = _Sensitive # pClientId_
@@ -90,6 +100,14 @@ initiateAuth pAuthFlow_ pClientId_ =
 -- | This is a random key-value pair map which can contain any key and will be passed to your PreAuthentication Lambda trigger as-is. It can be used to implement additional validations around authentication.
 iaClientMetadata :: Lens' InitiateAuth (HashMap Text Text)
 iaClientMetadata = lens _iaClientMetadata (\ s a -> s{_iaClientMetadata = a}) . _Default . _Map;
+
+-- | The Amazon Pinpoint analytics metadata for collecting metrics for @InitiateAuth@ calls.
+iaAnalyticsMetadata :: Lens' InitiateAuth (Maybe AnalyticsMetadataType)
+iaAnalyticsMetadata = lens _iaAnalyticsMetadata (\ s a -> s{_iaAnalyticsMetadata = a});
+
+-- | Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.
+iaUserContextData :: Lens' InitiateAuth (Maybe UserContextDataType)
+iaUserContextData = lens _iaUserContextData (\ s a -> s{_iaUserContextData = a});
 
 -- | The authentication parameters. These are inputs corresponding to the @AuthFlow@ that you are invoking. The required values depend on the value of @AuthFlow@ :     * For @USER_SRP_AUTH@ : @USERNAME@ (required), @SRP_A@ (required), @SECRET_HASH@ (required if the app client is configured with a client secret), @DEVICE_KEY@      * For @REFRESH_TOKEN_AUTH/REFRESH_TOKEN@ : @USERNAME@ (required), @SECRET_HASH@ (required if the app client is configured with a client secret), @REFRESH_TOKEN@ (required), @DEVICE_KEY@      * For @CUSTOM_AUTH@ : @USERNAME@ (required), @SECRET_HASH@ (if app client is configured with client secret), @DEVICE_KEY@
 iaAuthParameters :: Lens' InitiateAuth (HashMap Text Text)
@@ -135,6 +153,8 @@ instance ToJSON InitiateAuth where
           = object
               (catMaybes
                  [("ClientMetadata" .=) <$> _iaClientMetadata,
+                  ("AnalyticsMetadata" .=) <$> _iaAnalyticsMetadata,
+                  ("UserContextData" .=) <$> _iaUserContextData,
                   ("AuthParameters" .=) <$> _iaAuthParameters,
                   Just ("AuthFlow" .= _iaAuthFlow),
                   Just ("ClientId" .= _iaClientId)])
@@ -169,7 +189,7 @@ data InitiateAuthResponse = InitiateAuthResponse'
 --
 -- * 'iarsAuthenticationResult' - The result of the authentication response. This is only returned if the caller does not need to pass another challenge. If the caller does need to pass another challenge before it gets tokens, @ChallengeName@ , @ChallengeParameters@ , and @Session@ are returned.
 --
--- * 'iarsSession' - The session which should be passed both ways in challenge-response calls to the service. If the <API_InitiateAuth.html InitiateAuth> or <API_RespondToAuthChallenge.html RespondToAuthChallenge> API call determines that the caller needs to go through another challenge, they return a session with other challenge parameters. This session should be passed as it is to the next @RespondToAuthChallenge@ API call.
+-- * 'iarsSession' - The session which should be passed both ways in challenge-response calls to the service. If the or API call determines that the caller needs to go through another challenge, they return a session with other challenge parameters. This session should be passed as it is to the next @RespondToAuthChallenge@ API call.
 --
 -- * 'iarsResponseStatus' - -- | The response status code.
 initiateAuthResponse
@@ -197,7 +217,7 @@ iarsChallengeParameters = lens _iarsChallengeParameters (\ s a -> s{_iarsChallen
 iarsAuthenticationResult :: Lens' InitiateAuthResponse (Maybe AuthenticationResultType)
 iarsAuthenticationResult = lens _iarsAuthenticationResult (\ s a -> s{_iarsAuthenticationResult = a});
 
--- | The session which should be passed both ways in challenge-response calls to the service. If the <API_InitiateAuth.html InitiateAuth> or <API_RespondToAuthChallenge.html RespondToAuthChallenge> API call determines that the caller needs to go through another challenge, they return a session with other challenge parameters. This session should be passed as it is to the next @RespondToAuthChallenge@ API call.
+-- | The session which should be passed both ways in challenge-response calls to the service. If the or API call determines that the caller needs to go through another challenge, they return a session with other challenge parameters. This session should be passed as it is to the next @RespondToAuthChallenge@ API call.
 iarsSession :: Lens' InitiateAuthResponse (Maybe Text)
 iarsSession = lens _iarsSession (\ s a -> s{_iarsSession = a});
 

@@ -1626,6 +1626,100 @@ instance Hashable ReplicationTask where
 
 instance NFData ReplicationTask where
 
+-- | The task assessment report in JSON format.
+--
+--
+--
+-- /See:/ 'replicationTaskAssessmentResult' smart constructor.
+data ReplicationTaskAssessmentResult = ReplicationTaskAssessmentResult'
+  { _rtarAssessmentResults                 :: !(Maybe Text)
+  , _rtarAssessmentResultsFile             :: !(Maybe Text)
+  , _rtarReplicationTaskIdentifier         :: !(Maybe Text)
+  , _rtarAssessmentStatus                  :: !(Maybe Text)
+  , _rtarS3ObjectURL                       :: !(Maybe Text)
+  , _rtarReplicationTaskLastAssessmentDate :: !(Maybe POSIX)
+  , _rtarReplicationTaskARN                :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ReplicationTaskAssessmentResult' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rtarAssessmentResults' - The task assessment results in JSON format.
+--
+-- * 'rtarAssessmentResultsFile' - The file containing the results of the task assessment.
+--
+-- * 'rtarReplicationTaskIdentifier' - The replication task identifier of the task on which the task assessment was run.
+--
+-- * 'rtarAssessmentStatus' - The status of the task assessment.
+--
+-- * 'rtarS3ObjectURL' - The URL of the S3 object containing the task assessment results.
+--
+-- * 'rtarReplicationTaskLastAssessmentDate' - The date the task assessment was completed.
+--
+-- * 'rtarReplicationTaskARN' - The Amazon Resource Name (ARN) of the replication task.
+replicationTaskAssessmentResult
+    :: ReplicationTaskAssessmentResult
+replicationTaskAssessmentResult =
+  ReplicationTaskAssessmentResult'
+  { _rtarAssessmentResults = Nothing
+  , _rtarAssessmentResultsFile = Nothing
+  , _rtarReplicationTaskIdentifier = Nothing
+  , _rtarAssessmentStatus = Nothing
+  , _rtarS3ObjectURL = Nothing
+  , _rtarReplicationTaskLastAssessmentDate = Nothing
+  , _rtarReplicationTaskARN = Nothing
+  }
+
+
+-- | The task assessment results in JSON format.
+rtarAssessmentResults :: Lens' ReplicationTaskAssessmentResult (Maybe Text)
+rtarAssessmentResults = lens _rtarAssessmentResults (\ s a -> s{_rtarAssessmentResults = a});
+
+-- | The file containing the results of the task assessment.
+rtarAssessmentResultsFile :: Lens' ReplicationTaskAssessmentResult (Maybe Text)
+rtarAssessmentResultsFile = lens _rtarAssessmentResultsFile (\ s a -> s{_rtarAssessmentResultsFile = a});
+
+-- | The replication task identifier of the task on which the task assessment was run.
+rtarReplicationTaskIdentifier :: Lens' ReplicationTaskAssessmentResult (Maybe Text)
+rtarReplicationTaskIdentifier = lens _rtarReplicationTaskIdentifier (\ s a -> s{_rtarReplicationTaskIdentifier = a});
+
+-- | The status of the task assessment.
+rtarAssessmentStatus :: Lens' ReplicationTaskAssessmentResult (Maybe Text)
+rtarAssessmentStatus = lens _rtarAssessmentStatus (\ s a -> s{_rtarAssessmentStatus = a});
+
+-- | The URL of the S3 object containing the task assessment results.
+rtarS3ObjectURL :: Lens' ReplicationTaskAssessmentResult (Maybe Text)
+rtarS3ObjectURL = lens _rtarS3ObjectURL (\ s a -> s{_rtarS3ObjectURL = a});
+
+-- | The date the task assessment was completed.
+rtarReplicationTaskLastAssessmentDate :: Lens' ReplicationTaskAssessmentResult (Maybe UTCTime)
+rtarReplicationTaskLastAssessmentDate = lens _rtarReplicationTaskLastAssessmentDate (\ s a -> s{_rtarReplicationTaskLastAssessmentDate = a}) . mapping _Time;
+
+-- | The Amazon Resource Name (ARN) of the replication task.
+rtarReplicationTaskARN :: Lens' ReplicationTaskAssessmentResult (Maybe Text)
+rtarReplicationTaskARN = lens _rtarReplicationTaskARN (\ s a -> s{_rtarReplicationTaskARN = a});
+
+instance FromJSON ReplicationTaskAssessmentResult
+         where
+        parseJSON
+          = withObject "ReplicationTaskAssessmentResult"
+              (\ x ->
+                 ReplicationTaskAssessmentResult' <$>
+                   (x .:? "AssessmentResults") <*>
+                     (x .:? "AssessmentResultsFile")
+                     <*> (x .:? "ReplicationTaskIdentifier")
+                     <*> (x .:? "AssessmentStatus")
+                     <*> (x .:? "S3ObjectUrl")
+                     <*> (x .:? "ReplicationTaskLastAssessmentDate")
+                     <*> (x .:? "ReplicationTaskArn"))
+
+instance Hashable ReplicationTaskAssessmentResult
+         where
+
+instance NFData ReplicationTaskAssessmentResult where
+
 -- |
 --
 --
@@ -1931,15 +2025,19 @@ instance NFData SupportedEndpointType where
 --
 -- /See:/ 'tableStatistics' smart constructor.
 data TableStatistics = TableStatistics'
-  { _tsFullLoadRows                 :: !(Maybe Integer)
+  { _tsValidationState              :: !(Maybe Text)
+  , _tsFullLoadRows                 :: !(Maybe Integer)
   , _tsInserts                      :: !(Maybe Integer)
   , _tsFullLoadCondtnlChkFailedRows :: !(Maybe Integer)
+  , _tsValidationFailedRecords      :: !(Maybe Integer)
+  , _tsValidationSuspendedRecords   :: !(Maybe Integer)
   , _tsSchemaName                   :: !(Maybe Text)
   , _tsTableState                   :: !(Maybe Text)
   , _tsFullLoadErrorRows            :: !(Maybe Integer)
   , _tsDdls                         :: !(Maybe Integer)
   , _tsDeletes                      :: !(Maybe Integer)
   , _tsUpdates                      :: !(Maybe Integer)
+  , _tsValidationPendingRecords     :: !(Maybe Integer)
   , _tsLastUpdateTime               :: !(Maybe POSIX)
   , _tsTableName                    :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -1949,11 +2047,17 @@ data TableStatistics = TableStatistics'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'tsValidationState' - The validation state of the table. The parameter can have the following values     * Not enabled—Validation is not enabled for the table in the migration task.     * Pending records—Some records in the table are waiting for validation.     * Mismatched records—Some records in the table do not match between the source and target.     * Suspended records—Some records in the table could not be validated.     * No primary key—The table could not be validated because it had no primary key.     * Table error—The table was not validated because it was in an error state and some data was not migrated.     * Validated—All rows in the table were validated. If the table is updated, the status can change from Validated.     * Error—The table could not be validated because of an unexpected error.
+--
 -- * 'tsFullLoadRows' - The number of rows added during the Full Load operation.
 --
 -- * 'tsInserts' - The number of insert actions performed on a table.
 --
 -- * 'tsFullLoadCondtnlChkFailedRows' - The number of rows that failed conditional checks during the Full Load operation (valid only for DynamoDB as a target migrations).
+--
+-- * 'tsValidationFailedRecords' - The number of records that failed validation.
+--
+-- * 'tsValidationSuspendedRecords' - The number of records that could not be validated.
 --
 -- * 'tsSchemaName' - The schema name.
 --
@@ -1967,6 +2071,8 @@ data TableStatistics = TableStatistics'
 --
 -- * 'tsUpdates' - The number of update actions performed on a table.
 --
+-- * 'tsValidationPendingRecords' - The number of records that have yet to be validated.
+--
 -- * 'tsLastUpdateTime' - The last time the table was updated.
 --
 -- * 'tsTableName' - The name of the table.
@@ -1974,19 +2080,27 @@ tableStatistics
     :: TableStatistics
 tableStatistics =
   TableStatistics'
-  { _tsFullLoadRows = Nothing
+  { _tsValidationState = Nothing
+  , _tsFullLoadRows = Nothing
   , _tsInserts = Nothing
   , _tsFullLoadCondtnlChkFailedRows = Nothing
+  , _tsValidationFailedRecords = Nothing
+  , _tsValidationSuspendedRecords = Nothing
   , _tsSchemaName = Nothing
   , _tsTableState = Nothing
   , _tsFullLoadErrorRows = Nothing
   , _tsDdls = Nothing
   , _tsDeletes = Nothing
   , _tsUpdates = Nothing
+  , _tsValidationPendingRecords = Nothing
   , _tsLastUpdateTime = Nothing
   , _tsTableName = Nothing
   }
 
+
+-- | The validation state of the table. The parameter can have the following values     * Not enabled—Validation is not enabled for the table in the migration task.     * Pending records—Some records in the table are waiting for validation.     * Mismatched records—Some records in the table do not match between the source and target.     * Suspended records—Some records in the table could not be validated.     * No primary key—The table could not be validated because it had no primary key.     * Table error—The table was not validated because it was in an error state and some data was not migrated.     * Validated—All rows in the table were validated. If the table is updated, the status can change from Validated.     * Error—The table could not be validated because of an unexpected error.
+tsValidationState :: Lens' TableStatistics (Maybe Text)
+tsValidationState = lens _tsValidationState (\ s a -> s{_tsValidationState = a});
 
 -- | The number of rows added during the Full Load operation.
 tsFullLoadRows :: Lens' TableStatistics (Maybe Integer)
@@ -1999,6 +2113,14 @@ tsInserts = lens _tsInserts (\ s a -> s{_tsInserts = a});
 -- | The number of rows that failed conditional checks during the Full Load operation (valid only for DynamoDB as a target migrations).
 tsFullLoadCondtnlChkFailedRows :: Lens' TableStatistics (Maybe Integer)
 tsFullLoadCondtnlChkFailedRows = lens _tsFullLoadCondtnlChkFailedRows (\ s a -> s{_tsFullLoadCondtnlChkFailedRows = a});
+
+-- | The number of records that failed validation.
+tsValidationFailedRecords :: Lens' TableStatistics (Maybe Integer)
+tsValidationFailedRecords = lens _tsValidationFailedRecords (\ s a -> s{_tsValidationFailedRecords = a});
+
+-- | The number of records that could not be validated.
+tsValidationSuspendedRecords :: Lens' TableStatistics (Maybe Integer)
+tsValidationSuspendedRecords = lens _tsValidationSuspendedRecords (\ s a -> s{_tsValidationSuspendedRecords = a});
 
 -- | The schema name.
 tsSchemaName :: Lens' TableStatistics (Maybe Text)
@@ -2024,6 +2146,10 @@ tsDeletes = lens _tsDeletes (\ s a -> s{_tsDeletes = a});
 tsUpdates :: Lens' TableStatistics (Maybe Integer)
 tsUpdates = lens _tsUpdates (\ s a -> s{_tsUpdates = a});
 
+-- | The number of records that have yet to be validated.
+tsValidationPendingRecords :: Lens' TableStatistics (Maybe Integer)
+tsValidationPendingRecords = lens _tsValidationPendingRecords (\ s a -> s{_tsValidationPendingRecords = a});
+
 -- | The last time the table was updated.
 tsLastUpdateTime :: Lens' TableStatistics (Maybe UTCTime)
 tsLastUpdateTime = lens _tsLastUpdateTime (\ s a -> s{_tsLastUpdateTime = a}) . mapping _Time;
@@ -2037,14 +2163,18 @@ instance FromJSON TableStatistics where
           = withObject "TableStatistics"
               (\ x ->
                  TableStatistics' <$>
-                   (x .:? "FullLoadRows") <*> (x .:? "Inserts") <*>
-                     (x .:? "FullLoadCondtnlChkFailedRows")
+                   (x .:? "ValidationState") <*> (x .:? "FullLoadRows")
+                     <*> (x .:? "Inserts")
+                     <*> (x .:? "FullLoadCondtnlChkFailedRows")
+                     <*> (x .:? "ValidationFailedRecords")
+                     <*> (x .:? "ValidationSuspendedRecords")
                      <*> (x .:? "SchemaName")
                      <*> (x .:? "TableState")
                      <*> (x .:? "FullLoadErrorRows")
                      <*> (x .:? "Ddls")
                      <*> (x .:? "Deletes")
                      <*> (x .:? "Updates")
+                     <*> (x .:? "ValidationPendingRecords")
                      <*> (x .:? "LastUpdateTime")
                      <*> (x .:? "TableName"))
 

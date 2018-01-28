@@ -24,6 +24,9 @@ module Network.AWS.APIGateway.Types
     , _BadRequestException
     , _LimitExceededException
 
+    -- * APIKeySourceType
+    , APIKeySourceType (..)
+
     -- * APIKeysFormat
     , APIKeysFormat (..)
 
@@ -35,6 +38,9 @@ module Network.AWS.APIGateway.Types
 
     -- * CacheClusterStatus
     , CacheClusterStatus (..)
+
+    -- * ConnectionType
+    , ConnectionType (..)
 
     -- * ContentHandlingStrategy
     , ContentHandlingStrategy (..)
@@ -51,6 +57,9 @@ module Network.AWS.APIGateway.Types
     -- * IntegrationType
     , IntegrationType (..)
 
+    -- * LocationStatusType
+    , LocationStatusType (..)
+
     -- * Op
     , Op (..)
 
@@ -62,6 +71,9 @@ module Network.AWS.APIGateway.Types
 
     -- * UnauthorizedCacheControlHeaderStrategy
     , UnauthorizedCacheControlHeaderStrategy (..)
+
+    -- * VPCLinkStatus
+    , VPCLinkStatus (..)
 
     -- * APIKey
     , APIKey
@@ -81,6 +93,12 @@ module Network.AWS.APIGateway.Types
     , apiStage
     , asStage
     , asApiId
+
+    -- * AccessLogSettings
+    , AccessLogSettings
+    , accessLogSettings
+    , alsFormat
+    , alsDestinationARN
 
     -- * Account
     , Account
@@ -111,6 +129,14 @@ module Network.AWS.APIGateway.Types
     , bpmBasePath
     , bpmRestAPIId
 
+    -- * CanarySettings
+    , CanarySettings
+    , canarySettings
+    , csDeploymentId
+    , csStageVariableOverrides
+    , csUseStageCache
+    , csPercentTraffic
+
     -- * ClientCertificate
     , ClientCertificate
     , clientCertificate
@@ -127,6 +153,13 @@ module Network.AWS.APIGateway.Types
     , dCreatedDate
     , dId
     , dDescription
+
+    -- * DeploymentCanarySettings
+    , DeploymentCanarySettings
+    , deploymentCanarySettings
+    , dcsStageVariableOverrides
+    , dcsUseStageCache
+    , dcsPercentTraffic
 
     -- * DocumentationPart
     , DocumentationPart
@@ -154,9 +187,11 @@ module Network.AWS.APIGateway.Types
     -- * DomainName
     , DomainName
     , domainName
+    , dnRegionalHostedZoneId
     , dnCertificateName
     , dnRegionalCertificateARN
     , dnCertificateARN
+    , dnDistributionHostedZoneId
     , dnDomainName
     , dnRegionalCertificateName
     , dnRegionalDomainName
@@ -184,13 +219,16 @@ module Network.AWS.APIGateway.Types
     , iHttpMethod
     , iRequestTemplates
     , iCredentials
+    , iConnectionId
     , iRequestParameters
     , iContentHandling
     , iPassthroughBehavior
     , iUri
     , iIntegrationResponses
     , iCacheNamespace
+    , iTimeoutInMillis
     , iType
+    , iConnectionType
     , iCacheKeyParameters
 
     -- * IntegrationResponse
@@ -207,6 +245,7 @@ module Network.AWS.APIGateway.Types
     , method
     , mMethodResponses
     , mHttpMethod
+    , mAuthorizationScopes
     , mRequestValidatorId
     , mRequestModels
     , mRequestParameters
@@ -287,11 +326,13 @@ module Network.AWS.APIGateway.Types
     -- * RestAPI
     , RestAPI
     , restAPI
+    , raMinimumCompressionSize
     , raBinaryMediaTypes
     , raWarnings
     , raCreatedDate
     , raName
     , raVersion
+    , raApiKeySource
     , raId
     , raEndpointConfiguration
     , raDescription
@@ -318,6 +359,7 @@ module Network.AWS.APIGateway.Types
     , stage
     , sDeploymentId
     , sVariables
+    , sAccessLogSettings
     , sDocumentationVersion
     , sClientCertificateId
     , sCreatedDate
@@ -325,9 +367,11 @@ module Network.AWS.APIGateway.Types
     , sMethodSettings
     , sLastUpdatedDate
     , sCacheClusterSize
+    , sCanarySettings
     , sCacheClusterEnabled
     , sStageName
     , sDescription
+    , sTags
 
     -- * StageKey
     , StageKey
@@ -368,6 +412,16 @@ module Network.AWS.APIGateway.Types
     , upkName
     , upkId
     , upkType
+
+    -- * VPCLink
+    , VPCLink
+    , vpcLink
+    , vlStatus
+    , vlTargetARNs
+    , vlName
+    , vlStatusMessage
+    , vlId
+    , vlDescription
     ) where
 
 import Network.AWS.APIGateway.Types.Product

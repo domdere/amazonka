@@ -18,7 +18,9 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Undocumented operation.
+-- Deletes the specified image builder and releases the capacity.
+--
+--
 module Network.AWS.AppStream.DeleteImageBuilder
     (
     -- * Creating a Request
@@ -52,14 +54,14 @@ newtype DeleteImageBuilder = DeleteImageBuilder'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dibName' - Undocumented member.
+-- * 'dibName' - The name of the image builder.
 deleteImageBuilder
     :: Text -- ^ 'dibName'
     -> DeleteImageBuilder
 deleteImageBuilder pName_ = DeleteImageBuilder' {_dibName = pName_}
 
 
--- | Undocumented member.
+-- | The name of the image builder.
 dibName :: Lens' DeleteImageBuilder Text
 dibName = lens _dibName (\ s a -> s{_dibName = a});
 
@@ -108,7 +110,7 @@ data DeleteImageBuilderResponse = DeleteImageBuilderResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dibrsImageBuilder' - Undocumented member.
+-- * 'dibrsImageBuilder' - Information about the image builder.
 --
 -- * 'dibrsResponseStatus' - -- | The response status code.
 deleteImageBuilderResponse
@@ -119,7 +121,7 @@ deleteImageBuilderResponse pResponseStatus_ =
   {_dibrsImageBuilder = Nothing, _dibrsResponseStatus = pResponseStatus_}
 
 
--- | Undocumented member.
+-- | Information about the image builder.
 dibrsImageBuilder :: Lens' DeleteImageBuilderResponse (Maybe ImageBuilder)
 dibrsImageBuilder = lens _dibrsImageBuilder (\ s a -> s{_dibrsImageBuilder = a});
 

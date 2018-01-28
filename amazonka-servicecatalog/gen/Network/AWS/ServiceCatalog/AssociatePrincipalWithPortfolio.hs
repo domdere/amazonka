@@ -63,9 +63,9 @@ data AssociatePrincipalWithPortfolio = AssociatePrincipalWithPortfolio'
 --
 -- * 'aPortfolioId' - The portfolio identifier.
 --
--- * 'aPrincipalARN' - The ARN representing the principal (IAM user, role, or group).
+-- * 'aPrincipalARN' - The ARN of the principal (IAM user, role, or group).
 --
--- * 'aPrincipalType' - The principal type. Must be @IAM@
+-- * 'aPrincipalType' - The principal type. The supported value is @IAM@ .
 associatePrincipalWithPortfolio
     :: Text -- ^ 'aPortfolioId'
     -> Text -- ^ 'aPrincipalARN'
@@ -88,11 +88,11 @@ aAcceptLanguage = lens _aAcceptLanguage (\ s a -> s{_aAcceptLanguage = a});
 aPortfolioId :: Lens' AssociatePrincipalWithPortfolio Text
 aPortfolioId = lens _aPortfolioId (\ s a -> s{_aPortfolioId = a});
 
--- | The ARN representing the principal (IAM user, role, or group).
+-- | The ARN of the principal (IAM user, role, or group).
 aPrincipalARN :: Lens' AssociatePrincipalWithPortfolio Text
 aPrincipalARN = lens _aPrincipalARN (\ s a -> s{_aPrincipalARN = a});
 
--- | The principal type. Must be @IAM@
+-- | The principal type. The supported value is @IAM@ .
 aPrincipalType :: Lens' AssociatePrincipalWithPortfolio PrincipalType
 aPrincipalType = lens _aPrincipalType (\ s a -> s{_aPrincipalType = a});
 

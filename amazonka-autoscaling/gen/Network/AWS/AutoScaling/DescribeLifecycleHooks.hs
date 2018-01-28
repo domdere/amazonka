@@ -58,7 +58,7 @@ data DescribeLifecycleHooks = DescribeLifecycleHooks'
 --
 -- * 'dlhLifecycleHookNames' - The names of one or more lifecycle hooks. If you omit this parameter, all lifecycle hooks are described.
 --
--- * 'dlhAutoScalingGroupName' - The name of the group.
+-- * 'dlhAutoScalingGroupName' - The name of the Auto Scaling group.
 describeLifecycleHooks
     :: Text -- ^ 'dlhAutoScalingGroupName'
     -> DescribeLifecycleHooks
@@ -73,7 +73,7 @@ describeLifecycleHooks pAutoScalingGroupName_ =
 dlhLifecycleHookNames :: Lens' DescribeLifecycleHooks [Text]
 dlhLifecycleHookNames = lens _dlhLifecycleHookNames (\ s a -> s{_dlhLifecycleHookNames = a}) . _Default . _Coerce;
 
--- | The name of the group.
+-- | The name of the Auto Scaling group.
 dlhAutoScalingGroupName :: Lens' DescribeLifecycleHooks Text
 dlhAutoScalingGroupName = lens _dlhAutoScalingGroupName (\ s a -> s{_dlhAutoScalingGroupName = a});
 

@@ -21,6 +21,8 @@
 -- Creates one or more WorkSpaces.
 --
 --
+-- This operation is asynchronous and returns before the WorkSpaces are created.
+--
 module Network.AWS.WorkSpaces.CreateWorkspaces
     (
     -- * Creating a Request
@@ -45,11 +47,7 @@ import Network.AWS.Response
 import Network.AWS.WorkSpaces.Types
 import Network.AWS.WorkSpaces.Types.Product
 
--- | Contains the inputs for the 'CreateWorkspaces' operation.
---
---
---
--- /See:/ 'createWorkspaces' smart constructor.
+-- | /See:/ 'createWorkspaces' smart constructor.
 newtype CreateWorkspaces = CreateWorkspaces'
   { _cwWorkspaces :: List1 WorkspaceRequest
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -59,7 +57,7 @@ newtype CreateWorkspaces = CreateWorkspaces'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cwWorkspaces' - An array of structures that specify the WorkSpaces to create.
+-- * 'cwWorkspaces' - Information about the WorkSpaces to create.
 createWorkspaces
     :: NonEmpty WorkspaceRequest -- ^ 'cwWorkspaces'
     -> CreateWorkspaces
@@ -67,7 +65,7 @@ createWorkspaces pWorkspaces_ =
   CreateWorkspaces' {_cwWorkspaces = _List1 # pWorkspaces_}
 
 
--- | An array of structures that specify the WorkSpaces to create.
+-- | Information about the WorkSpaces to create.
 cwWorkspaces :: Lens' CreateWorkspaces (NonEmpty WorkspaceRequest)
 cwWorkspaces = lens _cwWorkspaces (\ s a -> s{_cwWorkspaces = a}) . _List1;
 
@@ -106,11 +104,7 @@ instance ToPath CreateWorkspaces where
 instance ToQuery CreateWorkspaces where
         toQuery = const mempty
 
--- | Contains the result of the 'CreateWorkspaces' operation.
---
---
---
--- /See:/ 'createWorkspacesResponse' smart constructor.
+-- | /See:/ 'createWorkspacesResponse' smart constructor.
 data CreateWorkspacesResponse = CreateWorkspacesResponse'
   { _cwrsFailedRequests  :: !(Maybe [FailedCreateWorkspaceRequest])
   , _cwrsPendingRequests :: !(Maybe [Workspace])
@@ -122,9 +116,9 @@ data CreateWorkspacesResponse = CreateWorkspacesResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cwrsFailedRequests' - An array of structures that represent the WorkSpaces that could not be created.
+-- * 'cwrsFailedRequests' - Information about the WorkSpaces that could not be created.
 --
--- * 'cwrsPendingRequests' - An array of structures that represent the WorkSpaces that were created. Because this operation is asynchronous, the identifier in @WorkspaceId@ is not immediately available. If you immediately call 'DescribeWorkspaces' with this identifier, no information will be returned.
+-- * 'cwrsPendingRequests' - Information about the WorkSpaces that were created. Because this operation is asynchronous, the identifier returned is not immediately available for use with other operations. For example, if you call 'DescribeWorkspaces' before the WorkSpace is created, the information returned can be incomplete.
 --
 -- * 'cwrsResponseStatus' - -- | The response status code.
 createWorkspacesResponse
@@ -138,11 +132,11 @@ createWorkspacesResponse pResponseStatus_ =
   }
 
 
--- | An array of structures that represent the WorkSpaces that could not be created.
+-- | Information about the WorkSpaces that could not be created.
 cwrsFailedRequests :: Lens' CreateWorkspacesResponse [FailedCreateWorkspaceRequest]
 cwrsFailedRequests = lens _cwrsFailedRequests (\ s a -> s{_cwrsFailedRequests = a}) . _Default . _Coerce;
 
--- | An array of structures that represent the WorkSpaces that were created. Because this operation is asynchronous, the identifier in @WorkspaceId@ is not immediately available. If you immediately call 'DescribeWorkspaces' with this identifier, no information will be returned.
+-- | Information about the WorkSpaces that were created. Because this operation is asynchronous, the identifier returned is not immediately available for use with other operations. For example, if you call 'DescribeWorkspaces' before the WorkSpace is created, the information returned can be incomplete.
 cwrsPendingRequests :: Lens' CreateWorkspacesResponse [Workspace]
 cwrsPendingRequests = lens _cwrsPendingRequests (\ s a -> s{_cwrsPendingRequests = a}) . _Default . _Coerce;
 

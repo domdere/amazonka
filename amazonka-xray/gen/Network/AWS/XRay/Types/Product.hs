@@ -907,8 +907,8 @@ data TelemetryRecord = TelemetryRecord'
   , _trSegmentsSentCount       :: !(Maybe Int)
   , _trSegmentsSpilloverCount  :: !(Maybe Int)
   , _trSegmentsRejectedCount   :: !(Maybe Int)
-  , _trTimestamp               :: !(Maybe POSIX)
   , _trBackendConnectionErrors :: !(Maybe BackendConnectionErrors)
+  , _trTimestamp               :: !POSIX
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -924,19 +924,20 @@ data TelemetryRecord = TelemetryRecord'
 --
 -- * 'trSegmentsRejectedCount' -
 --
--- * 'trTimestamp' -
---
 -- * 'trBackendConnectionErrors' -
+--
+-- * 'trTimestamp' -
 telemetryRecord
-    :: TelemetryRecord
-telemetryRecord =
+    :: UTCTime -- ^ 'trTimestamp'
+    -> TelemetryRecord
+telemetryRecord pTimestamp_ =
   TelemetryRecord'
   { _trSegmentsReceivedCount = Nothing
   , _trSegmentsSentCount = Nothing
   , _trSegmentsSpilloverCount = Nothing
   , _trSegmentsRejectedCount = Nothing
-  , _trTimestamp = Nothing
   , _trBackendConnectionErrors = Nothing
+  , _trTimestamp = _Time # pTimestamp_
   }
 
 
@@ -957,12 +958,12 @@ trSegmentsRejectedCount :: Lens' TelemetryRecord (Maybe Int)
 trSegmentsRejectedCount = lens _trSegmentsRejectedCount (\ s a -> s{_trSegmentsRejectedCount = a});
 
 -- |
-trTimestamp :: Lens' TelemetryRecord (Maybe UTCTime)
-trTimestamp = lens _trTimestamp (\ s a -> s{_trTimestamp = a}) . mapping _Time;
-
--- |
 trBackendConnectionErrors :: Lens' TelemetryRecord (Maybe BackendConnectionErrors)
 trBackendConnectionErrors = lens _trBackendConnectionErrors (\ s a -> s{_trBackendConnectionErrors = a});
+
+-- |
+trTimestamp :: Lens' TelemetryRecord UTCTime
+trTimestamp = lens _trTimestamp (\ s a -> s{_trTimestamp = a}) . _Time;
 
 instance Hashable TelemetryRecord where
 
@@ -979,9 +980,9 @@ instance ToJSON TelemetryRecord where
                     _trSegmentsSpilloverCount,
                   ("SegmentsRejectedCount" .=) <$>
                     _trSegmentsRejectedCount,
-                  ("Timestamp" .=) <$> _trTimestamp,
                   ("BackendConnectionErrors" .=) <$>
-                    _trBackendConnectionErrors])
+                    _trBackendConnectionErrors,
+                  Just ("Timestamp" .= _trTimestamp)])
 
 -- | A collection of segment documents with matching trace IDs.
 --

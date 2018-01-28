@@ -42,6 +42,7 @@ module Network.AWS.Lambda.UpdateFunctionConfiguration
     , ufcTimeout
     , ufcTracingConfig
     , ufcDescription
+    , ufcRevisionId
     , ufcFunctionName
 
     -- * Destructuring the Response
@@ -65,6 +66,7 @@ module Network.AWS.Lambda.UpdateFunctionConfiguration
     , fcCodeSha256
     , fcTracingConfig
     , fcDescription
+    , fcRevisionId
     , fcMasterARN
     ) where
 
@@ -92,6 +94,7 @@ data UpdateFunctionConfiguration = UpdateFunctionConfiguration'
   , _ufcTimeout          :: !(Maybe Nat)
   , _ufcTracingConfig    :: !(Maybe TracingConfig)
   , _ufcDescription      :: !(Maybe Text)
+  , _ufcRevisionId       :: !(Maybe Text)
   , _ufcFunctionName     :: !Text
   } deriving (Eq, Show, Data, Typeable, Generic)
 
@@ -122,6 +125,8 @@ data UpdateFunctionConfiguration = UpdateFunctionConfiguration'
 --
 -- * 'ufcDescription' - A short user-defined function description. AWS Lambda does not use this value. Assign a meaningful description as you see fit.
 --
+-- * 'ufcRevisionId' - An optional value you can use to ensure you are updating the latest update of the function version or alias. If the @RevisionID@ you pass doesn't match the latest @RevisionId@ of the function or alias, it will fail with an error message, advising you to retrieve the latest function version or alias @RevisionID@ using either or .
+--
 -- * 'ufcFunctionName' - The name of the Lambda function. You can specify a function name (for example, @Thumbnail@ ) or you can specify Amazon Resource Name (ARN) of the function (for example, @arn:aws:lambda:us-west-2:account-id:function:ThumbNail@ ). AWS Lambda also allows you to specify a partial ARN (for example, @account-id:Thumbnail@ ). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length.
 updateFunctionConfiguration
     :: Text -- ^ 'ufcFunctionName'
@@ -139,6 +144,7 @@ updateFunctionConfiguration pFunctionName_ =
   , _ufcTimeout = Nothing
   , _ufcTracingConfig = Nothing
   , _ufcDescription = Nothing
+  , _ufcRevisionId = Nothing
   , _ufcFunctionName = pFunctionName_
   }
 
@@ -187,6 +193,10 @@ ufcTracingConfig = lens _ufcTracingConfig (\ s a -> s{_ufcTracingConfig = a});
 ufcDescription :: Lens' UpdateFunctionConfiguration (Maybe Text)
 ufcDescription = lens _ufcDescription (\ s a -> s{_ufcDescription = a});
 
+-- | An optional value you can use to ensure you are updating the latest update of the function version or alias. If the @RevisionID@ you pass doesn't match the latest @RevisionId@ of the function or alias, it will fail with an error message, advising you to retrieve the latest function version or alias @RevisionID@ using either or .
+ufcRevisionId :: Lens' UpdateFunctionConfiguration (Maybe Text)
+ufcRevisionId = lens _ufcRevisionId (\ s a -> s{_ufcRevisionId = a});
+
 -- | The name of the Lambda function. You can specify a function name (for example, @Thumbnail@ ) or you can specify Amazon Resource Name (ARN) of the function (for example, @arn:aws:lambda:us-west-2:account-id:function:ThumbNail@ ). AWS Lambda also allows you to specify a partial ARN (for example, @account-id:Thumbnail@ ). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 character in length.
 ufcFunctionName :: Lens' UpdateFunctionConfiguration Text
 ufcFunctionName = lens _ufcFunctionName (\ s a -> s{_ufcFunctionName = a});
@@ -218,7 +228,8 @@ instance ToJSON UpdateFunctionConfiguration where
                   ("Handler" .=) <$> _ufcHandler,
                   ("Timeout" .=) <$> _ufcTimeout,
                   ("TracingConfig" .=) <$> _ufcTracingConfig,
-                  ("Description" .=) <$> _ufcDescription])
+                  ("Description" .=) <$> _ufcDescription,
+                  ("RevisionId" .=) <$> _ufcRevisionId])
 
 instance ToPath UpdateFunctionConfiguration where
         toPath UpdateFunctionConfiguration'{..}

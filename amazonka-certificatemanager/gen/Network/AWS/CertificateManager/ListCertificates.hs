@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Retrieves a list of ACM Certificates and the domain name for each. You can optionally filter the list to return only the certificates that match the specified status.
+-- Retrieves a list of certificate ARNs and domain names. You can request that only certificates that match a specific status be listed. You can also filter by specific attributes of the certificate.
 --
 --
 --
@@ -31,6 +31,7 @@ module Network.AWS.CertificateManager.ListCertificates
     -- * Request Lenses
     , lcCertificateStatuses
     , lcNextToken
+    , lcIncludes
     , lcMaxItems
 
     -- * Destructuring the Response
@@ -54,6 +55,7 @@ import Network.AWS.Response
 data ListCertificates = ListCertificates'
   { _lcCertificateStatuses :: !(Maybe [CertificateStatus])
   , _lcNextToken           :: !(Maybe Text)
+  , _lcIncludes            :: !(Maybe Filters)
   , _lcMaxItems            :: !(Maybe Nat)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -62,9 +64,11 @@ data ListCertificates = ListCertificates'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'lcCertificateStatuses' - The status or statuses on which to filter the list of ACM Certificates.
+-- * 'lcCertificateStatuses' - Filter the certificate list by status value.
 --
 -- * 'lcNextToken' - Use this parameter only when paginating results and only in a subsequent request after you receive a response with truncated results. Set it to the value of @NextToken@ from the response you just received.
+--
+-- * 'lcIncludes' - Filter the certificate list by one or more of the following values. For more information, see the 'Filters' structure.     * extendedKeyUsage     * keyUsage     * keyTypes
 --
 -- * 'lcMaxItems' - Use this parameter when paginating results to specify the maximum number of items to return in the response. If additional items exist beyond the number you specify, the @NextToken@ element is sent in the response. Use this @NextToken@ value in a subsequent request to retrieve additional items.
 listCertificates
@@ -73,17 +77,22 @@ listCertificates =
   ListCertificates'
   { _lcCertificateStatuses = Nothing
   , _lcNextToken = Nothing
+  , _lcIncludes = Nothing
   , _lcMaxItems = Nothing
   }
 
 
--- | The status or statuses on which to filter the list of ACM Certificates.
+-- | Filter the certificate list by status value.
 lcCertificateStatuses :: Lens' ListCertificates [CertificateStatus]
 lcCertificateStatuses = lens _lcCertificateStatuses (\ s a -> s{_lcCertificateStatuses = a}) . _Default . _Coerce;
 
 -- | Use this parameter only when paginating results and only in a subsequent request after you receive a response with truncated results. Set it to the value of @NextToken@ from the response you just received.
 lcNextToken :: Lens' ListCertificates (Maybe Text)
 lcNextToken = lens _lcNextToken (\ s a -> s{_lcNextToken = a});
+
+-- | Filter the certificate list by one or more of the following values. For more information, see the 'Filters' structure.     * extendedKeyUsage     * keyUsage     * keyTypes
+lcIncludes :: Lens' ListCertificates (Maybe Filters)
+lcIncludes = lens _lcIncludes (\ s a -> s{_lcIncludes = a});
 
 -- | Use this parameter when paginating results to specify the maximum number of items to return in the response. If additional items exist beyond the number you specify, the @NextToken@ element is sent in the response. Use this @NextToken@ value in a subsequent request to retrieve additional items.
 lcMaxItems :: Lens' ListCertificates (Maybe Natural)
@@ -128,6 +137,7 @@ instance ToJSON ListCertificates where
                  [("CertificateStatuses" .=) <$>
                     _lcCertificateStatuses,
                   ("NextToken" .=) <$> _lcNextToken,
+                  ("Includes" .=) <$> _lcIncludes,
                   ("MaxItems" .=) <$> _lcMaxItems])
 
 instance ToPath ListCertificates where

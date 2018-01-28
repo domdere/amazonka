@@ -18,8 +18,10 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Deletes the specified portfolio. This operation does not work with a portfolio that has been shared with you or if it has products, users, constraints, or shared accounts associated with it.
+-- Deletes the specified portfolio.
 --
+--
+-- You cannot delete a portfolio if it was shared with you or if it has associated products, users, constraints, or shared accounts.
 --
 module Network.AWS.ServiceCatalog.DeletePortfolio
     (
@@ -57,7 +59,7 @@ data DeletePortfolio = DeletePortfolio'
 --
 -- * 'dppAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'dppId' - The identifier of the portfolio for the delete request.
+-- * 'dppId' - The portfolio identifier.
 deletePortfolio
     :: Text -- ^ 'dppId'
     -> DeletePortfolio
@@ -69,7 +71,7 @@ deletePortfolio pId_ =
 dppAcceptLanguage :: Lens' DeletePortfolio (Maybe Text)
 dppAcceptLanguage = lens _dppAcceptLanguage (\ s a -> s{_dppAcceptLanguage = a});
 
--- | The identifier of the portfolio for the delete request.
+-- | The portfolio identifier.
 dppId :: Lens' DeletePortfolio Text
 dppId = lens _dppId (\ s a -> s{_dppId = a});
 

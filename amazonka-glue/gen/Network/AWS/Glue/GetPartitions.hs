@@ -21,6 +21,8 @@
 -- Retrieves information about the partitions in a table.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Glue.GetPartitions
     (
     -- * Creating a Request
@@ -47,6 +49,7 @@ module Network.AWS.Glue.GetPartitions
 import Network.AWS.Glue.Types
 import Network.AWS.Glue.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -123,6 +126,13 @@ gpsDatabaseName = lens _gpsDatabaseName (\ s a -> s{_gpsDatabaseName = a});
 -- | The name of the partitions' table.
 gpsTableName :: Lens' GetPartitions Text
 gpsTableName = lens _gpsTableName (\ s a -> s{_gpsTableName = a});
+
+instance AWSPager GetPartitions where
+        page rq rs
+          | stop (rs ^. gpsrsNextToken) = Nothing
+          | stop (rs ^. gpsrsPartitions) = Nothing
+          | otherwise =
+            Just $ rq & gpsNextToken .~ rs ^. gpsrsNextToken
 
 instance AWSRequest GetPartitions where
         type Rs GetPartitions = GetPartitionsResponse

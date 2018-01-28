@@ -21,6 +21,8 @@
 -- Gets all the triggers associated with a job.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Glue.GetTriggers
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.Glue.GetTriggers
 import Network.AWS.Glue.Types
 import Network.AWS.Glue.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -63,7 +66,7 @@ data GetTriggers = GetTriggers'
 --
 -- * 'gtsMaxResults' - The maximum size of the response.
 --
--- * 'gtsDependentJobName' - The name of the job for which to retrieve triggers.
+-- * 'gtsDependentJobName' - The name of the job for which to retrieve triggers. The trigger that can start this job will be returned, and if there is no such trigger, all triggers will be returned.
 getTriggers
     :: GetTriggers
 getTriggers =
@@ -82,9 +85,16 @@ gtsNextToken = lens _gtsNextToken (\ s a -> s{_gtsNextToken = a});
 gtsMaxResults :: Lens' GetTriggers (Maybe Natural)
 gtsMaxResults = lens _gtsMaxResults (\ s a -> s{_gtsMaxResults = a}) . mapping _Nat;
 
--- | The name of the job for which to retrieve triggers.
+-- | The name of the job for which to retrieve triggers. The trigger that can start this job will be returned, and if there is no such trigger, all triggers will be returned.
 gtsDependentJobName :: Lens' GetTriggers (Maybe Text)
 gtsDependentJobName = lens _gtsDependentJobName (\ s a -> s{_gtsDependentJobName = a});
+
+instance AWSPager GetTriggers where
+        page rq rs
+          | stop (rs ^. gttrsNextToken) = Nothing
+          | stop (rs ^. gttrsTriggers) = Nothing
+          | otherwise =
+            Just $ rq & gtsNextToken .~ rs ^. gttrsNextToken
 
 instance AWSRequest GetTriggers where
         type Rs GetTriggers = GetTriggersResponse

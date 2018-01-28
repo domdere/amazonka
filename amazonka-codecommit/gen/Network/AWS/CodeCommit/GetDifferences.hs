@@ -21,6 +21,8 @@
 -- Returns information about the differences in a valid commit specifier (such as a branch, tag, HEAD, commit ID or other fully qualified reference). Results can be limited to a specified path.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CodeCommit.GetDifferences
     (
     -- * Creating a Request
@@ -47,6 +49,7 @@ module Network.AWS.CodeCommit.GetDifferences
 import Network.AWS.CodeCommit.Types
 import Network.AWS.CodeCommit.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -123,6 +126,13 @@ gdRepositoryName = lens _gdRepositoryName (\ s a -> s{_gdRepositoryName = a});
 -- | The branch, tag, HEAD, or other fully qualified reference used to identify a commit.
 gdAfterCommitSpecifier :: Lens' GetDifferences Text
 gdAfterCommitSpecifier = lens _gdAfterCommitSpecifier (\ s a -> s{_gdAfterCommitSpecifier = a});
+
+instance AWSPager GetDifferences where
+        page rq rs
+          | stop (rs ^. gdrsNextToken) = Nothing
+          | stop (rs ^. gdrsDifferences) = Nothing
+          | otherwise =
+            Just $ rq & gdNextToken .~ rs ^. gdrsNextToken
 
 instance AWSRequest GetDifferences where
         type Rs GetDifferences = GetDifferencesResponse

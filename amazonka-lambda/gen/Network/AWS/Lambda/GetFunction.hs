@@ -38,6 +38,7 @@ module Network.AWS.Lambda.GetFunction
     , getFunctionResponse
     , GetFunctionResponse
     -- * Response Lenses
+    , gfrsConcurrency
     , gfrsCode
     , gfrsConfiguration
     , gfrsTags
@@ -66,7 +67,7 @@ data GetFunction = GetFunction'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'gfQualifier' - Using this optional parameter to specify a function version or an alias name. If you specify function version, the API uses qualified function ARN for the request and returns information about the specific Lambda function version. If you specify an alias name, the API uses the alias ARN and returns information about the function version to which the alias points. If you don't provide this parameter, the API uses unqualified function ARN and returns information about the @> LATEST@ version of the Lambda function.
+-- * 'gfQualifier' - Use this optional parameter to specify a function version or an alias name. If you specify function version, the API uses qualified function ARN for the request and returns information about the specific Lambda function version. If you specify an alias name, the API uses the alias ARN and returns information about the function version to which the alias points. If you don't provide this parameter, the API uses unqualified function ARN and returns information about the @> LATEST@ version of the Lambda function.
 --
 -- * 'gfFunctionName' - The Lambda function name. You can specify a function name (for example, @Thumbnail@ ) or you can specify Amazon Resource Name (ARN) of the function (for example, @arn:aws:lambda:us-west-2:account-id:function:ThumbNail@ ). AWS Lambda also allows you to specify a partial ARN (for example, @account-id:Thumbnail@ ). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.
 getFunction
@@ -76,7 +77,7 @@ getFunction pFunctionName_ =
   GetFunction' {_gfQualifier = Nothing, _gfFunctionName = pFunctionName_}
 
 
--- | Using this optional parameter to specify a function version or an alias name. If you specify function version, the API uses qualified function ARN for the request and returns information about the specific Lambda function version. If you specify an alias name, the API uses the alias ARN and returns information about the function version to which the alias points. If you don't provide this parameter, the API uses unqualified function ARN and returns information about the @> LATEST@ version of the Lambda function.
+-- | Use this optional parameter to specify a function version or an alias name. If you specify function version, the API uses qualified function ARN for the request and returns information about the specific Lambda function version. If you specify an alias name, the API uses the alias ARN and returns information about the function version to which the alias points. If you don't provide this parameter, the API uses unqualified function ARN and returns information about the @> LATEST@ version of the Lambda function.
 gfQualifier :: Lens' GetFunction (Maybe Text)
 gfQualifier = lens _gfQualifier (\ s a -> s{_gfQualifier = a});
 
@@ -91,8 +92,9 @@ instance AWSRequest GetFunction where
           = receiveJSON
               (\ s h x ->
                  GetFunctionResponse' <$>
-                   (x .?> "Code") <*> (x .?> "Configuration") <*>
-                     (x .?> "Tags" .!@ mempty)
+                   (x .?> "Concurrency") <*> (x .?> "Code") <*>
+                     (x .?> "Configuration")
+                     <*> (x .?> "Tags" .!@ mempty)
                      <*> (pure (fromEnum s)))
 
 instance Hashable GetFunction where
@@ -117,7 +119,8 @@ instance ToQuery GetFunction where
 --
 -- /See:/ 'getFunctionResponse' smart constructor.
 data GetFunctionResponse = GetFunctionResponse'
-  { _gfrsCode           :: !(Maybe FunctionCodeLocation)
+  { _gfrsConcurrency    :: !(Maybe Concurrency)
+  , _gfrsCode           :: !(Maybe FunctionCodeLocation)
   , _gfrsConfiguration  :: !(Maybe FunctionConfiguration)
   , _gfrsTags           :: !(Maybe (Map Text Text))
   , _gfrsResponseStatus :: !Int
@@ -127,6 +130,8 @@ data GetFunctionResponse = GetFunctionResponse'
 -- | Creates a value of 'GetFunctionResponse' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'gfrsConcurrency' - The concurrent execution limit set for this function. For more information, see 'concurrent-executions' .
 --
 -- * 'gfrsCode' - Undocumented member.
 --
@@ -140,12 +145,17 @@ getFunctionResponse
     -> GetFunctionResponse
 getFunctionResponse pResponseStatus_ =
   GetFunctionResponse'
-  { _gfrsCode = Nothing
+  { _gfrsConcurrency = Nothing
+  , _gfrsCode = Nothing
   , _gfrsConfiguration = Nothing
   , _gfrsTags = Nothing
   , _gfrsResponseStatus = pResponseStatus_
   }
 
+
+-- | The concurrent execution limit set for this function. For more information, see 'concurrent-executions' .
+gfrsConcurrency :: Lens' GetFunctionResponse (Maybe Concurrency)
+gfrsConcurrency = lens _gfrsConcurrency (\ s a -> s{_gfrsConcurrency = a});
 
 -- | Undocumented member.
 gfrsCode :: Lens' GetFunctionResponse (Maybe FunctionCodeLocation)

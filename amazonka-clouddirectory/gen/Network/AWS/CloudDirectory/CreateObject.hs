@@ -70,7 +70,7 @@ data CreateObject = CreateObject'
 --
 -- * 'coDirectoryARN' - The Amazon Resource Name (ARN) that is associated with the 'Directory' in which the object will be created. For more information, see 'arns' .
 --
--- * 'coSchemaFacets' - A list of schema facets to be associated with the object that contains @SchemaArn@ and facet name. For more information, see 'arns' .
+-- * 'coSchemaFacets' - A list of schema facets to be associated with the object. Do not provide minor version components. See 'SchemaFacet' for details.
 createObject
     :: Text -- ^ 'coDirectoryARN'
     -> CreateObject
@@ -100,7 +100,7 @@ coLinkName = lens _coLinkName (\ s a -> s{_coLinkName = a});
 coDirectoryARN :: Lens' CreateObject Text
 coDirectoryARN = lens _coDirectoryARN (\ s a -> s{_coDirectoryARN = a});
 
--- | A list of schema facets to be associated with the object that contains @SchemaArn@ and facet name. For more information, see 'arns' .
+-- | A list of schema facets to be associated with the object. Do not provide minor version components. See 'SchemaFacet' for details.
 coSchemaFacets :: Lens' CreateObject [SchemaFacet]
 coSchemaFacets = lens _coSchemaFacets (\ s a -> s{_coSchemaFacets = a}) . _Coerce;
 

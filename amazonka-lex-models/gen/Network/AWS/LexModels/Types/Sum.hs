@@ -19,6 +19,36 @@ module Network.AWS.LexModels.Types.Sum where
 
 import Network.AWS.Prelude
 
+data ChannelStatus
+  = Created
+  | Failed
+  | InProgress
+  deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
+
+
+instance FromText ChannelStatus where
+    parser = takeLowerText >>= \case
+        "created" -> pure Created
+        "failed" -> pure Failed
+        "in_progress" -> pure InProgress
+        e -> fromTextError $ "Failure parsing ChannelStatus from value: '" <> e
+           <> "'. Accepted values: created, failed, in_progress"
+
+instance ToText ChannelStatus where
+    toText = \case
+        Created -> "CREATED"
+        Failed -> "FAILED"
+        InProgress -> "IN_PROGRESS"
+
+instance Hashable     ChannelStatus
+instance NFData       ChannelStatus
+instance ToByteString ChannelStatus
+instance ToQuery      ChannelStatus
+instance ToHeader     ChannelStatus
+
+instance FromJSON ChannelStatus where
+    parseJSON = parseJSONText "ChannelStatus"
+
 data ChannelType
   = Facebook
   | Slack
@@ -80,25 +110,25 @@ instance FromJSON ContentType where
     parseJSON = parseJSONText "ContentType"
 
 data ExportStatus
-  = Failed
-  | InProgress
-  | Ready
+  = ESFailed
+  | ESInProgress
+  | ESReady
   deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
 
 
 instance FromText ExportStatus where
     parser = takeLowerText >>= \case
-        "failed" -> pure Failed
-        "in_progress" -> pure InProgress
-        "ready" -> pure Ready
+        "failed" -> pure ESFailed
+        "in_progress" -> pure ESInProgress
+        "ready" -> pure ESReady
         e -> fromTextError $ "Failure parsing ExportStatus from value: '" <> e
            <> "'. Accepted values: failed, in_progress, ready"
 
 instance ToText ExportStatus where
     toText = \case
-        Failed -> "FAILED"
-        InProgress -> "IN_PROGRESS"
-        Ready -> "READY"
+        ESFailed -> "FAILED"
+        ESInProgress -> "IN_PROGRESS"
+        ESReady -> "READY"
 
 instance Hashable     ExportStatus
 instance NFData       ExportStatus

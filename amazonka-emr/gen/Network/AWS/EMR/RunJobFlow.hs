@@ -25,7 +25,7 @@
 --
 -- A maximum of 256 steps are allowed in each job flow.
 --
--- If your cluster is long-running (such as a Hive data warehouse) or complex, you may require more than 256 steps to process your data. You can bypass the 256-step limitation in various ways, including using the SSH shell to connect to the master node and submitting queries directly to the software running on the master node, such as Hive and Hadoop. For more information on how to do this, see <http://docs.aws.amazon.com/ElasticMapReduce/latest/Management/Guide/AddMoreThan256Steps.html Add More than 256 Steps to a Cluster> in the /Amazon EMR Management Guide/ .
+-- If your cluster is long-running (such as a Hive data warehouse) or complex, you may require more than 256 steps to process your data. You can bypass the 256-step limitation in various ways, including using the SSH shell to connect to the master node and submitting queries directly to the software running on the master node, such as Hive and Hadoop. For more information on how to do this, see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/AddMoreThan256Steps.html Add More than 256 Steps to a Cluster> in the /Amazon EMR Management Guide/ .
 --
 -- For long running clusters, we recommend that you periodically store your results.
 --
@@ -49,6 +49,7 @@ module Network.AWS.EMR.RunJobFlow
     , rjfReleaseLabel
     , rjfRepoUpgradeOnBoot
     , rjfLogURI
+    , rjfKerberosAttributes
     , rjfNewSupportedProducts
     , rjfVisibleToAllUsers
     , rjfSupportedProducts
@@ -93,6 +94,7 @@ data RunJobFlow = RunJobFlow'
   , _rjfReleaseLabel          :: !(Maybe Text)
   , _rjfRepoUpgradeOnBoot     :: !(Maybe RepoUpgradeOnBoot)
   , _rjfLogURI                :: !(Maybe Text)
+  , _rjfKerberosAttributes    :: !(Maybe KerberosAttributes)
   , _rjfNewSupportedProducts  :: !(Maybe [SupportedProductConfig])
   , _rjfVisibleToAllUsers     :: !(Maybe Bool)
   , _rjfSupportedProducts     :: !(Maybe [Text])
@@ -108,7 +110,7 @@ data RunJobFlow = RunJobFlow'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'rjfAMIVersion' - For Amazon EMR AMI versions 3.x and 2.x. For Amazon EMR releases 4.0 and later, the Linux AMI is determined by the @ReleaseLabel@ specified or by @CustomAmiID@ . The version of the Amazon Machine Image (AMI) to use when launching Amazon EC2 instances in the job flow. For details about the AMI versions currently supported in EMR version 3.x and 2.x, see <ElasticMapReduce/latest/DeveloperGuide/emr-dg.pdf#nameddest=ami-versions-supported AMI Versions Supported in EMR> in the /Amazon EMR Developer Guide/ .  If the AMI supports multiple versions of Hadoop (for example, AMI 1.0 supports both Hadoop 0.18 and 0.20), you can use the 'JobFlowInstancesConfig' @HadoopVersion@ parameter to modify the version of Hadoop from the defaults shown above.
+-- * 'rjfAMIVersion' - For Amazon EMR AMI versions 3.x and 2.x. For Amazon EMR releases 4.0 and later, the Linux AMI is determined by the @ReleaseLabel@ specified or by @CustomAmiID@ . The version of the Amazon Machine Image (AMI) to use when launching Amazon EC2 instances in the job flow. For details about the AMI versions currently supported in EMR version 3.x and 2.x, see <emr/latest/DeveloperGuide/emr-dg.pdf#nameddest=ami-versions-supported AMI Versions Supported in EMR> in the /Amazon EMR Developer Guide/ .  If the AMI supports multiple versions of Hadoop (for example, AMI 1.0 supports both Hadoop 0.18 and 0.20), you can use the 'JobFlowInstancesConfig' @HadoopVersion@ parameter to modify the version of Hadoop from the defaults shown above.
 --
 -- * 'rjfEBSRootVolumeSize' - The size, in GiB, of the EBS root device volume of the Linux AMI that is used for each EC2 instance. Available in Amazon EMR version 4.x and later.
 --
@@ -136,11 +138,13 @@ data RunJobFlow = RunJobFlow'
 --
 -- * 'rjfLogURI' - The location in Amazon S3 to write the log files of the job flow. If a value is not provided, logs are not created.
 --
--- * 'rjfNewSupportedProducts' - A list of strings that indicates third-party software to use with the job flow that accepts a user argument list. EMR accepts and forwards the argument list to the corresponding installation script as bootstrap action arguments. For more information, see "Launch a Job Flow on the MapR Distribution for Hadoop" in the <http://docs.aws.amazon.com/http:/docs.aws.amazon.com/emr/latest/DeveloperGuide/emr-dg.pdf Amazon EMR Developer Guide> . Supported values are:     * "mapr-m3" - launch the cluster using MapR M3 Edition.     * "mapr-m5" - launch the cluster using MapR M5 Edition.     * "mapr" with the user arguments specifying "--edition,m3" or "--edition,m5" - launch the job flow using MapR M3 or M5 Edition respectively.     * "mapr-m7" - launch the cluster using MapR M7 Edition.     * "hunk" - launch the cluster with the Hunk Big Data Analtics Platform.     * "hue"- launch the cluster with Hue installed.     * "spark" - launch the cluster with Apache Spark installed.     * "ganglia" - launch the cluster with the Ganglia Monitoring System installed.
+-- * 'rjfKerberosAttributes' - Attributes for Kerberos configuration when Kerberos authentication is enabled using a security configuration. For more information see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-kerberos.html Use Kerberos Authentication> in the /EMR Management Guide/ .
+--
+-- * 'rjfNewSupportedProducts' - A list of strings that indicates third-party software to use with the job flow that accepts a user argument list. EMR accepts and forwards the argument list to the corresponding installation script as bootstrap action arguments. For more information, see "Launch a Job Flow on the MapR Distribution for Hadoop" in the <http://docs.aws.amazon.com/emr/latest/DeveloperGuide/emr-dg.pdf Amazon EMR Developer Guide> . Supported values are:     * "mapr-m3" - launch the cluster using MapR M3 Edition.     * "mapr-m5" - launch the cluster using MapR M5 Edition.     * "mapr" with the user arguments specifying "--edition,m3" or "--edition,m5" - launch the job flow using MapR M3 or M5 Edition respectively.     * "mapr-m7" - launch the cluster using MapR M7 Edition.     * "hunk" - launch the cluster with the Hunk Big Data Analtics Platform.     * "hue"- launch the cluster with Hue installed.     * "spark" - launch the cluster with Apache Spark installed.     * "ganglia" - launch the cluster with the Ganglia Monitoring System installed.
 --
 -- * 'rjfVisibleToAllUsers' - Whether the cluster is visible to all IAM users of the AWS account associated with the cluster. If this value is set to @true@ , all IAM users of that AWS account can view and (if they have the proper policy permissions set) manage the cluster. If it is set to @false@ , only the IAM user that created the cluster can view and manage it.
 --
--- * 'rjfSupportedProducts' - A list of strings that indicates third-party software to use. For more information, see <http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-supported-products.html Use Third Party Applications with Amazon EMR> . Currently supported values are:     * "mapr-m3" - launch the job flow using MapR M3 Edition.     * "mapr-m5" - launch the job flow using MapR M5 Edition.
+-- * 'rjfSupportedProducts' - A list of strings that indicates third-party software to use. For more information, see the <http://docs.aws.amazon.com/emr/latest/DeveloperGuide/emr-dg.pdf Amazon EMR Developer Guide> . Currently supported values are:     * "mapr-m3" - launch the job flow using MapR M3 Edition.     * "mapr-m5" - launch the job flow using MapR M5 Edition.
 --
 -- * 'rjfApplications' - For Amazon EMR releases 4.0 and later. A list of applications for the cluster. Valid values are: "Hadoop", "Hive", "Mahout", "Pig", and "Spark." They are case insensitive.
 --
@@ -171,6 +175,7 @@ runJobFlow pName_ pInstances_ =
   , _rjfReleaseLabel = Nothing
   , _rjfRepoUpgradeOnBoot = Nothing
   , _rjfLogURI = Nothing
+  , _rjfKerberosAttributes = Nothing
   , _rjfNewSupportedProducts = Nothing
   , _rjfVisibleToAllUsers = Nothing
   , _rjfSupportedProducts = Nothing
@@ -182,7 +187,7 @@ runJobFlow pName_ pInstances_ =
   }
 
 
--- | For Amazon EMR AMI versions 3.x and 2.x. For Amazon EMR releases 4.0 and later, the Linux AMI is determined by the @ReleaseLabel@ specified or by @CustomAmiID@ . The version of the Amazon Machine Image (AMI) to use when launching Amazon EC2 instances in the job flow. For details about the AMI versions currently supported in EMR version 3.x and 2.x, see <ElasticMapReduce/latest/DeveloperGuide/emr-dg.pdf#nameddest=ami-versions-supported AMI Versions Supported in EMR> in the /Amazon EMR Developer Guide/ .  If the AMI supports multiple versions of Hadoop (for example, AMI 1.0 supports both Hadoop 0.18 and 0.20), you can use the 'JobFlowInstancesConfig' @HadoopVersion@ parameter to modify the version of Hadoop from the defaults shown above.
+-- | For Amazon EMR AMI versions 3.x and 2.x. For Amazon EMR releases 4.0 and later, the Linux AMI is determined by the @ReleaseLabel@ specified or by @CustomAmiID@ . The version of the Amazon Machine Image (AMI) to use when launching Amazon EC2 instances in the job flow. For details about the AMI versions currently supported in EMR version 3.x and 2.x, see <emr/latest/DeveloperGuide/emr-dg.pdf#nameddest=ami-versions-supported AMI Versions Supported in EMR> in the /Amazon EMR Developer Guide/ .  If the AMI supports multiple versions of Hadoop (for example, AMI 1.0 supports both Hadoop 0.18 and 0.20), you can use the 'JobFlowInstancesConfig' @HadoopVersion@ parameter to modify the version of Hadoop from the defaults shown above.
 rjfAMIVersion :: Lens' RunJobFlow (Maybe Text)
 rjfAMIVersion = lens _rjfAMIVersion (\ s a -> s{_rjfAMIVersion = a});
 
@@ -238,7 +243,11 @@ rjfRepoUpgradeOnBoot = lens _rjfRepoUpgradeOnBoot (\ s a -> s{_rjfRepoUpgradeOnB
 rjfLogURI :: Lens' RunJobFlow (Maybe Text)
 rjfLogURI = lens _rjfLogURI (\ s a -> s{_rjfLogURI = a});
 
--- | A list of strings that indicates third-party software to use with the job flow that accepts a user argument list. EMR accepts and forwards the argument list to the corresponding installation script as bootstrap action arguments. For more information, see "Launch a Job Flow on the MapR Distribution for Hadoop" in the <http://docs.aws.amazon.com/http:/docs.aws.amazon.com/emr/latest/DeveloperGuide/emr-dg.pdf Amazon EMR Developer Guide> . Supported values are:     * "mapr-m3" - launch the cluster using MapR M3 Edition.     * "mapr-m5" - launch the cluster using MapR M5 Edition.     * "mapr" with the user arguments specifying "--edition,m3" or "--edition,m5" - launch the job flow using MapR M3 or M5 Edition respectively.     * "mapr-m7" - launch the cluster using MapR M7 Edition.     * "hunk" - launch the cluster with the Hunk Big Data Analtics Platform.     * "hue"- launch the cluster with Hue installed.     * "spark" - launch the cluster with Apache Spark installed.     * "ganglia" - launch the cluster with the Ganglia Monitoring System installed.
+-- | Attributes for Kerberos configuration when Kerberos authentication is enabled using a security configuration. For more information see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-kerberos.html Use Kerberos Authentication> in the /EMR Management Guide/ .
+rjfKerberosAttributes :: Lens' RunJobFlow (Maybe KerberosAttributes)
+rjfKerberosAttributes = lens _rjfKerberosAttributes (\ s a -> s{_rjfKerberosAttributes = a});
+
+-- | A list of strings that indicates third-party software to use with the job flow that accepts a user argument list. EMR accepts and forwards the argument list to the corresponding installation script as bootstrap action arguments. For more information, see "Launch a Job Flow on the MapR Distribution for Hadoop" in the <http://docs.aws.amazon.com/emr/latest/DeveloperGuide/emr-dg.pdf Amazon EMR Developer Guide> . Supported values are:     * "mapr-m3" - launch the cluster using MapR M3 Edition.     * "mapr-m5" - launch the cluster using MapR M5 Edition.     * "mapr" with the user arguments specifying "--edition,m3" or "--edition,m5" - launch the job flow using MapR M3 or M5 Edition respectively.     * "mapr-m7" - launch the cluster using MapR M7 Edition.     * "hunk" - launch the cluster with the Hunk Big Data Analtics Platform.     * "hue"- launch the cluster with Hue installed.     * "spark" - launch the cluster with Apache Spark installed.     * "ganglia" - launch the cluster with the Ganglia Monitoring System installed.
 rjfNewSupportedProducts :: Lens' RunJobFlow [SupportedProductConfig]
 rjfNewSupportedProducts = lens _rjfNewSupportedProducts (\ s a -> s{_rjfNewSupportedProducts = a}) . _Default . _Coerce;
 
@@ -246,7 +255,7 @@ rjfNewSupportedProducts = lens _rjfNewSupportedProducts (\ s a -> s{_rjfNewSuppo
 rjfVisibleToAllUsers :: Lens' RunJobFlow (Maybe Bool)
 rjfVisibleToAllUsers = lens _rjfVisibleToAllUsers (\ s a -> s{_rjfVisibleToAllUsers = a});
 
--- | A list of strings that indicates third-party software to use. For more information, see <http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-supported-products.html Use Third Party Applications with Amazon EMR> . Currently supported values are:     * "mapr-m3" - launch the job flow using MapR M3 Edition.     * "mapr-m5" - launch the job flow using MapR M5 Edition.
+-- | A list of strings that indicates third-party software to use. For more information, see the <http://docs.aws.amazon.com/emr/latest/DeveloperGuide/emr-dg.pdf Amazon EMR Developer Guide> . Currently supported values are:     * "mapr-m3" - launch the job flow using MapR M3 Edition.     * "mapr-m5" - launch the job flow using MapR M5 Edition.
 rjfSupportedProducts :: Lens' RunJobFlow [Text]
 rjfSupportedProducts = lens _rjfSupportedProducts (\ s a -> s{_rjfSupportedProducts = a}) . _Default . _Coerce;
 
@@ -311,6 +320,7 @@ instance ToJSON RunJobFlow where
                   ("ReleaseLabel" .=) <$> _rjfReleaseLabel,
                   ("RepoUpgradeOnBoot" .=) <$> _rjfRepoUpgradeOnBoot,
                   ("LogUri" .=) <$> _rjfLogURI,
+                  ("KerberosAttributes" .=) <$> _rjfKerberosAttributes,
                   ("NewSupportedProducts" .=) <$>
                     _rjfNewSupportedProducts,
                   ("VisibleToAllUsers" .=) <$> _rjfVisibleToAllUsers,

@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Modifies an existing @Classifier@ .
+-- Modifies an existing classifier (either a @GrokClassifier@ or an @XMLClassifier@ ).
 --
 --
 module Network.AWS.Glue.UpdateClassifier
@@ -28,6 +28,7 @@ module Network.AWS.Glue.UpdateClassifier
     , UpdateClassifier
     -- * Request Lenses
     , ucGrokClassifier
+    , ucXMLClassifier
 
     -- * Destructuring the Response
     , updateClassifierResponse
@@ -44,8 +45,9 @@ import Network.AWS.Request
 import Network.AWS.Response
 
 -- | /See:/ 'updateClassifier' smart constructor.
-newtype UpdateClassifier = UpdateClassifier'
-  { _ucGrokClassifier :: Maybe UpdateGrokClassifierRequest
+data UpdateClassifier = UpdateClassifier'
+  { _ucGrokClassifier :: !(Maybe UpdateGrokClassifierRequest)
+  , _ucXMLClassifier  :: !(Maybe UpdateXMLClassifierRequest)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -54,14 +56,21 @@ newtype UpdateClassifier = UpdateClassifier'
 -- Use one of the following lenses to modify other fields as desired:
 --
 -- * 'ucGrokClassifier' - A @GrokClassifier@ object with updated fields.
+--
+-- * 'ucXMLClassifier' - An @XMLClassifier@ object with updated fields.
 updateClassifier
     :: UpdateClassifier
-updateClassifier = UpdateClassifier' {_ucGrokClassifier = Nothing}
+updateClassifier =
+  UpdateClassifier' {_ucGrokClassifier = Nothing, _ucXMLClassifier = Nothing}
 
 
 -- | A @GrokClassifier@ object with updated fields.
 ucGrokClassifier :: Lens' UpdateClassifier (Maybe UpdateGrokClassifierRequest)
 ucGrokClassifier = lens _ucGrokClassifier (\ s a -> s{_ucGrokClassifier = a});
+
+-- | An @XMLClassifier@ object with updated fields.
+ucXMLClassifier :: Lens' UpdateClassifier (Maybe UpdateXMLClassifierRequest)
+ucXMLClassifier = lens _ucXMLClassifier (\ s a -> s{_ucXMLClassifier = a});
 
 instance AWSRequest UpdateClassifier where
         type Rs UpdateClassifier = UpdateClassifierResponse
@@ -88,7 +97,8 @@ instance ToJSON UpdateClassifier where
         toJSON UpdateClassifier'{..}
           = object
               (catMaybes
-                 [("GrokClassifier" .=) <$> _ucGrokClassifier])
+                 [("GrokClassifier" .=) <$> _ucGrokClassifier,
+                  ("XMLClassifier" .=) <$> _ucXMLClassifier])
 
 instance ToPath UpdateClassifier where
         toPath = const "/"

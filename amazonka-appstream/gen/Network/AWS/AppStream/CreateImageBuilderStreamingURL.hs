@@ -18,7 +18,9 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Undocumented operation.
+-- Creates a URL to start an image builder streaming session.
+--
+--
 module Network.AWS.AppStream.CreateImageBuilderStreamingURL
     (
     -- * Creating a Request
@@ -55,9 +57,9 @@ data CreateImageBuilderStreamingURL = CreateImageBuilderStreamingURL'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cibsuValidity' - Undocumented member.
+-- * 'cibsuValidity' - The time that the streaming URL will be valid, in seconds. Specify a value between 1 and 604800 seconds. The default is 3600 seconds.
 --
--- * 'cibsuName' - Undocumented member.
+-- * 'cibsuName' - The name of the image builder.
 createImageBuilderStreamingURL
     :: Text -- ^ 'cibsuName'
     -> CreateImageBuilderStreamingURL
@@ -66,11 +68,11 @@ createImageBuilderStreamingURL pName_ =
   {_cibsuValidity = Nothing, _cibsuName = pName_}
 
 
--- | Undocumented member.
+-- | The time that the streaming URL will be valid, in seconds. Specify a value between 1 and 604800 seconds. The default is 3600 seconds.
 cibsuValidity :: Lens' CreateImageBuilderStreamingURL (Maybe Integer)
 cibsuValidity = lens _cibsuValidity (\ s a -> s{_cibsuValidity = a});
 
--- | Undocumented member.
+-- | The name of the image builder.
 cibsuName :: Lens' CreateImageBuilderStreamingURL Text
 cibsuName = lens _cibsuName (\ s a -> s{_cibsuName = a});
 
@@ -127,9 +129,9 @@ data CreateImageBuilderStreamingURLResponse = CreateImageBuilderStreamingURLResp
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cibsursStreamingURL' - Undocumented member.
+-- * 'cibsursStreamingURL' - The URL to start the AppStream 2.0 streaming session.
 --
--- * 'cibsursExpires' - Undocumented member.
+-- * 'cibsursExpires' - The elapsed time, in seconds after the Unix epoch, when this URL expires.
 --
 -- * 'cibsursResponseStatus' - -- | The response status code.
 createImageBuilderStreamingURLResponse
@@ -143,11 +145,11 @@ createImageBuilderStreamingURLResponse pResponseStatus_ =
   }
 
 
--- | Undocumented member.
+-- | The URL to start the AppStream 2.0 streaming session.
 cibsursStreamingURL :: Lens' CreateImageBuilderStreamingURLResponse (Maybe Text)
 cibsursStreamingURL = lens _cibsursStreamingURL (\ s a -> s{_cibsursStreamingURL = a});
 
--- | Undocumented member.
+-- | The elapsed time, in seconds after the Unix epoch, when this URL expires.
 cibsursExpires :: Lens' CreateImageBuilderStreamingURLResponse (Maybe UTCTime)
 cibsursExpires = lens _cibsursExpires (\ s a -> s{_cibsursExpires = a}) . mapping _Time;
 

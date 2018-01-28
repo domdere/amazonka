@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Creates an activity. An Activity is a task which you write, in any language and hosted on any machine which has access to AWS Step Functions. Activities must poll Step Functions using the @GetActivityTask@ and respond using @SendTask*@ API calls. This function lets Step Functions know the existence of your activity and returns an identifier for use in a state machine and when polling from the activity.
+-- Creates an activity. An activity is a task which you write in any programming language and host on any machine which has access to AWS Step Functions. Activities must poll Step Functions using the @GetActivityTask@ API action and respond using @SendTask*@ API actions. This function lets Step Functions know the existence of your activity and returns an identifier for use in a state machine and when polling from the activity.
 --
 --
 module Network.AWS.StepFunctions.CreateActivity
@@ -115,7 +115,7 @@ data CreateActivityResponse = CreateActivityResponse'
 --
 -- * 'carsActivityARN' - The Amazon Resource Name (ARN) that identifies the created activity.
 --
--- * 'carsCreationDate' - The date the activity was created.
+-- * 'carsCreationDate' - The date the activity is created.
 createActivityResponse
     :: Int -- ^ 'carsResponseStatus'
     -> Text -- ^ 'carsActivityARN'
@@ -137,7 +137,7 @@ carsResponseStatus = lens _carsResponseStatus (\ s a -> s{_carsResponseStatus = 
 carsActivityARN :: Lens' CreateActivityResponse Text
 carsActivityARN = lens _carsActivityARN (\ s a -> s{_carsActivityARN = a});
 
--- | The date the activity was created.
+-- | The date the activity is created.
 carsCreationDate :: Lens' CreateActivityResponse UTCTime
 carsCreationDate = lens _carsCreationDate (\ s a -> s{_carsCreationDate = a}) . _Time;
 

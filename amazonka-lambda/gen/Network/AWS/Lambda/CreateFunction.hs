@@ -68,6 +68,7 @@ module Network.AWS.Lambda.CreateFunction
     , fcCodeSha256
     , fcTracingConfig
     , fcDescription
+    , fcRevisionId
     , fcMasterARN
     ) where
 

@@ -115,6 +115,19 @@ module Network.AWS.Kinesis.Types
     , sdStreamCreationTimestamp
     , sdEnhancedMonitoring
 
+    -- * StreamDescriptionSummary
+    , StreamDescriptionSummary
+    , streamDescriptionSummary
+    , sdsEncryptionType
+    , sdsKeyId
+    , sdsStreamName
+    , sdsStreamARN
+    , sdsStreamStatus
+    , sdsRetentionPeriodHours
+    , sdsStreamCreationTimestamp
+    , sdsEnhancedMonitoring
+    , sdsOpenShardCount
+
     -- * Tag
     , Tag
     , tag
@@ -211,14 +224,14 @@ _ProvisionedThroughputExceededException =
   _MatchServiceError kinesis "ProvisionedThroughputExceededException"
 
 
--- | The request was rejected because the specified entity or resource couldn't be found.
+-- | The request was rejected because the specified entity or resource can't be found.
 --
 --
 _KMSNotFoundException :: AsError a => Getting (First ServiceError) a ServiceError
 _KMSNotFoundException = _MatchServiceError kinesis "KMSNotFoundException"
 
 
--- | The request was rejected because the specified CMK isn't enabled.
+-- | The request was rejected because the specified customer master key (CMK) isn't enabled.
 --
 --
 _KMSDisabledException :: AsError a => Getting (First ServiceError) a ServiceError
@@ -241,14 +254,14 @@ _KMSAccessDeniedException =
   _MatchServiceError kinesis "KMSAccessDeniedException"
 
 
--- | The requested resource exceeds the maximum number allowed, or the number of concurrent stream requests exceeds the maximum number allowed (5).
+-- | The requested resource exceeds the maximum number allowed, or the number of concurrent stream requests exceeds the maximum number allowed.
 --
 --
 _LimitExceededException :: AsError a => Getting (First ServiceError) a ServiceError
 _LimitExceededException = _MatchServiceError kinesis "LimitExceededException"
 
 
--- | The resource is not available for this operation. For successful operation, the resource needs to be in the @ACTIVE@ state.
+-- | The resource is not available for this operation. For successful operation, the resource must be in the @ACTIVE@ state.
 --
 --
 _ResourceInUseException :: AsError a => Getting (First ServiceError) a ServiceError

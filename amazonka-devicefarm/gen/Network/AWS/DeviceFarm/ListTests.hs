@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Gets information about tests.
+-- Gets information about tests in a given test suite.
 --
 --
 --
@@ -66,7 +66,7 @@ data ListTests = ListTests'
 --
 -- * 'ltNextToken' - An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.
 --
--- * 'ltArn' - The tests' ARNs.
+-- * 'ltArn' - The test suite's Amazon Resource Name (ARN).
 listTests
     :: Text -- ^ 'ltArn'
     -> ListTests
@@ -77,7 +77,7 @@ listTests pArn_ = ListTests' {_ltNextToken = Nothing, _ltArn = pArn_}
 ltNextToken :: Lens' ListTests (Maybe Text)
 ltNextToken = lens _ltNextToken (\ s a -> s{_ltNextToken = a});
 
--- | The tests' ARNs.
+-- | The test suite's Amazon Resource Name (ARN).
 ltArn :: Lens' ListTests Text
 ltArn = lens _ltArn (\ s a -> s{_ltArn = a});
 

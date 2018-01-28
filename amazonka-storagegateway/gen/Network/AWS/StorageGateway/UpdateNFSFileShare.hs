@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Updates a file share. This operation is only supported in the file gateway architecture.
+-- Updates a file share. This operation is only supported in the file gateway type.
 --
 --
 -- Updates the following file share setting:
@@ -47,6 +47,7 @@ module Network.AWS.StorageGateway.UpdateNFSFileShare
     , unfsfsSquash
     , unfsfsNFSFileShareDefaults
     , unfsfsClientList
+    , unfsfsGuessMIMETypeEnabled
     , unfsfsReadOnly
     , unfsfsFileShareARN
 
@@ -77,6 +78,7 @@ data UpdateNFSFileShare = UpdateNFSFileShare'
   , _unfsfsSquash               :: !(Maybe Text)
   , _unfsfsNFSFileShareDefaults :: !(Maybe NFSFileShareDefaults)
   , _unfsfsClientList           :: !(Maybe (List1 Text))
+  , _unfsfsGuessMIMETypeEnabled :: !(Maybe Bool)
   , _unfsfsReadOnly             :: !(Maybe Bool)
   , _unfsfsFileShareARN         :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -98,6 +100,8 @@ data UpdateNFSFileShare = UpdateNFSFileShare'
 --
 -- * 'unfsfsClientList' - The list of clients that are allowed to access the file gateway. The list must contain either valid IP addresses or valid CIDR blocks.
 --
+-- * 'unfsfsGuessMIMETypeEnabled' - Enables guessing of the MIME type for uploaded objects based on file extensions: "true" to enable MIME type guessing, and otherwise "false".
+--
 -- * 'unfsfsReadOnly' - Sets the write status of a file share: "true" if the write status is read-only, otherwise "false".
 --
 -- * 'unfsfsFileShareARN' - The Amazon Resource Name (ARN) of the file share to be updated.
@@ -112,6 +116,7 @@ updateNFSFileShare pFileShareARN_ =
   , _unfsfsSquash = Nothing
   , _unfsfsNFSFileShareDefaults = Nothing
   , _unfsfsClientList = Nothing
+  , _unfsfsGuessMIMETypeEnabled = Nothing
   , _unfsfsReadOnly = Nothing
   , _unfsfsFileShareARN = pFileShareARN_
   }
@@ -140,6 +145,10 @@ unfsfsNFSFileShareDefaults = lens _unfsfsNFSFileShareDefaults (\ s a -> s{_unfsf
 -- | The list of clients that are allowed to access the file gateway. The list must contain either valid IP addresses or valid CIDR blocks.
 unfsfsClientList :: Lens' UpdateNFSFileShare (Maybe (NonEmpty Text))
 unfsfsClientList = lens _unfsfsClientList (\ s a -> s{_unfsfsClientList = a}) . mapping _List1;
+
+-- | Enables guessing of the MIME type for uploaded objects based on file extensions: "true" to enable MIME type guessing, and otherwise "false".
+unfsfsGuessMIMETypeEnabled :: Lens' UpdateNFSFileShare (Maybe Bool)
+unfsfsGuessMIMETypeEnabled = lens _unfsfsGuessMIMETypeEnabled (\ s a -> s{_unfsfsGuessMIMETypeEnabled = a});
 
 -- | Sets the write status of a file share: "true" if the write status is read-only, otherwise "false".
 unfsfsReadOnly :: Lens' UpdateNFSFileShare (Maybe Bool)
@@ -185,6 +194,8 @@ instance ToJSON UpdateNFSFileShare where
                   ("NFSFileShareDefaults" .=) <$>
                     _unfsfsNFSFileShareDefaults,
                   ("ClientList" .=) <$> _unfsfsClientList,
+                  ("GuessMIMETypeEnabled" .=) <$>
+                    _unfsfsGuessMIMETypeEnabled,
                   ("ReadOnly" .=) <$> _unfsfsReadOnly,
                   Just ("FileShareARN" .= _unfsfsFileShareARN)])
 

@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Lists the account IDs that have been authorized sharing of the specified portfolio.
+-- Lists the account IDs that have access to the specified portfolio.
 --
 --
 module Network.AWS.ServiceCatalog.ListPortfolioAccess
@@ -127,9 +127,9 @@ data ListPortfolioAccessResponse = ListPortfolioAccessResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'lparsNextPageToken' - The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.
+-- * 'lparsNextPageToken' - The page token to use to retrieve the next set of results. If there are no additional results, this value is null.
 --
--- * 'lparsAccountIds' - List of account IDs associated with access to the portfolio.
+-- * 'lparsAccountIds' - Information about the AWS accounts with access to the portfolio.
 --
 -- * 'lparsResponseStatus' - -- | The response status code.
 listPortfolioAccessResponse
@@ -143,11 +143,11 @@ listPortfolioAccessResponse pResponseStatus_ =
   }
 
 
--- | The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.
+-- | The page token to use to retrieve the next set of results. If there are no additional results, this value is null.
 lparsNextPageToken :: Lens' ListPortfolioAccessResponse (Maybe Text)
 lparsNextPageToken = lens _lparsNextPageToken (\ s a -> s{_lparsNextPageToken = a});
 
--- | List of account IDs associated with access to the portfolio.
+-- | Information about the AWS accounts with access to the portfolio.
 lparsAccountIds :: Lens' ListPortfolioAccessResponse [Text]
 lparsAccountIds = lens _lparsAccountIds (\ s a -> s{_lparsAccountIds = a}) . _Default . _Coerce;
 

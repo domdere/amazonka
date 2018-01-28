@@ -21,6 +21,8 @@
 -- Provides information about any domain controllers in your directory.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.DirectoryService.DescribeDomainControllers
     (
     -- * Creating a Request
@@ -44,6 +46,7 @@ module Network.AWS.DirectoryService.DescribeDomainControllers
 import Network.AWS.DirectoryService.Types
 import Network.AWS.DirectoryService.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -95,6 +98,13 @@ ddcLimit = lens _ddcLimit (\ s a -> s{_ddcLimit = a}) . mapping _Nat;
 -- | Identifier of the directory for which to retrieve the domain controller information.
 ddcDirectoryId :: Lens' DescribeDomainControllers Text
 ddcDirectoryId = lens _ddcDirectoryId (\ s a -> s{_ddcDirectoryId = a});
+
+instance AWSPager DescribeDomainControllers where
+        page rq rs
+          | stop (rs ^. ddcrsNextToken) = Nothing
+          | stop (rs ^. ddcrsDomainControllers) = Nothing
+          | otherwise =
+            Just $ rq & ddcNextToken .~ rs ^. ddcrsNextToken
 
 instance AWSRequest DescribeDomainControllers where
         type Rs DescribeDomainControllers =

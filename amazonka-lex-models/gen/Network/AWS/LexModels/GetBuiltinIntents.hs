@@ -23,6 +23,8 @@
 --
 -- This operation requires permission for the @lex:GetBuiltinIntents@ action.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.LexModels.GetBuiltinIntents
     (
     -- * Creating a Request
@@ -46,6 +48,7 @@ module Network.AWS.LexModels.GetBuiltinIntents
 import Network.AWS.Lens
 import Network.AWS.LexModels.Types
 import Network.AWS.LexModels.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -96,6 +99,13 @@ gbiSignatureContains = lens _gbiSignatureContains (\ s a -> s{_gbiSignatureConta
 -- | The maximum number of intents to return in the response. The default is 10.
 gbiMaxResults :: Lens' GetBuiltinIntents (Maybe Natural)
 gbiMaxResults = lens _gbiMaxResults (\ s a -> s{_gbiMaxResults = a}) . mapping _Nat;
+
+instance AWSPager GetBuiltinIntents where
+        page rq rs
+          | stop (rs ^. grsNextToken) = Nothing
+          | stop (rs ^. grsIntents) = Nothing
+          | otherwise =
+            Just $ rq & gbiNextToken .~ rs ^. grsNextToken
 
 instance AWSRequest GetBuiltinIntents where
         type Rs GetBuiltinIntents = GetBuiltinIntentsResponse

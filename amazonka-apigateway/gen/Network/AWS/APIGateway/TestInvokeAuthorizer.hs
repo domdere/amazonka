@@ -201,7 +201,7 @@ data TestInvokeAuthorizerResponse = TestInvokeAuthorizerResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'tiarsLog' - The Amazon API Gateway execution log for the test authorizer request.
+-- * 'tiarsLog' - The API Gateway execution log for the test authorizer request.
 --
 -- * 'tiarsPrincipalId' - The principal identity returned by the 'Authorizer'
 --
@@ -232,7 +232,7 @@ testInvokeAuthorizerResponse pResponseStatus_ =
   }
 
 
--- | The Amazon API Gateway execution log for the test authorizer request.
+-- | The API Gateway execution log for the test authorizer request.
 tiarsLog :: Lens' TestInvokeAuthorizerResponse (Maybe Text)
 tiarsLog = lens _tiarsLog (\ s a -> s{_tiarsLog = a});
 

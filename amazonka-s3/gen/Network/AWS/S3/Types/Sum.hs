@@ -283,6 +283,60 @@ instance FromXML ExpirationStatus where
 instance ToXML ExpirationStatus where
     toXML = toXMLText
 
+data ExpressionType =
+  Sql
+  deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
+
+
+instance FromText ExpressionType where
+    parser = takeLowerText >>= \case
+        "sql" -> pure Sql
+        e -> fromTextError $ "Failure parsing ExpressionType from value: '" <> e
+           <> "'. Accepted values: sql"
+
+instance ToText ExpressionType where
+    toText = \case
+        Sql -> "SQL"
+
+instance Hashable     ExpressionType
+instance NFData       ExpressionType
+instance ToByteString ExpressionType
+instance ToQuery      ExpressionType
+instance ToHeader     ExpressionType
+
+instance ToXML ExpressionType where
+    toXML = toXMLText
+
+data FileHeaderInfo
+  = Ignore
+  | None
+  | Use
+  deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
+
+
+instance FromText FileHeaderInfo where
+    parser = takeLowerText >>= \case
+        "ignore" -> pure Ignore
+        "none" -> pure None
+        "use" -> pure Use
+        e -> fromTextError $ "Failure parsing FileHeaderInfo from value: '" <> e
+           <> "'. Accepted values: ignore, none, use"
+
+instance ToText FileHeaderInfo where
+    toText = \case
+        Ignore -> "IGNORE"
+        None -> "NONE"
+        Use -> "USE"
+
+instance Hashable     FileHeaderInfo
+instance NFData       FileHeaderInfo
+instance ToByteString FileHeaderInfo
+instance ToQuery      FileHeaderInfo
+instance ToHeader     FileHeaderInfo
+
+instance ToXML FileHeaderInfo where
+    toXML = toXMLText
+
 data FilterRuleName
   = Prefix
   | Suffix
@@ -313,20 +367,23 @@ instance FromXML FilterRuleName where
 instance ToXML FilterRuleName where
     toXML = toXMLText
 
-data InventoryFormat =
-  IFCSV
+data InventoryFormat
+  = IFCSV
+  | IFOrc
   deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
 
 
 instance FromText InventoryFormat where
     parser = takeLowerText >>= \case
         "csv" -> pure IFCSV
+        "orc" -> pure IFOrc
         e -> fromTextError $ "Failure parsing InventoryFormat from value: '" <> e
-           <> "'. Accepted values: csv"
+           <> "'. Accepted values: csv, orc"
 
 instance ToText InventoryFormat where
     toText = \case
         IFCSV -> "CSV"
+        IFOrc -> "ORC"
 
 instance Hashable     InventoryFormat
 instance NFData       InventoryFormat
@@ -751,6 +808,33 @@ instance FromXML Protocol where
 instance ToXML Protocol where
     toXML = toXMLText
 
+data QuoteFields
+  = ASNeeded
+  | Always
+  deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
+
+
+instance FromText QuoteFields where
+    parser = takeLowerText >>= \case
+        "asneeded" -> pure ASNeeded
+        "always" -> pure Always
+        e -> fromTextError $ "Failure parsing QuoteFields from value: '" <> e
+           <> "'. Accepted values: asneeded, always"
+
+instance ToText QuoteFields where
+    toText = \case
+        ASNeeded -> "ASNEEDED"
+        Always -> "ALWAYS"
+
+instance Hashable     QuoteFields
+instance NFData       QuoteFields
+instance ToByteString QuoteFields
+instance ToQuery      QuoteFields
+instance ToHeader     QuoteFields
+
+instance ToXML QuoteFields where
+    toXML = toXMLText
+
 data ReplicationRuleStatus
   = Disabled
   | Enabled
@@ -862,6 +946,30 @@ instance ToQuery      RequestPayer
 instance ToHeader     RequestPayer
 
 instance ToXML RequestPayer where
+    toXML = toXMLText
+
+data RestoreRequestType =
+  Select
+  deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
+
+
+instance FromText RestoreRequestType where
+    parser = takeLowerText >>= \case
+        "select" -> pure Select
+        e -> fromTextError $ "Failure parsing RestoreRequestType from value: '" <> e
+           <> "'. Accepted values: select"
+
+instance ToText RestoreRequestType where
+    toText = \case
+        Select -> "SELECT"
+
+instance Hashable     RestoreRequestType
+instance NFData       RestoreRequestType
+instance ToByteString RestoreRequestType
+instance ToQuery      RestoreRequestType
+instance ToHeader     RestoreRequestType
+
+instance ToXML RestoreRequestType where
     toXML = toXMLText
 
 data ServerSideEncryption

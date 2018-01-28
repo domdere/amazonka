@@ -50,7 +50,7 @@ import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
 
--- | Requests Amazon API Gateway to get information about a 'Deployments' collection.
+-- | Requests API Gateway to get information about a 'Deployments' collection.
 --
 --
 --

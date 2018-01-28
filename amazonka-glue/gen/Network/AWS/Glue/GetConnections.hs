@@ -21,6 +21,8 @@
 -- Retrieves a list of connection definitions from the Data Catalog.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Glue.GetConnections
     (
     -- * Creating a Request
@@ -44,6 +46,7 @@ module Network.AWS.Glue.GetConnections
 import Network.AWS.Glue.Types
 import Network.AWS.Glue.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -94,6 +97,13 @@ gcsFilter = lens _gcsFilter (\ s a -> s{_gcsFilter = a});
 -- | The maximum number of connections to return in one response.
 gcsMaxResults :: Lens' GetConnections (Maybe Natural)
 gcsMaxResults = lens _gcsMaxResults (\ s a -> s{_gcsMaxResults = a}) . mapping _Nat;
+
+instance AWSPager GetConnections where
+        page rq rs
+          | stop (rs ^. gccrsNextToken) = Nothing
+          | stop (rs ^. gccrsConnectionList) = Nothing
+          | otherwise =
+            Just $ rq & gcsNextToken .~ rs ^. gccrsNextToken
 
 instance AWSRequest GetConnections where
         type Rs GetConnections = GetConnectionsResponse

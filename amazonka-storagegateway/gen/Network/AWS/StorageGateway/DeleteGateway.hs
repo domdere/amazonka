@@ -48,7 +48,7 @@ import Network.AWS.Response
 import Network.AWS.StorageGateway.Types
 import Network.AWS.StorageGateway.Types.Product
 
--- | A JSON object containing the id of the gateway to delete.
+-- | A JSON object containing the ID of the gateway to delete.
 --
 --
 --
@@ -107,7 +107,7 @@ instance ToPath DeleteGateway where
 instance ToQuery DeleteGateway where
         toQuery = const mempty
 
--- | A JSON object containing the id of the deleted gateway.
+-- | A JSON object containing the ID of the deleted gateway.
 --
 --
 --

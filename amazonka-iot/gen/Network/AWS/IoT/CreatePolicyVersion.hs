@@ -71,7 +71,7 @@ data CreatePolicyVersion = CreatePolicyVersion'
 --
 -- * 'cpvPolicyName' - The policy name.
 --
--- * 'cpvPolicyDocument' - The JSON document that describes the policy. Minimum length of 1. Maximum length of 2048, excluding whitespaces
+-- * 'cpvPolicyDocument' - The JSON document that describes the policy. Minimum length of 1. Maximum length of 2048, excluding whitespace.
 createPolicyVersion
     :: Text -- ^ 'cpvPolicyName'
     -> Text -- ^ 'cpvPolicyDocument'
@@ -92,7 +92,7 @@ cpvSetAsDefault = lens _cpvSetAsDefault (\ s a -> s{_cpvSetAsDefault = a});
 cpvPolicyName :: Lens' CreatePolicyVersion Text
 cpvPolicyName = lens _cpvPolicyName (\ s a -> s{_cpvPolicyName = a});
 
--- | The JSON document that describes the policy. Minimum length of 1. Maximum length of 2048, excluding whitespaces
+-- | The JSON document that describes the policy. Minimum length of 1. Maximum length of 2048, excluding whitespace.
 cpvPolicyDocument :: Lens' CreatePolicyVersion Text
 cpvPolicyDocument = lens _cpvPolicyDocument (\ s a -> s{_cpvPolicyDocument = a});
 

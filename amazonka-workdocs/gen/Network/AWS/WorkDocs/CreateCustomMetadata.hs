@@ -61,7 +61,7 @@ data CreateCustomMetadata = CreateCustomMetadata'
 --
 -- * 'ccmVersionId' - The ID of the version, if the custom metadata is being added to a document version.
 --
--- * 'ccmAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'ccmAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'ccmResourceId' - The ID of the resource.
 --
@@ -82,7 +82,7 @@ createCustomMetadata pResourceId_ =
 ccmVersionId :: Lens' CreateCustomMetadata (Maybe Text)
 ccmVersionId = lens _ccmVersionId (\ s a -> s{_ccmVersionId = a});
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 ccmAuthenticationToken :: Lens' CreateCustomMetadata (Maybe Text)
 ccmAuthenticationToken = lens _ccmAuthenticationToken (\ s a -> s{_ccmAuthenticationToken = a}) . mapping _Sensitive;
 

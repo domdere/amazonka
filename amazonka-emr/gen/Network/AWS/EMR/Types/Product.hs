@@ -21,7 +21,7 @@ import Network.AWS.EMR.Types.Sum
 import Network.AWS.Lens
 import Network.AWS.Prelude
 
--- | An application is any Amazon or third-party software that you can add to the cluster. This structure contains a list of strings that indicates the software to use with the cluster and accepts a user argument list. Amazon EMR accepts and forwards the argument list to the corresponding installation script as bootstrap action argument. For more information, see <http://docs.aws.amazon.com/ElasticMapReduce/latest/ManagementGuide/emr-mapr.html Using the MapR Distribution for Hadoop> . Currently supported values are:
+-- | An application is any Amazon or third-party software that you can add to the cluster. This structure contains a list of strings that indicates the software to use with the cluster and accepts a user argument list. Amazon EMR accepts and forwards the argument list to the corresponding installation script as bootstrap action argument. For more information, see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-mapr.html Using the MapR Distribution for Hadoop> . Currently supported values are:
 --
 --
 --     * "mapr-m3" - launch the cluster using MapR M3 Edition.
@@ -537,6 +537,7 @@ data Cluster = Cluster'
   , _cluReleaseLabel            :: !(Maybe Text)
   , _cluRepoUpgradeOnBoot       :: !(Maybe RepoUpgradeOnBoot)
   , _cluLogURI                  :: !(Maybe Text)
+  , _cluKerberosAttributes      :: !(Maybe KerberosAttributes)
   , _cluRunningAMIVersion       :: !(Maybe Text)
   , _cluMasterPublicDNSName     :: !(Maybe Text)
   , _cluTerminationProtected    :: !(Maybe Bool)
@@ -581,9 +582,11 @@ data Cluster = Cluster'
 --
 -- * 'cluLogURI' - The path to the Amazon S3 location where logs for this cluster are stored.
 --
+-- * 'cluKerberosAttributes' - Attributes for Kerberos configuration when Kerberos authentication is enabled using a security configuration. For more information see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-kerberos.html Use Kerberos Authentication> in the /EMR Management Guide/ .
+--
 -- * 'cluRunningAMIVersion' - The AMI version running on this cluster.
 --
--- * 'cluMasterPublicDNSName' - The public DNS name of the master EC2 instance.
+-- * 'cluMasterPublicDNSName' - The DNS name of the master node. If the cluster is on a private subnet, this is the private DNS name. On a public subnet, this is the public DNS name.
 --
 -- * 'cluTerminationProtected' - Indicates whether Amazon EMR will lock the cluster to prevent the EC2 instances from being terminated by an API call or user intervention, or in the event of a cluster error.
 --
@@ -622,6 +625,7 @@ cluster pId_ pName_ pStatus_ =
   , _cluReleaseLabel = Nothing
   , _cluRepoUpgradeOnBoot = Nothing
   , _cluLogURI = Nothing
+  , _cluKerberosAttributes = Nothing
   , _cluRunningAMIVersion = Nothing
   , _cluMasterPublicDNSName = Nothing
   , _cluTerminationProtected = Nothing
@@ -688,11 +692,15 @@ cluRepoUpgradeOnBoot = lens _cluRepoUpgradeOnBoot (\ s a -> s{_cluRepoUpgradeOnB
 cluLogURI :: Lens' Cluster (Maybe Text)
 cluLogURI = lens _cluLogURI (\ s a -> s{_cluLogURI = a});
 
+-- | Attributes for Kerberos configuration when Kerberos authentication is enabled using a security configuration. For more information see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-kerberos.html Use Kerberos Authentication> in the /EMR Management Guide/ .
+cluKerberosAttributes :: Lens' Cluster (Maybe KerberosAttributes)
+cluKerberosAttributes = lens _cluKerberosAttributes (\ s a -> s{_cluKerberosAttributes = a});
+
 -- | The AMI version running on this cluster.
 cluRunningAMIVersion :: Lens' Cluster (Maybe Text)
 cluRunningAMIVersion = lens _cluRunningAMIVersion (\ s a -> s{_cluRunningAMIVersion = a});
 
--- | The public DNS name of the master EC2 instance.
+-- | The DNS name of the master node. If the cluster is on a private subnet, this is the private DNS name. On a public subnet, this is the public DNS name.
 cluMasterPublicDNSName :: Lens' Cluster (Maybe Text)
 cluMasterPublicDNSName = lens _cluMasterPublicDNSName (\ s a -> s{_cluMasterPublicDNSName = a});
 
@@ -750,6 +758,7 @@ instance FromJSON Cluster where
                      <*> (x .:? "ReleaseLabel")
                      <*> (x .:? "RepoUpgradeOnBoot")
                      <*> (x .:? "LogUri")
+                     <*> (x .:? "KerberosAttributes")
                      <*> (x .:? "RunningAmiVersion")
                      <*> (x .:? "MasterPublicDnsName")
                      <*> (x .:? "TerminationProtected")
@@ -2102,7 +2111,7 @@ data InstanceFleetStatus = InstanceFleetStatus'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ifsState' - A code representing the instance fleet status.
+-- * 'ifsState' - A code representing the instance fleet status.     * @PROVISIONING@ —The instance fleet is provisioning EC2 resources and is not yet ready to run jobs.     * @BOOTSTRAPPING@ —EC2 instances and other resources have been provisioned and the bootstrap actions specified for the instances are underway.     * @RUNNING@ —EC2 instances and other resources are running. They are either executing jobs or waiting to execute jobs.     * @RESIZING@ —A resize operation is underway. EC2 instances are either being added or removed.     * @SUSPENDED@ —A resize operation could not complete. Existing EC2 instances are running, but instances can't be added or removed.     * @TERMINATING@ —The instance fleet is terminating EC2 instances.     * @TERMINATED@ —The instance fleet is no longer active, and all EC2 instances have been terminated.
 --
 -- * 'ifsStateChangeReason' - Provides status change reason details for the instance fleet.
 --
@@ -2114,7 +2123,7 @@ instanceFleetStatus =
   {_ifsState = Nothing, _ifsStateChangeReason = Nothing, _ifsTimeline = Nothing}
 
 
--- | A code representing the instance fleet status.
+-- | A code representing the instance fleet status.     * @PROVISIONING@ —The instance fleet is provisioning EC2 resources and is not yet ready to run jobs.     * @BOOTSTRAPPING@ —EC2 instances and other resources have been provisioned and the bootstrap actions specified for the instances are underway.     * @RUNNING@ —EC2 instances and other resources are running. They are either executing jobs or waiting to execute jobs.     * @RESIZING@ —A resize operation is underway. EC2 instances are either being added or removed.     * @SUSPENDED@ —A resize operation could not complete. Existing EC2 instances are running, but instances can't be added or removed.     * @TERMINATING@ —The instance fleet is terminating EC2 instances.     * @TERMINATED@ —The instance fleet is no longer active, and all EC2 instances have been terminated.
 ifsState :: Lens' InstanceFleetStatus (Maybe InstanceFleetState)
 ifsState = lens _ifsState (\ s a -> s{_ifsState = a});
 
@@ -3262,6 +3271,94 @@ instance ToJSON JobFlowInstancesConfig where
                     _jficTerminationProtected,
                   ("Placement" .=) <$> _jficPlacement])
 
+-- | Attributes for Kerberos configuration when Kerberos authentication is enabled using a security configuration. For more information see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-kerberos.html Use Kerberos Authentication> in the /EMR Management Guide/ .
+--
+--
+--
+-- /See:/ 'kerberosAttributes' smart constructor.
+data KerberosAttributes = KerberosAttributes'
+  { _kaADDomainJoinPassword             :: !(Maybe Text)
+  , _kaCrossRealmTrustPrincipalPassword :: !(Maybe Text)
+  , _kaADDomainJoinUser                 :: !(Maybe Text)
+  , _kaRealm                            :: !Text
+  , _kaKdcAdminPassword                 :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'KerberosAttributes' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'kaADDomainJoinPassword' - The Active Directory password for @ADDomainJoinUser@ .
+--
+-- * 'kaCrossRealmTrustPrincipalPassword' - Required only when establishing a cross-realm trust with a KDC in a different realm. The cross-realm principal password, which must be identical across realms.
+--
+-- * 'kaADDomainJoinUser' - Required only when establishing a cross-realm trust with an Active Directory domain. A user with sufficient privileges to join resources to the domain.
+--
+-- * 'kaRealm' - The name of the Kerberos realm to which all nodes in a cluster belong. For example, @EC2.INTERNAL@ .
+--
+-- * 'kaKdcAdminPassword' - The password used within the cluster for the kadmin service on the cluster-dedicated KDC, which maintains Kerberos principals, password policies, and keytabs for the cluster.
+kerberosAttributes
+    :: Text -- ^ 'kaRealm'
+    -> Text -- ^ 'kaKdcAdminPassword'
+    -> KerberosAttributes
+kerberosAttributes pRealm_ pKdcAdminPassword_ =
+  KerberosAttributes'
+  { _kaADDomainJoinPassword = Nothing
+  , _kaCrossRealmTrustPrincipalPassword = Nothing
+  , _kaADDomainJoinUser = Nothing
+  , _kaRealm = pRealm_
+  , _kaKdcAdminPassword = pKdcAdminPassword_
+  }
+
+
+-- | The Active Directory password for @ADDomainJoinUser@ .
+kaADDomainJoinPassword :: Lens' KerberosAttributes (Maybe Text)
+kaADDomainJoinPassword = lens _kaADDomainJoinPassword (\ s a -> s{_kaADDomainJoinPassword = a});
+
+-- | Required only when establishing a cross-realm trust with a KDC in a different realm. The cross-realm principal password, which must be identical across realms.
+kaCrossRealmTrustPrincipalPassword :: Lens' KerberosAttributes (Maybe Text)
+kaCrossRealmTrustPrincipalPassword = lens _kaCrossRealmTrustPrincipalPassword (\ s a -> s{_kaCrossRealmTrustPrincipalPassword = a});
+
+-- | Required only when establishing a cross-realm trust with an Active Directory domain. A user with sufficient privileges to join resources to the domain.
+kaADDomainJoinUser :: Lens' KerberosAttributes (Maybe Text)
+kaADDomainJoinUser = lens _kaADDomainJoinUser (\ s a -> s{_kaADDomainJoinUser = a});
+
+-- | The name of the Kerberos realm to which all nodes in a cluster belong. For example, @EC2.INTERNAL@ .
+kaRealm :: Lens' KerberosAttributes Text
+kaRealm = lens _kaRealm (\ s a -> s{_kaRealm = a});
+
+-- | The password used within the cluster for the kadmin service on the cluster-dedicated KDC, which maintains Kerberos principals, password policies, and keytabs for the cluster.
+kaKdcAdminPassword :: Lens' KerberosAttributes Text
+kaKdcAdminPassword = lens _kaKdcAdminPassword (\ s a -> s{_kaKdcAdminPassword = a});
+
+instance FromJSON KerberosAttributes where
+        parseJSON
+          = withObject "KerberosAttributes"
+              (\ x ->
+                 KerberosAttributes' <$>
+                   (x .:? "ADDomainJoinPassword") <*>
+                     (x .:? "CrossRealmTrustPrincipalPassword")
+                     <*> (x .:? "ADDomainJoinUser")
+                     <*> (x .: "Realm")
+                     <*> (x .: "KdcAdminPassword"))
+
+instance Hashable KerberosAttributes where
+
+instance NFData KerberosAttributes where
+
+instance ToJSON KerberosAttributes where
+        toJSON KerberosAttributes'{..}
+          = object
+              (catMaybes
+                 [("ADDomainJoinPassword" .=) <$>
+                    _kaADDomainJoinPassword,
+                  ("CrossRealmTrustPrincipalPassword" .=) <$>
+                    _kaCrossRealmTrustPrincipalPassword,
+                  ("ADDomainJoinUser" .=) <$> _kaADDomainJoinUser,
+                  Just ("Realm" .= _kaRealm),
+                  Just ("KdcAdminPassword" .= _kaKdcAdminPassword)])
+
 -- | A key value pair.
 --
 --
@@ -3783,11 +3880,11 @@ data SimpleScalingPolicyConfiguration = SimpleScalingPolicyConfiguration'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'sspcAdjustmentType' - The way in which EC2 instances are added (if @ScalingAdjustment@ is a positive number) or terminated (if @ScalingAdjustment@ is a negative number) each time the scaling activity is triggered. @CHANGE_IN_CAPACITY@ is the default. @CHANGE_IN_CAPACITY@ indicates that the EC2 instance count increments or decrements by @ScalingAdjustment@ , which should be expressed as an integer. @PERCENT_CHANGE_IN_CAPACITY@ indicates the instance count increments or decrements by the percentage specified by @ScalingAdjustment@ , which should be expressed as a decimal. For example, 0.20 indicates an increase in 20% increments of cluster capacity. @EXACT_CAPACITY@ indicates the scaling activity results in an instance group with the number of EC2 instances specified by @ScalingAdjustment@ , which should be expressed as a positive integer.
+-- * 'sspcAdjustmentType' - The way in which EC2 instances are added (if @ScalingAdjustment@ is a positive number) or terminated (if @ScalingAdjustment@ is a negative number) each time the scaling activity is triggered. @CHANGE_IN_CAPACITY@ is the default. @CHANGE_IN_CAPACITY@ indicates that the EC2 instance count increments or decrements by @ScalingAdjustment@ , which should be expressed as an integer. @PERCENT_CHANGE_IN_CAPACITY@ indicates the instance count increments or decrements by the percentage specified by @ScalingAdjustment@ , which should be expressed as an integer. For example, 20 indicates an increase in 20% increments of cluster capacity. @EXACT_CAPACITY@ indicates the scaling activity results in an instance group with the number of EC2 instances specified by @ScalingAdjustment@ , which should be expressed as a positive integer.
 --
 -- * 'sspcCoolDown' - The amount of time, in seconds, after a scaling activity completes before any further trigger-related scaling activities can start. The default value is 0.
 --
--- * 'sspcScalingAdjustment' - The amount by which to scale in or scale out, based on the specified @AdjustmentType@ . A positive value adds to the instance group's EC2 instance count while a negative number removes instances. If @AdjustmentType@ is set to @EXACT_CAPACITY@ , the number should only be a positive integer. If @AdjustmentType@ is set to @PERCENT_CHANGE_IN_CAPACITY@ , the value should express the percentage as a decimal. For example, -0.20 indicates a decrease in 20% increments of cluster capacity.
+-- * 'sspcScalingAdjustment' - The amount by which to scale in or scale out, based on the specified @AdjustmentType@ . A positive value adds to the instance group's EC2 instance count while a negative number removes instances. If @AdjustmentType@ is set to @EXACT_CAPACITY@ , the number should only be a positive integer. If @AdjustmentType@ is set to @PERCENT_CHANGE_IN_CAPACITY@ , the value should express the percentage as an integer. For example, -20 indicates a decrease in 20% increments of cluster capacity.
 simpleScalingPolicyConfiguration
     :: Int -- ^ 'sspcScalingAdjustment'
     -> SimpleScalingPolicyConfiguration
@@ -3799,7 +3896,7 @@ simpleScalingPolicyConfiguration pScalingAdjustment_ =
   }
 
 
--- | The way in which EC2 instances are added (if @ScalingAdjustment@ is a positive number) or terminated (if @ScalingAdjustment@ is a negative number) each time the scaling activity is triggered. @CHANGE_IN_CAPACITY@ is the default. @CHANGE_IN_CAPACITY@ indicates that the EC2 instance count increments or decrements by @ScalingAdjustment@ , which should be expressed as an integer. @PERCENT_CHANGE_IN_CAPACITY@ indicates the instance count increments or decrements by the percentage specified by @ScalingAdjustment@ , which should be expressed as a decimal. For example, 0.20 indicates an increase in 20% increments of cluster capacity. @EXACT_CAPACITY@ indicates the scaling activity results in an instance group with the number of EC2 instances specified by @ScalingAdjustment@ , which should be expressed as a positive integer.
+-- | The way in which EC2 instances are added (if @ScalingAdjustment@ is a positive number) or terminated (if @ScalingAdjustment@ is a negative number) each time the scaling activity is triggered. @CHANGE_IN_CAPACITY@ is the default. @CHANGE_IN_CAPACITY@ indicates that the EC2 instance count increments or decrements by @ScalingAdjustment@ , which should be expressed as an integer. @PERCENT_CHANGE_IN_CAPACITY@ indicates the instance count increments or decrements by the percentage specified by @ScalingAdjustment@ , which should be expressed as an integer. For example, 20 indicates an increase in 20% increments of cluster capacity. @EXACT_CAPACITY@ indicates the scaling activity results in an instance group with the number of EC2 instances specified by @ScalingAdjustment@ , which should be expressed as a positive integer.
 sspcAdjustmentType :: Lens' SimpleScalingPolicyConfiguration (Maybe AdjustmentType)
 sspcAdjustmentType = lens _sspcAdjustmentType (\ s a -> s{_sspcAdjustmentType = a});
 
@@ -3807,7 +3904,7 @@ sspcAdjustmentType = lens _sspcAdjustmentType (\ s a -> s{_sspcAdjustmentType = 
 sspcCoolDown :: Lens' SimpleScalingPolicyConfiguration (Maybe Int)
 sspcCoolDown = lens _sspcCoolDown (\ s a -> s{_sspcCoolDown = a});
 
--- | The amount by which to scale in or scale out, based on the specified @AdjustmentType@ . A positive value adds to the instance group's EC2 instance count while a negative number removes instances. If @AdjustmentType@ is set to @EXACT_CAPACITY@ , the number should only be a positive integer. If @AdjustmentType@ is set to @PERCENT_CHANGE_IN_CAPACITY@ , the value should express the percentage as a decimal. For example, -0.20 indicates a decrease in 20% increments of cluster capacity.
+-- | The amount by which to scale in or scale out, based on the specified @AdjustmentType@ . A positive value adds to the instance group's EC2 instance count while a negative number removes instances. If @AdjustmentType@ is set to @EXACT_CAPACITY@ , the number should only be a positive integer. If @AdjustmentType@ is set to @PERCENT_CHANGE_IN_CAPACITY@ , the value should express the percentage as an integer. For example, -20 indicates a decrease in 20% increments of cluster capacity.
 sspcScalingAdjustment :: Lens' SimpleScalingPolicyConfiguration Int
 sspcScalingAdjustment = lens _sspcScalingAdjustment (\ s a -> s{_sspcScalingAdjustment = a});
 
@@ -4312,7 +4409,7 @@ instance ToJSON SupportedProductConfig where
               (catMaybes
                  [("Args" .=) <$> _spcArgs, ("Name" .=) <$> _spcName])
 
--- | A key/value pair containing user-defined metadata that you can associate with an Amazon EMR resource. Tags make it easier to associate clusters in various ways, such as grouping clusters to track your Amazon EMR resource allocation costs. For more information, see <http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html Tagging Amazon EMR Resources> .
+-- | A key/value pair containing user-defined metadata that you can associate with an Amazon EMR resource. Tags make it easier to associate clusters in various ways, such as grouping clusters to track your Amazon EMR resource allocation costs. For more information, see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-tags.html Tag Clusters> .
 --
 --
 --
@@ -4327,19 +4424,19 @@ data Tag = Tag'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'tagValue' - A user-defined value, which is optional in a tag. For more information, see <http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html Tagging Amazon EMR Resources> .
+-- * 'tagValue' - A user-defined value, which is optional in a tag. For more information, see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-tags.html Tag Clusters> .
 --
--- * 'tagKey' - A user-defined key, which is the minimum required information for a valid tag. For more information, see <http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html Tagging Amazon EMR Resources> .
+-- * 'tagKey' - A user-defined key, which is the minimum required information for a valid tag. For more information, see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-tags.html Tag > .
 tag
     :: Tag
 tag = Tag' {_tagValue = Nothing, _tagKey = Nothing}
 
 
--- | A user-defined value, which is optional in a tag. For more information, see <http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html Tagging Amazon EMR Resources> .
+-- | A user-defined value, which is optional in a tag. For more information, see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-tags.html Tag Clusters> .
 tagValue :: Lens' Tag (Maybe Text)
 tagValue = lens _tagValue (\ s a -> s{_tagValue = a});
 
--- | A user-defined key, which is the minimum required information for a valid tag. For more information, see <http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html Tagging Amazon EMR Resources> .
+-- | A user-defined key, which is the minimum required information for a valid tag. For more information, see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-plan-tags.html Tag > .
 tagKey :: Lens' Tag (Maybe Text)
 tagKey = lens _tagKey (\ s a -> s{_tagKey = a});
 

@@ -147,6 +147,7 @@ module Network.AWS.AppStream.Types
     , iBaseImageARN
     , iDisplayName
     , iDescription
+    , iAppstreamAgentVersion
     , iApplications
     , iName
 
@@ -166,6 +167,7 @@ module Network.AWS.AppStream.Types
     , ibDisplayName
     , ibEnableDefaultInternetAccess
     , ibDescription
+    , ibAppstreamAgentVersion
     , ibName
 
     -- * ImageBuilderStateChangeReason

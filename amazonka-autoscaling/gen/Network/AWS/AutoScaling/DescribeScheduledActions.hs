@@ -72,7 +72,7 @@ data DescribeScheduledActions = DescribeScheduledActions'
 --
 -- * 'dsasNextToken' - The token for the next set of items to return. (You received this token from a previous call.)
 --
--- * 'dsasAutoScalingGroupName' - The name of the group.
+-- * 'dsasAutoScalingGroupName' - The name of the Auto Scaling group.
 --
 -- * 'dsasMaxRecords' - The maximum number of items to return with this call. The default value is 50 and the maximum value is 100.
 --
@@ -100,7 +100,7 @@ dsasStartTime = lens _dsasStartTime (\ s a -> s{_dsasStartTime = a}) . mapping _
 dsasNextToken :: Lens' DescribeScheduledActions (Maybe Text)
 dsasNextToken = lens _dsasNextToken (\ s a -> s{_dsasNextToken = a});
 
--- | The name of the group.
+-- | The name of the Auto Scaling group.
 dsasAutoScalingGroupName :: Lens' DescribeScheduledActions (Maybe Text)
 dsasAutoScalingGroupName = lens _dsasAutoScalingGroupName (\ s a -> s{_dsasAutoScalingGroupName = a});
 

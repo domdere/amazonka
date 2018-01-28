@@ -59,7 +59,7 @@ data RemoveFacetFromObject = RemoveFacetFromObject'
 --
 -- * 'rffoDirectoryARN' - The ARN of the directory in which the object resides.
 --
--- * 'rffoSchemaFacet' - The facet to remove.
+-- * 'rffoSchemaFacet' - The facet to remove. See 'SchemaFacet' for details.
 --
 -- * 'rffoObjectReference' - A reference to the object to remove the facet from.
 removeFacetFromObject
@@ -79,7 +79,7 @@ removeFacetFromObject pDirectoryARN_ pSchemaFacet_ pObjectReference_ =
 rffoDirectoryARN :: Lens' RemoveFacetFromObject Text
 rffoDirectoryARN = lens _rffoDirectoryARN (\ s a -> s{_rffoDirectoryARN = a});
 
--- | The facet to remove.
+-- | The facet to remove. See 'SchemaFacet' for details.
 rffoSchemaFacet :: Lens' RemoveFacetFromObject SchemaFacet
 rffoSchemaFacet = lens _rffoSchemaFacet (\ s a -> s{_rffoSchemaFacet = a});
 

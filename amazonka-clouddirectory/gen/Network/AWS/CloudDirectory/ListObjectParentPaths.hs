@@ -23,6 +23,8 @@
 --
 -- Use this API to evaluate all parents for an object. The call returns all objects from the root of the directory up to the requested object. The API returns the number of paths based on user-defined @MaxResults@ , in case there are multiple paths to the parent. The order of the paths and nodes returned is consistent among multiple API calls unless the objects are deleted or moved. Paths not leading to the directory root are ignored from the target object.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListObjectParentPaths
     (
     -- * Creating a Request
@@ -46,6 +48,7 @@ module Network.AWS.CloudDirectory.ListObjectParentPaths
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -98,6 +101,14 @@ loppDirectoryARN = lens _loppDirectoryARN (\ s a -> s{_loppDirectoryARN = a});
 -- | The reference that identifies the object whose parent paths are listed.
 loppObjectReference :: Lens' ListObjectParentPaths ObjectReference
 loppObjectReference = lens _loppObjectReference (\ s a -> s{_loppObjectReference = a});
+
+instance AWSPager ListObjectParentPaths where
+        page rq rs
+          | stop (rs ^. lopprsNextToken) = Nothing
+          | stop (rs ^. lopprsPathToObjectIdentifiersList) =
+            Nothing
+          | otherwise =
+            Just $ rq & loppNextToken .~ rs ^. lopprsNextToken
 
 instance AWSRequest ListObjectParentPaths where
         type Rs ListObjectParentPaths =

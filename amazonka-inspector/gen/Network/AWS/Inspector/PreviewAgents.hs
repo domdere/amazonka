@@ -21,6 +21,8 @@
 -- Previews the agents installed on the EC2 instances that are part of the specified assessment target.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Inspector.PreviewAgents
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.Inspector.PreviewAgents
 import Network.AWS.Inspector.Types
 import Network.AWS.Inspector.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -86,6 +89,13 @@ paMaxResults = lens _paMaxResults (\ s a -> s{_paMaxResults = a});
 -- | The ARN of the assessment target whose agents you want to preview.
 paPreviewAgentsARN :: Lens' PreviewAgents Text
 paPreviewAgentsARN = lens _paPreviewAgentsARN (\ s a -> s{_paPreviewAgentsARN = a});
+
+instance AWSPager PreviewAgents where
+        page rq rs
+          | stop (rs ^. parsNextToken) = Nothing
+          | stop (rs ^. parsAgentPreviews) = Nothing
+          | otherwise =
+            Just $ rq & paNextToken .~ rs ^. parsNextToken
 
 instance AWSRequest PreviewAgents where
         type Rs PreviewAgents = PreviewAgentsResponse

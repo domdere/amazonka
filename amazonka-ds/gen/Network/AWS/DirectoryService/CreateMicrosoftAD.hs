@@ -29,6 +29,7 @@ module Network.AWS.DirectoryService.CreateMicrosoftAD
       createMicrosoftAD
     , CreateMicrosoftAD
     -- * Request Lenses
+    , cmadEdition
     , cmadShortName
     , cmadDescription
     , cmadName
@@ -56,7 +57,8 @@ import Network.AWS.Response
 --
 -- /See:/ 'createMicrosoftAD' smart constructor.
 data CreateMicrosoftAD = CreateMicrosoftAD'
-  { _cmadShortName   :: !(Maybe Text)
+  { _cmadEdition     :: !(Maybe DirectoryEdition)
+  , _cmadShortName   :: !(Maybe Text)
   , _cmadDescription :: !(Maybe Text)
   , _cmadName        :: !Text
   , _cmadPassword    :: !(Sensitive Text)
@@ -67,6 +69,8 @@ data CreateMicrosoftAD = CreateMicrosoftAD'
 -- | Creates a value of 'CreateMicrosoftAD' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'cmadEdition' - AWS Microsoft AD is available in two editions: Standard and Enterprise. Enterprise is the default.
 --
 -- * 'cmadShortName' - The NetBIOS name for your domain. A short identifier for your domain, such as @CORP@ . If you don't specify a NetBIOS name, it will default to the first part of your directory DNS. For example, @CORP@ for the directory DNS @corp.example.com@ .
 --
@@ -84,13 +88,18 @@ createMicrosoftAD
     -> CreateMicrosoftAD
 createMicrosoftAD pName_ pPassword_ pVPCSettings_ =
   CreateMicrosoftAD'
-  { _cmadShortName = Nothing
+  { _cmadEdition = Nothing
+  , _cmadShortName = Nothing
   , _cmadDescription = Nothing
   , _cmadName = pName_
   , _cmadPassword = _Sensitive # pPassword_
   , _cmadVPCSettings = pVPCSettings_
   }
 
+
+-- | AWS Microsoft AD is available in two editions: Standard and Enterprise. Enterprise is the default.
+cmadEdition :: Lens' CreateMicrosoftAD (Maybe DirectoryEdition)
+cmadEdition = lens _cmadEdition (\ s a -> s{_cmadEdition = a});
 
 -- | The NetBIOS name for your domain. A short identifier for your domain, such as @CORP@ . If you don't specify a NetBIOS name, it will default to the first part of your directory DNS. For example, @CORP@ for the directory DNS @corp.example.com@ .
 cmadShortName :: Lens' CreateMicrosoftAD (Maybe Text)
@@ -139,7 +148,8 @@ instance ToJSON CreateMicrosoftAD where
         toJSON CreateMicrosoftAD'{..}
           = object
               (catMaybes
-                 [("ShortName" .=) <$> _cmadShortName,
+                 [("Edition" .=) <$> _cmadEdition,
+                  ("ShortName" .=) <$> _cmadShortName,
                   ("Description" .=) <$> _cmadDescription,
                   Just ("Name" .= _cmadName),
                   Just ("Password" .= _cmadPassword),

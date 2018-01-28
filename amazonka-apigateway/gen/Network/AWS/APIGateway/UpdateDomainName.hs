@@ -34,9 +34,11 @@ module Network.AWS.APIGateway.UpdateDomainName
     , domainName
     , DomainName
     -- * Response Lenses
+    , dnRegionalHostedZoneId
     , dnCertificateName
     , dnRegionalCertificateARN
     , dnCertificateARN
+    , dnDistributionHostedZoneId
     , dnDomainName
     , dnRegionalCertificateName
     , dnRegionalDomainName

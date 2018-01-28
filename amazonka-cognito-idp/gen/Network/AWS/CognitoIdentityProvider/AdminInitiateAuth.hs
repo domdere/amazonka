@@ -30,6 +30,8 @@ module Network.AWS.CognitoIdentityProvider.AdminInitiateAuth
     , AdminInitiateAuth
     -- * Request Lenses
     , aiaClientMetadata
+    , aiaContextData
+    , aiaAnalyticsMetadata
     , aiaAuthParameters
     , aiaUserPoolId
     , aiaClientId
@@ -59,11 +61,13 @@ import Network.AWS.Response
 --
 -- /See:/ 'adminInitiateAuth' smart constructor.
 data AdminInitiateAuth = AdminInitiateAuth'
-  { _aiaClientMetadata :: !(Maybe (Map Text Text))
-  , _aiaAuthParameters :: !(Maybe (Map Text Text))
-  , _aiaUserPoolId     :: !Text
-  , _aiaClientId       :: !(Sensitive Text)
-  , _aiaAuthFlow       :: !AuthFlowType
+  { _aiaClientMetadata    :: !(Maybe (Map Text Text))
+  , _aiaContextData       :: !(Maybe ContextDataType)
+  , _aiaAnalyticsMetadata :: !(Maybe AnalyticsMetadataType)
+  , _aiaAuthParameters    :: !(Maybe (Map Text Text))
+  , _aiaUserPoolId        :: !Text
+  , _aiaClientId          :: !(Sensitive Text)
+  , _aiaAuthFlow          :: !AuthFlowType
   } deriving (Eq, Show, Data, Typeable, Generic)
 
 
@@ -72,6 +76,10 @@ data AdminInitiateAuth = AdminInitiateAuth'
 -- Use one of the following lenses to modify other fields as desired:
 --
 -- * 'aiaClientMetadata' - This is a random key-value pair map which can contain any key and will be passed to your PreAuthentication Lambda trigger as-is. It can be used to implement additional validations around authentication.
+--
+-- * 'aiaContextData' - Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.
+--
+-- * 'aiaAnalyticsMetadata' - The analytics metadata for collecting Amazon Pinpoint metrics for @AdminInitiateAuth@ calls.
 --
 -- * 'aiaAuthParameters' - The authentication parameters. These are inputs corresponding to the @AuthFlow@ that you are invoking. The required values depend on the value of @AuthFlow@ :     * For @USER_SRP_AUTH@ : @USERNAME@ (required), @SRP_A@ (required), @SECRET_HASH@ (required if the app client is configured with a client secret), @DEVICE_KEY@      * For @REFRESH_TOKEN_AUTH/REFRESH_TOKEN@ : @USERNAME@ (required), @SECRET_HASH@ (required if the app client is configured with a client secret), @REFRESH_TOKEN@ (required), @DEVICE_KEY@      * For @ADMIN_NO_SRP_AUTH@ : @USERNAME@ (required), @SECRET_HASH@ (if app client is configured with client secret), @PASSWORD@ (required), @DEVICE_KEY@      * For @CUSTOM_AUTH@ : @USERNAME@ (required), @SECRET_HASH@ (if app client is configured with client secret), @DEVICE_KEY@
 --
@@ -88,6 +96,8 @@ adminInitiateAuth
 adminInitiateAuth pUserPoolId_ pClientId_ pAuthFlow_ =
   AdminInitiateAuth'
   { _aiaClientMetadata = Nothing
+  , _aiaContextData = Nothing
+  , _aiaAnalyticsMetadata = Nothing
   , _aiaAuthParameters = Nothing
   , _aiaUserPoolId = pUserPoolId_
   , _aiaClientId = _Sensitive # pClientId_
@@ -98,6 +108,14 @@ adminInitiateAuth pUserPoolId_ pClientId_ pAuthFlow_ =
 -- | This is a random key-value pair map which can contain any key and will be passed to your PreAuthentication Lambda trigger as-is. It can be used to implement additional validations around authentication.
 aiaClientMetadata :: Lens' AdminInitiateAuth (HashMap Text Text)
 aiaClientMetadata = lens _aiaClientMetadata (\ s a -> s{_aiaClientMetadata = a}) . _Default . _Map;
+
+-- | Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.
+aiaContextData :: Lens' AdminInitiateAuth (Maybe ContextDataType)
+aiaContextData = lens _aiaContextData (\ s a -> s{_aiaContextData = a});
+
+-- | The analytics metadata for collecting Amazon Pinpoint metrics for @AdminInitiateAuth@ calls.
+aiaAnalyticsMetadata :: Lens' AdminInitiateAuth (Maybe AnalyticsMetadataType)
+aiaAnalyticsMetadata = lens _aiaAnalyticsMetadata (\ s a -> s{_aiaAnalyticsMetadata = a});
 
 -- | The authentication parameters. These are inputs corresponding to the @AuthFlow@ that you are invoking. The required values depend on the value of @AuthFlow@ :     * For @USER_SRP_AUTH@ : @USERNAME@ (required), @SRP_A@ (required), @SECRET_HASH@ (required if the app client is configured with a client secret), @DEVICE_KEY@      * For @REFRESH_TOKEN_AUTH/REFRESH_TOKEN@ : @USERNAME@ (required), @SECRET_HASH@ (required if the app client is configured with a client secret), @REFRESH_TOKEN@ (required), @DEVICE_KEY@      * For @ADMIN_NO_SRP_AUTH@ : @USERNAME@ (required), @SECRET_HASH@ (if app client is configured with client secret), @PASSWORD@ (required), @DEVICE_KEY@      * For @CUSTOM_AUTH@ : @USERNAME@ (required), @SECRET_HASH@ (if app client is configured with client secret), @DEVICE_KEY@
 aiaAuthParameters :: Lens' AdminInitiateAuth (HashMap Text Text)
@@ -147,6 +165,8 @@ instance ToJSON AdminInitiateAuth where
           = object
               (catMaybes
                  [("ClientMetadata" .=) <$> _aiaClientMetadata,
+                  ("ContextData" .=) <$> _aiaContextData,
+                  ("AnalyticsMetadata" .=) <$> _aiaAnalyticsMetadata,
                   ("AuthParameters" .=) <$> _aiaAuthParameters,
                   Just ("UserPoolId" .= _aiaUserPoolId),
                   Just ("ClientId" .= _aiaClientId),

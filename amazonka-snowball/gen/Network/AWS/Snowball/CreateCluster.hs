@@ -86,7 +86,7 @@ data CreateCluster = CreateCluster'
 --
 -- * 'ccResources' - The resources associated with the cluster job. These resources include Amazon S3 buckets and optional AWS Lambda functions written in the Python language.
 --
--- * 'ccAddressId' - The ID for the address that you want the cluster shipped to.>
+-- * 'ccAddressId' - The ID for the address that you want the cluster shipped to.
 --
 -- * 'ccRoleARN' - The @RoleARN@ that you want to associate with this cluster. @RoleArn@ values are created by using the <http://docs.aws.amazon.com/IAM/latest/APIReference/API_CreateRole.html CreateRole> API action in AWS Identity and Access Management (IAM).
 --
@@ -141,7 +141,7 @@ ccJobType = lens _ccJobType (\ s a -> s{_ccJobType = a});
 ccResources :: Lens' CreateCluster JobResource
 ccResources = lens _ccResources (\ s a -> s{_ccResources = a});
 
--- | The ID for the address that you want the cluster shipped to.>
+-- | The ID for the address that you want the cluster shipped to.
 ccAddressId :: Lens' CreateCluster Text
 ccAddressId = lens _ccAddressId (\ s a -> s{_ccAddressId = a});
 

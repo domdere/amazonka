@@ -149,6 +149,7 @@ module Network.AWS.CloudFormation.Types
     , Parameter
     , parameter
     , pParameterValue
+    , pResolvedValue
     , pParameterKey
     , pUsePreviousValue
 
@@ -253,6 +254,7 @@ module Network.AWS.CloudFormation.Types
     , siRegion
     , siStatusReason
     , siStackId
+    , siParameterOverrides
     , siStackSetId
 
     -- * StackInstanceSummary

@@ -21,6 +21,8 @@
 -- Retrieves all the DevEndpoints in this AWS account.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Glue.GetDevEndpoints
     (
     -- * Creating a Request
@@ -42,6 +44,7 @@ module Network.AWS.Glue.GetDevEndpoints
 import Network.AWS.Glue.Types
 import Network.AWS.Glue.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -73,6 +76,13 @@ gdeNextToken = lens _gdeNextToken (\ s a -> s{_gdeNextToken = a});
 -- | The maximum size of information to return.
 gdeMaxResults :: Lens' GetDevEndpoints (Maybe Natural)
 gdeMaxResults = lens _gdeMaxResults (\ s a -> s{_gdeMaxResults = a}) . mapping _Nat;
+
+instance AWSPager GetDevEndpoints where
+        page rq rs
+          | stop (rs ^. gdersNextToken) = Nothing
+          | stop (rs ^. gdersDevEndpoints) = Nothing
+          | otherwise =
+            Just $ rq & gdeNextToken .~ rs ^. gdersNextToken
 
 instance AWSRequest GetDevEndpoints where
         type Rs GetDevEndpoints = GetDevEndpointsResponse

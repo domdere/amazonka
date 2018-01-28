@@ -23,6 +23,8 @@
 --
 -- Note that the "last updated" column the DMS console only indicates the time that AWS DMS last updated the table statistics record for a table. It does not indicate the time of the last update to the table.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.DMS.DescribeTableStatistics
     (
     -- * Creating a Request
@@ -47,6 +49,7 @@ module Network.AWS.DMS.DescribeTableStatistics
 import Network.AWS.DMS.Types
 import Network.AWS.DMS.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -102,6 +105,13 @@ dtsMaxRecords = lens _dtsMaxRecords (\ s a -> s{_dtsMaxRecords = a});
 -- | The Amazon Resource Name (ARN) of the replication task.
 dtsReplicationTaskARN :: Lens' DescribeTableStatistics Text
 dtsReplicationTaskARN = lens _dtsReplicationTaskARN (\ s a -> s{_dtsReplicationTaskARN = a});
+
+instance AWSPager DescribeTableStatistics where
+        page rq rs
+          | stop (rs ^. dtsrsMarker) = Nothing
+          | stop (rs ^. dtsrsTableStatistics) = Nothing
+          | otherwise =
+            Just $ rq & dtsMarker .~ rs ^. dtsrsMarker
 
 instance AWSRequest DescribeTableStatistics where
         type Rs DescribeTableStatistics =

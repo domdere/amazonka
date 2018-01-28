@@ -21,6 +21,8 @@
 -- Retrieves a list of traces specified by ID. Each trace is a collection of segment documents that originates from a single request. Use @GetTraceSummaries@ to get a list of trace IDs.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.XRay.BatchGetTraces
     (
     -- * Creating a Request
@@ -41,6 +43,7 @@ module Network.AWS.XRay.BatchGetTraces
     ) where
 
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -74,6 +77,13 @@ bgtNextToken = lens _bgtNextToken (\ s a -> s{_bgtNextToken = a});
 -- | Specify the trace IDs of requests for which to retrieve segments.
 bgtTraceIds :: Lens' BatchGetTraces [Text]
 bgtTraceIds = lens _bgtTraceIds (\ s a -> s{_bgtTraceIds = a}) . _Coerce;
+
+instance AWSPager BatchGetTraces where
+        page rq rs
+          | stop (rs ^. bgtrsNextToken) = Nothing
+          | stop (rs ^. bgtrsTraces) = Nothing
+          | otherwise =
+            Just $ rq & bgtNextToken .~ rs ^. bgtrsNextToken
 
 instance AWSRequest BatchGetTraces where
         type Rs BatchGetTraces = BatchGetTracesResponse

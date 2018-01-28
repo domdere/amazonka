@@ -76,25 +76,25 @@ data CreateFleet = CreateFleet'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cfDomainJoinInfo' - The information needed for streaming instances to join a domain.
+-- * 'cfDomainJoinInfo' - The information needed to join a Microsoft Active Directory domain.
 --
 -- * 'cfDisconnectTimeoutInSeconds' - The time after disconnection when a session is considered to have ended, in seconds. If a user who was disconnected reconnects within this time interval, the user is connected to their previous session. Specify a value between 60 and 57600.
 --
 -- * 'cfMaxUserDurationInSeconds' - The maximum time that a streaming session can run, in seconds. Specify a value between 600 and 57600.
 --
--- * 'cfFleetType' - Undocumented member.
+-- * 'cfFleetType' - The fleet type.     * ALWAYS_ON    * Provides users with instant-on access to their apps. You are charged for all running instances in your fleet, even if no users are streaming apps.     * ON_DEMAND    * Provide users with access to applications after they connect, which takes one to two minutes. You are charged for instance streaming when users are connected and a small hourly fee for instances that are not streaming apps.
 --
 -- * 'cfVPCConfig' - The VPC configuration for the fleet.
 --
--- * 'cfDisplayName' - The fleet name displayed to end users.
+-- * 'cfDisplayName' - The fleet name for display.
 --
 -- * 'cfEnableDefaultInternetAccess' - Enables or disables default internet access for the fleet.
 --
--- * 'cfDescription' - The description displayed to end users.
+-- * 'cfDescription' - The description for display.
 --
 -- * 'cfName' - A unique name for the fleet.
 --
--- * 'cfImageName' - The name of the image used by the fleet.
+-- * 'cfImageName' - The name of the image used to create the fleet.
 --
 -- * 'cfInstanceType' - The instance type to use when launching fleet instances. The following instance types are available:     * stream.standard.medium     * stream.standard.large     * stream.compute.large     * stream.compute.xlarge     * stream.compute.2xlarge     * stream.compute.4xlarge     * stream.compute.8xlarge     * stream.memory.large     * stream.memory.xlarge     * stream.memory.2xlarge     * stream.memory.4xlarge     * stream.memory.8xlarge     * stream.graphics-design.large     * stream.graphics-design.xlarge     * stream.graphics-design.2xlarge     * stream.graphics-design.4xlarge     * stream.graphics-desktop.2xlarge     * stream.graphics-pro.4xlarge     * stream.graphics-pro.8xlarge     * stream.graphics-pro.16xlarge
 --
@@ -122,7 +122,7 @@ createFleet pName_ pImageName_ pInstanceType_ pComputeCapacity_ =
   }
 
 
--- | The information needed for streaming instances to join a domain.
+-- | The information needed to join a Microsoft Active Directory domain.
 cfDomainJoinInfo :: Lens' CreateFleet (Maybe DomainJoinInfo)
 cfDomainJoinInfo = lens _cfDomainJoinInfo (\ s a -> s{_cfDomainJoinInfo = a});
 
@@ -134,7 +134,7 @@ cfDisconnectTimeoutInSeconds = lens _cfDisconnectTimeoutInSeconds (\ s a -> s{_c
 cfMaxUserDurationInSeconds :: Lens' CreateFleet (Maybe Int)
 cfMaxUserDurationInSeconds = lens _cfMaxUserDurationInSeconds (\ s a -> s{_cfMaxUserDurationInSeconds = a});
 
--- | Undocumented member.
+-- | The fleet type.     * ALWAYS_ON    * Provides users with instant-on access to their apps. You are charged for all running instances in your fleet, even if no users are streaming apps.     * ON_DEMAND    * Provide users with access to applications after they connect, which takes one to two minutes. You are charged for instance streaming when users are connected and a small hourly fee for instances that are not streaming apps.
 cfFleetType :: Lens' CreateFleet (Maybe FleetType)
 cfFleetType = lens _cfFleetType (\ s a -> s{_cfFleetType = a});
 
@@ -142,7 +142,7 @@ cfFleetType = lens _cfFleetType (\ s a -> s{_cfFleetType = a});
 cfVPCConfig :: Lens' CreateFleet (Maybe VPCConfig)
 cfVPCConfig = lens _cfVPCConfig (\ s a -> s{_cfVPCConfig = a});
 
--- | The fleet name displayed to end users.
+-- | The fleet name for display.
 cfDisplayName :: Lens' CreateFleet (Maybe Text)
 cfDisplayName = lens _cfDisplayName (\ s a -> s{_cfDisplayName = a});
 
@@ -150,7 +150,7 @@ cfDisplayName = lens _cfDisplayName (\ s a -> s{_cfDisplayName = a});
 cfEnableDefaultInternetAccess :: Lens' CreateFleet (Maybe Bool)
 cfEnableDefaultInternetAccess = lens _cfEnableDefaultInternetAccess (\ s a -> s{_cfEnableDefaultInternetAccess = a});
 
--- | The description displayed to end users.
+-- | The description for display.
 cfDescription :: Lens' CreateFleet (Maybe Text)
 cfDescription = lens _cfDescription (\ s a -> s{_cfDescription = a});
 
@@ -158,7 +158,7 @@ cfDescription = lens _cfDescription (\ s a -> s{_cfDescription = a});
 cfName :: Lens' CreateFleet Text
 cfName = lens _cfName (\ s a -> s{_cfName = a});
 
--- | The name of the image used by the fleet.
+-- | The name of the image used to create the fleet.
 cfImageName :: Lens' CreateFleet Text
 cfImageName = lens _cfImageName (\ s a -> s{_cfImageName = a});
 

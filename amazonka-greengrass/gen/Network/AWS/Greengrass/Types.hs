@@ -31,6 +31,21 @@ module Network.AWS.Greengrass.Types
     -- * LoggerType
     , LoggerType (..)
 
+    -- * Permission
+    , Permission (..)
+
+    -- * SoftwareToUpdate
+    , SoftwareToUpdate (..)
+
+    -- * UpdateAgentLogLevel
+    , UpdateAgentLogLevel (..)
+
+    -- * UpdateTargetsArchitecture
+    , UpdateTargetsArchitecture (..)
+
+    -- * UpdateTargetsOperatingSystem
+    , UpdateTargetsOperatingSystem (..)
+
     -- * ConnectivityInfo
     , ConnectivityInfo
     , connectivityInfo
@@ -112,6 +127,8 @@ module Network.AWS.Greengrass.Types
     , FunctionConfigurationEnvironment
     , functionConfigurationEnvironment
     , fceVariables
+    , fceResourceAccessPolicies
+    , fceAccessSysfs
 
     -- * FunctionDefinitionVersion
     , FunctionDefinitionVersion
@@ -144,19 +161,63 @@ module Network.AWS.Greengrass.Types
     , giLatestVersion
     , giLastUpdatedTimestamp
 
+    -- * GroupOwnerSetting
+    , GroupOwnerSetting
+    , groupOwnerSetting
+    , gosAutoAddGroupOwner
+    , gosGroupOwner
+
     -- * GroupVersion
     , GroupVersion
     , groupVersion
+    , gvResourceDefinitionVersionARN
     , gvSubscriptionDefinitionVersionARN
     , gvCoreDefinitionVersionARN
     , gvDeviceDefinitionVersionARN
     , gvFunctionDefinitionVersionARN
     , gvLoggerDefinitionVersionARN
 
+    -- * LocalDeviceResourceData
+    , LocalDeviceResourceData
+    , localDeviceResourceData
+    , ldrdGroupOwnerSetting
+    , ldrdSourcePath
+
+    -- * LocalVolumeResourceData
+    , LocalVolumeResourceData
+    , localVolumeResourceData
+    , lvrdGroupOwnerSetting
+    , lvrdDestinationPath
+    , lvrdSourcePath
+
     -- * LoggerDefinitionVersion
     , LoggerDefinitionVersion
     , loggerDefinitionVersion
     , ldvLoggers
+
+    -- * Resource
+    , Resource
+    , resource
+    , rResourceDataContainer
+    , rName
+    , rId
+
+    -- * ResourceAccessPolicy
+    , ResourceAccessPolicy
+    , resourceAccessPolicy
+    , rapResourceId
+    , rapPermission
+
+    -- * ResourceDataContainer
+    , ResourceDataContainer
+    , resourceDataContainer
+    , rdcLocalVolumeResourceData
+    , rdcLocalDeviceResourceData
+
+    -- * ResourceDefinitionVersion
+    , ResourceDefinitionVersion
+    , resourceDefinitionVersion
+    , rdvResources
 
     -- * Subscription
     , Subscription

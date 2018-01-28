@@ -137,8 +137,8 @@ module Network.AWS.XRay.Types
     , trSegmentsSentCount
     , trSegmentsSpilloverCount
     , trSegmentsRejectedCount
-    , trTimestamp
     , trBackendConnectionErrors
+    , trTimestamp
 
     -- * Trace
     , Trace

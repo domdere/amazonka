@@ -22,6 +22,48 @@ import Network.AWS.Prelude
 import Network.AWS.Route53.Internal
 import Network.AWS.Route53.Types.Sum
 
+-- | A complex type that contains the type of limit that you specified in the request and the current value for that limit.
+--
+--
+--
+-- /See:/ 'accountLimit' smart constructor.
+data AccountLimit = AccountLimit'
+  { _alType  :: !AccountLimitType
+  , _alValue :: !Nat
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'AccountLimit' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'alType' - The limit that you requested. Valid values include the following:     * __MAX_HEALTH_CHECKS_BY_OWNER__ : The maximum number of health checks that you can create using the current account.     * __MAX_HOSTED_ZONES_BY_OWNER__ : The maximum number of hosted zones that you can create using the current account.     * __MAX_REUSABLE_DELEGATION_SETS_BY_OWNER__ : The maximum number of reusable delegation sets that you can create using the current account.     * __MAX_TRAFFIC_POLICIES_BY_OWNER__ : The maximum number of traffic policies that you can create using the current account.     * __MAX_TRAFFIC_POLICY_INSTANCES_BY_OWNER__ : The maximum number of traffic policy instances that you can create using the current account. (Traffic policy instances are referred to as traffic flow policy records in the Amazon Route 53 console.)
+--
+-- * 'alValue' - The current value for the limit that is specified by 'AccountLimit$Type' .
+accountLimit
+    :: AccountLimitType -- ^ 'alType'
+    -> Natural -- ^ 'alValue'
+    -> AccountLimit
+accountLimit pType_ pValue_ =
+  AccountLimit' {_alType = pType_, _alValue = _Nat # pValue_}
+
+
+-- | The limit that you requested. Valid values include the following:     * __MAX_HEALTH_CHECKS_BY_OWNER__ : The maximum number of health checks that you can create using the current account.     * __MAX_HOSTED_ZONES_BY_OWNER__ : The maximum number of hosted zones that you can create using the current account.     * __MAX_REUSABLE_DELEGATION_SETS_BY_OWNER__ : The maximum number of reusable delegation sets that you can create using the current account.     * __MAX_TRAFFIC_POLICIES_BY_OWNER__ : The maximum number of traffic policies that you can create using the current account.     * __MAX_TRAFFIC_POLICY_INSTANCES_BY_OWNER__ : The maximum number of traffic policy instances that you can create using the current account. (Traffic policy instances are referred to as traffic flow policy records in the Amazon Route 53 console.)
+alType :: Lens' AccountLimit AccountLimitType
+alType = lens _alType (\ s a -> s{_alType = a});
+
+-- | The current value for the limit that is specified by 'AccountLimit$Type' .
+alValue :: Lens' AccountLimit Natural
+alValue = lens _alValue (\ s a -> s{_alValue = a}) . _Nat;
+
+instance FromXML AccountLimit where
+        parseXML x
+          = AccountLimit' <$> (x .@ "Type") <*> (x .@ "Value")
+
+instance Hashable AccountLimit where
+
+instance NFData AccountLimit where
+
 -- | A complex type that identifies the CloudWatch alarm that you want Amazon Route 53 health checkers to use to determine whether this health check is healthy.
 --
 --
@@ -95,7 +137,7 @@ data AliasTarget = AliasTarget'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'atHostedZoneId' - /Alias resource records sets only/ : The value used depends on where you want to route traffic:     * CloudFront distribution    * Specify @Z2FDTNDATAQYW2@ .     * Elastic Beanstalk environment    * Specify the hosted zone ID for the region in which you created the environment. The environment must have a regionalized subdomain. For a list of regions and the corresponding hosted zone IDs, see <http://docs.aws.amazon.com/general/latest/gr/rande.html#elasticbeanstalk_region AWS Elastic Beanstalk> in the "AWS Regions and Endpoints" chapter of the /Amazon Web Services General Reference/ .     * ELB load balancer    * Specify the value of the hosted zone ID for the load balancer. Use the following methods to get the hosted zone ID:     * <http://docs.aws.amazon.com/general/latest/gr/rande.html#elb_region Elastic Load Balancing> table in the "AWS Regions and Endpoints" chapter of the /Amazon Web Services General Reference/ : Use the value that corresponds with the region that you created your load balancer in. Note that there are separate columns for Application and Classic Load Balancers and for Network Load Balancers.     * __AWS Management Console__ : Go to the Amazon EC2 page, choose __Load Balancers__ in the navigation pane, select the load balancer, and get the value of the __Hosted zone__ field on the __Description__ tab.     * __Elastic Load Balancing API__ : Use @DescribeLoadBalancers@ to get the value of @CanonicalHostedZoneNameId@ . For more information, see the applicable guide:     * Classic Load Balancers: <http://docs.aws.amazon.com/elasticloadbalancing/2012-06-01/APIReference/API_DescribeLoadBalancers.html DescribeLoadBalancers>      * Application and Network Load Balancers: <http://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_DescribeLoadBalancers.html DescribeLoadBalancers>      * __AWS CLI__ : Use @describe-load-balancers@ to get the value of @CanonicalHostedZoneNameID@ (for Classic Load Balancers) or @CanonicalHostedZoneNameID@ (for Application and Network Load Balancers). For more information, see the applicable guide:     * Classic Load Balancers: <http://docs.aws.amazon.com/cli/latest/reference/elb/describe-load-balancers.html describe-load-balancers>      * Application and Network Load Balancers: <http://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-load-balancers.html describe-load-balancers>      * An Amazon S3 bucket configured as a static website    * Specify the hosted zone ID for the region that you created the bucket in. For more information about valid values, see the <http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region Amazon Simple Storage Service Website Endpoints> table in the "AWS Regions and Endpoints" chapter of the /Amazon Web Services General Reference/ .     * Another Amazon Route 53 resource record set in your hosted zone    * Specify the hosted zone ID of your hosted zone. (An alias resource record set can't reference a resource record set in a different hosted zone.)
+-- * 'atHostedZoneId' - /Alias resource records sets only/ : The value used depends on where you want to route traffic:     * CloudFront distribution    * Specify @Z2FDTNDATAQYW2@ .     * Elastic Beanstalk environment    * Specify the hosted zone ID for the region in which you created the environment. The environment must have a regionalized subdomain. For a list of regions and the corresponding hosted zone IDs, see <http://docs.aws.amazon.com/general/latest/gr/rande.html#elasticbeanstalk_region AWS Elastic Beanstalk> in the "AWS Regions and Endpoints" chapter of the /Amazon Web Services General Reference/ .     * ELB load balancer    * Specify the value of the hosted zone ID for the load balancer. Use the following methods to get the hosted zone ID:     * <http://docs.aws.amazon.com/general/latest/gr/rande.html#elb_region Elastic Load Balancing> table in the "AWS Regions and Endpoints" chapter of the /Amazon Web Services General Reference/ : Use the value that corresponds with the region that you created your load balancer in. Note that there are separate columns for Application and Classic Load Balancers and for Network Load Balancers.     * __AWS Management Console__ : Go to the Amazon EC2 page, choose __Load Balancers__ in the navigation pane, select the load balancer, and get the value of the __Hosted zone__ field on the __Description__ tab.     * __Elastic Load Balancing API__ : Use @DescribeLoadBalancers@ to get the applicable value. For more information, see the applicable guide:     * Classic Load Balancers: Use <http://docs.aws.amazon.com/elasticloadbalancing/2012-06-01/APIReference/API_DescribeLoadBalancers.html DescribeLoadBalancers> to get the value of @CanonicalHostedZoneNameId@ .     * Application and Network Load Balancers: Use <http://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_DescribeLoadBalancers.html DescribeLoadBalancers> to get the value of @CanonicalHostedZoneId@ .     * __AWS CLI__ : Use @describe-load-balancers@ to get the applicable value. For more information, see the applicable guide:     * Classic Load Balancers: Use <http://docs.aws.amazon.com/cli/latest/reference/elb/describe-load-balancers.html describe-load-balancers> to get the value of @CanonicalHostedZoneNameId@ .     * Application and Network Load Balancers: Use <http://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-load-balancers.html describe-load-balancers> to get the value of @CanonicalHostedZoneId@ .     * An Amazon S3 bucket configured as a static website    * Specify the hosted zone ID for the region that you created the bucket in. For more information about valid values, see the <http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region Amazon Simple Storage Service Website Endpoints> table in the "AWS Regions and Endpoints" chapter of the /Amazon Web Services General Reference/ .     * Another Amazon Route 53 resource record set in your hosted zone    * Specify the hosted zone ID of your hosted zone. (An alias resource record set can't reference a resource record set in a different hosted zone.)
 --
 -- * 'atDNSName' - /Alias resource record sets only:/ The value that you specify depends on where you want to route queries:     * CloudFront distribution    * Specify the domain name that CloudFront assigned when you created your distribution. Your CloudFront distribution must include an alternate domain name that matches the name of the resource record set. For example, if the name of the resource record set is /acme.example.com/ , your CloudFront distribution must include /acme.example.com/ as one of the alternate domain names. For more information, see <http://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/CNAMEs.html Using Alternate Domain Names (CNAMEs)> in the /Amazon CloudFront Developer Guide/ .     * Elastic Beanstalk environment    * Specify the @CNAME@ attribute for the environment. (The environment must have a regionalized domain name.) You can use the following methods to get the value of the CNAME attribute:     * /AWS Management Console/ : For information about how to get the value by using the console, see <http://docs.aws.amazon.com/elasticbeanstalk/latest/dg/customdomains.html Using Custom Domains with AWS Elastic Beanstalk> in the /AWS Elastic Beanstalk Developer Guide/ .     * /Elastic Beanstalk API/ : Use the @DescribeEnvironments@ action to get the value of the @CNAME@ attribute. For more information, see <http://docs.aws.amazon.com/elasticbeanstalk/latest/api/API_DescribeEnvironments.html DescribeEnvironments> in the /AWS Elastic Beanstalk API Reference/ .     * /AWS CLI/ : Use the @describe-environments@ command to get the value of the @CNAME@ attribute. For more information, see <http://docs.aws.amazon.com/cli/latest/reference/elasticbeanstalk/describe-environments.html describe-environments> in the /AWS Command Line Interface Reference/ .     * ELB load balancer    * Specify the DNS name that is associated with the load balancer. Get the DNS name by using the AWS Management Console, the ELB API, or the AWS CLI.      * __AWS Management Console__ : Go to the EC2 page, choose __Load Balancers__ in the navigation pane, choose the load balancer, choose the __Description__ tab, and get the value of the __DNS name__ field. (If you're routing traffic to a Classic Load Balancer, get the value that begins with __dualstack__ .)      * __Elastic Load Balancing API__ : Use @DescribeLoadBalancers@ to get the value of @DNSName@ . For more information, see the applicable guide:     * Classic Load Balancers: <http://docs.aws.amazon.com/elasticloadbalancing/2012-06-01/APIReference/API_DescribeLoadBalancers.html DescribeLoadBalancers>      * Application and Network Load Balancers: <http://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_DescribeLoadBalancers.html DescribeLoadBalancers>      * __AWS CLI__ : Use @describe-load-balancers@ to get the value of @DNSName@ . For more information, see the applicable guide:     * Classic Load Balancers: <http://docs.aws.amazon.com/cli/latest/reference/elb/describe-load-balancers.html describe-load-balancers>      * Application and Network Load Balancers: <http://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-load-balancers.html describe-load-balancers>      * Amazon S3 bucket that is configured as a static website    * Specify the domain name of the Amazon S3 website endpoint in which you created the bucket, for example, @s3-website-us-east-2.amazonaws.com@ . For more information about valid values, see the table <http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region Amazon Simple Storage Service (S3) Website Endpoints> in the /Amazon Web Services General Reference/ . For more information about using S3 buckets for websites, see <http://docs.aws.amazon.com/Route53/latest/DeveloperGuide/getting-started.html Getting Started with Amazon Route 53> in the /Amazon Route 53 Developer Guide./      * Another Amazon Route 53 resource record set    * Specify the value of the @Name@ element for a resource record set in the current hosted zone.
 --
@@ -113,7 +155,7 @@ aliasTarget pHostedZoneId_ pDNSName_ pEvaluateTargetHealth_ =
   }
 
 
--- | /Alias resource records sets only/ : The value used depends on where you want to route traffic:     * CloudFront distribution    * Specify @Z2FDTNDATAQYW2@ .     * Elastic Beanstalk environment    * Specify the hosted zone ID for the region in which you created the environment. The environment must have a regionalized subdomain. For a list of regions and the corresponding hosted zone IDs, see <http://docs.aws.amazon.com/general/latest/gr/rande.html#elasticbeanstalk_region AWS Elastic Beanstalk> in the "AWS Regions and Endpoints" chapter of the /Amazon Web Services General Reference/ .     * ELB load balancer    * Specify the value of the hosted zone ID for the load balancer. Use the following methods to get the hosted zone ID:     * <http://docs.aws.amazon.com/general/latest/gr/rande.html#elb_region Elastic Load Balancing> table in the "AWS Regions and Endpoints" chapter of the /Amazon Web Services General Reference/ : Use the value that corresponds with the region that you created your load balancer in. Note that there are separate columns for Application and Classic Load Balancers and for Network Load Balancers.     * __AWS Management Console__ : Go to the Amazon EC2 page, choose __Load Balancers__ in the navigation pane, select the load balancer, and get the value of the __Hosted zone__ field on the __Description__ tab.     * __Elastic Load Balancing API__ : Use @DescribeLoadBalancers@ to get the value of @CanonicalHostedZoneNameId@ . For more information, see the applicable guide:     * Classic Load Balancers: <http://docs.aws.amazon.com/elasticloadbalancing/2012-06-01/APIReference/API_DescribeLoadBalancers.html DescribeLoadBalancers>      * Application and Network Load Balancers: <http://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_DescribeLoadBalancers.html DescribeLoadBalancers>      * __AWS CLI__ : Use @describe-load-balancers@ to get the value of @CanonicalHostedZoneNameID@ (for Classic Load Balancers) or @CanonicalHostedZoneNameID@ (for Application and Network Load Balancers). For more information, see the applicable guide:     * Classic Load Balancers: <http://docs.aws.amazon.com/cli/latest/reference/elb/describe-load-balancers.html describe-load-balancers>      * Application and Network Load Balancers: <http://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-load-balancers.html describe-load-balancers>      * An Amazon S3 bucket configured as a static website    * Specify the hosted zone ID for the region that you created the bucket in. For more information about valid values, see the <http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region Amazon Simple Storage Service Website Endpoints> table in the "AWS Regions and Endpoints" chapter of the /Amazon Web Services General Reference/ .     * Another Amazon Route 53 resource record set in your hosted zone    * Specify the hosted zone ID of your hosted zone. (An alias resource record set can't reference a resource record set in a different hosted zone.)
+-- | /Alias resource records sets only/ : The value used depends on where you want to route traffic:     * CloudFront distribution    * Specify @Z2FDTNDATAQYW2@ .     * Elastic Beanstalk environment    * Specify the hosted zone ID for the region in which you created the environment. The environment must have a regionalized subdomain. For a list of regions and the corresponding hosted zone IDs, see <http://docs.aws.amazon.com/general/latest/gr/rande.html#elasticbeanstalk_region AWS Elastic Beanstalk> in the "AWS Regions and Endpoints" chapter of the /Amazon Web Services General Reference/ .     * ELB load balancer    * Specify the value of the hosted zone ID for the load balancer. Use the following methods to get the hosted zone ID:     * <http://docs.aws.amazon.com/general/latest/gr/rande.html#elb_region Elastic Load Balancing> table in the "AWS Regions and Endpoints" chapter of the /Amazon Web Services General Reference/ : Use the value that corresponds with the region that you created your load balancer in. Note that there are separate columns for Application and Classic Load Balancers and for Network Load Balancers.     * __AWS Management Console__ : Go to the Amazon EC2 page, choose __Load Balancers__ in the navigation pane, select the load balancer, and get the value of the __Hosted zone__ field on the __Description__ tab.     * __Elastic Load Balancing API__ : Use @DescribeLoadBalancers@ to get the applicable value. For more information, see the applicable guide:     * Classic Load Balancers: Use <http://docs.aws.amazon.com/elasticloadbalancing/2012-06-01/APIReference/API_DescribeLoadBalancers.html DescribeLoadBalancers> to get the value of @CanonicalHostedZoneNameId@ .     * Application and Network Load Balancers: Use <http://docs.aws.amazon.com/elasticloadbalancing/latest/APIReference/API_DescribeLoadBalancers.html DescribeLoadBalancers> to get the value of @CanonicalHostedZoneId@ .     * __AWS CLI__ : Use @describe-load-balancers@ to get the applicable value. For more information, see the applicable guide:     * Classic Load Balancers: Use <http://docs.aws.amazon.com/cli/latest/reference/elb/describe-load-balancers.html describe-load-balancers> to get the value of @CanonicalHostedZoneNameId@ .     * Application and Network Load Balancers: Use <http://docs.aws.amazon.com/cli/latest/reference/elbv2/describe-load-balancers.html describe-load-balancers> to get the value of @CanonicalHostedZoneId@ .     * An Amazon S3 bucket configured as a static website    * Specify the hosted zone ID for the region that you created the bucket in. For more information about valid values, see the <http://docs.aws.amazon.com/general/latest/gr/rande.html#s3_region Amazon Simple Storage Service Website Endpoints> table in the "AWS Regions and Endpoints" chapter of the /Amazon Web Services General Reference/ .     * Another Amazon Route 53 resource record set in your hosted zone    * Specify the hosted zone ID of your hosted zone. (An alias resource record set can't reference a resource record set in a different hosted zone.)
 atHostedZoneId :: Lens' AliasTarget ResourceId
 atHostedZoneId = lens _atHostedZoneId (\ s a -> s{_atHostedZoneId = a});
 
@@ -157,7 +199,7 @@ data Change = Change'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cAction' - The action to perform:     * @CREATE@ : Creates a resource record set that has the specified values.     * @DELETE@ : Deletes a existing resource record set. /Important:/ To delete the resource record set that is associated with a traffic policy instance, use @'DeleteTrafficPolicyInstance' @ . Amazon Route 53 will delete the resource record set automatically. If you delete the resource record set by using @ChangeResourceRecordSets@ , Amazon Route 53 doesn't automatically delete the traffic policy instance, and you'll continue to be charged for it even though it's no longer in use.      * @UPSERT@ : If a resource record set doesn't already exist, Amazon Route 53 creates it. If a resource record set does exist, Amazon Route 53 updates it with the values in the request. The values that you need to include in the request depend on the type of resource record set that you're creating, deleting, or updating: __Basic resource record sets (excluding alias, failover, geolocation, latency, and weighted resource record sets)__      * @Name@      * @Type@      * @TTL@  __Failover, geolocation, latency, or weighted resource record sets (excluding alias resource record sets)__      * @Name@      * @Type@      * @TTL@      * @SetIdentifier@  __Alias resource record sets (including failover alias, geolocation alias, latency alias, and weighted alias resource record sets)__      * @Name@      * @Type@      * @AliasTarget@ (includes @DNSName@ , @EvaluateTargetHealth@ , and @HostedZoneId@ )     * @SetIdentifier@ (for failover, geolocation, latency, and weighted resource record sets)
+-- * 'cAction' - The action to perform:     * @CREATE@ : Creates a resource record set that has the specified values.     * @DELETE@ : Deletes a existing resource record set. /Important:/ To delete the resource record set that is associated with a traffic policy instance, use @'DeleteTrafficPolicyInstance' @ . Amazon Route 53 will delete the resource record set automatically. If you delete the resource record set by using @ChangeResourceRecordSets@ , Amazon Route 53 doesn't automatically delete the traffic policy instance, and you'll continue to be charged for it even though it's no longer in use.      * @UPSERT@ : If a resource record set doesn't already exist, Amazon Route 53 creates it. If a resource record set does exist, Amazon Route 53 updates it with the values in the request.
 --
 -- * 'cResourceRecordSet' - Information about the resource record set to create, delete, or update.
 change
@@ -168,7 +210,7 @@ change pAction_ pResourceRecordSet_ =
   Change' {_cAction = pAction_, _cResourceRecordSet = pResourceRecordSet_}
 
 
--- | The action to perform:     * @CREATE@ : Creates a resource record set that has the specified values.     * @DELETE@ : Deletes a existing resource record set. /Important:/ To delete the resource record set that is associated with a traffic policy instance, use @'DeleteTrafficPolicyInstance' @ . Amazon Route 53 will delete the resource record set automatically. If you delete the resource record set by using @ChangeResourceRecordSets@ , Amazon Route 53 doesn't automatically delete the traffic policy instance, and you'll continue to be charged for it even though it's no longer in use.      * @UPSERT@ : If a resource record set doesn't already exist, Amazon Route 53 creates it. If a resource record set does exist, Amazon Route 53 updates it with the values in the request. The values that you need to include in the request depend on the type of resource record set that you're creating, deleting, or updating: __Basic resource record sets (excluding alias, failover, geolocation, latency, and weighted resource record sets)__      * @Name@      * @Type@      * @TTL@  __Failover, geolocation, latency, or weighted resource record sets (excluding alias resource record sets)__      * @Name@      * @Type@      * @TTL@      * @SetIdentifier@  __Alias resource record sets (including failover alias, geolocation alias, latency alias, and weighted alias resource record sets)__      * @Name@      * @Type@      * @AliasTarget@ (includes @DNSName@ , @EvaluateTargetHealth@ , and @HostedZoneId@ )     * @SetIdentifier@ (for failover, geolocation, latency, and weighted resource record sets)
+-- | The action to perform:     * @CREATE@ : Creates a resource record set that has the specified values.     * @DELETE@ : Deletes a existing resource record set. /Important:/ To delete the resource record set that is associated with a traffic policy instance, use @'DeleteTrafficPolicyInstance' @ . Amazon Route 53 will delete the resource record set automatically. If you delete the resource record set by using @ChangeResourceRecordSets@ , Amazon Route 53 doesn't automatically delete the traffic policy instance, and you'll continue to be charged for it even though it's no longer in use.      * @UPSERT@ : If a resource record set doesn't already exist, Amazon Route 53 creates it. If a resource record set does exist, Amazon Route 53 updates it with the values in the request.
 cAction :: Lens' Change ChangeAction
 cAction = lens _cAction (\ s a -> s{_cAction = a});
 
@@ -643,7 +685,8 @@ instance NFData GeoLocationDetails where
 --
 -- /See:/ 'healthCheck' smart constructor.
 data HealthCheck = HealthCheck'
-  { _hcCloudWatchAlarmConfiguration :: !(Maybe CloudWatchAlarmConfiguration)
+  { _hcLinkedService                :: !(Maybe LinkedService)
+  , _hcCloudWatchAlarmConfiguration :: !(Maybe CloudWatchAlarmConfiguration)
   , _hcId                           :: !Text
   , _hcCallerReference              :: !Text
   , _hcHealthCheckConfig            :: !HealthCheckConfig
@@ -654,6 +697,8 @@ data HealthCheck = HealthCheck'
 -- | Creates a value of 'HealthCheck' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'hcLinkedService' - If the health check was created by another service, the service that created the health check. When a health check is created by another service, you can't edit or delete it using Amazon Route 53.
 --
 -- * 'hcCloudWatchAlarmConfiguration' - A complex type that contains information about the CloudWatch alarm that Amazon Route 53 is monitoring for this health check.
 --
@@ -672,13 +717,18 @@ healthCheck
     -> HealthCheck
 healthCheck pId_ pCallerReference_ pHealthCheckConfig_ pHealthCheckVersion_ =
   HealthCheck'
-  { _hcCloudWatchAlarmConfiguration = Nothing
+  { _hcLinkedService = Nothing
+  , _hcCloudWatchAlarmConfiguration = Nothing
   , _hcId = pId_
   , _hcCallerReference = pCallerReference_
   , _hcHealthCheckConfig = pHealthCheckConfig_
   , _hcHealthCheckVersion = _Nat # pHealthCheckVersion_
   }
 
+
+-- | If the health check was created by another service, the service that created the health check. When a health check is created by another service, you can't edit or delete it using Amazon Route 53.
+hcLinkedService :: Lens' HealthCheck (Maybe LinkedService)
+hcLinkedService = lens _hcLinkedService (\ s a -> s{_hcLinkedService = a});
 
 -- | A complex type that contains information about the CloudWatch alarm that Amazon Route 53 is monitoring for this health check.
 hcCloudWatchAlarmConfiguration :: Lens' HealthCheck (Maybe CloudWatchAlarmConfiguration)
@@ -703,8 +753,9 @@ hcHealthCheckVersion = lens _hcHealthCheckVersion (\ s a -> s{_hcHealthCheckVers
 instance FromXML HealthCheck where
         parseXML x
           = HealthCheck' <$>
-              (x .@? "CloudWatchAlarmConfiguration") <*>
-                (x .@ "Id")
+              (x .@? "LinkedService") <*>
+                (x .@? "CloudWatchAlarmConfiguration")
+                <*> (x .@ "Id")
                 <*> (x .@ "CallerReference")
                 <*> (x .@ "HealthCheckConfig")
                 <*> (x .@ "HealthCheckVersion")
@@ -969,7 +1020,8 @@ instance NFData HealthCheckObservation where
 --
 -- /See:/ 'hostedZone' smart constructor.
 data HostedZone = HostedZone'
-  { _hzConfig                 :: !(Maybe HostedZoneConfig)
+  { _hzLinkedService          :: !(Maybe LinkedService)
+  , _hzConfig                 :: !(Maybe HostedZoneConfig)
   , _hzResourceRecordSetCount :: !(Maybe Integer)
   , _hzId                     :: !ResourceId
   , _hzName                   :: !Text
@@ -980,6 +1032,8 @@ data HostedZone = HostedZone'
 -- | Creates a value of 'HostedZone' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'hzLinkedService' - If the hosted zone was created by another service, the service that created the hosted zone. When a hosted zone is created by another service, you can't edit or delete it using Amazon Route 53.
 --
 -- * 'hzConfig' - A complex type that includes the @Comment@ and @PrivateZone@ elements. If you omitted the @HostedZoneConfig@ and @Comment@ elements from the request, the @Config@ and @Comment@ elements don't appear in the response.
 --
@@ -997,13 +1051,18 @@ hostedZone
     -> HostedZone
 hostedZone pId_ pName_ pCallerReference_ =
   HostedZone'
-  { _hzConfig = Nothing
+  { _hzLinkedService = Nothing
+  , _hzConfig = Nothing
   , _hzResourceRecordSetCount = Nothing
   , _hzId = pId_
   , _hzName = pName_
   , _hzCallerReference = pCallerReference_
   }
 
+
+-- | If the hosted zone was created by another service, the service that created the hosted zone. When a hosted zone is created by another service, you can't edit or delete it using Amazon Route 53.
+hzLinkedService :: Lens' HostedZone (Maybe LinkedService)
+hzLinkedService = lens _hzLinkedService (\ s a -> s{_hzLinkedService = a});
 
 -- | A complex type that includes the @Comment@ and @PrivateZone@ elements. If you omitted the @HostedZoneConfig@ and @Comment@ elements from the request, the @Config@ and @Comment@ elements don't appear in the response.
 hzConfig :: Lens' HostedZone (Maybe HostedZoneConfig)
@@ -1028,7 +1087,8 @@ hzCallerReference = lens _hzCallerReference (\ s a -> s{_hzCallerReference = a})
 instance FromXML HostedZone where
         parseXML x
           = HostedZone' <$>
-              (x .@? "Config") <*> (x .@? "ResourceRecordSetCount")
+              (x .@? "LinkedService") <*> (x .@? "Config") <*>
+                (x .@? "ResourceRecordSetCount")
                 <*> (x .@ "Id")
                 <*> (x .@ "Name")
                 <*> (x .@ "CallerReference")
@@ -1083,6 +1143,90 @@ instance ToXML HostedZoneConfig where
           = mconcat
               ["PrivateZone" @= _hzcPrivateZone,
                "Comment" @= _hzcComment]
+
+-- | A complex type that contains the type of limit that you specified in the request and the current value for that limit.
+--
+--
+--
+-- /See:/ 'hostedZoneLimit' smart constructor.
+data HostedZoneLimit = HostedZoneLimit'
+  { _hzlType  :: !HostedZoneLimitType
+  , _hzlValue :: !Nat
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'HostedZoneLimit' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'hzlType' - The limit that you requested. Valid values include the following:     * __MAX_RRSETS_BY_ZONE__ : The maximum number of records that you can create in the specified hosted zone.     * __MAX_VPCS_ASSOCIATED_BY_ZONE__ : The maximum number of Amazon VPCs that you can associate with the specified private hosted zone.
+--
+-- * 'hzlValue' - The current value for the limit that is specified by @Type@ .
+hostedZoneLimit
+    :: HostedZoneLimitType -- ^ 'hzlType'
+    -> Natural -- ^ 'hzlValue'
+    -> HostedZoneLimit
+hostedZoneLimit pType_ pValue_ =
+  HostedZoneLimit' {_hzlType = pType_, _hzlValue = _Nat # pValue_}
+
+
+-- | The limit that you requested. Valid values include the following:     * __MAX_RRSETS_BY_ZONE__ : The maximum number of records that you can create in the specified hosted zone.     * __MAX_VPCS_ASSOCIATED_BY_ZONE__ : The maximum number of Amazon VPCs that you can associate with the specified private hosted zone.
+hzlType :: Lens' HostedZoneLimit HostedZoneLimitType
+hzlType = lens _hzlType (\ s a -> s{_hzlType = a});
+
+-- | The current value for the limit that is specified by @Type@ .
+hzlValue :: Lens' HostedZoneLimit Natural
+hzlValue = lens _hzlValue (\ s a -> s{_hzlValue = a}) . _Nat;
+
+instance FromXML HostedZoneLimit where
+        parseXML x
+          = HostedZoneLimit' <$>
+              (x .@ "Type") <*> (x .@ "Value")
+
+instance Hashable HostedZoneLimit where
+
+instance NFData HostedZoneLimit where
+
+-- | If a health check or hosted zone was created by another service, @LinkedService@ is a complex type that describes the service that created the resource. When a resource is created by another service, you can't edit or delete it using Amazon Route 53.
+--
+--
+--
+-- /See:/ 'linkedService' smart constructor.
+data LinkedService = LinkedService'
+  { _lsServicePrincipal :: !(Maybe Text)
+  , _lsDescription      :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'LinkedService' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'lsServicePrincipal' - If the health check or hosted zone was created by another service, the service that created the resource. When a resource is created by another service, you can't edit or delete it using Amazon Route 53.
+--
+-- * 'lsDescription' - If the health check or hosted zone was created by another service, an optional description that can be provided by the other service. When a resource is created by another service, you can't edit or delete it using Amazon Route 53.
+linkedService
+    :: LinkedService
+linkedService =
+  LinkedService' {_lsServicePrincipal = Nothing, _lsDescription = Nothing}
+
+
+-- | If the health check or hosted zone was created by another service, the service that created the resource. When a resource is created by another service, you can't edit or delete it using Amazon Route 53.
+lsServicePrincipal :: Lens' LinkedService (Maybe Text)
+lsServicePrincipal = lens _lsServicePrincipal (\ s a -> s{_lsServicePrincipal = a});
+
+-- | If the health check or hosted zone was created by another service, an optional description that can be provided by the other service. When a resource is created by another service, you can't edit or delete it using Amazon Route 53.
+lsDescription :: Lens' LinkedService (Maybe Text)
+lsDescription = lens _lsDescription (\ s a -> s{_lsDescription = a});
+
+instance FromXML LinkedService where
+        parseXML x
+          = LinkedService' <$>
+              (x .@? "ServicePrincipal") <*> (x .@? "Description")
+
+instance Hashable LinkedService where
+
+instance NFData LinkedService where
 
 -- | A complex type that contains information about a configuration for DNS query logging.
 --
@@ -1392,6 +1536,49 @@ instance FromXML ResourceTagSet where
 instance Hashable ResourceTagSet where
 
 instance NFData ResourceTagSet where
+
+-- | A complex type that contains the type of limit that you specified in the request and the current value for that limit.
+--
+--
+--
+-- /See:/ 'reusableDelegationSetLimit' smart constructor.
+data ReusableDelegationSetLimit = ReusableDelegationSetLimit'
+  { _rdslType  :: !ReusableDelegationSetLimitType
+  , _rdslValue :: !Nat
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ReusableDelegationSetLimit' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rdslType' - The limit that you requested: @MAX_ZONES_BY_REUSABLE_DELEGATION_SET@ , the maximum number of hosted zones that you can associate with the specified reusable delegation set.
+--
+-- * 'rdslValue' - The current value for the @MAX_ZONES_BY_REUSABLE_DELEGATION_SET@ limit.
+reusableDelegationSetLimit
+    :: ReusableDelegationSetLimitType -- ^ 'rdslType'
+    -> Natural -- ^ 'rdslValue'
+    -> ReusableDelegationSetLimit
+reusableDelegationSetLimit pType_ pValue_ =
+  ReusableDelegationSetLimit' {_rdslType = pType_, _rdslValue = _Nat # pValue_}
+
+
+-- | The limit that you requested: @MAX_ZONES_BY_REUSABLE_DELEGATION_SET@ , the maximum number of hosted zones that you can associate with the specified reusable delegation set.
+rdslType :: Lens' ReusableDelegationSetLimit ReusableDelegationSetLimitType
+rdslType = lens _rdslType (\ s a -> s{_rdslType = a});
+
+-- | The current value for the @MAX_ZONES_BY_REUSABLE_DELEGATION_SET@ limit.
+rdslValue :: Lens' ReusableDelegationSetLimit Natural
+rdslValue = lens _rdslValue (\ s a -> s{_rdslValue = a}) . _Nat;
+
+instance FromXML ReusableDelegationSetLimit where
+        parseXML x
+          = ReusableDelegationSetLimit' <$>
+              (x .@ "Type") <*> (x .@ "Value")
+
+instance Hashable ReusableDelegationSetLimit where
+
+instance NFData ReusableDelegationSetLimit where
 
 -- | A complex type that contains the status that one Amazon Route 53 health checker reports and the time of the health check.
 --

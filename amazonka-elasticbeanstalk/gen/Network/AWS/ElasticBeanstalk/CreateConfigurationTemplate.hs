@@ -92,7 +92,7 @@ data CreateConfigurationTemplate = CreateConfigurationTemplate'
 --
 -- * 'cctOptionSettings' - If specified, AWS Elastic Beanstalk sets the specified configuration option to the requested value. The new value overrides the value obtained from the solution stack or the source configuration template.
 --
--- * 'cctPlatformARN' - The ARN of the custome platform.
+-- * 'cctPlatformARN' - The ARN of the custom platform.
 --
 -- * 'cctSourceConfiguration' - If specified, AWS Elastic Beanstalk uses the configuration values from the specified configuration template to create a new configuration. Values specified in the @OptionSettings@ parameter of this call overrides any values obtained from the @SourceConfiguration@ .  If no configuration template is found, returns an @InvalidParameterValue@ error.  Constraint: If both the solution stack name parameter and the source configuration parameters are specified, the solution stack of the source configuration template must match the specified solution stack name or else AWS Elastic Beanstalk returns an @InvalidParameterCombination@ error.
 --
@@ -126,7 +126,7 @@ createConfigurationTemplate pApplicationName_ pTemplateName_ =
 cctOptionSettings :: Lens' CreateConfigurationTemplate [ConfigurationOptionSetting]
 cctOptionSettings = lens _cctOptionSettings (\ s a -> s{_cctOptionSettings = a}) . _Default . _Coerce;
 
--- | The ARN of the custome platform.
+-- | The ARN of the custom platform.
 cctPlatformARN :: Lens' CreateConfigurationTemplate (Maybe Text)
 cctPlatformARN = lens _cctPlatformARN (\ s a -> s{_cctPlatformARN = a});
 

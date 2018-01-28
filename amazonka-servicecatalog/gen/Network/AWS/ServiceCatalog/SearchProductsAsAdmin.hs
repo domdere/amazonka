@@ -18,9 +18,11 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Retrieves summary and status information about all products created within the caller's account. If a portfolio ID is provided, this operation retrieves information for only those products that are associated with the specified portfolio.
+-- Gets information about the products for the specified portfolio or all products.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.ServiceCatalog.SearchProductsAsAdmin
     (
     -- * Creating a Request
@@ -46,6 +48,7 @@ module Network.AWS.ServiceCatalog.SearchProductsAsAdmin
     ) where
 
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -71,19 +74,19 @@ data SearchProductsAsAdmin = SearchProductsAsAdmin'
 --
 -- * 'spaaPortfolioId' - The portfolio identifier.
 --
--- * 'spaaFilters' - The list of filters with which to limit search results. If no search filters are specified, the output is all the products to which the administrator has access.
+-- * 'spaaFilters' - The search filters. If no search filters are specified, the output includes all products to which the administrator has access.
 --
--- * 'spaaSortOrder' - The sort order specifier. If no value is specified, results are not sorted.
+-- * 'spaaSortOrder' - The sort order. If no value is specified, the results are not sorted.
 --
 -- * 'spaaAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'spaaPageToken' - The page token of the first page retrieved. If null, this retrieves the first page of size @PageSize@ .
+-- * 'spaaPageToken' - The page token for the next set of results. To retrieve the first set of results, use null.
 --
--- * 'spaaPageSize' - The maximum number of items to return in the results. If more results exist than fit in the specified @PageSize@ , the value of @NextPageToken@ in the response is non-null.
+-- * 'spaaPageSize' - The maximum number of items to return with this call.
 --
 -- * 'spaaProductSource' - Access level of the source of the product.
 --
--- * 'spaaSortBy' - The sort field specifier. If no value is specified, results are not sorted.
+-- * 'spaaSortBy' - The sort field. If no value is specified, the results are not sorted.
 searchProductsAsAdmin
     :: SearchProductsAsAdmin
 searchProductsAsAdmin =
@@ -103,11 +106,11 @@ searchProductsAsAdmin =
 spaaPortfolioId :: Lens' SearchProductsAsAdmin (Maybe Text)
 spaaPortfolioId = lens _spaaPortfolioId (\ s a -> s{_spaaPortfolioId = a});
 
--- | The list of filters with which to limit search results. If no search filters are specified, the output is all the products to which the administrator has access.
+-- | The search filters. If no search filters are specified, the output includes all products to which the administrator has access.
 spaaFilters :: Lens' SearchProductsAsAdmin (HashMap ProductViewFilterBy [Text])
 spaaFilters = lens _spaaFilters (\ s a -> s{_spaaFilters = a}) . _Default . _Map;
 
--- | The sort order specifier. If no value is specified, results are not sorted.
+-- | The sort order. If no value is specified, the results are not sorted.
 spaaSortOrder :: Lens' SearchProductsAsAdmin (Maybe SortOrder)
 spaaSortOrder = lens _spaaSortOrder (\ s a -> s{_spaaSortOrder = a});
 
@@ -115,11 +118,11 @@ spaaSortOrder = lens _spaaSortOrder (\ s a -> s{_spaaSortOrder = a});
 spaaAcceptLanguage :: Lens' SearchProductsAsAdmin (Maybe Text)
 spaaAcceptLanguage = lens _spaaAcceptLanguage (\ s a -> s{_spaaAcceptLanguage = a});
 
--- | The page token of the first page retrieved. If null, this retrieves the first page of size @PageSize@ .
+-- | The page token for the next set of results. To retrieve the first set of results, use null.
 spaaPageToken :: Lens' SearchProductsAsAdmin (Maybe Text)
 spaaPageToken = lens _spaaPageToken (\ s a -> s{_spaaPageToken = a});
 
--- | The maximum number of items to return in the results. If more results exist than fit in the specified @PageSize@ , the value of @NextPageToken@ in the response is non-null.
+-- | The maximum number of items to return with this call.
 spaaPageSize :: Lens' SearchProductsAsAdmin (Maybe Natural)
 spaaPageSize = lens _spaaPageSize (\ s a -> s{_spaaPageSize = a}) . mapping _Nat;
 
@@ -127,9 +130,17 @@ spaaPageSize = lens _spaaPageSize (\ s a -> s{_spaaPageSize = a}) . mapping _Nat
 spaaProductSource :: Lens' SearchProductsAsAdmin (Maybe ProductSource)
 spaaProductSource = lens _spaaProductSource (\ s a -> s{_spaaProductSource = a});
 
--- | The sort field specifier. If no value is specified, results are not sorted.
+-- | The sort field. If no value is specified, the results are not sorted.
 spaaSortBy :: Lens' SearchProductsAsAdmin (Maybe ProductViewSortBy)
 spaaSortBy = lens _spaaSortBy (\ s a -> s{_spaaSortBy = a});
+
+instance AWSPager SearchProductsAsAdmin where
+        page rq rs
+          | stop (rs ^. spaarsNextPageToken) = Nothing
+          | stop (rs ^. spaarsProductViewDetails) = Nothing
+          | otherwise =
+            Just $ rq &
+              spaaPageToken .~ rs ^. spaarsNextPageToken
 
 instance AWSRequest SearchProductsAsAdmin where
         type Rs SearchProductsAsAdmin =
@@ -188,9 +199,9 @@ data SearchProductsAsAdminResponse = SearchProductsAsAdminResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'spaarsNextPageToken' - The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.
+-- * 'spaarsNextPageToken' - The page token to use to retrieve the next set of results. If there are no additional results, this value is null.
 --
--- * 'spaarsProductViewDetails' - List of detailed product view information objects.
+-- * 'spaarsProductViewDetails' - Information about the product views.
 --
 -- * 'spaarsResponseStatus' - -- | The response status code.
 searchProductsAsAdminResponse
@@ -204,11 +215,11 @@ searchProductsAsAdminResponse pResponseStatus_ =
   }
 
 
--- | The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.
+-- | The page token to use to retrieve the next set of results. If there are no additional results, this value is null.
 spaarsNextPageToken :: Lens' SearchProductsAsAdminResponse (Maybe Text)
 spaarsNextPageToken = lens _spaarsNextPageToken (\ s a -> s{_spaarsNextPageToken = a});
 
--- | List of detailed product view information objects.
+-- | Information about the product views.
 spaarsProductViewDetails :: Lens' SearchProductsAsAdminResponse [ProductViewDetail]
 spaarsProductViewDetails = lens _spaarsProductViewDetails (\ s a -> s{_spaarsProductViewDetails = a}) . _Default . _Coerce;
 

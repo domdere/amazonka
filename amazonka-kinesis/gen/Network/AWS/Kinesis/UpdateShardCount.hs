@@ -21,29 +21,29 @@
 -- Updates the shard count of the specified stream to the specified number of shards.
 --
 --
--- Updating the shard count is an asynchronous operation. Upon receiving the request, Amazon Kinesis returns immediately and sets the status of the stream to @UPDATING@ . After the update is complete, Amazon Kinesis sets the status of the stream back to @ACTIVE@ . Depending on the size of the stream, the scaling action could take a few minutes to complete. You can continue to read and write data to your stream while its status is @UPDATING@ .
+-- Updating the shard count is an asynchronous operation. Upon receiving the request, Kinesis Streams returns immediately and sets the status of the stream to @UPDATING@ . After the update is complete, Kinesis Streams sets the status of the stream back to @ACTIVE@ . Depending on the size of the stream, the scaling action could take a few minutes to complete. You can continue to read and write data to your stream while its status is @UPDATING@ .
 --
--- To update the shard count, Amazon Kinesis performs splits or merges on individual shards. This can cause short-lived shards to be created, in addition to the final shards. We recommend that you double or halve the shard count, as this results in the fewest number of splits or merges.
+-- To update the shard count, Kinesis Streams performs splits or merges on individual shards. This can cause short-lived shards to be created, in addition to the final shards. We recommend that you double or halve the shard count, as this results in the fewest number of splits or merges.
 --
--- This operation has the following limits, which are per region per account unless otherwise noted:
+-- This operation has the following limits, which are per region per account unless otherwise noted. You cannot:
 --
---     * scale more than twice per rolling 24 hour period
+--     * Scale more than twice per rolling 24 hour period
 --
---     * scale up above double your current shard count
+--     * Scale up to double your current shard count
 --
---     * scale down below half your current shard count
+--     * Scale down below half your current shard count
 --
---     * scale up above 200 shards in a stream
+--     * Scale up to more 500 shards in a stream
 --
---     * scale a stream with more than 200 shards down unless the result is less than 200 shards
+--     * Scale a stream with more than 500 shards down unless the result is less than 500 shards
 --
---     * scale up above the shard limits for your account
+--     * Scale up more the shard limits for your account
 --
 --     *
 --
 --
 --
--- For the default limits for an AWS account, see <http://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html Streams Limits> in the /Amazon Kinesis Streams Developer Guide/ . If you need to increase a limit, <http://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html contact AWS Support> .
+-- For the default limits for an AWS account, see <http://docs.aws.amazon.com/kinesis/latest/dev/service-sizes-and-limits.html Streams Limits> in the /Amazon Kinesis Streams Developer Guide/ . To increase a limit, <http://docs.aws.amazon.com/general/latest/gr/aws_service_limits.html contact AWS Support> .
 --
 module Network.AWS.Kinesis.UpdateShardCount
     (

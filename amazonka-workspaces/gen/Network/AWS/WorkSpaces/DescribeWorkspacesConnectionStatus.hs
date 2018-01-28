@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Describes the connection status of a specified WorkSpace.
+-- Describes the connection status of the specified WorkSpaces.
 --
 --
 module Network.AWS.WorkSpaces.DescribeWorkspacesConnectionStatus
@@ -57,9 +57,9 @@ data DescribeWorkspacesConnectionStatus = DescribeWorkspacesConnectionStatus'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dwcsWorkspaceIds' - An array of strings that contain the identifiers of the WorkSpaces.
+-- * 'dwcsWorkspaceIds' - The identifiers of the WorkSpaces.
 --
--- * 'dwcsNextToken' - The next token of the request.
+-- * 'dwcsNextToken' - The token for the next set of results. (You received this token from a previous call.)
 describeWorkspacesConnectionStatus
     :: DescribeWorkspacesConnectionStatus
 describeWorkspacesConnectionStatus =
@@ -67,11 +67,11 @@ describeWorkspacesConnectionStatus =
   {_dwcsWorkspaceIds = Nothing, _dwcsNextToken = Nothing}
 
 
--- | An array of strings that contain the identifiers of the WorkSpaces.
+-- | The identifiers of the WorkSpaces.
 dwcsWorkspaceIds :: Lens' DescribeWorkspacesConnectionStatus (Maybe (NonEmpty Text))
 dwcsWorkspaceIds = lens _dwcsWorkspaceIds (\ s a -> s{_dwcsWorkspaceIds = a}) . mapping _List1;
 
--- | The next token of the request.
+-- | The token for the next set of results. (You received this token from a previous call.)
 dwcsNextToken :: Lens' DescribeWorkspacesConnectionStatus (Maybe Text)
 dwcsNextToken = lens _dwcsNextToken (\ s a -> s{_dwcsNextToken = a});
 
@@ -134,9 +134,9 @@ data DescribeWorkspacesConnectionStatusResponse = DescribeWorkspacesConnectionSt
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dwcsrsNextToken' - The next token of the result.
+-- * 'dwcsrsNextToken' - The token to use to retrieve the next set of results, or null if there are no more results available.
 --
--- * 'dwcsrsWorkspacesConnectionStatus' - The connection status of the WorkSpace.
+-- * 'dwcsrsWorkspacesConnectionStatus' - Information about the connection status of the WorkSpace.
 --
 -- * 'dwcsrsResponseStatus' - -- | The response status code.
 describeWorkspacesConnectionStatusResponse
@@ -150,11 +150,11 @@ describeWorkspacesConnectionStatusResponse pResponseStatus_ =
   }
 
 
--- | The next token of the result.
+-- | The token to use to retrieve the next set of results, or null if there are no more results available.
 dwcsrsNextToken :: Lens' DescribeWorkspacesConnectionStatusResponse (Maybe Text)
 dwcsrsNextToken = lens _dwcsrsNextToken (\ s a -> s{_dwcsrsNextToken = a});
 
--- | The connection status of the WorkSpace.
+-- | Information about the connection status of the WorkSpace.
 dwcsrsWorkspacesConnectionStatus :: Lens' DescribeWorkspacesConnectionStatusResponse [WorkspaceConnectionStatus]
 dwcsrsWorkspacesConnectionStatus = lens _dwcsrsWorkspacesConnectionStatus (\ s a -> s{_dwcsrsWorkspacesConnectionStatus = a}) . _Default . _Coerce;
 

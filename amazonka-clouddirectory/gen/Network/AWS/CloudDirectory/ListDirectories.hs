@@ -21,6 +21,8 @@
 -- Lists directories created within an account.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListDirectories
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.CloudDirectory.ListDirectories
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -82,6 +85,13 @@ ldNextToken = lens _ldNextToken (\ s a -> s{_ldNextToken = a});
 -- | The maximum number of results to retrieve.
 ldMaxResults :: Lens' ListDirectories (Maybe Natural)
 ldMaxResults = lens _ldMaxResults (\ s a -> s{_ldMaxResults = a}) . mapping _Nat;
+
+instance AWSPager ListDirectories where
+        page rq rs
+          | stop (rs ^. ldrsNextToken) = Nothing
+          | stop (rs ^. ldrsDirectories) = Nothing
+          | otherwise =
+            Just $ rq & ldNextToken .~ rs ^. ldrsNextToken
 
 instance AWSRequest ListDirectories where
         type Rs ListDirectories = ListDirectoriesResponse

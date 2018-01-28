@@ -226,7 +226,7 @@ data Limit = Limit'
 --
 -- * 'lMax' - The maximum value of the limit.
 --
--- * 'lName' - The name of the limit. The possible values are:     * application-load-balancers     * listeners-per-application-load-balancer     * listeners-per-network-load-balancer     * network-load-balancers     * rules-per-application-load-balancer     * target-groups     * targets-per-application-load-balancer     * targets-per-availability-zone-per-network-load-balancer     * targets-per-network-load-balancer
+-- * 'lName' - The name of the limit. The possible values are:     * application-load-balancers     * listeners-per-application-load-balancer     * listeners-per-network-load-balancer     * network-load-balancers     * rules-per-application-load-balancer     * target-groups     * targets-per-application-load-balancer
 limit
     :: Limit
 limit = Limit' {_lMax = Nothing, _lName = Nothing}
@@ -236,7 +236,7 @@ limit = Limit' {_lMax = Nothing, _lName = Nothing}
 lMax :: Lens' Limit (Maybe Text)
 lMax = lens _lMax (\ s a -> s{_lMax = a});
 
--- | The name of the limit. The possible values are:     * application-load-balancers     * listeners-per-application-load-balancer     * listeners-per-network-load-balancer     * network-load-balancers     * rules-per-application-load-balancer     * target-groups     * targets-per-application-load-balancer     * targets-per-availability-zone-per-network-load-balancer     * targets-per-network-load-balancer
+-- | The name of the limit. The possible values are:     * application-load-balancers     * listeners-per-application-load-balancer     * listeners-per-network-load-balancer     * network-load-balancers     * rules-per-application-load-balancer     * target-groups     * targets-per-application-load-balancer
 lName :: Lens' Limit (Maybe Text)
 lName = lens _lName (\ s a -> s{_lName = a});
 

@@ -271,6 +271,24 @@ module Network.AWS.KinesisAnalytics.Types
     , ksouRoleARNUpdate
     , ksouResourceARNUpdate
 
+    -- * LambdaOutput
+    , LambdaOutput
+    , lambdaOutput
+    , loResourceARN
+    , loRoleARN
+
+    -- * LambdaOutputDescription
+    , LambdaOutputDescription
+    , lambdaOutputDescription
+    , lodResourceARN
+    , lodRoleARN
+
+    -- * LambdaOutputUpdate
+    , LambdaOutputUpdate
+    , lambdaOutputUpdate
+    , louRoleARNUpdate
+    , louResourceARNUpdate
+
     -- * MappingParameters
     , MappingParameters
     , mappingParameters
@@ -280,6 +298,7 @@ module Network.AWS.KinesisAnalytics.Types
     -- * Output
     , Output
     , output
+    , oLambdaOutput
     , oKinesisStreamsOutput
     , oKinesisFirehoseOutput
     , oName
@@ -293,6 +312,7 @@ module Network.AWS.KinesisAnalytics.Types
     , odKinesisFirehoseOutputDescription
     , odKinesisStreamsOutputDescription
     , odName
+    , odLambdaOutputDescription
 
     -- * OutputUpdate
     , OutputUpdate
@@ -301,6 +321,7 @@ module Network.AWS.KinesisAnalytics.Types
     , ouDestinationSchemaUpdate
     , ouKinesisFirehoseOutputUpdate
     , ouNameUpdate
+    , ouLambdaOutputUpdate
     , ouOutputId
 
     -- * RecordColumn

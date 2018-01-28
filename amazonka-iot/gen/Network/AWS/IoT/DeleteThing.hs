@@ -34,7 +34,7 @@ module Network.AWS.IoT.DeleteThing
     , deleteThingResponse
     , DeleteThingResponse
     -- * Response Lenses
-    , delrsResponseStatus
+    , ddrsResponseStatus
     ) where
 
 import Network.AWS.IoT.Types
@@ -106,7 +106,7 @@ instance ToQuery DeleteThing where
 --
 -- /See:/ 'deleteThingResponse' smart constructor.
 newtype DeleteThingResponse = DeleteThingResponse'
-  { _delrsResponseStatus :: Int
+  { _ddrsResponseStatus :: Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -114,16 +114,16 @@ newtype DeleteThingResponse = DeleteThingResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'delrsResponseStatus' - -- | The response status code.
+-- * 'ddrsResponseStatus' - -- | The response status code.
 deleteThingResponse
-    :: Int -- ^ 'delrsResponseStatus'
+    :: Int -- ^ 'ddrsResponseStatus'
     -> DeleteThingResponse
 deleteThingResponse pResponseStatus_ =
-  DeleteThingResponse' {_delrsResponseStatus = pResponseStatus_}
+  DeleteThingResponse' {_ddrsResponseStatus = pResponseStatus_}
 
 
 -- | -- | The response status code.
-delrsResponseStatus :: Lens' DeleteThingResponse Int
-delrsResponseStatus = lens _delrsResponseStatus (\ s a -> s{_delrsResponseStatus = a});
+ddrsResponseStatus :: Lens' DeleteThingResponse Int
+ddrsResponseStatus = lens _ddrsResponseStatus (\ s a -> s{_ddrsResponseStatus = a});
 
 instance NFData DeleteThingResponse where

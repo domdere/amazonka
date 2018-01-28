@@ -37,6 +37,12 @@ import Test.Tasty
 --         , requestCreateNetworkInterfacePermission $
 --             createNetworkInterfacePermission
 --
+--         , requestDeleteLaunchTemplate $
+--             deleteLaunchTemplate
+--
+--         , requestRejectVPCEndpointConnections $
+--             rejectVPCEndpointConnections
+--
 --         , requestCreateVPNGateway $
 --             createVPNGateway
 --
@@ -79,6 +85,9 @@ import Test.Tasty
 --         , requestDetachVolume $
 --             detachVolume
 --
+--         , requestDescribeInstanceCreditSpecifications $
+--             describeInstanceCreditSpecifications
+--
 --         , requestCancelBundleTask $
 --             cancelBundleTask
 --
@@ -102,6 +111,9 @@ import Test.Tasty
 --
 --         , requestDeregisterImage $
 --             deregisterImage
+--
+--         , requestDeleteVPCEndpointConnectionNotifications $
+--             deleteVPCEndpointConnectionNotifications
 --
 --         , requestModifyNetworkInterfaceAttribute $
 --             modifyNetworkInterfaceAttribute
@@ -142,11 +154,20 @@ import Test.Tasty
 --         , requestStopInstances $
 --             stopInstances
 --
+--         , requestModifyLaunchTemplate $
+--             modifyLaunchTemplate
+--
+--         , requestModifyVPCEndpointConnectionNotification $
+--             modifyVPCEndpointConnectionNotification
+--
 --         , requestDescribeInternetGateways $
 --             describeInternetGateways
 --
 --         , requestDisableVPCClassicLink $
 --             disableVPCClassicLink
+--
+--         , requestDeleteLaunchTemplateVersions $
+--             deleteLaunchTemplateVersions
 --
 --         , requestBundleInstance $
 --             bundleInstance
@@ -253,6 +274,9 @@ import Test.Tasty
 --         , requestDescribeFlowLogs $
 --             describeFlowLogs
 --
+--         , requestDescribeVPCEndpointConnectionNotifications $
+--             describeVPCEndpointConnectionNotifications
+--
 --         , requestRunInstances $
 --             runInstances
 --
@@ -271,6 +295,9 @@ import Test.Tasty
 --         , requestDescribeConversionTasks $
 --             describeConversionTasks
 --
+--         , requestCreateLaunchTemplateVersion $
+--             createLaunchTemplateVersion
+--
 --         , requestDisableVPCClassicLinkDNSSupport $
 --             disableVPCClassicLinkDNSSupport
 --
@@ -279,6 +306,12 @@ import Test.Tasty
 --
 --         , requestCreateFpgaImage $
 --             createFpgaImage
+--
+--         , requestAcceptVPCEndpointConnections $
+--             acceptVPCEndpointConnections
+--
+--         , requestGetLaunchTemplateData $
+--             getLaunchTemplateData
 --
 --         , requestAllocateAddress $
 --             allocateAddress
@@ -340,6 +373,9 @@ import Test.Tasty
 --         , requestEnableVPCClassicLinkDNSSupport $
 --             enableVPCClassicLinkDNSSupport
 --
+--         , requestDescribeVPCEndpointConnections $
+--             describeVPCEndpointConnections
+--
 --         , requestModifyReservedInstances $
 --             modifyReservedInstances
 --
@@ -358,8 +394,20 @@ import Test.Tasty
 --         , requestMoveAddressToVPC $
 --             moveAddressToVPC
 --
+--         , requestDescribeLaunchTemplateVersions $
+--             describeLaunchTemplateVersions
+--
+--         , requestModifyInstanceCreditSpecification $
+--             modifyInstanceCreditSpecification
+--
 --         , requestDeleteNetworkACL $
 --             deleteNetworkACL
+--
+--         , requestCreateLaunchTemplate $
+--             createLaunchTemplate
+--
+--         , requestCreateVPCEndpointConnectionNotification $
+--             createVPCEndpointConnectionNotification
 --
 --         , requestDeleteNetworkInterfacePermission $
 --             deleteNetworkInterfacePermission
@@ -469,6 +517,9 @@ import Test.Tasty
 --         , requestCancelExportTask $
 --             cancelExportTask
 --
+--         , requestCreateVPCEndpointServiceConfiguration $
+--             createVPCEndpointServiceConfiguration
+--
 --         , requestCreateDefaultVPC $
 --             createDefaultVPC
 --
@@ -553,6 +604,9 @@ import Test.Tasty
 --         , requestCreateRoute $
 --             createRoute
 --
+--         , requestDescribeVPCEndpointServiceConfigurations $
+--             describeVPCEndpointServiceConfigurations
+--
 --         , requestDeleteSnapshot $
 --             deleteSnapshot
 --
@@ -619,6 +673,9 @@ import Test.Tasty
 --         , requestAttachVPNGateway $
 --             attachVPNGateway
 --
+--         , requestModifyVPCEndpointServicePermissions $
+--             modifyVPCEndpointServicePermissions
+--
 --         , requestCreateDHCPOptions $
 --             createDHCPOptions
 --
@@ -633,6 +690,9 @@ import Test.Tasty
 --
 --         , requestRebootInstances $
 --             rebootInstances
+--
+--         , requestModifyVPCEndpointServiceConfiguration $
+--             modifyVPCEndpointServiceConfiguration
 --
 --         , requestUnassignIPv6Addresses $
 --             unassignIPv6Addresses
@@ -657,6 +717,9 @@ import Test.Tasty
 --
 --         , requestDescribeKeyPairs $
 --             describeKeyPairs
+--
+--         , requestDescribeLaunchTemplates $
+--             describeLaunchTemplates
 --
 --         , requestCreateVPNConnectionRoute $
 --             createVPNConnectionRoute
@@ -699,6 +762,9 @@ import Test.Tasty
 --
 --         , requestDescribeNetworkInterfacePermissions $
 --             describeNetworkInterfacePermissions
+--
+--         , requestDescribeVPCEndpointServicePermissions $
+--             describeVPCEndpointServicePermissions
 --
 --         , requestDeleteDHCPOptions $
 --             deleteDHCPOptions
@@ -754,6 +820,9 @@ import Test.Tasty
 --         , requestDeleteVolume $
 --             deleteVolume
 --
+--         , requestDeleteVPCEndpointServiceConfigurations $
+--             deleteVPCEndpointServiceConfigurations
+--
 --         , requestDescribeSpotFleetInstances $
 --             describeSpotFleetInstances
 --
@@ -768,6 +837,12 @@ import Test.Tasty
 --
 --         , responseCreateNetworkInterfacePermission $
 --             createNetworkInterfacePermissionResponse
+--
+--         , responseDeleteLaunchTemplate $
+--             deleteLaunchTemplateResponse
+--
+--         , responseRejectVPCEndpointConnections $
+--             rejectVPCEndpointConnectionsResponse
 --
 --         , responseCreateVPNGateway $
 --             createVPNGatewayResponse
@@ -811,6 +886,9 @@ import Test.Tasty
 --         , responseDetachVolume $
 --             volumeAttachment
 --
+--         , responseDescribeInstanceCreditSpecifications $
+--             describeInstanceCreditSpecificationsResponse
+--
 --         , responseCancelBundleTask $
 --             cancelBundleTaskResponse
 --
@@ -834,6 +912,9 @@ import Test.Tasty
 --
 --         , responseDeregisterImage $
 --             deregisterImageResponse
+--
+--         , responseDeleteVPCEndpointConnectionNotifications $
+--             deleteVPCEndpointConnectionNotificationsResponse
 --
 --         , responseModifyNetworkInterfaceAttribute $
 --             modifyNetworkInterfaceAttributeResponse
@@ -874,11 +955,20 @@ import Test.Tasty
 --         , responseStopInstances $
 --             stopInstancesResponse
 --
+--         , responseModifyLaunchTemplate $
+--             modifyLaunchTemplateResponse
+--
+--         , responseModifyVPCEndpointConnectionNotification $
+--             modifyVPCEndpointConnectionNotificationResponse
+--
 --         , responseDescribeInternetGateways $
 --             describeInternetGatewaysResponse
 --
 --         , responseDisableVPCClassicLink $
 --             disableVPCClassicLinkResponse
+--
+--         , responseDeleteLaunchTemplateVersions $
+--             deleteLaunchTemplateVersionsResponse
 --
 --         , responseBundleInstance $
 --             bundleInstanceResponse
@@ -985,6 +1075,9 @@ import Test.Tasty
 --         , responseDescribeFlowLogs $
 --             describeFlowLogsResponse
 --
+--         , responseDescribeVPCEndpointConnectionNotifications $
+--             describeVPCEndpointConnectionNotificationsResponse
+--
 --         , responseRunInstances $
 --             reservation
 --
@@ -1003,6 +1096,9 @@ import Test.Tasty
 --         , responseDescribeConversionTasks $
 --             describeConversionTasksResponse
 --
+--         , responseCreateLaunchTemplateVersion $
+--             createLaunchTemplateVersionResponse
+--
 --         , responseDisableVPCClassicLinkDNSSupport $
 --             disableVPCClassicLinkDNSSupportResponse
 --
@@ -1011,6 +1107,12 @@ import Test.Tasty
 --
 --         , responseCreateFpgaImage $
 --             createFpgaImageResponse
+--
+--         , responseAcceptVPCEndpointConnections $
+--             acceptVPCEndpointConnectionsResponse
+--
+--         , responseGetLaunchTemplateData $
+--             getLaunchTemplateDataResponse
 --
 --         , responseAllocateAddress $
 --             allocateAddressResponse
@@ -1072,6 +1174,9 @@ import Test.Tasty
 --         , responseEnableVPCClassicLinkDNSSupport $
 --             enableVPCClassicLinkDNSSupportResponse
 --
+--         , responseDescribeVPCEndpointConnections $
+--             describeVPCEndpointConnectionsResponse
+--
 --         , responseModifyReservedInstances $
 --             modifyReservedInstancesResponse
 --
@@ -1090,8 +1195,20 @@ import Test.Tasty
 --         , responseMoveAddressToVPC $
 --             moveAddressToVPCResponse
 --
+--         , responseDescribeLaunchTemplateVersions $
+--             describeLaunchTemplateVersionsResponse
+--
+--         , responseModifyInstanceCreditSpecification $
+--             modifyInstanceCreditSpecificationResponse
+--
 --         , responseDeleteNetworkACL $
 --             deleteNetworkACLResponse
+--
+--         , responseCreateLaunchTemplate $
+--             createLaunchTemplateResponse
+--
+--         , responseCreateVPCEndpointConnectionNotification $
+--             createVPCEndpointConnectionNotificationResponse
 --
 --         , responseDeleteNetworkInterfacePermission $
 --             deleteNetworkInterfacePermissionResponse
@@ -1201,6 +1318,9 @@ import Test.Tasty
 --         , responseCancelExportTask $
 --             cancelExportTaskResponse
 --
+--         , responseCreateVPCEndpointServiceConfiguration $
+--             createVPCEndpointServiceConfigurationResponse
+--
 --         , responseCreateDefaultVPC $
 --             createDefaultVPCResponse
 --
@@ -1285,6 +1405,9 @@ import Test.Tasty
 --         , responseCreateRoute $
 --             createRouteResponse
 --
+--         , responseDescribeVPCEndpointServiceConfigurations $
+--             describeVPCEndpointServiceConfigurationsResponse
+--
 --         , responseDeleteSnapshot $
 --             deleteSnapshotResponse
 --
@@ -1351,6 +1474,9 @@ import Test.Tasty
 --         , responseAttachVPNGateway $
 --             attachVPNGatewayResponse
 --
+--         , responseModifyVPCEndpointServicePermissions $
+--             modifyVPCEndpointServicePermissionsResponse
+--
 --         , responseCreateDHCPOptions $
 --             createDHCPOptionsResponse
 --
@@ -1365,6 +1491,9 @@ import Test.Tasty
 --
 --         , responseRebootInstances $
 --             rebootInstancesResponse
+--
+--         , responseModifyVPCEndpointServiceConfiguration $
+--             modifyVPCEndpointServiceConfigurationResponse
 --
 --         , responseUnassignIPv6Addresses $
 --             unassignIPv6AddressesResponse
@@ -1389,6 +1518,9 @@ import Test.Tasty
 --
 --         , responseDescribeKeyPairs $
 --             describeKeyPairsResponse
+--
+--         , responseDescribeLaunchTemplates $
+--             describeLaunchTemplatesResponse
 --
 --         , responseCreateVPNConnectionRoute $
 --             createVPNConnectionRouteResponse
@@ -1431,6 +1563,9 @@ import Test.Tasty
 --
 --         , responseDescribeNetworkInterfacePermissions $
 --             describeNetworkInterfacePermissionsResponse
+--
+--         , responseDescribeVPCEndpointServicePermissions $
+--             describeVPCEndpointServicePermissionsResponse
 --
 --         , responseDeleteDHCPOptions $
 --             deleteDHCPOptionsResponse
@@ -1486,6 +1621,9 @@ import Test.Tasty
 --         , responseDeleteVolume $
 --             deleteVolumeResponse
 --
+--         , responseDeleteVPCEndpointServiceConfigurations $
+--             deleteVPCEndpointServiceConfigurationsResponse
+--
 --         , responseDescribeSpotFleetInstances $
 --             describeSpotFleetInstancesResponse
 --
@@ -1508,6 +1646,16 @@ requestCreateNetworkInterfacePermission :: CreateNetworkInterfacePermission -> T
 requestCreateNetworkInterfacePermission = req
     "CreateNetworkInterfacePermission"
     "fixture/CreateNetworkInterfacePermission.yaml"
+
+requestDeleteLaunchTemplate :: DeleteLaunchTemplate -> TestTree
+requestDeleteLaunchTemplate = req
+    "DeleteLaunchTemplate"
+    "fixture/DeleteLaunchTemplate.yaml"
+
+requestRejectVPCEndpointConnections :: RejectVPCEndpointConnections -> TestTree
+requestRejectVPCEndpointConnections = req
+    "RejectVPCEndpointConnections"
+    "fixture/RejectVPCEndpointConnections.yaml"
 
 requestCreateVPNGateway :: CreateVPNGateway -> TestTree
 requestCreateVPNGateway = req
@@ -1579,6 +1727,11 @@ requestDetachVolume = req
     "DetachVolume"
     "fixture/DetachVolume.yaml"
 
+requestDescribeInstanceCreditSpecifications :: DescribeInstanceCreditSpecifications -> TestTree
+requestDescribeInstanceCreditSpecifications = req
+    "DescribeInstanceCreditSpecifications"
+    "fixture/DescribeInstanceCreditSpecifications.yaml"
+
 requestCancelBundleTask :: CancelBundleTask -> TestTree
 requestCancelBundleTask = req
     "CancelBundleTask"
@@ -1618,6 +1771,11 @@ requestDeregisterImage :: DeregisterImage -> TestTree
 requestDeregisterImage = req
     "DeregisterImage"
     "fixture/DeregisterImage.yaml"
+
+requestDeleteVPCEndpointConnectionNotifications :: DeleteVPCEndpointConnectionNotifications -> TestTree
+requestDeleteVPCEndpointConnectionNotifications = req
+    "DeleteVPCEndpointConnectionNotifications"
+    "fixture/DeleteVPCEndpointConnectionNotifications.yaml"
 
 requestModifyNetworkInterfaceAttribute :: ModifyNetworkInterfaceAttribute -> TestTree
 requestModifyNetworkInterfaceAttribute = req
@@ -1684,6 +1842,16 @@ requestStopInstances = req
     "StopInstances"
     "fixture/StopInstances.yaml"
 
+requestModifyLaunchTemplate :: ModifyLaunchTemplate -> TestTree
+requestModifyLaunchTemplate = req
+    "ModifyLaunchTemplate"
+    "fixture/ModifyLaunchTemplate.yaml"
+
+requestModifyVPCEndpointConnectionNotification :: ModifyVPCEndpointConnectionNotification -> TestTree
+requestModifyVPCEndpointConnectionNotification = req
+    "ModifyVPCEndpointConnectionNotification"
+    "fixture/ModifyVPCEndpointConnectionNotification.yaml"
+
 requestDescribeInternetGateways :: DescribeInternetGateways -> TestTree
 requestDescribeInternetGateways = req
     "DescribeInternetGateways"
@@ -1693,6 +1861,11 @@ requestDisableVPCClassicLink :: DisableVPCClassicLink -> TestTree
 requestDisableVPCClassicLink = req
     "DisableVPCClassicLink"
     "fixture/DisableVPCClassicLink.yaml"
+
+requestDeleteLaunchTemplateVersions :: DeleteLaunchTemplateVersions -> TestTree
+requestDeleteLaunchTemplateVersions = req
+    "DeleteLaunchTemplateVersions"
+    "fixture/DeleteLaunchTemplateVersions.yaml"
 
 requestBundleInstance :: BundleInstance -> TestTree
 requestBundleInstance = req
@@ -1869,6 +2042,11 @@ requestDescribeFlowLogs = req
     "DescribeFlowLogs"
     "fixture/DescribeFlowLogs.yaml"
 
+requestDescribeVPCEndpointConnectionNotifications :: DescribeVPCEndpointConnectionNotifications -> TestTree
+requestDescribeVPCEndpointConnectionNotifications = req
+    "DescribeVPCEndpointConnectionNotifications"
+    "fixture/DescribeVPCEndpointConnectionNotifications.yaml"
+
 requestRunInstances :: RunInstances -> TestTree
 requestRunInstances = req
     "RunInstances"
@@ -1899,6 +2077,11 @@ requestDescribeConversionTasks = req
     "DescribeConversionTasks"
     "fixture/DescribeConversionTasks.yaml"
 
+requestCreateLaunchTemplateVersion :: CreateLaunchTemplateVersion -> TestTree
+requestCreateLaunchTemplateVersion = req
+    "CreateLaunchTemplateVersion"
+    "fixture/CreateLaunchTemplateVersion.yaml"
+
 requestDisableVPCClassicLinkDNSSupport :: DisableVPCClassicLinkDNSSupport -> TestTree
 requestDisableVPCClassicLinkDNSSupport = req
     "DisableVPCClassicLinkDNSSupport"
@@ -1913,6 +2096,16 @@ requestCreateFpgaImage :: CreateFpgaImage -> TestTree
 requestCreateFpgaImage = req
     "CreateFpgaImage"
     "fixture/CreateFpgaImage.yaml"
+
+requestAcceptVPCEndpointConnections :: AcceptVPCEndpointConnections -> TestTree
+requestAcceptVPCEndpointConnections = req
+    "AcceptVPCEndpointConnections"
+    "fixture/AcceptVPCEndpointConnections.yaml"
+
+requestGetLaunchTemplateData :: GetLaunchTemplateData -> TestTree
+requestGetLaunchTemplateData = req
+    "GetLaunchTemplateData"
+    "fixture/GetLaunchTemplateData.yaml"
 
 requestAllocateAddress :: AllocateAddress -> TestTree
 requestAllocateAddress = req
@@ -2014,6 +2207,11 @@ requestEnableVPCClassicLinkDNSSupport = req
     "EnableVPCClassicLinkDNSSupport"
     "fixture/EnableVPCClassicLinkDNSSupport.yaml"
 
+requestDescribeVPCEndpointConnections :: DescribeVPCEndpointConnections -> TestTree
+requestDescribeVPCEndpointConnections = req
+    "DescribeVPCEndpointConnections"
+    "fixture/DescribeVPCEndpointConnections.yaml"
+
 requestModifyReservedInstances :: ModifyReservedInstances -> TestTree
 requestModifyReservedInstances = req
     "ModifyReservedInstances"
@@ -2044,10 +2242,30 @@ requestMoveAddressToVPC = req
     "MoveAddressToVPC"
     "fixture/MoveAddressToVPC.yaml"
 
+requestDescribeLaunchTemplateVersions :: DescribeLaunchTemplateVersions -> TestTree
+requestDescribeLaunchTemplateVersions = req
+    "DescribeLaunchTemplateVersions"
+    "fixture/DescribeLaunchTemplateVersions.yaml"
+
+requestModifyInstanceCreditSpecification :: ModifyInstanceCreditSpecification -> TestTree
+requestModifyInstanceCreditSpecification = req
+    "ModifyInstanceCreditSpecification"
+    "fixture/ModifyInstanceCreditSpecification.yaml"
+
 requestDeleteNetworkACL :: DeleteNetworkACL -> TestTree
 requestDeleteNetworkACL = req
     "DeleteNetworkACL"
     "fixture/DeleteNetworkACL.yaml"
+
+requestCreateLaunchTemplate :: CreateLaunchTemplate -> TestTree
+requestCreateLaunchTemplate = req
+    "CreateLaunchTemplate"
+    "fixture/CreateLaunchTemplate.yaml"
+
+requestCreateVPCEndpointConnectionNotification :: CreateVPCEndpointConnectionNotification -> TestTree
+requestCreateVPCEndpointConnectionNotification = req
+    "CreateVPCEndpointConnectionNotification"
+    "fixture/CreateVPCEndpointConnectionNotification.yaml"
 
 requestDeleteNetworkInterfacePermission :: DeleteNetworkInterfacePermission -> TestTree
 requestDeleteNetworkInterfacePermission = req
@@ -2229,6 +2447,11 @@ requestCancelExportTask = req
     "CancelExportTask"
     "fixture/CancelExportTask.yaml"
 
+requestCreateVPCEndpointServiceConfiguration :: CreateVPCEndpointServiceConfiguration -> TestTree
+requestCreateVPCEndpointServiceConfiguration = req
+    "CreateVPCEndpointServiceConfiguration"
+    "fixture/CreateVPCEndpointServiceConfiguration.yaml"
+
 requestCreateDefaultVPC :: CreateDefaultVPC -> TestTree
 requestCreateDefaultVPC = req
     "CreateDefaultVPC"
@@ -2369,6 +2592,11 @@ requestCreateRoute = req
     "CreateRoute"
     "fixture/CreateRoute.yaml"
 
+requestDescribeVPCEndpointServiceConfigurations :: DescribeVPCEndpointServiceConfigurations -> TestTree
+requestDescribeVPCEndpointServiceConfigurations = req
+    "DescribeVPCEndpointServiceConfigurations"
+    "fixture/DescribeVPCEndpointServiceConfigurations.yaml"
+
 requestDeleteSnapshot :: DeleteSnapshot -> TestTree
 requestDeleteSnapshot = req
     "DeleteSnapshot"
@@ -2479,6 +2707,11 @@ requestAttachVPNGateway = req
     "AttachVPNGateway"
     "fixture/AttachVPNGateway.yaml"
 
+requestModifyVPCEndpointServicePermissions :: ModifyVPCEndpointServicePermissions -> TestTree
+requestModifyVPCEndpointServicePermissions = req
+    "ModifyVPCEndpointServicePermissions"
+    "fixture/ModifyVPCEndpointServicePermissions.yaml"
+
 requestCreateDHCPOptions :: CreateDHCPOptions -> TestTree
 requestCreateDHCPOptions = req
     "CreateDHCPOptions"
@@ -2503,6 +2736,11 @@ requestRebootInstances :: RebootInstances -> TestTree
 requestRebootInstances = req
     "RebootInstances"
     "fixture/RebootInstances.yaml"
+
+requestModifyVPCEndpointServiceConfiguration :: ModifyVPCEndpointServiceConfiguration -> TestTree
+requestModifyVPCEndpointServiceConfiguration = req
+    "ModifyVPCEndpointServiceConfiguration"
+    "fixture/ModifyVPCEndpointServiceConfiguration.yaml"
 
 requestUnassignIPv6Addresses :: UnassignIPv6Addresses -> TestTree
 requestUnassignIPv6Addresses = req
@@ -2543,6 +2781,11 @@ requestDescribeKeyPairs :: DescribeKeyPairs -> TestTree
 requestDescribeKeyPairs = req
     "DescribeKeyPairs"
     "fixture/DescribeKeyPairs.yaml"
+
+requestDescribeLaunchTemplates :: DescribeLaunchTemplates -> TestTree
+requestDescribeLaunchTemplates = req
+    "DescribeLaunchTemplates"
+    "fixture/DescribeLaunchTemplates.yaml"
 
 requestCreateVPNConnectionRoute :: CreateVPNConnectionRoute -> TestTree
 requestCreateVPNConnectionRoute = req
@@ -2613,6 +2856,11 @@ requestDescribeNetworkInterfacePermissions :: DescribeNetworkInterfacePermission
 requestDescribeNetworkInterfacePermissions = req
     "DescribeNetworkInterfacePermissions"
     "fixture/DescribeNetworkInterfacePermissions.yaml"
+
+requestDescribeVPCEndpointServicePermissions :: DescribeVPCEndpointServicePermissions -> TestTree
+requestDescribeVPCEndpointServicePermissions = req
+    "DescribeVPCEndpointServicePermissions"
+    "fixture/DescribeVPCEndpointServicePermissions.yaml"
 
 requestDeleteDHCPOptions :: DeleteDHCPOptions -> TestTree
 requestDeleteDHCPOptions = req
@@ -2704,6 +2952,11 @@ requestDeleteVolume = req
     "DeleteVolume"
     "fixture/DeleteVolume.yaml"
 
+requestDeleteVPCEndpointServiceConfigurations :: DeleteVPCEndpointServiceConfigurations -> TestTree
+requestDeleteVPCEndpointServiceConfigurations = req
+    "DeleteVPCEndpointServiceConfigurations"
+    "fixture/DeleteVPCEndpointServiceConfigurations.yaml"
+
 requestDescribeSpotFleetInstances :: DescribeSpotFleetInstances -> TestTree
 requestDescribeSpotFleetInstances = req
     "DescribeSpotFleetInstances"
@@ -2731,6 +2984,20 @@ responseCreateNetworkInterfacePermission = res
     "fixture/CreateNetworkInterfacePermissionResponse.proto"
     ec2
     (Proxy :: Proxy CreateNetworkInterfacePermission)
+
+responseDeleteLaunchTemplate :: DeleteLaunchTemplateResponse -> TestTree
+responseDeleteLaunchTemplate = res
+    "DeleteLaunchTemplateResponse"
+    "fixture/DeleteLaunchTemplateResponse.proto"
+    ec2
+    (Proxy :: Proxy DeleteLaunchTemplate)
+
+responseRejectVPCEndpointConnections :: RejectVPCEndpointConnectionsResponse -> TestTree
+responseRejectVPCEndpointConnections = res
+    "RejectVPCEndpointConnectionsResponse"
+    "fixture/RejectVPCEndpointConnectionsResponse.proto"
+    ec2
+    (Proxy :: Proxy RejectVPCEndpointConnections)
 
 responseCreateVPNGateway :: CreateVPNGatewayResponse -> TestTree
 responseCreateVPNGateway = res
@@ -2830,6 +3097,13 @@ responseDetachVolume = res
     ec2
     (Proxy :: Proxy DetachVolume)
 
+responseDescribeInstanceCreditSpecifications :: DescribeInstanceCreditSpecificationsResponse -> TestTree
+responseDescribeInstanceCreditSpecifications = res
+    "DescribeInstanceCreditSpecificationsResponse"
+    "fixture/DescribeInstanceCreditSpecificationsResponse.proto"
+    ec2
+    (Proxy :: Proxy DescribeInstanceCreditSpecifications)
+
 responseCancelBundleTask :: CancelBundleTaskResponse -> TestTree
 responseCancelBundleTask = res
     "CancelBundleTaskResponse"
@@ -2885,6 +3159,13 @@ responseDeregisterImage = res
     "fixture/DeregisterImageResponse.proto"
     ec2
     (Proxy :: Proxy DeregisterImage)
+
+responseDeleteVPCEndpointConnectionNotifications :: DeleteVPCEndpointConnectionNotificationsResponse -> TestTree
+responseDeleteVPCEndpointConnectionNotifications = res
+    "DeleteVPCEndpointConnectionNotificationsResponse"
+    "fixture/DeleteVPCEndpointConnectionNotificationsResponse.proto"
+    ec2
+    (Proxy :: Proxy DeleteVPCEndpointConnectionNotifications)
 
 responseModifyNetworkInterfaceAttribute :: ModifyNetworkInterfaceAttributeResponse -> TestTree
 responseModifyNetworkInterfaceAttribute = res
@@ -2977,6 +3258,20 @@ responseStopInstances = res
     ec2
     (Proxy :: Proxy StopInstances)
 
+responseModifyLaunchTemplate :: ModifyLaunchTemplateResponse -> TestTree
+responseModifyLaunchTemplate = res
+    "ModifyLaunchTemplateResponse"
+    "fixture/ModifyLaunchTemplateResponse.proto"
+    ec2
+    (Proxy :: Proxy ModifyLaunchTemplate)
+
+responseModifyVPCEndpointConnectionNotification :: ModifyVPCEndpointConnectionNotificationResponse -> TestTree
+responseModifyVPCEndpointConnectionNotification = res
+    "ModifyVPCEndpointConnectionNotificationResponse"
+    "fixture/ModifyVPCEndpointConnectionNotificationResponse.proto"
+    ec2
+    (Proxy :: Proxy ModifyVPCEndpointConnectionNotification)
+
 responseDescribeInternetGateways :: DescribeInternetGatewaysResponse -> TestTree
 responseDescribeInternetGateways = res
     "DescribeInternetGatewaysResponse"
@@ -2990,6 +3285,13 @@ responseDisableVPCClassicLink = res
     "fixture/DisableVPCClassicLinkResponse.proto"
     ec2
     (Proxy :: Proxy DisableVPCClassicLink)
+
+responseDeleteLaunchTemplateVersions :: DeleteLaunchTemplateVersionsResponse -> TestTree
+responseDeleteLaunchTemplateVersions = res
+    "DeleteLaunchTemplateVersionsResponse"
+    "fixture/DeleteLaunchTemplateVersionsResponse.proto"
+    ec2
+    (Proxy :: Proxy DeleteLaunchTemplateVersions)
 
 responseBundleInstance :: BundleInstanceResponse -> TestTree
 responseBundleInstance = res
@@ -3236,6 +3538,13 @@ responseDescribeFlowLogs = res
     ec2
     (Proxy :: Proxy DescribeFlowLogs)
 
+responseDescribeVPCEndpointConnectionNotifications :: DescribeVPCEndpointConnectionNotificationsResponse -> TestTree
+responseDescribeVPCEndpointConnectionNotifications = res
+    "DescribeVPCEndpointConnectionNotificationsResponse"
+    "fixture/DescribeVPCEndpointConnectionNotificationsResponse.proto"
+    ec2
+    (Proxy :: Proxy DescribeVPCEndpointConnectionNotifications)
+
 responseRunInstances :: Reservation -> TestTree
 responseRunInstances = res
     "RunInstancesResponse"
@@ -3278,6 +3587,13 @@ responseDescribeConversionTasks = res
     ec2
     (Proxy :: Proxy DescribeConversionTasks)
 
+responseCreateLaunchTemplateVersion :: CreateLaunchTemplateVersionResponse -> TestTree
+responseCreateLaunchTemplateVersion = res
+    "CreateLaunchTemplateVersionResponse"
+    "fixture/CreateLaunchTemplateVersionResponse.proto"
+    ec2
+    (Proxy :: Proxy CreateLaunchTemplateVersion)
+
 responseDisableVPCClassicLinkDNSSupport :: DisableVPCClassicLinkDNSSupportResponse -> TestTree
 responseDisableVPCClassicLinkDNSSupport = res
     "DisableVPCClassicLinkDNSSupportResponse"
@@ -3298,6 +3614,20 @@ responseCreateFpgaImage = res
     "fixture/CreateFpgaImageResponse.proto"
     ec2
     (Proxy :: Proxy CreateFpgaImage)
+
+responseAcceptVPCEndpointConnections :: AcceptVPCEndpointConnectionsResponse -> TestTree
+responseAcceptVPCEndpointConnections = res
+    "AcceptVPCEndpointConnectionsResponse"
+    "fixture/AcceptVPCEndpointConnectionsResponse.proto"
+    ec2
+    (Proxy :: Proxy AcceptVPCEndpointConnections)
+
+responseGetLaunchTemplateData :: GetLaunchTemplateDataResponse -> TestTree
+responseGetLaunchTemplateData = res
+    "GetLaunchTemplateDataResponse"
+    "fixture/GetLaunchTemplateDataResponse.proto"
+    ec2
+    (Proxy :: Proxy GetLaunchTemplateData)
 
 responseAllocateAddress :: AllocateAddressResponse -> TestTree
 responseAllocateAddress = res
@@ -3439,6 +3769,13 @@ responseEnableVPCClassicLinkDNSSupport = res
     ec2
     (Proxy :: Proxy EnableVPCClassicLinkDNSSupport)
 
+responseDescribeVPCEndpointConnections :: DescribeVPCEndpointConnectionsResponse -> TestTree
+responseDescribeVPCEndpointConnections = res
+    "DescribeVPCEndpointConnectionsResponse"
+    "fixture/DescribeVPCEndpointConnectionsResponse.proto"
+    ec2
+    (Proxy :: Proxy DescribeVPCEndpointConnections)
+
 responseModifyReservedInstances :: ModifyReservedInstancesResponse -> TestTree
 responseModifyReservedInstances = res
     "ModifyReservedInstancesResponse"
@@ -3481,12 +3818,40 @@ responseMoveAddressToVPC = res
     ec2
     (Proxy :: Proxy MoveAddressToVPC)
 
+responseDescribeLaunchTemplateVersions :: DescribeLaunchTemplateVersionsResponse -> TestTree
+responseDescribeLaunchTemplateVersions = res
+    "DescribeLaunchTemplateVersionsResponse"
+    "fixture/DescribeLaunchTemplateVersionsResponse.proto"
+    ec2
+    (Proxy :: Proxy DescribeLaunchTemplateVersions)
+
+responseModifyInstanceCreditSpecification :: ModifyInstanceCreditSpecificationResponse -> TestTree
+responseModifyInstanceCreditSpecification = res
+    "ModifyInstanceCreditSpecificationResponse"
+    "fixture/ModifyInstanceCreditSpecificationResponse.proto"
+    ec2
+    (Proxy :: Proxy ModifyInstanceCreditSpecification)
+
 responseDeleteNetworkACL :: DeleteNetworkACLResponse -> TestTree
 responseDeleteNetworkACL = res
     "DeleteNetworkACLResponse"
     "fixture/DeleteNetworkACLResponse.proto"
     ec2
     (Proxy :: Proxy DeleteNetworkACL)
+
+responseCreateLaunchTemplate :: CreateLaunchTemplateResponse -> TestTree
+responseCreateLaunchTemplate = res
+    "CreateLaunchTemplateResponse"
+    "fixture/CreateLaunchTemplateResponse.proto"
+    ec2
+    (Proxy :: Proxy CreateLaunchTemplate)
+
+responseCreateVPCEndpointConnectionNotification :: CreateVPCEndpointConnectionNotificationResponse -> TestTree
+responseCreateVPCEndpointConnectionNotification = res
+    "CreateVPCEndpointConnectionNotificationResponse"
+    "fixture/CreateVPCEndpointConnectionNotificationResponse.proto"
+    ec2
+    (Proxy :: Proxy CreateVPCEndpointConnectionNotification)
 
 responseDeleteNetworkInterfacePermission :: DeleteNetworkInterfacePermissionResponse -> TestTree
 responseDeleteNetworkInterfacePermission = res
@@ -3740,6 +4105,13 @@ responseCancelExportTask = res
     ec2
     (Proxy :: Proxy CancelExportTask)
 
+responseCreateVPCEndpointServiceConfiguration :: CreateVPCEndpointServiceConfigurationResponse -> TestTree
+responseCreateVPCEndpointServiceConfiguration = res
+    "CreateVPCEndpointServiceConfigurationResponse"
+    "fixture/CreateVPCEndpointServiceConfigurationResponse.proto"
+    ec2
+    (Proxy :: Proxy CreateVPCEndpointServiceConfiguration)
+
 responseCreateDefaultVPC :: CreateDefaultVPCResponse -> TestTree
 responseCreateDefaultVPC = res
     "CreateDefaultVPCResponse"
@@ -3936,6 +4308,13 @@ responseCreateRoute = res
     ec2
     (Proxy :: Proxy CreateRoute)
 
+responseDescribeVPCEndpointServiceConfigurations :: DescribeVPCEndpointServiceConfigurationsResponse -> TestTree
+responseDescribeVPCEndpointServiceConfigurations = res
+    "DescribeVPCEndpointServiceConfigurationsResponse"
+    "fixture/DescribeVPCEndpointServiceConfigurationsResponse.proto"
+    ec2
+    (Proxy :: Proxy DescribeVPCEndpointServiceConfigurations)
+
 responseDeleteSnapshot :: DeleteSnapshotResponse -> TestTree
 responseDeleteSnapshot = res
     "DeleteSnapshotResponse"
@@ -4090,6 +4469,13 @@ responseAttachVPNGateway = res
     ec2
     (Proxy :: Proxy AttachVPNGateway)
 
+responseModifyVPCEndpointServicePermissions :: ModifyVPCEndpointServicePermissionsResponse -> TestTree
+responseModifyVPCEndpointServicePermissions = res
+    "ModifyVPCEndpointServicePermissionsResponse"
+    "fixture/ModifyVPCEndpointServicePermissionsResponse.proto"
+    ec2
+    (Proxy :: Proxy ModifyVPCEndpointServicePermissions)
+
 responseCreateDHCPOptions :: CreateDHCPOptionsResponse -> TestTree
 responseCreateDHCPOptions = res
     "CreateDHCPOptionsResponse"
@@ -4124,6 +4510,13 @@ responseRebootInstances = res
     "fixture/RebootInstancesResponse.proto"
     ec2
     (Proxy :: Proxy RebootInstances)
+
+responseModifyVPCEndpointServiceConfiguration :: ModifyVPCEndpointServiceConfigurationResponse -> TestTree
+responseModifyVPCEndpointServiceConfiguration = res
+    "ModifyVPCEndpointServiceConfigurationResponse"
+    "fixture/ModifyVPCEndpointServiceConfigurationResponse.proto"
+    ec2
+    (Proxy :: Proxy ModifyVPCEndpointServiceConfiguration)
 
 responseUnassignIPv6Addresses :: UnassignIPv6AddressesResponse -> TestTree
 responseUnassignIPv6Addresses = res
@@ -4180,6 +4573,13 @@ responseDescribeKeyPairs = res
     "fixture/DescribeKeyPairsResponse.proto"
     ec2
     (Proxy :: Proxy DescribeKeyPairs)
+
+responseDescribeLaunchTemplates :: DescribeLaunchTemplatesResponse -> TestTree
+responseDescribeLaunchTemplates = res
+    "DescribeLaunchTemplatesResponse"
+    "fixture/DescribeLaunchTemplatesResponse.proto"
+    ec2
+    (Proxy :: Proxy DescribeLaunchTemplates)
 
 responseCreateVPNConnectionRoute :: CreateVPNConnectionRouteResponse -> TestTree
 responseCreateVPNConnectionRoute = res
@@ -4278,6 +4678,13 @@ responseDescribeNetworkInterfacePermissions = res
     "fixture/DescribeNetworkInterfacePermissionsResponse.proto"
     ec2
     (Proxy :: Proxy DescribeNetworkInterfacePermissions)
+
+responseDescribeVPCEndpointServicePermissions :: DescribeVPCEndpointServicePermissionsResponse -> TestTree
+responseDescribeVPCEndpointServicePermissions = res
+    "DescribeVPCEndpointServicePermissionsResponse"
+    "fixture/DescribeVPCEndpointServicePermissionsResponse.proto"
+    ec2
+    (Proxy :: Proxy DescribeVPCEndpointServicePermissions)
 
 responseDeleteDHCPOptions :: DeleteDHCPOptionsResponse -> TestTree
 responseDeleteDHCPOptions = res
@@ -4404,6 +4811,13 @@ responseDeleteVolume = res
     "fixture/DeleteVolumeResponse.proto"
     ec2
     (Proxy :: Proxy DeleteVolume)
+
+responseDeleteVPCEndpointServiceConfigurations :: DeleteVPCEndpointServiceConfigurationsResponse -> TestTree
+responseDeleteVPCEndpointServiceConfigurations = res
+    "DeleteVPCEndpointServiceConfigurationsResponse"
+    "fixture/DeleteVPCEndpointServiceConfigurationsResponse.proto"
+    ec2
+    (Proxy :: Proxy DeleteVPCEndpointServiceConfigurations)
 
 responseDescribeSpotFleetInstances :: DescribeSpotFleetInstancesResponse -> TestTree
 responseDescribeSpotFleetInstances = res

@@ -83,6 +83,9 @@ module Network.AWS.CloudDirectory
     -- ** StillContainsLinksException
     , _StillContainsLinksException
 
+    -- ** IncompatibleSchemaException
+    , _IncompatibleSchemaException
+
     -- ** NotNodeException
     , _NotNodeException
 
@@ -131,14 +134,17 @@ module Network.AWS.CloudDirectory
     -- * Operations
     -- $operations
 
-    -- ** ListTypedLinkFacetAttributes
+    -- ** ListTypedLinkFacetAttributes (Paginated)
     , module Network.AWS.CloudDirectory.ListTypedLinkFacetAttributes
 
     -- ** DeleteObject
     , module Network.AWS.CloudDirectory.DeleteObject
 
-    -- ** ListIndex
+    -- ** ListIndex (Paginated)
     , module Network.AWS.CloudDirectory.ListIndex
+
+    -- ** UpgradeAppliedSchema
+    , module Network.AWS.CloudDirectory.UpgradeAppliedSchema
 
     -- ** GetDirectory
     , module Network.AWS.CloudDirectory.GetDirectory
@@ -146,28 +152,28 @@ module Network.AWS.CloudDirectory
     -- ** GetObjectInformation
     , module Network.AWS.CloudDirectory.GetObjectInformation
 
-    -- ** ListAttachedIndices
+    -- ** ListAttachedIndices (Paginated)
     , module Network.AWS.CloudDirectory.ListAttachedIndices
 
     -- ** DetachFromIndex
     , module Network.AWS.CloudDirectory.DetachFromIndex
 
-    -- ** LookupPolicy
+    -- ** LookupPolicy (Paginated)
     , module Network.AWS.CloudDirectory.LookupPolicy
 
-    -- ** ListTagsForResource
+    -- ** ListTagsForResource (Paginated)
     , module Network.AWS.CloudDirectory.ListTagsForResource
 
-    -- ** ListPublishedSchemaARNs
+    -- ** ListPublishedSchemaARNs (Paginated)
     , module Network.AWS.CloudDirectory.ListPublishedSchemaARNs
 
-    -- ** ListDirectories
+    -- ** ListDirectories (Paginated)
     , module Network.AWS.CloudDirectory.ListDirectories
 
     -- ** CreateTypedLinkFacet
     , module Network.AWS.CloudDirectory.CreateTypedLinkFacet
 
-    -- ** ListObjectParentPaths
+    -- ** ListObjectParentPaths (Paginated)
     , module Network.AWS.CloudDirectory.ListObjectParentPaths
 
     -- ** DisableDirectory
@@ -176,7 +182,7 @@ module Network.AWS.CloudDirectory
     -- ** CreateDirectory
     , module Network.AWS.CloudDirectory.CreateDirectory
 
-    -- ** ListFacetAttributes
+    -- ** ListFacetAttributes (Paginated)
     , module Network.AWS.CloudDirectory.ListFacetAttributes
 
     -- ** UpdateTypedLinkFacet
@@ -185,16 +191,19 @@ module Network.AWS.CloudDirectory
     -- ** DeleteTypedLinkFacet
     , module Network.AWS.CloudDirectory.DeleteTypedLinkFacet
 
+    -- ** GetAppliedSchemaVersion
+    , module Network.AWS.CloudDirectory.GetAppliedSchemaVersion
+
     -- ** RemoveFacetFromObject
     , module Network.AWS.CloudDirectory.RemoveFacetFromObject
 
     -- ** EnableDirectory
     , module Network.AWS.CloudDirectory.EnableDirectory
 
-    -- ** ListObjectAttributes
+    -- ** ListObjectAttributes (Paginated)
     , module Network.AWS.CloudDirectory.ListObjectAttributes
 
-    -- ** ListAppliedSchemaARNs
+    -- ** ListAppliedSchemaARNs (Paginated)
     , module Network.AWS.CloudDirectory.ListAppliedSchemaARNs
 
     -- ** ListIncomingTypedLinks
@@ -206,7 +215,7 @@ module Network.AWS.CloudDirectory
     -- ** GetTypedLinkFacetInformation
     , module Network.AWS.CloudDirectory.GetTypedLinkFacetInformation
 
-    -- ** ListDevelopmentSchemaARNs
+    -- ** ListDevelopmentSchemaARNs (Paginated)
     , module Network.AWS.CloudDirectory.ListDevelopmentSchemaARNs
 
     -- ** AttachObject
@@ -217,6 +226,9 @@ module Network.AWS.CloudDirectory
 
     -- ** CreateObject
     , module Network.AWS.CloudDirectory.CreateObject
+
+    -- ** UpgradePublishedSchema
+    , module Network.AWS.CloudDirectory.UpgradePublishedSchema
 
     -- ** CreateFacet
     , module Network.AWS.CloudDirectory.CreateFacet
@@ -230,7 +242,7 @@ module Network.AWS.CloudDirectory
     -- ** ListObjectChildren
     , module Network.AWS.CloudDirectory.ListObjectChildren
 
-    -- ** ListTypedLinkFacetNames
+    -- ** ListTypedLinkFacetNames (Paginated)
     , module Network.AWS.CloudDirectory.ListTypedLinkFacetNames
 
     -- ** AttachTypedLink
@@ -266,7 +278,7 @@ module Network.AWS.CloudDirectory
     -- ** ListObjectParents
     , module Network.AWS.CloudDirectory.ListObjectParents
 
-    -- ** ListPolicyAttachments
+    -- ** ListPolicyAttachments (Paginated)
     , module Network.AWS.CloudDirectory.ListPolicyAttachments
 
     -- ** TagResource
@@ -281,7 +293,7 @@ module Network.AWS.CloudDirectory
     -- ** DetachTypedLink
     , module Network.AWS.CloudDirectory.DetachTypedLink
 
-    -- ** ListFacetNames
+    -- ** ListFacetNames (Paginated)
     , module Network.AWS.CloudDirectory.ListFacetNames
 
     -- ** UntagResource
@@ -305,7 +317,7 @@ module Network.AWS.CloudDirectory
     -- ** AttachToIndex
     , module Network.AWS.CloudDirectory.AttachToIndex
 
-    -- ** ListObjectPolicies
+    -- ** ListObjectPolicies (Paginated)
     , module Network.AWS.CloudDirectory.ListObjectPolicies
 
     -- * Types
@@ -932,6 +944,7 @@ import Network.AWS.CloudDirectory.DetachPolicy
 import Network.AWS.CloudDirectory.DetachTypedLink
 import Network.AWS.CloudDirectory.DisableDirectory
 import Network.AWS.CloudDirectory.EnableDirectory
+import Network.AWS.CloudDirectory.GetAppliedSchemaVersion
 import Network.AWS.CloudDirectory.GetDirectory
 import Network.AWS.CloudDirectory.GetFacet
 import Network.AWS.CloudDirectory.GetObjectInformation
@@ -967,6 +980,8 @@ import Network.AWS.CloudDirectory.UpdateFacet
 import Network.AWS.CloudDirectory.UpdateObjectAttributes
 import Network.AWS.CloudDirectory.UpdateSchema
 import Network.AWS.CloudDirectory.UpdateTypedLinkFacet
+import Network.AWS.CloudDirectory.UpgradeAppliedSchema
+import Network.AWS.CloudDirectory.UpgradePublishedSchema
 import Network.AWS.CloudDirectory.Waiters
 
 {- $errors

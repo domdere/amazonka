@@ -21,6 +21,8 @@
 -- Returns the metadata for one service or a list of the metadata for all services. Use this without a service code to get the service codes for all services. Use it with a service code, such as @AmazonEC2@ , to get information specific to that service, such as the attribute names available for that service. For example, some of the attribute names available for EC2 are @volumeType@ , @maxIopsVolume@ , @operation@ , @locationType@ , and @instanceCapacity10xlarge@ .
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Pricing.DescribeServices
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.Pricing.DescribeServices
     ) where
 
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Pricing.Types
 import Network.AWS.Pricing.Types.Product
@@ -95,6 +98,13 @@ dsServiceCode = lens _dsServiceCode (\ s a -> s{_dsServiceCode = a});
 -- | The maximum number of results that you want returned in the response.
 dsMaxResults :: Lens' DescribeServices (Maybe Natural)
 dsMaxResults = lens _dsMaxResults (\ s a -> s{_dsMaxResults = a}) . mapping _Nat;
+
+instance AWSPager DescribeServices where
+        page rq rs
+          | stop (rs ^. dsrsNextToken) = Nothing
+          | stop (rs ^. dsrsServices) = Nothing
+          | otherwise =
+            Just $ rq & dsNextToken .~ rs ^. dsrsNextToken
 
 instance AWSRequest DescribeServices where
         type Rs DescribeServices = DescribeServicesResponse

@@ -50,7 +50,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'batchGetOnPremisesInstances' smart constructor.
 newtype BatchGetOnPremisesInstances = BatchGetOnPremisesInstances'
-  { _bgopiInstanceNames :: Maybe [Text]
+  { _bgopiInstanceNames :: [Text]
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -62,12 +62,12 @@ newtype BatchGetOnPremisesInstances = BatchGetOnPremisesInstances'
 batchGetOnPremisesInstances
     :: BatchGetOnPremisesInstances
 batchGetOnPremisesInstances =
-  BatchGetOnPremisesInstances' {_bgopiInstanceNames = Nothing}
+  BatchGetOnPremisesInstances' {_bgopiInstanceNames = mempty}
 
 
 -- | The names of the on-premises instances about which to get information.
 bgopiInstanceNames :: Lens' BatchGetOnPremisesInstances [Text]
-bgopiInstanceNames = lens _bgopiInstanceNames (\ s a -> s{_bgopiInstanceNames = a}) . _Default . _Coerce;
+bgopiInstanceNames = lens _bgopiInstanceNames (\ s a -> s{_bgopiInstanceNames = a}) . _Coerce;
 
 instance AWSRequest BatchGetOnPremisesInstances where
         type Rs BatchGetOnPremisesInstances =
@@ -98,7 +98,7 @@ instance ToJSON BatchGetOnPremisesInstances where
         toJSON BatchGetOnPremisesInstances'{..}
           = object
               (catMaybes
-                 [("instanceNames" .=) <$> _bgopiInstanceNames])
+                 [Just ("instanceNames" .= _bgopiInstanceNames)])
 
 instance ToPath BatchGetOnPremisesInstances where
         toPath = const "/"

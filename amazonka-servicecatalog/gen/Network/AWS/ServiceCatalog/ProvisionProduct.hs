@@ -18,10 +18,12 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Requests a /provision/ of a specified product. A /provisioned product/ is a resourced instance for a product. For example, provisioning a CloudFormation-template-backed product results in launching a CloudFormation stack and all the underlying resources that come with it.
+-- Provisions the specified product.
 --
 --
--- You can check the status of this request using the 'DescribeRecord' operation. The error "Parameter validation failed: Missing required parameter in Tags[/N/ ]:/Value/ " indicates that your request contains a tag which has a tag key but no corresponding tag value (value is empty or null). Your call may have included values returned from a @DescribeProvisioningParameters@ call that resulted in a TagOption key with an empty list. This happens when TagOption keys are in conflict. For more information, see 'DescribeProvisioningParameters' .
+-- A provisioned product is a resourced instance of a product. For example, provisioning a product based on a CloudFormation template launches a CloudFormation stack and its underlying resources. You can check the status of this request using 'DescribeRecord' .
+--
+-- If the request contains a tag key with an empty list of values, there is a tag conflict for that key. Do not include conflicted keys as tags, or this will cause the error "Parameter validation failed: Missing required parameter in Tags[/N/ ]:/Value/ ".
 --
 module Network.AWS.ServiceCatalog.ProvisionProduct
     (
@@ -76,17 +78,17 @@ data ProvisionProduct = ProvisionProduct'
 --
 -- * 'ppAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'ppPathId' - The identifier of the path for this product's provisioning. This value is optional if the product has a default path, and is required if there is more than one path for the specified product.
+-- * 'ppPathId' - The path identifier of the product. This value is optional if the product has a default path, and required if the product has more than one path. To list the paths for a product, use 'ListLaunchPaths' .
 --
 -- * 'ppProvisioningParameters' - Parameters specified by the administrator that are required for provisioning the product.
 --
--- * 'ppTags' - A list of tags to use as provisioning options.
+-- * 'ppTags' - The tags to use as provisioning options.
 --
 -- * 'ppProductId' - The product identifier.
 --
--- * 'ppProvisioningArtifactId' - The provisioning artifact identifier for this product. This is sometimes referred to as the product version.
+-- * 'ppProvisioningArtifactId' - The identifier of the provisioning artifact.
 --
--- * 'ppProvisionedProductName' - A user-friendly name to identify the ProvisionedProduct object. This value must be unique for the AWS account and cannot be updated after the product is provisioned.
+-- * 'ppProvisionedProductName' - A user-friendly name for the provisioned product. This value must be unique for the AWS account and cannot be updated after the product is provisioned.
 --
 -- * 'ppProvisionToken' - An idempotency token that uniquely identifies the provisioning request.
 provisionProduct
@@ -117,7 +119,7 @@ ppNotificationARNs = lens _ppNotificationARNs (\ s a -> s{_ppNotificationARNs = 
 ppAcceptLanguage :: Lens' ProvisionProduct (Maybe Text)
 ppAcceptLanguage = lens _ppAcceptLanguage (\ s a -> s{_ppAcceptLanguage = a});
 
--- | The identifier of the path for this product's provisioning. This value is optional if the product has a default path, and is required if there is more than one path for the specified product.
+-- | The path identifier of the product. This value is optional if the product has a default path, and required if the product has more than one path. To list the paths for a product, use 'ListLaunchPaths' .
 ppPathId :: Lens' ProvisionProduct (Maybe Text)
 ppPathId = lens _ppPathId (\ s a -> s{_ppPathId = a});
 
@@ -125,7 +127,7 @@ ppPathId = lens _ppPathId (\ s a -> s{_ppPathId = a});
 ppProvisioningParameters :: Lens' ProvisionProduct [ProvisioningParameter]
 ppProvisioningParameters = lens _ppProvisioningParameters (\ s a -> s{_ppProvisioningParameters = a}) . _Default . _Coerce;
 
--- | A list of tags to use as provisioning options.
+-- | The tags to use as provisioning options.
 ppTags :: Lens' ProvisionProduct [Tag]
 ppTags = lens _ppTags (\ s a -> s{_ppTags = a}) . _Default . _Coerce;
 
@@ -133,11 +135,11 @@ ppTags = lens _ppTags (\ s a -> s{_ppTags = a}) . _Default . _Coerce;
 ppProductId :: Lens' ProvisionProduct Text
 ppProductId = lens _ppProductId (\ s a -> s{_ppProductId = a});
 
--- | The provisioning artifact identifier for this product. This is sometimes referred to as the product version.
+-- | The identifier of the provisioning artifact.
 ppProvisioningArtifactId :: Lens' ProvisionProduct Text
 ppProvisioningArtifactId = lens _ppProvisioningArtifactId (\ s a -> s{_ppProvisioningArtifactId = a});
 
--- | A user-friendly name to identify the ProvisionedProduct object. This value must be unique for the AWS account and cannot be updated after the product is provisioned.
+-- | A user-friendly name for the provisioned product. This value must be unique for the AWS account and cannot be updated after the product is provisioned.
 ppProvisionedProductName :: Lens' ProvisionProduct Text
 ppProvisionedProductName = lens _ppProvisionedProductName (\ s a -> s{_ppProvisionedProductName = a});
 
@@ -204,7 +206,7 @@ data ProvisionProductResponse = ProvisionProductResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'pprsRecordDetail' - The detailed result of the 'ProvisionProduct' request, containing the inputs made to that request, the current state of the request, a pointer to the ProvisionedProduct object of the request, and a list of any errors that the request encountered.
+-- * 'pprsRecordDetail' - Information about the result of 'ProvisionProduct' .
 --
 -- * 'pprsResponseStatus' - -- | The response status code.
 provisionProductResponse
@@ -215,7 +217,7 @@ provisionProductResponse pResponseStatus_ =
   {_pprsRecordDetail = Nothing, _pprsResponseStatus = pResponseStatus_}
 
 
--- | The detailed result of the 'ProvisionProduct' request, containing the inputs made to that request, the current state of the request, a pointer to the ProvisionedProduct object of the request, and a list of any errors that the request encountered.
+-- | Information about the result of 'ProvisionProduct' .
 pprsRecordDetail :: Lens' ProvisionProductResponse (Maybe RecordDetail)
 pprsRecordDetail = lens _pprsRecordDetail (\ s a -> s{_pprsRecordDetail = a});
 

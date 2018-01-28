@@ -53,7 +53,7 @@ module Network.AWS.LexModels
     -- ** DeleteIntentVersion
     , module Network.AWS.LexModels.DeleteIntentVersion
 
-    -- ** GetBotAliases
+    -- ** GetBotAliases (Paginated)
     , module Network.AWS.LexModels.GetBotAliases
 
     -- ** DeleteBotChannelAssociation
@@ -71,7 +71,7 @@ module Network.AWS.LexModels
     -- ** DeleteIntent
     , module Network.AWS.LexModels.DeleteIntent
 
-    -- ** GetBuiltinIntents
+    -- ** GetBuiltinIntents (Paginated)
     , module Network.AWS.LexModels.GetBuiltinIntents
 
     -- ** PutBot
@@ -80,7 +80,7 @@ module Network.AWS.LexModels
     -- ** DeleteBot
     , module Network.AWS.LexModels.DeleteBot
 
-    -- ** GetIntentVersions
+    -- ** GetIntentVersions (Paginated)
     , module Network.AWS.LexModels.GetIntentVersions
 
     -- ** GetBuiltinIntent
@@ -89,22 +89,22 @@ module Network.AWS.LexModels
     -- ** PutBotAlias
     , module Network.AWS.LexModels.PutBotAlias
 
-    -- ** GetBotVersions
+    -- ** GetBotVersions (Paginated)
     , module Network.AWS.LexModels.GetBotVersions
 
-    -- ** GetBotChannelAssociations
+    -- ** GetBotChannelAssociations (Paginated)
     , module Network.AWS.LexModels.GetBotChannelAssociations
 
     -- ** DeleteBotAlias
     , module Network.AWS.LexModels.DeleteBotAlias
 
-    -- ** GetSlotTypes
+    -- ** GetSlotTypes (Paginated)
     , module Network.AWS.LexModels.GetSlotTypes
 
     -- ** DeleteUtterances
     , module Network.AWS.LexModels.DeleteUtterances
 
-    -- ** GetBots
+    -- ** GetBots (Paginated)
     , module Network.AWS.LexModels.GetBots
 
     -- ** GetBot
@@ -137,22 +137,25 @@ module Network.AWS.LexModels
     -- ** PutSlotType
     , module Network.AWS.LexModels.PutSlotType
 
-    -- ** GetBuiltinSlotTypes
+    -- ** GetBuiltinSlotTypes (Paginated)
     , module Network.AWS.LexModels.GetBuiltinSlotTypes
 
     -- ** GetUtterancesView
     , module Network.AWS.LexModels.GetUtterancesView
 
-    -- ** GetSlotTypeVersions
+    -- ** GetSlotTypeVersions (Paginated)
     , module Network.AWS.LexModels.GetSlotTypeVersions
 
-    -- ** GetIntents
+    -- ** GetIntents (Paginated)
     , module Network.AWS.LexModels.GetIntents
 
     -- ** GetBotAlias
     , module Network.AWS.LexModels.GetBotAlias
 
     -- * Types
+
+    -- ** ChannelStatus
+    , ChannelStatus (..)
 
     -- ** ChannelType
     , ChannelType (..)
@@ -204,6 +207,8 @@ module Network.AWS.LexModels
     -- ** BotChannelAssociation
     , BotChannelAssociation
     , botChannelAssociation
+    , bcaFailureReason
+    , bcaStatus
     , bcaBotAlias
     , bcaBotName
     , bcaBotConfiguration

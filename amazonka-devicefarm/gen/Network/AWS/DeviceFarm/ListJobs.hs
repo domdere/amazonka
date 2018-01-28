@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Gets information about jobs.
+-- Gets information about jobs for a given test run.
 --
 --
 --
@@ -66,7 +66,7 @@ data ListJobs = ListJobs'
 --
 -- * 'ljNextToken' - An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.
 --
--- * 'ljArn' - The jobs' ARNs.
+-- * 'ljArn' - The run's Amazon Resource Name (ARN).
 listJobs
     :: Text -- ^ 'ljArn'
     -> ListJobs
@@ -77,7 +77,7 @@ listJobs pArn_ = ListJobs' {_ljNextToken = Nothing, _ljArn = pArn_}
 ljNextToken :: Lens' ListJobs (Maybe Text)
 ljNextToken = lens _ljNextToken (\ s a -> s{_ljNextToken = a});
 
--- | The jobs' ARNs.
+-- | The run's Amazon Resource Name (ARN).
 ljArn :: Lens' ListJobs Text
 ljArn = lens _ljArn (\ s a -> s{_ljArn = a});
 

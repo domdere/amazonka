@@ -21,9 +21,9 @@
 -- Begins the export of discovered data to an S3 bucket.
 --
 --
--- If you specify @agentId@ in a filter, the task exports up to 72 hours of detailed data collected by the identified Application Discovery Agent, including network, process, and performance details. A time range for exported agent data may be set by using @startTime@ and @endTime@ . Export of detailed agent data is limited to five concurrently running exports.
+-- If you specify @agentIds@ in a filter, the task exports up to 72 hours of detailed data collected by the identified Application Discovery Agent, including network, process, and performance details. A time range for exported agent data may be set by using @startTime@ and @endTime@ . Export of detailed agent data is limited to five concurrently running exports.
 --
--- If you do not include an @agentId@ filter, summary data is exported that includes both AWS Agentless Discovery Connector data and summary data from AWS Discovery Agents. Export of summary data is limited to two exports per day.
+-- If you do not include an @agentIds@ filter, summary data is exported that includes both AWS Agentless Discovery Connector data and summary data from AWS Discovery Agents. Export of summary data is limited to two exports per day.
 --
 module Network.AWS.Discovery.StartExportTask
     (
@@ -64,7 +64,7 @@ data StartExportTask = StartExportTask'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'setExportDataFormat' - The file format for the returned export data. Default value is @CSV@ .
+-- * 'setExportDataFormat' - The file format for the returned export data. Default value is @CSV@ . __Note:__ /The/ @GRAPHML@ /option has been deprecated./
 --
 -- * 'setStartTime' - The start timestamp for exported data from the single Application Discovery Agent selected in the filters. If no value is specified, data is exported starting from the first data collected by the agent.
 --
@@ -82,7 +82,7 @@ startExportTask =
   }
 
 
--- | The file format for the returned export data. Default value is @CSV@ .
+-- | The file format for the returned export data. Default value is @CSV@ . __Note:__ /The/ @GRAPHML@ /option has been deprecated./
 setExportDataFormat :: Lens' StartExportTask [ExportDataFormat]
 setExportDataFormat = lens _setExportDataFormat (\ s a -> s{_setExportDataFormat = a}) . _Default . _Coerce;
 

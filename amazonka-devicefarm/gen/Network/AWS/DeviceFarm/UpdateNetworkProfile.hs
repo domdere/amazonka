@@ -98,7 +98,7 @@ data UpdateNetworkProfile = UpdateNetworkProfile'
 --
 -- * 'unpDownlinkBandwidthBits' - The data throughput rate in bits per second, as an integer from 0 to 104857600.
 --
--- * 'unpArn' - The Amazon Resource Name (ARN) of the project that you wish to update network profile settings.
+-- * 'unpArn' - The Amazon Resource Name (ARN) of the project for which you want to update network profile settings.
 updateNetworkProfile
     :: Text -- ^ 'unpArn'
     -> UpdateNetworkProfile
@@ -163,7 +163,7 @@ unpDownlinkDelayMs = lens _unpDownlinkDelayMs (\ s a -> s{_unpDownlinkDelayMs = 
 unpDownlinkBandwidthBits :: Lens' UpdateNetworkProfile (Maybe Integer)
 unpDownlinkBandwidthBits = lens _unpDownlinkBandwidthBits (\ s a -> s{_unpDownlinkBandwidthBits = a});
 
--- | The Amazon Resource Name (ARN) of the project that you wish to update network profile settings.
+-- | The Amazon Resource Name (ARN) of the project for which you want to update network profile settings.
 unpArn :: Lens' UpdateNetworkProfile Text
 unpArn = lens _unpArn (\ s a -> s{_unpArn = a});
 

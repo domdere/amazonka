@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Returns an endpoint for the Amazon EC2 Container Service agent to poll for updates.
+-- Returns an endpoint for the Amazon ECS agent to poll for updates.
 --
 --
 module Network.AWS.ECS.DiscoverPollEndpoint
@@ -59,7 +59,7 @@ data DiscoverPollEndpoint = DiscoverPollEndpoint'
 --
 -- * 'dpeCluster' - The short name or full Amazon Resource Name (ARN) of the cluster that the container instance belongs to.
 --
--- * 'dpeContainerInstance' - The container instance ID or full Amazon Resource Name (ARN) of the container instance. The ARN contains the @arn:aws:ecs@ namespace, followed by the region of the container instance, the AWS account ID of the container instance owner, the @container-instance@ namespace, and then the container instance ID. For example, @arn:aws:ecs:/region/ :/aws_account_id/ :container-instance//container_instance_ID/ @ .
+-- * 'dpeContainerInstance' - The container instance ID or full ARN of the container instance. The ARN contains the @arn:aws:ecs@ namespace, followed by the region of the container instance, the AWS account ID of the container instance owner, the @container-instance@ namespace, and then the container instance ID. For example, @arn:aws:ecs:/region/ :/aws_account_id/ :container-instance//container_instance_ID/ @ .
 discoverPollEndpoint
     :: DiscoverPollEndpoint
 discoverPollEndpoint =
@@ -70,7 +70,7 @@ discoverPollEndpoint =
 dpeCluster :: Lens' DiscoverPollEndpoint (Maybe Text)
 dpeCluster = lens _dpeCluster (\ s a -> s{_dpeCluster = a});
 
--- | The container instance ID or full Amazon Resource Name (ARN) of the container instance. The ARN contains the @arn:aws:ecs@ namespace, followed by the region of the container instance, the AWS account ID of the container instance owner, the @container-instance@ namespace, and then the container instance ID. For example, @arn:aws:ecs:/region/ :/aws_account_id/ :container-instance//container_instance_ID/ @ .
+-- | The container instance ID or full ARN of the container instance. The ARN contains the @arn:aws:ecs@ namespace, followed by the region of the container instance, the AWS account ID of the container instance owner, the @container-instance@ namespace, and then the container instance ID. For example, @arn:aws:ecs:/region/ :/aws_account_id/ :container-instance//container_instance_ID/ @ .
 dpeContainerInstance :: Lens' DiscoverPollEndpoint (Maybe Text)
 dpeContainerInstance = lens _dpeContainerInstance (\ s a -> s{_dpeContainerInstance = a});
 

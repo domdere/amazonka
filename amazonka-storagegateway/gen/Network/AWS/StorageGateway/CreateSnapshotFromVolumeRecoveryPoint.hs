@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Initiates a snapshot of a gateway from a volume recovery point. This operation is only supported in the cached volume gateway architecture.
+-- Initiates a snapshot of a gateway from a volume recovery point. This operation is only supported in the cached volume gateway type.
 --
 --
 -- A volume recovery point is a point in time at which all data of the volume is consistent and from which you can create a snapshot. To get a list of volume recovery point for cached volume gateway, use 'ListVolumeRecoveryPoints' .

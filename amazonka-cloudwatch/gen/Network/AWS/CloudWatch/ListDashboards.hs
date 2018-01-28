@@ -21,6 +21,8 @@
 -- Returns a list of the dashboards for your account. If you include @DashboardNamePrefix@ , only those dashboards with names starting with the prefix are listed. Otherwise, all dashboards in your account are listed.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudWatch.ListDashboards
     (
     -- * Creating a Request
@@ -42,6 +44,7 @@ module Network.AWS.CloudWatch.ListDashboards
 import Network.AWS.CloudWatch.Types
 import Network.AWS.CloudWatch.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -73,6 +76,13 @@ ldDashboardNamePrefix = lens _ldDashboardNamePrefix (\ s a -> s{_ldDashboardName
 -- | The token returned by a previous call to indicate that there is more data available.
 ldNextToken :: Lens' ListDashboards (Maybe Text)
 ldNextToken = lens _ldNextToken (\ s a -> s{_ldNextToken = a});
+
+instance AWSPager ListDashboards where
+        page rq rs
+          | stop (rs ^. ldrsNextToken) = Nothing
+          | stop (rs ^. ldrsDashboardEntries) = Nothing
+          | otherwise =
+            Just $ rq & ldNextToken .~ rs ^. ldrsNextToken
 
 instance AWSRequest ListDashboards where
         type Rs ListDashboards = ListDashboardsResponse

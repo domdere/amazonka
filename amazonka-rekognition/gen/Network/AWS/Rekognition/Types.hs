@@ -17,6 +17,7 @@ module Network.AWS.Rekognition.Types
 
     -- * Errors
     , _AccessDeniedException
+    , _VideoTooLargeException
     , _InvalidParameterException
     , _InvalidImageFormatException
     , _ResourceAlreadyExistsException
@@ -25,23 +26,53 @@ module Network.AWS.Rekognition.Types
     , _ImageTooLargeException
     , _ThrottlingException
     , _InternalServerError
+    , _IdempotentParameterMismatchException
     , _ResourceNotFoundException
     , _InvalidPaginationTokenException
+    , _LimitExceededException
+    , _ResourceInUseException
 
     -- * Attribute
     , Attribute (..)
 
+    -- * CelebrityRecognitionSortBy
+    , CelebrityRecognitionSortBy (..)
+
+    -- * ContentModerationSortBy
+    , ContentModerationSortBy (..)
+
     -- * EmotionName
     , EmotionName (..)
 
+    -- * FaceAttributes
+    , FaceAttributes (..)
+
+    -- * FaceSearchSortBy
+    , FaceSearchSortBy (..)
+
     -- * GenderType
     , GenderType (..)
+
+    -- * LabelDetectionSortBy
+    , LabelDetectionSortBy (..)
 
     -- * LandmarkType
     , LandmarkType (..)
 
     -- * OrientationCorrection
     , OrientationCorrection (..)
+
+    -- * PersonTrackingSortBy
+    , PersonTrackingSortBy (..)
+
+    -- * StreamProcessorStatus
+    , StreamProcessorStatus (..)
+
+    -- * TextTypes
+    , TextTypes (..)
+
+    -- * VideoJobStatus
+    , VideoJobStatus (..)
 
     -- * AgeRange
     , AgeRange
@@ -72,6 +103,22 @@ module Network.AWS.Rekognition.Types
     , cId
     , cFace
 
+    -- * CelebrityDetail
+    , CelebrityDetail
+    , celebrityDetail
+    , cdBoundingBox
+    , cdURLs
+    , cdConfidence
+    , cdName
+    , cdId
+    , cdFace
+
+    -- * CelebrityRecognition
+    , CelebrityRecognition
+    , celebrityRecognition
+    , crCelebrity
+    , crTimestamp
+
     -- * CompareFacesMatch
     , CompareFacesMatch
     , compareFacesMatch
@@ -92,6 +139,12 @@ module Network.AWS.Rekognition.Types
     , comparedSourceImageFace
     , csifBoundingBox
     , csifConfidence
+
+    -- * ContentModerationDetection
+    , ContentModerationDetection
+    , contentModerationDetection
+    , cmdModerationLabel
+    , cmdTimestamp
 
     -- * Emotion
     , Emotion
@@ -139,6 +192,12 @@ module Network.AWS.Rekognition.Types
     , fdSmile
     , fdLandmarks
 
+    -- * FaceDetection
+    , FaceDetection
+    , faceDetection
+    , fdTimestamp
+    , fdFace
+
     -- * FaceMatch
     , FaceMatch
     , faceMatch
@@ -151,11 +210,23 @@ module Network.AWS.Rekognition.Types
     , frFaceDetail
     , frFace
 
+    -- * FaceSearchSettings
+    , FaceSearchSettings
+    , faceSearchSettings
+    , fssFaceMatchThreshold
+    , fssCollectionId
+
     -- * Gender
     , Gender
     , gender
     , gValue
     , gConfidence
+
+    -- * Geometry
+    , Geometry
+    , geometry
+    , gBoundingBox
+    , gPolygon
 
     -- * Image
     , Image
@@ -169,11 +240,27 @@ module Network.AWS.Rekognition.Types
     , iqSharpness
     , iqBrightness
 
+    -- * KinesisDataStream
+    , KinesisDataStream
+    , kinesisDataStream
+    , kdsARN
+
+    -- * KinesisVideoStream
+    , KinesisVideoStream
+    , kinesisVideoStream
+    , kvsARN
+
     -- * Label
     , Label
     , label
     , lConfidence
     , lName
+
+    -- * LabelDetection
+    , LabelDetection
+    , labelDetection
+    , ldLabel
+    , ldTimestamp
 
     -- * Landmark
     , Landmark
@@ -201,6 +288,38 @@ module Network.AWS.Rekognition.Types
     , mValue
     , mConfidence
 
+    -- * NotificationChannel
+    , NotificationChannel
+    , notificationChannel
+    , ncSNSTopicARN
+    , ncRoleARN
+
+    -- * PersonDetail
+    , PersonDetail
+    , personDetail
+    , pdBoundingBox
+    , pdIndex
+    , pdFace
+
+    -- * PersonDetection
+    , PersonDetection
+    , personDetection
+    , pdPerson
+    , pdTimestamp
+
+    -- * PersonMatch
+    , PersonMatch
+    , personMatch
+    , pmFaceMatches
+    , pmPerson
+    , pmTimestamp
+
+    -- * Point
+    , Point
+    , point
+    , pX
+    , pY
+
     -- * Pose
     , Pose
     , pose
@@ -221,11 +340,57 @@ module Network.AWS.Rekognition.Types
     , smiValue
     , smiConfidence
 
+    -- * StreamProcessor
+    , StreamProcessor
+    , streamProcessor
+    , spStatus
+    , spName
+
+    -- * StreamProcessorInput
+    , StreamProcessorInput
+    , streamProcessorInput
+    , spiKinesisVideoStream
+
+    -- * StreamProcessorOutput
+    , StreamProcessorOutput
+    , streamProcessorOutput
+    , spoKinesisDataStream
+
+    -- * StreamProcessorSettings
+    , StreamProcessorSettings
+    , streamProcessorSettings
+    , spsFaceSearch
+
     -- * Sunglasses
     , Sunglasses
     , sunglasses
     , sValue
     , sConfidence
+
+    -- * TextDetection
+    , TextDetection
+    , textDetection
+    , tdDetectedText
+    , tdConfidence
+    , tdGeometry
+    , tdId
+    , tdType
+    , tdParentId
+
+    -- * Video
+    , Video
+    , video
+    , vS3Object
+
+    -- * VideoMetadata
+    , VideoMetadata
+    , videoMetadata
+    , vmFrameRate
+    , vmFormat
+    , vmCodec
+    , vmFrameHeight
+    , vmDurationMillis
+    , vmFrameWidth
     ) where
 
 import Network.AWS.Lens
@@ -276,6 +441,14 @@ rekognition =
 --
 _AccessDeniedException :: AsError a => Getting (First ServiceError) a ServiceError
 _AccessDeniedException = _MatchServiceError rekognition "AccessDeniedException"
+
+
+-- | The file size or duration of the supplied media is too large. The maximum file size is 8GB. The maximum duration is 2 hours.
+--
+--
+_VideoTooLargeException :: AsError a => Getting (First ServiceError) a ServiceError
+_VideoTooLargeException =
+  _MatchServiceError rekognition "VideoTooLargeException"
 
 
 -- | Input parameter violated a constraint. Validate your parameter before calling the API operation again.
@@ -340,7 +513,15 @@ _InternalServerError :: AsError a => Getting (First ServiceError) a ServiceError
 _InternalServerError = _MatchServiceError rekognition "InternalServerError"
 
 
--- | Collection specified in the request is not found.
+-- | A @ClientRequestToken@ input parameter was reused with an operation, but at least one of the other input parameters is different from the previous call to the operation.
+--
+--
+_IdempotentParameterMismatchException :: AsError a => Getting (First ServiceError) a ServiceError
+_IdempotentParameterMismatchException =
+  _MatchServiceError rekognition "IdempotentParameterMismatchException"
+
+
+-- | The collection specified in the request cannot be found.
 --
 --
 _ResourceNotFoundException :: AsError a => Getting (First ServiceError) a ServiceError
@@ -354,4 +535,20 @@ _ResourceNotFoundException =
 _InvalidPaginationTokenException :: AsError a => Getting (First ServiceError) a ServiceError
 _InvalidPaginationTokenException =
   _MatchServiceError rekognition "InvalidPaginationTokenException"
+
+
+-- |
+--
+--
+_LimitExceededException :: AsError a => Getting (First ServiceError) a ServiceError
+_LimitExceededException =
+  _MatchServiceError rekognition "LimitExceededException"
+
+
+-- |
+--
+--
+_ResourceInUseException :: AsError a => Getting (First ServiceError) a ServiceError
+_ResourceInUseException =
+  _MatchServiceError rekognition "ResourceInUseException"
 

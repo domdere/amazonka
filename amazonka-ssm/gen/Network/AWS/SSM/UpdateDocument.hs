@@ -27,6 +27,8 @@ module Network.AWS.SSM.UpdateDocument
       updateDocument
     , UpdateDocument
     -- * Request Lenses
+    , udTargetType
+    , udDocumentFormat
     , udDocumentVersion
     , udContent
     , udName
@@ -48,7 +50,9 @@ import Network.AWS.SSM.Types.Product
 
 -- | /See:/ 'updateDocument' smart constructor.
 data UpdateDocument = UpdateDocument'
-  { _udDocumentVersion :: !(Maybe Text)
+  { _udTargetType      :: !(Maybe Text)
+  , _udDocumentFormat  :: !(Maybe DocumentFormat)
+  , _udDocumentVersion :: !(Maybe Text)
   , _udContent         :: !Text
   , _udName            :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -57,6 +61,10 @@ data UpdateDocument = UpdateDocument'
 -- | Creates a value of 'UpdateDocument' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'udTargetType' - Specify a new target type for the document.
+--
+-- * 'udDocumentFormat' - Specify the document format for the new document version. Systems Manager supports JSON and YAML documents. JSON is the default format.
 --
 -- * 'udDocumentVersion' - The version of the document that you want to update.
 --
@@ -69,8 +77,21 @@ updateDocument
     -> UpdateDocument
 updateDocument pContent_ pName_ =
   UpdateDocument'
-  {_udDocumentVersion = Nothing, _udContent = pContent_, _udName = pName_}
+  { _udTargetType = Nothing
+  , _udDocumentFormat = Nothing
+  , _udDocumentVersion = Nothing
+  , _udContent = pContent_
+  , _udName = pName_
+  }
 
+
+-- | Specify a new target type for the document.
+udTargetType :: Lens' UpdateDocument (Maybe Text)
+udTargetType = lens _udTargetType (\ s a -> s{_udTargetType = a});
+
+-- | Specify the document format for the new document version. Systems Manager supports JSON and YAML documents. JSON is the default format.
+udDocumentFormat :: Lens' UpdateDocument (Maybe DocumentFormat)
+udDocumentFormat = lens _udDocumentFormat (\ s a -> s{_udDocumentFormat = a});
 
 -- | The version of the document that you want to update.
 udDocumentVersion :: Lens' UpdateDocument (Maybe Text)
@@ -111,7 +132,9 @@ instance ToJSON UpdateDocument where
         toJSON UpdateDocument'{..}
           = object
               (catMaybes
-                 [("DocumentVersion" .=) <$> _udDocumentVersion,
+                 [("TargetType" .=) <$> _udTargetType,
+                  ("DocumentFormat" .=) <$> _udDocumentFormat,
+                  ("DocumentVersion" .=) <$> _udDocumentVersion,
                   Just ("Content" .= _udContent),
                   Just ("Name" .= _udName)])
 

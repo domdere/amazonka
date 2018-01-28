@@ -21,6 +21,8 @@
 -- Lists all available Amazon Inspector rules packages.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Inspector.ListRulesPackages
     (
     -- * Creating a Request
@@ -42,6 +44,7 @@ module Network.AWS.Inspector.ListRulesPackages
 import Network.AWS.Inspector.Types
 import Network.AWS.Inspector.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -73,6 +76,13 @@ lrpNextToken = lens _lrpNextToken (\ s a -> s{_lrpNextToken = a});
 -- | You can use this parameter to indicate the maximum number of items you want in the response. The default value is 10. The maximum value is 500.
 lrpMaxResults :: Lens' ListRulesPackages (Maybe Int)
 lrpMaxResults = lens _lrpMaxResults (\ s a -> s{_lrpMaxResults = a});
+
+instance AWSPager ListRulesPackages where
+        page rq rs
+          | stop (rs ^. lrprsNextToken) = Nothing
+          | stop (rs ^. lrprsRulesPackageARNs) = Nothing
+          | otherwise =
+            Just $ rq & lrpNextToken .~ rs ^. lrprsNextToken
 
 instance AWSRequest ListRulesPackages where
         type Rs ListRulesPackages = ListRulesPackagesResponse

@@ -31,6 +31,7 @@ module Network.AWS.CognitoIdentityProvider.UpdateUserPool
     , uupVerificationMessageTemplate
     , uupEmailVerificationMessage
     , uupSmsAuthenticationMessage
+    , uupUserPoolAddOns
     , uupEmailVerificationSubject
     , uupEmailConfiguration
     , uupSmsVerificationMessage
@@ -67,6 +68,7 @@ data UpdateUserPool = UpdateUserPool'
   , _uupVerificationMessageTemplate :: !(Maybe VerificationMessageTemplateType)
   , _uupEmailVerificationMessage    :: !(Maybe Text)
   , _uupSmsAuthenticationMessage    :: !(Maybe Text)
+  , _uupUserPoolAddOns              :: !(Maybe UserPoolAddOnsType)
   , _uupEmailVerificationSubject    :: !(Maybe Text)
   , _uupEmailConfiguration          :: !(Maybe EmailConfigurationType)
   , _uupSmsVerificationMessage      :: !(Maybe Text)
@@ -92,6 +94,8 @@ data UpdateUserPool = UpdateUserPool'
 -- * 'uupEmailVerificationMessage' - The contents of the email verification message.
 --
 -- * 'uupSmsAuthenticationMessage' - The contents of the SMS authentication message.
+--
+-- * 'uupUserPoolAddOns' - Used to enable advanced security risk detection. Set the key @AdvancedSecurityMode@ to the value "AUDIT".
 --
 -- * 'uupEmailVerificationSubject' - The subject of the email verification message.
 --
@@ -123,6 +127,7 @@ updateUserPool pUserPoolId_ =
   , _uupVerificationMessageTemplate = Nothing
   , _uupEmailVerificationMessage = Nothing
   , _uupSmsAuthenticationMessage = Nothing
+  , _uupUserPoolAddOns = Nothing
   , _uupEmailVerificationSubject = Nothing
   , _uupEmailConfiguration = Nothing
   , _uupSmsVerificationMessage = Nothing
@@ -152,6 +157,10 @@ uupEmailVerificationMessage = lens _uupEmailVerificationMessage (\ s a -> s{_uup
 -- | The contents of the SMS authentication message.
 uupSmsAuthenticationMessage :: Lens' UpdateUserPool (Maybe Text)
 uupSmsAuthenticationMessage = lens _uupSmsAuthenticationMessage (\ s a -> s{_uupSmsAuthenticationMessage = a});
+
+-- | Used to enable advanced security risk detection. Set the key @AdvancedSecurityMode@ to the value "AUDIT".
+uupUserPoolAddOns :: Lens' UpdateUserPool (Maybe UserPoolAddOnsType)
+uupUserPoolAddOns = lens _uupUserPoolAddOns (\ s a -> s{_uupUserPoolAddOns = a});
 
 -- | The subject of the email verification message.
 uupEmailVerificationSubject :: Lens' UpdateUserPool (Maybe Text)
@@ -230,6 +239,7 @@ instance ToJSON UpdateUserPool where
                     _uupEmailVerificationMessage,
                   ("SmsAuthenticationMessage" .=) <$>
                     _uupSmsAuthenticationMessage,
+                  ("UserPoolAddOns" .=) <$> _uupUserPoolAddOns,
                   ("EmailVerificationSubject" .=) <$>
                     _uupEmailVerificationSubject,
                   ("EmailConfiguration" .=) <$> _uupEmailConfiguration,

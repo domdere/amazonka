@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Stops a batch of job runs for a given job.
+-- Stops one or more job runs for a specified Job.
 --
 --
 module Network.AWS.Glue.BatchStopJobRun
@@ -57,9 +57,9 @@ data BatchStopJobRun = BatchStopJobRun'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'bsjrJobName' - The name of the job whose job runs are to be stopped.
+-- * 'bsjrJobName' - The name of the Job in question.
 --
--- * 'bsjrJobRunIds' - A list of job run Ids of the given job to be stopped.
+-- * 'bsjrJobRunIds' - A list of the JobRunIds that should be stopped for that Job.
 batchStopJobRun
     :: Text -- ^ 'bsjrJobName'
     -> NonEmpty Text -- ^ 'bsjrJobRunIds'
@@ -69,11 +69,11 @@ batchStopJobRun pJobName_ pJobRunIds_ =
   {_bsjrJobName = pJobName_, _bsjrJobRunIds = _List1 # pJobRunIds_}
 
 
--- | The name of the job whose job runs are to be stopped.
+-- | The name of the Job in question.
 bsjrJobName :: Lens' BatchStopJobRun Text
 bsjrJobName = lens _bsjrJobName (\ s a -> s{_bsjrJobName = a});
 
--- | A list of job run Ids of the given job to be stopped.
+-- | A list of the JobRunIds that should be stopped for that Job.
 bsjrJobRunIds :: Lens' BatchStopJobRun (NonEmpty Text)
 bsjrJobRunIds = lens _bsjrJobRunIds (\ s a -> s{_bsjrJobRunIds = a}) . _List1;
 
@@ -126,9 +126,9 @@ data BatchStopJobRunResponse = BatchStopJobRunResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'bsjrrsSuccessfulSubmissions' - A list of job runs which are successfully submitted for stopping.
+-- * 'bsjrrsSuccessfulSubmissions' - A list of the JobRuns that were successfully submitted for stopping.
 --
--- * 'bsjrrsErrors' - A list containing the job run Ids and details of the error that occurred for each job run while submitting to stop.
+-- * 'bsjrrsErrors' - A list of the errors that were encountered in tryng to stop JobRuns, including the JobRunId for which each error was encountered and details about the error.
 --
 -- * 'bsjrrsResponseStatus' - -- | The response status code.
 batchStopJobRunResponse
@@ -142,11 +142,11 @@ batchStopJobRunResponse pResponseStatus_ =
   }
 
 
--- | A list of job runs which are successfully submitted for stopping.
+-- | A list of the JobRuns that were successfully submitted for stopping.
 bsjrrsSuccessfulSubmissions :: Lens' BatchStopJobRunResponse [BatchStopJobRunSuccessfulSubmission]
 bsjrrsSuccessfulSubmissions = lens _bsjrrsSuccessfulSubmissions (\ s a -> s{_bsjrrsSuccessfulSubmissions = a}) . _Default . _Coerce;
 
--- | A list containing the job run Ids and details of the error that occurred for each job run while submitting to stop.
+-- | A list of the errors that were encountered in tryng to stop JobRuns, including the JobRunId for which each error was encountered and details about the error.
 bsjrrsErrors :: Lens' BatchStopJobRunResponse [BatchStopJobRunError]
 bsjrrsErrors = lens _bsjrrsErrors (\ s a -> s{_bsjrrsErrors = a}) . _Default . _Coerce;
 

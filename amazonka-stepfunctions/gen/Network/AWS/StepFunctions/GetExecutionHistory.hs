@@ -18,8 +18,10 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Returns the history of the specified execution as a list of events. By default, the results are returned in ascending order of the @timeStamp@ of the events. Use the @reverseOrder@ parameter to get the latest events first. The results may be split into multiple pages. To retrieve subsequent pages, make the call again using the @nextToken@ returned by the previous call.
+-- Returns the history of the specified execution as a list of events. By default, the results are returned in ascending order of the @timeStamp@ of the events. Use the @reverseOrder@ parameter to get the latest events first.
 --
+--
+-- If a @nextToken@ is returned by a previous call, there are more results available. To retrieve the next page of results, make the call again using the returned token in @nextToken@ . Keep all other arguments unchanged.
 --
 --
 -- This operation returns paginated results.
@@ -66,9 +68,9 @@ data GetExecutionHistory = GetExecutionHistory'
 --
 -- * 'gehReverseOrder' - Lists events in descending order of their @timeStamp@ .
 --
--- * 'gehNextToken' - If a @nextToken@ was returned by a previous call, there are more results available. To retrieve the next page of results, make the call again using the returned token in @nextToken@ . Keep all other arguments unchanged. The configured @maxResults@ determines how many results can be returned in a single call.
+-- * 'gehNextToken' - If a @nextToken@ is returned by a previous call, there are more results available. To retrieve the next page of results, make the call again using the returned token in @nextToken@ . Keep all other arguments unchanged. The configured @maxResults@ determines how many results can be returned in a single call.
 --
--- * 'gehMaxResults' - The maximum number of results that will be returned per call. @nextToken@ can be used to obtain further pages of results. The default is 100 and the maximum allowed page size is 100. A value of 0 means to use the default. This is an upper limit only; the actual number of results returned per call may be fewer than the specified maximum.
+-- * 'gehMaxResults' - The maximum number of results that are returned per call. You can use @nextToken@ to obtain further pages of results. The default is 100 and the maximum allowed page size is 100. A value of 0 uses the default. This is only an upper limit. The actual number of results returned per call might be fewer than the specified maximum.
 --
 -- * 'gehExecutionARN' - The Amazon Resource Name (ARN) of the execution.
 getExecutionHistory
@@ -87,11 +89,11 @@ getExecutionHistory pExecutionARN_ =
 gehReverseOrder :: Lens' GetExecutionHistory (Maybe Bool)
 gehReverseOrder = lens _gehReverseOrder (\ s a -> s{_gehReverseOrder = a});
 
--- | If a @nextToken@ was returned by a previous call, there are more results available. To retrieve the next page of results, make the call again using the returned token in @nextToken@ . Keep all other arguments unchanged. The configured @maxResults@ determines how many results can be returned in a single call.
+-- | If a @nextToken@ is returned by a previous call, there are more results available. To retrieve the next page of results, make the call again using the returned token in @nextToken@ . Keep all other arguments unchanged. The configured @maxResults@ determines how many results can be returned in a single call.
 gehNextToken :: Lens' GetExecutionHistory (Maybe Text)
 gehNextToken = lens _gehNextToken (\ s a -> s{_gehNextToken = a});
 
--- | The maximum number of results that will be returned per call. @nextToken@ can be used to obtain further pages of results. The default is 100 and the maximum allowed page size is 100. A value of 0 means to use the default. This is an upper limit only; the actual number of results returned per call may be fewer than the specified maximum.
+-- | The maximum number of results that are returned per call. You can use @nextToken@ to obtain further pages of results. The default is 100 and the maximum allowed page size is 100. A value of 0 uses the default. This is only an upper limit. The actual number of results returned per call might be fewer than the specified maximum.
 gehMaxResults :: Lens' GetExecutionHistory (Maybe Natural)
 gehMaxResults = lens _gehMaxResults (\ s a -> s{_gehMaxResults = a}) . mapping _Nat;
 
@@ -158,7 +160,7 @@ data GetExecutionHistoryResponse = GetExecutionHistoryResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'gehrsNextToken' - If a @nextToken@ is returned, there are more results available. To retrieve the next page of results, make the call again using the returned token in @nextToken@ . Keep all other arguments unchanged. The configured @maxResults@ determines how many results can be returned in a single call.
+-- * 'gehrsNextToken' - If a @nextToken@ is returned by a previous call, there are more results available. To retrieve the next page of results, make the call again using the returned token in @nextToken@ . Keep all other arguments unchanged. The configured @maxResults@ determines how many results can be returned in a single call.
 --
 -- * 'gehrsResponseStatus' - -- | The response status code.
 --
@@ -174,7 +176,7 @@ getExecutionHistoryResponse pResponseStatus_ =
   }
 
 
--- | If a @nextToken@ is returned, there are more results available. To retrieve the next page of results, make the call again using the returned token in @nextToken@ . Keep all other arguments unchanged. The configured @maxResults@ determines how many results can be returned in a single call.
+-- | If a @nextToken@ is returned by a previous call, there are more results available. To retrieve the next page of results, make the call again using the returned token in @nextToken@ . Keep all other arguments unchanged. The configured @maxResults@ determines how many results can be returned in a single call.
 gehrsNextToken :: Lens' GetExecutionHistoryResponse (Maybe Text)
 gehrsNextToken = lens _gehrsNextToken (\ s a -> s{_gehrsNextToken = a});
 

@@ -21,6 +21,8 @@
 -- Returns a list of attribute values. Attibutes are similar to the details in a Price List API offer file. For a list of available attributes, see <http://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/reading-an-offer.html#pps-defs Offer File Definitions> in the <http://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/billing-what-is.html AWS Billing and Cost Management User Guide> .
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Pricing.GetAttributeValues
     (
     -- * Creating a Request
@@ -42,6 +44,7 @@ module Network.AWS.Pricing.GetAttributeValues
     ) where
 
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Pricing.Types
 import Network.AWS.Pricing.Types.Product
@@ -96,6 +99,13 @@ gavServiceCode = lens _gavServiceCode (\ s a -> s{_gavServiceCode = a});
 -- | The name of the attribute that you want to retrieve the values for, such as @volumeType@ .
 gavAttributeName :: Lens' GetAttributeValues Text
 gavAttributeName = lens _gavAttributeName (\ s a -> s{_gavAttributeName = a});
+
+instance AWSPager GetAttributeValues where
+        page rq rs
+          | stop (rs ^. gavrsNextToken) = Nothing
+          | stop (rs ^. gavrsAttributeValues) = Nothing
+          | otherwise =
+            Just $ rq & gavNextToken .~ rs ^. gavrsNextToken
 
 instance AWSRequest GetAttributeValues where
         type Rs GetAttributeValues =

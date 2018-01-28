@@ -34,6 +34,9 @@ import Test.Tasty
 --         , requestReloadTables $
 --             reloadTables
 --
+--         , requestStartReplicationTaskAssessment $
+--             startReplicationTaskAssessment
+--
 --         , requestCreateEndpoint $
 --             createEndpoint
 --
@@ -57,6 +60,9 @@ import Test.Tasty
 --
 --         , requestDeleteReplicationTask $
 --             deleteReplicationTask
+--
+--         , requestDescribeReplicationTaskAssessmentResults $
+--             describeReplicationTaskAssessmentResults
 --
 --         , requestTestConnection $
 --             testConnection
@@ -157,6 +163,9 @@ import Test.Tasty
 --         , responseReloadTables $
 --             reloadTablesResponse
 --
+--         , responseStartReplicationTaskAssessment $
+--             startReplicationTaskAssessmentResponse
+--
 --         , responseCreateEndpoint $
 --             createEndpointResponse
 --
@@ -180,6 +189,9 @@ import Test.Tasty
 --
 --         , responseDeleteReplicationTask $
 --             deleteReplicationTaskResponse
+--
+--         , responseDescribeReplicationTaskAssessmentResults $
+--             describeReplicationTaskAssessmentResultsResponse
 --
 --         , responseTestConnection $
 --             testConnectionResponse
@@ -286,6 +298,11 @@ requestReloadTables = req
     "ReloadTables"
     "fixture/ReloadTables.yaml"
 
+requestStartReplicationTaskAssessment :: StartReplicationTaskAssessment -> TestTree
+requestStartReplicationTaskAssessment = req
+    "StartReplicationTaskAssessment"
+    "fixture/StartReplicationTaskAssessment.yaml"
+
 requestCreateEndpoint :: CreateEndpoint -> TestTree
 requestCreateEndpoint = req
     "CreateEndpoint"
@@ -325,6 +342,11 @@ requestDeleteReplicationTask :: DeleteReplicationTask -> TestTree
 requestDeleteReplicationTask = req
     "DeleteReplicationTask"
     "fixture/DeleteReplicationTask.yaml"
+
+requestDescribeReplicationTaskAssessmentResults :: DescribeReplicationTaskAssessmentResults -> TestTree
+requestDescribeReplicationTaskAssessmentResults = req
+    "DescribeReplicationTaskAssessmentResults"
+    "fixture/DescribeReplicationTaskAssessmentResults.yaml"
 
 requestTestConnection :: TestConnection -> TestTree
 requestTestConnection = req
@@ -492,6 +514,13 @@ responseReloadTables = res
     dms
     (Proxy :: Proxy ReloadTables)
 
+responseStartReplicationTaskAssessment :: StartReplicationTaskAssessmentResponse -> TestTree
+responseStartReplicationTaskAssessment = res
+    "StartReplicationTaskAssessmentResponse"
+    "fixture/StartReplicationTaskAssessmentResponse.proto"
+    dms
+    (Proxy :: Proxy StartReplicationTaskAssessment)
+
 responseCreateEndpoint :: CreateEndpointResponse -> TestTree
 responseCreateEndpoint = res
     "CreateEndpointResponse"
@@ -547,6 +576,13 @@ responseDeleteReplicationTask = res
     "fixture/DeleteReplicationTaskResponse.proto"
     dms
     (Proxy :: Proxy DeleteReplicationTask)
+
+responseDescribeReplicationTaskAssessmentResults :: DescribeReplicationTaskAssessmentResultsResponse -> TestTree
+responseDescribeReplicationTaskAssessmentResults = res
+    "DescribeReplicationTaskAssessmentResultsResponse"
+    "fixture/DescribeReplicationTaskAssessmentResultsResponse.proto"
+    dms
+    (Proxy :: Proxy DescribeReplicationTaskAssessmentResults)
 
 responseTestConnection :: TestConnectionResponse -> TestTree
 responseTestConnection = res

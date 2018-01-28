@@ -443,7 +443,7 @@ _UnsupportedProtocolException =
   _MatchServiceError eLBv2 "UnsupportedProtocol" . hasStatus 400
 
 
--- | The specified target does not exist, is not in the same VPC as the target group, or has an unsupported instance type.
+-- | The specified target does not exist or is not in the same VPC as the target group.
 --
 --
 _InvalidTargetException :: AsError a => Getting (First ServiceError) a ServiceError

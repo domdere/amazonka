@@ -18,10 +18,10 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Describes the events for the specified Spot fleet request during the specified time.
+-- Describes the events for the specified Spot Fleet request during the specified time.
 --
 --
--- Spot fleet events are delayed by up to 30 seconds before they can be described. This ensures that you can query by the last evaluated time and not miss a recorded event.
+-- Spot Fleet events are delayed by up to 30 seconds before they can be described. This ensures that you can query by the last evaluated time and not miss a recorded event.
 --
 module Network.AWS.EC2.DescribeSpotFleetRequestHistory
     (
@@ -82,7 +82,7 @@ data DescribeSpotFleetRequestHistory = DescribeSpotFleetRequestHistory'
 --
 -- * 'dsfrhMaxResults' - The maximum number of results to return in a single call. Specify a value between 1 and 1000. The default value is 1000. To retrieve the remaining results, make another call with the returned @NextToken@ value.
 --
--- * 'dsfrhSpotFleetRequestId' - The ID of the Spot fleet request.
+-- * 'dsfrhSpotFleetRequestId' - The ID of the Spot Fleet request.
 --
 -- * 'dsfrhStartTime' - The starting date and time for the events, in UTC format (for example, /YYYY/ -/MM/ -/DD/ T/HH/ :/MM/ :/SS/ Z).
 describeSpotFleetRequestHistory
@@ -116,7 +116,7 @@ dsfrhDryRun = lens _dsfrhDryRun (\ s a -> s{_dsfrhDryRun = a});
 dsfrhMaxResults :: Lens' DescribeSpotFleetRequestHistory (Maybe Int)
 dsfrhMaxResults = lens _dsfrhMaxResults (\ s a -> s{_dsfrhMaxResults = a});
 
--- | The ID of the Spot fleet request.
+-- | The ID of the Spot Fleet request.
 dsfrhSpotFleetRequestId :: Lens' DescribeSpotFleetRequestHistory Text
 dsfrhSpotFleetRequestId = lens _dsfrhSpotFleetRequestId (\ s a -> s{_dsfrhSpotFleetRequestId = a});
 
@@ -189,11 +189,11 @@ data DescribeSpotFleetRequestHistoryResponse = DescribeSpotFleetRequestHistoryRe
 --
 -- * 'dsfrhrsResponseStatus' - -- | The response status code.
 --
--- * 'dsfrhrsHistoryRecords' - Information about the events in the history of the Spot fleet request.
+-- * 'dsfrhrsHistoryRecords' - Information about the events in the history of the Spot Fleet request.
 --
 -- * 'dsfrhrsLastEvaluatedTime' - The last date and time for the events, in UTC format (for example, /YYYY/ -/MM/ -/DD/ T/HH/ :/MM/ :/SS/ Z). All records up to this time were retrieved. If @nextToken@ indicates that there are more results, this value is not present.
 --
--- * 'dsfrhrsSpotFleetRequestId' - The ID of the Spot fleet request.
+-- * 'dsfrhrsSpotFleetRequestId' - The ID of the Spot Fleet request.
 --
 -- * 'dsfrhrsStartTime' - The starting date and time for the events, in UTC format (for example, /YYYY/ -/MM/ -/DD/ T/HH/ :/MM/ :/SS/ Z).
 describeSpotFleetRequestHistoryResponse
@@ -221,7 +221,7 @@ dsfrhrsNextToken = lens _dsfrhrsNextToken (\ s a -> s{_dsfrhrsNextToken = a});
 dsfrhrsResponseStatus :: Lens' DescribeSpotFleetRequestHistoryResponse Int
 dsfrhrsResponseStatus = lens _dsfrhrsResponseStatus (\ s a -> s{_dsfrhrsResponseStatus = a});
 
--- | Information about the events in the history of the Spot fleet request.
+-- | Information about the events in the history of the Spot Fleet request.
 dsfrhrsHistoryRecords :: Lens' DescribeSpotFleetRequestHistoryResponse [HistoryRecord]
 dsfrhrsHistoryRecords = lens _dsfrhrsHistoryRecords (\ s a -> s{_dsfrhrsHistoryRecords = a}) . _Coerce;
 
@@ -229,7 +229,7 @@ dsfrhrsHistoryRecords = lens _dsfrhrsHistoryRecords (\ s a -> s{_dsfrhrsHistoryR
 dsfrhrsLastEvaluatedTime :: Lens' DescribeSpotFleetRequestHistoryResponse UTCTime
 dsfrhrsLastEvaluatedTime = lens _dsfrhrsLastEvaluatedTime (\ s a -> s{_dsfrhrsLastEvaluatedTime = a}) . _Time;
 
--- | The ID of the Spot fleet request.
+-- | The ID of the Spot Fleet request.
 dsfrhrsSpotFleetRequestId :: Lens' DescribeSpotFleetRequestHistoryResponse Text
 dsfrhrsSpotFleetRequestId = lens _dsfrhrsSpotFleetRequestId (\ s a -> s{_dsfrhrsSpotFleetRequestId = a});
 

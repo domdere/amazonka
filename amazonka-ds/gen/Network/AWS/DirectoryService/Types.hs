@@ -32,6 +32,9 @@ module Network.AWS.DirectoryService.Types
     , _TagLimitExceededException
     , _ClientException
 
+    -- * DirectoryEdition
+    , DirectoryEdition (..)
+
     -- * DirectorySize
     , DirectorySize (..)
 
@@ -118,6 +121,7 @@ module Network.AWS.DirectoryService.Types
     -- * DirectoryDescription
     , DirectoryDescription
     , directoryDescription
+    , ddEdition
     , ddRadiusStatus
     , ddStage
     , ddDirectoryId

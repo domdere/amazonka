@@ -63,7 +63,7 @@ data AddApplicationInputProcessingConfiguration = AddApplicationInputProcessingC
 --
 -- * 'aaipcCurrentApplicationVersionId' - Version of the application to which you want to add the input processing configuration. You can use the 'DescribeApplication' operation to get the current application version. If the version specified is not the current version, the @ConcurrentModificationException@ is returned.
 --
--- * 'aaipcInputId' - The ID of the input configuration to which to add the input configuration. You can get a list of the input IDs for an application using the 'DescribeApplication' operation.
+-- * 'aaipcInputId' - The ID of the input configuration to add the input processing configuration to. You can get a list of the input IDs for an application using the 'DescribeApplication' operation.
 --
 -- * 'aaipcInputProcessingConfiguration' - The 'InputProcessingConfiguration' to add to the application.
 addApplicationInputProcessingConfiguration
@@ -89,7 +89,7 @@ aaipcApplicationName = lens _aaipcApplicationName (\ s a -> s{_aaipcApplicationN
 aaipcCurrentApplicationVersionId :: Lens' AddApplicationInputProcessingConfiguration Natural
 aaipcCurrentApplicationVersionId = lens _aaipcCurrentApplicationVersionId (\ s a -> s{_aaipcCurrentApplicationVersionId = a}) . _Nat;
 
--- | The ID of the input configuration to which to add the input configuration. You can get a list of the input IDs for an application using the 'DescribeApplication' operation.
+-- | The ID of the input configuration to add the input processing configuration to. You can get a list of the input IDs for an application using the 'DescribeApplication' operation.
 aaipcInputId :: Lens' AddApplicationInputProcessingConfiguration Text
 aaipcInputId = lens _aaipcInputId (\ s a -> s{_aaipcInputId = a});
 

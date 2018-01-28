@@ -110,7 +110,7 @@ module Network.AWS.Glue
     -- ** UpdateConnection
     , module Network.AWS.Glue.UpdateConnection
 
-    -- ** GetUserDefinedFunctions
+    -- ** GetUserDefinedFunctions (Paginated)
     , module Network.AWS.Glue.GetUserDefinedFunctions
 
     -- ** BatchCreatePartition
@@ -119,14 +119,20 @@ module Network.AWS.Glue
     -- ** GetMapping
     , module Network.AWS.Glue.GetMapping
 
-    -- ** GetJobs
+    -- ** GetTableVersion
+    , module Network.AWS.Glue.GetTableVersion
+
+    -- ** GetJobs (Paginated)
     , module Network.AWS.Glue.GetJobs
 
-    -- ** GetClassifiers
+    -- ** GetClassifiers (Paginated)
     , module Network.AWS.Glue.GetClassifiers
 
     -- ** CreateConnection
     , module Network.AWS.Glue.CreateConnection
+
+    -- ** DeleteTableVersion
+    , module Network.AWS.Glue.DeleteTableVersion
 
     -- ** DeleteDevEndpoint
     , module Network.AWS.Glue.DeleteDevEndpoint
@@ -161,7 +167,7 @@ module Network.AWS.Glue
     -- ** BatchDeleteTable
     , module Network.AWS.Glue.BatchDeleteTable
 
-    -- ** GetTables
+    -- ** GetTables (Paginated)
     , module Network.AWS.Glue.GetTables
 
     -- ** CreateClassifier
@@ -173,7 +179,7 @@ module Network.AWS.Glue
     -- ** CreateJob
     , module Network.AWS.Glue.CreateJob
 
-    -- ** GetJobRuns
+    -- ** GetJobRuns (Paginated)
     , module Network.AWS.Glue.GetJobRuns
 
     -- ** CreateUserDefinedFunction
@@ -188,7 +194,7 @@ module Network.AWS.Glue
     -- ** UpdateJob
     , module Network.AWS.Glue.UpdateJob
 
-    -- ** GetCrawlers
+    -- ** GetCrawlers (Paginated)
     , module Network.AWS.Glue.GetCrawlers
 
     -- ** GetClassifier
@@ -197,7 +203,10 @@ module Network.AWS.Glue
     -- ** GetJob
     , module Network.AWS.Glue.GetJob
 
-    -- ** GetDevEndpoints
+    -- ** BatchDeleteTableVersion
+    , module Network.AWS.Glue.BatchDeleteTableVersion
+
+    -- ** GetDevEndpoints (Paginated)
     , module Network.AWS.Glue.GetDevEndpoints
 
     -- ** StartCrawlerSchedule
@@ -215,7 +224,7 @@ module Network.AWS.Glue
     -- ** StopCrawler
     , module Network.AWS.Glue.StopCrawler
 
-    -- ** GetPartitions
+    -- ** GetPartitions (Paginated)
     , module Network.AWS.Glue.GetPartitions
 
     -- ** BatchDeletePartition
@@ -233,13 +242,13 @@ module Network.AWS.Glue
     -- ** CreateTable
     , module Network.AWS.Glue.CreateTable
 
-    -- ** GetCrawlerMetrics
+    -- ** GetCrawlerMetrics (Paginated)
     , module Network.AWS.Glue.GetCrawlerMetrics
 
     -- ** GetPlan
     , module Network.AWS.Glue.GetPlan
 
-    -- ** GetTriggers
+    -- ** GetTriggers (Paginated)
     , module Network.AWS.Glue.GetTriggers
 
     -- ** StartTrigger
@@ -248,7 +257,7 @@ module Network.AWS.Glue
     -- ** GetDataflowGraph
     , module Network.AWS.Glue.GetDataflowGraph
 
-    -- ** GetDatabases
+    -- ** GetDatabases (Paginated)
     , module Network.AWS.Glue.GetDatabases
 
     -- ** GetTable
@@ -275,7 +284,7 @@ module Network.AWS.Glue
     -- ** CreateScript
     , module Network.AWS.Glue.CreateScript
 
-    -- ** GetConnections
+    -- ** GetConnections (Paginated)
     , module Network.AWS.Glue.GetConnections
 
     -- ** GetTrigger
@@ -302,7 +311,7 @@ module Network.AWS.Glue
     -- ** CreateDatabase
     , module Network.AWS.Glue.CreateDatabase
 
-    -- ** GetTableVersions
+    -- ** GetTableVersions (Paginated)
     , module Network.AWS.Glue.GetTableVersions
 
     -- ** DeleteTrigger
@@ -327,6 +336,9 @@ module Network.AWS.Glue
 
     -- ** JobRunState
     , JobRunState (..)
+
+    -- ** Language
+    , Language (..)
 
     -- ** LastCrawlStatus
     , LastCrawlStatus (..)
@@ -391,6 +403,7 @@ module Network.AWS.Glue
     , Classifier
     , classifier
     , cGrokClassifier
+    , cXMLClassifier
 
     -- ** CodeGenEdge
     , CodeGenEdge
@@ -444,12 +457,12 @@ module Network.AWS.Glue
     -- ** ConnectionInput
     , ConnectionInput
     , connectionInput
-    , ciConnectionProperties
     , ciMatchCriteria
     , ciPhysicalConnectionRequirements
-    , ciName
     , ciDescription
+    , ciName
     , ciConnectionType
+    , ciConnectionProperties
 
     -- ** ConnectionsList
     , ConnectionsList
@@ -472,6 +485,7 @@ module Network.AWS.Glue
     , craTargets
     , craVersion
     , craDatabaseName
+    , craConfiguration
     , craTablePrefix
     , craDescription
 
@@ -500,6 +514,13 @@ module Network.AWS.Glue
     , cgcrClassification
     , cgcrName
     , cgcrGrokPattern
+
+    -- ** CreateXMLClassifierRequest
+    , CreateXMLClassifierRequest
+    , createXMLClassifierRequest
+    , cxcrRowTag
+    , cxcrClassification
+    , cxcrName
 
     -- ** Database
     , Database
@@ -833,6 +854,13 @@ module Network.AWS.Glue
     , tvVersionId
     , tvTable
 
+    -- ** TableVersionError
+    , TableVersionError
+    , tableVersionError
+    , tveVersionId
+    , tveTableName
+    , tveErrorDetail
+
     -- ** Trigger
     , Trigger
     , trigger
@@ -862,6 +890,13 @@ module Network.AWS.Glue
     , ugcrGrokPattern
     , ugcrName
 
+    -- ** UpdateXMLClassifierRequest
+    , UpdateXMLClassifierRequest
+    , updateXMLClassifierRequest
+    , uxcrClassification
+    , uxcrRowTag
+    , uxcrName
+
     -- ** UserDefinedFunction
     , UserDefinedFunction
     , userDefinedFunction
@@ -880,12 +915,23 @@ module Network.AWS.Glue
     , udfiFunctionName
     , udfiOwnerType
     , udfiClassName
+
+    -- ** XMLClassifier
+    , XMLClassifier
+    , xmlClassifier
+    , xcCreationTime
+    , xcLastUpdated
+    , xcVersion
+    , xcRowTag
+    , xcName
+    , xcClassification
     ) where
 
 import Network.AWS.Glue.BatchCreatePartition
 import Network.AWS.Glue.BatchDeleteConnection
 import Network.AWS.Glue.BatchDeletePartition
 import Network.AWS.Glue.BatchDeleteTable
+import Network.AWS.Glue.BatchDeleteTableVersion
 import Network.AWS.Glue.BatchGetPartition
 import Network.AWS.Glue.BatchStopJobRun
 import Network.AWS.Glue.CreateClassifier
@@ -907,6 +953,7 @@ import Network.AWS.Glue.DeleteDevEndpoint
 import Network.AWS.Glue.DeleteJob
 import Network.AWS.Glue.DeletePartition
 import Network.AWS.Glue.DeleteTable
+import Network.AWS.Glue.DeleteTableVersion
 import Network.AWS.Glue.DeleteTrigger
 import Network.AWS.Glue.DeleteUserDefinedFunction
 import Network.AWS.Glue.GetCatalogImportStatus
@@ -932,6 +979,7 @@ import Network.AWS.Glue.GetPartitions
 import Network.AWS.Glue.GetPlan
 import Network.AWS.Glue.GetTable
 import Network.AWS.Glue.GetTables
+import Network.AWS.Glue.GetTableVersion
 import Network.AWS.Glue.GetTableVersions
 import Network.AWS.Glue.GetTrigger
 import Network.AWS.Glue.GetTriggers

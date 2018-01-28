@@ -37,9 +37,13 @@ module Network.AWS.WorkDocs.Types
     , _UnauthorizedOperationException
     , _DraftUploadOutOfSyncException
     , _LimitExceededException
+    , _InvalidPasswordException
 
     -- * ActivityType
     , ActivityType (..)
+
+    -- * BooleanEnumType
+    , BooleanEnumType (..)
 
     -- * CommentStatusType
     , CommentStatusType (..)
@@ -193,6 +197,12 @@ module Network.AWS.WorkDocs.Types
     , groupMetadata
     , gmName
     , gmId
+
+    -- * NotificationOptions
+    , NotificationOptions
+    , notificationOptions
+    , noEmailMessage
+    , noSendEmail
 
     -- * Participants
     , Participants
@@ -390,7 +400,7 @@ _TooManyLabelsException =
   _MatchServiceError workDocs "TooManyLabelsException" . hasStatus 429
 
 
--- | The pagination marker and/or limit fields are not valid.
+-- | The pagination marker or limit fields are not valid.
 --
 --
 _InvalidArgumentException :: AsError a => Getting (First ServiceError) a ServiceError
@@ -415,7 +425,7 @@ _TooManySubscriptionsException =
   _MatchServiceError workDocs "TooManySubscriptionsException" . hasStatus 429
 
 
--- | The AWS Directory Service cannot reach an on-premises instance. Or a dependency under the control of the organization is failing, such as a connected active directory.
+-- | The AWS Directory Service cannot reach an on-premises instance. Or a dependency under the control of the organization is failing, such as a connected Active Directory.
 --
 --
 _FailedDependencyException :: AsError a => Getting (First ServiceError) a ServiceError
@@ -519,4 +529,12 @@ _DraftUploadOutOfSyncException =
 _LimitExceededException :: AsError a => Getting (First ServiceError) a ServiceError
 _LimitExceededException =
   _MatchServiceError workDocs "LimitExceededException" . hasStatus 409
+
+
+-- | The password is invalid.
+--
+--
+_InvalidPasswordException :: AsError a => Getting (First ServiceError) a ServiceError
+_InvalidPasswordException =
+  _MatchServiceError workDocs "InvalidPasswordException" . hasStatus 401
 

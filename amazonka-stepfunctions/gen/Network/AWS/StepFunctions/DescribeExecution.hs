@@ -146,7 +146,7 @@ data DescribeExecutionResponse = DescribeExecutionResponse'
 --
 -- * 'dersStatus' - The current status of the execution.
 --
--- * 'dersStartDate' - The date the execution was started.
+-- * 'dersStartDate' - The date the execution is started.
 --
 -- * 'dersInput' - The string that contains the JSON input data of the execution.
 describeExecutionResponse
@@ -199,7 +199,7 @@ dersStateMachineARN = lens _dersStateMachineARN (\ s a -> s{_dersStateMachineARN
 dersStatus :: Lens' DescribeExecutionResponse ExecutionStatus
 dersStatus = lens _dersStatus (\ s a -> s{_dersStatus = a});
 
--- | The date the execution was started.
+-- | The date the execution is started.
 dersStartDate :: Lens' DescribeExecutionResponse UTCTime
 dersStartDate = lens _dersStartDate (\ s a -> s{_dersStartDate = a}) . _Time;
 

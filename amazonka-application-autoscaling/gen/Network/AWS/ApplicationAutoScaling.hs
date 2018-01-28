@@ -18,13 +18,15 @@
 --
 --     * Scale your resources in response to CloudWatch alarms
 --
+--     * Schedule one-time or recurring scaling actions
+--
 --     * View the history of your scaling events
 --
 --
 --
 -- Application Auto Scaling can scale the following AWS resources:
 --
---     * Amazon ECS services. For more information, see <http://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-auto-scaling.html Service Auto Scaling> in the /Amazon EC2 Container Service Developer Guide/ .
+--     * Amazon ECS services. For more information, see <http://docs.aws.amazon.com/AmazonECS/latest/developerguide/service-auto-scaling.html Service Auto Scaling> in the /Amazon Elastic Container Service Developer Guide/ .
 --
 --     * Amazon EC2 Spot fleets. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/fleet-auto-scaling.html Automatic Scaling for Spot Fleet> in the /Amazon EC2 User Guide/ .
 --
@@ -33,6 +35,8 @@
 --     * AppStream 2.0 fleets. For more information, see <http://docs.aws.amazon.com/appstream2/latest/developerguide/autoscaling.html Fleet Auto Scaling for Amazon AppStream 2.0> in the /Amazon AppStream 2.0 Developer Guide/ .
 --
 --     * Provisioned read and write capacity for Amazon DynamoDB tables and global secondary indexes. For more information, see <http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/AutoScaling.html Managing Throughput Capacity Automatically with DynamoDB Auto Scaling> in the /Amazon DynamoDB Developer Guide/ .
+--
+--     * Amazon Aurora Replicas. For more information, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Aurora.Integrating.AutoScaling.html Using Amazon Aurora Auto Scaling with Aurora Replicas> .
 --
 --
 --

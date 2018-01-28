@@ -72,9 +72,9 @@ data PutParameter = PutParameter'
 --
 -- * 'ppOverwrite' - Overwrite an existing parameter. If not specified, will default to "false".
 --
--- * 'ppDescription' - Information about the parameter that you want to add to the system
+-- * 'ppDescription' - Information about the parameter that you want to add to the system.
 --
--- * 'ppName' - The name of the parameter that you want to add to the system.
+-- * 'ppName' - The fully qualified name of the parameter that you want to add to the system. The fully qualified name includes the complete hierarchy of the parameter path and name. For example: @/Dev/DBServer/MySQL/db-string13@
 --
 -- * 'ppValue' - The parameter value that you want to add to the system.
 --
@@ -108,11 +108,11 @@ ppAllowedPattern = lens _ppAllowedPattern (\ s a -> s{_ppAllowedPattern = a});
 ppOverwrite :: Lens' PutParameter (Maybe Bool)
 ppOverwrite = lens _ppOverwrite (\ s a -> s{_ppOverwrite = a});
 
--- | Information about the parameter that you want to add to the system
+-- | Information about the parameter that you want to add to the system.
 ppDescription :: Lens' PutParameter (Maybe Text)
 ppDescription = lens _ppDescription (\ s a -> s{_ppDescription = a});
 
--- | The name of the parameter that you want to add to the system.
+-- | The fully qualified name of the parameter that you want to add to the system. The fully qualified name includes the complete hierarchy of the parameter path and name. For example: @/Dev/DBServer/MySQL/db-string13@
 ppName :: Lens' PutParameter Text
 ppName = lens _ppName (\ s a -> s{_ppName = a});
 

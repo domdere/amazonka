@@ -79,7 +79,7 @@ data CreateApplicationVersion = CreateApplicationVersion'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cavProcess' - Preprocesses and validates the environment manifest and configuration files in the source bundle. Validating configuration files can identify issues prior to deploying the application version to an environment.
+-- * 'cavProcess' - Preprocesses and validates the environment manifest (@env.yaml@ ) and configuration files (@*.config@ files in the @.ebextensions@ folder) in the source bundle. Validating configuration files can identify issues prior to deploying the application version to an environment.
 --
 -- * 'cavSourceBundle' - The Amazon S3 bucket and key that identify the location of the source bundle for this version. Specify a source bundle in S3 or a commit in an AWS CodeCommit repository (with @SourceBuildInformation@ ), but not both. If neither @SourceBundle@ nor @SourceBuildInformation@ are provided, Elastic Beanstalk uses a sample application.
 --
@@ -111,7 +111,7 @@ createApplicationVersion pApplicationName_ pVersionLabel_ =
   }
 
 
--- | Preprocesses and validates the environment manifest and configuration files in the source bundle. Validating configuration files can identify issues prior to deploying the application version to an environment.
+-- | Preprocesses and validates the environment manifest (@env.yaml@ ) and configuration files (@*.config@ files in the @.ebextensions@ folder) in the source bundle. Validating configuration files can identify issues prior to deploying the application version to an environment.
 cavProcess :: Lens' CreateApplicationVersion (Maybe Bool)
 cavProcess = lens _cavProcess (\ s a -> s{_cavProcess = a});
 

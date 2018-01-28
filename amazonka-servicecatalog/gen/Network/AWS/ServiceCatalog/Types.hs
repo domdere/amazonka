@@ -182,6 +182,7 @@ module Network.AWS.ServiceCatalog.Types
     , ProvisioningArtifactDetail
     , provisioningArtifactDetail
     , padCreatedTime
+    , padActive
     , padName
     , padId
     , padType
@@ -342,7 +343,7 @@ serviceCatalog =
       | otherwise = Nothing
 
 
--- | One or more parameters provided to the operation are invalid.
+-- | One or more parameters provided to the operation are not valid.
 --
 --
 _InvalidParametersException :: AsError a => Getting (First ServiceError) a ServiceError
@@ -374,7 +375,7 @@ _ResourceNotFoundException =
   _MatchServiceError serviceCatalog "ResourceNotFoundException"
 
 
--- | An attempt was made to modify a resource that is in an invalid state. Inspect the resource you are using for this operation to ensure that all resource states are valid before retrying the operation.
+-- | An attempt was made to modify a resource that is in a state that is not valid. Check your resources to ensure that they are in valid states before retrying the operation.
 --
 --
 _InvalidStateException :: AsError a => Getting (First ServiceError) a ServiceError
@@ -382,7 +383,7 @@ _InvalidStateException =
   _MatchServiceError serviceCatalog "InvalidStateException"
 
 
--- | The current limits of the service would have been exceeded by this operation. Reduce the resource use or increase the service limits and retry the operation.
+-- | The current limits of the service would have been exceeded by this operation. Decrease your resource use or increase your service limits and retry the operation.
 --
 --
 _LimitExceededException :: AsError a => Getting (First ServiceError) a ServiceError
@@ -390,7 +391,7 @@ _LimitExceededException =
   _MatchServiceError serviceCatalog "LimitExceededException"
 
 
--- | The operation was requested against a resource that is currently in use. Free the resource from use and retry the operation.
+-- | A resource that is currently in use. Ensure the resource is not in use and retry the operation.
 --
 --
 _ResourceInUseException :: AsError a => Getting (First ServiceError) a ServiceError

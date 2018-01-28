@@ -64,7 +64,7 @@ data UpdateGroup = UpdateGroup'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ugPrecedence' - The new precedence value for the group. For more information about this parameter, see <API_CreateGroup.html CreateGroup> .
+-- * 'ugPrecedence' - The new precedence value for the group. For more information about this parameter, see .
 --
 -- * 'ugDescription' - A string containing the new description of the group.
 --
@@ -87,7 +87,7 @@ updateGroup pGroupName_ pUserPoolId_ =
   }
 
 
--- | The new precedence value for the group. For more information about this parameter, see <API_CreateGroup.html CreateGroup> .
+-- | The new precedence value for the group. For more information about this parameter, see .
 ugPrecedence :: Lens' UpdateGroup (Maybe Natural)
 ugPrecedence = lens _ugPrecedence (\ s a -> s{_ugPrecedence = a}) . mapping _Nat;
 

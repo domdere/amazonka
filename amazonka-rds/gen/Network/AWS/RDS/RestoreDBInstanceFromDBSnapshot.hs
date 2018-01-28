@@ -50,6 +50,7 @@ module Network.AWS.RDS.RestoreDBInstanceFromDBSnapshot
     , rdifdsPort
     , rdifdsEnableIAMDatabaseAuthentication
     , rdifdsStorageType
+    , rdifdsEnableCloudwatchLogsExports
     , rdifdsDBName
     , rdifdsDBInstanceIdentifier
     , rdifdsDBSnapshotIdentifier
@@ -94,6 +95,7 @@ data RestoreDBInstanceFromDBSnapshot = RestoreDBInstanceFromDBSnapshot'
   , _rdifdsPort                            :: !(Maybe Int)
   , _rdifdsEnableIAMDatabaseAuthentication :: !(Maybe Bool)
   , _rdifdsStorageType                     :: !(Maybe Text)
+  , _rdifdsEnableCloudwatchLogsExports     :: !(Maybe [Text])
   , _rdifdsDBName                          :: !(Maybe Text)
   , _rdifdsDBInstanceIdentifier            :: !Text
   , _rdifdsDBSnapshotIdentifier            :: !Text
@@ -114,23 +116,23 @@ data RestoreDBInstanceFromDBSnapshot = RestoreDBInstanceFromDBSnapshot'
 --
 -- * 'rdifdsDomain' - Specify the Active Directory Domain to restore the instance in.
 --
--- * 'rdifdsEngine' - The database engine to use for the new instance. Default: The same as source Constraint: Must be compatible with the engine of the source. You can restore a MariaDB 10.1 DB instance from a MySQL 5.6 snapshot. Valid Values:     * @aurora@      * @mariadb@      * @mysql@      * @oracle-ee@      * @oracle-se2@      * @oracle-se1@      * @oracle-se@      * @postgres@      * @sqlserver-ee@      * @sqlserver-se@      * @sqlserver-ex@      * @sqlserver-web@
+-- * 'rdifdsEngine' - The database engine to use for the new instance. Default: The same as source Constraint: Must be compatible with the engine of the source. For example, you can restore a MariaDB 10.1 DB instance from a MySQL 5.6 snapshot. Valid Values:     * @aurora@      * @aurora-postgresql@      * @mariadb@      * @mysql@      * @oracle-ee@      * @oracle-se2@      * @oracle-se1@      * @oracle-se@      * @postgres@      * @sqlserver-ee@      * @sqlserver-se@      * @sqlserver-ex@      * @sqlserver-web@
 --
--- * 'rdifdsTDECredentialPassword' - The password for the given ARN from the Key Store in order to access the device.
+-- * 'rdifdsTDECredentialPassword' - The password for the given ARN from the key store in order to access the device.
 --
--- * 'rdifdsDBInstanceClass' - The compute and memory capacity of the Amazon RDS DB instance, for example, @db.m4.large@ . Not all DB instance classes are available in all regions, or for all database engines. For the full list of DB instance classes, and availability for your engine, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html DB Instance Class> in the Amazon RDS User Guide.  Default: The same DBInstanceClass as the original DB instance.
+-- * 'rdifdsDBInstanceClass' - The compute and memory capacity of the Amazon RDS DB instance, for example, @db.m4.large@ . Not all DB instance classes are available in all AWS Regions, or for all database engines. For the full list of DB instance classes, and availability for your engine, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html DB Instance Class> in the Amazon RDS User Guide.  Default: The same DBInstanceClass as the original DB instance.
 --
 -- * 'rdifdsLicenseModel' - License model information for the restored DB instance. Default: Same as source. Valid values: @license-included@ | @bring-your-own-license@ | @general-public-license@
 --
--- * 'rdifdsAvailabilityZone' - The EC2 Availability Zone that the database instance is created in. Default: A random, system-chosen Availability Zone. Constraint: You cannot specify the AvailabilityZone parameter if the MultiAZ parameter is set to @true@ . Example: @us-east-1a@
+-- * 'rdifdsAvailabilityZone' - The EC2 Availability Zone that the DB instance is created in. Default: A random, system-chosen Availability Zone. Constraint: You can't specify the AvailabilityZone parameter if the MultiAZ parameter is set to @true@ . Example: @us-east-1a@
 --
--- * 'rdifdsMultiAZ' - Specifies if the DB instance is a Multi-AZ deployment. Constraint: You cannot specify the AvailabilityZone parameter if the MultiAZ parameter is set to @true@ .
+-- * 'rdifdsMultiAZ' - Specifies if the DB instance is a Multi-AZ deployment. Constraint: You can't specify the AvailabilityZone parameter if the MultiAZ parameter is set to @true@ .
 --
--- * 'rdifdsOptionGroupName' - The name of the option group to be used for the restored DB instance. Permanent options, such as the TDE option for Oracle Advanced Security TDE, cannot be removed from an option group, and that option group cannot be removed from a DB instance once it is associated with a DB instance
+-- * 'rdifdsOptionGroupName' - The name of the option group to be used for the restored DB instance. Permanent options, such as the TDE option for Oracle Advanced Security TDE, can't be removed from an option group, and that option group can't be removed from a DB instance once it is associated with a DB instance
 --
--- * 'rdifdsCopyTagsToSnapshot' - True to copy all tags from the restored DB instance to snapshots of the DB instance; otherwise false. The default is false.
+-- * 'rdifdsCopyTagsToSnapshot' - True to copy all tags from the restored DB instance to snapshots of the DB instance, and otherwise false. The default is false.
 --
--- * 'rdifdsTDECredentialARN' - The ARN from the Key Store with which to associate the instance for TDE encryption.
+-- * 'rdifdsTDECredentialARN' - The ARN from the key store with which to associate the instance for TDE encryption.
 --
 -- * 'rdifdsDomainIAMRoleName' - Specify the name of the IAM role to be used when making API calls to the Directory Service.
 --
@@ -138,9 +140,11 @@ data RestoreDBInstanceFromDBSnapshot = RestoreDBInstanceFromDBSnapshot'
 --
 -- * 'rdifdsPort' - The port number on which the database accepts connections. Default: The same port as the original DB instance Constraints: Value must be @1150-65535@
 --
--- * 'rdifdsEnableIAMDatabaseAuthentication' - True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts; otherwise false. You can enable IAM database authentication for the following database engines     * For MySQL 5.6, minor version 5.6.34 or higher     * For MySQL 5.7, minor version 5.7.16 or higher     * Aurora 5.6 or higher. Default: @false@
+-- * 'rdifdsEnableIAMDatabaseAuthentication' - True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. You can enable IAM database authentication for the following database engines     * For MySQL 5.6, minor version 5.6.34 or higher     * For MySQL 5.7, minor version 5.7.16 or higher     * Aurora 5.6 or higher. Default: @false@
 --
--- * 'rdifdsStorageType' - Specifies the storage type to be associated with the DB instance. Valid values: @standard | gp2 | io1@  If you specify @io1@ , you must also include a value for the @Iops@ parameter.  Default: @io1@ if the @Iops@ parameter is specified; otherwise @standard@
+-- * 'rdifdsStorageType' - Specifies the storage type to be associated with the DB instance. Valid values: @standard | gp2 | io1@  If you specify @io1@ , you must also include a value for the @Iops@ parameter.  Default: @io1@ if the @Iops@ parameter is specified, otherwise @standard@
+--
+-- * 'rdifdsEnableCloudwatchLogsExports' - The list of logs that the restored DB instance is to export to CloudWatch Logs.
 --
 -- * 'rdifdsDBName' - The database name for the restored DB instance.
 --
@@ -172,6 +176,7 @@ restoreDBInstanceFromDBSnapshot pDBInstanceIdentifier_ pDBSnapshotIdentifier_ =
   , _rdifdsPort = Nothing
   , _rdifdsEnableIAMDatabaseAuthentication = Nothing
   , _rdifdsStorageType = Nothing
+  , _rdifdsEnableCloudwatchLogsExports = Nothing
   , _rdifdsDBName = Nothing
   , _rdifdsDBInstanceIdentifier = pDBInstanceIdentifier_
   , _rdifdsDBSnapshotIdentifier = pDBSnapshotIdentifier_
@@ -198,15 +203,15 @@ rdifdsIOPS = lens _rdifdsIOPS (\ s a -> s{_rdifdsIOPS = a});
 rdifdsDomain :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Text)
 rdifdsDomain = lens _rdifdsDomain (\ s a -> s{_rdifdsDomain = a});
 
--- | The database engine to use for the new instance. Default: The same as source Constraint: Must be compatible with the engine of the source. You can restore a MariaDB 10.1 DB instance from a MySQL 5.6 snapshot. Valid Values:     * @aurora@      * @mariadb@      * @mysql@      * @oracle-ee@      * @oracle-se2@      * @oracle-se1@      * @oracle-se@      * @postgres@      * @sqlserver-ee@      * @sqlserver-se@      * @sqlserver-ex@      * @sqlserver-web@
+-- | The database engine to use for the new instance. Default: The same as source Constraint: Must be compatible with the engine of the source. For example, you can restore a MariaDB 10.1 DB instance from a MySQL 5.6 snapshot. Valid Values:     * @aurora@      * @aurora-postgresql@      * @mariadb@      * @mysql@      * @oracle-ee@      * @oracle-se2@      * @oracle-se1@      * @oracle-se@      * @postgres@      * @sqlserver-ee@      * @sqlserver-se@      * @sqlserver-ex@      * @sqlserver-web@
 rdifdsEngine :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Text)
 rdifdsEngine = lens _rdifdsEngine (\ s a -> s{_rdifdsEngine = a});
 
--- | The password for the given ARN from the Key Store in order to access the device.
+-- | The password for the given ARN from the key store in order to access the device.
 rdifdsTDECredentialPassword :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Text)
 rdifdsTDECredentialPassword = lens _rdifdsTDECredentialPassword (\ s a -> s{_rdifdsTDECredentialPassword = a});
 
--- | The compute and memory capacity of the Amazon RDS DB instance, for example, @db.m4.large@ . Not all DB instance classes are available in all regions, or for all database engines. For the full list of DB instance classes, and availability for your engine, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html DB Instance Class> in the Amazon RDS User Guide.  Default: The same DBInstanceClass as the original DB instance.
+-- | The compute and memory capacity of the Amazon RDS DB instance, for example, @db.m4.large@ . Not all DB instance classes are available in all AWS Regions, or for all database engines. For the full list of DB instance classes, and availability for your engine, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html DB Instance Class> in the Amazon RDS User Guide.  Default: The same DBInstanceClass as the original DB instance.
 rdifdsDBInstanceClass :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Text)
 rdifdsDBInstanceClass = lens _rdifdsDBInstanceClass (\ s a -> s{_rdifdsDBInstanceClass = a});
 
@@ -214,23 +219,23 @@ rdifdsDBInstanceClass = lens _rdifdsDBInstanceClass (\ s a -> s{_rdifdsDBInstanc
 rdifdsLicenseModel :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Text)
 rdifdsLicenseModel = lens _rdifdsLicenseModel (\ s a -> s{_rdifdsLicenseModel = a});
 
--- | The EC2 Availability Zone that the database instance is created in. Default: A random, system-chosen Availability Zone. Constraint: You cannot specify the AvailabilityZone parameter if the MultiAZ parameter is set to @true@ . Example: @us-east-1a@
+-- | The EC2 Availability Zone that the DB instance is created in. Default: A random, system-chosen Availability Zone. Constraint: You can't specify the AvailabilityZone parameter if the MultiAZ parameter is set to @true@ . Example: @us-east-1a@
 rdifdsAvailabilityZone :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Text)
 rdifdsAvailabilityZone = lens _rdifdsAvailabilityZone (\ s a -> s{_rdifdsAvailabilityZone = a});
 
--- | Specifies if the DB instance is a Multi-AZ deployment. Constraint: You cannot specify the AvailabilityZone parameter if the MultiAZ parameter is set to @true@ .
+-- | Specifies if the DB instance is a Multi-AZ deployment. Constraint: You can't specify the AvailabilityZone parameter if the MultiAZ parameter is set to @true@ .
 rdifdsMultiAZ :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Bool)
 rdifdsMultiAZ = lens _rdifdsMultiAZ (\ s a -> s{_rdifdsMultiAZ = a});
 
--- | The name of the option group to be used for the restored DB instance. Permanent options, such as the TDE option for Oracle Advanced Security TDE, cannot be removed from an option group, and that option group cannot be removed from a DB instance once it is associated with a DB instance
+-- | The name of the option group to be used for the restored DB instance. Permanent options, such as the TDE option for Oracle Advanced Security TDE, can't be removed from an option group, and that option group can't be removed from a DB instance once it is associated with a DB instance
 rdifdsOptionGroupName :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Text)
 rdifdsOptionGroupName = lens _rdifdsOptionGroupName (\ s a -> s{_rdifdsOptionGroupName = a});
 
--- | True to copy all tags from the restored DB instance to snapshots of the DB instance; otherwise false. The default is false.
+-- | True to copy all tags from the restored DB instance to snapshots of the DB instance, and otherwise false. The default is false.
 rdifdsCopyTagsToSnapshot :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Bool)
 rdifdsCopyTagsToSnapshot = lens _rdifdsCopyTagsToSnapshot (\ s a -> s{_rdifdsCopyTagsToSnapshot = a});
 
--- | The ARN from the Key Store with which to associate the instance for TDE encryption.
+-- | The ARN from the key store with which to associate the instance for TDE encryption.
 rdifdsTDECredentialARN :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Text)
 rdifdsTDECredentialARN = lens _rdifdsTDECredentialARN (\ s a -> s{_rdifdsTDECredentialARN = a});
 
@@ -246,13 +251,17 @@ rdifdsTags = lens _rdifdsTags (\ s a -> s{_rdifdsTags = a}) . _Default . _Coerce
 rdifdsPort :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Int)
 rdifdsPort = lens _rdifdsPort (\ s a -> s{_rdifdsPort = a});
 
--- | True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts; otherwise false. You can enable IAM database authentication for the following database engines     * For MySQL 5.6, minor version 5.6.34 or higher     * For MySQL 5.7, minor version 5.7.16 or higher     * Aurora 5.6 or higher. Default: @false@
+-- | True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. You can enable IAM database authentication for the following database engines     * For MySQL 5.6, minor version 5.6.34 or higher     * For MySQL 5.7, minor version 5.7.16 or higher     * Aurora 5.6 or higher. Default: @false@
 rdifdsEnableIAMDatabaseAuthentication :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Bool)
 rdifdsEnableIAMDatabaseAuthentication = lens _rdifdsEnableIAMDatabaseAuthentication (\ s a -> s{_rdifdsEnableIAMDatabaseAuthentication = a});
 
--- | Specifies the storage type to be associated with the DB instance. Valid values: @standard | gp2 | io1@  If you specify @io1@ , you must also include a value for the @Iops@ parameter.  Default: @io1@ if the @Iops@ parameter is specified; otherwise @standard@
+-- | Specifies the storage type to be associated with the DB instance. Valid values: @standard | gp2 | io1@  If you specify @io1@ , you must also include a value for the @Iops@ parameter.  Default: @io1@ if the @Iops@ parameter is specified, otherwise @standard@
 rdifdsStorageType :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Text)
 rdifdsStorageType = lens _rdifdsStorageType (\ s a -> s{_rdifdsStorageType = a});
+
+-- | The list of logs that the restored DB instance is to export to CloudWatch Logs.
+rdifdsEnableCloudwatchLogsExports :: Lens' RestoreDBInstanceFromDBSnapshot [Text]
+rdifdsEnableCloudwatchLogsExports = lens _rdifdsEnableCloudwatchLogsExports (\ s a -> s{_rdifdsEnableCloudwatchLogsExports = a}) . _Default . _Coerce;
 
 -- | The database name for the restored DB instance.
 rdifdsDBName :: Lens' RestoreDBInstanceFromDBSnapshot (Maybe Text)
@@ -319,6 +328,10 @@ instance ToQuery RestoreDBInstanceFromDBSnapshot
                "EnableIAMDatabaseAuthentication" =:
                  _rdifdsEnableIAMDatabaseAuthentication,
                "StorageType" =: _rdifdsStorageType,
+               "EnableCloudwatchLogsExports" =:
+                 toQuery
+                   (toQueryList "member" <$>
+                      _rdifdsEnableCloudwatchLogsExports),
                "DBName" =: _rdifdsDBName,
                "DBInstanceIdentifier" =:
                  _rdifdsDBInstanceIdentifier,

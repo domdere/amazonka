@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Describes the current user's special folders; the @RootFolder@ and the @RecyleBin@ . @RootFolder@ is the root of user's files and folders and @RecyleBin@ is the root of recycled items. This is not a valid action for SigV4 (administrative API) clients.
+-- Describes the current user's special folders; the @RootFolder@ and the @RecycleBin@ . @RootFolder@ is the root of user's files and folders and @RecycleBin@ is the root of recycled items. This is not a valid action for SigV4 (administrative API) clients.
 --
 --
 module Network.AWS.WorkDocs.DescribeRootFolders
@@ -63,7 +63,7 @@ data DescribeRootFolders = DescribeRootFolders'
 --
 -- * 'drfLimit' - The maximum number of items to return.
 --
--- * 'drfAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'drfAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 describeRootFolders
     :: Text -- ^ 'drfAuthenticationToken'
     -> DescribeRootFolders
@@ -83,7 +83,7 @@ drfMarker = lens _drfMarker (\ s a -> s{_drfMarker = a});
 drfLimit :: Lens' DescribeRootFolders (Maybe Natural)
 drfLimit = lens _drfLimit (\ s a -> s{_drfLimit = a}) . mapping _Nat;
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 drfAuthenticationToken :: Lens' DescribeRootFolders Text
 drfAuthenticationToken = lens _drfAuthenticationToken (\ s a -> s{_drfAuthenticationToken = a}) . _Sensitive;
 

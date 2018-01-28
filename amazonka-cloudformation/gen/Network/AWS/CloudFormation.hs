@@ -116,6 +116,9 @@ module Network.AWS.CloudFormation
     -- ** ListStackResources (Paginated)
     , module Network.AWS.CloudFormation.ListStackResources
 
+    -- ** UpdateStackInstances
+    , module Network.AWS.CloudFormation.UpdateStackInstances
+
     -- ** DeleteStackInstances
     , module Network.AWS.CloudFormation.DeleteStackInstances
 
@@ -336,6 +339,7 @@ module Network.AWS.CloudFormation
     , Parameter
     , parameter
     , pParameterValue
+    , pResolvedValue
     , pParameterKey
     , pUsePreviousValue
 
@@ -440,6 +444,7 @@ module Network.AWS.CloudFormation
     , siRegion
     , siStatusReason
     , siStackId
+    , siParameterOverrides
     , siStackSetId
 
     -- ** StackInstanceSummary
@@ -615,6 +620,7 @@ import Network.AWS.CloudFormation.SignalResource
 import Network.AWS.CloudFormation.StopStackSetOperation
 import Network.AWS.CloudFormation.Types
 import Network.AWS.CloudFormation.UpdateStack
+import Network.AWS.CloudFormation.UpdateStackInstances
 import Network.AWS.CloudFormation.UpdateStackSet
 import Network.AWS.CloudFormation.UpdateTerminationProtection
 import Network.AWS.CloudFormation.ValidateTemplate

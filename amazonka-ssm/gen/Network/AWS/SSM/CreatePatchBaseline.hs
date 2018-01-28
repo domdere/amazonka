@@ -74,7 +74,7 @@ data CreatePatchBaseline = CreatePatchBaseline'
 --
 -- * 'cpbClientToken' - User-provided idempotency token.
 --
--- * 'cpbOperatingSystem' - Defines the operating system the patch baseline applies to. Supported operating systems include WINDOWS, AMAZON_LINUX, UBUNTU and REDHAT_ENTERPRISE_LINUX. The Default value is WINDOWS.
+-- * 'cpbOperatingSystem' - Defines the operating system the patch baseline applies to. The Default value is WINDOWS.
 --
 -- * 'cpbGlobalFilters' - A set of global filters used to exclude patches from the baseline.
 --
@@ -112,7 +112,7 @@ cpbApprovalRules = lens _cpbApprovalRules (\ s a -> s{_cpbApprovalRules = a});
 cpbClientToken :: Lens' CreatePatchBaseline (Maybe Text)
 cpbClientToken = lens _cpbClientToken (\ s a -> s{_cpbClientToken = a});
 
--- | Defines the operating system the patch baseline applies to. Supported operating systems include WINDOWS, AMAZON_LINUX, UBUNTU and REDHAT_ENTERPRISE_LINUX. The Default value is WINDOWS.
+-- | Defines the operating system the patch baseline applies to. The Default value is WINDOWS.
 cpbOperatingSystem :: Lens' CreatePatchBaseline (Maybe OperatingSystem)
 cpbOperatingSystem = lens _cpbOperatingSystem (\ s a -> s{_cpbOperatingSystem = a});
 

@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Deletes the data feed for Spot instances.
+-- Deletes the data feed for Spot Instances.
 --
 --
 module Network.AWS.EC2.DeleteSpotDatafeedSubscription

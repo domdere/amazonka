@@ -24,6 +24,9 @@ module Network.AWS.LexModels.Types
     , _LimitExceededException
     , _ResourceInUseException
 
+    -- * ChannelStatus
+    , ChannelStatus (..)
+
     -- * ChannelType
     , ChannelType (..)
 
@@ -74,6 +77,8 @@ module Network.AWS.LexModels.Types
     -- * BotChannelAssociation
     , BotChannelAssociation
     , botChannelAssociation
+    , bcaFailureReason
+    , bcaStatus
     , bcaBotAlias
     , bcaBotName
     , bcaBotConfiguration

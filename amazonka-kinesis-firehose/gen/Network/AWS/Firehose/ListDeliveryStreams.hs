@@ -61,7 +61,7 @@ data ListDeliveryStreams = ListDeliveryStreams'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ldsLimit' - The maximum number of delivery streams to list.
+-- * 'ldsLimit' - The maximum number of delivery streams to list. The default value is 10.
 --
 -- * 'ldsDeliveryStreamType' - The delivery stream type. This can be one of the following values:     * @DirectPut@ : Provider applications access the delivery stream directly.     * @KinesisStreamAsSource@ : The delivery stream uses a Kinesis stream as a source. This parameter is optional. If this parameter is omitted, delivery streams of all types are returned.
 --
@@ -76,7 +76,7 @@ listDeliveryStreams =
   }
 
 
--- | The maximum number of delivery streams to list.
+-- | The maximum number of delivery streams to list. The default value is 10.
 ldsLimit :: Lens' ListDeliveryStreams (Maybe Natural)
 ldsLimit = lens _ldsLimit (\ s a -> s{_ldsLimit = a}) . mapping _Nat;
 

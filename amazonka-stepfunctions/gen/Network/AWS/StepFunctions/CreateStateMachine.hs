@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Creates a state machine. A state machine consists of a collection of states that can do work (@Task@ states), determine which states to transition to next (@Choice@ states), stop an execution with an error (@Fail@ states), and so on. State machines are specified using a JSON-based, structured language.
+-- Creates a state machine. A state machine consists of a collection of states that can do work (@Task@ states), determine to which states to transition next (@Choice@ states), stop an execution with an error (@Fail@ states), and so on. State machines are specified using a JSON-based, structured language.
 --
 --
 module Network.AWS.StepFunctions.CreateStateMachine
@@ -141,7 +141,7 @@ data CreateStateMachineResponse = CreateStateMachineResponse'
 --
 -- * 'csmrsStateMachineARN' - The Amazon Resource Name (ARN) that identifies the created state machine.
 --
--- * 'csmrsCreationDate' - The date the state machine was created.
+-- * 'csmrsCreationDate' - The date the state machine is created.
 createStateMachineResponse
     :: Int -- ^ 'csmrsResponseStatus'
     -> Text -- ^ 'csmrsStateMachineARN'
@@ -163,7 +163,7 @@ csmrsResponseStatus = lens _csmrsResponseStatus (\ s a -> s{_csmrsResponseStatus
 csmrsStateMachineARN :: Lens' CreateStateMachineResponse Text
 csmrsStateMachineARN = lens _csmrsStateMachineARN (\ s a -> s{_csmrsStateMachineARN = a});
 
--- | The date the state machine was created.
+-- | The date the state machine is created.
 csmrsCreationDate :: Lens' CreateStateMachineResponse UTCTime
 csmrsCreationDate = lens _csmrsCreationDate (\ s a -> s{_csmrsCreationDate = a}) . _Time;
 

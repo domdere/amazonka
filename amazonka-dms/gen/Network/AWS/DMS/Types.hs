@@ -253,6 +253,17 @@ module Network.AWS.DMS.Types
     , rReplicationInstanceARN
     , rLastFailureMessage
 
+    -- * ReplicationTaskAssessmentResult
+    , ReplicationTaskAssessmentResult
+    , replicationTaskAssessmentResult
+    , rtarAssessmentResults
+    , rtarAssessmentResultsFile
+    , rtarReplicationTaskIdentifier
+    , rtarAssessmentStatus
+    , rtarS3ObjectURL
+    , rtarReplicationTaskLastAssessmentDate
+    , rtarReplicationTaskARN
+
     -- * ReplicationTaskStats
     , ReplicationTaskStats
     , replicationTaskStats
@@ -291,15 +302,19 @@ module Network.AWS.DMS.Types
     -- * TableStatistics
     , TableStatistics
     , tableStatistics
+    , tsValidationState
     , tsFullLoadRows
     , tsInserts
     , tsFullLoadCondtnlChkFailedRows
+    , tsValidationFailedRecords
+    , tsValidationSuspendedRecords
     , tsSchemaName
     , tsTableState
     , tsFullLoadErrorRows
     , tsDdls
     , tsDeletes
     , tsUpdates
+    , tsValidationPendingRecords
     , tsLastUpdateTime
     , tsTableName
 

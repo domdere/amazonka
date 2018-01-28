@@ -21,6 +21,8 @@
 -- Returns information about replication instances for your account in the current region.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.DMS.DescribeReplicationInstances
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.DMS.DescribeReplicationInstances
 import Network.AWS.DMS.Types
 import Network.AWS.DMS.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -86,6 +89,13 @@ driMarker = lens _driMarker (\ s a -> s{_driMarker = a});
 -- | The maximum number of records to include in the response. If more records exist than the specified @MaxRecords@ value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.  Default: 100 Constraints: Minimum 20, maximum 100.
 driMaxRecords :: Lens' DescribeReplicationInstances (Maybe Int)
 driMaxRecords = lens _driMaxRecords (\ s a -> s{_driMaxRecords = a});
+
+instance AWSPager DescribeReplicationInstances where
+        page rq rs
+          | stop (rs ^. drisrsMarker) = Nothing
+          | stop (rs ^. drisrsReplicationInstances) = Nothing
+          | otherwise =
+            Just $ rq & driMarker .~ rs ^. drisrsMarker
 
 instance AWSRequest DescribeReplicationInstances
          where

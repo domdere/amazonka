@@ -35,17 +35,29 @@ module Network.AWS.CertificateManager.Types
     -- * DomainStatus
     , DomainStatus (..)
 
+    -- * ExtendedKeyUsageName
+    , ExtendedKeyUsageName (..)
+
     -- * FailureReason
     , FailureReason (..)
 
     -- * KeyAlgorithm
     , KeyAlgorithm (..)
 
+    -- * KeyUsageName
+    , KeyUsageName (..)
+
+    -- * RecordType
+    , RecordType (..)
+
     -- * RenewalStatus
     , RenewalStatus (..)
 
     -- * RevocationReason
     , RevocationReason (..)
+
+    -- * ValidationMethod
+    , ValidationMethod (..)
 
     -- * CertificateDetail
     , CertificateDetail
@@ -58,7 +70,9 @@ module Network.AWS.CertificateManager.Types
     , cdCreatedAt
     , cdCertificateARN
     , cdSerial
+    , cdExtendedKeyUsages
     , cdImportedAt
+    , cdKeyUsages
     , cdRevokedAt
     , cdNotBefore
     , cdRevocationReason
@@ -82,6 +96,8 @@ module Network.AWS.CertificateManager.Types
     , DomainValidation
     , domainValidation
     , dvValidationEmails
+    , dvValidationMethod
+    , dvResourceRecord
     , dvValidationStatus
     , dvValidationDomain
     , dvDomainName
@@ -92,11 +108,36 @@ module Network.AWS.CertificateManager.Types
     , dvoDomainName
     , dvoValidationDomain
 
+    -- * ExtendedKeyUsage
+    , ExtendedKeyUsage
+    , extendedKeyUsage
+    , ekuOId
+    , ekuName
+
+    -- * Filters
+    , Filters
+    , filters
+    , fKeyTypes
+    , fKeyUsage
+    , fExtendedKeyUsage
+
+    -- * KeyUsage
+    , KeyUsage
+    , keyUsage
+    , kuName
+
     -- * RenewalSummary
     , RenewalSummary
     , renewalSummary
     , rsRenewalStatus
     , rsDomainValidationOptions
+
+    -- * ResourceRecord
+    , ResourceRecord
+    , resourceRecord
+    , rrName
+    , rrType
+    , rrValue
 
     -- * Tag
     , Tag

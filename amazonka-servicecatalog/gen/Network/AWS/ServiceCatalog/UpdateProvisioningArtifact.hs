@@ -18,8 +18,10 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Updates an existing provisioning artifact's information. This operation does not work on a provisioning artifact associated with a product that has been shared with you.
+-- Updates the specified provisioning artifact (also known as a version) for the specified product.
 --
+--
+-- You cannot update a provisioning artifact for a product that was shared with you.
 --
 module Network.AWS.ServiceCatalog.UpdateProvisioningArtifact
     (
@@ -27,6 +29,7 @@ module Network.AWS.ServiceCatalog.UpdateProvisioningArtifact
       updateProvisioningArtifact
     , UpdateProvisioningArtifact
     -- * Request Lenses
+    , upaActive
     , upaName
     , upaAcceptLanguage
     , upaDescription
@@ -52,7 +55,8 @@ import Network.AWS.ServiceCatalog.Types.Product
 
 -- | /See:/ 'updateProvisioningArtifact' smart constructor.
 data UpdateProvisioningArtifact = UpdateProvisioningArtifact'
-  { _upaName                   :: !(Maybe Text)
+  { _upaActive                 :: !(Maybe Bool)
+  , _upaName                   :: !(Maybe Text)
   , _upaAcceptLanguage         :: !(Maybe Text)
   , _upaDescription            :: !(Maybe Text)
   , _upaProductId              :: !Text
@@ -64,28 +68,35 @@ data UpdateProvisioningArtifact = UpdateProvisioningArtifact'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'upaActive' - Indicates whether the product version is active.
+--
 -- * 'upaName' - The updated name of the provisioning artifact.
 --
 -- * 'upaAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'upaDescription' - The updated text description of the provisioning artifact.
+-- * 'upaDescription' - The updated description of the provisioning artifact.
 --
 -- * 'upaProductId' - The product identifier.
 --
--- * 'upaProvisioningArtifactId' - The identifier of the provisioning artifact for the update request. This is sometimes referred to as the product version.
+-- * 'upaProvisioningArtifactId' - The identifier of the provisioning artifact.
 updateProvisioningArtifact
     :: Text -- ^ 'upaProductId'
     -> Text -- ^ 'upaProvisioningArtifactId'
     -> UpdateProvisioningArtifact
 updateProvisioningArtifact pProductId_ pProvisioningArtifactId_ =
   UpdateProvisioningArtifact'
-  { _upaName = Nothing
+  { _upaActive = Nothing
+  , _upaName = Nothing
   , _upaAcceptLanguage = Nothing
   , _upaDescription = Nothing
   , _upaProductId = pProductId_
   , _upaProvisioningArtifactId = pProvisioningArtifactId_
   }
 
+
+-- | Indicates whether the product version is active.
+upaActive :: Lens' UpdateProvisioningArtifact (Maybe Bool)
+upaActive = lens _upaActive (\ s a -> s{_upaActive = a});
 
 -- | The updated name of the provisioning artifact.
 upaName :: Lens' UpdateProvisioningArtifact (Maybe Text)
@@ -95,7 +106,7 @@ upaName = lens _upaName (\ s a -> s{_upaName = a});
 upaAcceptLanguage :: Lens' UpdateProvisioningArtifact (Maybe Text)
 upaAcceptLanguage = lens _upaAcceptLanguage (\ s a -> s{_upaAcceptLanguage = a});
 
--- | The updated text description of the provisioning artifact.
+-- | The updated description of the provisioning artifact.
 upaDescription :: Lens' UpdateProvisioningArtifact (Maybe Text)
 upaDescription = lens _upaDescription (\ s a -> s{_upaDescription = a});
 
@@ -103,7 +114,7 @@ upaDescription = lens _upaDescription (\ s a -> s{_upaDescription = a});
 upaProductId :: Lens' UpdateProvisioningArtifact Text
 upaProductId = lens _upaProductId (\ s a -> s{_upaProductId = a});
 
--- | The identifier of the provisioning artifact for the update request. This is sometimes referred to as the product version.
+-- | The identifier of the provisioning artifact.
 upaProvisioningArtifactId :: Lens' UpdateProvisioningArtifact Text
 upaProvisioningArtifactId = lens _upaProvisioningArtifactId (\ s a -> s{_upaProvisioningArtifactId = a});
 
@@ -137,7 +148,8 @@ instance ToJSON UpdateProvisioningArtifact where
         toJSON UpdateProvisioningArtifact'{..}
           = object
               (catMaybes
-                 [("Name" .=) <$> _upaName,
+                 [("Active" .=) <$> _upaActive,
+                  ("Name" .=) <$> _upaName,
                   ("AcceptLanguage" .=) <$> _upaAcceptLanguage,
                   ("Description" .=) <$> _upaDescription,
                   Just ("ProductId" .= _upaProductId),
@@ -166,9 +178,9 @@ data UpdateProvisioningArtifactResponse = UpdateProvisioningArtifactResponse'
 --
 -- * 'uparsStatus' - The status of the current request.
 --
--- * 'uparsInfo' - Additional information about the provisioning artifact update request.
+-- * 'uparsInfo' - The URL of the CloudFormation template in Amazon S3.
 --
--- * 'uparsProvisioningArtifactDetail' - The resulting detailed provisioning artifact information.
+-- * 'uparsProvisioningArtifactDetail' - Information about the provisioning artifact.
 --
 -- * 'uparsResponseStatus' - -- | The response status code.
 updateProvisioningArtifactResponse
@@ -187,11 +199,11 @@ updateProvisioningArtifactResponse pResponseStatus_ =
 uparsStatus :: Lens' UpdateProvisioningArtifactResponse (Maybe RequestStatus)
 uparsStatus = lens _uparsStatus (\ s a -> s{_uparsStatus = a});
 
--- | Additional information about the provisioning artifact update request.
+-- | The URL of the CloudFormation template in Amazon S3.
 uparsInfo :: Lens' UpdateProvisioningArtifactResponse (HashMap Text Text)
 uparsInfo = lens _uparsInfo (\ s a -> s{_uparsInfo = a}) . _Default . _Map;
 
--- | The resulting detailed provisioning artifact information.
+-- | Information about the provisioning artifact.
 uparsProvisioningArtifactDetail :: Lens' UpdateProvisioningArtifactResponse (Maybe ProvisioningArtifactDetail)
 uparsProvisioningArtifactDetail = lens _uparsProvisioningArtifactDetail (\ s a -> s{_uparsProvisioningArtifactDetail = a});
 

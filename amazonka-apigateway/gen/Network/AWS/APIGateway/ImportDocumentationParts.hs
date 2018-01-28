@@ -139,7 +139,7 @@ instance ToQuery ImportDocumentationParts where
 -- | A collection of the imported 'DocumentationPart' identifiers.
 --
 --
--- This is used to return the result when documentation parts in an external (e.g., Swagger) file are imported into Amazon API Gateway<http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-documenting-api.html Documenting an API> , <http://docs.aws.amazon.com/apigateway/api-reference/link-relation/documentationpart-import/ documentationpart:import> , 'DocumentationPart'
+-- This is used to return the result when documentation parts in an external (e.g., Swagger) file are imported into API Gateway<http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-documenting-api.html Documenting an API> , <http://docs.aws.amazon.com/apigateway/api-reference/link-relation/documentationpart-import/ documentationpart:import> , 'DocumentationPart'
 --
 -- /See:/ 'importDocumentationPartsResponse' smart constructor.
 data ImportDocumentationPartsResponse = ImportDocumentationPartsResponse'

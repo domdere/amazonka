@@ -55,7 +55,7 @@ data ResendValidationEmail = ResendValidationEmail'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'rveCertificateARN' - String that contains the ARN of the requested certificate. The certificate ARN is generated and returned by the 'RequestCertificate' action as soon as the request is made. By default, using this parameter causes email to be sent to all top-level domains you specified in the certificate request. The ARN must be of the form: @arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012@
+-- * 'rveCertificateARN' - String that contains the ARN of the requested certificate. The certificate ARN is generated and returned by the 'RequestCertificate' action as soon as the request is made. By default, using this parameter causes email to be sent to all top-level domains you specified in the certificate request. The ARN must be of the form:  @arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012@
 --
 -- * 'rveDomain' - The fully qualified domain name (FQDN) of the certificate that needs to be validated.
 --
@@ -73,7 +73,7 @@ resendValidationEmail pCertificateARN_ pDomain_ pValidationDomain_ =
   }
 
 
--- | String that contains the ARN of the requested certificate. The certificate ARN is generated and returned by the 'RequestCertificate' action as soon as the request is made. By default, using this parameter causes email to be sent to all top-level domains you specified in the certificate request. The ARN must be of the form: @arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012@
+-- | String that contains the ARN of the requested certificate. The certificate ARN is generated and returned by the 'RequestCertificate' action as soon as the request is made. By default, using this parameter causes email to be sent to all top-level domains you specified in the certificate request. The ARN must be of the form:  @arn:aws:acm:us-east-1:123456789012:certificate/12345678-1234-1234-1234-123456789012@
 rveCertificateARN :: Lens' ResendValidationEmail Text
 rveCertificateARN = lens _rveCertificateARN (\ s a -> s{_rveCertificateARN = a});
 

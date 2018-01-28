@@ -54,13 +54,13 @@ newtype GetRegions = GetRegions'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'grIncludeAvailabilityZones' - A Boolean value indicating whether to also include Availability Zones in your get regions request. Availability Zones are indicated with a letter: e.g., @us-east-1a@ .
+-- * 'grIncludeAvailabilityZones' - A Boolean value indicating whether to also include Availability Zones in your get regions request. Availability Zones are indicated with a letter: e.g., @us-east-2a@ .
 getRegions
     :: GetRegions
 getRegions = GetRegions' {_grIncludeAvailabilityZones = Nothing}
 
 
--- | A Boolean value indicating whether to also include Availability Zones in your get regions request. Availability Zones are indicated with a letter: e.g., @us-east-1a@ .
+-- | A Boolean value indicating whether to also include Availability Zones in your get regions request. Availability Zones are indicated with a letter: e.g., @us-east-2a@ .
 grIncludeAvailabilityZones :: Lens' GetRegions (Maybe Bool)
 grIncludeAvailabilityZones = lens _grIncludeAvailabilityZones (\ s a -> s{_grIncludeAvailabilityZones = a});
 

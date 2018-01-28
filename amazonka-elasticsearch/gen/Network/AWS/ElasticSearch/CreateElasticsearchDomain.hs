@@ -32,6 +32,7 @@ module Network.AWS.ElasticSearch.CreateElasticsearchDomain
     , cedLogPublishingOptions
     , cedElasticsearchClusterConfig
     , cedSnapshotOptions
+    , cedEncryptionAtRestOptions
     , cedVPCOptions
     , cedAdvancedOptions
     , cedElasticsearchVersion
@@ -59,6 +60,7 @@ data CreateElasticsearchDomain = CreateElasticsearchDomain'
   , _cedLogPublishingOptions       :: !(Maybe (Map LogType LogPublishingOption))
   , _cedElasticsearchClusterConfig :: !(Maybe ElasticsearchClusterConfig)
   , _cedSnapshotOptions            :: !(Maybe SnapshotOptions)
+  , _cedEncryptionAtRestOptions    :: !(Maybe EncryptionAtRestOptions)
   , _cedVPCOptions                 :: !(Maybe VPCOptions)
   , _cedAdvancedOptions            :: !(Maybe (Map Text Text))
   , _cedElasticsearchVersion       :: !(Maybe Text)
@@ -80,6 +82,8 @@ data CreateElasticsearchDomain = CreateElasticsearchDomain'
 --
 -- * 'cedSnapshotOptions' - Option to set time, in UTC format, of the daily automated snapshot. Default value is 0 hours.
 --
+-- * 'cedEncryptionAtRestOptions' - Specifies the Encryption At Rest Options.
+--
 -- * 'cedVPCOptions' - Options to specify the subnets and security groups for VPC endpoint. For more information, see <http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-vpc.html#es-creating-vpc Creating a VPC> in /VPC Endpoints for Amazon Elasticsearch Service Domains/
 --
 -- * 'cedAdvancedOptions' - Option to allow references to indices in an HTTP request body. Must be @false@ when configuring access to individual sub-resources. By default, the value is @true@ . See <http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-createupdatedomains.html#es-createdomain-configure-advanced-options Configuration Advanced Options> for more information.
@@ -97,6 +101,7 @@ createElasticsearchDomain pDomainName_ =
   , _cedLogPublishingOptions = Nothing
   , _cedElasticsearchClusterConfig = Nothing
   , _cedSnapshotOptions = Nothing
+  , _cedEncryptionAtRestOptions = Nothing
   , _cedVPCOptions = Nothing
   , _cedAdvancedOptions = Nothing
   , _cedElasticsearchVersion = Nothing
@@ -123,6 +128,10 @@ cedElasticsearchClusterConfig = lens _cedElasticsearchClusterConfig (\ s a -> s{
 -- | Option to set time, in UTC format, of the daily automated snapshot. Default value is 0 hours.
 cedSnapshotOptions :: Lens' CreateElasticsearchDomain (Maybe SnapshotOptions)
 cedSnapshotOptions = lens _cedSnapshotOptions (\ s a -> s{_cedSnapshotOptions = a});
+
+-- | Specifies the Encryption At Rest Options.
+cedEncryptionAtRestOptions :: Lens' CreateElasticsearchDomain (Maybe EncryptionAtRestOptions)
+cedEncryptionAtRestOptions = lens _cedEncryptionAtRestOptions (\ s a -> s{_cedEncryptionAtRestOptions = a});
 
 -- | Options to specify the subnets and security groups for VPC endpoint. For more information, see <http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-vpc.html#es-creating-vpc Creating a VPC> in /VPC Endpoints for Amazon Elasticsearch Service Domains/
 cedVPCOptions :: Lens' CreateElasticsearchDomain (Maybe VPCOptions)
@@ -168,6 +177,8 @@ instance ToJSON CreateElasticsearchDomain where
                   ("ElasticsearchClusterConfig" .=) <$>
                     _cedElasticsearchClusterConfig,
                   ("SnapshotOptions" .=) <$> _cedSnapshotOptions,
+                  ("EncryptionAtRestOptions" .=) <$>
+                    _cedEncryptionAtRestOptions,
                   ("VPCOptions" .=) <$> _cedVPCOptions,
                   ("AdvancedOptions" .=) <$> _cedAdvancedOptions,
                   ("ElasticsearchVersion" .=) <$>

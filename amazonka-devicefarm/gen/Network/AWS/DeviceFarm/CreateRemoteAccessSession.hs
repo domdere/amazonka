@@ -28,10 +28,13 @@ module Network.AWS.DeviceFarm.CreateRemoteAccessSession
     , CreateRemoteAccessSession
     -- * Request Lenses
     , crasClientId
+    , crasRemoteRecordEnabled
+    , crasRemoteRecordAppARN
     , crasSshPublicKey
     , crasName
     , crasRemoteDebugEnabled
     , crasConfiguration
+    , crasInteractionMode
     , crasProjectARN
     , crasDeviceARN
 
@@ -56,13 +59,16 @@ import Network.AWS.Response
 --
 -- /See:/ 'createRemoteAccessSession' smart constructor.
 data CreateRemoteAccessSession = CreateRemoteAccessSession'
-  { _crasClientId           :: !(Maybe Text)
-  , _crasSshPublicKey       :: !(Maybe Text)
-  , _crasName               :: !(Maybe Text)
-  , _crasRemoteDebugEnabled :: !(Maybe Bool)
-  , _crasConfiguration      :: !(Maybe CreateRemoteAccessSessionConfiguration)
-  , _crasProjectARN         :: !Text
-  , _crasDeviceARN          :: !Text
+  { _crasClientId            :: !(Maybe Text)
+  , _crasRemoteRecordEnabled :: !(Maybe Bool)
+  , _crasRemoteRecordAppARN  :: !(Maybe Text)
+  , _crasSshPublicKey        :: !(Maybe Text)
+  , _crasName                :: !(Maybe Text)
+  , _crasRemoteDebugEnabled  :: !(Maybe Bool)
+  , _crasConfiguration       :: !(Maybe CreateRemoteAccessSessionConfiguration)
+  , _crasInteractionMode     :: !(Maybe InteractionMode)
+  , _crasProjectARN          :: !Text
+  , _crasDeviceARN           :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -70,7 +76,11 @@ data CreateRemoteAccessSession = CreateRemoteAccessSession'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'crasClientId' - Unique identifier for the client. If you want access to multiple devices on the same client, you should pass the same @clientId@ value in each call to @CreateRemoteAccessSession@ . This is required only if @remoteDebugEnabled@ is set to true @true@ .
+-- * 'crasClientId' - Unique identifier for the client. If you want access to multiple devices on the same client, you should pass the same @clientId@ value in each call to @CreateRemoteAccessSession@ . This is required only if @remoteDebugEnabled@ is set to @true@ .
+--
+-- * 'crasRemoteRecordEnabled' - Set to @true@ to enable remote recording for the remote access session.
+--
+-- * 'crasRemoteRecordAppARN' - The Amazon Resource Name (ARN) for the app to be recorded in the remote access session.
 --
 -- * 'crasSshPublicKey' - The public key of the @ssh@ key pair you want to use for connecting to remote devices in your remote debugging session. This is only required if @remoteDebugEnabled@ is set to @true@ .
 --
@@ -79,6 +89,8 @@ data CreateRemoteAccessSession = CreateRemoteAccessSession'
 -- * 'crasRemoteDebugEnabled' - Set to @true@ if you want to access devices remotely for debugging in your remote access session.
 --
 -- * 'crasConfiguration' - The configuration information for the remote access session request.
+--
+-- * 'crasInteractionMode' - The interaction mode of the remote access session. Valid values are:     * INTERACTIVE: You can interact with the iOS device by viewing, touching, and rotating the screen. You __cannot__ run XCUITest framework-based tests in this mode.     * NO_VIDEO: You are connected to the device but cannot interact with it or view the screen. This mode has the fastest test execution speed. You __can__ run XCUITest framework-based tests in this mode.     * VIDEO_ONLY: You can view the screen but cannot touch or rotate it. You __can__ run XCUITest framework-based tests and watch the screen in this mode.
 --
 -- * 'crasProjectARN' - The Amazon Resource Name (ARN) of the project for which you want to create a remote access session.
 --
@@ -90,18 +102,29 @@ createRemoteAccessSession
 createRemoteAccessSession pProjectARN_ pDeviceARN_ =
   CreateRemoteAccessSession'
   { _crasClientId = Nothing
+  , _crasRemoteRecordEnabled = Nothing
+  , _crasRemoteRecordAppARN = Nothing
   , _crasSshPublicKey = Nothing
   , _crasName = Nothing
   , _crasRemoteDebugEnabled = Nothing
   , _crasConfiguration = Nothing
+  , _crasInteractionMode = Nothing
   , _crasProjectARN = pProjectARN_
   , _crasDeviceARN = pDeviceARN_
   }
 
 
--- | Unique identifier for the client. If you want access to multiple devices on the same client, you should pass the same @clientId@ value in each call to @CreateRemoteAccessSession@ . This is required only if @remoteDebugEnabled@ is set to true @true@ .
+-- | Unique identifier for the client. If you want access to multiple devices on the same client, you should pass the same @clientId@ value in each call to @CreateRemoteAccessSession@ . This is required only if @remoteDebugEnabled@ is set to @true@ .
 crasClientId :: Lens' CreateRemoteAccessSession (Maybe Text)
 crasClientId = lens _crasClientId (\ s a -> s{_crasClientId = a});
+
+-- | Set to @true@ to enable remote recording for the remote access session.
+crasRemoteRecordEnabled :: Lens' CreateRemoteAccessSession (Maybe Bool)
+crasRemoteRecordEnabled = lens _crasRemoteRecordEnabled (\ s a -> s{_crasRemoteRecordEnabled = a});
+
+-- | The Amazon Resource Name (ARN) for the app to be recorded in the remote access session.
+crasRemoteRecordAppARN :: Lens' CreateRemoteAccessSession (Maybe Text)
+crasRemoteRecordAppARN = lens _crasRemoteRecordAppARN (\ s a -> s{_crasRemoteRecordAppARN = a});
 
 -- | The public key of the @ssh@ key pair you want to use for connecting to remote devices in your remote debugging session. This is only required if @remoteDebugEnabled@ is set to @true@ .
 crasSshPublicKey :: Lens' CreateRemoteAccessSession (Maybe Text)
@@ -118,6 +141,10 @@ crasRemoteDebugEnabled = lens _crasRemoteDebugEnabled (\ s a -> s{_crasRemoteDeb
 -- | The configuration information for the remote access session request.
 crasConfiguration :: Lens' CreateRemoteAccessSession (Maybe CreateRemoteAccessSessionConfiguration)
 crasConfiguration = lens _crasConfiguration (\ s a -> s{_crasConfiguration = a});
+
+-- | The interaction mode of the remote access session. Valid values are:     * INTERACTIVE: You can interact with the iOS device by viewing, touching, and rotating the screen. You __cannot__ run XCUITest framework-based tests in this mode.     * NO_VIDEO: You are connected to the device but cannot interact with it or view the screen. This mode has the fastest test execution speed. You __can__ run XCUITest framework-based tests in this mode.     * VIDEO_ONLY: You can view the screen but cannot touch or rotate it. You __can__ run XCUITest framework-based tests and watch the screen in this mode.
+crasInteractionMode :: Lens' CreateRemoteAccessSession (Maybe InteractionMode)
+crasInteractionMode = lens _crasInteractionMode (\ s a -> s{_crasInteractionMode = a});
 
 -- | The Amazon Resource Name (ARN) of the project for which you want to create a remote access session.
 crasProjectARN :: Lens' CreateRemoteAccessSession Text
@@ -157,11 +184,16 @@ instance ToJSON CreateRemoteAccessSession where
           = object
               (catMaybes
                  [("clientId" .=) <$> _crasClientId,
+                  ("remoteRecordEnabled" .=) <$>
+                    _crasRemoteRecordEnabled,
+                  ("remoteRecordAppArn" .=) <$>
+                    _crasRemoteRecordAppARN,
                   ("sshPublicKey" .=) <$> _crasSshPublicKey,
                   ("name" .=) <$> _crasName,
                   ("remoteDebugEnabled" .=) <$>
                     _crasRemoteDebugEnabled,
                   ("configuration" .=) <$> _crasConfiguration,
+                  ("interactionMode" .=) <$> _crasInteractionMode,
                   Just ("projectArn" .= _crasProjectARN),
                   Just ("deviceArn" .= _crasDeviceARN)])
 

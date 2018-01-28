@@ -42,7 +42,7 @@ import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
 
--- | Requests Amazon API Gateway to delete a 'Stage' resource.
+-- | Requests API Gateway to delete a 'Stage' resource.
 --
 --
 --

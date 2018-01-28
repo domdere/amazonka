@@ -27,6 +27,9 @@ module Network.AWS.CodeBuild.CreateProject
       createProject
     , CreateProject
     -- * Request Lenses
+    , cpBadgeEnabled
+    , cpCache
+    , cpVpcConfig
     , cpEncryptionKey
     , cpDescription
     , cpServiceRole
@@ -54,7 +57,10 @@ import Network.AWS.Response
 
 -- | /See:/ 'createProject' smart constructor.
 data CreateProject = CreateProject'
-  { _cpEncryptionKey    :: !(Maybe Text)
+  { _cpBadgeEnabled     :: !(Maybe Bool)
+  , _cpCache            :: !(Maybe ProjectCache)
+  , _cpVpcConfig        :: !(Maybe VPCConfig)
+  , _cpEncryptionKey    :: !(Maybe Text)
   , _cpDescription      :: !(Maybe Text)
   , _cpServiceRole      :: !(Maybe Text)
   , _cpTags             :: !(Maybe [Tag])
@@ -69,6 +75,12 @@ data CreateProject = CreateProject'
 -- | Creates a value of 'CreateProject' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'cpBadgeEnabled' - Set this to true to generate a publicly-accessible URL for your project's build badge.
+--
+-- * 'cpCache' - Stores recently used information so that it can be quickly accessed at a later time.
+--
+-- * 'cpVpcConfig' - VpcConfig enables AWS CodeBuild to access resources in an Amazon VPC.
 --
 -- * 'cpEncryptionKey' - The AWS Key Management Service (AWS KMS) customer master key (CMK) to be used for encrypting the build output artifacts. You can specify either the CMK's Amazon Resource Name (ARN) or, if available, the CMK's alias (using the format @alias//alias-name/ @ ).
 --
@@ -95,7 +107,10 @@ createProject
     -> CreateProject
 createProject pName_ pSource_ pArtifacts_ pEnvironment_ =
   CreateProject'
-  { _cpEncryptionKey = Nothing
+  { _cpBadgeEnabled = Nothing
+  , _cpCache = Nothing
+  , _cpVpcConfig = Nothing
+  , _cpEncryptionKey = Nothing
   , _cpDescription = Nothing
   , _cpServiceRole = Nothing
   , _cpTags = Nothing
@@ -106,6 +121,18 @@ createProject pName_ pSource_ pArtifacts_ pEnvironment_ =
   , _cpEnvironment = pEnvironment_
   }
 
+
+-- | Set this to true to generate a publicly-accessible URL for your project's build badge.
+cpBadgeEnabled :: Lens' CreateProject (Maybe Bool)
+cpBadgeEnabled = lens _cpBadgeEnabled (\ s a -> s{_cpBadgeEnabled = a});
+
+-- | Stores recently used information so that it can be quickly accessed at a later time.
+cpCache :: Lens' CreateProject (Maybe ProjectCache)
+cpCache = lens _cpCache (\ s a -> s{_cpCache = a});
+
+-- | VpcConfig enables AWS CodeBuild to access resources in an Amazon VPC.
+cpVpcConfig :: Lens' CreateProject (Maybe VPCConfig)
+cpVpcConfig = lens _cpVpcConfig (\ s a -> s{_cpVpcConfig = a});
 
 -- | The AWS Key Management Service (AWS KMS) customer master key (CMK) to be used for encrypting the build output artifacts. You can specify either the CMK's Amazon Resource Name (ARN) or, if available, the CMK's alias (using the format @alias//alias-name/ @ ).
 cpEncryptionKey :: Lens' CreateProject (Maybe Text)
@@ -169,7 +196,10 @@ instance ToJSON CreateProject where
         toJSON CreateProject'{..}
           = object
               (catMaybes
-                 [("encryptionKey" .=) <$> _cpEncryptionKey,
+                 [("badgeEnabled" .=) <$> _cpBadgeEnabled,
+                  ("cache" .=) <$> _cpCache,
+                  ("vpcConfig" .=) <$> _cpVpcConfig,
+                  ("encryptionKey" .=) <$> _cpEncryptionKey,
                   ("description" .=) <$> _cpDescription,
                   ("serviceRole" .=) <$> _cpServiceRole,
                   ("tags" .=) <$> _cpTags,

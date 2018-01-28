@@ -619,6 +619,155 @@ instance ToXML CORSRule where
                toXMLList "AllowedMethod" _crAllowedMethods,
                toXMLList "AllowedOrigin" _crAllowedOrigins]
 
+-- | Describes how a CSV-formatted input object is formatted.
+--
+-- /See:/ 'csvInput' smart constructor.
+data CSVInput = CSVInput'
+  { _ciQuoteCharacter       :: !(Maybe Text)
+  , _ciRecordDelimiter      :: !(Maybe Text)
+  , _ciFileHeaderInfo       :: !(Maybe FileHeaderInfo)
+  , _ciQuoteEscapeCharacter :: !(Maybe Text)
+  , _ciComments             :: !(Maybe Text)
+  , _ciFieldDelimiter       :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CSVInput' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ciQuoteCharacter' - Value used for escaping where the field delimiter is part of the value.
+--
+-- * 'ciRecordDelimiter' - Value used to separate individual records.
+--
+-- * 'ciFileHeaderInfo' - Describes the first line of input. Valid values: None, Ignore, Use.
+--
+-- * 'ciQuoteEscapeCharacter' - Single character used for escaping the quote character inside an already escaped value.
+--
+-- * 'ciComments' - Single character used to indicate a row should be ignored when present at the start of a row.
+--
+-- * 'ciFieldDelimiter' - Value used to separate individual fields in a record.
+csvInput
+    :: CSVInput
+csvInput =
+  CSVInput'
+  { _ciQuoteCharacter = Nothing
+  , _ciRecordDelimiter = Nothing
+  , _ciFileHeaderInfo = Nothing
+  , _ciQuoteEscapeCharacter = Nothing
+  , _ciComments = Nothing
+  , _ciFieldDelimiter = Nothing
+  }
+
+
+-- | Value used for escaping where the field delimiter is part of the value.
+ciQuoteCharacter :: Lens' CSVInput (Maybe Text)
+ciQuoteCharacter = lens _ciQuoteCharacter (\ s a -> s{_ciQuoteCharacter = a});
+
+-- | Value used to separate individual records.
+ciRecordDelimiter :: Lens' CSVInput (Maybe Text)
+ciRecordDelimiter = lens _ciRecordDelimiter (\ s a -> s{_ciRecordDelimiter = a});
+
+-- | Describes the first line of input. Valid values: None, Ignore, Use.
+ciFileHeaderInfo :: Lens' CSVInput (Maybe FileHeaderInfo)
+ciFileHeaderInfo = lens _ciFileHeaderInfo (\ s a -> s{_ciFileHeaderInfo = a});
+
+-- | Single character used for escaping the quote character inside an already escaped value.
+ciQuoteEscapeCharacter :: Lens' CSVInput (Maybe Text)
+ciQuoteEscapeCharacter = lens _ciQuoteEscapeCharacter (\ s a -> s{_ciQuoteEscapeCharacter = a});
+
+-- | Single character used to indicate a row should be ignored when present at the start of a row.
+ciComments :: Lens' CSVInput (Maybe Text)
+ciComments = lens _ciComments (\ s a -> s{_ciComments = a});
+
+-- | Value used to separate individual fields in a record.
+ciFieldDelimiter :: Lens' CSVInput (Maybe Text)
+ciFieldDelimiter = lens _ciFieldDelimiter (\ s a -> s{_ciFieldDelimiter = a});
+
+instance Hashable CSVInput where
+
+instance NFData CSVInput where
+
+instance ToXML CSVInput where
+        toXML CSVInput'{..}
+          = mconcat
+              ["QuoteCharacter" @= _ciQuoteCharacter,
+               "RecordDelimiter" @= _ciRecordDelimiter,
+               "FileHeaderInfo" @= _ciFileHeaderInfo,
+               "QuoteEscapeCharacter" @= _ciQuoteEscapeCharacter,
+               "Comments" @= _ciComments,
+               "FieldDelimiter" @= _ciFieldDelimiter]
+
+-- | Describes how CSV-formatted results are formatted.
+--
+-- /See:/ 'csvOutput' smart constructor.
+data CSVOutput = CSVOutput'
+  { _coQuoteCharacter       :: !(Maybe Text)
+  , _coQuoteFields          :: !(Maybe QuoteFields)
+  , _coRecordDelimiter      :: !(Maybe Text)
+  , _coQuoteEscapeCharacter :: !(Maybe Text)
+  , _coFieldDelimiter       :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CSVOutput' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'coQuoteCharacter' - Value used for escaping where the field delimiter is part of the value.
+--
+-- * 'coQuoteFields' - Indicates whether or not all output fields should be quoted.
+--
+-- * 'coRecordDelimiter' - Value used to separate individual records.
+--
+-- * 'coQuoteEscapeCharacter' - Single character used for escaping the quote character inside an already escaped value.
+--
+-- * 'coFieldDelimiter' - Value used to separate individual fields in a record.
+csvOutput
+    :: CSVOutput
+csvOutput =
+  CSVOutput'
+  { _coQuoteCharacter = Nothing
+  , _coQuoteFields = Nothing
+  , _coRecordDelimiter = Nothing
+  , _coQuoteEscapeCharacter = Nothing
+  , _coFieldDelimiter = Nothing
+  }
+
+
+-- | Value used for escaping where the field delimiter is part of the value.
+coQuoteCharacter :: Lens' CSVOutput (Maybe Text)
+coQuoteCharacter = lens _coQuoteCharacter (\ s a -> s{_coQuoteCharacter = a});
+
+-- | Indicates whether or not all output fields should be quoted.
+coQuoteFields :: Lens' CSVOutput (Maybe QuoteFields)
+coQuoteFields = lens _coQuoteFields (\ s a -> s{_coQuoteFields = a});
+
+-- | Value used to separate individual records.
+coRecordDelimiter :: Lens' CSVOutput (Maybe Text)
+coRecordDelimiter = lens _coRecordDelimiter (\ s a -> s{_coRecordDelimiter = a});
+
+-- | Single character used for escaping the quote character inside an already escaped value.
+coQuoteEscapeCharacter :: Lens' CSVOutput (Maybe Text)
+coQuoteEscapeCharacter = lens _coQuoteEscapeCharacter (\ s a -> s{_coQuoteEscapeCharacter = a});
+
+-- | Value used to separate individual fields in a record.
+coFieldDelimiter :: Lens' CSVOutput (Maybe Text)
+coFieldDelimiter = lens _coFieldDelimiter (\ s a -> s{_coFieldDelimiter = a});
+
+instance Hashable CSVOutput where
+
+instance NFData CSVOutput where
+
+instance ToXML CSVOutput where
+        toXML CSVOutput'{..}
+          = mconcat
+              ["QuoteCharacter" @= _coQuoteCharacter,
+               "QuoteFields" @= _coQuoteFields,
+               "RecordDelimiter" @= _coRecordDelimiter,
+               "QuoteEscapeCharacter" @= _coQuoteEscapeCharacter,
+               "FieldDelimiter" @= _coFieldDelimiter]
+
 -- | /See:/ 'commonPrefix' smart constructor.
 newtype CommonPrefix = CommonPrefix'
   { _cpPrefix :: Maybe Text
@@ -1106,6 +1255,59 @@ instance ToXML Destination where
                  _dEncryptionConfiguration,
                "Bucket" @= _dBucket]
 
+-- | Describes the server-side encryption that will be applied to the restore results.
+--
+-- /See:/ 'encryption' smart constructor.
+data Encryption = Encryption'
+  { _eKMSKeyId       :: !(Maybe (Sensitive Text))
+  , _eKMSContext     :: !(Maybe Text)
+  , _eEncryptionType :: !ServerSideEncryption
+  } deriving (Eq, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'Encryption' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'eKMSKeyId' - If the encryption type is aws:kms, this optional value specifies the AWS KMS key ID to use for encryption of job results.
+--
+-- * 'eKMSContext' - If the encryption type is aws:kms, this optional value can be used to specify the encryption context for the restore results.
+--
+-- * 'eEncryptionType' - The server-side encryption algorithm used when storing job results in Amazon S3 (e.g., AES256, aws:kms).
+encryption
+    :: ServerSideEncryption -- ^ 'eEncryptionType'
+    -> Encryption
+encryption pEncryptionType_ =
+  Encryption'
+  { _eKMSKeyId = Nothing
+  , _eKMSContext = Nothing
+  , _eEncryptionType = pEncryptionType_
+  }
+
+
+-- | If the encryption type is aws:kms, this optional value specifies the AWS KMS key ID to use for encryption of job results.
+eKMSKeyId :: Lens' Encryption (Maybe Text)
+eKMSKeyId = lens _eKMSKeyId (\ s a -> s{_eKMSKeyId = a}) . mapping _Sensitive;
+
+-- | If the encryption type is aws:kms, this optional value can be used to specify the encryption context for the restore results.
+eKMSContext :: Lens' Encryption (Maybe Text)
+eKMSContext = lens _eKMSContext (\ s a -> s{_eKMSContext = a});
+
+-- | The server-side encryption algorithm used when storing job results in Amazon S3 (e.g., AES256, aws:kms).
+eEncryptionType :: Lens' Encryption ServerSideEncryption
+eEncryptionType = lens _eEncryptionType (\ s a -> s{_eEncryptionType = a});
+
+instance Hashable Encryption where
+
+instance NFData Encryption where
+
+instance ToXML Encryption where
+        toXML Encryption'{..}
+          = mconcat
+              ["KMSKeyId" @= _eKMSKeyId,
+               "KMSContext" @= _eKMSContext,
+               "EncryptionType" @= _eEncryptionType]
+
 -- | Container for information regarding encryption based configuration for replicas.
 --
 -- /See:/ 'encryptionConfiguration' smart constructor.
@@ -1427,6 +1629,36 @@ instance FromXML Initiator where
 instance Hashable Initiator where
 
 instance NFData Initiator where
+
+-- | Describes the serialization format of the object.
+--
+-- /See:/ 'inputSerialization' smart constructor.
+newtype InputSerialization = InputSerialization'
+  { _isCSV :: Maybe CSVInput
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'InputSerialization' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'isCSV' - Describes the serialization of a CSV-encoded object.
+inputSerialization
+    :: InputSerialization
+inputSerialization = InputSerialization' {_isCSV = Nothing}
+
+
+-- | Describes the serialization of a CSV-encoded object.
+isCSV :: Lens' InputSerialization (Maybe CSVInput)
+isCSV = lens _isCSV (\ s a -> s{_isCSV = a});
+
+instance Hashable InputSerialization where
+
+instance NFData InputSerialization where
+
+instance ToXML InputSerialization where
+        toXML InputSerialization'{..}
+          = mconcat ["CSV" @= _isCSV]
 
 -- | /See:/ 'inventoryConfiguration' smart constructor.
 data InventoryConfiguration = InventoryConfiguration'
@@ -2155,6 +2387,43 @@ instance ToXML LoggingEnabled where
                  toXML (toXMLList "Grant" <$> _leTargetGrants),
                "TargetPrefix" @= _leTargetPrefix]
 
+-- | A metadata key-value pair to store with an object.
+--
+-- /See:/ 'metadataEntry' smart constructor.
+data MetadataEntry = MetadataEntry'
+  { _meValue :: !(Maybe Text)
+  , _meName  :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'MetadataEntry' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'meValue' - Undocumented member.
+--
+-- * 'meName' - Undocumented member.
+metadataEntry
+    :: MetadataEntry
+metadataEntry = MetadataEntry' {_meValue = Nothing, _meName = Nothing}
+
+
+-- | Undocumented member.
+meValue :: Lens' MetadataEntry (Maybe Text)
+meValue = lens _meValue (\ s a -> s{_meValue = a});
+
+-- | Undocumented member.
+meName :: Lens' MetadataEntry (Maybe Text)
+meName = lens _meName (\ s a -> s{_meName = a});
+
+instance Hashable MetadataEntry where
+
+instance NFData MetadataEntry where
+
+instance ToXML MetadataEntry where
+        toXML MetadataEntry'{..}
+          = mconcat ["Value" @= _meValue, "Name" @= _meName]
+
 -- | /See:/ 'metricsAndOperator' smart constructor.
 data MetricsAndOperator = MetricsAndOperator'
   { _maoPrefix :: !(Maybe Text)
@@ -2768,6 +3037,65 @@ instance Hashable ObjectVersion where
 
 instance NFData ObjectVersion where
 
+-- | Describes the location where the restore job's output is stored.
+--
+-- /See:/ 'outputLocation' smart constructor.
+newtype OutputLocation = OutputLocation'
+  { _olS3 :: Maybe S3Location
+  } deriving (Eq, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'OutputLocation' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'olS3' - Describes an S3 location that will receive the results of the restore request.
+outputLocation
+    :: OutputLocation
+outputLocation = OutputLocation' {_olS3 = Nothing}
+
+
+-- | Describes an S3 location that will receive the results of the restore request.
+olS3 :: Lens' OutputLocation (Maybe S3Location)
+olS3 = lens _olS3 (\ s a -> s{_olS3 = a});
+
+instance Hashable OutputLocation where
+
+instance NFData OutputLocation where
+
+instance ToXML OutputLocation where
+        toXML OutputLocation'{..} = mconcat ["S3" @= _olS3]
+
+-- | Describes how results of the Select job are serialized.
+--
+-- /See:/ 'outputSerialization' smart constructor.
+newtype OutputSerialization = OutputSerialization'
+  { _osCSV :: Maybe CSVOutput
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'OutputSerialization' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'osCSV' - Describes the serialization of CSV-encoded Select results.
+outputSerialization
+    :: OutputSerialization
+outputSerialization = OutputSerialization' {_osCSV = Nothing}
+
+
+-- | Describes the serialization of CSV-encoded Select results.
+osCSV :: Lens' OutputSerialization (Maybe CSVOutput)
+osCSV = lens _osCSV (\ s a -> s{_osCSV = a});
+
+instance Hashable OutputSerialization where
+
+instance NFData OutputSerialization where
+
+instance ToXML OutputSerialization where
+        toXML OutputSerialization'{..}
+          = mconcat ["CSV" @= _osCSV]
+
 -- | /See:/ 'owner' smart constructor.
 data Owner = Owner'
   { _oDisplayName :: !(Maybe Text)
@@ -3207,34 +3535,78 @@ instance ToXML RequestPaymentConfiguration where
         toXML RequestPaymentConfiguration'{..}
           = mconcat ["Payer" @= _rpcPayer]
 
--- | /See:/ 'restoreRequest' smart constructor.
+-- | Container for restore job parameters.
+--
+-- /See:/ 'restoreRequest' smart constructor.
 data RestoreRequest = RestoreRequest'
-  { _rrGlacierJobParameters :: !(Maybe GlacierJobParameters)
-  , _rrDays                 :: !Int
-  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+  { _rrDays                 :: !(Maybe Int)
+  , _rrSelectParameters     :: !(Maybe SelectParameters)
+  , _rrOutputLocation       :: !(Maybe OutputLocation)
+  , _rrTier                 :: !(Maybe Tier)
+  , _rrGlacierJobParameters :: !(Maybe GlacierJobParameters)
+  , _rrType                 :: !(Maybe RestoreRequestType)
+  , _rrDescription          :: !(Maybe Text)
+  } deriving (Eq, Show, Data, Typeable, Generic)
 
 
 -- | Creates a value of 'RestoreRequest' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'rrGlacierJobParameters' - Glacier related prameters pertaining to this job.
+-- * 'rrDays' - Lifetime of the active copy in days. Do not use with restores that specify OutputLocation.
 --
--- * 'rrDays' - Lifetime of the active copy in days
+-- * 'rrSelectParameters' - Describes the parameters for Select job types.
+--
+-- * 'rrOutputLocation' - Describes the location where the restore job's output is stored.
+--
+-- * 'rrTier' - Glacier retrieval tier at which the restore will be processed.
+--
+-- * 'rrGlacierJobParameters' - Glacier related parameters pertaining to this job. Do not use with restores that specify OutputLocation.
+--
+-- * 'rrType' - Type of restore request.
+--
+-- * 'rrDescription' - The optional description for the job.
 restoreRequest
-    :: Int -- ^ 'rrDays'
-    -> RestoreRequest
-restoreRequest pDays_ =
-  RestoreRequest' {_rrGlacierJobParameters = Nothing, _rrDays = pDays_}
+    :: RestoreRequest
+restoreRequest =
+  RestoreRequest'
+  { _rrDays = Nothing
+  , _rrSelectParameters = Nothing
+  , _rrOutputLocation = Nothing
+  , _rrTier = Nothing
+  , _rrGlacierJobParameters = Nothing
+  , _rrType = Nothing
+  , _rrDescription = Nothing
+  }
 
 
--- | Glacier related prameters pertaining to this job.
+-- | Lifetime of the active copy in days. Do not use with restores that specify OutputLocation.
+rrDays :: Lens' RestoreRequest (Maybe Int)
+rrDays = lens _rrDays (\ s a -> s{_rrDays = a});
+
+-- | Describes the parameters for Select job types.
+rrSelectParameters :: Lens' RestoreRequest (Maybe SelectParameters)
+rrSelectParameters = lens _rrSelectParameters (\ s a -> s{_rrSelectParameters = a});
+
+-- | Describes the location where the restore job's output is stored.
+rrOutputLocation :: Lens' RestoreRequest (Maybe OutputLocation)
+rrOutputLocation = lens _rrOutputLocation (\ s a -> s{_rrOutputLocation = a});
+
+-- | Glacier retrieval tier at which the restore will be processed.
+rrTier :: Lens' RestoreRequest (Maybe Tier)
+rrTier = lens _rrTier (\ s a -> s{_rrTier = a});
+
+-- | Glacier related parameters pertaining to this job. Do not use with restores that specify OutputLocation.
 rrGlacierJobParameters :: Lens' RestoreRequest (Maybe GlacierJobParameters)
 rrGlacierJobParameters = lens _rrGlacierJobParameters (\ s a -> s{_rrGlacierJobParameters = a});
 
--- | Lifetime of the active copy in days
-rrDays :: Lens' RestoreRequest Int
-rrDays = lens _rrDays (\ s a -> s{_rrDays = a});
+-- | Type of restore request.
+rrType :: Lens' RestoreRequest (Maybe RestoreRequestType)
+rrType = lens _rrType (\ s a -> s{_rrType = a});
+
+-- | The optional description for the job.
+rrDescription :: Lens' RestoreRequest (Maybe Text)
+rrDescription = lens _rrDescription (\ s a -> s{_rrDescription = a});
 
 instance Hashable RestoreRequest where
 
@@ -3243,8 +3615,12 @@ instance NFData RestoreRequest where
 instance ToXML RestoreRequest where
         toXML RestoreRequest'{..}
           = mconcat
-              ["GlacierJobParameters" @= _rrGlacierJobParameters,
-               "Days" @= _rrDays]
+              ["Days" @= _rrDays,
+               "SelectParameters" @= _rrSelectParameters,
+               "OutputLocation" @= _rrOutputLocation,
+               "Tier" @= _rrTier,
+               "GlacierJobParameters" @= _rrGlacierJobParameters,
+               "Type" @= _rrType, "Description" @= _rrDescription]
 
 -- | /See:/ 'routingRule' smart constructor.
 data RoutingRule = RoutingRule'
@@ -3325,6 +3701,107 @@ instance ToXML S3KeyFilter where
         toXML S3KeyFilter'{..}
           = mconcat
               [toXML (toXMLList "FilterRule" <$> _skfFilterRules)]
+
+-- | Describes an S3 location that will receive the results of the restore request.
+--
+-- /See:/ 's3Location' smart constructor.
+data S3Location = S3Location'
+  { _slCannedACL         :: !(Maybe ObjectCannedACL)
+  , _slAccessControlList :: !(Maybe [Grant])
+  , _slUserMetadata      :: !(Maybe [MetadataEntry])
+  , _slEncryption        :: !(Maybe Encryption)
+  , _slStorageClass      :: !(Maybe StorageClass)
+  , _slTagging           :: !(Maybe Tagging)
+  , _slBucketName        :: !BucketName
+  , _slPrefix            :: !Text
+  } deriving (Eq, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'S3Location' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'slCannedACL' - The canned ACL to apply to the restore results.
+--
+-- * 'slAccessControlList' - A list of grants that control access to the staged results.
+--
+-- * 'slUserMetadata' - A list of metadata to store with the restore results in S3.
+--
+-- * 'slEncryption' - Undocumented member.
+--
+-- * 'slStorageClass' - The class of storage used to store the restore results.
+--
+-- * 'slTagging' - The tag-set that is applied to the restore results.
+--
+-- * 'slBucketName' - The name of the bucket where the restore results will be placed.
+--
+-- * 'slPrefix' - The prefix that is prepended to the restore results for this request.
+s3Location
+    :: BucketName -- ^ 'slBucketName'
+    -> Text -- ^ 'slPrefix'
+    -> S3Location
+s3Location pBucketName_ pPrefix_ =
+  S3Location'
+  { _slCannedACL = Nothing
+  , _slAccessControlList = Nothing
+  , _slUserMetadata = Nothing
+  , _slEncryption = Nothing
+  , _slStorageClass = Nothing
+  , _slTagging = Nothing
+  , _slBucketName = pBucketName_
+  , _slPrefix = pPrefix_
+  }
+
+
+-- | The canned ACL to apply to the restore results.
+slCannedACL :: Lens' S3Location (Maybe ObjectCannedACL)
+slCannedACL = lens _slCannedACL (\ s a -> s{_slCannedACL = a});
+
+-- | A list of grants that control access to the staged results.
+slAccessControlList :: Lens' S3Location [Grant]
+slAccessControlList = lens _slAccessControlList (\ s a -> s{_slAccessControlList = a}) . _Default . _Coerce;
+
+-- | A list of metadata to store with the restore results in S3.
+slUserMetadata :: Lens' S3Location [MetadataEntry]
+slUserMetadata = lens _slUserMetadata (\ s a -> s{_slUserMetadata = a}) . _Default . _Coerce;
+
+-- | Undocumented member.
+slEncryption :: Lens' S3Location (Maybe Encryption)
+slEncryption = lens _slEncryption (\ s a -> s{_slEncryption = a});
+
+-- | The class of storage used to store the restore results.
+slStorageClass :: Lens' S3Location (Maybe StorageClass)
+slStorageClass = lens _slStorageClass (\ s a -> s{_slStorageClass = a});
+
+-- | The tag-set that is applied to the restore results.
+slTagging :: Lens' S3Location (Maybe Tagging)
+slTagging = lens _slTagging (\ s a -> s{_slTagging = a});
+
+-- | The name of the bucket where the restore results will be placed.
+slBucketName :: Lens' S3Location BucketName
+slBucketName = lens _slBucketName (\ s a -> s{_slBucketName = a});
+
+-- | The prefix that is prepended to the restore results for this request.
+slPrefix :: Lens' S3Location Text
+slPrefix = lens _slPrefix (\ s a -> s{_slPrefix = a});
+
+instance Hashable S3Location where
+
+instance NFData S3Location where
+
+instance ToXML S3Location where
+        toXML S3Location'{..}
+          = mconcat
+              ["CannedACL" @= _slCannedACL,
+               "AccessControlList" @=
+                 toXML (toXMLList "Grant" <$> _slAccessControlList),
+               "UserMetadata" @=
+                 toXML
+                   (toXMLList "MetadataEntry" <$> _slUserMetadata),
+               "Encryption" @= _slEncryption,
+               "StorageClass" @= _slStorageClass,
+               "Tagging" @= _slTagging,
+               "BucketName" @= _slBucketName, "Prefix" @= _slPrefix]
 
 -- | /See:/ 's3ServiceError' smart constructor.
 data S3ServiceError = S3ServiceError'
@@ -3441,6 +3918,71 @@ instance NFData SSES3 where
 
 instance ToXML SSES3 where
         toXML = const mempty
+
+-- | Describes the parameters for Select job types.
+--
+-- /See:/ 'selectParameters' smart constructor.
+data SelectParameters = SelectParameters'
+  { _spInputSerialization  :: !InputSerialization
+  , _spExpressionType      :: !ExpressionType
+  , _spExpression          :: !Text
+  , _spOutputSerialization :: !OutputSerialization
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'SelectParameters' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'spInputSerialization' - Describes the serialization format of the object.
+--
+-- * 'spExpressionType' - The type of the provided expression (e.g., SQL).
+--
+-- * 'spExpression' - The expression that is used to query the object.
+--
+-- * 'spOutputSerialization' - Describes how the results of the Select job are serialized.
+selectParameters
+    :: InputSerialization -- ^ 'spInputSerialization'
+    -> ExpressionType -- ^ 'spExpressionType'
+    -> Text -- ^ 'spExpression'
+    -> OutputSerialization -- ^ 'spOutputSerialization'
+    -> SelectParameters
+selectParameters pInputSerialization_ pExpressionType_ pExpression_ pOutputSerialization_ =
+  SelectParameters'
+  { _spInputSerialization = pInputSerialization_
+  , _spExpressionType = pExpressionType_
+  , _spExpression = pExpression_
+  , _spOutputSerialization = pOutputSerialization_
+  }
+
+
+-- | Describes the serialization format of the object.
+spInputSerialization :: Lens' SelectParameters InputSerialization
+spInputSerialization = lens _spInputSerialization (\ s a -> s{_spInputSerialization = a});
+
+-- | The type of the provided expression (e.g., SQL).
+spExpressionType :: Lens' SelectParameters ExpressionType
+spExpressionType = lens _spExpressionType (\ s a -> s{_spExpressionType = a});
+
+-- | The expression that is used to query the object.
+spExpression :: Lens' SelectParameters Text
+spExpression = lens _spExpression (\ s a -> s{_spExpression = a});
+
+-- | Describes how the results of the Select job are serialized.
+spOutputSerialization :: Lens' SelectParameters OutputSerialization
+spOutputSerialization = lens _spOutputSerialization (\ s a -> s{_spOutputSerialization = a});
+
+instance Hashable SelectParameters where
+
+instance NFData SelectParameters where
+
+instance ToXML SelectParameters where
+        toXML SelectParameters'{..}
+          = mconcat
+              ["InputSerialization" @= _spInputSerialization,
+               "ExpressionType" @= _spExpressionType,
+               "Expression" @= _spExpression,
+               "OutputSerialization" @= _spOutputSerialization]
 
 -- | Describes the default server-side encryption to apply to new objects in the bucket. If Put Object request does not specify any server-side encryption, this default encryption will be applied.
 --

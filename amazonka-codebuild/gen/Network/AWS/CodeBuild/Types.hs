@@ -34,6 +34,9 @@ module Network.AWS.CodeBuild.Types
     -- * BuildPhaseType
     , BuildPhaseType (..)
 
+    -- * CacheType
+    , CacheType (..)
+
     -- * ComputeType
     , ComputeType (..)
 
@@ -74,9 +77,12 @@ module Network.AWS.CodeBuild.Types
     , bArtifacts
     , bEnvironment
     , bInitiator
+    , bNetworkInterface
     , bCurrentPhase
+    , bCache
     , bSourceVersion
     , bLogs
+    , bVpcConfig
     , bEndTime
     , bProjectName
     , bBuildStatus
@@ -110,6 +116,7 @@ module Network.AWS.CodeBuild.Types
     -- * EnvironmentImage
     , EnvironmentImage
     , environmentImage
+    , eiVersions
     , eiName
     , eiDescription
 
@@ -139,6 +146,12 @@ module Network.AWS.CodeBuild.Types
     , llGroupName
     , llStreamName
 
+    -- * NetworkInterface
+    , NetworkInterface
+    , networkInterface
+    , niSubnetId
+    , niNetworkInterfaceId
+
     -- * PhaseContext
     , PhaseContext
     , phaseContext
@@ -152,8 +165,11 @@ module Network.AWS.CodeBuild.Types
     , pArtifacts
     , pEnvironment
     , pCreated
+    , pCache
     , pName
+    , pVpcConfig
     , pSource
+    , pBadge
     , pEncryptionKey
     , pLastModified
     , pWebhook
@@ -172,10 +188,23 @@ module Network.AWS.CodeBuild.Types
     , paNamespaceType
     , paType
 
+    -- * ProjectBadge
+    , ProjectBadge
+    , projectBadge
+    , pbBadgeEnabled
+    , pbBadgeRequestURL
+
+    -- * ProjectCache
+    , ProjectCache
+    , projectCache
+    , pcLocation
+    , pcType
+
     -- * ProjectEnvironment
     , ProjectEnvironment
     , projectEnvironment
     , pePrivilegedMode
+    , peCertificate
     , peEnvironmentVariables
     , peType
     , peImage
@@ -184,9 +213,11 @@ module Network.AWS.CodeBuild.Types
     -- * ProjectSource
     , ProjectSource
     , projectSource
+    , psInsecureSSL
     , psLocation
     , psAuth
     , psBuildspec
+    , psGitCloneDepth
     , psType
 
     -- * SourceAuth
@@ -201,10 +232,19 @@ module Network.AWS.CodeBuild.Types
     , tagValue
     , tagKey
 
+    -- * VPCConfig
+    , VPCConfig
+    , vpcConfig
+    , vcSecurityGroupIds
+    , vcVpcId
+    , vcSubnets
+
     -- * Webhook
     , Webhook
     , webhook
     , wUrl
+    , wSecret
+    , wPayloadURL
     ) where
 
 import Network.AWS.CodeBuild.Types.Product

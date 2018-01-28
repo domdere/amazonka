@@ -25,6 +25,8 @@
 --
 -- This operation requires permission for the @lex:GetBuiltInSlotTypes@ action.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.LexModels.GetBuiltinSlotTypes
     (
     -- * Creating a Request
@@ -48,6 +50,7 @@ module Network.AWS.LexModels.GetBuiltinSlotTypes
 import Network.AWS.Lens
 import Network.AWS.LexModels.Types
 import Network.AWS.LexModels.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -98,6 +101,13 @@ gbstSignatureContains = lens _gbstSignatureContains (\ s a -> s{_gbstSignatureCo
 -- | The maximum number of slot types to return in the response. The default is 10.
 gbstMaxResults :: Lens' GetBuiltinSlotTypes (Maybe Natural)
 gbstMaxResults = lens _gbstMaxResults (\ s a -> s{_gbstMaxResults = a}) . mapping _Nat;
+
+instance AWSPager GetBuiltinSlotTypes where
+        page rq rs
+          | stop (rs ^. gbstrsNextToken) = Nothing
+          | stop (rs ^. gbstrsSlotTypes) = Nothing
+          | otherwise =
+            Just $ rq & gbstNextToken .~ rs ^. gbstrsNextToken
 
 instance AWSRequest GetBuiltinSlotTypes where
         type Rs GetBuiltinSlotTypes =

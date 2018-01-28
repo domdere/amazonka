@@ -38,6 +38,7 @@ module Network.AWS.CognitoIdentityProvider.CreateUserPoolClient
     , cupcReadAttributes
     , cupcAllowedOAuthScopes
     , cupcAllowedOAuthFlows
+    , cupcAnalyticsConfiguration
     , cupcCallbackURLs
     , cupcUserPoolId
     , cupcClientName
@@ -74,6 +75,7 @@ data CreateUserPoolClient = CreateUserPoolClient'
   , _cupcReadAttributes                  :: !(Maybe [Text])
   , _cupcAllowedOAuthScopes              :: !(Maybe [Text])
   , _cupcAllowedOAuthFlows               :: !(Maybe [OAuthFlowType])
+  , _cupcAnalyticsConfiguration          :: !(Maybe AnalyticsConfigurationType)
   , _cupcCallbackURLs                    :: !(Maybe [Text])
   , _cupcUserPoolId                      :: !Text
   , _cupcClientName                      :: !Text
@@ -106,6 +108,8 @@ data CreateUserPoolClient = CreateUserPoolClient'
 --
 -- * 'cupcAllowedOAuthFlows' - Set to @code@ to initiate a code grant flow, which provides an authorization code as the response. This code can be exchanged for access tokens with the token endpoint. Set to @token@ to specify that the client should get the access token (and, optionally, ID token, based on scopes) directly.
 --
+-- * 'cupcAnalyticsConfiguration' - The Amazon Pinpoint analytics configuration for collecting metrics for this user pool.
+--
 -- * 'cupcCallbackURLs' - A list of allowed callback URLs for the identity providers.
 --
 -- * 'cupcUserPoolId' - The user pool ID for the user pool where you want to create a user pool client.
@@ -128,6 +132,7 @@ createUserPoolClient pUserPoolId_ pClientName_ =
   , _cupcReadAttributes = Nothing
   , _cupcAllowedOAuthScopes = Nothing
   , _cupcAllowedOAuthFlows = Nothing
+  , _cupcAnalyticsConfiguration = Nothing
   , _cupcCallbackURLs = Nothing
   , _cupcUserPoolId = pUserPoolId_
   , _cupcClientName = pClientName_
@@ -177,6 +182,10 @@ cupcAllowedOAuthScopes = lens _cupcAllowedOAuthScopes (\ s a -> s{_cupcAllowedOA
 -- | Set to @code@ to initiate a code grant flow, which provides an authorization code as the response. This code can be exchanged for access tokens with the token endpoint. Set to @token@ to specify that the client should get the access token (and, optionally, ID token, based on scopes) directly.
 cupcAllowedOAuthFlows :: Lens' CreateUserPoolClient [OAuthFlowType]
 cupcAllowedOAuthFlows = lens _cupcAllowedOAuthFlows (\ s a -> s{_cupcAllowedOAuthFlows = a}) . _Default . _Coerce;
+
+-- | The Amazon Pinpoint analytics configuration for collecting metrics for this user pool.
+cupcAnalyticsConfiguration :: Lens' CreateUserPoolClient (Maybe AnalyticsConfigurationType)
+cupcAnalyticsConfiguration = lens _cupcAnalyticsConfiguration (\ s a -> s{_cupcAnalyticsConfiguration = a});
 
 -- | A list of allowed callback URLs for the identity providers.
 cupcCallbackURLs :: Lens' CreateUserPoolClient [Text]
@@ -234,6 +243,8 @@ instance ToJSON CreateUserPoolClient where
                   ("AllowedOAuthScopes" .=) <$>
                     _cupcAllowedOAuthScopes,
                   ("AllowedOAuthFlows" .=) <$> _cupcAllowedOAuthFlows,
+                  ("AnalyticsConfiguration" .=) <$>
+                    _cupcAnalyticsConfiguration,
                   ("CallbackURLs" .=) <$> _cupcCallbackURLs,
                   Just ("UserPoolId" .= _cupcUserPoolId),
                   Just ("ClientName" .= _cupcClientName)])

@@ -69,6 +69,7 @@ library
         , Network.AWS.DMS.DescribeRefreshSchemasStatus
         , Network.AWS.DMS.DescribeReplicationInstances
         , Network.AWS.DMS.DescribeReplicationSubnetGroups
+        , Network.AWS.DMS.DescribeReplicationTaskAssessmentResults
         , Network.AWS.DMS.DescribeReplicationTasks
         , Network.AWS.DMS.DescribeSchemas
         , Network.AWS.DMS.DescribeTableStatistics
@@ -83,6 +84,7 @@ library
         , Network.AWS.DMS.ReloadTables
         , Network.AWS.DMS.RemoveTagsFromResource
         , Network.AWS.DMS.StartReplicationTask
+        , Network.AWS.DMS.StartReplicationTaskAssessment
         , Network.AWS.DMS.StopReplicationTask
         , Network.AWS.DMS.TestConnection
         , Network.AWS.DMS.Types

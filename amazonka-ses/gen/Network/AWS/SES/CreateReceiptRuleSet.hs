@@ -61,7 +61,7 @@ newtype CreateReceiptRuleSet = CreateReceiptRuleSet'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'crrsRuleSetName' - The name of the rule set to create. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
+-- * 'crrsRuleSetName' - The name of the rule set to create. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
 createReceiptRuleSet
     :: Text -- ^ 'crrsRuleSetName'
     -> CreateReceiptRuleSet
@@ -69,7 +69,7 @@ createReceiptRuleSet pRuleSetName_ =
   CreateReceiptRuleSet' {_crrsRuleSetName = pRuleSetName_}
 
 
--- | The name of the rule set to create. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
+-- | The name of the rule set to create. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
 crrsRuleSetName :: Lens' CreateReceiptRuleSet Text
 crrsRuleSetName = lens _crrsRuleSetName (\ s a -> s{_crrsRuleSetName = a});
 

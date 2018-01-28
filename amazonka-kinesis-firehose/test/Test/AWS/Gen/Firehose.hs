@@ -31,9 +31,6 @@ import Test.Tasty
 --         [ requestPutRecord $
 --             putRecord
 --
---         , requestGetKinesisStream $
---             getKinesisStream
---
 --         , requestUpdateDestination $
 --             updateDestination
 --
@@ -57,9 +54,6 @@ import Test.Tasty
 --     , testGroup "response"
 --         [ responsePutRecord $
 --             putRecordResponse
---
---         , responseGetKinesisStream $
---             getKinesisStreamResponse
 --
 --         , responseUpdateDestination $
 --             updateDestinationResponse
@@ -88,11 +82,6 @@ requestPutRecord :: PutRecord -> TestTree
 requestPutRecord = req
     "PutRecord"
     "fixture/PutRecord.yaml"
-
-requestGetKinesisStream :: GetKinesisStream -> TestTree
-requestGetKinesisStream = req
-    "GetKinesisStream"
-    "fixture/GetKinesisStream.yaml"
 
 requestUpdateDestination :: UpdateDestination -> TestTree
 requestUpdateDestination = req
@@ -132,13 +121,6 @@ responsePutRecord = res
     "fixture/PutRecordResponse.proto"
     firehose
     (Proxy :: Proxy PutRecord)
-
-responseGetKinesisStream :: GetKinesisStreamResponse -> TestTree
-responseGetKinesisStream = res
-    "GetKinesisStreamResponse"
-    "fixture/GetKinesisStreamResponse.proto"
-    firehose
-    (Proxy :: Proxy GetKinesisStream)
 
 responseUpdateDestination :: UpdateDestinationResponse -> TestTree
 responseUpdateDestination = res

@@ -21,6 +21,8 @@
 -- Retrieves attributes attached to the facet.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListFacetAttributes
     (
     -- * Creating a Request
@@ -44,6 +46,7 @@ module Network.AWS.CloudDirectory.ListFacetAttributes
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -96,6 +99,13 @@ lfaSchemaARN = lens _lfaSchemaARN (\ s a -> s{_lfaSchemaARN = a});
 -- | The name of the facet whose attributes will be retrieved.
 lfaName :: Lens' ListFacetAttributes Text
 lfaName = lens _lfaName (\ s a -> s{_lfaName = a});
+
+instance AWSPager ListFacetAttributes where
+        page rq rs
+          | stop (rs ^. lfarsNextToken) = Nothing
+          | stop (rs ^. lfarsAttributes) = Nothing
+          | otherwise =
+            Just $ rq & lfaNextToken .~ rs ^. lfarsNextToken
 
 instance AWSRequest ListFacetAttributes where
         type Rs ListFacetAttributes =

@@ -27,8 +27,6 @@
 --
 -- To delete a target group, use 'DeleteTargetGroup' .
 --
--- This operation is idempotent, which means that it completes at most one time. If you attempt to create multiple target groups with the same settings, each call succeeds.
---
 -- For more information, see <http://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-target-groups.html Target Groups for Your Application Load Balancers> in the /Application Load Balancers Guide/ or <http://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-target-groups.html Target Groups for Your Network Load Balancers> in the /Network Load Balancers Guide/ .
 --
 module Network.AWS.ELBv2.CreateTargetGroup

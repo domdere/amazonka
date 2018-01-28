@@ -60,9 +60,9 @@ data GetTable = GetTable'
 --
 -- * 'gttCatalogId' - The ID of the Data Catalog where the table resides. If none is supplied, the AWS account ID is used by default.
 --
--- * 'gttDatabaseName' - The name of the database in the catalog in which the table resides.
+-- * 'gttDatabaseName' - The name of the database in the catalog in which the table resides. For Hive compatibility, this name is entirely lowercase.
 --
--- * 'gttName' - The name of the table for which to retrieve the definition.
+-- * 'gttName' - The name of the table for which to retrieve the definition. For Hive compatibility, this name is entirely lowercase.
 getTable
     :: Text -- ^ 'gttDatabaseName'
     -> Text -- ^ 'gttName'
@@ -79,11 +79,11 @@ getTable pDatabaseName_ pName_ =
 gttCatalogId :: Lens' GetTable (Maybe Text)
 gttCatalogId = lens _gttCatalogId (\ s a -> s{_gttCatalogId = a});
 
--- | The name of the database in the catalog in which the table resides.
+-- | The name of the database in the catalog in which the table resides. For Hive compatibility, this name is entirely lowercase.
 gttDatabaseName :: Lens' GetTable Text
 gttDatabaseName = lens _gttDatabaseName (\ s a -> s{_gttDatabaseName = a});
 
--- | The name of the table for which to retrieve the definition.
+-- | The name of the table for which to retrieve the definition. For Hive compatibility, this name is entirely lowercase.
 gttName :: Lens' GetTable Text
 gttName = lens _gttName (\ s a -> s{_gttName = a});
 

@@ -18,8 +18,10 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Detects instances of real-world labels within an image (JPEG or PNG) provided as input. This includes objects like flower, tree, and table; events like wedding, graduation, and birthday party; and concepts like landscape, evening, and nature. For an example, see 'get-started-exercise-detect-labels' .
+-- Detects instances of real-world entities within an image (JPEG or PNG) provided as input. This includes objects like flower, tree, and table; events like wedding, graduation, and birthday party; and concepts like landscape, evening, and nature. For an example, see 'images-s3' .
 --
+--
+-- You pass the input image as base64-encoded image bytes or as a reference to an image in an Amazon S3 bucket. If you use the Amazon CLI to call Amazon Rekognition operations, passing image bytes is not supported. The image must be either a PNG or JPEG formatted file.
 --
 -- For each object, scene, and concept the API returns one or more labels. Each label provides the object name, and the level of confidence that the image contains the object. For example, suppose the input image has a lighthouse, the sea, and a rock. The response will include all three labels, one for each object.
 --
@@ -39,7 +41,7 @@
 --
 -- In this example, the detection algorithm more precisely identifies the flower as a tulip.
 --
--- You can provide the input image as an S3 object or as base64-encoded bytes. In response, the API returns an array of labels. In addition, the response also includes the orientation correction. Optionally, you can specify @MinConfidence@ to control the confidence threshold for the labels returned. The default is 50%. You can also add the @MaxLabels@ parameter to limit the number of labels returned.
+-- In response, the API returns an array of labels. In addition, the response also includes the orientation correction. Optionally, you can specify @MinConfidence@ to control the confidence threshold for the labels returned. The default is 50%. You can also add the @MaxLabels@ parameter to limit the number of labels returned.
 --
 -- This is a stateless API operation. That is, the operation does not persist any data.
 --
@@ -87,7 +89,7 @@ data DetectLabels = DetectLabels'
 --
 -- * 'dlMaxLabels' - Maximum number of labels you want the service to return in the response. The service returns the specified number of highest confidence labels.
 --
--- * 'dlImage' - The input image. You can provide a blob of image bytes or an S3 object.
+-- * 'dlImage' - The input image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing base64-encoded image bytes is not supported.
 detectLabels
     :: Image -- ^ 'dlImage'
     -> DetectLabels
@@ -104,7 +106,7 @@ dlMinConfidence = lens _dlMinConfidence (\ s a -> s{_dlMinConfidence = a});
 dlMaxLabels :: Lens' DetectLabels (Maybe Natural)
 dlMaxLabels = lens _dlMaxLabels (\ s a -> s{_dlMaxLabels = a}) . mapping _Nat;
 
--- | The input image. You can provide a blob of image bytes or an S3 object.
+-- | The input image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing base64-encoded image bytes is not supported.
 dlImage :: Lens' DetectLabels Image
 dlImage = lens _dlImage (\ s a -> s{_dlImage = a});
 

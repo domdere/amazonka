@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Create a new TagOption.
+-- Creates a TagOption.
 --
 --
 module Network.AWS.ServiceCatalog.CreateTagOption
@@ -122,7 +122,7 @@ data CreateTagOptionResponse = CreateTagOptionResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ctorsTagOptionDetail' - The resulting detailed TagOption information.
+-- * 'ctorsTagOptionDetail' - Information about the TagOption.
 --
 -- * 'ctorsResponseStatus' - -- | The response status code.
 createTagOptionResponse
@@ -133,7 +133,7 @@ createTagOptionResponse pResponseStatus_ =
   {_ctorsTagOptionDetail = Nothing, _ctorsResponseStatus = pResponseStatus_}
 
 
--- | The resulting detailed TagOption information.
+-- | Information about the TagOption.
 ctorsTagOptionDetail :: Lens' CreateTagOptionResponse (Maybe TagOptionDetail)
 ctorsTagOptionDetail = lens _ctorsTagOptionDetail (\ s a -> s{_ctorsTagOptionDetail = a});
 

@@ -70,7 +70,7 @@ data ListTaskDefinitionFamilies = ListTaskDefinitionFamilies'
 --
 -- * 'ltdfFamilyPrefix' - The @familyPrefix@ is a string that is used to filter the results of @ListTaskDefinitionFamilies@ . If you specify a @familyPrefix@ , only task definition family names that begin with the @familyPrefix@ string are returned.
 --
--- * 'ltdfNextToken' - The @nextToken@ value returned from a previous paginated @ListTaskDefinitionFamilies@ request where @maxResults@ was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the @nextToken@ value. This value is @null@ when there are no more results to return.
+-- * 'ltdfNextToken' - The @nextToken@ value returned from a previous paginated @ListTaskDefinitionFamilies@ request where @maxResults@ was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the @nextToken@ value.
 --
 -- * 'ltdfMaxResults' - The maximum number of task definition family results returned by @ListTaskDefinitionFamilies@ in paginated output. When this parameter is used, @ListTaskDefinitions@ only returns @maxResults@ results in a single page along with a @nextToken@ response element. The remaining results of the initial request can be seen by sending another @ListTaskDefinitionFamilies@ request with the returned @nextToken@ value. This value can be between 1 and 100. If this parameter is not used, then @ListTaskDefinitionFamilies@ returns up to 100 results and a @nextToken@ value if applicable.
 listTaskDefinitionFamilies
@@ -92,7 +92,7 @@ ltdfStatus = lens _ltdfStatus (\ s a -> s{_ltdfStatus = a});
 ltdfFamilyPrefix :: Lens' ListTaskDefinitionFamilies (Maybe Text)
 ltdfFamilyPrefix = lens _ltdfFamilyPrefix (\ s a -> s{_ltdfFamilyPrefix = a});
 
--- | The @nextToken@ value returned from a previous paginated @ListTaskDefinitionFamilies@ request where @maxResults@ was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the @nextToken@ value. This value is @null@ when there are no more results to return.
+-- | The @nextToken@ value returned from a previous paginated @ListTaskDefinitionFamilies@ request where @maxResults@ was used and the results exceeded the value of that parameter. Pagination continues from the end of the previous results that returned the @nextToken@ value.
 ltdfNextToken :: Lens' ListTaskDefinitionFamilies (Maybe Text)
 ltdfNextToken = lens _ltdfNextToken (\ s a -> s{_ltdfNextToken = a});
 

@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Creates a new product.
+-- Creates a product.
 --
 --
 module Network.AWS.ServiceCatalog.CreateProduct
@@ -78,29 +78,29 @@ data CreateProduct = CreateProduct'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cpSupportURL' - Contact URL for product support.
+-- * 'cpSupportURL' - The contact URL for product support.
 --
 -- * 'cpDistributor' - The distributor of the product.
 --
 -- * 'cpAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'cpSupportEmail' - Contact email for product support.
+-- * 'cpSupportEmail' - The contact email for product support.
 --
--- * 'cpDescription' - The text description of the product.
+-- * 'cpDescription' - The description of the product.
 --
--- * 'cpTags' - Tags to associate with the new product.
+-- * 'cpTags' - The tags to associate with the product.
 --
--- * 'cpSupportDescription' - Support information about the product.
+-- * 'cpSupportDescription' - The support information about the product.
 --
 -- * 'cpName' - The name of the product.
 --
 -- * 'cpOwner' - The owner of the product.
 --
--- * 'cpProductType' - The type of the product to create.
+-- * 'cpProductType' - The type of product.
 --
--- * 'cpProvisioningArtifactParameters' - Parameters for the provisioning artifact.
+-- * 'cpProvisioningArtifactParameters' - The configuration of the provisioning artifact.
 --
--- * 'cpIdempotencyToken' - A token to disambiguate duplicate requests. You can use the same input in multiple requests, provided that you also specify a different idempotency token for each request.
+-- * 'cpIdempotencyToken' - A unique identifier that you provide to ensure idempotency. If multiple requests differ only by the idempotency token, the same response is returned for each repeated request.
 createProduct
     :: Text -- ^ 'cpName'
     -> Text -- ^ 'cpOwner'
@@ -125,7 +125,7 @@ createProduct pName_ pOwner_ pProductType_ pProvisioningArtifactParameters_ pIde
   }
 
 
--- | Contact URL for product support.
+-- | The contact URL for product support.
 cpSupportURL :: Lens' CreateProduct (Maybe Text)
 cpSupportURL = lens _cpSupportURL (\ s a -> s{_cpSupportURL = a});
 
@@ -137,19 +137,19 @@ cpDistributor = lens _cpDistributor (\ s a -> s{_cpDistributor = a});
 cpAcceptLanguage :: Lens' CreateProduct (Maybe Text)
 cpAcceptLanguage = lens _cpAcceptLanguage (\ s a -> s{_cpAcceptLanguage = a});
 
--- | Contact email for product support.
+-- | The contact email for product support.
 cpSupportEmail :: Lens' CreateProduct (Maybe Text)
 cpSupportEmail = lens _cpSupportEmail (\ s a -> s{_cpSupportEmail = a});
 
--- | The text description of the product.
+-- | The description of the product.
 cpDescription :: Lens' CreateProduct (Maybe Text)
 cpDescription = lens _cpDescription (\ s a -> s{_cpDescription = a});
 
--- | Tags to associate with the new product.
+-- | The tags to associate with the product.
 cpTags :: Lens' CreateProduct [Tag]
 cpTags = lens _cpTags (\ s a -> s{_cpTags = a}) . _Default . _Coerce;
 
--- | Support information about the product.
+-- | The support information about the product.
 cpSupportDescription :: Lens' CreateProduct (Maybe Text)
 cpSupportDescription = lens _cpSupportDescription (\ s a -> s{_cpSupportDescription = a});
 
@@ -161,15 +161,15 @@ cpName = lens _cpName (\ s a -> s{_cpName = a});
 cpOwner :: Lens' CreateProduct Text
 cpOwner = lens _cpOwner (\ s a -> s{_cpOwner = a});
 
--- | The type of the product to create.
+-- | The type of product.
 cpProductType :: Lens' CreateProduct ProductType
 cpProductType = lens _cpProductType (\ s a -> s{_cpProductType = a});
 
--- | Parameters for the provisioning artifact.
+-- | The configuration of the provisioning artifact.
 cpProvisioningArtifactParameters :: Lens' CreateProduct ProvisioningArtifactProperties
 cpProvisioningArtifactParameters = lens _cpProvisioningArtifactParameters (\ s a -> s{_cpProvisioningArtifactParameters = a});
 
--- | A token to disambiguate duplicate requests. You can use the same input in multiple requests, provided that you also specify a different idempotency token for each request.
+-- | A unique identifier that you provide to ensure idempotency. If multiple requests differ only by the idempotency token, the same response is returned for each repeated request.
 cpIdempotencyToken :: Lens' CreateProduct Text
 cpIdempotencyToken = lens _cpIdempotencyToken (\ s a -> s{_cpIdempotencyToken = a});
 
@@ -236,11 +236,11 @@ data CreateProductResponse = CreateProductResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cprsProductViewDetail' - The resulting detailed product view information.
+-- * 'cprsProductViewDetail' - Information about the product view.
 --
--- * 'cprsProvisioningArtifactDetail' - The resulting detailed provisioning artifact information.
+-- * 'cprsProvisioningArtifactDetail' - Information about the provisioning artifact.
 --
--- * 'cprsTags' - Tags successfully associated with the new product.
+-- * 'cprsTags' - Information about the tags associated with the product.
 --
 -- * 'cprsResponseStatus' - -- | The response status code.
 createProductResponse
@@ -255,15 +255,15 @@ createProductResponse pResponseStatus_ =
   }
 
 
--- | The resulting detailed product view information.
+-- | Information about the product view.
 cprsProductViewDetail :: Lens' CreateProductResponse (Maybe ProductViewDetail)
 cprsProductViewDetail = lens _cprsProductViewDetail (\ s a -> s{_cprsProductViewDetail = a});
 
--- | The resulting detailed provisioning artifact information.
+-- | Information about the provisioning artifact.
 cprsProvisioningArtifactDetail :: Lens' CreateProductResponse (Maybe ProvisioningArtifactDetail)
 cprsProvisioningArtifactDetail = lens _cprsProvisioningArtifactDetail (\ s a -> s{_cprsProvisioningArtifactDetail = a});
 
--- | Tags successfully associated with the new product.
+-- | Information about the tags associated with the product.
 cprsTags :: Lens' CreateProductResponse [Tag]
 cprsTags = lens _cprsTags (\ s a -> s{_cprsTags = a}) . _Default . _Coerce;
 

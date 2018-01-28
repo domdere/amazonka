@@ -29,6 +29,7 @@ module Network.AWS.StorageGateway.Types
     , cscsivVolumeARN
     , cscsivVolumeProgress
     , cscsivVolumeSizeInBytes
+    , cscsivVolumeUsedInBytes
     , cscsivCreatedDate
     , cscsivVolumeId
     , cscsivVolumeType
@@ -101,6 +102,7 @@ module Network.AWS.StorageGateway.Types
     , nfsfsiNFSFileShareDefaults
     , nfsfsiLocationARN
     , nfsfsiClientList
+    , nfsfsiGuessMIMETypeEnabled
     , nfsfsiReadOnly
 
     -- * NetworkInterface
@@ -120,6 +122,7 @@ module Network.AWS.StorageGateway.Types
     , sscsivVolumeARN
     , sscsivVolumeProgress
     , sscsivVolumeSizeInBytes
+    , sscsivVolumeUsedInBytes
     , sscsivCreatedDate
     , sscsivVolumeId
     , sscsivVolumeDiskId

@@ -49,7 +49,7 @@ import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
 
--- | Requests Amazon API Gateway to create a 'Resource' resource.
+-- | Requests API Gateway to create a 'Resource' resource.
 --
 --
 --

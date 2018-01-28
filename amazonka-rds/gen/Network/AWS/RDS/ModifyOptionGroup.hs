@@ -70,7 +70,7 @@ data ModifyOptionGroup = ModifyOptionGroup'
 --
 -- * 'mogApplyImmediately' - Indicates whether the changes should be applied immediately, or during the next maintenance window for each instance associated with the option group.
 --
--- * 'mogOptionGroupName' - The name of the option group to be modified. Permanent options, such as the TDE option for Oracle Advanced Security TDE, cannot be removed from an option group, and that option group cannot be removed from a DB instance once it is associated with a DB instance
+-- * 'mogOptionGroupName' - The name of the option group to be modified. Permanent options, such as the TDE option for Oracle Advanced Security TDE, can't be removed from an option group, and that option group can't be removed from a DB instance once it is associated with a DB instance
 modifyOptionGroup
     :: Text -- ^ 'mogOptionGroupName'
     -> ModifyOptionGroup
@@ -95,7 +95,7 @@ mogOptionsToRemove = lens _mogOptionsToRemove (\ s a -> s{_mogOptionsToRemove = 
 mogApplyImmediately :: Lens' ModifyOptionGroup (Maybe Bool)
 mogApplyImmediately = lens _mogApplyImmediately (\ s a -> s{_mogApplyImmediately = a});
 
--- | The name of the option group to be modified. Permanent options, such as the TDE option for Oracle Advanced Security TDE, cannot be removed from an option group, and that option group cannot be removed from a DB instance once it is associated with a DB instance
+-- | The name of the option group to be modified. Permanent options, such as the TDE option for Oracle Advanced Security TDE, can't be removed from an option group, and that option group can't be removed from a DB instance once it is associated with a DB instance
 mogOptionGroupName :: Lens' ModifyOptionGroup Text
 mogOptionGroupName = lens _mogOptionGroupName (\ s a -> s{_mogOptionGroupName = a});
 

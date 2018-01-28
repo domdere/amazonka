@@ -21,6 +21,8 @@
 -- The @ListBonusPayments@ operation retrieves the amounts of bonuses you have paid to Workers for a given HIT or assignment.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.MechanicalTurk.ListBonusPayments
     (
     -- * Creating a Request
@@ -45,6 +47,7 @@ module Network.AWS.MechanicalTurk.ListBonusPayments
 import Network.AWS.Lens
 import Network.AWS.MechanicalTurk.Types
 import Network.AWS.MechanicalTurk.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -95,6 +98,13 @@ lbpAssignmentId = lens _lbpAssignmentId (\ s a -> s{_lbpAssignmentId = a});
 -- | Undocumented member.
 lbpMaxResults :: Lens' ListBonusPayments (Maybe Natural)
 lbpMaxResults = lens _lbpMaxResults (\ s a -> s{_lbpMaxResults = a}) . mapping _Nat;
+
+instance AWSPager ListBonusPayments where
+        page rq rs
+          | stop (rs ^. lbprsNextToken) = Nothing
+          | stop (rs ^. lbprsBonusPayments) = Nothing
+          | otherwise =
+            Just $ rq & lbpNextToken .~ rs ^. lbprsNextToken
 
 instance AWSRequest ListBonusPayments where
         type Rs ListBonusPayments = ListBonusPaymentsResponse

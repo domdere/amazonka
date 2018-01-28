@@ -21,6 +21,8 @@
 -- Lists all policies from the root of the 'Directory' to the object specified. If there are no policies present, an empty list is returned. If policies are present, and if some objects don't have the policies attached, it returns the @ObjectIdentifier@ for such objects. If policies are present, it returns @ObjectIdentifier@ , @policyId@ , and @policyType@ . Paths that don't lead to the root from the target object are ignored. For more information, see <http://docs.aws.amazon.com/directoryservice/latest/admin-guide/cd_key_concepts.html#policies Policies> .
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.LookupPolicy
     (
     -- * Creating a Request
@@ -44,6 +46,7 @@ module Network.AWS.CloudDirectory.LookupPolicy
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -96,6 +99,13 @@ lpDirectoryARN = lens _lpDirectoryARN (\ s a -> s{_lpDirectoryARN = a});
 -- | Reference that identifies the object whose policies will be looked up.
 lpObjectReference :: Lens' LookupPolicy ObjectReference
 lpObjectReference = lens _lpObjectReference (\ s a -> s{_lpObjectReference = a});
+
+instance AWSPager LookupPolicy where
+        page rq rs
+          | stop (rs ^. lprsNextToken) = Nothing
+          | stop (rs ^. lprsPolicyToPathList) = Nothing
+          | otherwise =
+            Just $ rq & lpNextToken .~ rs ^. lprsNextToken
 
 instance AWSRequest LookupPolicy where
         type Rs LookupPolicy = LookupPolicyResponse

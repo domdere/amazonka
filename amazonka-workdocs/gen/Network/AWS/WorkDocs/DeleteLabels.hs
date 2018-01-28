@@ -61,7 +61,7 @@ data DeleteLabels = DeleteLabels'
 --
 -- * 'dlDeleteAll' - Flag to request removal of all labels from the specified resource.
 --
--- * 'dlAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'dlAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'dlLabels' - List of labels to delete from the resource.
 --
@@ -82,7 +82,7 @@ deleteLabels pResourceId_ =
 dlDeleteAll :: Lens' DeleteLabels (Maybe Bool)
 dlDeleteAll = lens _dlDeleteAll (\ s a -> s{_dlDeleteAll = a});
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 dlAuthenticationToken :: Lens' DeleteLabels (Maybe Text)
 dlAuthenticationToken = lens _dlAuthenticationToken (\ s a -> s{_dlAuthenticationToken = a}) . mapping _Sensitive;
 

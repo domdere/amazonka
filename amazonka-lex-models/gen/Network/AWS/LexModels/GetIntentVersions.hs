@@ -27,6 +27,8 @@
 --
 -- This operation requires permissions for the @lex:GetIntentVersions@ action.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.LexModels.GetIntentVersions
     (
     -- * Creating a Request
@@ -49,6 +51,7 @@ module Network.AWS.LexModels.GetIntentVersions
 import Network.AWS.Lens
 import Network.AWS.LexModels.Types
 import Network.AWS.LexModels.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -89,6 +92,13 @@ givMaxResults = lens _givMaxResults (\ s a -> s{_givMaxResults = a}) . mapping _
 -- | The name of the intent for which versions should be returned.
 givName :: Lens' GetIntentVersions Text
 givName = lens _givName (\ s a -> s{_givName = a});
+
+instance AWSPager GetIntentVersions where
+        page rq rs
+          | stop (rs ^. givrsNextToken) = Nothing
+          | stop (rs ^. givrsIntents) = Nothing
+          | otherwise =
+            Just $ rq & givNextToken .~ rs ^. givrsNextToken
 
 instance AWSRequest GetIntentVersions where
         type Rs GetIntentVersions = GetIntentVersionsResponse

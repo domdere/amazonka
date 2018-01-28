@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Describes tags for a WorkSpace.
+-- Describes the tags for the specified WorkSpace.
 --
 --
 module Network.AWS.WorkSpaces.DescribeTags
@@ -44,11 +44,7 @@ import Network.AWS.Response
 import Network.AWS.WorkSpaces.Types
 import Network.AWS.WorkSpaces.Types.Product
 
--- | The request of the 'DescribeTags' operation.
---
---
---
--- /See:/ 'describeTags' smart constructor.
+-- | /See:/ 'describeTags' smart constructor.
 newtype DescribeTags = DescribeTags'
   { _dtResourceId :: Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -58,14 +54,14 @@ newtype DescribeTags = DescribeTags'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dtResourceId' - The resource ID of the request.
+-- * 'dtResourceId' - The ID of the resource.
 describeTags
     :: Text -- ^ 'dtResourceId'
     -> DescribeTags
 describeTags pResourceId_ = DescribeTags' {_dtResourceId = pResourceId_}
 
 
--- | The resource ID of the request.
+-- | The ID of the resource.
 dtResourceId :: Lens' DescribeTags Text
 dtResourceId = lens _dtResourceId (\ s a -> s{_dtResourceId = a});
 
@@ -102,11 +98,7 @@ instance ToPath DescribeTags where
 instance ToQuery DescribeTags where
         toQuery = const mempty
 
--- | The result of the 'DescribeTags' operation.
---
---
---
--- /See:/ 'describeTagsResponse' smart constructor.
+-- | /See:/ 'describeTagsResponse' smart constructor.
 data DescribeTagsResponse = DescribeTagsResponse'
   { _dtrsTagList        :: !(Maybe [Tag])
   , _dtrsResponseStatus :: !Int
@@ -117,7 +109,7 @@ data DescribeTagsResponse = DescribeTagsResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dtrsTagList' - The list of tags.
+-- * 'dtrsTagList' - The tags.
 --
 -- * 'dtrsResponseStatus' - -- | The response status code.
 describeTagsResponse
@@ -128,7 +120,7 @@ describeTagsResponse pResponseStatus_ =
   {_dtrsTagList = Nothing, _dtrsResponseStatus = pResponseStatus_}
 
 
--- | The list of tags.
+-- | The tags.
 dtrsTagList :: Lens' DescribeTagsResponse [Tag]
 dtrsTagList = lens _dtrsTagList (\ s a -> s{_dtrsTagList = a}) . _Default . _Coerce;
 

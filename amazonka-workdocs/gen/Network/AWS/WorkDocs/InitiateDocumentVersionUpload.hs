@@ -75,15 +75,15 @@ data InitiateDocumentVersionUpload = InitiateDocumentVersionUpload'
 --
 -- * 'idvuDocumentSizeInBytes' - The size of the document, in bytes.
 --
--- * 'idvuContentCreatedTimestamp' - The time stamp when the content of the document was originally created.
+-- * 'idvuContentCreatedTimestamp' - The timestamp when the content of the document was originally created.
 --
--- * 'idvuAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'idvuAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'idvuName' - The name of the document.
 --
 -- * 'idvuId' - The ID of the document.
 --
--- * 'idvuContentModifiedTimestamp' - The time stamp when the content of the document was modified.
+-- * 'idvuContentModifiedTimestamp' - The timestamp when the content of the document was modified.
 --
 -- * 'idvuContentType' - The content type of the document.
 --
@@ -108,11 +108,11 @@ initiateDocumentVersionUpload pParentFolderId_ =
 idvuDocumentSizeInBytes :: Lens' InitiateDocumentVersionUpload (Maybe Integer)
 idvuDocumentSizeInBytes = lens _idvuDocumentSizeInBytes (\ s a -> s{_idvuDocumentSizeInBytes = a});
 
--- | The time stamp when the content of the document was originally created.
+-- | The timestamp when the content of the document was originally created.
 idvuContentCreatedTimestamp :: Lens' InitiateDocumentVersionUpload (Maybe UTCTime)
 idvuContentCreatedTimestamp = lens _idvuContentCreatedTimestamp (\ s a -> s{_idvuContentCreatedTimestamp = a}) . mapping _Time;
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 idvuAuthenticationToken :: Lens' InitiateDocumentVersionUpload (Maybe Text)
 idvuAuthenticationToken = lens _idvuAuthenticationToken (\ s a -> s{_idvuAuthenticationToken = a}) . mapping _Sensitive;
 
@@ -124,7 +124,7 @@ idvuName = lens _idvuName (\ s a -> s{_idvuName = a});
 idvuId :: Lens' InitiateDocumentVersionUpload (Maybe Text)
 idvuId = lens _idvuId (\ s a -> s{_idvuId = a});
 
--- | The time stamp when the content of the document was modified.
+-- | The timestamp when the content of the document was modified.
 idvuContentModifiedTimestamp :: Lens' InitiateDocumentVersionUpload (Maybe UTCTime)
 idvuContentModifiedTimestamp = lens _idvuContentModifiedTimestamp (\ s a -> s{_idvuContentModifiedTimestamp = a}) . mapping _Time;
 

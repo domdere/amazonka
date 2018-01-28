@@ -74,7 +74,13 @@ module Network.AWS.Inspector.Types
     -- * AgentPreview
     , AgentPreview
     , agentPreview
+    , apHostname
     , apAutoScalingGroup
+    , apOperatingSystem
+    , apAgentVersion
+    , apKernelVersion
+    , apAgentHealth
+    , apIpv4Address
     , apAgentId
 
     -- * AssessmentRun
@@ -151,12 +157,14 @@ module Network.AWS.Inspector.Types
     -- * AssessmentTemplate
     , AssessmentTemplate
     , assessmentTemplate
+    , atLastAssessmentRunARN
     , atArn
     , atName
     , atAssessmentTargetARN
     , atDurationInSeconds
     , atRulesPackageARNs
     , atUserAttributesForFindings
+    , atAssessmentRunCount
     , atCreatedAt
 
     -- * AssessmentTemplateFilter

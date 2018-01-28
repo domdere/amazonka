@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Updates the schedule of a crawler using a Cron expression.
+-- Updates the schedule of a crawler using a @cron@ expression.
 --
 --
 module Network.AWS.Glue.UpdateCrawlerSchedule

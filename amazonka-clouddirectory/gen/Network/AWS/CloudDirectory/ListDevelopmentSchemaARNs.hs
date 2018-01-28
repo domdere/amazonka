@@ -21,6 +21,8 @@
 -- Retrieves each Amazon Resource Name (ARN) of schemas in the development state.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListDevelopmentSchemaARNs
     (
     -- * Creating a Request
@@ -42,6 +44,7 @@ module Network.AWS.CloudDirectory.ListDevelopmentSchemaARNs
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -74,6 +77,13 @@ ldsaNextToken = lens _ldsaNextToken (\ s a -> s{_ldsaNextToken = a});
 -- | The maximum number of results to retrieve.
 ldsaMaxResults :: Lens' ListDevelopmentSchemaARNs (Maybe Natural)
 ldsaMaxResults = lens _ldsaMaxResults (\ s a -> s{_ldsaMaxResults = a}) . mapping _Nat;
+
+instance AWSPager ListDevelopmentSchemaARNs where
+        page rq rs
+          | stop (rs ^. ldsarsNextToken) = Nothing
+          | stop (rs ^. ldsarsSchemaARNs) = Nothing
+          | otherwise =
+            Just $ rq & ldsaNextToken .~ rs ^. ldsarsNextToken
 
 instance AWSRequest ListDevelopmentSchemaARNs where
         type Rs ListDevelopmentSchemaARNs =

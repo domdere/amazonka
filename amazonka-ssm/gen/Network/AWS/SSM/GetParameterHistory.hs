@@ -21,6 +21,8 @@
 -- Query a list of all parameters used by the AWS account.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.SSM.GetParameterHistory
     (
     -- * Creating a Request
@@ -42,6 +44,7 @@ module Network.AWS.SSM.GetParameterHistory
     ) where
 
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -95,6 +98,13 @@ gphMaxResults = lens _gphMaxResults (\ s a -> s{_gphMaxResults = a}) . mapping _
 -- | The name of a parameter you want to query.
 gphName :: Lens' GetParameterHistory Text
 gphName = lens _gphName (\ s a -> s{_gphName = a});
+
+instance AWSPager GetParameterHistory where
+        page rq rs
+          | stop (rs ^. gphrsNextToken) = Nothing
+          | stop (rs ^. gphrsParameters) = Nothing
+          | otherwise =
+            Just $ rq & gphNextToken .~ rs ^. gphrsNextToken
 
 instance AWSRequest GetParameterHistory where
         type Rs GetParameterHistory =

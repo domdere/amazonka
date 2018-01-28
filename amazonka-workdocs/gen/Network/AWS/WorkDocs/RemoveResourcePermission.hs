@@ -59,7 +59,7 @@ data RemoveResourcePermission = RemoveResourcePermission'
 --
 -- * 'rrpPrincipalType' - The principal type of the resource.
 --
--- * 'rrpAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'rrpAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'rrpResourceId' - The ID of the resource.
 --
@@ -81,7 +81,7 @@ removeResourcePermission pResourceId_ pPrincipalId_ =
 rrpPrincipalType :: Lens' RemoveResourcePermission (Maybe PrincipalType)
 rrpPrincipalType = lens _rrpPrincipalType (\ s a -> s{_rrpPrincipalType = a});
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 rrpAuthenticationToken :: Lens' RemoveResourcePermission (Maybe Text)
 rrpAuthenticationToken = lens _rrpAuthenticationToken (\ s a -> s{_rrpAuthenticationToken = a}) . mapping _Sensitive;
 

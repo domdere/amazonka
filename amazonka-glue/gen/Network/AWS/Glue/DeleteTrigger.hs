@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Deletes a specified trigger.
+-- Deletes a specified trigger. If the trigger is not found, no exception is thrown.
 --
 --
 module Network.AWS.Glue.DeleteTrigger

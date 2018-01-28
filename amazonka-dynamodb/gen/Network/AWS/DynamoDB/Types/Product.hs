@@ -251,6 +251,239 @@ instance ToJSON AttributeValueUpdate where
                  [("Value" .=) <$> _avuValue,
                   ("Action" .=) <$> _avuAction])
 
+-- | Contains the description of the backup created for the table.
+--
+--
+--
+-- /See:/ 'backupDescription' smart constructor.
+data BackupDescription = BackupDescription'
+  { _bdBackupDetails             :: !(Maybe BackupDetails)
+  , _bdSourceTableDetails        :: !(Maybe SourceTableDetails)
+  , _bdSourceTableFeatureDetails :: !(Maybe SourceTableFeatureDetails)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'BackupDescription' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'bdBackupDetails' - Contains the details of the backup created for the table.
+--
+-- * 'bdSourceTableDetails' - Contains the details of the table when the backup was created.
+--
+-- * 'bdSourceTableFeatureDetails' - Contains the details of the features enabled on the table when the backup was created. For example, LSIs, GSIs, streams, TTL.
+backupDescription
+    :: BackupDescription
+backupDescription =
+  BackupDescription'
+  { _bdBackupDetails = Nothing
+  , _bdSourceTableDetails = Nothing
+  , _bdSourceTableFeatureDetails = Nothing
+  }
+
+
+-- | Contains the details of the backup created for the table.
+bdBackupDetails :: Lens' BackupDescription (Maybe BackupDetails)
+bdBackupDetails = lens _bdBackupDetails (\ s a -> s{_bdBackupDetails = a});
+
+-- | Contains the details of the table when the backup was created.
+bdSourceTableDetails :: Lens' BackupDescription (Maybe SourceTableDetails)
+bdSourceTableDetails = lens _bdSourceTableDetails (\ s a -> s{_bdSourceTableDetails = a});
+
+-- | Contains the details of the features enabled on the table when the backup was created. For example, LSIs, GSIs, streams, TTL.
+bdSourceTableFeatureDetails :: Lens' BackupDescription (Maybe SourceTableFeatureDetails)
+bdSourceTableFeatureDetails = lens _bdSourceTableFeatureDetails (\ s a -> s{_bdSourceTableFeatureDetails = a});
+
+instance FromJSON BackupDescription where
+        parseJSON
+          = withObject "BackupDescription"
+              (\ x ->
+                 BackupDescription' <$>
+                   (x .:? "BackupDetails") <*>
+                     (x .:? "SourceTableDetails")
+                     <*> (x .:? "SourceTableFeatureDetails"))
+
+instance Hashable BackupDescription where
+
+instance NFData BackupDescription where
+
+-- | Contains the details of the backup created for the table.
+--
+--
+--
+-- /See:/ 'backupDetails' smart constructor.
+data BackupDetails = BackupDetails'
+  { _bdBackupSizeBytes        :: !(Maybe Nat)
+  , _bdBackupARN              :: !Text
+  , _bdBackupName             :: !Text
+  , _bdBackupStatus           :: !BackupStatus
+  , _bdBackupCreationDateTime :: !POSIX
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'BackupDetails' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'bdBackupSizeBytes' - Size of the backup in bytes.
+--
+-- * 'bdBackupARN' - ARN associated with the backup.
+--
+-- * 'bdBackupName' - Name of the requested backup.
+--
+-- * 'bdBackupStatus' - Backup can be in one of the following states: CREATING, ACTIVE, DELETED.
+--
+-- * 'bdBackupCreationDateTime' - Time at which the backup was created. This is the request time of the backup.
+backupDetails
+    :: Text -- ^ 'bdBackupARN'
+    -> Text -- ^ 'bdBackupName'
+    -> BackupStatus -- ^ 'bdBackupStatus'
+    -> UTCTime -- ^ 'bdBackupCreationDateTime'
+    -> BackupDetails
+backupDetails pBackupARN_ pBackupName_ pBackupStatus_ pBackupCreationDateTime_ =
+  BackupDetails'
+  { _bdBackupSizeBytes = Nothing
+  , _bdBackupARN = pBackupARN_
+  , _bdBackupName = pBackupName_
+  , _bdBackupStatus = pBackupStatus_
+  , _bdBackupCreationDateTime = _Time # pBackupCreationDateTime_
+  }
+
+
+-- | Size of the backup in bytes.
+bdBackupSizeBytes :: Lens' BackupDetails (Maybe Natural)
+bdBackupSizeBytes = lens _bdBackupSizeBytes (\ s a -> s{_bdBackupSizeBytes = a}) . mapping _Nat;
+
+-- | ARN associated with the backup.
+bdBackupARN :: Lens' BackupDetails Text
+bdBackupARN = lens _bdBackupARN (\ s a -> s{_bdBackupARN = a});
+
+-- | Name of the requested backup.
+bdBackupName :: Lens' BackupDetails Text
+bdBackupName = lens _bdBackupName (\ s a -> s{_bdBackupName = a});
+
+-- | Backup can be in one of the following states: CREATING, ACTIVE, DELETED.
+bdBackupStatus :: Lens' BackupDetails BackupStatus
+bdBackupStatus = lens _bdBackupStatus (\ s a -> s{_bdBackupStatus = a});
+
+-- | Time at which the backup was created. This is the request time of the backup.
+bdBackupCreationDateTime :: Lens' BackupDetails UTCTime
+bdBackupCreationDateTime = lens _bdBackupCreationDateTime (\ s a -> s{_bdBackupCreationDateTime = a}) . _Time;
+
+instance FromJSON BackupDetails where
+        parseJSON
+          = withObject "BackupDetails"
+              (\ x ->
+                 BackupDetails' <$>
+                   (x .:? "BackupSizeBytes") <*> (x .: "BackupArn") <*>
+                     (x .: "BackupName")
+                     <*> (x .: "BackupStatus")
+                     <*> (x .: "BackupCreationDateTime"))
+
+instance Hashable BackupDetails where
+
+instance NFData BackupDetails where
+
+-- | Contains details for the backup.
+--
+--
+--
+-- /See:/ 'backupSummary' smart constructor.
+data BackupSummary = BackupSummary'
+  { _bsTableARN               :: !(Maybe Text)
+  , _bsBackupName             :: !(Maybe Text)
+  , _bsBackupStatus           :: !(Maybe BackupStatus)
+  , _bsBackupSizeBytes        :: !(Maybe Nat)
+  , _bsBackupARN              :: !(Maybe Text)
+  , _bsTableId                :: !(Maybe Text)
+  , _bsBackupCreationDateTime :: !(Maybe POSIX)
+  , _bsTableName              :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'BackupSummary' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'bsTableARN' - ARN associated with the table.
+--
+-- * 'bsBackupName' - Name of the specified backup.
+--
+-- * 'bsBackupStatus' - Backup can be in one of the following states: CREATING, ACTIVE, DELETED.
+--
+-- * 'bsBackupSizeBytes' - Size of the backup in bytes.
+--
+-- * 'bsBackupARN' - ARN associated with the backup.
+--
+-- * 'bsTableId' - Unique identifier for the table.
+--
+-- * 'bsBackupCreationDateTime' - Time at which the backup was created.
+--
+-- * 'bsTableName' - Name of the table.
+backupSummary
+    :: BackupSummary
+backupSummary =
+  BackupSummary'
+  { _bsTableARN = Nothing
+  , _bsBackupName = Nothing
+  , _bsBackupStatus = Nothing
+  , _bsBackupSizeBytes = Nothing
+  , _bsBackupARN = Nothing
+  , _bsTableId = Nothing
+  , _bsBackupCreationDateTime = Nothing
+  , _bsTableName = Nothing
+  }
+
+
+-- | ARN associated with the table.
+bsTableARN :: Lens' BackupSummary (Maybe Text)
+bsTableARN = lens _bsTableARN (\ s a -> s{_bsTableARN = a});
+
+-- | Name of the specified backup.
+bsBackupName :: Lens' BackupSummary (Maybe Text)
+bsBackupName = lens _bsBackupName (\ s a -> s{_bsBackupName = a});
+
+-- | Backup can be in one of the following states: CREATING, ACTIVE, DELETED.
+bsBackupStatus :: Lens' BackupSummary (Maybe BackupStatus)
+bsBackupStatus = lens _bsBackupStatus (\ s a -> s{_bsBackupStatus = a});
+
+-- | Size of the backup in bytes.
+bsBackupSizeBytes :: Lens' BackupSummary (Maybe Natural)
+bsBackupSizeBytes = lens _bsBackupSizeBytes (\ s a -> s{_bsBackupSizeBytes = a}) . mapping _Nat;
+
+-- | ARN associated with the backup.
+bsBackupARN :: Lens' BackupSummary (Maybe Text)
+bsBackupARN = lens _bsBackupARN (\ s a -> s{_bsBackupARN = a});
+
+-- | Unique identifier for the table.
+bsTableId :: Lens' BackupSummary (Maybe Text)
+bsTableId = lens _bsTableId (\ s a -> s{_bsTableId = a});
+
+-- | Time at which the backup was created.
+bsBackupCreationDateTime :: Lens' BackupSummary (Maybe UTCTime)
+bsBackupCreationDateTime = lens _bsBackupCreationDateTime (\ s a -> s{_bsBackupCreationDateTime = a}) . mapping _Time;
+
+-- | Name of the table.
+bsTableName :: Lens' BackupSummary (Maybe Text)
+bsTableName = lens _bsTableName (\ s a -> s{_bsTableName = a});
+
+instance FromJSON BackupSummary where
+        parseJSON
+          = withObject "BackupSummary"
+              (\ x ->
+                 BackupSummary' <$>
+                   (x .:? "TableArn") <*> (x .:? "BackupName") <*>
+                     (x .:? "BackupStatus")
+                     <*> (x .:? "BackupSizeBytes")
+                     <*> (x .:? "BackupArn")
+                     <*> (x .:? "TableId")
+                     <*> (x .:? "BackupCreationDateTime")
+                     <*> (x .:? "TableName"))
+
+instance Hashable BackupSummary where
+
+instance NFData BackupSummary where
+
 -- | Represents the amount of provisioned throughput capacity consumed on a table or an index.
 --
 --
@@ -413,6 +646,44 @@ instance Hashable ConsumedCapacity where
 
 instance NFData ConsumedCapacity where
 
+-- | Represents the backup and restore settings on the table when the backup was created.
+--
+--
+--
+-- /See:/ 'continuousBackupsDescription' smart constructor.
+newtype ContinuousBackupsDescription = ContinuousBackupsDescription'
+  { _cbdContinuousBackupsStatus :: ContinuousBackupsStatus
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ContinuousBackupsDescription' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'cbdContinuousBackupsStatus' - ContinuousBackupsStatus can be one of the following states : ENABLED, DISABLED
+continuousBackupsDescription
+    :: ContinuousBackupsStatus -- ^ 'cbdContinuousBackupsStatus'
+    -> ContinuousBackupsDescription
+continuousBackupsDescription pContinuousBackupsStatus_ =
+  ContinuousBackupsDescription'
+  {_cbdContinuousBackupsStatus = pContinuousBackupsStatus_}
+
+
+-- | ContinuousBackupsStatus can be one of the following states : ENABLED, DISABLED
+cbdContinuousBackupsStatus :: Lens' ContinuousBackupsDescription ContinuousBackupsStatus
+cbdContinuousBackupsStatus = lens _cbdContinuousBackupsStatus (\ s a -> s{_cbdContinuousBackupsStatus = a});
+
+instance FromJSON ContinuousBackupsDescription where
+        parseJSON
+          = withObject "ContinuousBackupsDescription"
+              (\ x ->
+                 ContinuousBackupsDescription' <$>
+                   (x .: "ContinuousBackupsStatus"))
+
+instance Hashable ContinuousBackupsDescription where
+
+instance NFData ContinuousBackupsDescription where
+
 -- | Represents a new global secondary index to be added to an existing table.
 --
 --
@@ -486,6 +757,41 @@ instance ToJSON CreateGlobalSecondaryIndexAction
                     ("ProvisionedThroughput" .=
                        _cgsiaProvisionedThroughput)])
 
+-- | Represents a replica to be added.
+--
+--
+--
+-- /See:/ 'createReplicaAction' smart constructor.
+newtype CreateReplicaAction = CreateReplicaAction'
+  { _craRegionName :: Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CreateReplicaAction' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'craRegionName' - The region of the replica to be added.
+createReplicaAction
+    :: Text -- ^ 'craRegionName'
+    -> CreateReplicaAction
+createReplicaAction pRegionName_ =
+  CreateReplicaAction' {_craRegionName = pRegionName_}
+
+
+-- | The region of the replica to be added.
+craRegionName :: Lens' CreateReplicaAction Text
+craRegionName = lens _craRegionName (\ s a -> s{_craRegionName = a});
+
+instance Hashable CreateReplicaAction where
+
+instance NFData CreateReplicaAction where
+
+instance ToJSON CreateReplicaAction where
+        toJSON CreateReplicaAction'{..}
+          = object
+              (catMaybes [Just ("RegionName" .= _craRegionName)])
+
 -- | Represents a global secondary index to be deleted from an existing table.
 --
 --
@@ -523,6 +829,41 @@ instance ToJSON DeleteGlobalSecondaryIndexAction
         toJSON DeleteGlobalSecondaryIndexAction'{..}
           = object
               (catMaybes [Just ("IndexName" .= _dgsiaIndexName)])
+
+-- | Represents a replica to be removed.
+--
+--
+--
+-- /See:/ 'deleteReplicaAction' smart constructor.
+newtype DeleteReplicaAction = DeleteReplicaAction'
+  { _draRegionName :: Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'DeleteReplicaAction' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'draRegionName' - The region of the replica to be removed.
+deleteReplicaAction
+    :: Text -- ^ 'draRegionName'
+    -> DeleteReplicaAction
+deleteReplicaAction pRegionName_ =
+  DeleteReplicaAction' {_draRegionName = pRegionName_}
+
+
+-- | The region of the replica to be removed.
+draRegionName :: Lens' DeleteReplicaAction Text
+draRegionName = lens _draRegionName (\ s a -> s{_draRegionName = a});
+
+instance Hashable DeleteReplicaAction where
+
+instance NFData DeleteReplicaAction where
+
+instance ToJSON DeleteReplicaAction where
+        toJSON DeleteReplicaAction'{..}
+          = object
+              (catMaybes [Just ("RegionName" .= _draRegionName)])
 
 -- | Represents a request to perform a @DeleteItem@ operation on an item.
 --
@@ -816,6 +1157,71 @@ instance Hashable GlobalSecondaryIndexDescription
 
 instance NFData GlobalSecondaryIndexDescription where
 
+-- | Represents the properties of a global secondary index for the table when the backup was created.
+--
+--
+--
+-- /See:/ 'globalSecondaryIndexInfo' smart constructor.
+data GlobalSecondaryIndexInfo = GlobalSecondaryIndexInfo'
+  { _gsiiProvisionedThroughput :: !(Maybe ProvisionedThroughput)
+  , _gsiiKeySchema             :: !(Maybe (List1 KeySchemaElement))
+  , _gsiiProjection            :: !(Maybe Projection)
+  , _gsiiIndexName             :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'GlobalSecondaryIndexInfo' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'gsiiProvisionedThroughput' - Represents the provisioned throughput settings for the specified global secondary index.
+--
+-- * 'gsiiKeySchema' - The complete key schema for a global secondary index, which consists of one or more pairs of attribute names and key types:     * @HASH@ - partition key     * @RANGE@ - sort key
+--
+-- * 'gsiiProjection' - Represents attributes that are copied (projected) from the table into the global secondary index. These are in addition to the primary key attributes and index key attributes, which are automatically projected.
+--
+-- * 'gsiiIndexName' - The name of the global secondary index.
+globalSecondaryIndexInfo
+    :: GlobalSecondaryIndexInfo
+globalSecondaryIndexInfo =
+  GlobalSecondaryIndexInfo'
+  { _gsiiProvisionedThroughput = Nothing
+  , _gsiiKeySchema = Nothing
+  , _gsiiProjection = Nothing
+  , _gsiiIndexName = Nothing
+  }
+
+
+-- | Represents the provisioned throughput settings for the specified global secondary index.
+gsiiProvisionedThroughput :: Lens' GlobalSecondaryIndexInfo (Maybe ProvisionedThroughput)
+gsiiProvisionedThroughput = lens _gsiiProvisionedThroughput (\ s a -> s{_gsiiProvisionedThroughput = a});
+
+-- | The complete key schema for a global secondary index, which consists of one or more pairs of attribute names and key types:     * @HASH@ - partition key     * @RANGE@ - sort key
+gsiiKeySchema :: Lens' GlobalSecondaryIndexInfo (Maybe (NonEmpty KeySchemaElement))
+gsiiKeySchema = lens _gsiiKeySchema (\ s a -> s{_gsiiKeySchema = a}) . mapping _List1;
+
+-- | Represents attributes that are copied (projected) from the table into the global secondary index. These are in addition to the primary key attributes and index key attributes, which are automatically projected.
+gsiiProjection :: Lens' GlobalSecondaryIndexInfo (Maybe Projection)
+gsiiProjection = lens _gsiiProjection (\ s a -> s{_gsiiProjection = a});
+
+-- | The name of the global secondary index.
+gsiiIndexName :: Lens' GlobalSecondaryIndexInfo (Maybe Text)
+gsiiIndexName = lens _gsiiIndexName (\ s a -> s{_gsiiIndexName = a});
+
+instance FromJSON GlobalSecondaryIndexInfo where
+        parseJSON
+          = withObject "GlobalSecondaryIndexInfo"
+              (\ x ->
+                 GlobalSecondaryIndexInfo' <$>
+                   (x .:? "ProvisionedThroughput") <*>
+                     (x .:? "KeySchema")
+                     <*> (x .:? "Projection")
+                     <*> (x .:? "IndexName"))
+
+instance Hashable GlobalSecondaryIndexInfo where
+
+instance NFData GlobalSecondaryIndexInfo where
+
 -- | Represents one of the following:
 --
 --
@@ -875,6 +1281,124 @@ instance ToJSON GlobalSecondaryIndexUpdate where
                  [("Create" .=) <$> _gsiuCreate,
                   ("Delete" .=) <$> _gsiuDelete,
                   ("Update" .=) <$> _gsiuUpdate])
+
+-- | Represents the properties of a global table.
+--
+--
+--
+-- /See:/ 'globalTable' smart constructor.
+data GlobalTable = GlobalTable'
+  { _gtGlobalTableName  :: !(Maybe Text)
+  , _gtReplicationGroup :: !(Maybe [Replica])
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'GlobalTable' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'gtGlobalTableName' - The global table name.
+--
+-- * 'gtReplicationGroup' - The regions where the global table has replicas.
+globalTable
+    :: GlobalTable
+globalTable =
+  GlobalTable' {_gtGlobalTableName = Nothing, _gtReplicationGroup = Nothing}
+
+
+-- | The global table name.
+gtGlobalTableName :: Lens' GlobalTable (Maybe Text)
+gtGlobalTableName = lens _gtGlobalTableName (\ s a -> s{_gtGlobalTableName = a});
+
+-- | The regions where the global table has replicas.
+gtReplicationGroup :: Lens' GlobalTable [Replica]
+gtReplicationGroup = lens _gtReplicationGroup (\ s a -> s{_gtReplicationGroup = a}) . _Default . _Coerce;
+
+instance FromJSON GlobalTable where
+        parseJSON
+          = withObject "GlobalTable"
+              (\ x ->
+                 GlobalTable' <$>
+                   (x .:? "GlobalTableName") <*>
+                     (x .:? "ReplicationGroup" .!= mempty))
+
+instance Hashable GlobalTable where
+
+instance NFData GlobalTable where
+
+-- | Contains details about the global table.
+--
+--
+--
+-- /See:/ 'globalTableDescription' smart constructor.
+data GlobalTableDescription = GlobalTableDescription'
+  { _gtdGlobalTableStatus :: !(Maybe GlobalTableStatus)
+  , _gtdGlobalTableName   :: !(Maybe Text)
+  , _gtdGlobalTableARN    :: !(Maybe Text)
+  , _gtdCreationDateTime  :: !(Maybe POSIX)
+  , _gtdReplicationGroup  :: !(Maybe [ReplicaDescription])
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'GlobalTableDescription' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'gtdGlobalTableStatus' - The current state of the global table:     * @CREATING@ - The global table is being created.     * @UPDATING@ - The global table is being updated.     * @DELETING@ - The global table is being deleted.     * @ACTIVE@ - The global table is ready for use.
+--
+-- * 'gtdGlobalTableName' - The global table name.
+--
+-- * 'gtdGlobalTableARN' - The unique identifier of the global table.
+--
+-- * 'gtdCreationDateTime' - The creation time of the global table.
+--
+-- * 'gtdReplicationGroup' - The regions where the global table has replicas.
+globalTableDescription
+    :: GlobalTableDescription
+globalTableDescription =
+  GlobalTableDescription'
+  { _gtdGlobalTableStatus = Nothing
+  , _gtdGlobalTableName = Nothing
+  , _gtdGlobalTableARN = Nothing
+  , _gtdCreationDateTime = Nothing
+  , _gtdReplicationGroup = Nothing
+  }
+
+
+-- | The current state of the global table:     * @CREATING@ - The global table is being created.     * @UPDATING@ - The global table is being updated.     * @DELETING@ - The global table is being deleted.     * @ACTIVE@ - The global table is ready for use.
+gtdGlobalTableStatus :: Lens' GlobalTableDescription (Maybe GlobalTableStatus)
+gtdGlobalTableStatus = lens _gtdGlobalTableStatus (\ s a -> s{_gtdGlobalTableStatus = a});
+
+-- | The global table name.
+gtdGlobalTableName :: Lens' GlobalTableDescription (Maybe Text)
+gtdGlobalTableName = lens _gtdGlobalTableName (\ s a -> s{_gtdGlobalTableName = a});
+
+-- | The unique identifier of the global table.
+gtdGlobalTableARN :: Lens' GlobalTableDescription (Maybe Text)
+gtdGlobalTableARN = lens _gtdGlobalTableARN (\ s a -> s{_gtdGlobalTableARN = a});
+
+-- | The creation time of the global table.
+gtdCreationDateTime :: Lens' GlobalTableDescription (Maybe UTCTime)
+gtdCreationDateTime = lens _gtdCreationDateTime (\ s a -> s{_gtdCreationDateTime = a}) . mapping _Time;
+
+-- | The regions where the global table has replicas.
+gtdReplicationGroup :: Lens' GlobalTableDescription [ReplicaDescription]
+gtdReplicationGroup = lens _gtdReplicationGroup (\ s a -> s{_gtdReplicationGroup = a}) . _Default . _Coerce;
+
+instance FromJSON GlobalTableDescription where
+        parseJSON
+          = withObject "GlobalTableDescription"
+              (\ x ->
+                 GlobalTableDescription' <$>
+                   (x .:? "GlobalTableStatus") <*>
+                     (x .:? "GlobalTableName")
+                     <*> (x .:? "GlobalTableArn")
+                     <*> (x .:? "CreationDateTime")
+                     <*> (x .:? "ReplicationGroup" .!= mempty))
+
+instance Hashable GlobalTableDescription where
+
+instance NFData GlobalTableDescription where
 
 -- | Information about item collections, if any, that were affected by the operation. @ItemCollectionMetrics@ is only returned if the request asked for it. If the table does not have any local secondary indexes, this information is not returned in the response.
 --
@@ -1209,6 +1733,61 @@ instance Hashable LocalSecondaryIndexDescription
 
 instance NFData LocalSecondaryIndexDescription where
 
+-- | Represents the properties of a local secondary index for the table when the backup was created.
+--
+--
+--
+-- /See:/ 'localSecondaryIndexInfo' smart constructor.
+data LocalSecondaryIndexInfo = LocalSecondaryIndexInfo'
+  { _lsiiKeySchema  :: !(Maybe (List1 KeySchemaElement))
+  , _lsiiProjection :: !(Maybe Projection)
+  , _lsiiIndexName  :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'LocalSecondaryIndexInfo' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'lsiiKeySchema' - The complete key schema for a local secondary index, which consists of one or more pairs of attribute names and key types:     * @HASH@ - partition key     * @RANGE@ - sort key
+--
+-- * 'lsiiProjection' - Represents attributes that are copied (projected) from the table into the global secondary index. These are in addition to the primary key attributes and index key attributes, which are automatically projected.
+--
+-- * 'lsiiIndexName' - Represents the name of the local secondary index.
+localSecondaryIndexInfo
+    :: LocalSecondaryIndexInfo
+localSecondaryIndexInfo =
+  LocalSecondaryIndexInfo'
+  { _lsiiKeySchema = Nothing
+  , _lsiiProjection = Nothing
+  , _lsiiIndexName = Nothing
+  }
+
+
+-- | The complete key schema for a local secondary index, which consists of one or more pairs of attribute names and key types:     * @HASH@ - partition key     * @RANGE@ - sort key
+lsiiKeySchema :: Lens' LocalSecondaryIndexInfo (Maybe (NonEmpty KeySchemaElement))
+lsiiKeySchema = lens _lsiiKeySchema (\ s a -> s{_lsiiKeySchema = a}) . mapping _List1;
+
+-- | Represents attributes that are copied (projected) from the table into the global secondary index. These are in addition to the primary key attributes and index key attributes, which are automatically projected.
+lsiiProjection :: Lens' LocalSecondaryIndexInfo (Maybe Projection)
+lsiiProjection = lens _lsiiProjection (\ s a -> s{_lsiiProjection = a});
+
+-- | Represents the name of the local secondary index.
+lsiiIndexName :: Lens' LocalSecondaryIndexInfo (Maybe Text)
+lsiiIndexName = lens _lsiiIndexName (\ s a -> s{_lsiiIndexName = a});
+
+instance FromJSON LocalSecondaryIndexInfo where
+        parseJSON
+          = withObject "LocalSecondaryIndexInfo"
+              (\ x ->
+                 LocalSecondaryIndexInfo' <$>
+                   (x .:? "KeySchema") <*> (x .:? "Projection") <*>
+                     (x .:? "IndexName"))
+
+instance Hashable LocalSecondaryIndexInfo where
+
+instance NFData LocalSecondaryIndexInfo where
+
 -- | Represents attributes that are copied (projected) from the table into an index. These are in addition to the primary key attributes and index key attributes, which are automatically projected.
 --
 --
@@ -1298,6 +1877,14 @@ ptReadCapacityUnits = lens _ptReadCapacityUnits (\ s a -> s{_ptReadCapacityUnits
 -- | The maximum number of writes consumed per second before DynamoDB returns a @ThrottlingException@ . For more information, see <http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/WorkingWithTables.html#ProvisionedThroughput Specifying Read and Write Requirements> in the /Amazon DynamoDB Developer Guide/ .
 ptWriteCapacityUnits :: Lens' ProvisionedThroughput Natural
 ptWriteCapacityUnits = lens _ptWriteCapacityUnits (\ s a -> s{_ptWriteCapacityUnits = a}) . _Nat;
+
+instance FromJSON ProvisionedThroughput where
+        parseJSON
+          = withObject "ProvisionedThroughput"
+              (\ x ->
+                 ProvisionedThroughput' <$>
+                   (x .: "ReadCapacityUnits") <*>
+                     (x .: "WriteCapacityUnits"))
 
 instance Hashable ProvisionedThroughput where
 
@@ -1425,6 +2012,364 @@ instance ToJSON PutRequest where
         toJSON PutRequest'{..}
           = object (catMaybes [Just ("Item" .= _prItem)])
 
+-- | Represents the properties of a replica.
+--
+--
+--
+-- /See:/ 'replica' smart constructor.
+newtype Replica = Replica'
+  { _rRegionName :: Maybe Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'Replica' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rRegionName' - The region where the replica needs to be created.
+replica
+    :: Replica
+replica = Replica' {_rRegionName = Nothing}
+
+
+-- | The region where the replica needs to be created.
+rRegionName :: Lens' Replica (Maybe Text)
+rRegionName = lens _rRegionName (\ s a -> s{_rRegionName = a});
+
+instance FromJSON Replica where
+        parseJSON
+          = withObject "Replica"
+              (\ x -> Replica' <$> (x .:? "RegionName"))
+
+instance Hashable Replica where
+
+instance NFData Replica where
+
+instance ToJSON Replica where
+        toJSON Replica'{..}
+          = object
+              (catMaybes [("RegionName" .=) <$> _rRegionName])
+
+-- | Contains the details of the replica.
+--
+--
+--
+-- /See:/ 'replicaDescription' smart constructor.
+newtype ReplicaDescription = ReplicaDescription'
+  { _rdRegionName :: Maybe Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ReplicaDescription' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rdRegionName' - The name of the region.
+replicaDescription
+    :: ReplicaDescription
+replicaDescription = ReplicaDescription' {_rdRegionName = Nothing}
+
+
+-- | The name of the region.
+rdRegionName :: Lens' ReplicaDescription (Maybe Text)
+rdRegionName = lens _rdRegionName (\ s a -> s{_rdRegionName = a});
+
+instance FromJSON ReplicaDescription where
+        parseJSON
+          = withObject "ReplicaDescription"
+              (\ x -> ReplicaDescription' <$> (x .:? "RegionName"))
+
+instance Hashable ReplicaDescription where
+
+instance NFData ReplicaDescription where
+
+-- | Represents one of the following:
+--
+--
+--     * A new replica to be added to an existing global table.
+--
+--     * New parameters for an existing replica.
+--
+--     * An existing replica to be removed from an existing global table.
+--
+--
+--
+--
+-- /See:/ 'replicaUpdate' smart constructor.
+data ReplicaUpdate = ReplicaUpdate'
+  { _ruCreate :: !(Maybe CreateReplicaAction)
+  , _ruDelete :: !(Maybe DeleteReplicaAction)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ReplicaUpdate' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ruCreate' - The parameters required for creating a replica on an existing global table.
+--
+-- * 'ruDelete' - The name of the existing replica to be removed.
+replicaUpdate
+    :: ReplicaUpdate
+replicaUpdate = ReplicaUpdate' {_ruCreate = Nothing, _ruDelete = Nothing}
+
+
+-- | The parameters required for creating a replica on an existing global table.
+ruCreate :: Lens' ReplicaUpdate (Maybe CreateReplicaAction)
+ruCreate = lens _ruCreate (\ s a -> s{_ruCreate = a});
+
+-- | The name of the existing replica to be removed.
+ruDelete :: Lens' ReplicaUpdate (Maybe DeleteReplicaAction)
+ruDelete = lens _ruDelete (\ s a -> s{_ruDelete = a});
+
+instance Hashable ReplicaUpdate where
+
+instance NFData ReplicaUpdate where
+
+instance ToJSON ReplicaUpdate where
+        toJSON ReplicaUpdate'{..}
+          = object
+              (catMaybes
+                 [("Create" .=) <$> _ruCreate,
+                  ("Delete" .=) <$> _ruDelete])
+
+-- | Contains details for the restore.
+--
+--
+--
+-- /See:/ 'restoreSummary' smart constructor.
+data RestoreSummary = RestoreSummary'
+  { _rsSourceTableARN    :: !(Maybe Text)
+  , _rsSourceBackupARN   :: !(Maybe Text)
+  , _rsRestoreDateTime   :: !POSIX
+  , _rsRestoreInProgress :: !Bool
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'RestoreSummary' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rsSourceTableARN' - ARN of the source table of the backup that is being restored.
+--
+-- * 'rsSourceBackupARN' - ARN of the backup from which the table was restored.
+--
+-- * 'rsRestoreDateTime' - Point in time or source backup time.
+--
+-- * 'rsRestoreInProgress' - Indicates if a restore is in progress or not.
+restoreSummary
+    :: UTCTime -- ^ 'rsRestoreDateTime'
+    -> Bool -- ^ 'rsRestoreInProgress'
+    -> RestoreSummary
+restoreSummary pRestoreDateTime_ pRestoreInProgress_ =
+  RestoreSummary'
+  { _rsSourceTableARN = Nothing
+  , _rsSourceBackupARN = Nothing
+  , _rsRestoreDateTime = _Time # pRestoreDateTime_
+  , _rsRestoreInProgress = pRestoreInProgress_
+  }
+
+
+-- | ARN of the source table of the backup that is being restored.
+rsSourceTableARN :: Lens' RestoreSummary (Maybe Text)
+rsSourceTableARN = lens _rsSourceTableARN (\ s a -> s{_rsSourceTableARN = a});
+
+-- | ARN of the backup from which the table was restored.
+rsSourceBackupARN :: Lens' RestoreSummary (Maybe Text)
+rsSourceBackupARN = lens _rsSourceBackupARN (\ s a -> s{_rsSourceBackupARN = a});
+
+-- | Point in time or source backup time.
+rsRestoreDateTime :: Lens' RestoreSummary UTCTime
+rsRestoreDateTime = lens _rsRestoreDateTime (\ s a -> s{_rsRestoreDateTime = a}) . _Time;
+
+-- | Indicates if a restore is in progress or not.
+rsRestoreInProgress :: Lens' RestoreSummary Bool
+rsRestoreInProgress = lens _rsRestoreInProgress (\ s a -> s{_rsRestoreInProgress = a});
+
+instance FromJSON RestoreSummary where
+        parseJSON
+          = withObject "RestoreSummary"
+              (\ x ->
+                 RestoreSummary' <$>
+                   (x .:? "SourceTableArn") <*>
+                     (x .:? "SourceBackupArn")
+                     <*> (x .: "RestoreDateTime")
+                     <*> (x .: "RestoreInProgress"))
+
+instance Hashable RestoreSummary where
+
+instance NFData RestoreSummary where
+
+-- | Contains the details of the table when the backup was created.
+--
+--
+--
+-- /See:/ 'sourceTableDetails' smart constructor.
+data SourceTableDetails = SourceTableDetails'
+  { _stdTableSizeBytes        :: !(Maybe Integer)
+  , _stdTableARN              :: !(Maybe Text)
+  , _stdItemCount             :: !(Maybe Nat)
+  , _stdTableName             :: !Text
+  , _stdTableId               :: !Text
+  , _stdKeySchema             :: !(List1 KeySchemaElement)
+  , _stdTableCreationDateTime :: !POSIX
+  , _stdProvisionedThroughput :: !ProvisionedThroughput
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'SourceTableDetails' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'stdTableSizeBytes' - Size of the table in bytes. Please note this is an approximate value.
+--
+-- * 'stdTableARN' - ARN of the table for which backup was created.
+--
+-- * 'stdItemCount' - Number of items in the table. Please note this is an approximate value.
+--
+-- * 'stdTableName' - The name of the table for which the backup was created.
+--
+-- * 'stdTableId' - Unique identifier for the table for which the backup was created.
+--
+-- * 'stdKeySchema' - Schema of the table.
+--
+-- * 'stdTableCreationDateTime' - Time when the source table was created.
+--
+-- * 'stdProvisionedThroughput' - Read IOPs and Write IOPS on the table when the backup was created.
+sourceTableDetails
+    :: Text -- ^ 'stdTableName'
+    -> Text -- ^ 'stdTableId'
+    -> NonEmpty KeySchemaElement -- ^ 'stdKeySchema'
+    -> UTCTime -- ^ 'stdTableCreationDateTime'
+    -> ProvisionedThroughput -- ^ 'stdProvisionedThroughput'
+    -> SourceTableDetails
+sourceTableDetails pTableName_ pTableId_ pKeySchema_ pTableCreationDateTime_ pProvisionedThroughput_ =
+  SourceTableDetails'
+  { _stdTableSizeBytes = Nothing
+  , _stdTableARN = Nothing
+  , _stdItemCount = Nothing
+  , _stdTableName = pTableName_
+  , _stdTableId = pTableId_
+  , _stdKeySchema = _List1 # pKeySchema_
+  , _stdTableCreationDateTime = _Time # pTableCreationDateTime_
+  , _stdProvisionedThroughput = pProvisionedThroughput_
+  }
+
+
+-- | Size of the table in bytes. Please note this is an approximate value.
+stdTableSizeBytes :: Lens' SourceTableDetails (Maybe Integer)
+stdTableSizeBytes = lens _stdTableSizeBytes (\ s a -> s{_stdTableSizeBytes = a});
+
+-- | ARN of the table for which backup was created.
+stdTableARN :: Lens' SourceTableDetails (Maybe Text)
+stdTableARN = lens _stdTableARN (\ s a -> s{_stdTableARN = a});
+
+-- | Number of items in the table. Please note this is an approximate value.
+stdItemCount :: Lens' SourceTableDetails (Maybe Natural)
+stdItemCount = lens _stdItemCount (\ s a -> s{_stdItemCount = a}) . mapping _Nat;
+
+-- | The name of the table for which the backup was created.
+stdTableName :: Lens' SourceTableDetails Text
+stdTableName = lens _stdTableName (\ s a -> s{_stdTableName = a});
+
+-- | Unique identifier for the table for which the backup was created.
+stdTableId :: Lens' SourceTableDetails Text
+stdTableId = lens _stdTableId (\ s a -> s{_stdTableId = a});
+
+-- | Schema of the table.
+stdKeySchema :: Lens' SourceTableDetails (NonEmpty KeySchemaElement)
+stdKeySchema = lens _stdKeySchema (\ s a -> s{_stdKeySchema = a}) . _List1;
+
+-- | Time when the source table was created.
+stdTableCreationDateTime :: Lens' SourceTableDetails UTCTime
+stdTableCreationDateTime = lens _stdTableCreationDateTime (\ s a -> s{_stdTableCreationDateTime = a}) . _Time;
+
+-- | Read IOPs and Write IOPS on the table when the backup was created.
+stdProvisionedThroughput :: Lens' SourceTableDetails ProvisionedThroughput
+stdProvisionedThroughput = lens _stdProvisionedThroughput (\ s a -> s{_stdProvisionedThroughput = a});
+
+instance FromJSON SourceTableDetails where
+        parseJSON
+          = withObject "SourceTableDetails"
+              (\ x ->
+                 SourceTableDetails' <$>
+                   (x .:? "TableSizeBytes") <*> (x .:? "TableArn") <*>
+                     (x .:? "ItemCount")
+                     <*> (x .: "TableName")
+                     <*> (x .: "TableId")
+                     <*> (x .: "KeySchema")
+                     <*> (x .: "TableCreationDateTime")
+                     <*> (x .: "ProvisionedThroughput"))
+
+instance Hashable SourceTableDetails where
+
+instance NFData SourceTableDetails where
+
+-- | Contains the details of the features enabled on the table when the backup was created. For example, LSIs, GSIs, streams, TTL.
+--
+--
+--
+-- /See:/ 'sourceTableFeatureDetails' smart constructor.
+data SourceTableFeatureDetails = SourceTableFeatureDetails'
+  { _stfdStreamDescription      :: !(Maybe StreamSpecification)
+  , _stfdGlobalSecondaryIndexes :: !(Maybe [GlobalSecondaryIndexInfo])
+  , _stfdLocalSecondaryIndexes  :: !(Maybe [LocalSecondaryIndexInfo])
+  , _stfdTimeToLiveDescription  :: !(Maybe TimeToLiveDescription)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'SourceTableFeatureDetails' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'stfdStreamDescription' - Stream settings on the table when the backup was created.
+--
+-- * 'stfdGlobalSecondaryIndexes' - Represents the GSI properties for the table when the backup was created. It includes the IndexName, KeySchema, Projection and ProvisionedThroughput for the GSIs on the table at the time of backup.
+--
+-- * 'stfdLocalSecondaryIndexes' - Represents the LSI properties for the table when the backup was created. It includes the IndexName, KeySchema and Projection for the LSIs on the table at the time of backup.
+--
+-- * 'stfdTimeToLiveDescription' - Time to Live settings on the table when the backup was created.
+sourceTableFeatureDetails
+    :: SourceTableFeatureDetails
+sourceTableFeatureDetails =
+  SourceTableFeatureDetails'
+  { _stfdStreamDescription = Nothing
+  , _stfdGlobalSecondaryIndexes = Nothing
+  , _stfdLocalSecondaryIndexes = Nothing
+  , _stfdTimeToLiveDescription = Nothing
+  }
+
+
+-- | Stream settings on the table when the backup was created.
+stfdStreamDescription :: Lens' SourceTableFeatureDetails (Maybe StreamSpecification)
+stfdStreamDescription = lens _stfdStreamDescription (\ s a -> s{_stfdStreamDescription = a});
+
+-- | Represents the GSI properties for the table when the backup was created. It includes the IndexName, KeySchema, Projection and ProvisionedThroughput for the GSIs on the table at the time of backup.
+stfdGlobalSecondaryIndexes :: Lens' SourceTableFeatureDetails [GlobalSecondaryIndexInfo]
+stfdGlobalSecondaryIndexes = lens _stfdGlobalSecondaryIndexes (\ s a -> s{_stfdGlobalSecondaryIndexes = a}) . _Default . _Coerce;
+
+-- | Represents the LSI properties for the table when the backup was created. It includes the IndexName, KeySchema and Projection for the LSIs on the table at the time of backup.
+stfdLocalSecondaryIndexes :: Lens' SourceTableFeatureDetails [LocalSecondaryIndexInfo]
+stfdLocalSecondaryIndexes = lens _stfdLocalSecondaryIndexes (\ s a -> s{_stfdLocalSecondaryIndexes = a}) . _Default . _Coerce;
+
+-- | Time to Live settings on the table when the backup was created.
+stfdTimeToLiveDescription :: Lens' SourceTableFeatureDetails (Maybe TimeToLiveDescription)
+stfdTimeToLiveDescription = lens _stfdTimeToLiveDescription (\ s a -> s{_stfdTimeToLiveDescription = a});
+
+instance FromJSON SourceTableFeatureDetails where
+        parseJSON
+          = withObject "SourceTableFeatureDetails"
+              (\ x ->
+                 SourceTableFeatureDetails' <$>
+                   (x .:? "StreamDescription") <*>
+                     (x .:? "GlobalSecondaryIndexes" .!= mempty)
+                     <*> (x .:? "LocalSecondaryIndexes" .!= mempty)
+                     <*> (x .:? "TimeToLiveDescription"))
+
+instance Hashable SourceTableFeatureDetails where
+
+instance NFData SourceTableFeatureDetails where
+
 -- | Represents the DynamoDB Streams configuration for a table in DynamoDB.
 --
 --
@@ -1481,7 +2426,8 @@ instance ToJSON StreamSpecification where
 --
 -- /See:/ 'tableDescription' smart constructor.
 data TableDescription = TableDescription'
-  { _tdTableSizeBytes         :: !(Maybe Integer)
+  { _tdRestoreSummary         :: !(Maybe RestoreSummary)
+  , _tdTableSizeBytes         :: !(Maybe Integer)
   , _tdAttributeDefinitions   :: !(Maybe [AttributeDefinition])
   , _tdLatestStreamARN        :: !(Maybe Text)
   , _tdProvisionedThroughput  :: !(Maybe ProvisionedThroughputDescription)
@@ -1492,6 +2438,7 @@ data TableDescription = TableDescription'
   , _tdLatestStreamLabel      :: !(Maybe Text)
   , _tdLocalSecondaryIndexes  :: !(Maybe [LocalSecondaryIndexDescription])
   , _tdCreationDateTime       :: !(Maybe POSIX)
+  , _tdTableId                :: !(Maybe Text)
   , _tdItemCount              :: !(Maybe Integer)
   , _tdTableName              :: !(Maybe Text)
   , _tdStreamSpecification    :: !(Maybe StreamSpecification)
@@ -1501,6 +2448,8 @@ data TableDescription = TableDescription'
 -- | Creates a value of 'TableDescription' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'tdRestoreSummary' - Contains details for the restore.
 --
 -- * 'tdTableSizeBytes' - The total size of the specified table, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.
 --
@@ -1524,6 +2473,8 @@ data TableDescription = TableDescription'
 --
 -- * 'tdCreationDateTime' - The date and time when the table was created, in <http://www.epochconverter.com/ UNIX epoch time> format.
 --
+-- * 'tdTableId' - Unique identifier for the table for which the backup was created.
+--
 -- * 'tdItemCount' - The number of items in the specified table. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.
 --
 -- * 'tdTableName' - The name of the table.
@@ -1533,7 +2484,8 @@ tableDescription
     :: TableDescription
 tableDescription =
   TableDescription'
-  { _tdTableSizeBytes = Nothing
+  { _tdRestoreSummary = Nothing
+  , _tdTableSizeBytes = Nothing
   , _tdAttributeDefinitions = Nothing
   , _tdLatestStreamARN = Nothing
   , _tdProvisionedThroughput = Nothing
@@ -1544,11 +2496,16 @@ tableDescription =
   , _tdLatestStreamLabel = Nothing
   , _tdLocalSecondaryIndexes = Nothing
   , _tdCreationDateTime = Nothing
+  , _tdTableId = Nothing
   , _tdItemCount = Nothing
   , _tdTableName = Nothing
   , _tdStreamSpecification = Nothing
   }
 
+
+-- | Contains details for the restore.
+tdRestoreSummary :: Lens' TableDescription (Maybe RestoreSummary)
+tdRestoreSummary = lens _tdRestoreSummary (\ s a -> s{_tdRestoreSummary = a});
 
 -- | The total size of the specified table, in bytes. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.
 tdTableSizeBytes :: Lens' TableDescription (Maybe Integer)
@@ -1594,6 +2551,10 @@ tdLocalSecondaryIndexes = lens _tdLocalSecondaryIndexes (\ s a -> s{_tdLocalSeco
 tdCreationDateTime :: Lens' TableDescription (Maybe UTCTime)
 tdCreationDateTime = lens _tdCreationDateTime (\ s a -> s{_tdCreationDateTime = a}) . mapping _Time;
 
+-- | Unique identifier for the table for which the backup was created.
+tdTableId :: Lens' TableDescription (Maybe Text)
+tdTableId = lens _tdTableId (\ s a -> s{_tdTableId = a});
+
 -- | The number of items in the specified table. DynamoDB updates this value approximately every six hours. Recent changes might not be reflected in this value.
 tdItemCount :: Lens' TableDescription (Maybe Integer)
 tdItemCount = lens _tdItemCount (\ s a -> s{_tdItemCount = a});
@@ -1611,8 +2572,8 @@ instance FromJSON TableDescription where
           = withObject "TableDescription"
               (\ x ->
                  TableDescription' <$>
-                   (x .:? "TableSizeBytes") <*>
-                     (x .:? "AttributeDefinitions" .!= mempty)
+                   (x .:? "RestoreSummary") <*> (x .:? "TableSizeBytes")
+                     <*> (x .:? "AttributeDefinitions" .!= mempty)
                      <*> (x .:? "LatestStreamArn")
                      <*> (x .:? "ProvisionedThroughput")
                      <*> (x .:? "TableStatus")
@@ -1622,6 +2583,7 @@ instance FromJSON TableDescription where
                      <*> (x .:? "LatestStreamLabel")
                      <*> (x .:? "LocalSecondaryIndexes" .!= mempty)
                      <*> (x .:? "CreationDateTime")
+                     <*> (x .:? "TableId")
                      <*> (x .:? "ItemCount")
                      <*> (x .:? "TableName")
                      <*> (x .:? "StreamSpecification"))

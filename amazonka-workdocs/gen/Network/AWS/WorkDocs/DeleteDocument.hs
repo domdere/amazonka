@@ -53,7 +53,7 @@ data DeleteDocument = DeleteDocument'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ddAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'ddAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'ddDocumentId' - The ID of the document.
 deleteDocument
@@ -64,7 +64,7 @@ deleteDocument pDocumentId_ =
   {_ddAuthenticationToken = Nothing, _ddDocumentId = pDocumentId_}
 
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 ddAuthenticationToken :: Lens' DeleteDocument (Maybe Text)
 ddAuthenticationToken = lens _ddAuthenticationToken (\ s a -> s{_ddAuthenticationToken = a}) . mapping _Sensitive;
 

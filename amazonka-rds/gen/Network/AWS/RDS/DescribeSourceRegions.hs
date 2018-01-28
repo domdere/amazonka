@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Returns a list of the source AWS regions where the current AWS Region can create a Read Replica or copy a DB snapshot from. This API action supports pagination.
+-- Returns a list of the source AWS Regions where the current AWS Region can create a Read Replica or copy a DB snapshot from. This API action supports pagination.
 --
 --
 module Network.AWS.RDS.DescribeSourceRegions

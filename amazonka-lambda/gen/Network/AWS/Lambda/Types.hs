@@ -20,6 +20,7 @@ module Network.AWS.Lambda.Types
     , _EC2ThrottledException
     , _InvalidRuntimeException
     , _PolicyLengthExceededException
+    , _PreconditionFailedException
     , _EC2AccessDeniedException
     , _InvalidSubnetIdException
     , _UnsupportedMediaTypeException
@@ -63,6 +64,7 @@ module Network.AWS.Lambda.Types
     , accountLimit
     , alConcurrentExecutions
     , alTotalCodeSize
+    , alUnreservedConcurrentExecutions
     , alCodeSizeUnzipped
     , alCodeSizeZipped
 
@@ -75,10 +77,22 @@ module Network.AWS.Lambda.Types
     -- * AliasConfiguration
     , AliasConfiguration
     , aliasConfiguration
+    , acRoutingConfig
     , acName
     , acFunctionVersion
     , acAliasARN
     , acDescription
+    , acRevisionId
+
+    -- * AliasRoutingConfiguration
+    , AliasRoutingConfiguration
+    , aliasRoutingConfiguration
+    , arcAdditionalVersionWeights
+
+    -- * Concurrency
+    , Concurrency
+    , concurrency
+    , cReservedConcurrentExecutions
 
     -- * DeadLetterConfig
     , DeadLetterConfig
@@ -148,6 +162,7 @@ module Network.AWS.Lambda.Types
     , fcCodeSha256
     , fcTracingConfig
     , fcDescription
+    , fcRevisionId
     , fcMasterARN
 
     -- * TracingConfig
@@ -249,6 +264,14 @@ _PolicyLengthExceededException =
   _MatchServiceError lambda "PolicyLengthExceededException" . hasStatus 400
 
 
+-- | The RevisionId provided does not match the latest RevisionId for the Lambda function or alias. Call the @GetFunction@ or the @GetAlias@ API to retrieve the latest RevisionId for your resource.
+--
+--
+_PreconditionFailedException :: AsError a => Getting (First ServiceError) a ServiceError
+_PreconditionFailedException =
+  _MatchServiceError lambda "PreconditionFailedException" . hasStatus 412
+
+
 -- |
 --
 --
@@ -297,7 +320,7 @@ _ENILimitReachedException =
   _MatchServiceError lambda "ENILimitReachedException" . hasStatus 502
 
 
--- | One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the @CreateFunction@ or the @UpdateFunctionConfiguration@ API, that AWS Lambda is unable to assume you will get this exception. You will also get this exception if you have selected a deprecated runtime, such as Node v0.10.42.
+-- | One of the parameters in the request is invalid. For example, if you provided an IAM role for AWS Lambda to assume in the @CreateFunction@ or the @UpdateFunctionConfiguration@ API, that AWS Lambda is unable to assume you will get this exception.
 --
 --
 _InvalidParameterValueException :: AsError a => Getting (First ServiceError) a ServiceError

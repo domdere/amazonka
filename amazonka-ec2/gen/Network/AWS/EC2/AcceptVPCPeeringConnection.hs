@@ -21,6 +21,8 @@
 -- Accept a VPC peering connection request. To accept a request, the VPC peering connection must be in the @pending-acceptance@ state, and you must be the owner of the peer VPC. Use 'DescribeVpcPeeringConnections' to view your outstanding VPC peering connection requests.
 --
 --
+-- For an inter-region VPC peering connection request, you must accept the VPC peering connection in the region of the accepter VPC.
+--
 module Network.AWS.EC2.AcceptVPCPeeringConnection
     (
     -- * Creating a Request
@@ -60,7 +62,7 @@ data AcceptVPCPeeringConnection = AcceptVPCPeeringConnection'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'avpcVPCPeeringConnectionId' - The ID of the VPC peering connection.
+-- * 'avpcVPCPeeringConnectionId' - The ID of the VPC peering connection. You must specify this parameter in the request.
 --
 -- * 'avpcDryRun' - Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is @DryRunOperation@ . Otherwise, it is @UnauthorizedOperation@ .
 acceptVPCPeeringConnection
@@ -70,7 +72,7 @@ acceptVPCPeeringConnection =
   {_avpcVPCPeeringConnectionId = Nothing, _avpcDryRun = Nothing}
 
 
--- | The ID of the VPC peering connection.
+-- | The ID of the VPC peering connection. You must specify this parameter in the request.
 avpcVPCPeeringConnectionId :: Lens' AcceptVPCPeeringConnection (Maybe Text)
 avpcVPCPeeringConnectionId = lens _avpcVPCPeeringConnectionId (\ s a -> s{_avpcVPCPeeringConnectionId = a});
 

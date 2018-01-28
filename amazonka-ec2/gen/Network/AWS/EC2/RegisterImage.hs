@@ -90,7 +90,7 @@ data RegisterImage = RegisterImage'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'riVirtualizationType' - The type of virtualization. Default: @paravirtual@
+-- * 'riVirtualizationType' - The type of virtualization (@hvm@ | @paravirtual@ ). Default: @paravirtual@
 --
 -- * 'riImageLocation' - The full path to your AMI manifest in Amazon S3 storage.
 --
@@ -136,7 +136,7 @@ registerImage pName_ =
   }
 
 
--- | The type of virtualization. Default: @paravirtual@
+-- | The type of virtualization (@hvm@ | @paravirtual@ ). Default: @paravirtual@
 riVirtualizationType :: Lens' RegisterImage (Maybe Text)
 riVirtualizationType = lens _riVirtualizationType (\ s a -> s{_riVirtualizationType = a});
 

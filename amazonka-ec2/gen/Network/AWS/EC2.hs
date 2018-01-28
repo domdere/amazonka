@@ -13,7 +13,7 @@
 --
 -- __Amazon Elastic Compute Cloud__
 --
--- Amazon Elastic Compute Cloud (Amazon EC2) provides resizable computing capacity in the Amazon Web Services (AWS) cloud. Using Amazon EC2 eliminates your need to invest in hardware up front, so you can develop and deploy applications faster.
+-- Amazon Elastic Compute Cloud (Amazon EC2) provides resizable computing capacity in the AWS Cloud. Using Amazon EC2 eliminates your need to invest in hardware up front, so you can develop and deploy applications faster.
 --
 module Network.AWS.EC2
     (
@@ -122,6 +122,12 @@ module Network.AWS.EC2
     -- ** CreateNetworkInterfacePermission
     , module Network.AWS.EC2.CreateNetworkInterfacePermission
 
+    -- ** DeleteLaunchTemplate
+    , module Network.AWS.EC2.DeleteLaunchTemplate
+
+    -- ** RejectVPCEndpointConnections
+    , module Network.AWS.EC2.RejectVPCEndpointConnections
+
     -- ** CreateVPNGateway
     , module Network.AWS.EC2.CreateVPNGateway
 
@@ -164,6 +170,9 @@ module Network.AWS.EC2
     -- ** DetachVolume
     , module Network.AWS.EC2.DetachVolume
 
+    -- ** DescribeInstanceCreditSpecifications
+    , module Network.AWS.EC2.DescribeInstanceCreditSpecifications
+
     -- ** CancelBundleTask
     , module Network.AWS.EC2.CancelBundleTask
 
@@ -187,6 +196,9 @@ module Network.AWS.EC2
 
     -- ** DeregisterImage
     , module Network.AWS.EC2.DeregisterImage
+
+    -- ** DeleteVPCEndpointConnectionNotifications
+    , module Network.AWS.EC2.DeleteVPCEndpointConnectionNotifications
 
     -- ** ModifyNetworkInterfaceAttribute
     , module Network.AWS.EC2.ModifyNetworkInterfaceAttribute
@@ -227,11 +239,20 @@ module Network.AWS.EC2
     -- ** StopInstances
     , module Network.AWS.EC2.StopInstances
 
+    -- ** ModifyLaunchTemplate
+    , module Network.AWS.EC2.ModifyLaunchTemplate
+
+    -- ** ModifyVPCEndpointConnectionNotification
+    , module Network.AWS.EC2.ModifyVPCEndpointConnectionNotification
+
     -- ** DescribeInternetGateways
     , module Network.AWS.EC2.DescribeInternetGateways
 
     -- ** DisableVPCClassicLink
     , module Network.AWS.EC2.DisableVPCClassicLink
+
+    -- ** DeleteLaunchTemplateVersions
+    , module Network.AWS.EC2.DeleteLaunchTemplateVersions
 
     -- ** BundleInstance
     , module Network.AWS.EC2.BundleInstance
@@ -338,6 +359,9 @@ module Network.AWS.EC2
     -- ** DescribeFlowLogs
     , module Network.AWS.EC2.DescribeFlowLogs
 
+    -- ** DescribeVPCEndpointConnectionNotifications
+    , module Network.AWS.EC2.DescribeVPCEndpointConnectionNotifications
+
     -- ** RunInstances
     , module Network.AWS.EC2.RunInstances
 
@@ -356,6 +380,9 @@ module Network.AWS.EC2
     -- ** DescribeConversionTasks
     , module Network.AWS.EC2.DescribeConversionTasks
 
+    -- ** CreateLaunchTemplateVersion
+    , module Network.AWS.EC2.CreateLaunchTemplateVersion
+
     -- ** DisableVPCClassicLinkDNSSupport
     , module Network.AWS.EC2.DisableVPCClassicLinkDNSSupport
 
@@ -364,6 +391,12 @@ module Network.AWS.EC2
 
     -- ** CreateFpgaImage
     , module Network.AWS.EC2.CreateFpgaImage
+
+    -- ** AcceptVPCEndpointConnections
+    , module Network.AWS.EC2.AcceptVPCEndpointConnections
+
+    -- ** GetLaunchTemplateData
+    , module Network.AWS.EC2.GetLaunchTemplateData
 
     -- ** AllocateAddress
     , module Network.AWS.EC2.AllocateAddress
@@ -425,6 +458,9 @@ module Network.AWS.EC2
     -- ** EnableVPCClassicLinkDNSSupport
     , module Network.AWS.EC2.EnableVPCClassicLinkDNSSupport
 
+    -- ** DescribeVPCEndpointConnections
+    , module Network.AWS.EC2.DescribeVPCEndpointConnections
+
     -- ** ModifyReservedInstances
     , module Network.AWS.EC2.ModifyReservedInstances
 
@@ -443,8 +479,20 @@ module Network.AWS.EC2
     -- ** MoveAddressToVPC
     , module Network.AWS.EC2.MoveAddressToVPC
 
+    -- ** DescribeLaunchTemplateVersions
+    , module Network.AWS.EC2.DescribeLaunchTemplateVersions
+
+    -- ** ModifyInstanceCreditSpecification
+    , module Network.AWS.EC2.ModifyInstanceCreditSpecification
+
     -- ** DeleteNetworkACL
     , module Network.AWS.EC2.DeleteNetworkACL
+
+    -- ** CreateLaunchTemplate
+    , module Network.AWS.EC2.CreateLaunchTemplate
+
+    -- ** CreateVPCEndpointConnectionNotification
+    , module Network.AWS.EC2.CreateVPCEndpointConnectionNotification
 
     -- ** DeleteNetworkInterfacePermission
     , module Network.AWS.EC2.DeleteNetworkInterfacePermission
@@ -554,6 +602,9 @@ module Network.AWS.EC2
     -- ** CancelExportTask
     , module Network.AWS.EC2.CancelExportTask
 
+    -- ** CreateVPCEndpointServiceConfiguration
+    , module Network.AWS.EC2.CreateVPCEndpointServiceConfiguration
+
     -- ** CreateDefaultVPC
     , module Network.AWS.EC2.CreateDefaultVPC
 
@@ -638,6 +689,9 @@ module Network.AWS.EC2
     -- ** CreateRoute
     , module Network.AWS.EC2.CreateRoute
 
+    -- ** DescribeVPCEndpointServiceConfigurations
+    , module Network.AWS.EC2.DescribeVPCEndpointServiceConfigurations
+
     -- ** DeleteSnapshot
     , module Network.AWS.EC2.DeleteSnapshot
 
@@ -704,6 +758,9 @@ module Network.AWS.EC2
     -- ** AttachVPNGateway
     , module Network.AWS.EC2.AttachVPNGateway
 
+    -- ** ModifyVPCEndpointServicePermissions
+    , module Network.AWS.EC2.ModifyVPCEndpointServicePermissions
+
     -- ** CreateDHCPOptions
     , module Network.AWS.EC2.CreateDHCPOptions
 
@@ -718,6 +775,9 @@ module Network.AWS.EC2
 
     -- ** RebootInstances
     , module Network.AWS.EC2.RebootInstances
+
+    -- ** ModifyVPCEndpointServiceConfiguration
+    , module Network.AWS.EC2.ModifyVPCEndpointServiceConfiguration
 
     -- ** UnassignIPv6Addresses
     , module Network.AWS.EC2.UnassignIPv6Addresses
@@ -742,6 +802,9 @@ module Network.AWS.EC2
 
     -- ** DescribeKeyPairs
     , module Network.AWS.EC2.DescribeKeyPairs
+
+    -- ** DescribeLaunchTemplates
+    , module Network.AWS.EC2.DescribeLaunchTemplates
 
     -- ** CreateVPNConnectionRoute
     , module Network.AWS.EC2.CreateVPNConnectionRoute
@@ -784,6 +847,9 @@ module Network.AWS.EC2
 
     -- ** DescribeNetworkInterfacePermissions
     , module Network.AWS.EC2.DescribeNetworkInterfacePermissions
+
+    -- ** DescribeVPCEndpointServicePermissions
+    , module Network.AWS.EC2.DescribeVPCEndpointServicePermissions
 
     -- ** DeleteDHCPOptions
     , module Network.AWS.EC2.DeleteDHCPOptions
@@ -839,7 +905,10 @@ module Network.AWS.EC2
     -- ** DeleteVolume
     , module Network.AWS.EC2.DeleteVolume
 
-    -- ** DescribeSpotFleetInstances
+    -- ** DeleteVPCEndpointServiceConfigurations
+    , module Network.AWS.EC2.DeleteVPCEndpointServiceConfigurations
+
+    -- ** DescribeSpotFleetInstances (Paginated)
     , module Network.AWS.EC2.DescribeSpotFleetInstances
 
     -- * Types
@@ -888,6 +957,12 @@ module Network.AWS.EC2
 
     -- ** CancelSpotInstanceRequestState
     , CancelSpotInstanceRequestState (..)
+
+    -- ** ConnectionNotificationState
+    , ConnectionNotificationState (..)
+
+    -- ** ConnectionNotificationType
+    , ConnectionNotificationType (..)
 
     -- ** ContainerFormat
     , ContainerFormat (..)
@@ -985,11 +1060,17 @@ module Network.AWS.EC2
     -- ** InterfacePermissionType
     , InterfacePermissionType (..)
 
+    -- ** LaunchTemplateErrorCode
+    , LaunchTemplateErrorCode (..)
+
     -- ** ListingState
     , ListingState (..)
 
     -- ** ListingStatus
     , ListingStatus (..)
+
+    -- ** MarketType
+    , MarketType (..)
 
     -- ** MonitoringState
     , MonitoringState (..)
@@ -1036,6 +1117,9 @@ module Network.AWS.EC2
     -- ** PlatformValues
     , PlatformValues (..)
 
+    -- ** PrincipalType
+    , PrincipalType (..)
+
     -- ** ProductCodeValues
     , ProductCodeValues (..)
 
@@ -1077,6 +1161,9 @@ module Network.AWS.EC2
 
     -- ** Scope
     , Scope (..)
+
+    -- ** ServiceState
+    , ServiceState (..)
 
     -- ** ServiceType
     , ServiceType (..)
@@ -1122,6 +1209,9 @@ module Network.AWS.EC2
 
     -- ** TrafficType
     , TrafficType (..)
+
+    -- ** UnsuccessfulInstanceCreditSpecificationErrorCode
+    , UnsuccessfulInstanceCreditSpecificationErrorCode (..)
 
     -- ** VPCAttributeName
     , VPCAttributeName (..)
@@ -1201,6 +1291,13 @@ module Network.AWS.EC2
     , aNetworkInterfaceId
     , aPrivateIPAddress
     , aPublicIP
+    , aTags
+
+    -- ** AllowedPrincipal
+    , AllowedPrincipal
+    , allowedPrincipal
+    , apPrincipalType
+    , apPrincipal
 
     -- ** AttributeBooleanValue
     , AttributeBooleanValue
@@ -1324,6 +1421,17 @@ module Network.AWS.EC2
     , cdUploadEnd
     , cdComment
 
+    -- ** ConnectionNotification
+    , ConnectionNotification
+    , connectionNotification
+    , cnConnectionNotificationState
+    , cnConnectionNotificationType
+    , cnConnectionEvents
+    , cnServiceId
+    , cnVPCEndpointId
+    , cnConnectionNotificationId
+    , cnConnectionNotificationARN
+
     -- ** ConversionTask
     , ConversionTask
     , conversionTask
@@ -1346,6 +1454,16 @@ module Network.AWS.EC2
     , createVolumePermissionModifications
     , cvpmRemove
     , cvpmAdd
+
+    -- ** CreditSpecification
+    , CreditSpecification
+    , creditSpecification
+    , csCPUCredits
+
+    -- ** CreditSpecificationRequest
+    , CreditSpecificationRequest
+    , creditSpecificationRequest
+    , csrCPUCredits
 
     -- ** CustomerGateway
     , CustomerGateway
@@ -1375,6 +1493,21 @@ module Network.AWS.EC2
     , dnsEntry
     , deHostedZoneId
     , deDNSName
+
+    -- ** DeleteLaunchTemplateVersionsResponseErrorItem
+    , DeleteLaunchTemplateVersionsResponseErrorItem
+    , deleteLaunchTemplateVersionsResponseErrorItem
+    , dltvreiLaunchTemplateName
+    , dltvreiLaunchTemplateId
+    , dltvreiVersionNumber
+    , dltvreiResponseError
+
+    -- ** DeleteLaunchTemplateVersionsResponseSuccessItem
+    , DeleteLaunchTemplateVersionsResponseSuccessItem
+    , deleteLaunchTemplateVersionsResponseSuccessItem
+    , dltvrsiLaunchTemplateName
+    , dltvrsiLaunchTemplateId
+    , dltvrsiVersionNumber
 
     -- ** DiskImage
     , DiskImage
@@ -1411,6 +1544,7 @@ module Network.AWS.EC2
     , ebdVolumeSize
     , ebdIOPS
     , ebdEncrypted
+    , ebdKMSKeyId
     , ebdVolumeType
     , ebdSnapshotId
 
@@ -1451,6 +1585,11 @@ module Network.AWS.EC2
     , ElasticGpuSpecification
     , elasticGpuSpecification
     , egsType
+
+    -- ** ElasticGpuSpecificationResponse
+    , ElasticGpuSpecificationResponse
+    , elasticGpuSpecificationResponse
+    , eType
 
     -- ** ElasticGpus
     , ElasticGpus
@@ -1500,6 +1639,13 @@ module Network.AWS.EC2
     , filter'
     , fValues
     , fName
+
+    -- ** FleetLaunchTemplateSpecification
+    , FleetLaunchTemplateSpecification
+    , fleetLaunchTemplateSpecification
+    , fltsLaunchTemplateName
+    , fltsLaunchTemplateId
+    , fltsVersion
 
     -- ** FlowLog
     , FlowLog
@@ -1850,6 +1996,18 @@ module Network.AWS.EC2
     , icState
     , icInstanceCount
 
+    -- ** InstanceCreditSpecification
+    , InstanceCreditSpecification
+    , instanceCreditSpecification
+    , icsInstanceId
+    , icsCPUCredits
+
+    -- ** InstanceCreditSpecificationRequest
+    , InstanceCreditSpecificationRequest
+    , instanceCreditSpecificationRequest
+    , icsrInstanceId
+    , icsrCPUCredits
+
     -- ** InstanceExportDetails
     , InstanceExportDetails
     , instanceExportDetails
@@ -1860,6 +2018,17 @@ module Network.AWS.EC2
     , InstanceIPv6Address
     , instanceIPv6Address
     , iiaIPv6Address
+
+    -- ** InstanceIPv6AddressRequest
+    , InstanceIPv6AddressRequest
+    , instanceIPv6AddressRequest
+    , iiarIPv6Address
+
+    -- ** InstanceMarketOptionsRequest
+    , InstanceMarketOptionsRequest
+    , instanceMarketOptionsRequest
+    , imorMarketType
+    , imorSpotOptions
 
     -- ** InstanceMonitoring
     , InstanceMonitoring
@@ -2019,6 +2188,205 @@ module Network.AWS.EC2
     , lsAddressingType
     , lsBlockDeviceMappings
     , lsPlacement
+
+    -- ** LaunchTemplate
+    , LaunchTemplate
+    , launchTemplate
+    , ltLaunchTemplateName
+    , ltLatestVersionNumber
+    , ltLaunchTemplateId
+    , ltCreatedBy
+    , ltDefaultVersionNumber
+    , ltCreateTime
+    , ltTags
+
+    -- ** LaunchTemplateBlockDeviceMapping
+    , LaunchTemplateBlockDeviceMapping
+    , launchTemplateBlockDeviceMapping
+    , ltbdmVirtualName
+    , ltbdmNoDevice
+    , ltbdmEBS
+    , ltbdmDeviceName
+
+    -- ** LaunchTemplateBlockDeviceMappingRequest
+    , LaunchTemplateBlockDeviceMappingRequest
+    , launchTemplateBlockDeviceMappingRequest
+    , ltbdmrVirtualName
+    , ltbdmrNoDevice
+    , ltbdmrEBS
+    , ltbdmrDeviceName
+
+    -- ** LaunchTemplateConfig
+    , LaunchTemplateConfig
+    , launchTemplateConfig
+    , ltcOverrides
+    , ltcLaunchTemplateSpecification
+
+    -- ** LaunchTemplateEBSBlockDevice
+    , LaunchTemplateEBSBlockDevice
+    , launchTemplateEBSBlockDevice
+    , ltebdDeleteOnTermination
+    , ltebdVolumeSize
+    , ltebdIOPS
+    , ltebdEncrypted
+    , ltebdKMSKeyId
+    , ltebdVolumeType
+    , ltebdSnapshotId
+
+    -- ** LaunchTemplateEBSBlockDeviceRequest
+    , LaunchTemplateEBSBlockDeviceRequest
+    , launchTemplateEBSBlockDeviceRequest
+    , ltebdrDeleteOnTermination
+    , ltebdrVolumeSize
+    , ltebdrIOPS
+    , ltebdrEncrypted
+    , ltebdrKMSKeyId
+    , ltebdrVolumeType
+    , ltebdrSnapshotId
+
+    -- ** LaunchTemplateIAMInstanceProfileSpecification
+    , LaunchTemplateIAMInstanceProfileSpecification
+    , launchTemplateIAMInstanceProfileSpecification
+    , ltiapsARN
+    , ltiapsName
+
+    -- ** LaunchTemplateIAMInstanceProfileSpecificationRequest
+    , LaunchTemplateIAMInstanceProfileSpecificationRequest
+    , launchTemplateIAMInstanceProfileSpecificationRequest
+    , ltiapsrARN
+    , ltiapsrName
+
+    -- ** LaunchTemplateInstanceMarketOptions
+    , LaunchTemplateInstanceMarketOptions
+    , launchTemplateInstanceMarketOptions
+    , ltimoMarketType
+    , ltimoSpotOptions
+
+    -- ** LaunchTemplateInstanceMarketOptionsRequest
+    , LaunchTemplateInstanceMarketOptionsRequest
+    , launchTemplateInstanceMarketOptionsRequest
+    , ltimorMarketType
+    , ltimorSpotOptions
+
+    -- ** LaunchTemplateInstanceNetworkInterfaceSpecification
+    , LaunchTemplateInstanceNetworkInterfaceSpecification
+    , launchTemplateInstanceNetworkInterfaceSpecification
+    , ltinisGroups
+    , ltinisPrivateIPAddresses
+    , ltinisDeleteOnTermination
+    , ltinisAssociatePublicIPAddress
+    , ltinisNetworkInterfaceId
+    , ltinisSubnetId
+    , ltinisIPv6AddressCount
+    , ltinisPrivateIPAddress
+    , ltinisSecondaryPrivateIPAddressCount
+    , ltinisDescription
+    , ltinisDeviceIndex
+    , ltinisIPv6Addresses
+
+    -- ** LaunchTemplateInstanceNetworkInterfaceSpecificationRequest
+    , LaunchTemplateInstanceNetworkInterfaceSpecificationRequest
+    , launchTemplateInstanceNetworkInterfaceSpecificationRequest
+    , ltinisrGroups
+    , ltinisrPrivateIPAddresses
+    , ltinisrDeleteOnTermination
+    , ltinisrAssociatePublicIPAddress
+    , ltinisrNetworkInterfaceId
+    , ltinisrSubnetId
+    , ltinisrIPv6AddressCount
+    , ltinisrPrivateIPAddress
+    , ltinisrSecondaryPrivateIPAddressCount
+    , ltinisrDescription
+    , ltinisrDeviceIndex
+    , ltinisrIPv6Addresses
+
+    -- ** LaunchTemplateOverrides
+    , LaunchTemplateOverrides
+    , launchTemplateOverrides
+    , ltoSpotPrice
+    , ltoWeightedCapacity
+    , ltoSubnetId
+    , ltoInstanceType
+    , ltoAvailabilityZone
+
+    -- ** LaunchTemplatePlacement
+    , LaunchTemplatePlacement
+    , launchTemplatePlacement
+    , ltpAffinity
+    , ltpHostId
+    , ltpSpreadDomain
+    , ltpAvailabilityZone
+    , ltpTenancy
+    , ltpGroupName
+
+    -- ** LaunchTemplatePlacementRequest
+    , LaunchTemplatePlacementRequest
+    , launchTemplatePlacementRequest
+    , ltprAffinity
+    , ltprHostId
+    , ltprSpreadDomain
+    , ltprAvailabilityZone
+    , ltprTenancy
+    , ltprGroupName
+
+    -- ** LaunchTemplateSpecification
+    , LaunchTemplateSpecification
+    , launchTemplateSpecification
+    , ltsLaunchTemplateName
+    , ltsLaunchTemplateId
+    , ltsVersion
+
+    -- ** LaunchTemplateSpotMarketOptions
+    , LaunchTemplateSpotMarketOptions
+    , launchTemplateSpotMarketOptions
+    , ltsmoBlockDurationMinutes
+    , ltsmoInstanceInterruptionBehavior
+    , ltsmoValidUntil
+    , ltsmoSpotInstanceType
+    , ltsmoMaxPrice
+
+    -- ** LaunchTemplateSpotMarketOptionsRequest
+    , LaunchTemplateSpotMarketOptionsRequest
+    , launchTemplateSpotMarketOptionsRequest
+    , ltsmorBlockDurationMinutes
+    , ltsmorInstanceInterruptionBehavior
+    , ltsmorValidUntil
+    , ltsmorSpotInstanceType
+    , ltsmorMaxPrice
+
+    -- ** LaunchTemplateTagSpecification
+    , LaunchTemplateTagSpecification
+    , launchTemplateTagSpecification
+    , lttsResourceType
+    , lttsTags
+
+    -- ** LaunchTemplateTagSpecificationRequest
+    , LaunchTemplateTagSpecificationRequest
+    , launchTemplateTagSpecificationRequest
+    , lttsrResourceType
+    , lttsrTags
+
+    -- ** LaunchTemplateVersion
+    , LaunchTemplateVersion
+    , launchTemplateVersion
+    , ltvLaunchTemplateName
+    , ltvLaunchTemplateId
+    , ltvCreatedBy
+    , ltvDefaultVersion
+    , ltvVersionNumber
+    , ltvVersionDescription
+    , ltvLaunchTemplateData
+    , ltvCreateTime
+
+    -- ** LaunchTemplatesMonitoring
+    , LaunchTemplatesMonitoring
+    , launchTemplatesMonitoring
+    , ltmEnabled
+
+    -- ** LaunchTemplatesMonitoringRequest
+    , LaunchTemplatesMonitoringRequest
+    , launchTemplatesMonitoringRequest
+    , ltmrEnabled
 
     -- ** LoadBalancersConfig
     , LoadBalancersConfig
@@ -2327,6 +2695,30 @@ module Network.AWS.EC2
     , riRegionName
     , riEndpoint
 
+    -- ** RequestLaunchTemplateData
+    , RequestLaunchTemplateData
+    , requestLaunchTemplateData
+    , rltdSecurityGroupIds
+    , rltdSecurityGroups
+    , rltdInstanceMarketOptions
+    , rltdDisableAPITermination
+    , rltdKeyName
+    , rltdNetworkInterfaces
+    , rltdRamDiskId
+    , rltdKernelId
+    , rltdElasticGpuSpecifications
+    , rltdInstanceType
+    , rltdEBSOptimized
+    , rltdUserData
+    , rltdMonitoring
+    , rltdTagSpecifications
+    , rltdIAMInstanceProfile
+    , rltdImageId
+    , rltdInstanceInitiatedShutdownBehavior
+    , rltdCreditSpecification
+    , rltdBlockDeviceMappings
+    , rltdPlacement
+
     -- ** RequestSpotLaunchSpecification
     , RequestSpotLaunchSpecification
     , requestSpotLaunchSpecification
@@ -2462,6 +2854,36 @@ module Network.AWS.EC2
     , rioReservedInstancesOfferingId
     , rioOfferingClass
     , rioDuration
+
+    -- ** ResponseError
+    , ResponseError
+    , responseError
+    , reCode
+    , reMessage
+
+    -- ** ResponseLaunchTemplateData
+    , ResponseLaunchTemplateData
+    , responseLaunchTemplateData
+    , rSecurityGroupIds
+    , rSecurityGroups
+    , rInstanceMarketOptions
+    , rDisableAPITermination
+    , rKeyName
+    , rNetworkInterfaces
+    , rRamDiskId
+    , rKernelId
+    , rElasticGpuSpecifications
+    , rInstanceType
+    , rEBSOptimized
+    , rUserData
+    , rMonitoring
+    , rTagSpecifications
+    , rIAMInstanceProfile
+    , rImageId
+    , rInstanceInitiatedShutdownBehavior
+    , rCreditSpecification
+    , rBlockDeviceMappings
+    , rPlacement
 
     -- ** Route
     , Route
@@ -2670,6 +3092,19 @@ module Network.AWS.EC2
     , sgrGroupId
     , sgrReferencingVPCId
 
+    -- ** ServiceConfiguration
+    , ServiceConfiguration
+    , serviceConfiguration
+    , scNetworkLoadBalancerARNs
+    , scBaseEndpointDNSNames
+    , scAvailabilityZones
+    , scServiceName
+    , scServiceState
+    , scServiceType
+    , scAcceptanceRequired
+    , scServiceId
+    , scPrivateDNSName
+
     -- ** ServiceDetail
     , ServiceDetail
     , serviceDetail
@@ -2802,18 +3237,19 @@ module Network.AWS.EC2
     , spotFleetRequestConfigData
     , sfrcdClientToken
     , sfrcdInstanceInterruptionBehavior
+    , sfrcdSpotPrice
     , sfrcdLoadBalancersConfig
     , sfrcdExcessCapacityTerminationPolicy
+    , sfrcdLaunchTemplateConfigs
     , sfrcdValidUntil
     , sfrcdTerminateInstancesWithExpiration
     , sfrcdFulfilledCapacity
     , sfrcdType
     , sfrcdValidFrom
     , sfrcdReplaceUnhealthyInstances
+    , sfrcdLaunchSpecifications
     , sfrcdAllocationStrategy
     , sfrcdIAMFleetRole
-    , sfrcdLaunchSpecifications
-    , sfrcdSpotPrice
     , sfrcdTargetCapacity
 
     -- ** SpotFleetTagSpecification
@@ -2857,6 +3293,15 @@ module Network.AWS.EC2
     , sisUpdateTime
     , sisCode
     , sisMessage
+
+    -- ** SpotMarketOptions
+    , SpotMarketOptions
+    , spotMarketOptions
+    , smoBlockDurationMinutes
+    , smoInstanceInterruptionBehavior
+    , smoValidUntil
+    , smoSpotInstanceType
+    , smoMaxPrice
 
     -- ** SpotPlacement
     , SpotPlacement
@@ -2939,6 +3384,11 @@ module Network.AWS.EC2
     , sicbaIPv6CidrBlock
     , sicbaIPv6CidrBlockState
 
+    -- ** SuccessfulInstanceCreditSpecificationItem
+    , SuccessfulInstanceCreditSpecificationItem
+    , successfulInstanceCreditSpecificationItem
+    , sicsiInstanceId
+
     -- ** Tag
     , Tag
     , tag
@@ -2986,6 +3436,18 @@ module Network.AWS.EC2
     , targetReservationValue
     , trvReservationValue
     , trvTargetConfiguration
+
+    -- ** UnsuccessfulInstanceCreditSpecificationItem
+    , UnsuccessfulInstanceCreditSpecificationItem
+    , unsuccessfulInstanceCreditSpecificationItem
+    , uicsiInstanceId
+    , uicsiError
+
+    -- ** UnsuccessfulInstanceCreditSpecificationItemError
+    , UnsuccessfulInstanceCreditSpecificationItemError
+    , unsuccessfulInstanceCreditSpecificationItemError
+    , uicsieCode
+    , uicsieMessage
 
     -- ** UnsuccessfulItem
     , UnsuccessfulItem
@@ -3092,6 +3554,15 @@ module Network.AWS.EC2
     , veVPCEndpointId
     , veRouteTableIds
 
+    -- ** VPCEndpointConnection
+    , VPCEndpointConnection
+    , vpcEndpointConnection
+    , vecVPCEndpointOwner
+    , vecVPCEndpointState
+    , vecCreationTimestamp
+    , vecServiceId
+    , vecVPCEndpointId
+
     -- ** VPCIPv6CidrBlockAssociation
     , VPCIPv6CidrBlockAssociation
     , vpcIPv6CidrBlockAssociation
@@ -3130,6 +3601,7 @@ module Network.AWS.EC2
     , vpcviOwnerId
     , vpcviPeeringOptions
     , vpcviCidrBlock
+    , vpcviRegion
     , vpcviIPv6CidrBlockSet
 
     -- ** VPNConnection
@@ -3269,6 +3741,7 @@ module Network.AWS.EC2
     ) where
 
 import Network.AWS.EC2.AcceptReservedInstancesExchangeQuote
+import Network.AWS.EC2.AcceptVPCEndpointConnections
 import Network.AWS.EC2.AcceptVPCPeeringConnection
 import Network.AWS.EC2.AllocateAddress
 import Network.AWS.EC2.AllocateHosts
@@ -3310,6 +3783,8 @@ import Network.AWS.EC2.CreateImage
 import Network.AWS.EC2.CreateInstanceExportTask
 import Network.AWS.EC2.CreateInternetGateway
 import Network.AWS.EC2.CreateKeyPair
+import Network.AWS.EC2.CreateLaunchTemplate
+import Network.AWS.EC2.CreateLaunchTemplateVersion
 import Network.AWS.EC2.CreateNatGateway
 import Network.AWS.EC2.CreateNetworkACL
 import Network.AWS.EC2.CreateNetworkACLEntry
@@ -3327,6 +3802,8 @@ import Network.AWS.EC2.CreateTags
 import Network.AWS.EC2.CreateVolume
 import Network.AWS.EC2.CreateVPC
 import Network.AWS.EC2.CreateVPCEndpoint
+import Network.AWS.EC2.CreateVPCEndpointConnectionNotification
+import Network.AWS.EC2.CreateVPCEndpointServiceConfiguration
 import Network.AWS.EC2.CreateVPCPeeringConnection
 import Network.AWS.EC2.CreateVPNConnection
 import Network.AWS.EC2.CreateVPNConnectionRoute
@@ -3338,6 +3815,8 @@ import Network.AWS.EC2.DeleteFlowLogs
 import Network.AWS.EC2.DeleteFpgaImage
 import Network.AWS.EC2.DeleteInternetGateway
 import Network.AWS.EC2.DeleteKeyPair
+import Network.AWS.EC2.DeleteLaunchTemplate
+import Network.AWS.EC2.DeleteLaunchTemplateVersions
 import Network.AWS.EC2.DeleteNatGateway
 import Network.AWS.EC2.DeleteNetworkACL
 import Network.AWS.EC2.DeleteNetworkACLEntry
@@ -3353,7 +3832,9 @@ import Network.AWS.EC2.DeleteSubnet
 import Network.AWS.EC2.DeleteTags
 import Network.AWS.EC2.DeleteVolume
 import Network.AWS.EC2.DeleteVPC
+import Network.AWS.EC2.DeleteVPCEndpointConnectionNotifications
 import Network.AWS.EC2.DeleteVPCEndpoints
+import Network.AWS.EC2.DeleteVPCEndpointServiceConfigurations
 import Network.AWS.EC2.DeleteVPCPeeringConnection
 import Network.AWS.EC2.DeleteVPNConnection
 import Network.AWS.EC2.DeleteVPNConnectionRoute
@@ -3384,10 +3865,13 @@ import Network.AWS.EC2.DescribeImages
 import Network.AWS.EC2.DescribeImportImageTasks
 import Network.AWS.EC2.DescribeImportSnapshotTasks
 import Network.AWS.EC2.DescribeInstanceAttribute
+import Network.AWS.EC2.DescribeInstanceCreditSpecifications
 import Network.AWS.EC2.DescribeInstances
 import Network.AWS.EC2.DescribeInstanceStatus
 import Network.AWS.EC2.DescribeInternetGateways
 import Network.AWS.EC2.DescribeKeyPairs
+import Network.AWS.EC2.DescribeLaunchTemplates
+import Network.AWS.EC2.DescribeLaunchTemplateVersions
 import Network.AWS.EC2.DescribeMovingAddresses
 import Network.AWS.EC2.DescribeNatGateways
 import Network.AWS.EC2.DescribeNetworkACLs
@@ -3424,7 +3908,11 @@ import Network.AWS.EC2.DescribeVolumeStatus
 import Network.AWS.EC2.DescribeVPCAttribute
 import Network.AWS.EC2.DescribeVPCClassicLink
 import Network.AWS.EC2.DescribeVPCClassicLinkDNSSupport
+import Network.AWS.EC2.DescribeVPCEndpointConnectionNotifications
+import Network.AWS.EC2.DescribeVPCEndpointConnections
 import Network.AWS.EC2.DescribeVPCEndpoints
+import Network.AWS.EC2.DescribeVPCEndpointServiceConfigurations
+import Network.AWS.EC2.DescribeVPCEndpointServicePermissions
 import Network.AWS.EC2.DescribeVPCEndpointServices
 import Network.AWS.EC2.DescribeVPCPeeringConnections
 import Network.AWS.EC2.DescribeVPCs
@@ -3450,6 +3938,7 @@ import Network.AWS.EC2.EnableVPCClassicLinkDNSSupport
 import Network.AWS.EC2.GetConsoleOutput
 import Network.AWS.EC2.GetConsoleScreenshot
 import Network.AWS.EC2.GetHostReservationPurchasePreview
+import Network.AWS.EC2.GetLaunchTemplateData
 import Network.AWS.EC2.GetPasswordData
 import Network.AWS.EC2.GetReservedInstancesExchangeQuote
 import Network.AWS.EC2.ImportImage
@@ -3464,7 +3953,9 @@ import Network.AWS.EC2.ModifyIdentityIdFormat
 import Network.AWS.EC2.ModifyIdFormat
 import Network.AWS.EC2.ModifyImageAttribute
 import Network.AWS.EC2.ModifyInstanceAttribute
+import Network.AWS.EC2.ModifyInstanceCreditSpecification
 import Network.AWS.EC2.ModifyInstancePlacement
+import Network.AWS.EC2.ModifyLaunchTemplate
 import Network.AWS.EC2.ModifyNetworkInterfaceAttribute
 import Network.AWS.EC2.ModifyReservedInstances
 import Network.AWS.EC2.ModifySnapshotAttribute
@@ -3474,6 +3965,9 @@ import Network.AWS.EC2.ModifyVolume
 import Network.AWS.EC2.ModifyVolumeAttribute
 import Network.AWS.EC2.ModifyVPCAttribute
 import Network.AWS.EC2.ModifyVPCEndpoint
+import Network.AWS.EC2.ModifyVPCEndpointConnectionNotification
+import Network.AWS.EC2.ModifyVPCEndpointServiceConfiguration
+import Network.AWS.EC2.ModifyVPCEndpointServicePermissions
 import Network.AWS.EC2.ModifyVPCPeeringConnectionOptions
 import Network.AWS.EC2.ModifyVPCTenancy
 import Network.AWS.EC2.MonitorInstances
@@ -3483,6 +3977,7 @@ import Network.AWS.EC2.PurchaseReservedInstancesOffering
 import Network.AWS.EC2.PurchaseScheduledInstances
 import Network.AWS.EC2.RebootInstances
 import Network.AWS.EC2.RegisterImage
+import Network.AWS.EC2.RejectVPCEndpointConnections
 import Network.AWS.EC2.RejectVPCPeeringConnection
 import Network.AWS.EC2.ReleaseAddress
 import Network.AWS.EC2.ReleaseHosts

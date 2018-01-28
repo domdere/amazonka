@@ -21,7 +21,7 @@
 -- Returns a description of virtual tape library (VTL) devices for the specified tape gateway. In the response, AWS Storage Gateway returns VTL device information.
 --
 --
--- This operation is only supported in the tape gateway architecture.
+-- This operation is only supported in the tape gateway type.
 --
 --
 -- This operation returns paginated results.

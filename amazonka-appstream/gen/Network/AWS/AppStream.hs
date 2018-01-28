@@ -92,6 +92,9 @@ module Network.AWS.AppStream
     -- ** CreateImageBuilder
     , module Network.AWS.AppStream.CreateImageBuilder
 
+    -- ** ListTagsForResource
+    , module Network.AWS.AppStream.ListTagsForResource
+
     -- ** DescribeDirectoryConfigs
     , module Network.AWS.AppStream.DescribeDirectoryConfigs
 
@@ -131,8 +134,14 @@ module Network.AWS.AppStream
     -- ** ExpireSession
     , module Network.AWS.AppStream.ExpireSession
 
+    -- ** TagResource
+    , module Network.AWS.AppStream.TagResource
+
     -- ** CreateStreamingURL
     , module Network.AWS.AppStream.CreateStreamingURL
+
+    -- ** UntagResource
+    , module Network.AWS.AppStream.UntagResource
 
     -- ** StartFleet
     , module Network.AWS.AppStream.StartFleet
@@ -268,6 +277,7 @@ module Network.AWS.AppStream
     , iBaseImageARN
     , iDisplayName
     , iDescription
+    , iAppstreamAgentVersion
     , iApplications
     , iName
 
@@ -287,6 +297,7 @@ module Network.AWS.AppStream
     , ibDisplayName
     , ibEnableDefaultInternetAccess
     , ibDescription
+    , ibAppstreamAgentVersion
     , ibName
 
     -- ** ImageBuilderStateChangeReason
@@ -376,11 +387,14 @@ import Network.AWS.AppStream.DisassociateFleet
 import Network.AWS.AppStream.ExpireSession
 import Network.AWS.AppStream.ListAssociatedFleets
 import Network.AWS.AppStream.ListAssociatedStacks
+import Network.AWS.AppStream.ListTagsForResource
 import Network.AWS.AppStream.StartFleet
 import Network.AWS.AppStream.StartImageBuilder
 import Network.AWS.AppStream.StopFleet
 import Network.AWS.AppStream.StopImageBuilder
+import Network.AWS.AppStream.TagResource
 import Network.AWS.AppStream.Types
+import Network.AWS.AppStream.UntagResource
 import Network.AWS.AppStream.UpdateDirectoryConfig
 import Network.AWS.AppStream.UpdateFleet
 import Network.AWS.AppStream.UpdateStack

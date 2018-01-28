@@ -61,7 +61,7 @@ data DisableEnhancedMonitoring = DisableEnhancedMonitoring'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'demStreamName' - The name of the Amazon Kinesis stream for which to disable enhanced monitoring.
+-- * 'demStreamName' - The name of the Kinesis stream for which to disable enhanced monitoring.
 --
 -- * 'demShardLevelMetrics' - List of shard-level metrics to disable. The following are the valid shard-level metrics. The value "@ALL@ " disables every metric.     * @IncomingBytes@      * @IncomingRecords@      * @OutgoingBytes@      * @OutgoingRecords@      * @WriteProvisionedThroughputExceeded@      * @ReadProvisionedThroughputExceeded@      * @IteratorAgeMilliseconds@      * @ALL@  For more information, see <http://docs.aws.amazon.com/kinesis/latest/dev/monitoring-with-cloudwatch.html Monitoring the Amazon Kinesis Streams Service with Amazon CloudWatch> in the /Amazon Kinesis Streams Developer Guide/ .
 disableEnhancedMonitoring
@@ -72,7 +72,7 @@ disableEnhancedMonitoring pStreamName_ =
   {_demStreamName = pStreamName_, _demShardLevelMetrics = mempty}
 
 
--- | The name of the Amazon Kinesis stream for which to disable enhanced monitoring.
+-- | The name of the Kinesis stream for which to disable enhanced monitoring.
 demStreamName :: Lens' DisableEnhancedMonitoring Text
 demStreamName = lens _demStreamName (\ s a -> s{_demStreamName = a});
 

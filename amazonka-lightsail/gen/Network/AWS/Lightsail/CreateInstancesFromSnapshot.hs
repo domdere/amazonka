@@ -29,6 +29,7 @@ module Network.AWS.Lightsail.CreateInstancesFromSnapshot
     -- * Request Lenses
     , cifsUserData
     , cifsKeyPairName
+    , cifsAttachedDiskMapping
     , cifsInstanceNames
     , cifsAvailabilityZone
     , cifsInstanceSnapshotName
@@ -53,6 +54,7 @@ import Network.AWS.Response
 data CreateInstancesFromSnapshot = CreateInstancesFromSnapshot'
   { _cifsUserData             :: !(Maybe Text)
   , _cifsKeyPairName          :: !(Maybe Text)
+  , _cifsAttachedDiskMapping  :: !(Maybe (Map Text [DiskMap]))
   , _cifsInstanceNames        :: ![Text]
   , _cifsAvailabilityZone     :: !Text
   , _cifsInstanceSnapshotName :: !Text
@@ -64,13 +66,15 @@ data CreateInstancesFromSnapshot = CreateInstancesFromSnapshot'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cifsUserData' - You can create a launch script that configures a server with additional user data. For example, @apt-get –y update@ .
+-- * 'cifsUserData' - You can create a launch script that configures a server with additional user data. For example, @apt-get -y update@ .
 --
 -- * 'cifsKeyPairName' - The name for your key pair.
 --
+-- * 'cifsAttachedDiskMapping' - An object containing information about one or more disk mappings.
+--
 -- * 'cifsInstanceNames' - The names for your new instances.
 --
--- * 'cifsAvailabilityZone' - The Availability Zone where you want to create your instances. Use the following formatting: @us-east-1a@ (case sensitive). You can get a list of availability zones by using the <http://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRegions.html get regions> operation. Be sure to add the @include availability zones@ parameter to your request.
+-- * 'cifsAvailabilityZone' - The Availability Zone where you want to create your instances. Use the following formatting: @us-east-2a@ (case sensitive). You can get a list of availability zones by using the <http://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRegions.html get regions> operation. Be sure to add the @include availability zones@ parameter to your request.
 --
 -- * 'cifsInstanceSnapshotName' - The name of the instance snapshot on which you are basing your new instances. Use the get instance snapshots operation to return information about your existing snapshots.
 --
@@ -84,6 +88,7 @@ createInstancesFromSnapshot pAvailabilityZone_ pInstanceSnapshotName_ pBundleId_
   CreateInstancesFromSnapshot'
   { _cifsUserData = Nothing
   , _cifsKeyPairName = Nothing
+  , _cifsAttachedDiskMapping = Nothing
   , _cifsInstanceNames = mempty
   , _cifsAvailabilityZone = pAvailabilityZone_
   , _cifsInstanceSnapshotName = pInstanceSnapshotName_
@@ -91,7 +96,7 @@ createInstancesFromSnapshot pAvailabilityZone_ pInstanceSnapshotName_ pBundleId_
   }
 
 
--- | You can create a launch script that configures a server with additional user data. For example, @apt-get –y update@ .
+-- | You can create a launch script that configures a server with additional user data. For example, @apt-get -y update@ .
 cifsUserData :: Lens' CreateInstancesFromSnapshot (Maybe Text)
 cifsUserData = lens _cifsUserData (\ s a -> s{_cifsUserData = a});
 
@@ -99,11 +104,15 @@ cifsUserData = lens _cifsUserData (\ s a -> s{_cifsUserData = a});
 cifsKeyPairName :: Lens' CreateInstancesFromSnapshot (Maybe Text)
 cifsKeyPairName = lens _cifsKeyPairName (\ s a -> s{_cifsKeyPairName = a});
 
+-- | An object containing information about one or more disk mappings.
+cifsAttachedDiskMapping :: Lens' CreateInstancesFromSnapshot (HashMap Text [DiskMap])
+cifsAttachedDiskMapping = lens _cifsAttachedDiskMapping (\ s a -> s{_cifsAttachedDiskMapping = a}) . _Default . _Map;
+
 -- | The names for your new instances.
 cifsInstanceNames :: Lens' CreateInstancesFromSnapshot [Text]
 cifsInstanceNames = lens _cifsInstanceNames (\ s a -> s{_cifsInstanceNames = a}) . _Coerce;
 
--- | The Availability Zone where you want to create your instances. Use the following formatting: @us-east-1a@ (case sensitive). You can get a list of availability zones by using the <http://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRegions.html get regions> operation. Be sure to add the @include availability zones@ parameter to your request.
+-- | The Availability Zone where you want to create your instances. Use the following formatting: @us-east-2a@ (case sensitive). You can get a list of availability zones by using the <http://docs.aws.amazon.com/lightsail/2016-11-28/api-reference/API_GetRegions.html get regions> operation. Be sure to add the @include availability zones@ parameter to your request.
 cifsAvailabilityZone :: Lens' CreateInstancesFromSnapshot Text
 cifsAvailabilityZone = lens _cifsAvailabilityZone (\ s a -> s{_cifsAvailabilityZone = a});
 
@@ -146,6 +155,8 @@ instance ToJSON CreateInstancesFromSnapshot where
               (catMaybes
                  [("userData" .=) <$> _cifsUserData,
                   ("keyPairName" .=) <$> _cifsKeyPairName,
+                  ("attachedDiskMapping" .=) <$>
+                    _cifsAttachedDiskMapping,
                   Just ("instanceNames" .= _cifsInstanceNames),
                   Just ("availabilityZone" .= _cifsAvailabilityZone),
                   Just

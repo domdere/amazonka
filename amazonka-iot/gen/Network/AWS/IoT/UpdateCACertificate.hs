@@ -27,7 +27,9 @@ module Network.AWS.IoT.UpdateCACertificate
       updateCACertificate
     , UpdateCACertificate
     -- * Request Lenses
+    , ucacRemoveAutoRegistration
     , ucacNewStatus
+    , ucacRegistrationConfig
     , ucacNewAutoRegistrationStatus
     , ucacCertificateId
 
@@ -49,7 +51,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'updateCACertificate' smart constructor.
 data UpdateCACertificate = UpdateCACertificate'
-  { _ucacNewStatus                 :: !(Maybe CACertificateStatus)
+  { _ucacRemoveAutoRegistration    :: !(Maybe Bool)
+  , _ucacNewStatus                 :: !(Maybe CACertificateStatus)
+  , _ucacRegistrationConfig        :: !(Maybe RegistrationConfig)
   , _ucacNewAutoRegistrationStatus :: !(Maybe AutoRegistrationStatus)
   , _ucacCertificateId             :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -59,7 +63,11 @@ data UpdateCACertificate = UpdateCACertificate'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'ucacRemoveAutoRegistration' - If true, remove auto registration.
+--
 -- * 'ucacNewStatus' - The updated status of the CA certificate. __Note:__ The status value REGISTER_INACTIVE is deprecated and should not be used.
+--
+-- * 'ucacRegistrationConfig' - Information about the registration configuration.
 --
 -- * 'ucacNewAutoRegistrationStatus' - The new value for the auto registration status. Valid values are: "ENABLE" or "DISABLE".
 --
@@ -69,15 +77,25 @@ updateCACertificate
     -> UpdateCACertificate
 updateCACertificate pCertificateId_ =
   UpdateCACertificate'
-  { _ucacNewStatus = Nothing
+  { _ucacRemoveAutoRegistration = Nothing
+  , _ucacNewStatus = Nothing
+  , _ucacRegistrationConfig = Nothing
   , _ucacNewAutoRegistrationStatus = Nothing
   , _ucacCertificateId = pCertificateId_
   }
 
 
+-- | If true, remove auto registration.
+ucacRemoveAutoRegistration :: Lens' UpdateCACertificate (Maybe Bool)
+ucacRemoveAutoRegistration = lens _ucacRemoveAutoRegistration (\ s a -> s{_ucacRemoveAutoRegistration = a});
+
 -- | The updated status of the CA certificate. __Note:__ The status value REGISTER_INACTIVE is deprecated and should not be used.
 ucacNewStatus :: Lens' UpdateCACertificate (Maybe CACertificateStatus)
 ucacNewStatus = lens _ucacNewStatus (\ s a -> s{_ucacNewStatus = a});
+
+-- | Information about the registration configuration.
+ucacRegistrationConfig :: Lens' UpdateCACertificate (Maybe RegistrationConfig)
+ucacRegistrationConfig = lens _ucacRegistrationConfig (\ s a -> s{_ucacRegistrationConfig = a});
 
 -- | The new value for the auto registration status. Valid values are: "ENABLE" or "DISABLE".
 ucacNewAutoRegistrationStatus :: Lens' UpdateCACertificate (Maybe AutoRegistrationStatus)
@@ -101,7 +119,13 @@ instance ToHeaders UpdateCACertificate where
         toHeaders = const mempty
 
 instance ToJSON UpdateCACertificate where
-        toJSON = const (Object mempty)
+        toJSON UpdateCACertificate'{..}
+          = object
+              (catMaybes
+                 [("removeAutoRegistration" .=) <$>
+                    _ucacRemoveAutoRegistration,
+                  ("registrationConfig" .=) <$>
+                    _ucacRegistrationConfig])
 
 instance ToPath UpdateCACertificate where
         toPath UpdateCACertificate'{..}

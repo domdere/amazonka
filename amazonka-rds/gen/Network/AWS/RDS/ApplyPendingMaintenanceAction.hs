@@ -66,7 +66,7 @@ data ApplyPendingMaintenanceAction = ApplyPendingMaintenanceAction'
 --
 -- * 'apmaApplyAction' - The pending maintenance action to apply to this resource. Valid values: @system-update@ , @db-upgrade@
 --
--- * 'apmaOptInType' - A value that specifies the type of opt-in request, or undoes an opt-in request. An opt-in request of type @immediate@ cannot be undone. Valid values:     * @immediate@ - Apply the maintenance action immediately.     * @next-maintenance@ - Apply the maintenance action during the next maintenance window for the resource.     * @undo-opt-in@ - Cancel any existing @next-maintenance@ opt-in requests.
+-- * 'apmaOptInType' - A value that specifies the type of opt-in request, or undoes an opt-in request. An opt-in request of type @immediate@ can't be undone. Valid values:     * @immediate@ - Apply the maintenance action immediately.     * @next-maintenance@ - Apply the maintenance action during the next maintenance window for the resource.     * @undo-opt-in@ - Cancel any existing @next-maintenance@ opt-in requests.
 applyPendingMaintenanceAction
     :: Text -- ^ 'apmaResourceIdentifier'
     -> Text -- ^ 'apmaApplyAction'
@@ -88,7 +88,7 @@ apmaResourceIdentifier = lens _apmaResourceIdentifier (\ s a -> s{_apmaResourceI
 apmaApplyAction :: Lens' ApplyPendingMaintenanceAction Text
 apmaApplyAction = lens _apmaApplyAction (\ s a -> s{_apmaApplyAction = a});
 
--- | A value that specifies the type of opt-in request, or undoes an opt-in request. An opt-in request of type @immediate@ cannot be undone. Valid values:     * @immediate@ - Apply the maintenance action immediately.     * @next-maintenance@ - Apply the maintenance action during the next maintenance window for the resource.     * @undo-opt-in@ - Cancel any existing @next-maintenance@ opt-in requests.
+-- | A value that specifies the type of opt-in request, or undoes an opt-in request. An opt-in request of type @immediate@ can't be undone. Valid values:     * @immediate@ - Apply the maintenance action immediately.     * @next-maintenance@ - Apply the maintenance action during the next maintenance window for the resource.     * @undo-opt-in@ - Cancel any existing @next-maintenance@ opt-in requests.
 apmaOptInType :: Lens' ApplyPendingMaintenanceAction Text
 apmaOptInType = lens _apmaOptInType (\ s a -> s{_apmaOptInType = a});
 

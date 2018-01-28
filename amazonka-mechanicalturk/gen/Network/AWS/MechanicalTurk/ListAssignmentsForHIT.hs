@@ -29,6 +29,8 @@
 --
 -- Results are sorted and divided into numbered pages and the operation returns a single page of results. You can use the parameters of the operation to control sorting and pagination.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.MechanicalTurk.ListAssignmentsForHIT
     (
     -- * Creating a Request
@@ -53,6 +55,7 @@ module Network.AWS.MechanicalTurk.ListAssignmentsForHIT
 import Network.AWS.Lens
 import Network.AWS.MechanicalTurk.Types
 import Network.AWS.MechanicalTurk.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -104,6 +107,14 @@ lafhitMaxResults = lens _lafhitMaxResults (\ s a -> s{_lafhitMaxResults = a}) . 
 -- | The ID of the HIT.
 lafhitHITId :: Lens' ListAssignmentsForHIT Text
 lafhitHITId = lens _lafhitHITId (\ s a -> s{_lafhitHITId = a});
+
+instance AWSPager ListAssignmentsForHIT where
+        page rq rs
+          | stop (rs ^. lafhitrsNextToken) = Nothing
+          | stop (rs ^. lafhitrsAssignments) = Nothing
+          | otherwise =
+            Just $ rq &
+              lafhitNextToken .~ rs ^. lafhitrsNextToken
 
 instance AWSRequest ListAssignmentsForHIT where
         type Rs ListAssignmentsForHIT =

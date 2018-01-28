@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Associate a TagOption identifier with a resource identifier.
+-- Associate the specified TagOption with the specified portfolio or product.
 --
 --
 module Network.AWS.ServiceCatalog.AssociateTagOptionWithResource

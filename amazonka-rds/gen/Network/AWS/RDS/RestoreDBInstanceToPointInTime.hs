@@ -50,6 +50,7 @@ module Network.AWS.RDS.RestoreDBInstanceToPointInTime
     , rditpitPort
     , rditpitEnableIAMDatabaseAuthentication
     , rditpitStorageType
+    , rditpitEnableCloudwatchLogsExports
     , rditpitDBName
     , rditpitSourceDBInstanceIdentifier
     , rditpitTargetDBInstanceIdentifier
@@ -96,6 +97,7 @@ data RestoreDBInstanceToPointInTime = RestoreDBInstanceToPointInTime'
   , _rditpitPort                            :: !(Maybe Int)
   , _rditpitEnableIAMDatabaseAuthentication :: !(Maybe Bool)
   , _rditpitStorageType                     :: !(Maybe Text)
+  , _rditpitEnableCloudwatchLogsExports     :: !(Maybe [Text])
   , _rditpitDBName                          :: !(Maybe Text)
   , _rditpitSourceDBInstanceIdentifier      :: !Text
   , _rditpitTargetDBInstanceIdentifier      :: !Text
@@ -120,23 +122,23 @@ data RestoreDBInstanceToPointInTime = RestoreDBInstanceToPointInTime'
 --
 -- * 'rditpitDomain' - Specify the Active Directory Domain to restore the instance in.
 --
--- * 'rditpitEngine' - The database engine to use for the new instance. Default: The same as source Constraint: Must be compatible with the engine of the source Valid Values:     * @aurora@      * @mariadb@      * @mysql@      * @oracle-ee@      * @oracle-se2@      * @oracle-se1@      * @oracle-se@      * @postgres@      * @sqlserver-ee@      * @sqlserver-se@      * @sqlserver-ex@      * @sqlserver-web@
+-- * 'rditpitEngine' - The database engine to use for the new instance. Default: The same as source Constraint: Must be compatible with the engine of the source Valid Values:     * @aurora@      * @aurora-postgresql@      * @mariadb@      * @mysql@      * @oracle-ee@      * @oracle-se2@      * @oracle-se1@      * @oracle-se@      * @postgres@      * @sqlserver-ee@      * @sqlserver-se@      * @sqlserver-ex@      * @sqlserver-web@
 --
--- * 'rditpitTDECredentialPassword' - The password for the given ARN from the Key Store in order to access the device.
+-- * 'rditpitTDECredentialPassword' - The password for the given ARN from the key store in order to access the device.
 --
--- * 'rditpitDBInstanceClass' - The compute and memory capacity of the Amazon RDS DB instance, for example, @db.m4.large@ . Not all DB instance classes are available in all regions, or for all database engines. For the full list of DB instance classes, and availability for your engine, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html DB Instance Class> in the Amazon RDS User Guide.  Default: The same DBInstanceClass as the original DB instance.
+-- * 'rditpitDBInstanceClass' - The compute and memory capacity of the Amazon RDS DB instance, for example, @db.m4.large@ . Not all DB instance classes are available in all AWS Regions, or for all database engines. For the full list of DB instance classes, and availability for your engine, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html DB Instance Class> in the Amazon RDS User Guide.  Default: The same DBInstanceClass as the original DB instance.
 --
 -- * 'rditpitLicenseModel' - License model information for the restored DB instance. Default: Same as source. Valid values: @license-included@ | @bring-your-own-license@ | @general-public-license@
 --
--- * 'rditpitAvailabilityZone' - The EC2 Availability Zone that the database instance is created in. Default: A random, system-chosen Availability Zone. Constraint: You cannot specify the AvailabilityZone parameter if the MultiAZ parameter is set to true. Example: @us-east-1a@
+-- * 'rditpitAvailabilityZone' - The EC2 Availability Zone that the DB instance is created in. Default: A random, system-chosen Availability Zone. Constraint: You can't specify the AvailabilityZone parameter if the MultiAZ parameter is set to true. Example: @us-east-1a@
 --
--- * 'rditpitMultiAZ' - Specifies if the DB instance is a Multi-AZ deployment. Constraint: You cannot specify the AvailabilityZone parameter if the MultiAZ parameter is set to @true@ .
+-- * 'rditpitMultiAZ' - Specifies if the DB instance is a Multi-AZ deployment. Constraint: You can't specify the AvailabilityZone parameter if the MultiAZ parameter is set to @true@ .
 --
--- * 'rditpitOptionGroupName' - The name of the option group to be used for the restored DB instance. Permanent options, such as the TDE option for Oracle Advanced Security TDE, cannot be removed from an option group, and that option group cannot be removed from a DB instance once it is associated with a DB instance
+-- * 'rditpitOptionGroupName' - The name of the option group to be used for the restored DB instance. Permanent options, such as the TDE option for Oracle Advanced Security TDE, can't be removed from an option group, and that option group can't be removed from a DB instance once it is associated with a DB instance
 --
--- * 'rditpitCopyTagsToSnapshot' - True to copy all tags from the restored DB instance to snapshots of the DB instance; otherwise false. The default is false.
+-- * 'rditpitCopyTagsToSnapshot' - True to copy all tags from the restored DB instance to snapshots of the DB instance, and otherwise false. The default is false.
 --
--- * 'rditpitTDECredentialARN' - The ARN from the Key Store with which to associate the instance for TDE encryption.
+-- * 'rditpitTDECredentialARN' - The ARN from the key store with which to associate the instance for TDE encryption.
 --
 -- * 'rditpitDomainIAMRoleName' - Specify the name of the IAM role to be used when making API calls to the Directory Service.
 --
@@ -144,15 +146,17 @@ data RestoreDBInstanceToPointInTime = RestoreDBInstanceToPointInTime'
 --
 -- * 'rditpitPort' - The port number on which the database accepts connections. Constraints: Value must be @1150-65535@  Default: The same port as the original DB instance.
 --
--- * 'rditpitEnableIAMDatabaseAuthentication' - True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts; otherwise false. You can enable IAM database authentication for the following database engines     * For MySQL 5.6, minor version 5.6.34 or higher     * For MySQL 5.7, minor version 5.7.16 or higher     * Aurora 5.6 or higher. Default: @false@
+-- * 'rditpitEnableIAMDatabaseAuthentication' - True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. You can enable IAM database authentication for the following database engines     * For MySQL 5.6, minor version 5.6.34 or higher     * For MySQL 5.7, minor version 5.7.16 or higher     * Aurora 5.6 or higher. Default: @false@
 --
--- * 'rditpitStorageType' - Specifies the storage type to be associated with the DB instance. Valid values: @standard | gp2 | io1@  If you specify @io1@ , you must also include a value for the @Iops@ parameter.  Default: @io1@ if the @Iops@ parameter is specified; otherwise @standard@
+-- * 'rditpitStorageType' - Specifies the storage type to be associated with the DB instance. Valid values: @standard | gp2 | io1@  If you specify @io1@ , you must also include a value for the @Iops@ parameter.  Default: @io1@ if the @Iops@ parameter is specified, otherwise @standard@
+--
+-- * 'rditpitEnableCloudwatchLogsExports' - The list of logs that the restored DB instance is to export to CloudWatch Logs.
 --
 -- * 'rditpitDBName' - The database name for the restored DB instance.
 --
--- * 'rditpitSourceDBInstanceIdentifier' - The identifier of the source DB instance from which to restore. Constraints:     * Must match the identifier of an existing DBInstance.
+-- * 'rditpitSourceDBInstanceIdentifier' - The identifier of the source DB instance from which to restore. Constraints:     * Must match the identifier of an existing DB instance.
 --
--- * 'rditpitTargetDBInstanceIdentifier' - The name of the new database instance to be created. Constraints:     * Must contain from 1 to 63 letters, numbers, or hyphens     * First character must be a letter     * Cannot end with a hyphen or contain two consecutive hyphens
+-- * 'rditpitTargetDBInstanceIdentifier' - The name of the new DB instance to be created. Constraints:     * Must contain from 1 to 63 letters, numbers, or hyphens     * First character must be a letter     * Cannot end with a hyphen or contain two consecutive hyphens
 restoreDBInstanceToPointInTime
     :: Text -- ^ 'rditpitSourceDBInstanceIdentifier'
     -> Text -- ^ 'rditpitTargetDBInstanceIdentifier'
@@ -180,6 +184,7 @@ restoreDBInstanceToPointInTime pSourceDBInstanceIdentifier_ pTargetDBInstanceIde
   , _rditpitPort = Nothing
   , _rditpitEnableIAMDatabaseAuthentication = Nothing
   , _rditpitStorageType = Nothing
+  , _rditpitEnableCloudwatchLogsExports = Nothing
   , _rditpitDBName = Nothing
   , _rditpitSourceDBInstanceIdentifier = pSourceDBInstanceIdentifier_
   , _rditpitTargetDBInstanceIdentifier = pTargetDBInstanceIdentifier_
@@ -214,15 +219,15 @@ rditpitIOPS = lens _rditpitIOPS (\ s a -> s{_rditpitIOPS = a});
 rditpitDomain :: Lens' RestoreDBInstanceToPointInTime (Maybe Text)
 rditpitDomain = lens _rditpitDomain (\ s a -> s{_rditpitDomain = a});
 
--- | The database engine to use for the new instance. Default: The same as source Constraint: Must be compatible with the engine of the source Valid Values:     * @aurora@      * @mariadb@      * @mysql@      * @oracle-ee@      * @oracle-se2@      * @oracle-se1@      * @oracle-se@      * @postgres@      * @sqlserver-ee@      * @sqlserver-se@      * @sqlserver-ex@      * @sqlserver-web@
+-- | The database engine to use for the new instance. Default: The same as source Constraint: Must be compatible with the engine of the source Valid Values:     * @aurora@      * @aurora-postgresql@      * @mariadb@      * @mysql@      * @oracle-ee@      * @oracle-se2@      * @oracle-se1@      * @oracle-se@      * @postgres@      * @sqlserver-ee@      * @sqlserver-se@      * @sqlserver-ex@      * @sqlserver-web@
 rditpitEngine :: Lens' RestoreDBInstanceToPointInTime (Maybe Text)
 rditpitEngine = lens _rditpitEngine (\ s a -> s{_rditpitEngine = a});
 
--- | The password for the given ARN from the Key Store in order to access the device.
+-- | The password for the given ARN from the key store in order to access the device.
 rditpitTDECredentialPassword :: Lens' RestoreDBInstanceToPointInTime (Maybe Text)
 rditpitTDECredentialPassword = lens _rditpitTDECredentialPassword (\ s a -> s{_rditpitTDECredentialPassword = a});
 
--- | The compute and memory capacity of the Amazon RDS DB instance, for example, @db.m4.large@ . Not all DB instance classes are available in all regions, or for all database engines. For the full list of DB instance classes, and availability for your engine, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html DB Instance Class> in the Amazon RDS User Guide.  Default: The same DBInstanceClass as the original DB instance.
+-- | The compute and memory capacity of the Amazon RDS DB instance, for example, @db.m4.large@ . Not all DB instance classes are available in all AWS Regions, or for all database engines. For the full list of DB instance classes, and availability for your engine, see <http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.DBInstanceClass.html DB Instance Class> in the Amazon RDS User Guide.  Default: The same DBInstanceClass as the original DB instance.
 rditpitDBInstanceClass :: Lens' RestoreDBInstanceToPointInTime (Maybe Text)
 rditpitDBInstanceClass = lens _rditpitDBInstanceClass (\ s a -> s{_rditpitDBInstanceClass = a});
 
@@ -230,23 +235,23 @@ rditpitDBInstanceClass = lens _rditpitDBInstanceClass (\ s a -> s{_rditpitDBInst
 rditpitLicenseModel :: Lens' RestoreDBInstanceToPointInTime (Maybe Text)
 rditpitLicenseModel = lens _rditpitLicenseModel (\ s a -> s{_rditpitLicenseModel = a});
 
--- | The EC2 Availability Zone that the database instance is created in. Default: A random, system-chosen Availability Zone. Constraint: You cannot specify the AvailabilityZone parameter if the MultiAZ parameter is set to true. Example: @us-east-1a@
+-- | The EC2 Availability Zone that the DB instance is created in. Default: A random, system-chosen Availability Zone. Constraint: You can't specify the AvailabilityZone parameter if the MultiAZ parameter is set to true. Example: @us-east-1a@
 rditpitAvailabilityZone :: Lens' RestoreDBInstanceToPointInTime (Maybe Text)
 rditpitAvailabilityZone = lens _rditpitAvailabilityZone (\ s a -> s{_rditpitAvailabilityZone = a});
 
--- | Specifies if the DB instance is a Multi-AZ deployment. Constraint: You cannot specify the AvailabilityZone parameter if the MultiAZ parameter is set to @true@ .
+-- | Specifies if the DB instance is a Multi-AZ deployment. Constraint: You can't specify the AvailabilityZone parameter if the MultiAZ parameter is set to @true@ .
 rditpitMultiAZ :: Lens' RestoreDBInstanceToPointInTime (Maybe Bool)
 rditpitMultiAZ = lens _rditpitMultiAZ (\ s a -> s{_rditpitMultiAZ = a});
 
--- | The name of the option group to be used for the restored DB instance. Permanent options, such as the TDE option for Oracle Advanced Security TDE, cannot be removed from an option group, and that option group cannot be removed from a DB instance once it is associated with a DB instance
+-- | The name of the option group to be used for the restored DB instance. Permanent options, such as the TDE option for Oracle Advanced Security TDE, can't be removed from an option group, and that option group can't be removed from a DB instance once it is associated with a DB instance
 rditpitOptionGroupName :: Lens' RestoreDBInstanceToPointInTime (Maybe Text)
 rditpitOptionGroupName = lens _rditpitOptionGroupName (\ s a -> s{_rditpitOptionGroupName = a});
 
--- | True to copy all tags from the restored DB instance to snapshots of the DB instance; otherwise false. The default is false.
+-- | True to copy all tags from the restored DB instance to snapshots of the DB instance, and otherwise false. The default is false.
 rditpitCopyTagsToSnapshot :: Lens' RestoreDBInstanceToPointInTime (Maybe Bool)
 rditpitCopyTagsToSnapshot = lens _rditpitCopyTagsToSnapshot (\ s a -> s{_rditpitCopyTagsToSnapshot = a});
 
--- | The ARN from the Key Store with which to associate the instance for TDE encryption.
+-- | The ARN from the key store with which to associate the instance for TDE encryption.
 rditpitTDECredentialARN :: Lens' RestoreDBInstanceToPointInTime (Maybe Text)
 rditpitTDECredentialARN = lens _rditpitTDECredentialARN (\ s a -> s{_rditpitTDECredentialARN = a});
 
@@ -262,23 +267,27 @@ rditpitTags = lens _rditpitTags (\ s a -> s{_rditpitTags = a}) . _Default . _Coe
 rditpitPort :: Lens' RestoreDBInstanceToPointInTime (Maybe Int)
 rditpitPort = lens _rditpitPort (\ s a -> s{_rditpitPort = a});
 
--- | True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts; otherwise false. You can enable IAM database authentication for the following database engines     * For MySQL 5.6, minor version 5.6.34 or higher     * For MySQL 5.7, minor version 5.7.16 or higher     * Aurora 5.6 or higher. Default: @false@
+-- | True to enable mapping of AWS Identity and Access Management (IAM) accounts to database accounts, and otherwise false. You can enable IAM database authentication for the following database engines     * For MySQL 5.6, minor version 5.6.34 or higher     * For MySQL 5.7, minor version 5.7.16 or higher     * Aurora 5.6 or higher. Default: @false@
 rditpitEnableIAMDatabaseAuthentication :: Lens' RestoreDBInstanceToPointInTime (Maybe Bool)
 rditpitEnableIAMDatabaseAuthentication = lens _rditpitEnableIAMDatabaseAuthentication (\ s a -> s{_rditpitEnableIAMDatabaseAuthentication = a});
 
--- | Specifies the storage type to be associated with the DB instance. Valid values: @standard | gp2 | io1@  If you specify @io1@ , you must also include a value for the @Iops@ parameter.  Default: @io1@ if the @Iops@ parameter is specified; otherwise @standard@
+-- | Specifies the storage type to be associated with the DB instance. Valid values: @standard | gp2 | io1@  If you specify @io1@ , you must also include a value for the @Iops@ parameter.  Default: @io1@ if the @Iops@ parameter is specified, otherwise @standard@
 rditpitStorageType :: Lens' RestoreDBInstanceToPointInTime (Maybe Text)
 rditpitStorageType = lens _rditpitStorageType (\ s a -> s{_rditpitStorageType = a});
+
+-- | The list of logs that the restored DB instance is to export to CloudWatch Logs.
+rditpitEnableCloudwatchLogsExports :: Lens' RestoreDBInstanceToPointInTime [Text]
+rditpitEnableCloudwatchLogsExports = lens _rditpitEnableCloudwatchLogsExports (\ s a -> s{_rditpitEnableCloudwatchLogsExports = a}) . _Default . _Coerce;
 
 -- | The database name for the restored DB instance.
 rditpitDBName :: Lens' RestoreDBInstanceToPointInTime (Maybe Text)
 rditpitDBName = lens _rditpitDBName (\ s a -> s{_rditpitDBName = a});
 
--- | The identifier of the source DB instance from which to restore. Constraints:     * Must match the identifier of an existing DBInstance.
+-- | The identifier of the source DB instance from which to restore. Constraints:     * Must match the identifier of an existing DB instance.
 rditpitSourceDBInstanceIdentifier :: Lens' RestoreDBInstanceToPointInTime Text
 rditpitSourceDBInstanceIdentifier = lens _rditpitSourceDBInstanceIdentifier (\ s a -> s{_rditpitSourceDBInstanceIdentifier = a});
 
--- | The name of the new database instance to be created. Constraints:     * Must contain from 1 to 63 letters, numbers, or hyphens     * First character must be a letter     * Cannot end with a hyphen or contain two consecutive hyphens
+-- | The name of the new DB instance to be created. Constraints:     * Must contain from 1 to 63 letters, numbers, or hyphens     * First character must be a letter     * Cannot end with a hyphen or contain two consecutive hyphens
 rditpitTargetDBInstanceIdentifier :: Lens' RestoreDBInstanceToPointInTime Text
 rditpitTargetDBInstanceIdentifier = lens _rditpitTargetDBInstanceIdentifier (\ s a -> s{_rditpitTargetDBInstanceIdentifier = a});
 
@@ -337,6 +346,10 @@ instance ToQuery RestoreDBInstanceToPointInTime where
                "EnableIAMDatabaseAuthentication" =:
                  _rditpitEnableIAMDatabaseAuthentication,
                "StorageType" =: _rditpitStorageType,
+               "EnableCloudwatchLogsExports" =:
+                 toQuery
+                   (toQueryList "member" <$>
+                      _rditpitEnableCloudwatchLogsExports),
                "DBName" =: _rditpitDBName,
                "SourceDBInstanceIdentifier" =:
                  _rditpitSourceDBInstanceIdentifier,

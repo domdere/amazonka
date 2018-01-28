@@ -18,8 +18,10 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Starts the specified WorkSpaces. The WorkSpaces must have a running mode of AutoStop and a state of STOPPED.
+-- Starts the specified WorkSpaces.
 --
+--
+-- You cannot start a WorkSpace unless it has a running mode of @AutoStop@ and a state of @STOPPED@ .
 --
 module Network.AWS.WorkSpaces.StartWorkspaces
     (
@@ -54,7 +56,7 @@ newtype StartWorkspaces = StartWorkspaces'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'swStartWorkspaceRequests' - The requests.
+-- * 'swStartWorkspaceRequests' - The WorkSpaces to start.
 startWorkspaces
     :: NonEmpty StartRequest -- ^ 'swStartWorkspaceRequests'
     -> StartWorkspaces
@@ -63,7 +65,7 @@ startWorkspaces pStartWorkspaceRequests_ =
   {_swStartWorkspaceRequests = _List1 # pStartWorkspaceRequests_}
 
 
--- | The requests.
+-- | The WorkSpaces to start.
 swStartWorkspaceRequests :: Lens' StartWorkspaces (NonEmpty StartRequest)
 swStartWorkspaceRequests = lens _swStartWorkspaceRequests (\ s a -> s{_swStartWorkspaceRequests = a}) . _List1;
 
@@ -115,7 +117,7 @@ data StartWorkspacesResponse = StartWorkspacesResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'swrsFailedRequests' - The failed requests.
+-- * 'swrsFailedRequests' - Information about the WorkSpaces that could not be started.
 --
 -- * 'swrsResponseStatus' - -- | The response status code.
 startWorkspacesResponse
@@ -126,7 +128,7 @@ startWorkspacesResponse pResponseStatus_ =
   {_swrsFailedRequests = Nothing, _swrsResponseStatus = pResponseStatus_}
 
 
--- | The failed requests.
+-- | Information about the WorkSpaces that could not be started.
 swrsFailedRequests :: Lens' StartWorkspacesResponse [FailedWorkspaceChangeRequest]
 swrsFailedRequests = lens _swrsFailedRequests (\ s a -> s{_swrsFailedRequests = a}) . _Default . _Coerce;
 

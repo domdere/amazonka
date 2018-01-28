@@ -18,10 +18,10 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Cancels one or more Spot instance requests. Spot instances are instances that Amazon EC2 starts on your behalf when the bid price that you specify exceeds the current Spot price. Amazon EC2 periodically sets the Spot price based on available Spot instance capacity and current Spot instance requests. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html Spot Instance Requests> in the /Amazon Elastic Compute Cloud User Guide/ .
+-- Cancels one or more Spot Instance requests. Spot Instances are instances that Amazon EC2 starts on your behalf when the maximum price that you specify exceeds the current Spot price. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html Spot Instance Requests> in the /Amazon Elastic Compute Cloud User Guide/ .
 --
 --
--- /Important:/ Canceling a Spot instance request does not terminate running Spot instances associated with the request.
+-- /Important:/ Canceling a Spot Instance request does not terminate running Spot Instances associated with the request.
 --
 module Network.AWS.EC2.CancelSpotInstanceRequests
     (
@@ -64,7 +64,7 @@ data CancelSpotInstanceRequests = CancelSpotInstanceRequests'
 --
 -- * 'csirDryRun' - Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is @DryRunOperation@ . Otherwise, it is @UnauthorizedOperation@ .
 --
--- * 'csirSpotInstanceRequestIds' - One or more Spot instance request IDs.
+-- * 'csirSpotInstanceRequestIds' - One or more Spot Instance request IDs.
 cancelSpotInstanceRequests
     :: CancelSpotInstanceRequests
 cancelSpotInstanceRequests =
@@ -76,7 +76,7 @@ cancelSpotInstanceRequests =
 csirDryRun :: Lens' CancelSpotInstanceRequests (Maybe Bool)
 csirDryRun = lens _csirDryRun (\ s a -> s{_csirDryRun = a});
 
--- | One or more Spot instance request IDs.
+-- | One or more Spot Instance request IDs.
 csirSpotInstanceRequestIds :: Lens' CancelSpotInstanceRequests [Text]
 csirSpotInstanceRequestIds = lens _csirSpotInstanceRequestIds (\ s a -> s{_csirSpotInstanceRequestIds = a}) . _Coerce;
 
@@ -127,7 +127,7 @@ data CancelSpotInstanceRequestsResponse = CancelSpotInstanceRequestsResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'csirrsCancelledSpotInstanceRequests' - One or more Spot instance requests.
+-- * 'csirrsCancelledSpotInstanceRequests' - One or more Spot Instance requests.
 --
 -- * 'csirrsResponseStatus' - -- | The response status code.
 cancelSpotInstanceRequestsResponse
@@ -140,7 +140,7 @@ cancelSpotInstanceRequestsResponse pResponseStatus_ =
   }
 
 
--- | One or more Spot instance requests.
+-- | One or more Spot Instance requests.
 csirrsCancelledSpotInstanceRequests :: Lens' CancelSpotInstanceRequestsResponse [CancelledSpotInstanceRequest]
 csirrsCancelledSpotInstanceRequests = lens _csirrsCancelledSpotInstanceRequests (\ s a -> s{_csirrsCancelledSpotInstanceRequests = a}) . _Default . _Coerce;
 

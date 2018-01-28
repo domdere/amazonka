@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Associates a product with a portfolio.
+-- Associates the specified product with the specified portfolio.
 --
 --
 module Network.AWS.ServiceCatalog.AssociateProductWithPortfolio
@@ -59,7 +59,7 @@ data AssociateProductWithPortfolio = AssociateProductWithPortfolio'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'apwpSourcePortfolioId' - The identifier of the source portfolio to use with this association.
+-- * 'apwpSourcePortfolioId' - The identifier of the source portfolio.
 --
 -- * 'apwpAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
@@ -79,7 +79,7 @@ associateProductWithPortfolio pProductId_ pPortfolioId_ =
   }
 
 
--- | The identifier of the source portfolio to use with this association.
+-- | The identifier of the source portfolio.
 apwpSourcePortfolioId :: Lens' AssociateProductWithPortfolio (Maybe Text)
 apwpSourcePortfolioId = lens _apwpSourcePortfolioId (\ s a -> s{_apwpSourcePortfolioId = a});
 

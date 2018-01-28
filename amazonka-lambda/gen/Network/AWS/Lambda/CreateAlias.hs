@@ -29,6 +29,7 @@ module Network.AWS.Lambda.CreateAlias
       createAlias
     , CreateAlias
     -- * Request Lenses
+    , caRoutingConfig
     , caDescription
     , caFunctionName
     , caName
@@ -38,10 +39,12 @@ module Network.AWS.Lambda.CreateAlias
     , aliasConfiguration
     , AliasConfiguration
     -- * Response Lenses
+    , acRoutingConfig
     , acName
     , acFunctionVersion
     , acAliasARN
     , acDescription
+    , acRevisionId
     ) where
 
 import Network.AWS.Lambda.Types
@@ -53,7 +56,8 @@ import Network.AWS.Response
 
 -- | /See:/ 'createAlias' smart constructor.
 data CreateAlias = CreateAlias'
-  { _caDescription     :: !(Maybe Text)
+  { _caRoutingConfig   :: !(Maybe AliasRoutingConfiguration)
+  , _caDescription     :: !(Maybe Text)
   , _caFunctionName    :: !Text
   , _caName            :: !Text
   , _caFunctionVersion :: !Text
@@ -63,6 +67,8 @@ data CreateAlias = CreateAlias'
 -- | Creates a value of 'CreateAlias' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'caRoutingConfig' - Specifies an additional version your alias can point to, allowing you to dictate what percentage of traffic will invoke each version. For more information, see 'lambda-traffic-shifting-using-aliases' .
 --
 -- * 'caDescription' - Description of the alias.
 --
@@ -78,12 +84,17 @@ createAlias
     -> CreateAlias
 createAlias pFunctionName_ pName_ pFunctionVersion_ =
   CreateAlias'
-  { _caDescription = Nothing
+  { _caRoutingConfig = Nothing
+  , _caDescription = Nothing
   , _caFunctionName = pFunctionName_
   , _caName = pName_
   , _caFunctionVersion = pFunctionVersion_
   }
 
+
+-- | Specifies an additional version your alias can point to, allowing you to dictate what percentage of traffic will invoke each version. For more information, see 'lambda-traffic-shifting-using-aliases' .
+caRoutingConfig :: Lens' CreateAlias (Maybe AliasRoutingConfiguration)
+caRoutingConfig = lens _caRoutingConfig (\ s a -> s{_caRoutingConfig = a});
 
 -- | Description of the alias.
 caDescription :: Lens' CreateAlias (Maybe Text)
@@ -117,7 +128,8 @@ instance ToJSON CreateAlias where
         toJSON CreateAlias'{..}
           = object
               (catMaybes
-                 [("Description" .=) <$> _caDescription,
+                 [("RoutingConfig" .=) <$> _caRoutingConfig,
+                  ("Description" .=) <$> _caDescription,
                   Just ("Name" .= _caName),
                   Just ("FunctionVersion" .= _caFunctionVersion)])
 

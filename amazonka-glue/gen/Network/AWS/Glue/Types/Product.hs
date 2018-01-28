@@ -36,7 +36,7 @@ data Action = Action'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'aArguments' - Arguments to be passed to the job.
+-- * 'aArguments' - Arguments to be passed to the job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html Calling AWS Glue APIs in Python> topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-glue-arguments.html Special Parameters Used by AWS Glue> topic in the developer guide.
 --
 -- * 'aJobName' - The name of a job to be executed.
 action
@@ -44,7 +44,7 @@ action
 action = Action' {_aArguments = Nothing, _aJobName = Nothing}
 
 
--- | Arguments to be passed to the job.
+-- | Arguments to be passed to the job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html Calling AWS Glue APIs in Python> topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-glue-arguments.html Special Parameters Used by AWS Glue> topic in the developer guide.
 aArguments :: Lens' Action (HashMap Text Text)
 aArguments = lens _aArguments (\ s a -> s{_aArguments = a}) . _Default . _Map;
 
@@ -70,7 +70,7 @@ instance ToJSON Action where
                  [("Arguments" .=) <$> _aArguments,
                   ("JobName" .=) <$> _aJobName])
 
--- | Details about the job run and the error that occurred while trying to submit it for stopping.
+-- | Records an error that occurred when attempting to stop a specified JobRun.
 --
 --
 --
@@ -86,11 +86,11 @@ data BatchStopJobRunError = BatchStopJobRunError'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'bsjreJobName' - The name of the job.
+-- * 'bsjreJobName' - The name of the Job in question.
 --
--- * 'bsjreJobRunId' - The job run Id.
+-- * 'bsjreJobRunId' - The JobRunId of the JobRun in question.
 --
--- * 'bsjreErrorDetail' - The details of the error that occurred.
+-- * 'bsjreErrorDetail' - Specifies details about the error that was encountered.
 batchStopJobRunError
     :: BatchStopJobRunError
 batchStopJobRunError =
@@ -101,15 +101,15 @@ batchStopJobRunError =
   }
 
 
--- | The name of the job.
+-- | The name of the Job in question.
 bsjreJobName :: Lens' BatchStopJobRunError (Maybe Text)
 bsjreJobName = lens _bsjreJobName (\ s a -> s{_bsjreJobName = a});
 
--- | The job run Id.
+-- | The JobRunId of the JobRun in question.
 bsjreJobRunId :: Lens' BatchStopJobRunError (Maybe Text)
 bsjreJobRunId = lens _bsjreJobRunId (\ s a -> s{_bsjreJobRunId = a});
 
--- | The details of the error that occurred.
+-- | Specifies details about the error that was encountered.
 bsjreErrorDetail :: Lens' BatchStopJobRunError (Maybe ErrorDetail)
 bsjreErrorDetail = lens _bsjreErrorDetail (\ s a -> s{_bsjreErrorDetail = a});
 
@@ -125,7 +125,7 @@ instance Hashable BatchStopJobRunError where
 
 instance NFData BatchStopJobRunError where
 
--- | Details about the job run which is submitted successfully for stopping.
+-- | Records a successful request to stop a specified JobRun.
 --
 --
 --
@@ -140,9 +140,9 @@ data BatchStopJobRunSuccessfulSubmission = BatchStopJobRunSuccessfulSubmission'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'bsjrssJobName' - The name of the job.
+-- * 'bsjrssJobName' - The Name of the Job in question.
 --
--- * 'bsjrssJobRunId' - The job run Id.
+-- * 'bsjrssJobRunId' - The JobRunId of the JobRun in question.
 batchStopJobRunSuccessfulSubmission
     :: BatchStopJobRunSuccessfulSubmission
 batchStopJobRunSuccessfulSubmission =
@@ -150,11 +150,11 @@ batchStopJobRunSuccessfulSubmission =
   {_bsjrssJobName = Nothing, _bsjrssJobRunId = Nothing}
 
 
--- | The name of the job.
+-- | The Name of the Job in question.
 bsjrssJobName :: Lens' BatchStopJobRunSuccessfulSubmission (Maybe Text)
 bsjrssJobName = lens _bsjrssJobName (\ s a -> s{_bsjrssJobName = a});
 
--- | The job run Id.
+-- | The JobRunId of the JobRun in question.
 bsjrssJobRunId :: Lens' BatchStopJobRunSuccessfulSubmission (Maybe Text)
 bsjrssJobRunId = lens _bsjrssJobRunId (\ s a -> s{_bsjrssJobRunId = a});
 
@@ -272,13 +272,16 @@ instance Hashable CatalogImportStatus where
 
 instance NFData CatalogImportStatus where
 
--- | Classifiers are written in Python and triggered during a Crawl Task. You can write your own Classifiers to best categorize your data sources and specify the appropriate schemas to use for them. A Classifier first checks whether a given file is in a format it can handle, and then, if so, creates a schema in the form of a @StructType@ object that matches that data format.
+-- | Classifiers are written in Python and triggered during a crawl task. You can write your own classifiers to best categorize your data sources and specify the appropriate schemas to use for them. A classifier checks whether a given file is in a format it can handle, and if it is, the classifier creates a schema in the form of a @StructType@ object that matches that data format.
 --
+--
+-- A classifier can be either a @grok@ classifier or an XML classifier, specified in one or the other field of the @Classifier@ object.
 --
 --
 -- /See:/ 'classifier' smart constructor.
-newtype Classifier = Classifier'
-  { _cGrokClassifier :: Maybe GrokClassifier
+data Classifier = Classifier'
+  { _cGrokClassifier :: !(Maybe GrokClassifier)
+  , _cXMLClassifier  :: !(Maybe XMLClassifier)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -286,20 +289,28 @@ newtype Classifier = Classifier'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cGrokClassifier' - A GrokClassifier object.
+-- * 'cGrokClassifier' - A @GrokClassifier@ object.
+--
+-- * 'cXMLClassifier' - An @XMLClassifier@ object.
 classifier
     :: Classifier
-classifier = Classifier' {_cGrokClassifier = Nothing}
+classifier = Classifier' {_cGrokClassifier = Nothing, _cXMLClassifier = Nothing}
 
 
--- | A GrokClassifier object.
+-- | A @GrokClassifier@ object.
 cGrokClassifier :: Lens' Classifier (Maybe GrokClassifier)
 cGrokClassifier = lens _cGrokClassifier (\ s a -> s{_cGrokClassifier = a});
+
+-- | An @XMLClassifier@ object.
+cXMLClassifier :: Lens' Classifier (Maybe XMLClassifier)
+cXMLClassifier = lens _cXMLClassifier (\ s a -> s{_cXMLClassifier = a});
 
 instance FromJSON Classifier where
         parseJSON
           = withObject "Classifier"
-              (\ x -> Classifier' <$> (x .:? "GrokClassifier"))
+              (\ x ->
+                 Classifier' <$>
+                   (x .:? "GrokClassifier") <*> (x .:? "XMLClassifier"))
 
 instance Hashable Classifier where
 
@@ -578,9 +589,9 @@ data Condition = Condition'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cState' - The condition state.
+-- * 'cState' - The condition state. Currently, the values supported are SUCCEEDED, STOPPED and FAILED.
 --
--- * 'cJobName' - The name of the job in question.
+-- * 'cJobName' - The name of the Job to whose JobRuns this condition applies and on which this trigger waits.
 --
 -- * 'cLogicalOperator' - A logical operator.
 condition
@@ -590,11 +601,11 @@ condition =
   {_cState = Nothing, _cJobName = Nothing, _cLogicalOperator = Nothing}
 
 
--- | The condition state.
+-- | The condition state. Currently, the values supported are SUCCEEDED, STOPPED and FAILED.
 cState :: Lens' Condition (Maybe JobRunState)
 cState = lens _cState (\ s a -> s{_cState = a});
 
--- | The name of the job in question.
+-- | The name of the Job to whose JobRuns this condition applies and on which this trigger waits.
 cJobName :: Lens' Condition (Maybe Text)
 cJobName = lens _cJobName (\ s a -> s{_cJobName = a});
 
@@ -737,12 +748,12 @@ instance NFData Connection where
 --
 -- /See:/ 'connectionInput' smart constructor.
 data ConnectionInput = ConnectionInput'
-  { _ciConnectionProperties :: !(Maybe (Map ConnectionPropertyKey Text))
-  , _ciMatchCriteria :: !(Maybe [Text])
+  { _ciMatchCriteria                  :: !(Maybe [Text])
   , _ciPhysicalConnectionRequirements :: !(Maybe PhysicalConnectionRequirements)
-  , _ciName :: !(Maybe Text)
-  , _ciDescription :: !(Maybe Text)
-  , _ciConnectionType :: !(Maybe ConnectionType)
+  , _ciDescription                    :: !(Maybe Text)
+  , _ciName                           :: !Text
+  , _ciConnectionType                 :: !ConnectionType
+  , _ciConnectionProperties           :: !(Map ConnectionPropertyKey Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -750,33 +761,31 @@ data ConnectionInput = ConnectionInput'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ciConnectionProperties' - A list of key-value pairs used as parameters for this connection.
---
 -- * 'ciMatchCriteria' - A list of criteria that can be used in selecting this connection.
 --
 -- * 'ciPhysicalConnectionRequirements' - A map of physical connection requirements, such as VPC and SecurityGroup, needed for making this connection successfully.
 --
--- * 'ciName' - The name of the connection.
---
 -- * 'ciDescription' - Description of the connection.
 --
+-- * 'ciName' - The name of the connection.
+--
 -- * 'ciConnectionType' - The type of the connection. Currently, only JDBC is supported; SFTP is not supported.
+--
+-- * 'ciConnectionProperties' - A list of key-value pairs used as parameters for this connection.
 connectionInput
-    :: ConnectionInput
-connectionInput =
+    :: Text -- ^ 'ciName'
+    -> ConnectionType -- ^ 'ciConnectionType'
+    -> ConnectionInput
+connectionInput pName_ pConnectionType_ =
   ConnectionInput'
-  { _ciConnectionProperties = Nothing
-  , _ciMatchCriteria = Nothing
+  { _ciMatchCriteria = Nothing
   , _ciPhysicalConnectionRequirements = Nothing
-  , _ciName = Nothing
   , _ciDescription = Nothing
-  , _ciConnectionType = Nothing
+  , _ciName = pName_
+  , _ciConnectionType = pConnectionType_
+  , _ciConnectionProperties = mempty
   }
 
-
--- | A list of key-value pairs used as parameters for this connection.
-ciConnectionProperties :: Lens' ConnectionInput (HashMap ConnectionPropertyKey Text)
-ciConnectionProperties = lens _ciConnectionProperties (\ s a -> s{_ciConnectionProperties = a}) . _Default . _Map;
 
 -- | A list of criteria that can be used in selecting this connection.
 ciMatchCriteria :: Lens' ConnectionInput [Text]
@@ -786,17 +795,21 @@ ciMatchCriteria = lens _ciMatchCriteria (\ s a -> s{_ciMatchCriteria = a}) . _De
 ciPhysicalConnectionRequirements :: Lens' ConnectionInput (Maybe PhysicalConnectionRequirements)
 ciPhysicalConnectionRequirements = lens _ciPhysicalConnectionRequirements (\ s a -> s{_ciPhysicalConnectionRequirements = a});
 
--- | The name of the connection.
-ciName :: Lens' ConnectionInput (Maybe Text)
-ciName = lens _ciName (\ s a -> s{_ciName = a});
-
 -- | Description of the connection.
 ciDescription :: Lens' ConnectionInput (Maybe Text)
 ciDescription = lens _ciDescription (\ s a -> s{_ciDescription = a});
 
+-- | The name of the connection.
+ciName :: Lens' ConnectionInput Text
+ciName = lens _ciName (\ s a -> s{_ciName = a});
+
 -- | The type of the connection. Currently, only JDBC is supported; SFTP is not supported.
-ciConnectionType :: Lens' ConnectionInput (Maybe ConnectionType)
+ciConnectionType :: Lens' ConnectionInput ConnectionType
 ciConnectionType = lens _ciConnectionType (\ s a -> s{_ciConnectionType = a});
+
+-- | A list of key-value pairs used as parameters for this connection.
+ciConnectionProperties :: Lens' ConnectionInput (HashMap ConnectionPropertyKey Text)
+ciConnectionProperties = lens _ciConnectionProperties (\ s a -> s{_ciConnectionProperties = a}) . _Map;
 
 instance Hashable ConnectionInput where
 
@@ -806,14 +819,14 @@ instance ToJSON ConnectionInput where
         toJSON ConnectionInput'{..}
           = object
               (catMaybes
-                 [("ConnectionProperties" .=) <$>
-                    _ciConnectionProperties,
-                  ("MatchCriteria" .=) <$> _ciMatchCriteria,
+                 [("MatchCriteria" .=) <$> _ciMatchCriteria,
                   ("PhysicalConnectionRequirements" .=) <$>
                     _ciPhysicalConnectionRequirements,
-                  ("Name" .=) <$> _ciName,
                   ("Description" .=) <$> _ciDescription,
-                  ("ConnectionType" .=) <$> _ciConnectionType])
+                  Just ("Name" .= _ciName),
+                  Just ("ConnectionType" .= _ciConnectionType),
+                  Just
+                    ("ConnectionProperties" .= _ciConnectionProperties)])
 
 -- | Specifies the connections used by a job.
 --
@@ -855,7 +868,7 @@ instance ToJSON ConnectionsList where
           = object
               (catMaybes [("Connections" .=) <$> _clConnections])
 
--- | Specifies a crawler program that examines a data source and uses classifiers to try to determine its schema. If successful, the crawler records metatdata concerning the data source in the Data Catalog.
+-- | Specifies a crawler program that examines a data source and uses classifiers to try to determine its schema. If successful, the crawler records metadata concerning the data source in the AWS Glue Data Catalog.
 --
 --
 --
@@ -874,6 +887,7 @@ data Crawler = Crawler'
   , _craTargets            :: !(Maybe CrawlerTargets)
   , _craVersion            :: !(Maybe Integer)
   , _craDatabaseName       :: !(Maybe Text)
+  , _craConfiguration      :: !(Maybe Text)
   , _craTablePrefix        :: !(Maybe Text)
   , _craDescription        :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -883,35 +897,37 @@ data Crawler = Crawler'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'craCreationTime' - The time when the Crawler was created.
+-- * 'craCreationTime' - The time when the crawler was created.
 --
--- * 'craState' - Indicates whether this Crawler is running, or whether a run is pending.
+-- * 'craState' - Indicates whether the crawler is running, or whether a run is pending.
 --
--- * 'craSchemaChangePolicy' - Sets policy for the crawler's update and delete behavior.
+-- * 'craSchemaChangePolicy' - Sets the behavior when the crawler finds a changed or deleted object.
 --
--- * 'craLastUpdated' - The time the Crawler was last updated.
+-- * 'craLastUpdated' - The time the crawler was last updated.
 --
--- * 'craSchedule' - A @Schedule@ object that specifies the schedule on which this Crawler is to be run.
+-- * 'craSchedule' - For scheduled crawlers, the schedule when the crawler runs.
 --
 -- * 'craLastCrawl' - The status of the last crawl, and potentially error information if an error occurred.
 --
--- * 'craCrawlElapsedTime' - If this Crawler is running, contains the total time elapsed since the last crawl began.
+-- * 'craCrawlElapsedTime' - If the crawler is running, contains the total time elapsed since the last crawl began.
 --
--- * 'craClassifiers' - A list of custom @Classifier@ s associated with this Crawler.
+-- * 'craClassifiers' - A list of custom classifiers associated with the crawler.
 --
--- * 'craRole' - The IAM role (or ARN of an IAM role) used to access customer resources such as data in S3.
+-- * 'craRole' - The IAM role (or ARN of an IAM role) used to access customer resources, such as data in Amazon S3.
 --
--- * 'craName' - The @Crawler@ name.
+-- * 'craName' - The crawler name.
 --
 -- * 'craTargets' - A collection of targets to crawl.
 --
--- * 'craVersion' - The version of the Crawler.
+-- * 'craVersion' - The version of the crawler.
 --
--- * 'craDatabaseName' - The @Database@ where this Crawler's output should be stored.
+-- * 'craDatabaseName' - The database where metadata is written by this crawler.
 --
--- * 'craTablePrefix' - The table prefix used for catalog tables created.
+-- * 'craConfiguration' - Crawler configuration information. This versioned JSON string allows users to specify aspects of a Crawler's behavior. You can use this field to force partitions to inherit metadata such as classification, input format, output format, serde information, and schema from their parent table, rather than detect this information separately for each partition. Use the following JSON string to specify that behavior: Example: @'{ "Version": 1.0, "CrawlerOutput": { "Partitions": { "AddOrUpdateBehavior": "InheritFromTable" } } }'@
 --
--- * 'craDescription' - A description of this Crawler and where it should be used.
+-- * 'craTablePrefix' - The prefix added to the names of tables that are created.
+--
+-- * 'craDescription' - A description of the crawler.
 crawler
     :: Crawler
 crawler =
@@ -929,28 +945,29 @@ crawler =
   , _craTargets = Nothing
   , _craVersion = Nothing
   , _craDatabaseName = Nothing
+  , _craConfiguration = Nothing
   , _craTablePrefix = Nothing
   , _craDescription = Nothing
   }
 
 
--- | The time when the Crawler was created.
+-- | The time when the crawler was created.
 craCreationTime :: Lens' Crawler (Maybe UTCTime)
 craCreationTime = lens _craCreationTime (\ s a -> s{_craCreationTime = a}) . mapping _Time;
 
--- | Indicates whether this Crawler is running, or whether a run is pending.
+-- | Indicates whether the crawler is running, or whether a run is pending.
 craState :: Lens' Crawler (Maybe CrawlerState)
 craState = lens _craState (\ s a -> s{_craState = a});
 
--- | Sets policy for the crawler's update and delete behavior.
+-- | Sets the behavior when the crawler finds a changed or deleted object.
 craSchemaChangePolicy :: Lens' Crawler (Maybe SchemaChangePolicy)
 craSchemaChangePolicy = lens _craSchemaChangePolicy (\ s a -> s{_craSchemaChangePolicy = a});
 
--- | The time the Crawler was last updated.
+-- | The time the crawler was last updated.
 craLastUpdated :: Lens' Crawler (Maybe UTCTime)
 craLastUpdated = lens _craLastUpdated (\ s a -> s{_craLastUpdated = a}) . mapping _Time;
 
--- | A @Schedule@ object that specifies the schedule on which this Crawler is to be run.
+-- | For scheduled crawlers, the schedule when the crawler runs.
 craSchedule :: Lens' Crawler (Maybe Schedule)
 craSchedule = lens _craSchedule (\ s a -> s{_craSchedule = a});
 
@@ -958,19 +975,19 @@ craSchedule = lens _craSchedule (\ s a -> s{_craSchedule = a});
 craLastCrawl :: Lens' Crawler (Maybe LastCrawlInfo)
 craLastCrawl = lens _craLastCrawl (\ s a -> s{_craLastCrawl = a});
 
--- | If this Crawler is running, contains the total time elapsed since the last crawl began.
+-- | If the crawler is running, contains the total time elapsed since the last crawl began.
 craCrawlElapsedTime :: Lens' Crawler (Maybe Integer)
 craCrawlElapsedTime = lens _craCrawlElapsedTime (\ s a -> s{_craCrawlElapsedTime = a});
 
--- | A list of custom @Classifier@ s associated with this Crawler.
+-- | A list of custom classifiers associated with the crawler.
 craClassifiers :: Lens' Crawler [Text]
 craClassifiers = lens _craClassifiers (\ s a -> s{_craClassifiers = a}) . _Default . _Coerce;
 
--- | The IAM role (or ARN of an IAM role) used to access customer resources such as data in S3.
+-- | The IAM role (or ARN of an IAM role) used to access customer resources, such as data in Amazon S3.
 craRole :: Lens' Crawler (Maybe Text)
 craRole = lens _craRole (\ s a -> s{_craRole = a});
 
--- | The @Crawler@ name.
+-- | The crawler name.
 craName :: Lens' Crawler (Maybe Text)
 craName = lens _craName (\ s a -> s{_craName = a});
 
@@ -978,19 +995,23 @@ craName = lens _craName (\ s a -> s{_craName = a});
 craTargets :: Lens' Crawler (Maybe CrawlerTargets)
 craTargets = lens _craTargets (\ s a -> s{_craTargets = a});
 
--- | The version of the Crawler.
+-- | The version of the crawler.
 craVersion :: Lens' Crawler (Maybe Integer)
 craVersion = lens _craVersion (\ s a -> s{_craVersion = a});
 
--- | The @Database@ where this Crawler's output should be stored.
+-- | The database where metadata is written by this crawler.
 craDatabaseName :: Lens' Crawler (Maybe Text)
 craDatabaseName = lens _craDatabaseName (\ s a -> s{_craDatabaseName = a});
 
--- | The table prefix used for catalog tables created.
+-- | Crawler configuration information. This versioned JSON string allows users to specify aspects of a Crawler's behavior. You can use this field to force partitions to inherit metadata such as classification, input format, output format, serde information, and schema from their parent table, rather than detect this information separately for each partition. Use the following JSON string to specify that behavior: Example: @'{ "Version": 1.0, "CrawlerOutput": { "Partitions": { "AddOrUpdateBehavior": "InheritFromTable" } } }'@
+craConfiguration :: Lens' Crawler (Maybe Text)
+craConfiguration = lens _craConfiguration (\ s a -> s{_craConfiguration = a});
+
+-- | The prefix added to the names of tables that are created.
 craTablePrefix :: Lens' Crawler (Maybe Text)
 craTablePrefix = lens _craTablePrefix (\ s a -> s{_craTablePrefix = a});
 
--- | A description of this Crawler and where it should be used.
+-- | A description of the crawler.
 craDescription :: Lens' Crawler (Maybe Text)
 craDescription = lens _craDescription (\ s a -> s{_craDescription = a});
 
@@ -1011,6 +1032,7 @@ instance FromJSON Crawler where
                      <*> (x .:? "Targets")
                      <*> (x .:? "Version")
                      <*> (x .:? "DatabaseName")
+                     <*> (x .:? "Configuration")
                      <*> (x .:? "TablePrefix")
                      <*> (x .:? "Description"))
 
@@ -1041,17 +1063,17 @@ data CrawlerMetrics = CrawlerMetrics'
 --
 -- * 'cmLastRuntimeSeconds' - The duration of the crawler's most recent run, in seconds.
 --
--- * 'cmTablesCreated' - A list of the tables created by this crawler.
+-- * 'cmTablesCreated' - The number of tables created by this crawler.
 --
--- * 'cmStillEstimating' - True if the crawler is estimating its
+-- * 'cmStillEstimating' - True if the crawler is still estimating how long it will take to complete this run.
 --
 -- * 'cmMedianRuntimeSeconds' - The median duration of this crawler's runs, in seconds.
 --
 -- * 'cmTimeLeftSeconds' - The estimated time left to complete a running crawl.
 --
--- * 'cmTablesDeleted' - A list of the tables deleted by this crawler.
+-- * 'cmTablesDeleted' - The number of tables deleted by this crawler.
 --
--- * 'cmTablesUpdated' - A list of the tables created by this crawler.
+-- * 'cmTablesUpdated' - The number of tables updated by this crawler.
 --
 -- * 'cmCrawlerName' - The name of the crawler.
 crawlerMetrics
@@ -1073,11 +1095,11 @@ crawlerMetrics =
 cmLastRuntimeSeconds :: Lens' CrawlerMetrics (Maybe Double)
 cmLastRuntimeSeconds = lens _cmLastRuntimeSeconds (\ s a -> s{_cmLastRuntimeSeconds = a});
 
--- | A list of the tables created by this crawler.
+-- | The number of tables created by this crawler.
 cmTablesCreated :: Lens' CrawlerMetrics (Maybe Natural)
 cmTablesCreated = lens _cmTablesCreated (\ s a -> s{_cmTablesCreated = a}) . mapping _Nat;
 
--- | True if the crawler is estimating its
+-- | True if the crawler is still estimating how long it will take to complete this run.
 cmStillEstimating :: Lens' CrawlerMetrics (Maybe Bool)
 cmStillEstimating = lens _cmStillEstimating (\ s a -> s{_cmStillEstimating = a});
 
@@ -1089,11 +1111,11 @@ cmMedianRuntimeSeconds = lens _cmMedianRuntimeSeconds (\ s a -> s{_cmMedianRunti
 cmTimeLeftSeconds :: Lens' CrawlerMetrics (Maybe Double)
 cmTimeLeftSeconds = lens _cmTimeLeftSeconds (\ s a -> s{_cmTimeLeftSeconds = a});
 
--- | A list of the tables deleted by this crawler.
+-- | The number of tables deleted by this crawler.
 cmTablesDeleted :: Lens' CrawlerMetrics (Maybe Natural)
 cmTablesDeleted = lens _cmTablesDeleted (\ s a -> s{_cmTablesDeleted = a}) . mapping _Nat;
 
--- | A list of the tables created by this crawler.
+-- | The number of tables updated by this crawler.
 cmTablesUpdated :: Lens' CrawlerMetrics (Maybe Natural)
 cmTablesUpdated = lens _cmTablesUpdated (\ s a -> s{_cmTablesUpdated = a}) . mapping _Nat;
 
@@ -1119,7 +1141,7 @@ instance Hashable CrawlerMetrics where
 
 instance NFData CrawlerMetrics where
 
--- | Specifies crawler targets.
+-- | Specifies data stores to crawl.
 --
 --
 --
@@ -1134,7 +1156,7 @@ data CrawlerTargets = CrawlerTargets'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ctS3Targets' - Specifies targets in AWS S3.
+-- * 'ctS3Targets' - Specifies Amazon S3 targets.
 --
 -- * 'ctJdbcTargets' - Specifies JDBC targets.
 crawlerTargets
@@ -1143,7 +1165,7 @@ crawlerTargets =
   CrawlerTargets' {_ctS3Targets = Nothing, _ctJdbcTargets = Nothing}
 
 
--- | Specifies targets in AWS S3.
+-- | Specifies Amazon S3 targets.
 ctS3Targets :: Lens' CrawlerTargets [S3Target]
 ctS3Targets = lens _ctS3Targets (\ s a -> s{_ctS3Targets = a}) . _Default . _Coerce;
 
@@ -1170,7 +1192,7 @@ instance ToJSON CrawlerTargets where
                  [("S3Targets" .=) <$> _ctS3Targets,
                   ("JdbcTargets" .=) <$> _ctJdbcTargets])
 
--- | Specifies a Grok classifier for CreateClassifier to create.
+-- | Specifies a @grok@ classifier for @CreateClassifier@ to create.
 --
 --
 --
@@ -1187,11 +1209,11 @@ data CreateGrokClassifierRequest = CreateGrokClassifierRequest'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cgcrCustomPatterns' - Custom grok patterns used by this classifier.
+-- * 'cgcrCustomPatterns' - Optional custom grok patterns used by this classifier.
 --
--- * 'cgcrClassification' - The type of result that the classifier matches, such as Twitter Json, Omniture logs, Cloudwatch logs, and so forth.
+-- * 'cgcrClassification' - An identifier of the data format that the classifier matches, such as Twitter, JSON, Omniture logs, Amazon CloudWatch Logs, and so on.
 --
--- * 'cgcrName' - The name of the new Classifier.
+-- * 'cgcrName' - The name of the new classifier.
 --
 -- * 'cgcrGrokPattern' - The grok pattern used by this classifier.
 createGrokClassifierRequest
@@ -1208,15 +1230,15 @@ createGrokClassifierRequest pClassification_ pName_ pGrokPattern_ =
   }
 
 
--- | Custom grok patterns used by this classifier.
+-- | Optional custom grok patterns used by this classifier.
 cgcrCustomPatterns :: Lens' CreateGrokClassifierRequest (Maybe Text)
 cgcrCustomPatterns = lens _cgcrCustomPatterns (\ s a -> s{_cgcrCustomPatterns = a});
 
--- | The type of result that the classifier matches, such as Twitter Json, Omniture logs, Cloudwatch logs, and so forth.
+-- | An identifier of the data format that the classifier matches, such as Twitter, JSON, Omniture logs, Amazon CloudWatch Logs, and so on.
 cgcrClassification :: Lens' CreateGrokClassifierRequest Text
 cgcrClassification = lens _cgcrClassification (\ s a -> s{_cgcrClassification = a});
 
--- | The name of the new Classifier.
+-- | The name of the new classifier.
 cgcrName :: Lens' CreateGrokClassifierRequest Text
 cgcrName = lens _cgcrName (\ s a -> s{_cgcrName = a});
 
@@ -1236,6 +1258,63 @@ instance ToJSON CreateGrokClassifierRequest where
                   Just ("Classification" .= _cgcrClassification),
                   Just ("Name" .= _cgcrName),
                   Just ("GrokPattern" .= _cgcrGrokPattern)])
+
+-- | Specifies an XML classifier for @CreateClassifier@ to create.
+--
+--
+--
+-- /See:/ 'createXMLClassifierRequest' smart constructor.
+data CreateXMLClassifierRequest = CreateXMLClassifierRequest'
+  { _cxcrRowTag         :: !(Maybe Text)
+  , _cxcrClassification :: !Text
+  , _cxcrName           :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CreateXMLClassifierRequest' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'cxcrRowTag' - The XML tag designating the element that contains each record in an XML document being parsed. Note that this cannot identify a self-closing element (closed by @/>@ ). An empty row element that contains only attributes can be parsed as long as it ends with a closing tag (for example, @<row item_a="A" item_b="B"></row>@ is okay, but @<row item_a="A" item_b="B" />@ is not).
+--
+-- * 'cxcrClassification' - An identifier of the data format that the classifier matches.
+--
+-- * 'cxcrName' - The name of the classifier.
+createXMLClassifierRequest
+    :: Text -- ^ 'cxcrClassification'
+    -> Text -- ^ 'cxcrName'
+    -> CreateXMLClassifierRequest
+createXMLClassifierRequest pClassification_ pName_ =
+  CreateXMLClassifierRequest'
+  { _cxcrRowTag = Nothing
+  , _cxcrClassification = pClassification_
+  , _cxcrName = pName_
+  }
+
+
+-- | The XML tag designating the element that contains each record in an XML document being parsed. Note that this cannot identify a self-closing element (closed by @/>@ ). An empty row element that contains only attributes can be parsed as long as it ends with a closing tag (for example, @<row item_a="A" item_b="B"></row>@ is okay, but @<row item_a="A" item_b="B" />@ is not).
+cxcrRowTag :: Lens' CreateXMLClassifierRequest (Maybe Text)
+cxcrRowTag = lens _cxcrRowTag (\ s a -> s{_cxcrRowTag = a});
+
+-- | An identifier of the data format that the classifier matches.
+cxcrClassification :: Lens' CreateXMLClassifierRequest Text
+cxcrClassification = lens _cxcrClassification (\ s a -> s{_cxcrClassification = a});
+
+-- | The name of the classifier.
+cxcrName :: Lens' CreateXMLClassifierRequest Text
+cxcrName = lens _cxcrName (\ s a -> s{_cxcrName = a});
+
+instance Hashable CreateXMLClassifierRequest where
+
+instance NFData CreateXMLClassifierRequest where
+
+instance ToJSON CreateXMLClassifierRequest where
+        toJSON CreateXMLClassifierRequest'{..}
+          = object
+              (catMaybes
+                 [("RowTag" .=) <$> _cxcrRowTag,
+                  Just ("Classification" .= _cxcrClassification),
+                  Just ("Name" .= _cxcrName)])
 
 -- | The @Database@ object represents a logical grouping of tables that may reside in a Hive metastore or an RDBMS.
 --
@@ -1263,7 +1342,7 @@ data Database = Database'
 --
 -- * 'dCreateTime' - The time at which the metadata database was created in the catalog.
 --
--- * 'dName' - Name of the database.
+-- * 'dName' - Name of the database. For Hive compatibility, this is folded to lowercase when it is stored.
 database
     :: Text -- ^ 'dName'
     -> Database
@@ -1293,7 +1372,7 @@ dDescription = lens _dDescription (\ s a -> s{_dDescription = a});
 dCreateTime :: Lens' Database (Maybe UTCTime)
 dCreateTime = lens _dCreateTime (\ s a -> s{_dCreateTime = a}) . mapping _Time;
 
--- | Name of the database.
+-- | Name of the database. For Hive compatibility, this is folded to lowercase when it is stored.
 dName :: Lens' Database Text
 dName = lens _dName (\ s a -> s{_dName = a});
 
@@ -1312,7 +1391,7 @@ instance Hashable Database where
 
 instance NFData Database where
 
--- | The structure used to create or updata a database.
+-- | The structure used to create or update a database.
 --
 --
 --
@@ -1335,7 +1414,7 @@ data DatabaseInput = DatabaseInput'
 --
 -- * 'diDescription' - Description of the database
 --
--- * 'diName' - Name of the database.
+-- * 'diName' - Name of the database. For Hive compatibility, this is folded to lowercase when it is stored.
 databaseInput
     :: Text -- ^ 'diName'
     -> DatabaseInput
@@ -1360,7 +1439,7 @@ diParameters = lens _diParameters (\ s a -> s{_diParameters = a}) . _Default . _
 diDescription :: Lens' DatabaseInput (Maybe Text)
 diDescription = lens _diDescription (\ s a -> s{_diDescription = a});
 
--- | Name of the database.
+-- | Name of the database. For Hive compatibility, this is folded to lowercase when it is stored.
 diName :: Lens' DatabaseInput Text
 diName = lens _diName (\ s a -> s{_diName = a});
 
@@ -1668,13 +1747,13 @@ newtype ExecutionProperty = ExecutionProperty'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'epMaxConcurrentRuns' - The maximum number of concurrent runs allowed for a job.
+-- * 'epMaxConcurrentRuns' - The maximum number of concurrent runs allowed for a job. The default is 1. An error is returned when this threshold is reached. The maximum value you can specify is controlled by a service limit.
 executionProperty
     :: ExecutionProperty
 executionProperty = ExecutionProperty' {_epMaxConcurrentRuns = Nothing}
 
 
--- | The maximum number of concurrent runs allowed for a job.
+-- | The maximum number of concurrent runs allowed for a job. The default is 1. An error is returned when this threshold is reached. The maximum value you can specify is controlled by a service limit.
 epMaxConcurrentRuns :: Lens' ExecutionProperty (Maybe Int)
 epMaxConcurrentRuns = lens _epMaxConcurrentRuns (\ s a -> s{_epMaxConcurrentRuns = a});
 
@@ -1738,7 +1817,7 @@ instance ToJSON GetConnectionsFilter where
                  [("MatchCriteria" .=) <$> _gcfMatchCriteria,
                   ("ConnectionType" .=) <$> _gcfConnectionType])
 
--- | A classifier that uses @grok@ .
+-- | A classifier that uses @grok@ patterns.
 --
 --
 --
@@ -1764,13 +1843,13 @@ data GrokClassifier = GrokClassifier'
 --
 -- * 'gcVersion' - The version of this classifier.
 --
--- * 'gcCustomPatterns' - Custom grok patterns used by this classifier.
+-- * 'gcCustomPatterns' - Optional custom grok patterns defined by this classifier. For more information, see custom patterns in <http://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html Writing Custom Classifers> .
 --
 -- * 'gcName' - The name of the classifier.
 --
--- * 'gcClassification' - The data form that the classifier matches, such as Twitter, JSON, Omniture Logs, and so forth.
+-- * 'gcClassification' - An identifier of the data format that the classifier matches, such as Twitter, JSON, Omniture logs, and so on.
 --
--- * 'gcGrokPattern' - The grok pattern used by this classifier.
+-- * 'gcGrokPattern' - The grok pattern applied to a data store by this classifier. For more information, see built-in patterns in <http://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html Writing Custom Classifers> .
 grokClassifier
     :: Text -- ^ 'gcName'
     -> Text -- ^ 'gcClassification'
@@ -1800,7 +1879,7 @@ gcLastUpdated = lens _gcLastUpdated (\ s a -> s{_gcLastUpdated = a}) . mapping _
 gcVersion :: Lens' GrokClassifier (Maybe Integer)
 gcVersion = lens _gcVersion (\ s a -> s{_gcVersion = a});
 
--- | Custom grok patterns used by this classifier.
+-- | Optional custom grok patterns defined by this classifier. For more information, see custom patterns in <http://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html Writing Custom Classifers> .
 gcCustomPatterns :: Lens' GrokClassifier (Maybe Text)
 gcCustomPatterns = lens _gcCustomPatterns (\ s a -> s{_gcCustomPatterns = a});
 
@@ -1808,11 +1887,11 @@ gcCustomPatterns = lens _gcCustomPatterns (\ s a -> s{_gcCustomPatterns = a});
 gcName :: Lens' GrokClassifier Text
 gcName = lens _gcName (\ s a -> s{_gcName = a});
 
--- | The data form that the classifier matches, such as Twitter, JSON, Omniture Logs, and so forth.
+-- | An identifier of the data format that the classifier matches, such as Twitter, JSON, Omniture logs, and so on.
 gcClassification :: Lens' GrokClassifier Text
 gcClassification = lens _gcClassification (\ s a -> s{_gcClassification = a});
 
--- | The grok pattern used by this classifier.
+-- | The grok pattern applied to a data store by this classifier. For more information, see built-in patterns in <http://docs.aws.amazon.com/glue/latest/dg/custom-classifier.html Writing Custom Classifers> .
 gcGrokPattern :: Lens' GrokClassifier Text
 gcGrokPattern = lens _gcGrokPattern (\ s a -> s{_gcGrokPattern = a});
 
@@ -1832,7 +1911,7 @@ instance Hashable GrokClassifier where
 
 instance NFData GrokClassifier where
 
--- | Specifies a JDBC target for a crawl.
+-- | Specifies a JDBC data store to crawl.
 --
 --
 --
@@ -1850,9 +1929,9 @@ data JdbcTarget = JdbcTarget'
 --
 -- * 'jtPath' - The path of the JDBC target.
 --
--- * 'jtConnectionName' - The name of the connection to use for the JDBC target.
+-- * 'jtConnectionName' - The name of the connection to use to connect to the JDBC target.
 --
--- * 'jtExclusions' - A list of items to exclude from the crawl.
+-- * 'jtExclusions' - A list of glob patterns used to exclude from the crawl. For more information, see <http://docs.aws.amazon.com/glue/latest/dg/add-crawler.html Catalog Tables with a Crawler> .
 jdbcTarget
     :: JdbcTarget
 jdbcTarget =
@@ -1864,11 +1943,11 @@ jdbcTarget =
 jtPath :: Lens' JdbcTarget (Maybe Text)
 jtPath = lens _jtPath (\ s a -> s{_jtPath = a});
 
--- | The name of the connection to use for the JDBC target.
+-- | The name of the connection to use to connect to the JDBC target.
 jtConnectionName :: Lens' JdbcTarget (Maybe Text)
 jtConnectionName = lens _jtConnectionName (\ s a -> s{_jtConnectionName = a});
 
--- | A list of items to exclude from the crawl.
+-- | A list of glob patterns used to exclude from the crawl. For more information, see <http://docs.aws.amazon.com/glue/latest/dg/add-crawler.html Catalog Tables with a Crawler> .
 jtExclusions :: Lens' JdbcTarget [Text]
 jtExclusions = lens _jtExclusions (\ s a -> s{_jtExclusions = a}) . _Default . _Coerce;
 
@@ -1892,7 +1971,7 @@ instance ToJSON JdbcTarget where
                   ("ConnectionName" .=) <$> _jtConnectionName,
                   ("Exclusions" .=) <$> _jtExclusions])
 
--- | Specifies a job in the Data Catalog.
+-- | Specifies a job.
 --
 --
 --
@@ -1923,7 +2002,7 @@ data Job = Job'
 --
 -- * 'jConnections' - The connections used for this job.
 --
--- * 'jRole' - The role associated with this job.
+-- * 'jRole' - The name of the IAM role associated with this job.
 --
 -- * 'jName' - The name you assign to this job.
 --
@@ -1933,9 +2012,9 @@ data Job = Job'
 --
 -- * 'jExecutionProperty' - An ExecutionProperty specifying the maximum number of concurrent runs allowed for this job.
 --
--- * 'jAllocatedCapacity' - The number of capacity units allocated to this job.
+-- * 'jAllocatedCapacity' - The number of AWS Glue data processing units (DPUs) allocated to this Job. From 2 to 100 DPUs can be allocated; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <https://aws.amazon.com/glue/pricing/ AWS Glue pricing page> .
 --
--- * 'jDefaultArguments' - The default parameters for this job.
+-- * 'jDefaultArguments' - The default arguments for this job, specified as name-value pairs. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html Calling AWS Glue APIs in Python> topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-glue-arguments.html Special Parameters Used by AWS Glue> topic in the developer guide.
 --
 -- * 'jDescription' - Description of this job.
 --
@@ -1971,7 +2050,7 @@ jLastModifiedOn = lens _jLastModifiedOn (\ s a -> s{_jLastModifiedOn = a}) . map
 jConnections :: Lens' Job (Maybe ConnectionsList)
 jConnections = lens _jConnections (\ s a -> s{_jConnections = a});
 
--- | The role associated with this job.
+-- | The name of the IAM role associated with this job.
 jRole :: Lens' Job (Maybe Text)
 jRole = lens _jRole (\ s a -> s{_jRole = a});
 
@@ -1991,11 +2070,11 @@ jMaxRetries = lens _jMaxRetries (\ s a -> s{_jMaxRetries = a});
 jExecutionProperty :: Lens' Job (Maybe ExecutionProperty)
 jExecutionProperty = lens _jExecutionProperty (\ s a -> s{_jExecutionProperty = a});
 
--- | The number of capacity units allocated to this job.
+-- | The number of AWS Glue data processing units (DPUs) allocated to this Job. From 2 to 100 DPUs can be allocated; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <https://aws.amazon.com/glue/pricing/ AWS Glue pricing page> .
 jAllocatedCapacity :: Lens' Job (Maybe Int)
 jAllocatedCapacity = lens _jAllocatedCapacity (\ s a -> s{_jAllocatedCapacity = a});
 
--- | The default parameters for this job.
+-- | The default arguments for this job, specified as name-value pairs. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html Calling AWS Glue APIs in Python> topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-glue-arguments.html Special Parameters Used by AWS Glue> topic in the developer guide.
 jDefaultArguments :: Lens' Job (HashMap Text Text)
 jDefaultArguments = lens _jDefaultArguments (\ s a -> s{_jDefaultArguments = a}) . _Default . _Map;
 
@@ -2116,19 +2195,19 @@ data JobCommand = JobCommand'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'jcScriptLocation' - Specifies the location of a script that executes a job.
+-- * 'jcScriptLocation' - Specifies the S3 path to a script that executes a job (required).
 --
--- * 'jcName' - The name of this job command.
+-- * 'jcName' - The name of the job command: this must be @glueetl@ .
 jobCommand
     :: JobCommand
 jobCommand = JobCommand' {_jcScriptLocation = Nothing, _jcName = Nothing}
 
 
--- | Specifies the location of a script that executes a job.
+-- | Specifies the S3 path to a script that executes a job (required).
 jcScriptLocation :: Lens' JobCommand (Maybe Text)
 jcScriptLocation = lens _jcScriptLocation (\ s a -> s{_jcScriptLocation = a});
 
--- | The name of this job command.
+-- | The name of the job command: this must be @glueetl@ .
 jcName :: Lens' JobCommand (Maybe Text)
 jcName = lens _jcName (\ s a -> s{_jcName = a});
 
@@ -2178,11 +2257,11 @@ data JobRun = JobRun'
 --
 -- * 'jrCompletedOn' - The date and time this job run completed.
 --
--- * 'jrTriggerName' - The name of the trigger for this job run.
+-- * 'jrTriggerName' - The name of the trigger that started this job run.
 --
 -- * 'jrLastModifiedOn' - The last time this job run was modified.
 --
--- * 'jrArguments' - The job arguments associated with this run.
+-- * 'jrArguments' - The job arguments associated with this run. These override equivalent default arguments set for the job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own job arguments, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html Calling AWS Glue APIs in Python> topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-glue-arguments.html Special Parameters Used by AWS Glue> topic in the developer guide.
 --
 -- * 'jrJobName' - The name of the job being run.
 --
@@ -2192,13 +2271,13 @@ data JobRun = JobRun'
 --
 -- * 'jrPredecessorRuns' - A list of predecessors to this job run.
 --
--- * 'jrPreviousRunId' - The ID of the previous run of this job.
+-- * 'jrPreviousRunId' - The ID of the previous run of this job. For example, the JobRunId specified in the StartJobRun action.
 --
 -- * 'jrId' - The ID of this job run.
 --
--- * 'jrAttempt' - The number or the attempt to run this job.
+-- * 'jrAttempt' - The number of the attempt to run this job.
 --
--- * 'jrAllocatedCapacity' - The amount of infrastructure capacity allocated to this job run.
+-- * 'jrAllocatedCapacity' - The number of AWS Glue data processing units (DPUs) allocated to this JobRun. From 2 to 100 DPUs can be allocated; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <https://aws.amazon.com/glue/pricing/ AWS Glue pricing page> .
 --
 -- * 'jrErrorMessage' - An error message associated with this job run.
 jobRun
@@ -2225,7 +2304,7 @@ jobRun =
 jrCompletedOn :: Lens' JobRun (Maybe UTCTime)
 jrCompletedOn = lens _jrCompletedOn (\ s a -> s{_jrCompletedOn = a}) . mapping _Time;
 
--- | The name of the trigger for this job run.
+-- | The name of the trigger that started this job run.
 jrTriggerName :: Lens' JobRun (Maybe Text)
 jrTriggerName = lens _jrTriggerName (\ s a -> s{_jrTriggerName = a});
 
@@ -2233,7 +2312,7 @@ jrTriggerName = lens _jrTriggerName (\ s a -> s{_jrTriggerName = a});
 jrLastModifiedOn :: Lens' JobRun (Maybe UTCTime)
 jrLastModifiedOn = lens _jrLastModifiedOn (\ s a -> s{_jrLastModifiedOn = a}) . mapping _Time;
 
--- | The job arguments associated with this run.
+-- | The job arguments associated with this run. These override equivalent default arguments set for the job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own job arguments, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html Calling AWS Glue APIs in Python> topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-glue-arguments.html Special Parameters Used by AWS Glue> topic in the developer guide.
 jrArguments :: Lens' JobRun (HashMap Text Text)
 jrArguments = lens _jrArguments (\ s a -> s{_jrArguments = a}) . _Default . _Map;
 
@@ -2253,7 +2332,7 @@ jrJobRunState = lens _jrJobRunState (\ s a -> s{_jrJobRunState = a});
 jrPredecessorRuns :: Lens' JobRun [Predecessor]
 jrPredecessorRuns = lens _jrPredecessorRuns (\ s a -> s{_jrPredecessorRuns = a}) . _Default . _Coerce;
 
--- | The ID of the previous run of this job.
+-- | The ID of the previous run of this job. For example, the JobRunId specified in the StartJobRun action.
 jrPreviousRunId :: Lens' JobRun (Maybe Text)
 jrPreviousRunId = lens _jrPreviousRunId (\ s a -> s{_jrPreviousRunId = a});
 
@@ -2261,11 +2340,11 @@ jrPreviousRunId = lens _jrPreviousRunId (\ s a -> s{_jrPreviousRunId = a});
 jrId :: Lens' JobRun (Maybe Text)
 jrId = lens _jrId (\ s a -> s{_jrId = a});
 
--- | The number or the attempt to run this job.
+-- | The number of the attempt to run this job.
 jrAttempt :: Lens' JobRun (Maybe Int)
 jrAttempt = lens _jrAttempt (\ s a -> s{_jrAttempt = a});
 
--- | The amount of infrastructure capacity allocated to this job run.
+-- | The number of AWS Glue data processing units (DPUs) allocated to this JobRun. From 2 to 100 DPUs can be allocated; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <https://aws.amazon.com/glue/pricing/ AWS Glue pricing page> .
 jrAllocatedCapacity :: Lens' JobRun (Maybe Int)
 jrAllocatedCapacity = lens _jrAllocatedCapacity (\ s a -> s{_jrAllocatedCapacity = a});
 
@@ -2295,7 +2374,7 @@ instance Hashable JobRun where
 
 instance NFData JobRun where
 
--- | Specifies information used to update an existing job.
+-- | Specifies information used to update an existing job. Note that the previous job definition will be completely overwritten by this information.
 --
 --
 --
@@ -2317,11 +2396,11 @@ data JobUpdate = JobUpdate'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'juCommand' - The JobCommand that executes this job.
+-- * 'juCommand' - The JobCommand that executes this job (required).
 --
 -- * 'juConnections' - The connections used for this job.
 --
--- * 'juRole' - The role associated with this job.
+-- * 'juRole' - The name of the IAM role associated with this job (required).
 --
 -- * 'juLogURI' - This field is reserved for future use.
 --
@@ -2329,9 +2408,9 @@ data JobUpdate = JobUpdate'
 --
 -- * 'juExecutionProperty' - An ExecutionProperty specifying the maximum number of concurrent runs allowed for this job.
 --
--- * 'juAllocatedCapacity' - The number of capacity units allocated to this job.
+-- * 'juAllocatedCapacity' - The number of AWS Glue data processing units (DPUs) to allocate to this Job. From 2 to 100 DPUs can be allocated; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <https://aws.amazon.com/glue/pricing/ AWS Glue pricing page> .
 --
--- * 'juDefaultArguments' - The default parameters for this job.
+-- * 'juDefaultArguments' - The default arguments for this job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html Calling AWS Glue APIs in Python> topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-glue-arguments.html Special Parameters Used by AWS Glue> topic in the developer guide.
 --
 -- * 'juDescription' - Description of the job.
 jobUpdate
@@ -2350,7 +2429,7 @@ jobUpdate =
   }
 
 
--- | The JobCommand that executes this job.
+-- | The JobCommand that executes this job (required).
 juCommand :: Lens' JobUpdate (Maybe JobCommand)
 juCommand = lens _juCommand (\ s a -> s{_juCommand = a});
 
@@ -2358,7 +2437,7 @@ juCommand = lens _juCommand (\ s a -> s{_juCommand = a});
 juConnections :: Lens' JobUpdate (Maybe ConnectionsList)
 juConnections = lens _juConnections (\ s a -> s{_juConnections = a});
 
--- | The role associated with this job.
+-- | The name of the IAM role associated with this job (required).
 juRole :: Lens' JobUpdate (Maybe Text)
 juRole = lens _juRole (\ s a -> s{_juRole = a});
 
@@ -2374,11 +2453,11 @@ juMaxRetries = lens _juMaxRetries (\ s a -> s{_juMaxRetries = a});
 juExecutionProperty :: Lens' JobUpdate (Maybe ExecutionProperty)
 juExecutionProperty = lens _juExecutionProperty (\ s a -> s{_juExecutionProperty = a});
 
--- | The number of capacity units allocated to this job.
+-- | The number of AWS Glue data processing units (DPUs) to allocate to this Job. From 2 to 100 DPUs can be allocated; the default is 10. A DPU is a relative measure of processing power that consists of 4 vCPUs of compute capacity and 16 GB of memory. For more information, see the <https://aws.amazon.com/glue/pricing/ AWS Glue pricing page> .
 juAllocatedCapacity :: Lens' JobUpdate (Maybe Int)
 juAllocatedCapacity = lens _juAllocatedCapacity (\ s a -> s{_juAllocatedCapacity = a});
 
--- | The default parameters for this job.
+-- | The default arguments for this job. You can specify arguments here that your own job-execution script consumes, as well as arguments that AWS Glue itself consumes. For information about how to specify and consume your own Job arguments, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-calling.html Calling AWS Glue APIs in Python> topic in the developer guide. For information about the key-value pairs that AWS Glue consumes to set up your job, see the <http://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-glue-arguments.html Special Parameters Used by AWS Glue> topic in the developer guide.
 juDefaultArguments :: Lens' JobUpdate (HashMap Text Text)
 juDefaultArguments = lens _juDefaultArguments (\ s a -> s{_juDefaultArguments = a}) . _Default . _Map;
 
@@ -2432,7 +2511,7 @@ data LastCrawlInfo = LastCrawlInfo'
 --
 -- * 'lciMessagePrefix' - The prefix for a message about this crawl.
 --
--- * 'lciErrorMessage' - Error information about the last crawl, if an error occurred.
+-- * 'lciErrorMessage' - If an error occurred, the error information about the last crawl.
 lastCrawlInfo
     :: LastCrawlInfo
 lastCrawlInfo =
@@ -2466,7 +2545,7 @@ lciLogGroup = lens _lciLogGroup (\ s a -> s{_lciLogGroup = a});
 lciMessagePrefix :: Lens' LastCrawlInfo (Maybe Text)
 lciMessagePrefix = lens _lciMessagePrefix (\ s a -> s{_lciMessagePrefix = a});
 
--- | Error information about the last crawl, if an error occurred.
+-- | If an error occurred, the error information about the last crawl.
 lciErrorMessage :: Lens' LastCrawlInfo (Maybe Text)
 lciErrorMessage = lens _lciErrorMessage (\ s a -> s{_lciErrorMessage = a});
 
@@ -2502,7 +2581,7 @@ data Location = Location'
 --
 -- * 'lJdbc' - A JDBC location.
 --
--- * 'lS3' - An AWS S3 location.
+-- * 'lS3' - An Amazon S3 location.
 location
     :: Location
 location = Location' {_lJdbc = Nothing, _lS3 = Nothing}
@@ -2512,7 +2591,7 @@ location = Location' {_lJdbc = Nothing, _lS3 = Nothing}
 lJdbc :: Lens' Location [CodeGenNodeArg]
 lJdbc = lens _lJdbc (\ s a -> s{_lJdbc = a}) . _Default . _Coerce;
 
--- | An AWS S3 location.
+-- | An Amazon S3 location.
 lS3 :: Lens' Location [CodeGenNodeArg]
 lS3 = lens _lS3 (\ s a -> s{_lS3 = a}) . _Default . _Coerce;
 
@@ -2946,7 +3025,7 @@ data PhysicalConnectionRequirements = PhysicalConnectionRequirements'
 --
 -- * 'pcrSubnetId' - The subnet ID used by the connection.
 --
--- * 'pcrAvailabilityZone' - The connection's availability zone.
+-- * 'pcrAvailabilityZone' - The connection's availability zone. This field is deprecated and has no effect.
 physicalConnectionRequirements
     :: PhysicalConnectionRequirements
 physicalConnectionRequirements =
@@ -2965,7 +3044,7 @@ pcrSecurityGroupIdList = lens _pcrSecurityGroupIdList (\ s a -> s{_pcrSecurityGr
 pcrSubnetId :: Lens' PhysicalConnectionRequirements (Maybe Text)
 pcrSubnetId = lens _pcrSubnetId (\ s a -> s{_pcrSubnetId = a});
 
--- | The connection's availability zone.
+-- | The connection's availability zone. This field is deprecated and has no effect.
 pcrAvailabilityZone :: Lens' PhysicalConnectionRequirements (Maybe Text)
 pcrAvailabilityZone = lens _pcrAvailabilityZone (\ s a -> s{_pcrAvailabilityZone = a});
 
@@ -2993,7 +3072,7 @@ instance ToJSON PhysicalConnectionRequirements where
                   ("SubnetId" .=) <$> _pcrSubnetId,
                   ("AvailabilityZone" .=) <$> _pcrAvailabilityZone])
 
--- | A job run that preceded this one.
+-- | A job run that was used in the predicate of a conditional trigger that triggered this job run.
 --
 --
 --
@@ -3010,7 +3089,7 @@ data Predecessor = Predecessor'
 --
 -- * 'pJobName' - The name of the predecessor job.
 --
--- * 'pRunId' - The job-run ID of the precessor job run.
+-- * 'pRunId' - The job-run ID of the predecessor job run.
 predecessor
     :: Predecessor
 predecessor = Predecessor' {_pJobName = Nothing, _pRunId = Nothing}
@@ -3020,7 +3099,7 @@ predecessor = Predecessor' {_pJobName = Nothing, _pRunId = Nothing}
 pJobName :: Lens' Predecessor (Maybe Text)
 pJobName = lens _pJobName (\ s a -> s{_pJobName = a});
 
--- | The job-run ID of the precessor job run.
+-- | The job-run ID of the predecessor job run.
 pRunId :: Lens' Predecessor (Maybe Text)
 pRunId = lens _pRunId (\ s a -> s{_pRunId = a});
 
@@ -3134,7 +3213,7 @@ instance ToJSON ResourceURI where
                  [("ResourceType" .=) <$> _ruResourceType,
                   ("Uri" .=) <$> _ruURI])
 
--- | Specifies a crawler target in AWS S3.
+-- | Specifies a data store in Amazon S3.
 --
 --
 --
@@ -3149,19 +3228,19 @@ data S3Target = S3Target'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'stPath' - The path to the S3 target.
+-- * 'stPath' - The path to the Amazon S3 target.
 --
--- * 'stExclusions' - A list of S3 objects to exclude from the crawl.
+-- * 'stExclusions' - A list of glob patterns used to exclude from the crawl. For more information, see <http://docs.aws.amazon.com/glue/latest/dg/add-crawler.html Catalog Tables with a Crawler> .
 s3Target
     :: S3Target
 s3Target = S3Target' {_stPath = Nothing, _stExclusions = Nothing}
 
 
--- | The path to the S3 target.
+-- | The path to the Amazon S3 target.
 stPath :: Lens' S3Target (Maybe Text)
 stPath = lens _stPath (\ s a -> s{_stPath = a});
 
--- | A list of S3 objects to exclude from the crawl.
+-- | A list of glob patterns used to exclude from the crawl. For more information, see <http://docs.aws.amazon.com/glue/latest/dg/add-crawler.html Catalog Tables with a Crawler> .
 stExclusions :: Lens' S3Target [Text]
 stExclusions = lens _stExclusions (\ s a -> s{_stExclusions = a}) . _Default . _Coerce;
 
@@ -3240,9 +3319,9 @@ data SchemaChangePolicy = SchemaChangePolicy'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'scpDeleteBehavior' - The deletion behavior.
+-- * 'scpDeleteBehavior' - The deletion behavior when the crawler finds a deleted object.
 --
--- * 'scpUpdateBehavior' - The update behavior.
+-- * 'scpUpdateBehavior' - The update behavior when the crawler finds a changed schema.
 schemaChangePolicy
     :: SchemaChangePolicy
 schemaChangePolicy =
@@ -3250,11 +3329,11 @@ schemaChangePolicy =
   {_scpDeleteBehavior = Nothing, _scpUpdateBehavior = Nothing}
 
 
--- | The deletion behavior.
+-- | The deletion behavior when the crawler finds a deleted object.
 scpDeleteBehavior :: Lens' SchemaChangePolicy (Maybe DeleteBehavior)
 scpDeleteBehavior = lens _scpDeleteBehavior (\ s a -> s{_scpDeleteBehavior = a});
 
--- | The update behavior.
+-- | The update behavior when the crawler finds a changed schema.
 scpUpdateBehavior :: Lens' SchemaChangePolicy (Maybe UpdateBehavior)
 scpUpdateBehavior = lens _scpUpdateBehavior (\ s a -> s{_scpUpdateBehavior = a});
 
@@ -3656,7 +3735,7 @@ data Table = Table'
 --
 -- * 'tStorageDescriptor' - A storage descriptor containing information about the physical storage of this table.
 --
--- * 'tDatabaseName' - Name of the metadata database where the table metadata resides.
+-- * 'tDatabaseName' - Name of the metadata database where the table metadata resides. For Hive compatibility, this must be all lowercase.
 --
 -- * 'tParameters' - Properties associated with this table, as a list of key-value pairs.
 --
@@ -3668,7 +3747,7 @@ data Table = Table'
 --
 -- * 'tCreateTime' - Time when the table definition was created in the Data Catalog.
 --
--- * 'tName' - Name of the table.
+-- * 'tName' - Name of the table. For Hive compatibility, this must be entirely lowercase.
 table
     :: Text -- ^ 'tName'
     -> Table
@@ -3729,7 +3808,7 @@ tLastAnalyzedTime = lens _tLastAnalyzedTime (\ s a -> s{_tLastAnalyzedTime = a})
 tStorageDescriptor :: Lens' Table (Maybe StorageDescriptor)
 tStorageDescriptor = lens _tStorageDescriptor (\ s a -> s{_tStorageDescriptor = a});
 
--- | Name of the metadata database where the table metadata resides.
+-- | Name of the metadata database where the table metadata resides. For Hive compatibility, this must be all lowercase.
 tDatabaseName :: Lens' Table (Maybe Text)
 tDatabaseName = lens _tDatabaseName (\ s a -> s{_tDatabaseName = a});
 
@@ -3753,7 +3832,7 @@ tPartitionKeys = lens _tPartitionKeys (\ s a -> s{_tPartitionKeys = a}) . _Defau
 tCreateTime :: Lens' Table (Maybe UTCTime)
 tCreateTime = lens _tCreateTime (\ s a -> s{_tCreateTime = a}) . mapping _Time;
 
--- | Name of the table.
+-- | Name of the table. For Hive compatibility, this must be entirely lowercase.
 tName :: Lens' Table Text
 tName = lens _tName (\ s a -> s{_tName = a});
 
@@ -3797,7 +3876,7 @@ data TableError = TableError'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'teTableName' - Name of the table.
+-- * 'teTableName' - Name of the table. For Hive compatibility, this must be entirely lowercase.
 --
 -- * 'teErrorDetail' - Detail about the error.
 tableError
@@ -3805,7 +3884,7 @@ tableError
 tableError = TableError' {_teTableName = Nothing, _teErrorDetail = Nothing}
 
 
--- | Name of the table.
+-- | Name of the table. For Hive compatibility, this must be entirely lowercase.
 teTableName :: Lens' TableError (Maybe Text)
 teTableName = lens _teTableName (\ s a -> s{_teTableName = a});
 
@@ -3871,7 +3950,7 @@ data TableInput = TableInput'
 --
 -- * 'tiPartitionKeys' - A list of columns by which the table is partitioned. Only primitive types are supported as partition keys.
 --
--- * 'tiName' - Name of the table.
+-- * 'tiName' - Name of the table. For Hive compatibility, this is folded to lowercase when it is stored.
 tableInput
     :: Text -- ^ 'tiName'
     -> TableInput
@@ -3936,7 +4015,7 @@ tiDescription = lens _tiDescription (\ s a -> s{_tiDescription = a});
 tiPartitionKeys :: Lens' TableInput [Column]
 tiPartitionKeys = lens _tiPartitionKeys (\ s a -> s{_tiPartitionKeys = a}) . _Default . _Coerce;
 
--- | Name of the table.
+-- | Name of the table. For Hive compatibility, this is folded to lowercase when it is stored.
 tiName :: Lens' TableInput Text
 tiName = lens _tiName (\ s a -> s{_tiName = a});
 
@@ -4003,6 +4082,58 @@ instance Hashable TableVersion where
 
 instance NFData TableVersion where
 
+-- | An error record for table-version operations.
+--
+--
+--
+-- /See:/ 'tableVersionError' smart constructor.
+data TableVersionError = TableVersionError'
+  { _tveVersionId   :: !(Maybe Text)
+  , _tveTableName   :: !(Maybe Text)
+  , _tveErrorDetail :: !(Maybe ErrorDetail)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'TableVersionError' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'tveVersionId' - The ID value of the version in question.
+--
+-- * 'tveTableName' - The name of the table in question.
+--
+-- * 'tveErrorDetail' - Detail about the error.
+tableVersionError
+    :: TableVersionError
+tableVersionError =
+  TableVersionError'
+  {_tveVersionId = Nothing, _tveTableName = Nothing, _tveErrorDetail = Nothing}
+
+
+-- | The ID value of the version in question.
+tveVersionId :: Lens' TableVersionError (Maybe Text)
+tveVersionId = lens _tveVersionId (\ s a -> s{_tveVersionId = a});
+
+-- | The name of the table in question.
+tveTableName :: Lens' TableVersionError (Maybe Text)
+tveTableName = lens _tveTableName (\ s a -> s{_tveTableName = a});
+
+-- | Detail about the error.
+tveErrorDetail :: Lens' TableVersionError (Maybe ErrorDetail)
+tveErrorDetail = lens _tveErrorDetail (\ s a -> s{_tveErrorDetail = a});
+
+instance FromJSON TableVersionError where
+        parseJSON
+          = withObject "TableVersionError"
+              (\ x ->
+                 TableVersionError' <$>
+                   (x .:? "VersionId") <*> (x .:? "TableName") <*>
+                     (x .:? "ErrorDetail"))
+
+instance Hashable TableVersionError where
+
+instance NFData TableVersionError where
+
 -- | Information about a specific trigger.
 --
 --
@@ -4030,11 +4161,11 @@ data Trigger = Trigger'
 --
 -- * 'triSchedule' - A @cron@ expression used to specify the schedule (see <http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html Time-Based Schedules for Jobs and Crawlers> . For example, to run something every day at 12:15 UTC, you would specify: @cron(15 12 * * ? *)@ .
 --
--- * 'triPredicate' - The predicate of this trigger.
+-- * 'triPredicate' - The predicate of this trigger, which defines when it will fire.
 --
 -- * 'triName' - Name of the trigger.
 --
--- * 'triId' - The trigger ID.
+-- * 'triId' - Reserved for future use.
 --
 -- * 'triType' - The type of trigger that this is.
 --
@@ -4066,7 +4197,7 @@ triActions = lens _triActions (\ s a -> s{_triActions = a}) . _Default . _Coerce
 triSchedule :: Lens' Trigger (Maybe Text)
 triSchedule = lens _triSchedule (\ s a -> s{_triSchedule = a});
 
--- | The predicate of this trigger.
+-- | The predicate of this trigger, which defines when it will fire.
 triPredicate :: Lens' Trigger (Maybe Predicate)
 triPredicate = lens _triPredicate (\ s a -> s{_triPredicate = a});
 
@@ -4074,7 +4205,7 @@ triPredicate = lens _triPredicate (\ s a -> s{_triPredicate = a});
 triName :: Lens' Trigger (Maybe Text)
 triName = lens _triName (\ s a -> s{_triName = a});
 
--- | The trigger ID.
+-- | Reserved for future use.
 triId :: Lens' Trigger (Maybe Text)
 triId = lens _triId (\ s a -> s{_triId = a});
 
@@ -4103,7 +4234,7 @@ instance Hashable Trigger where
 
 instance NFData Trigger where
 
--- | A structure used to provide information used to updata a trigger.
+-- | A structure used to provide information used to update a trigger. This object will update the the previous trigger definition by overwriting it completely.
 --
 --
 --
@@ -4123,11 +4254,11 @@ data TriggerUpdate = TriggerUpdate'
 --
 -- * 'tuActions' - The actions initiated by this trigger.
 --
--- * 'tuSchedule' - An updated @cron@ expression used to specify the schedule (see <http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html Time-Based Schedules for Jobs and Crawlers> . For example, to run something every day at 12:15 UTC, you would specify: @cron(15 12 * * ? *)@ .
+-- * 'tuSchedule' - A @cron@ expression used to specify the schedule (see <http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html Time-Based Schedules for Jobs and Crawlers> . For example, to run something every day at 12:15 UTC, you would specify: @cron(15 12 * * ? *)@ .
 --
 -- * 'tuPredicate' - The predicate of this trigger, which defines when it will fire.
 --
--- * 'tuName' - The name of the trigger.
+-- * 'tuName' - Reserved for future use.
 --
 -- * 'tuDescription' - A description of this trigger.
 triggerUpdate
@@ -4146,7 +4277,7 @@ triggerUpdate =
 tuActions :: Lens' TriggerUpdate [Action]
 tuActions = lens _tuActions (\ s a -> s{_tuActions = a}) . _Default . _Coerce;
 
--- | An updated @cron@ expression used to specify the schedule (see <http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html Time-Based Schedules for Jobs and Crawlers> . For example, to run something every day at 12:15 UTC, you would specify: @cron(15 12 * * ? *)@ .
+-- | A @cron@ expression used to specify the schedule (see <http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html Time-Based Schedules for Jobs and Crawlers> . For example, to run something every day at 12:15 UTC, you would specify: @cron(15 12 * * ? *)@ .
 tuSchedule :: Lens' TriggerUpdate (Maybe Text)
 tuSchedule = lens _tuSchedule (\ s a -> s{_tuSchedule = a});
 
@@ -4154,7 +4285,7 @@ tuSchedule = lens _tuSchedule (\ s a -> s{_tuSchedule = a});
 tuPredicate :: Lens' TriggerUpdate (Maybe Predicate)
 tuPredicate = lens _tuPredicate (\ s a -> s{_tuPredicate = a});
 
--- | The name of the trigger.
+-- | Reserved for future use.
 tuName :: Lens' TriggerUpdate (Maybe Text)
 tuName = lens _tuName (\ s a -> s{_tuName = a});
 
@@ -4176,7 +4307,7 @@ instance ToJSON TriggerUpdate where
                   ("Name" .=) <$> _tuName,
                   ("Description" .=) <$> _tuDescription])
 
--- | Specifies a Grok classifier to update when passed to UpdateClassifier.
+-- | Specifies a grok classifier to update when passed to @UpdateClassifier@ .
 --
 --
 --
@@ -4193,9 +4324,9 @@ data UpdateGrokClassifierRequest = UpdateGrokClassifierRequest'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ugcrClassification' - The type of result that the classifier matches, such as Twitter Json, Omniture logs, Cloudwatch logs, and so forth.
+-- * 'ugcrClassification' - An identifier of the data format that the classifier matches, such as Twitter, JSON, Omniture logs, Amazon CloudWatch Logs, and so on.
 --
--- * 'ugcrCustomPatterns' - Custom grok patterns used by this classifier.
+-- * 'ugcrCustomPatterns' - Optional custom grok patterns used by this classifier.
 --
 -- * 'ugcrGrokPattern' - The grok pattern used by this classifier.
 --
@@ -4212,11 +4343,11 @@ updateGrokClassifierRequest pName_ =
   }
 
 
--- | The type of result that the classifier matches, such as Twitter Json, Omniture logs, Cloudwatch logs, and so forth.
+-- | An identifier of the data format that the classifier matches, such as Twitter, JSON, Omniture logs, Amazon CloudWatch Logs, and so on.
 ugcrClassification :: Lens' UpdateGrokClassifierRequest (Maybe Text)
 ugcrClassification = lens _ugcrClassification (\ s a -> s{_ugcrClassification = a});
 
--- | Custom grok patterns used by this classifier.
+-- | Optional custom grok patterns used by this classifier.
 ugcrCustomPatterns :: Lens' UpdateGrokClassifierRequest (Maybe Text)
 ugcrCustomPatterns = lens _ugcrCustomPatterns (\ s a -> s{_ugcrCustomPatterns = a});
 
@@ -4240,6 +4371,59 @@ instance ToJSON UpdateGrokClassifierRequest where
                   ("CustomPatterns" .=) <$> _ugcrCustomPatterns,
                   ("GrokPattern" .=) <$> _ugcrGrokPattern,
                   Just ("Name" .= _ugcrName)])
+
+-- | Specifies an XML classifier to be updated.
+--
+--
+--
+-- /See:/ 'updateXMLClassifierRequest' smart constructor.
+data UpdateXMLClassifierRequest = UpdateXMLClassifierRequest'
+  { _uxcrClassification :: !(Maybe Text)
+  , _uxcrRowTag         :: !(Maybe Text)
+  , _uxcrName           :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'UpdateXMLClassifierRequest' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'uxcrClassification' - An identifier of the data format that the classifier matches.
+--
+-- * 'uxcrRowTag' - The XML tag designating the element that contains each record in an XML document being parsed. Note that this cannot identify a self-closing element (closed by @/>@ ). An empty row element that contains only attributes can be parsed as long as it ends with a closing tag (for example, @<row item_a="A" item_b="B"></row>@ is okay, but @<row item_a="A" item_b="B" />@ is not).
+--
+-- * 'uxcrName' - The name of the classifier.
+updateXMLClassifierRequest
+    :: Text -- ^ 'uxcrName'
+    -> UpdateXMLClassifierRequest
+updateXMLClassifierRequest pName_ =
+  UpdateXMLClassifierRequest'
+  {_uxcrClassification = Nothing, _uxcrRowTag = Nothing, _uxcrName = pName_}
+
+
+-- | An identifier of the data format that the classifier matches.
+uxcrClassification :: Lens' UpdateXMLClassifierRequest (Maybe Text)
+uxcrClassification = lens _uxcrClassification (\ s a -> s{_uxcrClassification = a});
+
+-- | The XML tag designating the element that contains each record in an XML document being parsed. Note that this cannot identify a self-closing element (closed by @/>@ ). An empty row element that contains only attributes can be parsed as long as it ends with a closing tag (for example, @<row item_a="A" item_b="B"></row>@ is okay, but @<row item_a="A" item_b="B" />@ is not).
+uxcrRowTag :: Lens' UpdateXMLClassifierRequest (Maybe Text)
+uxcrRowTag = lens _uxcrRowTag (\ s a -> s{_uxcrRowTag = a});
+
+-- | The name of the classifier.
+uxcrName :: Lens' UpdateXMLClassifierRequest Text
+uxcrName = lens _uxcrName (\ s a -> s{_uxcrName = a});
+
+instance Hashable UpdateXMLClassifierRequest where
+
+instance NFData UpdateXMLClassifierRequest where
+
+instance ToJSON UpdateXMLClassifierRequest where
+        toJSON UpdateXMLClassifierRequest'{..}
+          = object
+              (catMaybes
+                 [("Classification" .=) <$> _uxcrClassification,
+                  ("RowTag" .=) <$> _uxcrRowTag,
+                  Just ("Name" .= _uxcrName)])
 
 -- | Represents the equivalent of a Hive user-defined function (@UDF@ ) definition.
 --
@@ -4396,3 +4580,87 @@ instance ToJSON UserDefinedFunctionInput where
                   ("FunctionName" .=) <$> _udfiFunctionName,
                   ("OwnerType" .=) <$> _udfiOwnerType,
                   ("ClassName" .=) <$> _udfiClassName])
+
+-- | A classifier for @XML@ content.
+--
+--
+--
+-- /See:/ 'xmlClassifier' smart constructor.
+data XMLClassifier = XMLClassifier'
+  { _xcCreationTime   :: !(Maybe POSIX)
+  , _xcLastUpdated    :: !(Maybe POSIX)
+  , _xcVersion        :: !(Maybe Integer)
+  , _xcRowTag         :: !(Maybe Text)
+  , _xcName           :: !Text
+  , _xcClassification :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'XMLClassifier' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'xcCreationTime' - The time this classifier was registered.
+--
+-- * 'xcLastUpdated' - The time this classifier was last updated.
+--
+-- * 'xcVersion' - The version of this classifier.
+--
+-- * 'xcRowTag' - The XML tag designating the element that contains each record in an XML document being parsed. Note that this cannot identify a self-closing element (closed by @/>@ ). An empty row element that contains only attributes can be parsed as long as it ends with a closing tag (for example, @<row item_a="A" item_b="B"></row>@ is okay, but @<row item_a="A" item_b="B" />@ is not).
+--
+-- * 'xcName' - The name of the classifier.
+--
+-- * 'xcClassification' - An identifier of the data format that the classifier matches.
+xmlClassifier
+    :: Text -- ^ 'xcName'
+    -> Text -- ^ 'xcClassification'
+    -> XMLClassifier
+xmlClassifier pName_ pClassification_ =
+  XMLClassifier'
+  { _xcCreationTime = Nothing
+  , _xcLastUpdated = Nothing
+  , _xcVersion = Nothing
+  , _xcRowTag = Nothing
+  , _xcName = pName_
+  , _xcClassification = pClassification_
+  }
+
+
+-- | The time this classifier was registered.
+xcCreationTime :: Lens' XMLClassifier (Maybe UTCTime)
+xcCreationTime = lens _xcCreationTime (\ s a -> s{_xcCreationTime = a}) . mapping _Time;
+
+-- | The time this classifier was last updated.
+xcLastUpdated :: Lens' XMLClassifier (Maybe UTCTime)
+xcLastUpdated = lens _xcLastUpdated (\ s a -> s{_xcLastUpdated = a}) . mapping _Time;
+
+-- | The version of this classifier.
+xcVersion :: Lens' XMLClassifier (Maybe Integer)
+xcVersion = lens _xcVersion (\ s a -> s{_xcVersion = a});
+
+-- | The XML tag designating the element that contains each record in an XML document being parsed. Note that this cannot identify a self-closing element (closed by @/>@ ). An empty row element that contains only attributes can be parsed as long as it ends with a closing tag (for example, @<row item_a="A" item_b="B"></row>@ is okay, but @<row item_a="A" item_b="B" />@ is not).
+xcRowTag :: Lens' XMLClassifier (Maybe Text)
+xcRowTag = lens _xcRowTag (\ s a -> s{_xcRowTag = a});
+
+-- | The name of the classifier.
+xcName :: Lens' XMLClassifier Text
+xcName = lens _xcName (\ s a -> s{_xcName = a});
+
+-- | An identifier of the data format that the classifier matches.
+xcClassification :: Lens' XMLClassifier Text
+xcClassification = lens _xcClassification (\ s a -> s{_xcClassification = a});
+
+instance FromJSON XMLClassifier where
+        parseJSON
+          = withObject "XMLClassifier"
+              (\ x ->
+                 XMLClassifier' <$>
+                   (x .:? "CreationTime") <*> (x .:? "LastUpdated") <*>
+                     (x .:? "Version")
+                     <*> (x .:? "RowTag")
+                     <*> (x .: "Name")
+                     <*> (x .: "Classification"))
+
+instance Hashable XMLClassifier where
+
+instance NFData XMLClassifier where

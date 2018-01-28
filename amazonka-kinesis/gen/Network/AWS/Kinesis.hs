@@ -80,6 +80,9 @@ module Network.AWS.Kinesis
     -- ** MergeShards
     , module Network.AWS.Kinesis.MergeShards
 
+    -- ** DescribeStreamSummary
+    , module Network.AWS.Kinesis.DescribeStreamSummary
+
     -- ** GetShardIterator
     , module Network.AWS.Kinesis.GetShardIterator
 
@@ -222,6 +225,19 @@ module Network.AWS.Kinesis
     , sdStreamCreationTimestamp
     , sdEnhancedMonitoring
 
+    -- ** StreamDescriptionSummary
+    , StreamDescriptionSummary
+    , streamDescriptionSummary
+    , sdsEncryptionType
+    , sdsKeyId
+    , sdsStreamName
+    , sdsStreamARN
+    , sdsStreamStatus
+    , sdsRetentionPeriodHours
+    , sdsStreamCreationTimestamp
+    , sdsEnhancedMonitoring
+    , sdsOpenShardCount
+
     -- ** Tag
     , Tag
     , tag
@@ -235,6 +251,7 @@ import Network.AWS.Kinesis.DecreaseStreamRetentionPeriod
 import Network.AWS.Kinesis.DeleteStream
 import Network.AWS.Kinesis.DescribeLimits
 import Network.AWS.Kinesis.DescribeStream
+import Network.AWS.Kinesis.DescribeStreamSummary
 import Network.AWS.Kinesis.DisableEnhancedMonitoring
 import Network.AWS.Kinesis.EnableEnhancedMonitoring
 import Network.AWS.Kinesis.GetRecords

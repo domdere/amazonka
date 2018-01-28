@@ -37,6 +37,7 @@ module Network.AWS.IoT.CreateThing
     -- * Response Lenses
     , ctrsThingARN
     , ctrsThingName
+    , ctrsThingId
     , ctrsResponseStatus
     ) where
 
@@ -99,7 +100,8 @@ instance AWSRequest CreateThing where
               (\ s h x ->
                  CreateThingResponse' <$>
                    (x .?> "thingArn") <*> (x .?> "thingName") <*>
-                     (pure (fromEnum s)))
+                     (x .?> "thingId")
+                     <*> (pure (fromEnum s)))
 
 instance Hashable CreateThing where
 
@@ -130,6 +132,7 @@ instance ToQuery CreateThing where
 data CreateThingResponse = CreateThingResponse'
   { _ctrsThingARN       :: !(Maybe Text)
   , _ctrsThingName      :: !(Maybe Text)
+  , _ctrsThingId        :: !(Maybe Text)
   , _ctrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -142,6 +145,8 @@ data CreateThingResponse = CreateThingResponse'
 --
 -- * 'ctrsThingName' - The name of the new thing.
 --
+-- * 'ctrsThingId' - The thing ID.
+--
 -- * 'ctrsResponseStatus' - -- | The response status code.
 createThingResponse
     :: Int -- ^ 'ctrsResponseStatus'
@@ -150,6 +155,7 @@ createThingResponse pResponseStatus_ =
   CreateThingResponse'
   { _ctrsThingARN = Nothing
   , _ctrsThingName = Nothing
+  , _ctrsThingId = Nothing
   , _ctrsResponseStatus = pResponseStatus_
   }
 
@@ -161,6 +167,10 @@ ctrsThingARN = lens _ctrsThingARN (\ s a -> s{_ctrsThingARN = a});
 -- | The name of the new thing.
 ctrsThingName :: Lens' CreateThingResponse (Maybe Text)
 ctrsThingName = lens _ctrsThingName (\ s a -> s{_ctrsThingName = a});
+
+-- | The thing ID.
+ctrsThingId :: Lens' CreateThingResponse (Maybe Text)
+ctrsThingId = lens _ctrsThingId (\ s a -> s{_ctrsThingId = a});
 
 -- | -- | The response status code.
 ctrsResponseStatus :: Lens' CreateThingResponse Int

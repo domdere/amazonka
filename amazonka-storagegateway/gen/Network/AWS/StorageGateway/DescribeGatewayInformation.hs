@@ -52,7 +52,7 @@ import Network.AWS.Response
 import Network.AWS.StorageGateway.Types
 import Network.AWS.StorageGateway.Types.Product
 
--- | A JSON object containing the id of the gateway.
+-- | A JSON object containing the ID of the gateway.
 --
 --
 --

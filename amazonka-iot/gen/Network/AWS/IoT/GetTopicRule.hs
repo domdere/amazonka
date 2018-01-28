@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Gets information about the specified rule.
+-- Gets information about the rule.
 --
 --
 module Network.AWS.IoT.GetTopicRule

@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Deletes a specified job.
+-- Deletes a specified job. If the job is not found, no exception is thrown.
 --
 --
 module Network.AWS.Glue.DeleteJob

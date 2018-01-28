@@ -55,6 +55,7 @@ module Network.AWS.Firehose.CreateDeliveryStream
     , cdsExtendedS3DestinationConfiguration
     , cdsKinesisStreamSourceConfiguration
     , cdsDeliveryStreamType
+    , cdsSplunkDestinationConfiguration
     , cdsDeliveryStreamName
 
     -- * Destructuring the Response
@@ -80,6 +81,7 @@ data CreateDeliveryStream = CreateDeliveryStream'
   , _cdsExtendedS3DestinationConfiguration :: !(Maybe ExtendedS3DestinationConfiguration)
   , _cdsKinesisStreamSourceConfiguration :: !(Maybe KinesisStreamSourceConfiguration)
   , _cdsDeliveryStreamType :: !(Maybe DeliveryStreamType)
+  , _cdsSplunkDestinationConfiguration :: !(Maybe SplunkDestinationConfiguration)
   , _cdsDeliveryStreamName :: !Text
   } deriving (Eq, Show, Data, Typeable, Generic)
 
@@ -100,6 +102,8 @@ data CreateDeliveryStream = CreateDeliveryStream'
 --
 -- * 'cdsDeliveryStreamType' - The delivery stream type. This parameter can be one of the following values:     * @DirectPut@ : Provider applications access the delivery stream directly.     * @KinesisStreamAsSource@ : The delivery stream uses a Kinesis stream as a source.
 --
+-- * 'cdsSplunkDestinationConfiguration' - The destination in Splunk. You can specify only one destination.
+--
 -- * 'cdsDeliveryStreamName' - The name of the delivery stream. This name must be unique per AWS account in the same region. If the delivery streams are in different accounts or different regions, you can have multiple delivery streams with the same name.
 createDeliveryStream
     :: Text -- ^ 'cdsDeliveryStreamName'
@@ -112,6 +116,7 @@ createDeliveryStream pDeliveryStreamName_ =
   , _cdsExtendedS3DestinationConfiguration = Nothing
   , _cdsKinesisStreamSourceConfiguration = Nothing
   , _cdsDeliveryStreamType = Nothing
+  , _cdsSplunkDestinationConfiguration = Nothing
   , _cdsDeliveryStreamName = pDeliveryStreamName_
   }
 
@@ -139,6 +144,10 @@ cdsKinesisStreamSourceConfiguration = lens _cdsKinesisStreamSourceConfiguration 
 -- | The delivery stream type. This parameter can be one of the following values:     * @DirectPut@ : Provider applications access the delivery stream directly.     * @KinesisStreamAsSource@ : The delivery stream uses a Kinesis stream as a source.
 cdsDeliveryStreamType :: Lens' CreateDeliveryStream (Maybe DeliveryStreamType)
 cdsDeliveryStreamType = lens _cdsDeliveryStreamType (\ s a -> s{_cdsDeliveryStreamType = a});
+
+-- | The destination in Splunk. You can specify only one destination.
+cdsSplunkDestinationConfiguration :: Lens' CreateDeliveryStream (Maybe SplunkDestinationConfiguration)
+cdsSplunkDestinationConfiguration = lens _cdsSplunkDestinationConfiguration (\ s a -> s{_cdsSplunkDestinationConfiguration = a});
 
 -- | The name of the delivery stream. This name must be unique per AWS account in the same region. If the delivery streams are in different accounts or different regions, you can have multiple delivery streams with the same name.
 cdsDeliveryStreamName :: Lens' CreateDeliveryStream Text
@@ -183,6 +192,8 @@ instance ToJSON CreateDeliveryStream where
                   ("KinesisStreamSourceConfiguration" .=) <$>
                     _cdsKinesisStreamSourceConfiguration,
                   ("DeliveryStreamType" .=) <$> _cdsDeliveryStreamType,
+                  ("SplunkDestinationConfiguration" .=) <$>
+                    _cdsSplunkDestinationConfiguration,
                   Just
                     ("DeliveryStreamName" .= _cdsDeliveryStreamName)])
 

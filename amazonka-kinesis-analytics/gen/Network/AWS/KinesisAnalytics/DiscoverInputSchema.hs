@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Infers a schema by evaluating sample records on the specified streaming source (Amazon Kinesis stream or Amazon Kinesis Firehose delivery stream). In the response, the operation returns the inferred schema and also the sample records that the operation used to infer the schema.
+-- Infers a schema by evaluating sample records on the specified streaming source (Amazon Kinesis stream or Amazon Kinesis Firehose delivery stream) or S3 object. In the response, the operation returns the inferred schema and also the sample records that the operation used to infer the schema.
 --
 --
 -- You can use the inferred schema when configuring a streaming source for your application. For conceptual information, see <http://docs.aws.amazon.com/kinesisanalytics/latest/dev/how-it-works-input.html Configuring Application Input> . Note that when you create an application using the Amazon Kinesis Analytics console, the console uses this operation to infer a schema and show it in the console user interface.
@@ -73,7 +73,7 @@ data DiscoverInputSchema = DiscoverInputSchema'
 --
 -- * 'disInputProcessingConfiguration' - The 'InputProcessingConfiguration' to use to preprocess the records before discovering the schema of the records.
 --
--- * 'disS3Configuration' - Undocumented member.
+-- * 'disS3Configuration' - Specify this parameter to discover a schema from data in an S3 object.
 --
 -- * 'disResourceARN' - Amazon Resource Name (ARN) of the streaming source.
 --
@@ -98,7 +98,7 @@ disInputStartingPositionConfiguration = lens _disInputStartingPositionConfigurat
 disInputProcessingConfiguration :: Lens' DiscoverInputSchema (Maybe InputProcessingConfiguration)
 disInputProcessingConfiguration = lens _disInputProcessingConfiguration (\ s a -> s{_disInputProcessingConfiguration = a});
 
--- | Undocumented member.
+-- | Specify this parameter to discover a schema from data in an S3 object.
 disS3Configuration :: Lens' DiscoverInputSchema (Maybe S3Configuration)
 disS3Configuration = lens _disS3Configuration (\ s a -> s{_disS3Configuration = a});
 

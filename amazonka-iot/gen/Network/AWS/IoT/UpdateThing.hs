@@ -65,7 +65,7 @@ data UpdateThing = UpdateThing'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'utRemoveThingType' - Remove a thing type association. If __true__ , the assocation is removed.
+-- * 'utRemoveThingType' - Remove a thing type association. If __true__ , the association is removed.
 --
 -- * 'utThingTypeName' - The name of the thing type.
 --
@@ -87,7 +87,7 @@ updateThing pThingName_ =
   }
 
 
--- | Remove a thing type association. If __true__ , the assocation is removed.
+-- | Remove a thing type association. If __true__ , the association is removed.
 utRemoveThingType :: Lens' UpdateThing (Maybe Bool)
 utRemoveThingType = lens _utRemoveThingType (\ s a -> s{_utRemoveThingType = a});
 

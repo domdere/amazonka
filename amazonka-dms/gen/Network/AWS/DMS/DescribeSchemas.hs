@@ -23,6 +23,8 @@
 --
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.DMS.DescribeSchemas
     (
     -- * Creating a Request
@@ -45,6 +47,7 @@ module Network.AWS.DMS.DescribeSchemas
 import Network.AWS.DMS.Types
 import Network.AWS.DMS.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -89,6 +92,13 @@ dsMaxRecords = lens _dsMaxRecords (\ s a -> s{_dsMaxRecords = a});
 -- | The Amazon Resource Name (ARN) string that uniquely identifies the endpoint.
 dsEndpointARN :: Lens' DescribeSchemas Text
 dsEndpointARN = lens _dsEndpointARN (\ s a -> s{_dsEndpointARN = a});
+
+instance AWSPager DescribeSchemas where
+        page rq rs
+          | stop (rs ^. dsrsMarker) = Nothing
+          | stop (rs ^. dsrsSchemas) = Nothing
+          | otherwise =
+            Just $ rq & dsMarker .~ rs ^. dsrsMarker
 
 instance AWSRequest DescribeSchemas where
         type Rs DescribeSchemas = DescribeSchemasResponse

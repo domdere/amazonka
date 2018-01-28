@@ -25,7 +25,7 @@
 --
 -- The data blob can be any type of data; for example, a segment from a log file, geographic/location data, website clickstream data, and so on.
 --
--- The partition key is used by Amazon Kinesis to distribute data across shards. Amazon Kinesis segregates the data records that belong to a stream into multiple shards, using the partition key associated with each data record to determine which shard a given data record belongs to.
+-- The partition key is used by Kinesis Streams to distribute data across shards. Kinesis Streams segregates the data records that belong to a stream into multiple shards, using the partition key associated with each data record to determine the shard to which a given data record belongs.
 --
 -- Partition keys are Unicode strings, with a maximum length limit of 256 characters for each key. An MD5 hash function is used to map partition keys to 128-bit integer values and to map associated data records to shards using the hash key ranges of the shards. You can override hashing the partition key to determine the shard by explicitly specifying a hash value using the @ExplicitHashKey@ parameter. For more information, see <http://docs.aws.amazon.com/kinesis/latest/dev/developing-producers-with-sdk.html#kinesis-using-sdk-java-add-data-to-stream Adding Data to a Stream> in the /Amazon Kinesis Streams Developer Guide/ .
 --
@@ -86,7 +86,7 @@ data PutRecord = PutRecord'
 --
 -- * 'prExplicitHashKey' - The hash value used to explicitly determine the shard the data record is assigned to by overriding the partition key hash.
 --
--- * 'prSequenceNumberForOrdering' - Guarantees strictly increasing sequence numbers, for puts from the same client and to the same partition key. Usage: set the @SequenceNumberForOrdering@ of record /n/ to the sequence number of record /n-1/ (as returned in the result when putting record /n-1/ ). If this parameter is not set, records will be coarsely ordered based on arrival time.
+-- * 'prSequenceNumberForOrdering' - Guarantees strictly increasing sequence numbers, for puts from the same client and to the same partition key. Usage: set the @SequenceNumberForOrdering@ of record /n/ to the sequence number of record /n-1/ (as returned in the result when putting record /n-1/ ). If this parameter is not set, records are coarsely ordered based on arrival time.
 --
 -- * 'prStreamName' - The name of the stream to put the data record into.
 --
@@ -112,7 +112,7 @@ putRecord pStreamName_ pData_ pPartitionKey_ =
 prExplicitHashKey :: Lens' PutRecord (Maybe Text)
 prExplicitHashKey = lens _prExplicitHashKey (\ s a -> s{_prExplicitHashKey = a});
 
--- | Guarantees strictly increasing sequence numbers, for puts from the same client and to the same partition key. Usage: set the @SequenceNumberForOrdering@ of record /n/ to the sequence number of record /n-1/ (as returned in the result when putting record /n-1/ ). If this parameter is not set, records will be coarsely ordered based on arrival time.
+-- | Guarantees strictly increasing sequence numbers, for puts from the same client and to the same partition key. Usage: set the @SequenceNumberForOrdering@ of record /n/ to the sequence number of record /n-1/ (as returned in the result when putting record /n-1/ ). If this parameter is not set, records are coarsely ordered based on arrival time.
 prSequenceNumberForOrdering :: Lens' PutRecord (Maybe Text)
 prSequenceNumberForOrdering = lens _prSequenceNumberForOrdering (\ s a -> s{_prSequenceNumberForOrdering = a});
 

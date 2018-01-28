@@ -61,7 +61,7 @@ data StartExecution = StartExecution'
 --
 -- * 'seInput' - The string that contains the JSON input data for the execution, for example: @"input": "{\"first_name\" : \"test\"}"@
 --
--- * 'seName' - The name of the execution. This name must be unique for your AWS account and region for 90 days. For more information, see <http://docs.aws.amazon.com/step-functions/latest/dg/limits.html#service-limits-state-machine-executions Limits Related to State Machine Executions> in the /AWS Step Functions Developer Guide/ . A name must /not/ contain:     * whitespace     * brackets @< > { } [ ]@      * wildcard characters @? *@      * special characters @" # % \ ^ | ~ ` $ & , ; : /@      * control characters (@U+0000-001F@ , @U+007F-009F@ )
+-- * 'seName' - The name of the execution. This name must be unique for your AWS account and region for 90 days. For more information, see <http://docs.aws.amazon.com/step-functions/latest/dg/limits.html#service-limits-state-machine-executions Limits Related to State Machine Executions> in the /AWS Step Functions Developer Guide/ . /Important:/ An execution can't use the name of another execution for 90 days. When you make multiple @StartExecution@ calls with the same name, the new execution doesn't run and the following rules apply:     * When the original execution is open and the execution input from the new call is /different/ , the @ExecutionAlreadyExists@ message is returned.     * When the original execution is open and the execution input from the new call is /identical/ , the @Success@ message is returned.     * When the original execution is closed, the @ExecutionAlreadyExists@ message is returned regardless of input. A name must /not/ contain:     * whitespace     * brackets @< > { } [ ]@      * wildcard characters @? *@      * special characters @" # % \ ^ | ~ ` $ & , ; : /@      * control characters (@U+0000-001F@ , @U+007F-009F@ )
 --
 -- * 'seStateMachineARN' - The Amazon Resource Name (ARN) of the state machine to execute.
 startExecution
@@ -79,7 +79,7 @@ startExecution pStateMachineARN_ =
 seInput :: Lens' StartExecution (Maybe Text)
 seInput = lens _seInput (\ s a -> s{_seInput = a});
 
--- | The name of the execution. This name must be unique for your AWS account and region for 90 days. For more information, see <http://docs.aws.amazon.com/step-functions/latest/dg/limits.html#service-limits-state-machine-executions Limits Related to State Machine Executions> in the /AWS Step Functions Developer Guide/ . A name must /not/ contain:     * whitespace     * brackets @< > { } [ ]@      * wildcard characters @? *@      * special characters @" # % \ ^ | ~ ` $ & , ; : /@      * control characters (@U+0000-001F@ , @U+007F-009F@ )
+-- | The name of the execution. This name must be unique for your AWS account and region for 90 days. For more information, see <http://docs.aws.amazon.com/step-functions/latest/dg/limits.html#service-limits-state-machine-executions Limits Related to State Machine Executions> in the /AWS Step Functions Developer Guide/ . /Important:/ An execution can't use the name of another execution for 90 days. When you make multiple @StartExecution@ calls with the same name, the new execution doesn't run and the following rules apply:     * When the original execution is open and the execution input from the new call is /different/ , the @ExecutionAlreadyExists@ message is returned.     * When the original execution is open and the execution input from the new call is /identical/ , the @Success@ message is returned.     * When the original execution is closed, the @ExecutionAlreadyExists@ message is returned regardless of input. A name must /not/ contain:     * whitespace     * brackets @< > { } [ ]@      * wildcard characters @? *@      * special characters @" # % \ ^ | ~ ` $ & , ; : /@      * control characters (@U+0000-001F@ , @U+007F-009F@ )
 seName :: Lens' StartExecution (Maybe Text)
 seName = lens _seName (\ s a -> s{_seName = a});
 
@@ -139,7 +139,7 @@ data StartExecutionResponse = StartExecutionResponse'
 --
 -- * 'srsExecutionARN' - The Amazon Resource Name (ARN) that identifies the execution.
 --
--- * 'srsStartDate' - The date the execution was started.
+-- * 'srsStartDate' - The date the execution is started.
 startExecutionResponse
     :: Int -- ^ 'srsResponseStatus'
     -> Text -- ^ 'srsExecutionARN'
@@ -161,7 +161,7 @@ srsResponseStatus = lens _srsResponseStatus (\ s a -> s{_srsResponseStatus = a})
 srsExecutionARN :: Lens' StartExecutionResponse Text
 srsExecutionARN = lens _srsExecutionARN (\ s a -> s{_srsExecutionARN = a});
 
--- | The date the execution was started.
+-- | The date the execution is started.
 srsStartDate :: Lens' StartExecutionResponse UTCTime
 srsStartDate = lens _srsStartDate (\ s a -> s{_srsStartDate = a}) . _Time;
 

@@ -23,6 +23,8 @@
 --
 -- If you specify @SubscriptionName@ , this action lists the description for that subscription.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.DMS.DescribeEventSubscriptions
     (
     -- * Creating a Request
@@ -46,6 +48,7 @@ module Network.AWS.DMS.DescribeEventSubscriptions
 import Network.AWS.DMS.Types
 import Network.AWS.DMS.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -100,6 +103,13 @@ dessMarker = lens _dessMarker (\ s a -> s{_dessMarker = a});
 -- | The maximum number of records to include in the response. If more records exist than the specified @MaxRecords@ value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.  Default: 100 Constraints: Minimum 20, maximum 100.
 dessMaxRecords :: Lens' DescribeEventSubscriptions (Maybe Int)
 dessMaxRecords = lens _dessMaxRecords (\ s a -> s{_dessMaxRecords = a});
+
+instance AWSPager DescribeEventSubscriptions where
+        page rq rs
+          | stop (rs ^. desrsMarker) = Nothing
+          | stop (rs ^. desrsEventSubscriptionsList) = Nothing
+          | otherwise =
+            Just $ rq & dessMarker .~ rs ^. desrsMarker
 
 instance AWSRequest DescribeEventSubscriptions where
         type Rs DescribeEventSubscriptions =

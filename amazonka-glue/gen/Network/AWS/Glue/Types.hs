@@ -51,6 +51,9 @@ module Network.AWS.Glue.Types
     -- * JobRunState
     , JobRunState (..)
 
+    -- * Language
+    , Language (..)
+
     -- * LastCrawlStatus
     , LastCrawlStatus (..)
 
@@ -114,6 +117,7 @@ module Network.AWS.Glue.Types
     , Classifier
     , classifier
     , cGrokClassifier
+    , cXMLClassifier
 
     -- * CodeGenEdge
     , CodeGenEdge
@@ -167,12 +171,12 @@ module Network.AWS.Glue.Types
     -- * ConnectionInput
     , ConnectionInput
     , connectionInput
-    , ciConnectionProperties
     , ciMatchCriteria
     , ciPhysicalConnectionRequirements
-    , ciName
     , ciDescription
+    , ciName
     , ciConnectionType
+    , ciConnectionProperties
 
     -- * ConnectionsList
     , ConnectionsList
@@ -195,6 +199,7 @@ module Network.AWS.Glue.Types
     , craTargets
     , craVersion
     , craDatabaseName
+    , craConfiguration
     , craTablePrefix
     , craDescription
 
@@ -223,6 +228,13 @@ module Network.AWS.Glue.Types
     , cgcrClassification
     , cgcrName
     , cgcrGrokPattern
+
+    -- * CreateXMLClassifierRequest
+    , CreateXMLClassifierRequest
+    , createXMLClassifierRequest
+    , cxcrRowTag
+    , cxcrClassification
+    , cxcrName
 
     -- * Database
     , Database
@@ -556,6 +568,13 @@ module Network.AWS.Glue.Types
     , tvVersionId
     , tvTable
 
+    -- * TableVersionError
+    , TableVersionError
+    , tableVersionError
+    , tveVersionId
+    , tveTableName
+    , tveErrorDetail
+
     -- * Trigger
     , Trigger
     , trigger
@@ -585,6 +604,13 @@ module Network.AWS.Glue.Types
     , ugcrGrokPattern
     , ugcrName
 
+    -- * UpdateXMLClassifierRequest
+    , UpdateXMLClassifierRequest
+    , updateXMLClassifierRequest
+    , uxcrClassification
+    , uxcrRowTag
+    , uxcrName
+
     -- * UserDefinedFunction
     , UserDefinedFunction
     , userDefinedFunction
@@ -603,6 +629,16 @@ module Network.AWS.Glue.Types
     , udfiFunctionName
     , udfiOwnerType
     , udfiClassName
+
+    -- * XMLClassifier
+    , XMLClassifier
+    , xmlClassifier
+    , xcCreationTime
+    , xcLastUpdated
+    , xcVersion
+    , xcRowTag
+    , xcName
+    , xcClassification
     ) where
 
 import Network.AWS.Glue.Types.Product

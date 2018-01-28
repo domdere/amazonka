@@ -56,6 +56,9 @@ module Network.AWS.DeviceFarm.Types
     -- * ExecutionStatus
     , ExecutionStatus (..)
 
+    -- * InteractionMode
+    , InteractionMode (..)
+
     -- * NetworkProfileType
     , NetworkProfileType (..)
 
@@ -140,6 +143,7 @@ module Network.AWS.DeviceFarm.Types
     , devImage
     , devManufacturer
     , devPlatform
+    , devModelId
     , devRemoteAccessEnabled
     , devArn
     , devFormFactor
@@ -313,7 +317,9 @@ module Network.AWS.DeviceFarm.Types
     , rasClientId
     , rasDeviceUdid
     , rasStatus
+    , rasRemoteRecordEnabled
     , rasArn
+    , rasRemoteRecordAppARN
     , rasCreated
     , rasDevice
     , rasStopped
@@ -324,6 +330,7 @@ module Network.AWS.DeviceFarm.Types
     , rasEndpoint
     , rasMessage
     , rasHostAddress
+    , rasInteractionMode
     , rasStarted
 
     -- * Resolution
@@ -345,21 +352,30 @@ module Network.AWS.DeviceFarm.Types
     , runBillingMethod
     , runStatus
     , runCustomerArtifactPaths
+    , runEventCount
     , runCounters
     , runPlatform
+    , runSeed
+    , runRadios
     , runArn
+    , runLocation
     , runCreated
+    , runLocale
     , runStopped
     , runResult
+    , runJobTimeoutMinutes
     , runCompletedJobs
     , runResultCode
     , runName
+    , runAppUpload
     , runParsingResultURL
     , runNetworkProfile
     , runDeviceMinutes
     , runType
     , runMessage
+    , runWebURL
     , runTotalJobs
+    , runDevicePoolARN
     , runStarted
 
     -- * Sample

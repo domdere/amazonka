@@ -69,6 +69,7 @@ library
         , Network.AWS.SSM.DescribeActivations
         , Network.AWS.SSM.DescribeAssociation
         , Network.AWS.SSM.DescribeAutomationExecutions
+        , Network.AWS.SSM.DescribeAutomationStepExecutions
         , Network.AWS.SSM.DescribeAvailablePatches
         , Network.AWS.SSM.DescribeDocument
         , Network.AWS.SSM.DescribeDocumentPermission

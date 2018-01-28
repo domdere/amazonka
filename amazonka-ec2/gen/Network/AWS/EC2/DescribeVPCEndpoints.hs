@@ -67,7 +67,7 @@ data DescribeVPCEndpoints = DescribeVPCEndpoints'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dvpceFilters' - One or more filters.     * @service-name@ : The name of the AWS service.     * @vpc-id@ : The ID of the VPC in which the endpoint resides.     * @vpc-endpoint-id@ : The ID of the endpoint.     * @vpc-endpoint-state@ : The state of the endpoint. (@pending@ | @available@ | @deleting@ | @deleted@ )
+-- * 'dvpceFilters' - One or more filters.     * @service-name@ : The name of the service.     * @vpc-id@ : The ID of the VPC in which the endpoint resides.     * @vpc-endpoint-id@ : The ID of the endpoint.     * @vpc-endpoint-state@ : The state of the endpoint. (@pending@ | @available@ | @deleting@ | @deleted@ )
 --
 -- * 'dvpceNextToken' - The token for the next set of items to return. (You received this token from a prior call.)
 --
@@ -88,7 +88,7 @@ describeVPCEndpoints =
   }
 
 
--- | One or more filters.     * @service-name@ : The name of the AWS service.     * @vpc-id@ : The ID of the VPC in which the endpoint resides.     * @vpc-endpoint-id@ : The ID of the endpoint.     * @vpc-endpoint-state@ : The state of the endpoint. (@pending@ | @available@ | @deleting@ | @deleted@ )
+-- | One or more filters.     * @service-name@ : The name of the service.     * @vpc-id@ : The ID of the VPC in which the endpoint resides.     * @vpc-endpoint-id@ : The ID of the endpoint.     * @vpc-endpoint-state@ : The state of the endpoint. (@pending@ | @available@ | @deleting@ | @deleted@ )
 dvpceFilters :: Lens' DescribeVPCEndpoints [Filter]
 dvpceFilters = lens _dvpceFilters (\ s a -> s{_dvpceFilters = a}) . _Default . _Coerce;
 

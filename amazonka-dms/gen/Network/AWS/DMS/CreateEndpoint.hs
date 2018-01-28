@@ -90,7 +90,7 @@ data CreateEndpoint = CreateEndpoint'
 --
 -- * 'ceServerName' - The name of the server where the endpoint database resides.
 --
--- * 'ceCertificateARN' - The Amazon Resource Number (ARN) for the certificate.
+-- * 'ceCertificateARN' - The Amazon Resource Name (ARN) for the certificate.
 --
 -- * 'ceExtraConnectionAttributes' - Additional attributes associated with the connection.
 --
@@ -149,7 +149,7 @@ createEndpoint pEndpointIdentifier_ pEndpointType_ pEngineName_ =
 ceServerName :: Lens' CreateEndpoint (Maybe Text)
 ceServerName = lens _ceServerName (\ s a -> s{_ceServerName = a});
 
--- | The Amazon Resource Number (ARN) for the certificate.
+-- | The Amazon Resource Name (ARN) for the certificate.
 ceCertificateARN :: Lens' CreateEndpoint (Maybe Text)
 ceCertificateARN = lens _ceCertificateARN (\ s a -> s{_ceCertificateARN = a});
 

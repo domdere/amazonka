@@ -31,6 +31,12 @@ module Network.AWS.WorkSpaces.Types
     -- * ConnectionState
     , ConnectionState (..)
 
+    -- * ModificationResourceEnum
+    , ModificationResourceEnum (..)
+
+    -- * ModificationStateEnum
+    , ModificationStateEnum (..)
+
     -- * RunningMode
     , RunningMode (..)
 
@@ -71,6 +77,12 @@ module Network.AWS.WorkSpaces.Types
     , fwcrWorkspaceId
     , fwcrErrorMessage
 
+    -- * ModificationState
+    , ModificationState
+    , modificationState
+    , msState
+    , msResource
+
     -- * RebootRequest
     , RebootRequest
     , rebootRequest
@@ -80,6 +92,11 @@ module Network.AWS.WorkSpaces.Types
     , RebuildRequest
     , rebuildRequest
     , rrWorkspaceId
+
+    -- * RootStorage
+    , RootStorage
+    , rootStorage
+    , rsCapacity
 
     -- * StartRequest
     , StartRequest
@@ -113,6 +130,7 @@ module Network.AWS.WorkSpaces.Types
     , wDirectoryId
     , wState
     , wIPAddress
+    , wModificationStates
     , wUserName
     , wSubnetId
     , wBundleId
@@ -130,6 +148,7 @@ module Network.AWS.WorkSpaces.Types
     , workspaceBundle
     , wbBundleId
     , wbOwner
+    , wbRootStorage
     , wbName
     , wbComputeType
     , wbUserStorage
@@ -162,8 +181,11 @@ module Network.AWS.WorkSpaces.Types
     -- * WorkspaceProperties
     , WorkspaceProperties
     , workspaceProperties
+    , wpComputeTypeName
     , wpRunningMode
+    , wpRootVolumeSizeGib
     , wpRunningModeAutoStopTimeoutInMinutes
+    , wpUserVolumeSizeGib
 
     -- * WorkspaceRequest
     , WorkspaceRequest

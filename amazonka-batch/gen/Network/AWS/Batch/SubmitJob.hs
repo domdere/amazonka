@@ -31,6 +31,7 @@ module Network.AWS.Batch.SubmitJob
     , sjRetryStrategy
     , sjDependsOn
     , sjParameters
+    , sjArrayProperties
     , sjJobName
     , sjJobQueue
     , sjJobDefinition
@@ -57,6 +58,7 @@ data SubmitJob = SubmitJob'
   , _sjRetryStrategy      :: !(Maybe RetryStrategy)
   , _sjDependsOn          :: !(Maybe [JobDependency])
   , _sjParameters         :: !(Maybe (Map Text Text))
+  , _sjArrayProperties    :: !(Maybe ArrayProperties)
   , _sjJobName            :: !Text
   , _sjJobQueue           :: !Text
   , _sjJobDefinition      :: !Text
@@ -71,13 +73,15 @@ data SubmitJob = SubmitJob'
 --
 -- * 'sjRetryStrategy' - The retry strategy to use for failed jobs from this 'SubmitJob' operation. When a retry strategy is specified here, it overrides the retry strategy defined in the job definition.
 --
--- * 'sjDependsOn' - A list of job IDs on which this job depends. A job can depend upon a maximum of 20 jobs.
+-- * 'sjDependsOn' - A list of dependencies for the job. A job can depend upon a maximum of 20 jobs. You can specify a @SEQUENTIAL@ type dependency without specifying a job ID for array jobs so that each child array job completes sequentially, starting at index 0. You can also specify an @N_TO_N@ type dependency with a job ID for array jobs so that each index child of this job must wait for the corresponding index child of each dependency to complete before it can begin.
 --
 -- * 'sjParameters' - Additional parameters passed to the job that replace parameter substitution placeholders that are set in the job definition. Parameters are specified as a key and value pair mapping. Parameters in a @SubmitJob@ request override any corresponding parameter defaults from the job definition.
 --
+-- * 'sjArrayProperties' - The array properties for the submitted job, such as the size of the array. The array size can be between 2 and 10,000. If you specify array properties for a job, it becomes an array job. For more information, see <http://docs.aws.amazon.com/batch/latest/userguide/array_jobs.html Array Jobs> in the /AWS Batch User Guide/ .
+--
 -- * 'sjJobName' - The name of the job. The first character must be alphanumeric, and up to 128 letters (uppercase and lowercase), numbers, hyphens, and underscores are allowed.
 --
--- * 'sjJobQueue' - The job queue into which the job will be submitted. You can specify either the name or the Amazon Resource Name (ARN) of the queue.
+-- * 'sjJobQueue' - The job queue into which the job is submitted. You can specify either the name or the Amazon Resource Name (ARN) of the queue.
 --
 -- * 'sjJobDefinition' - The job definition used by this job. This value can be either a @name:revision@ or the Amazon Resource Name (ARN) for the job definition.
 submitJob
@@ -91,6 +95,7 @@ submitJob pJobName_ pJobQueue_ pJobDefinition_ =
   , _sjRetryStrategy = Nothing
   , _sjDependsOn = Nothing
   , _sjParameters = Nothing
+  , _sjArrayProperties = Nothing
   , _sjJobName = pJobName_
   , _sjJobQueue = pJobQueue_
   , _sjJobDefinition = pJobDefinition_
@@ -105,7 +110,7 @@ sjContainerOverrides = lens _sjContainerOverrides (\ s a -> s{_sjContainerOverri
 sjRetryStrategy :: Lens' SubmitJob (Maybe RetryStrategy)
 sjRetryStrategy = lens _sjRetryStrategy (\ s a -> s{_sjRetryStrategy = a});
 
--- | A list of job IDs on which this job depends. A job can depend upon a maximum of 20 jobs.
+-- | A list of dependencies for the job. A job can depend upon a maximum of 20 jobs. You can specify a @SEQUENTIAL@ type dependency without specifying a job ID for array jobs so that each child array job completes sequentially, starting at index 0. You can also specify an @N_TO_N@ type dependency with a job ID for array jobs so that each index child of this job must wait for the corresponding index child of each dependency to complete before it can begin.
 sjDependsOn :: Lens' SubmitJob [JobDependency]
 sjDependsOn = lens _sjDependsOn (\ s a -> s{_sjDependsOn = a}) . _Default . _Coerce;
 
@@ -113,11 +118,15 @@ sjDependsOn = lens _sjDependsOn (\ s a -> s{_sjDependsOn = a}) . _Default . _Coe
 sjParameters :: Lens' SubmitJob (HashMap Text Text)
 sjParameters = lens _sjParameters (\ s a -> s{_sjParameters = a}) . _Default . _Map;
 
+-- | The array properties for the submitted job, such as the size of the array. The array size can be between 2 and 10,000. If you specify array properties for a job, it becomes an array job. For more information, see <http://docs.aws.amazon.com/batch/latest/userguide/array_jobs.html Array Jobs> in the /AWS Batch User Guide/ .
+sjArrayProperties :: Lens' SubmitJob (Maybe ArrayProperties)
+sjArrayProperties = lens _sjArrayProperties (\ s a -> s{_sjArrayProperties = a});
+
 -- | The name of the job. The first character must be alphanumeric, and up to 128 letters (uppercase and lowercase), numbers, hyphens, and underscores are allowed.
 sjJobName :: Lens' SubmitJob Text
 sjJobName = lens _sjJobName (\ s a -> s{_sjJobName = a});
 
--- | The job queue into which the job will be submitted. You can specify either the name or the Amazon Resource Name (ARN) of the queue.
+-- | The job queue into which the job is submitted. You can specify either the name or the Amazon Resource Name (ARN) of the queue.
 sjJobQueue :: Lens' SubmitJob Text
 sjJobQueue = lens _sjJobQueue (\ s a -> s{_sjJobQueue = a});
 
@@ -154,6 +163,7 @@ instance ToJSON SubmitJob where
                   ("retryStrategy" .=) <$> _sjRetryStrategy,
                   ("dependsOn" .=) <$> _sjDependsOn,
                   ("parameters" .=) <$> _sjParameters,
+                  ("arrayProperties" .=) <$> _sjArrayProperties,
                   Just ("jobName" .= _sjJobName),
                   Just ("jobQueue" .= _sjJobQueue),
                   Just ("jobDefinition" .= _sjJobDefinition)])

@@ -31,6 +31,7 @@ module Network.AWS.CognitoIdentityProvider.CreateUserPool
     , cupVerificationMessageTemplate
     , cupEmailVerificationMessage
     , cupSmsAuthenticationMessage
+    , cupUserPoolAddOns
     , cupEmailVerificationSubject
     , cupUsernameAttributes
     , cupAliasAttributes
@@ -71,6 +72,7 @@ data CreateUserPool = CreateUserPool'
   , _cupVerificationMessageTemplate :: !(Maybe VerificationMessageTemplateType)
   , _cupEmailVerificationMessage    :: !(Maybe Text)
   , _cupSmsAuthenticationMessage    :: !(Maybe Text)
+  , _cupUserPoolAddOns              :: !(Maybe UserPoolAddOnsType)
   , _cupEmailVerificationSubject    :: !(Maybe Text)
   , _cupUsernameAttributes          :: !(Maybe [UsernameAttributeType])
   , _cupAliasAttributes             :: !(Maybe [AliasAttributeType])
@@ -99,6 +101,8 @@ data CreateUserPool = CreateUserPool'
 -- * 'cupEmailVerificationMessage' - A string representing the email verification message.
 --
 -- * 'cupSmsAuthenticationMessage' - A string representing the SMS authentication message.
+--
+-- * 'cupUserPoolAddOns' - Used to enable advanced security risk detection. Set the key @AdvancedSecurityMode@ to the value "AUDIT".
 --
 -- * 'cupEmailVerificationSubject' - A string representing the email verification subject.
 --
@@ -136,6 +140,7 @@ createUserPool pPoolName_ =
   , _cupVerificationMessageTemplate = Nothing
   , _cupEmailVerificationMessage = Nothing
   , _cupSmsAuthenticationMessage = Nothing
+  , _cupUserPoolAddOns = Nothing
   , _cupEmailVerificationSubject = Nothing
   , _cupUsernameAttributes = Nothing
   , _cupAliasAttributes = Nothing
@@ -168,6 +173,10 @@ cupEmailVerificationMessage = lens _cupEmailVerificationMessage (\ s a -> s{_cup
 -- | A string representing the SMS authentication message.
 cupSmsAuthenticationMessage :: Lens' CreateUserPool (Maybe Text)
 cupSmsAuthenticationMessage = lens _cupSmsAuthenticationMessage (\ s a -> s{_cupSmsAuthenticationMessage = a});
+
+-- | Used to enable advanced security risk detection. Set the key @AdvancedSecurityMode@ to the value "AUDIT".
+cupUserPoolAddOns :: Lens' CreateUserPool (Maybe UserPoolAddOnsType)
+cupUserPoolAddOns = lens _cupUserPoolAddOns (\ s a -> s{_cupUserPoolAddOns = a});
 
 -- | A string representing the email verification subject.
 cupEmailVerificationSubject :: Lens' CreateUserPool (Maybe Text)
@@ -259,6 +268,7 @@ instance ToJSON CreateUserPool where
                     _cupEmailVerificationMessage,
                   ("SmsAuthenticationMessage" .=) <$>
                     _cupSmsAuthenticationMessage,
+                  ("UserPoolAddOns" .=) <$> _cupUserPoolAddOns,
                   ("EmailVerificationSubject" .=) <$>
                     _cupEmailVerificationSubject,
                   ("UsernameAttributes" .=) <$> _cupUsernameAttributes,

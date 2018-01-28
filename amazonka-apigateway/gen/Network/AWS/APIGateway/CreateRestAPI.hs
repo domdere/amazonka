@@ -27,8 +27,10 @@ module Network.AWS.APIGateway.CreateRestAPI
       createRestAPI
     , CreateRestAPI
     -- * Request Lenses
+    , craMinimumCompressionSize
     , craBinaryMediaTypes
     , craVersion
+    , craApiKeySource
     , craCloneFrom
     , craEndpointConfiguration
     , craDescription
@@ -38,11 +40,13 @@ module Network.AWS.APIGateway.CreateRestAPI
     , restAPI
     , RestAPI
     -- * Response Lenses
+    , raMinimumCompressionSize
     , raBinaryMediaTypes
     , raWarnings
     , raCreatedDate
     , raName
     , raVersion
+    , raApiKeySource
     , raId
     , raEndpointConfiguration
     , raDescription
@@ -61,12 +65,14 @@ import Network.AWS.Response
 --
 -- /See:/ 'createRestAPI' smart constructor.
 data CreateRestAPI = CreateRestAPI'
-  { _craBinaryMediaTypes      :: !(Maybe [Text])
-  , _craVersion               :: !(Maybe Text)
-  , _craCloneFrom             :: !(Maybe Text)
-  , _craEndpointConfiguration :: !(Maybe EndpointConfiguration)
-  , _craDescription           :: !(Maybe Text)
-  , _craName                  :: !Text
+  { _craMinimumCompressionSize :: !(Maybe Int)
+  , _craBinaryMediaTypes       :: !(Maybe [Text])
+  , _craVersion                :: !(Maybe Text)
+  , _craApiKeySource           :: !(Maybe APIKeySourceType)
+  , _craCloneFrom              :: !(Maybe Text)
+  , _craEndpointConfiguration  :: !(Maybe EndpointConfiguration)
+  , _craDescription            :: !(Maybe Text)
+  , _craName                   :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -74,9 +80,13 @@ data CreateRestAPI = CreateRestAPI'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'craMinimumCompressionSize' - A nullable integer used to enable (non-negative between 0 and 10485760 (10M) bytes, inclusive) or disable (null) compression on an API. When compression is enabled, compression or decompression are not applied on the payload if the payload size is smaller than this value. Setting it to zero allows compression for any payload size.
+--
 -- * 'craBinaryMediaTypes' - The list of binary media types supported by the 'RestApi' . By default, the 'RestApi' supports only UTF-8-encoded text payloads.
 --
 -- * 'craVersion' - A version identifier for the API.
+--
+-- * 'craApiKeySource' - The source of the API key for metring requests according to a usage plan. Valid values are     * @HEADER@ to read the API key from the @X-API-Key@ header of a request.     * @AUTHORIZER@ to read the API key from the @UsageIdentifierKey@ from a custom authorizer.
 --
 -- * 'craCloneFrom' - The ID of the 'RestApi' that you want to clone from.
 --
@@ -90,14 +100,20 @@ createRestAPI
     -> CreateRestAPI
 createRestAPI pName_ =
   CreateRestAPI'
-  { _craBinaryMediaTypes = Nothing
+  { _craMinimumCompressionSize = Nothing
+  , _craBinaryMediaTypes = Nothing
   , _craVersion = Nothing
+  , _craApiKeySource = Nothing
   , _craCloneFrom = Nothing
   , _craEndpointConfiguration = Nothing
   , _craDescription = Nothing
   , _craName = pName_
   }
 
+
+-- | A nullable integer used to enable (non-negative between 0 and 10485760 (10M) bytes, inclusive) or disable (null) compression on an API. When compression is enabled, compression or decompression are not applied on the payload if the payload size is smaller than this value. Setting it to zero allows compression for any payload size.
+craMinimumCompressionSize :: Lens' CreateRestAPI (Maybe Int)
+craMinimumCompressionSize = lens _craMinimumCompressionSize (\ s a -> s{_craMinimumCompressionSize = a});
 
 -- | The list of binary media types supported by the 'RestApi' . By default, the 'RestApi' supports only UTF-8-encoded text payloads.
 craBinaryMediaTypes :: Lens' CreateRestAPI [Text]
@@ -106,6 +122,10 @@ craBinaryMediaTypes = lens _craBinaryMediaTypes (\ s a -> s{_craBinaryMediaTypes
 -- | A version identifier for the API.
 craVersion :: Lens' CreateRestAPI (Maybe Text)
 craVersion = lens _craVersion (\ s a -> s{_craVersion = a});
+
+-- | The source of the API key for metring requests according to a usage plan. Valid values are     * @HEADER@ to read the API key from the @X-API-Key@ header of a request.     * @AUTHORIZER@ to read the API key from the @UsageIdentifierKey@ from a custom authorizer.
+craApiKeySource :: Lens' CreateRestAPI (Maybe APIKeySourceType)
+craApiKeySource = lens _craApiKeySource (\ s a -> s{_craApiKeySource = a});
 
 -- | The ID of the 'RestApi' that you want to clone from.
 craCloneFrom :: Lens' CreateRestAPI (Maybe Text)
@@ -142,8 +162,11 @@ instance ToJSON CreateRestAPI where
         toJSON CreateRestAPI'{..}
           = object
               (catMaybes
-                 [("binaryMediaTypes" .=) <$> _craBinaryMediaTypes,
+                 [("minimumCompressionSize" .=) <$>
+                    _craMinimumCompressionSize,
+                  ("binaryMediaTypes" .=) <$> _craBinaryMediaTypes,
                   ("version" .=) <$> _craVersion,
+                  ("apiKeySource" .=) <$> _craApiKeySource,
                   ("cloneFrom" .=) <$> _craCloneFrom,
                   ("endpointConfiguration" .=) <$>
                     _craEndpointConfiguration,

@@ -28,6 +28,7 @@ module Network.AWS.SSM.GetInventorySchema
     , GetInventorySchema
     -- * Request Lenses
     , gisTypeName
+    , gisAggregator
     , gisNextToken
     , gisSubType
     , gisMaxResults
@@ -51,6 +52,7 @@ import Network.AWS.SSM.Types.Product
 -- | /See:/ 'getInventorySchema' smart constructor.
 data GetInventorySchema = GetInventorySchema'
   { _gisTypeName   :: !(Maybe Text)
+  , _gisAggregator :: !(Maybe Bool)
   , _gisNextToken  :: !(Maybe Text)
   , _gisSubType    :: !(Maybe Bool)
   , _gisMaxResults :: !(Maybe Nat)
@@ -63,6 +65,8 @@ data GetInventorySchema = GetInventorySchema'
 --
 -- * 'gisTypeName' - The type of inventory item to return.
 --
+-- * 'gisAggregator' - Returns inventory schemas that support aggregation. For example, this call returns the @AWS:InstanceInformation@ type, because it supports aggregation based on the @PlatformName@ , @PlatformType@ , and @PlatformVersion@ attributes.
+--
 -- * 'gisNextToken' - The token for the next set of items to return. (You received this token from a previous call.)
 --
 -- * 'gisSubType' - Returns the sub-type schema for a specified inventory type.
@@ -73,6 +77,7 @@ getInventorySchema
 getInventorySchema =
   GetInventorySchema'
   { _gisTypeName = Nothing
+  , _gisAggregator = Nothing
   , _gisNextToken = Nothing
   , _gisSubType = Nothing
   , _gisMaxResults = Nothing
@@ -82,6 +87,10 @@ getInventorySchema =
 -- | The type of inventory item to return.
 gisTypeName :: Lens' GetInventorySchema (Maybe Text)
 gisTypeName = lens _gisTypeName (\ s a -> s{_gisTypeName = a});
+
+-- | Returns inventory schemas that support aggregation. For example, this call returns the @AWS:InstanceInformation@ type, because it supports aggregation based on the @PlatformName@ , @PlatformType@ , and @PlatformVersion@ attributes.
+gisAggregator :: Lens' GetInventorySchema (Maybe Bool)
+gisAggregator = lens _gisAggregator (\ s a -> s{_gisAggregator = a});
 
 -- | The token for the next set of items to return. (You received this token from a previous call.)
 gisNextToken :: Lens' GetInventorySchema (Maybe Text)
@@ -124,6 +133,7 @@ instance ToJSON GetInventorySchema where
           = object
               (catMaybes
                  [("TypeName" .=) <$> _gisTypeName,
+                  ("Aggregator" .=) <$> _gisAggregator,
                   ("NextToken" .=) <$> _gisNextToken,
                   ("SubType" .=) <$> _gisSubType,
                   ("MaxResults" .=) <$> _gisMaxResults])

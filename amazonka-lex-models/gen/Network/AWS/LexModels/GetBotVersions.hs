@@ -27,6 +27,8 @@
 --
 -- This operation requires permissions for the @lex:GetBotVersions@ action.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.LexModels.GetBotVersions
     (
     -- * Creating a Request
@@ -49,6 +51,7 @@ module Network.AWS.LexModels.GetBotVersions
 import Network.AWS.Lens
 import Network.AWS.LexModels.Types
 import Network.AWS.LexModels.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -89,6 +92,13 @@ gbvMaxResults = lens _gbvMaxResults (\ s a -> s{_gbvMaxResults = a}) . mapping _
 -- | The name of the bot for which versions should be returned.
 gbvName :: Lens' GetBotVersions Text
 gbvName = lens _gbvName (\ s a -> s{_gbvName = a});
+
+instance AWSPager GetBotVersions where
+        page rq rs
+          | stop (rs ^. gbvrsNextToken) = Nothing
+          | stop (rs ^. gbvrsBots) = Nothing
+          | otherwise =
+            Just $ rq & gbvNextToken .~ rs ^. gbvrsNextToken
 
 instance AWSRequest GetBotVersions where
         type Rs GetBotVersions = GetBotVersionsResponse

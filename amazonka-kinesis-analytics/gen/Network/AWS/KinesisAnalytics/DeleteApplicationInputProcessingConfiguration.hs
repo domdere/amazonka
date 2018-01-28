@@ -61,7 +61,7 @@ data DeleteApplicationInputProcessingConfiguration = DeleteApplicationInputProce
 --
 -- * 'daipcCurrentApplicationVersionId' - The version ID of the Kinesis Analytics application.
 --
--- * 'daipcInputId' - The ID of the input configuration from which to delete the input configuration. You can get a list of the input IDs for an application using the 'DescribeApplication' operation.
+-- * 'daipcInputId' - The ID of the input configuration from which to delete the input processing configuration. You can get a list of the input IDs for an application by using the 'DescribeApplication' operation.
 deleteApplicationInputProcessingConfiguration
     :: Text -- ^ 'daipcApplicationName'
     -> Natural -- ^ 'daipcCurrentApplicationVersionId'
@@ -83,7 +83,7 @@ daipcApplicationName = lens _daipcApplicationName (\ s a -> s{_daipcApplicationN
 daipcCurrentApplicationVersionId :: Lens' DeleteApplicationInputProcessingConfiguration Natural
 daipcCurrentApplicationVersionId = lens _daipcCurrentApplicationVersionId (\ s a -> s{_daipcCurrentApplicationVersionId = a}) . _Nat;
 
--- | The ID of the input configuration from which to delete the input configuration. You can get a list of the input IDs for an application using the 'DescribeApplication' operation.
+-- | The ID of the input configuration from which to delete the input processing configuration. You can get a list of the input IDs for an application by using the 'DescribeApplication' operation.
 daipcInputId :: Lens' DeleteApplicationInputProcessingConfiguration Text
 daipcInputId = lens _daipcInputId (\ s a -> s{_daipcInputId = a});
 

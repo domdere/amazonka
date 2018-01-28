@@ -39,13 +39,16 @@ module Network.AWS.APIGateway.UpdateIntegration
     , iHttpMethod
     , iRequestTemplates
     , iCredentials
+    , iConnectionId
     , iRequestParameters
     , iContentHandling
     , iPassthroughBehavior
     , iUri
     , iIntegrationResponses
     , iCacheNamespace
+    , iTimeoutInMillis
     , iType
+    , iConnectionType
     , iCacheKeyParameters
     ) where
 

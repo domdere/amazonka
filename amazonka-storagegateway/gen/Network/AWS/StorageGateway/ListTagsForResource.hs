@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Lists the tags that have been added to the specified resource. This operation is only supported in the cached volume, stored volume and tape gateway architecture.
+-- Lists the tags that have been added to the specified resource. This operation is only supported in the cached volume, stored volume and tape gateway type.
 --
 --
 module Network.AWS.StorageGateway.ListTagsForResource

@@ -18,8 +18,10 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Deletes the specified product. This operation does not work with a product that has been shared with you or is associated with a portfolio.
+-- Deletes the specified product.
 --
+--
+-- You cannot delete a product if it was shared with you or is associated with a portfolio.
 --
 module Network.AWS.ServiceCatalog.DeleteProduct
     (
@@ -57,7 +59,7 @@ data DeleteProduct = DeleteProduct'
 --
 -- * 'delAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'delId' - The identifier of the product for the delete request.
+-- * 'delId' - The product identifier.
 deleteProduct
     :: Text -- ^ 'delId'
     -> DeleteProduct
@@ -69,7 +71,7 @@ deleteProduct pId_ =
 delAcceptLanguage :: Lens' DeleteProduct (Maybe Text)
 delAcceptLanguage = lens _delAcceptLanguage (\ s a -> s{_delAcceptLanguage = a});
 
--- | The identifier of the product for the delete request.
+-- | The product identifier.
 delId :: Lens' DeleteProduct Text
 delId = lens _delId (\ s a -> s{_delId = a});
 

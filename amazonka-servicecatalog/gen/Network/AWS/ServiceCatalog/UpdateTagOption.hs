@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Updates an existing TagOption.
+-- Updates the specified TagOption.
 --
 --
 module Network.AWS.ServiceCatalog.UpdateTagOption
@@ -62,7 +62,7 @@ data UpdateTagOption = UpdateTagOption'
 --
 -- * 'utoActive' - The updated active state.
 --
--- * 'utoId' - The identifier of the constraint to update.
+-- * 'utoId' - The TagOption identifier.
 updateTagOption
     :: Text -- ^ 'utoId'
     -> UpdateTagOption
@@ -78,7 +78,7 @@ utoValue = lens _utoValue (\ s a -> s{_utoValue = a});
 utoActive :: Lens' UpdateTagOption (Maybe Bool)
 utoActive = lens _utoActive (\ s a -> s{_utoActive = a});
 
--- | The identifier of the constraint to update.
+-- | The TagOption identifier.
 utoId :: Lens' UpdateTagOption Text
 utoId = lens _utoId (\ s a -> s{_utoId = a});
 
@@ -129,7 +129,7 @@ data UpdateTagOptionResponse = UpdateTagOptionResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'utorsTagOptionDetail' - The resulting detailed TagOption information.
+-- * 'utorsTagOptionDetail' - Information about the TagOption.
 --
 -- * 'utorsResponseStatus' - -- | The response status code.
 updateTagOptionResponse
@@ -140,7 +140,7 @@ updateTagOptionResponse pResponseStatus_ =
   {_utorsTagOptionDetail = Nothing, _utorsResponseStatus = pResponseStatus_}
 
 
--- | The resulting detailed TagOption information.
+-- | Information about the TagOption.
 utorsTagOptionDetail :: Lens' UpdateTagOptionResponse (Maybe TagOptionDetail)
 utorsTagOptionDetail = lens _utorsTagOptionDetail (\ s a -> s{_utorsTagOptionDetail = a});
 

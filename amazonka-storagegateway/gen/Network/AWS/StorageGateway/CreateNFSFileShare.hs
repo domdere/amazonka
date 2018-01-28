@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Creates a file share on an existing file gateway. In Storage Gateway, a file share is a file system mount point backed by Amazon S3 cloud storage. Storage Gateway exposes file shares using a Network File System (NFS) interface. This operation is only supported in the file gateway architecture.
+-- Creates a file share on an existing file gateway. In Storage Gateway, a file share is a file system mount point backed by Amazon S3 cloud storage. Storage Gateway exposes file shares using a Network File System (NFS) interface. This operation is only supported in the file gateway type.
 --
 --
 -- /Important:/ File gateway requires AWS Security Token Service (AWS STS) to be activated to enable you create a file share. Make sure AWS STS is activated in the region you are creating your file gateway in. If AWS STS is not activated in the region, activate it. For information about how to activate AWS STS, see Activating and Deactivating AWS STS in an AWS Region in the AWS Identity and Access Management User Guide.
@@ -37,6 +37,7 @@ module Network.AWS.StorageGateway.CreateNFSFileShare
     , cnfsfsSquash
     , cnfsfsNFSFileShareDefaults
     , cnfsfsClientList
+    , cnfsfsGuessMIMETypeEnabled
     , cnfsfsReadOnly
     , cnfsfsClientToken
     , cnfsfsGatewayARN
@@ -70,6 +71,7 @@ data CreateNFSFileShare = CreateNFSFileShare'
   , _cnfsfsSquash               :: !(Maybe Text)
   , _cnfsfsNFSFileShareDefaults :: !(Maybe NFSFileShareDefaults)
   , _cnfsfsClientList           :: !(Maybe (List1 Text))
+  , _cnfsfsGuessMIMETypeEnabled :: !(Maybe Bool)
   , _cnfsfsReadOnly             :: !(Maybe Bool)
   , _cnfsfsClientToken          :: !Text
   , _cnfsfsGatewayARN           :: !Text
@@ -94,6 +96,8 @@ data CreateNFSFileShare = CreateNFSFileShare'
 --
 -- * 'cnfsfsClientList' - The list of clients that are allowed to access the file gateway. The list must contain either valid IP addresses or valid CIDR blocks.
 --
+-- * 'cnfsfsGuessMIMETypeEnabled' - Enables guessing of the MIME type for uploaded objects based on file extensions: "true" to enable MIME type guessing, and otherwise "false".
+--
 -- * 'cnfsfsReadOnly' - Sets the write status of a file share: "true" if the write status is read-only, and otherwise "false".
 --
 -- * 'cnfsfsClientToken' - A unique string value that you supply that is used by file gateway to ensure idempotent file share creation.
@@ -117,6 +121,7 @@ createNFSFileShare pClientToken_ pGatewayARN_ pRole_ pLocationARN_ =
   , _cnfsfsSquash = Nothing
   , _cnfsfsNFSFileShareDefaults = Nothing
   , _cnfsfsClientList = Nothing
+  , _cnfsfsGuessMIMETypeEnabled = Nothing
   , _cnfsfsReadOnly = Nothing
   , _cnfsfsClientToken = pClientToken_
   , _cnfsfsGatewayARN = pGatewayARN_
@@ -148,6 +153,10 @@ cnfsfsNFSFileShareDefaults = lens _cnfsfsNFSFileShareDefaults (\ s a -> s{_cnfsf
 -- | The list of clients that are allowed to access the file gateway. The list must contain either valid IP addresses or valid CIDR blocks.
 cnfsfsClientList :: Lens' CreateNFSFileShare (Maybe (NonEmpty Text))
 cnfsfsClientList = lens _cnfsfsClientList (\ s a -> s{_cnfsfsClientList = a}) . mapping _List1;
+
+-- | Enables guessing of the MIME type for uploaded objects based on file extensions: "true" to enable MIME type guessing, and otherwise "false".
+cnfsfsGuessMIMETypeEnabled :: Lens' CreateNFSFileShare (Maybe Bool)
+cnfsfsGuessMIMETypeEnabled = lens _cnfsfsGuessMIMETypeEnabled (\ s a -> s{_cnfsfsGuessMIMETypeEnabled = a});
 
 -- | Sets the write status of a file share: "true" if the write status is read-only, and otherwise "false".
 cnfsfsReadOnly :: Lens' CreateNFSFileShare (Maybe Bool)
@@ -205,6 +214,8 @@ instance ToJSON CreateNFSFileShare where
                   ("NFSFileShareDefaults" .=) <$>
                     _cnfsfsNFSFileShareDefaults,
                   ("ClientList" .=) <$> _cnfsfsClientList,
+                  ("GuessMIMETypeEnabled" .=) <$>
+                    _cnfsfsGuessMIMETypeEnabled,
                   ("ReadOnly" .=) <$> _cnfsfsReadOnly,
                   Just ("ClientToken" .= _cnfsfsClientToken),
                   Just ("GatewayARN" .= _cnfsfsGatewayARN),

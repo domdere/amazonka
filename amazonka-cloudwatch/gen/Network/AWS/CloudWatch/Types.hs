@@ -111,6 +111,7 @@ module Network.AWS.CloudWatch.Types
     , maOKActions
     , maEvaluateLowSampleCountPercentile
     , maStateValue
+    , maDatapointsToAlarm
     , maThreshold
     , maAlarmConfigurationUpdatedTimestamp
     , maActionsEnabled

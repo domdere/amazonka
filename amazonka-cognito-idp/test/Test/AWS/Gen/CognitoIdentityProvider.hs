@@ -49,6 +49,9 @@ import Test.Tasty
 --         , requestGetUserAttributeVerificationCode $
 --             getUserAttributeVerificationCode
 --
+--         , requestSetUserPoolMFAConfig $
+--             setUserPoolMFAConfig
+--
 --         , requestUpdateUserAttributes $
 --             updateUserAttributes
 --
@@ -94,6 +97,9 @@ import Test.Tasty
 --         , requestListUsersInGroup $
 --             listUsersInGroup
 --
+--         , requestAssociateSoftwareToken $
+--             associateSoftwareToken
+--
 --         , requestAdminDisableProviderForUser $
 --             adminDisableProviderForUser
 --
@@ -111,6 +117,9 @@ import Test.Tasty
 --
 --         , requestAdminConfirmSignUp $
 --             adminConfirmSignUp
+--
+--         , requestAdminUpdateAuthEventFeedback $
+--             adminUpdateAuthEventFeedback
 --
 --         , requestStartUserImportJob $
 --             startUserImportJob
@@ -157,6 +166,9 @@ import Test.Tasty
 --         , requestAdminRemoveUserFromGroup $
 --             adminRemoveUserFromGroup
 --
+--         , requestSetRiskConfiguration $
+--             setRiskConfiguration
+--
 --         , requestConfirmSignUp $
 --             confirmSignUp
 --
@@ -165,6 +177,9 @@ import Test.Tasty
 --
 --         , requestAdminResetUserPassword $
 --             adminResetUserPassword
+--
+--         , requestUpdateAuthEventFeedback $
+--             updateAuthEventFeedback
 --
 --         , requestCreateUserImportJob $
 --             createUserImportJob
@@ -187,6 +202,9 @@ import Test.Tasty
 --         , requestDescribeResourceServer $
 --             describeResourceServer
 --
+--         , requestSetUserMFAPreference $
+--             setUserMFAPreference
+--
 --         , requestAdminUpdateDeviceStatus $
 --             adminUpdateDeviceStatus
 --
@@ -198,6 +216,9 @@ import Test.Tasty
 --
 --         , requestListUserPoolClients $
 --             listUserPoolClients
+--
+--         , requestAdminSetUserMFAPreference $
+--             adminSetUserMFAPreference
 --
 --         , requestUpdateUserPoolClient $
 --             updateUserPoolClient
@@ -217,8 +238,14 @@ import Test.Tasty
 --         , requestCreateUserPoolClient $
 --             createUserPoolClient
 --
+--         , requestGetUserPoolMFAConfig $
+--             getUserPoolMFAConfig
+--
 --         , requestCreateResourceServer $
 --             createResourceServer
+--
+--         , requestAdminListUserAuthEvents $
+--             adminListUserAuthEvents
 --
 --         , requestCreateGroup $
 --             createGroup
@@ -226,11 +253,17 @@ import Test.Tasty
 --         , requestAdminAddUserToGroup $
 --             adminAddUserToGroup
 --
+--         , requestVerifySoftwareToken $
+--             verifySoftwareToken
+--
 --         , requestStopUserImportJob $
 --             stopUserImportJob
 --
 --         , requestDescribeUserImportJob $
 --             describeUserImportJob
+--
+--         , requestDescribeRiskConfiguration $
+--             describeRiskConfiguration
 --
 --         , requestDeleteGroup $
 --             deleteGroup
@@ -301,6 +334,9 @@ import Test.Tasty
 --         , responseGetUserAttributeVerificationCode $
 --             getUserAttributeVerificationCodeResponse
 --
+--         , responseSetUserPoolMFAConfig $
+--             setUserPoolMFAConfigResponse
+--
 --         , responseUpdateUserAttributes $
 --             updateUserAttributesResponse
 --
@@ -346,6 +382,9 @@ import Test.Tasty
 --         , responseListUsersInGroup $
 --             listUsersInGroupResponse
 --
+--         , responseAssociateSoftwareToken $
+--             associateSoftwareTokenResponse
+--
 --         , responseAdminDisableProviderForUser $
 --             adminDisableProviderForUserResponse
 --
@@ -363,6 +402,9 @@ import Test.Tasty
 --
 --         , responseAdminConfirmSignUp $
 --             adminConfirmSignUpResponse
+--
+--         , responseAdminUpdateAuthEventFeedback $
+--             adminUpdateAuthEventFeedbackResponse
 --
 --         , responseStartUserImportJob $
 --             startUserImportJobResponse
@@ -409,6 +451,9 @@ import Test.Tasty
 --         , responseAdminRemoveUserFromGroup $
 --             adminRemoveUserFromGroupResponse
 --
+--         , responseSetRiskConfiguration $
+--             setRiskConfigurationResponse
+--
 --         , responseConfirmSignUp $
 --             confirmSignUpResponse
 --
@@ -417,6 +462,9 @@ import Test.Tasty
 --
 --         , responseAdminResetUserPassword $
 --             adminResetUserPasswordResponse
+--
+--         , responseUpdateAuthEventFeedback $
+--             updateAuthEventFeedbackResponse
 --
 --         , responseCreateUserImportJob $
 --             createUserImportJobResponse
@@ -439,6 +487,9 @@ import Test.Tasty
 --         , responseDescribeResourceServer $
 --             describeResourceServerResponse
 --
+--         , responseSetUserMFAPreference $
+--             setUserMFAPreferenceResponse
+--
 --         , responseAdminUpdateDeviceStatus $
 --             adminUpdateDeviceStatusResponse
 --
@@ -450,6 +501,9 @@ import Test.Tasty
 --
 --         , responseListUserPoolClients $
 --             listUserPoolClientsResponse
+--
+--         , responseAdminSetUserMFAPreference $
+--             adminSetUserMFAPreferenceResponse
 --
 --         , responseUpdateUserPoolClient $
 --             updateUserPoolClientResponse
@@ -469,8 +523,14 @@ import Test.Tasty
 --         , responseCreateUserPoolClient $
 --             createUserPoolClientResponse
 --
+--         , responseGetUserPoolMFAConfig $
+--             getUserPoolMFAConfigResponse
+--
 --         , responseCreateResourceServer $
 --             createResourceServerResponse
+--
+--         , responseAdminListUserAuthEvents $
+--             adminListUserAuthEventsResponse
 --
 --         , responseCreateGroup $
 --             createGroupResponse
@@ -478,11 +538,17 @@ import Test.Tasty
 --         , responseAdminAddUserToGroup $
 --             adminAddUserToGroupResponse
 --
+--         , responseVerifySoftwareToken $
+--             verifySoftwareTokenResponse
+--
 --         , responseStopUserImportJob $
 --             stopUserImportJobResponse
 --
 --         , responseDescribeUserImportJob $
 --             describeUserImportJobResponse
+--
+--         , responseDescribeRiskConfiguration $
+--             describeRiskConfigurationResponse
 --
 --         , responseDeleteGroup $
 --             deleteGroupResponse
@@ -569,6 +635,11 @@ requestGetUserAttributeVerificationCode = req
     "GetUserAttributeVerificationCode"
     "fixture/GetUserAttributeVerificationCode.yaml"
 
+requestSetUserPoolMFAConfig :: SetUserPoolMFAConfig -> TestTree
+requestSetUserPoolMFAConfig = req
+    "SetUserPoolMFAConfig"
+    "fixture/SetUserPoolMFAConfig.yaml"
+
 requestUpdateUserAttributes :: UpdateUserAttributes -> TestTree
 requestUpdateUserAttributes = req
     "UpdateUserAttributes"
@@ -644,6 +715,11 @@ requestListUsersInGroup = req
     "ListUsersInGroup"
     "fixture/ListUsersInGroup.yaml"
 
+requestAssociateSoftwareToken :: AssociateSoftwareToken -> TestTree
+requestAssociateSoftwareToken = req
+    "AssociateSoftwareToken"
+    "fixture/AssociateSoftwareToken.yaml"
+
 requestAdminDisableProviderForUser :: AdminDisableProviderForUser -> TestTree
 requestAdminDisableProviderForUser = req
     "AdminDisableProviderForUser"
@@ -673,6 +749,11 @@ requestAdminConfirmSignUp :: AdminConfirmSignUp -> TestTree
 requestAdminConfirmSignUp = req
     "AdminConfirmSignUp"
     "fixture/AdminConfirmSignUp.yaml"
+
+requestAdminUpdateAuthEventFeedback :: AdminUpdateAuthEventFeedback -> TestTree
+requestAdminUpdateAuthEventFeedback = req
+    "AdminUpdateAuthEventFeedback"
+    "fixture/AdminUpdateAuthEventFeedback.yaml"
 
 requestStartUserImportJob :: StartUserImportJob -> TestTree
 requestStartUserImportJob = req
@@ -749,6 +830,11 @@ requestAdminRemoveUserFromGroup = req
     "AdminRemoveUserFromGroup"
     "fixture/AdminRemoveUserFromGroup.yaml"
 
+requestSetRiskConfiguration :: SetRiskConfiguration -> TestTree
+requestSetRiskConfiguration = req
+    "SetRiskConfiguration"
+    "fixture/SetRiskConfiguration.yaml"
+
 requestConfirmSignUp :: ConfirmSignUp -> TestTree
 requestConfirmSignUp = req
     "ConfirmSignUp"
@@ -763,6 +849,11 @@ requestAdminResetUserPassword :: AdminResetUserPassword -> TestTree
 requestAdminResetUserPassword = req
     "AdminResetUserPassword"
     "fixture/AdminResetUserPassword.yaml"
+
+requestUpdateAuthEventFeedback :: UpdateAuthEventFeedback -> TestTree
+requestUpdateAuthEventFeedback = req
+    "UpdateAuthEventFeedback"
+    "fixture/UpdateAuthEventFeedback.yaml"
 
 requestCreateUserImportJob :: CreateUserImportJob -> TestTree
 requestCreateUserImportJob = req
@@ -799,6 +890,11 @@ requestDescribeResourceServer = req
     "DescribeResourceServer"
     "fixture/DescribeResourceServer.yaml"
 
+requestSetUserMFAPreference :: SetUserMFAPreference -> TestTree
+requestSetUserMFAPreference = req
+    "SetUserMFAPreference"
+    "fixture/SetUserMFAPreference.yaml"
+
 requestAdminUpdateDeviceStatus :: AdminUpdateDeviceStatus -> TestTree
 requestAdminUpdateDeviceStatus = req
     "AdminUpdateDeviceStatus"
@@ -818,6 +914,11 @@ requestListUserPoolClients :: ListUserPoolClients -> TestTree
 requestListUserPoolClients = req
     "ListUserPoolClients"
     "fixture/ListUserPoolClients.yaml"
+
+requestAdminSetUserMFAPreference :: AdminSetUserMFAPreference -> TestTree
+requestAdminSetUserMFAPreference = req
+    "AdminSetUserMFAPreference"
+    "fixture/AdminSetUserMFAPreference.yaml"
 
 requestUpdateUserPoolClient :: UpdateUserPoolClient -> TestTree
 requestUpdateUserPoolClient = req
@@ -849,10 +950,20 @@ requestCreateUserPoolClient = req
     "CreateUserPoolClient"
     "fixture/CreateUserPoolClient.yaml"
 
+requestGetUserPoolMFAConfig :: GetUserPoolMFAConfig -> TestTree
+requestGetUserPoolMFAConfig = req
+    "GetUserPoolMFAConfig"
+    "fixture/GetUserPoolMFAConfig.yaml"
+
 requestCreateResourceServer :: CreateResourceServer -> TestTree
 requestCreateResourceServer = req
     "CreateResourceServer"
     "fixture/CreateResourceServer.yaml"
+
+requestAdminListUserAuthEvents :: AdminListUserAuthEvents -> TestTree
+requestAdminListUserAuthEvents = req
+    "AdminListUserAuthEvents"
+    "fixture/AdminListUserAuthEvents.yaml"
 
 requestCreateGroup :: CreateGroup -> TestTree
 requestCreateGroup = req
@@ -864,6 +975,11 @@ requestAdminAddUserToGroup = req
     "AdminAddUserToGroup"
     "fixture/AdminAddUserToGroup.yaml"
 
+requestVerifySoftwareToken :: VerifySoftwareToken -> TestTree
+requestVerifySoftwareToken = req
+    "VerifySoftwareToken"
+    "fixture/VerifySoftwareToken.yaml"
+
 requestStopUserImportJob :: StopUserImportJob -> TestTree
 requestStopUserImportJob = req
     "StopUserImportJob"
@@ -873,6 +989,11 @@ requestDescribeUserImportJob :: DescribeUserImportJob -> TestTree
 requestDescribeUserImportJob = req
     "DescribeUserImportJob"
     "fixture/DescribeUserImportJob.yaml"
+
+requestDescribeRiskConfiguration :: DescribeRiskConfiguration -> TestTree
+requestDescribeRiskConfiguration = req
+    "DescribeRiskConfiguration"
+    "fixture/DescribeRiskConfiguration.yaml"
 
 requestDeleteGroup :: DeleteGroup -> TestTree
 requestDeleteGroup = req
@@ -1000,6 +1121,13 @@ responseGetUserAttributeVerificationCode = res
     cognitoIdentityProvider
     (Proxy :: Proxy GetUserAttributeVerificationCode)
 
+responseSetUserPoolMFAConfig :: SetUserPoolMFAConfigResponse -> TestTree
+responseSetUserPoolMFAConfig = res
+    "SetUserPoolMFAConfigResponse"
+    "fixture/SetUserPoolMFAConfigResponse.proto"
+    cognitoIdentityProvider
+    (Proxy :: Proxy SetUserPoolMFAConfig)
+
 responseUpdateUserAttributes :: UpdateUserAttributesResponse -> TestTree
 responseUpdateUserAttributes = res
     "UpdateUserAttributesResponse"
@@ -1105,6 +1233,13 @@ responseListUsersInGroup = res
     cognitoIdentityProvider
     (Proxy :: Proxy ListUsersInGroup)
 
+responseAssociateSoftwareToken :: AssociateSoftwareTokenResponse -> TestTree
+responseAssociateSoftwareToken = res
+    "AssociateSoftwareTokenResponse"
+    "fixture/AssociateSoftwareTokenResponse.proto"
+    cognitoIdentityProvider
+    (Proxy :: Proxy AssociateSoftwareToken)
+
 responseAdminDisableProviderForUser :: AdminDisableProviderForUserResponse -> TestTree
 responseAdminDisableProviderForUser = res
     "AdminDisableProviderForUserResponse"
@@ -1146,6 +1281,13 @@ responseAdminConfirmSignUp = res
     "fixture/AdminConfirmSignUpResponse.proto"
     cognitoIdentityProvider
     (Proxy :: Proxy AdminConfirmSignUp)
+
+responseAdminUpdateAuthEventFeedback :: AdminUpdateAuthEventFeedbackResponse -> TestTree
+responseAdminUpdateAuthEventFeedback = res
+    "AdminUpdateAuthEventFeedbackResponse"
+    "fixture/AdminUpdateAuthEventFeedbackResponse.proto"
+    cognitoIdentityProvider
+    (Proxy :: Proxy AdminUpdateAuthEventFeedback)
 
 responseStartUserImportJob :: StartUserImportJobResponse -> TestTree
 responseStartUserImportJob = res
@@ -1252,6 +1394,13 @@ responseAdminRemoveUserFromGroup = res
     cognitoIdentityProvider
     (Proxy :: Proxy AdminRemoveUserFromGroup)
 
+responseSetRiskConfiguration :: SetRiskConfigurationResponse -> TestTree
+responseSetRiskConfiguration = res
+    "SetRiskConfigurationResponse"
+    "fixture/SetRiskConfigurationResponse.proto"
+    cognitoIdentityProvider
+    (Proxy :: Proxy SetRiskConfiguration)
+
 responseConfirmSignUp :: ConfirmSignUpResponse -> TestTree
 responseConfirmSignUp = res
     "ConfirmSignUpResponse"
@@ -1272,6 +1421,13 @@ responseAdminResetUserPassword = res
     "fixture/AdminResetUserPasswordResponse.proto"
     cognitoIdentityProvider
     (Proxy :: Proxy AdminResetUserPassword)
+
+responseUpdateAuthEventFeedback :: UpdateAuthEventFeedbackResponse -> TestTree
+responseUpdateAuthEventFeedback = res
+    "UpdateAuthEventFeedbackResponse"
+    "fixture/UpdateAuthEventFeedbackResponse.proto"
+    cognitoIdentityProvider
+    (Proxy :: Proxy UpdateAuthEventFeedback)
 
 responseCreateUserImportJob :: CreateUserImportJobResponse -> TestTree
 responseCreateUserImportJob = res
@@ -1322,6 +1478,13 @@ responseDescribeResourceServer = res
     cognitoIdentityProvider
     (Proxy :: Proxy DescribeResourceServer)
 
+responseSetUserMFAPreference :: SetUserMFAPreferenceResponse -> TestTree
+responseSetUserMFAPreference = res
+    "SetUserMFAPreferenceResponse"
+    "fixture/SetUserMFAPreferenceResponse.proto"
+    cognitoIdentityProvider
+    (Proxy :: Proxy SetUserMFAPreference)
+
 responseAdminUpdateDeviceStatus :: AdminUpdateDeviceStatusResponse -> TestTree
 responseAdminUpdateDeviceStatus = res
     "AdminUpdateDeviceStatusResponse"
@@ -1349,6 +1512,13 @@ responseListUserPoolClients = res
     "fixture/ListUserPoolClientsResponse.proto"
     cognitoIdentityProvider
     (Proxy :: Proxy ListUserPoolClients)
+
+responseAdminSetUserMFAPreference :: AdminSetUserMFAPreferenceResponse -> TestTree
+responseAdminSetUserMFAPreference = res
+    "AdminSetUserMFAPreferenceResponse"
+    "fixture/AdminSetUserMFAPreferenceResponse.proto"
+    cognitoIdentityProvider
+    (Proxy :: Proxy AdminSetUserMFAPreference)
 
 responseUpdateUserPoolClient :: UpdateUserPoolClientResponse -> TestTree
 responseUpdateUserPoolClient = res
@@ -1392,12 +1562,26 @@ responseCreateUserPoolClient = res
     cognitoIdentityProvider
     (Proxy :: Proxy CreateUserPoolClient)
 
+responseGetUserPoolMFAConfig :: GetUserPoolMFAConfigResponse -> TestTree
+responseGetUserPoolMFAConfig = res
+    "GetUserPoolMFAConfigResponse"
+    "fixture/GetUserPoolMFAConfigResponse.proto"
+    cognitoIdentityProvider
+    (Proxy :: Proxy GetUserPoolMFAConfig)
+
 responseCreateResourceServer :: CreateResourceServerResponse -> TestTree
 responseCreateResourceServer = res
     "CreateResourceServerResponse"
     "fixture/CreateResourceServerResponse.proto"
     cognitoIdentityProvider
     (Proxy :: Proxy CreateResourceServer)
+
+responseAdminListUserAuthEvents :: AdminListUserAuthEventsResponse -> TestTree
+responseAdminListUserAuthEvents = res
+    "AdminListUserAuthEventsResponse"
+    "fixture/AdminListUserAuthEventsResponse.proto"
+    cognitoIdentityProvider
+    (Proxy :: Proxy AdminListUserAuthEvents)
 
 responseCreateGroup :: CreateGroupResponse -> TestTree
 responseCreateGroup = res
@@ -1413,6 +1597,13 @@ responseAdminAddUserToGroup = res
     cognitoIdentityProvider
     (Proxy :: Proxy AdminAddUserToGroup)
 
+responseVerifySoftwareToken :: VerifySoftwareTokenResponse -> TestTree
+responseVerifySoftwareToken = res
+    "VerifySoftwareTokenResponse"
+    "fixture/VerifySoftwareTokenResponse.proto"
+    cognitoIdentityProvider
+    (Proxy :: Proxy VerifySoftwareToken)
+
 responseStopUserImportJob :: StopUserImportJobResponse -> TestTree
 responseStopUserImportJob = res
     "StopUserImportJobResponse"
@@ -1426,6 +1617,13 @@ responseDescribeUserImportJob = res
     "fixture/DescribeUserImportJobResponse.proto"
     cognitoIdentityProvider
     (Proxy :: Proxy DescribeUserImportJob)
+
+responseDescribeRiskConfiguration :: DescribeRiskConfigurationResponse -> TestTree
+responseDescribeRiskConfiguration = res
+    "DescribeRiskConfigurationResponse"
+    "fixture/DescribeRiskConfigurationResponse.proto"
+    cognitoIdentityProvider
+    (Proxy :: Proxy DescribeRiskConfiguration)
 
 responseDeleteGroup :: DeleteGroupResponse -> TestTree
 responseDeleteGroup = res

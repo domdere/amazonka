@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Deletes the specified portfolio share.
+-- Stops sharing the specified portfolio with the specified account.
 --
 --
 module Network.AWS.ServiceCatalog.DeletePortfolioShare
@@ -61,7 +61,7 @@ data DeletePortfolioShare = DeletePortfolioShare'
 --
 -- * 'dpsPortfolioId' - The portfolio identifier.
 --
--- * 'dpsAccountId' - The account ID associated with the share to delete.
+-- * 'dpsAccountId' - The AWS account ID.
 deletePortfolioShare
     :: Text -- ^ 'dpsPortfolioId'
     -> Text -- ^ 'dpsAccountId'
@@ -82,7 +82,7 @@ dpsAcceptLanguage = lens _dpsAcceptLanguage (\ s a -> s{_dpsAcceptLanguage = a})
 dpsPortfolioId :: Lens' DeletePortfolioShare Text
 dpsPortfolioId = lens _dpsPortfolioId (\ s a -> s{_dpsPortfolioId = a});
 
--- | The account ID associated with the share to delete.
+-- | The AWS account ID.
 dpsAccountId :: Lens' DeletePortfolioShare Text
 dpsAccountId = lens _dpsAccountId (\ s a -> s{_dpsAccountId = a});
 

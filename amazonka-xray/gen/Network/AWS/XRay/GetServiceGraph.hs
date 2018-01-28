@@ -21,6 +21,8 @@
 -- Retrieves a document that describes services that process incoming requests, and downstream services that they call as a result. Root services process incoming requests and make calls to downstream services. Root services are applications that use the AWS X-Ray SDK. Downstream services can be other applications, AWS resources, HTTP web APIs, or SQL databases.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.XRay.GetServiceGraph
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.XRay.GetServiceGraph
     ) where
 
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -89,6 +92,13 @@ gsgStartTime = lens _gsgStartTime (\ s a -> s{_gsgStartTime = a}) . _Time;
 -- | The end of the time frame for which to generate a graph.
 gsgEndTime :: Lens' GetServiceGraph UTCTime
 gsgEndTime = lens _gsgEndTime (\ s a -> s{_gsgEndTime = a}) . _Time;
+
+instance AWSPager GetServiceGraph where
+        page rq rs
+          | stop (rs ^. gsgrsNextToken) = Nothing
+          | stop (rs ^. gsgrsServices) = Nothing
+          | otherwise =
+            Just $ rq & gsgNextToken .~ rs ^. gsgrsNextToken
 
 instance AWSRequest GetServiceGraph where
         type Rs GetServiceGraph = GetServiceGraphResponse

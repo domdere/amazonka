@@ -27,6 +27,8 @@
 --
 -- If you are an IAM user, you must have Amazon EC2 permissions for some operations:
 --
+--     * @iam:CreateServiceLinkedRole@ for all alarms with EC2 actions
+--
 --     * @ec2:DescribeInstanceStatus@ and @ec2:DescribeInstances@ for all alarms on EC2 instance status metrics
 --
 --     * @ec2:StopInstances@ for alarms with stop actions
@@ -55,6 +57,7 @@ module Network.AWS.CloudWatch.PutMetricAlarm
     , pmaAlarmDescription
     , pmaOKActions
     , pmaEvaluateLowSampleCountPercentile
+    , pmaDatapointsToAlarm
     , pmaActionsEnabled
     , pmaInsufficientDataActions
     , pmaDimensions
@@ -88,6 +91,7 @@ data PutMetricAlarm = PutMetricAlarm'
   , _pmaAlarmDescription                 :: !(Maybe Text)
   , _pmaOKActions                        :: !(Maybe [Text])
   , _pmaEvaluateLowSampleCountPercentile :: !(Maybe Text)
+  , _pmaDatapointsToAlarm                :: !(Maybe Nat)
   , _pmaActionsEnabled                   :: !(Maybe Bool)
   , _pmaInsufficientDataActions          :: !(Maybe [Text])
   , _pmaDimensions                       :: !(Maybe [Dimension])
@@ -113,23 +117,25 @@ data PutMetricAlarm = PutMetricAlarm'
 --
 -- * 'pmaAlarmDescription' - The description for the alarm.
 --
--- * 'pmaOKActions' - The actions to execute when this alarm transitions to an @OK@ state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:/region/ :ec2:stop | arn:aws:automate:/region/ :ec2:terminate | arn:aws:automate:/region/ :ec2:recover Valid Values (for use with IAM roles): arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Reboot/1.0
+-- * 'pmaOKActions' - The actions to execute when this alarm transitions to an @OK@ state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:/region/ :ec2:stop | arn:aws:automate:/region/ :ec2:terminate | arn:aws:automate:/region/ :ec2:recover | arn:aws:sns:/region/ :/account-id/ :/sns-topic-name/ | arn:aws:autoscaling:/region/ :/account-id/ :scalingPolicy:/policy-id/ autoScalingGroupName//group-friendly-name/ :policyName//policy-friendly-name/  Valid Values (for use with IAM roles): arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Reboot/1.0
 --
 -- * 'pmaEvaluateLowSampleCountPercentile' - Used only for alarms based on percentiles. If you specify @ignore@ , the alarm state does not change during periods with too few data points to be statistically significant. If you specify @evaluate@ or omit this parameter, the alarm is always evaluated and possibly changes state no matter how many data points are available. For more information, see <http://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/AlarmThatSendsEmail.html#percentiles-with-low-samples Percentile-Based CloudWatch Alarms and Low Data Samples> . Valid Values: @evaluate | ignore@
 --
+-- * 'pmaDatapointsToAlarm' - The number of datapoints that must be breaching to trigger the alarm.
+--
 -- * 'pmaActionsEnabled' - Indicates whether actions should be executed during any changes to the alarm state.
 --
--- * 'pmaInsufficientDataActions' - The actions to execute when this alarm transitions to the @INSUFFICIENT_DATA@ state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:/region/ :ec2:stop | arn:aws:automate:/region/ :ec2:terminate | arn:aws:automate:/region/ :ec2:recover Valid Values (for use with IAM roles): arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Reboot/1.0
+-- * 'pmaInsufficientDataActions' - The actions to execute when this alarm transitions to the @INSUFFICIENT_DATA@ state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:/region/ :ec2:stop | arn:aws:automate:/region/ :ec2:terminate | arn:aws:automate:/region/ :ec2:recover | arn:aws:sns:/region/ :/account-id/ :/sns-topic-name/ | arn:aws:autoscaling:/region/ :/account-id/ :scalingPolicy:/policy-id/ autoScalingGroupName//group-friendly-name/ :policyName//policy-friendly-name/  Valid Values (for use with IAM roles): arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Reboot/1.0
 --
 -- * 'pmaDimensions' - The dimensions for the metric associated with the alarm.
 --
--- * 'pmaAlarmActions' - The actions to execute when this alarm transitions to the @ALARM@ state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:/region/ :ec2:stop | arn:aws:automate:/region/ :ec2:terminate | arn:aws:automate:/region/ :ec2:recover Valid Values (for use with IAM roles): arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Reboot/1.0
+-- * 'pmaAlarmActions' - The actions to execute when this alarm transitions to the @ALARM@ state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:/region/ :ec2:stop | arn:aws:automate:/region/ :ec2:terminate | arn:aws:automate:/region/ :ec2:recover | arn:aws:sns:/region/ :/account-id/ :/sns-topic-name/ | arn:aws:autoscaling:/region/ :/account-id/ :scalingPolicy:/policy-id/ autoScalingGroupName//group-friendly-name/ :policyName//policy-friendly-name/  Valid Values (for use with IAM roles): arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Reboot/1.0
 --
 -- * 'pmaUnit' - The unit of measure for the statistic. For example, the units for the Amazon EC2 NetworkIn metric are Bytes because NetworkIn tracks the number of bytes that an instance receives on all network interfaces. You can also specify a unit when you create a custom metric. Units help provide conceptual meaning to your data. Metric data points that specify a unit of measure, such as Percent, are aggregated separately. If you specify a unit, you must use a unit that is appropriate for the metric. Otherwise, the CloudWatch alarm can get stuck in the @INSUFFICIENT DATA@ state.
 --
--- * 'pmaStatistic' - The statistic for the metric associated with the alarm, other than percentile. For percentile statistics, use @ExtendedStatistic@ .
+-- * 'pmaStatistic' - The statistic for the metric associated with the alarm, other than percentile. For percentile statistics, use @ExtendedStatistic@ . When you call @PutMetricAlarm@ , you must specify either @Statistic@ or @ExtendedStatistic,@ but not both.
 --
--- * 'pmaExtendedStatistic' - The percentile statistic for the metric associated with the alarm. Specify a value between p0.0 and p100.
+-- * 'pmaExtendedStatistic' - The percentile statistic for the metric associated with the alarm. Specify a value between p0.0 and p100. When you call @PutMetricAlarm@ , you must specify either @Statistic@ or @ExtendedStatistic,@ but not both.
 --
 -- * 'pmaAlarmName' - The name for the alarm. This name must be unique within the AWS account.
 --
@@ -159,6 +165,7 @@ putMetricAlarm pAlarmName_ pMetricName_ pNamespace_ pPeriod_ pEvaluationPeriods_
   , _pmaAlarmDescription = Nothing
   , _pmaOKActions = Nothing
   , _pmaEvaluateLowSampleCountPercentile = Nothing
+  , _pmaDatapointsToAlarm = Nothing
   , _pmaActionsEnabled = Nothing
   , _pmaInsufficientDataActions = Nothing
   , _pmaDimensions = Nothing
@@ -184,7 +191,7 @@ pmaTreatMissingData = lens _pmaTreatMissingData (\ s a -> s{_pmaTreatMissingData
 pmaAlarmDescription :: Lens' PutMetricAlarm (Maybe Text)
 pmaAlarmDescription = lens _pmaAlarmDescription (\ s a -> s{_pmaAlarmDescription = a});
 
--- | The actions to execute when this alarm transitions to an @OK@ state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:/region/ :ec2:stop | arn:aws:automate:/region/ :ec2:terminate | arn:aws:automate:/region/ :ec2:recover Valid Values (for use with IAM roles): arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Reboot/1.0
+-- | The actions to execute when this alarm transitions to an @OK@ state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:/region/ :ec2:stop | arn:aws:automate:/region/ :ec2:terminate | arn:aws:automate:/region/ :ec2:recover | arn:aws:sns:/region/ :/account-id/ :/sns-topic-name/ | arn:aws:autoscaling:/region/ :/account-id/ :scalingPolicy:/policy-id/ autoScalingGroupName//group-friendly-name/ :policyName//policy-friendly-name/  Valid Values (for use with IAM roles): arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Reboot/1.0
 pmaOKActions :: Lens' PutMetricAlarm [Text]
 pmaOKActions = lens _pmaOKActions (\ s a -> s{_pmaOKActions = a}) . _Default . _Coerce;
 
@@ -192,11 +199,15 @@ pmaOKActions = lens _pmaOKActions (\ s a -> s{_pmaOKActions = a}) . _Default . _
 pmaEvaluateLowSampleCountPercentile :: Lens' PutMetricAlarm (Maybe Text)
 pmaEvaluateLowSampleCountPercentile = lens _pmaEvaluateLowSampleCountPercentile (\ s a -> s{_pmaEvaluateLowSampleCountPercentile = a});
 
+-- | The number of datapoints that must be breaching to trigger the alarm.
+pmaDatapointsToAlarm :: Lens' PutMetricAlarm (Maybe Natural)
+pmaDatapointsToAlarm = lens _pmaDatapointsToAlarm (\ s a -> s{_pmaDatapointsToAlarm = a}) . mapping _Nat;
+
 -- | Indicates whether actions should be executed during any changes to the alarm state.
 pmaActionsEnabled :: Lens' PutMetricAlarm (Maybe Bool)
 pmaActionsEnabled = lens _pmaActionsEnabled (\ s a -> s{_pmaActionsEnabled = a});
 
--- | The actions to execute when this alarm transitions to the @INSUFFICIENT_DATA@ state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:/region/ :ec2:stop | arn:aws:automate:/region/ :ec2:terminate | arn:aws:automate:/region/ :ec2:recover Valid Values (for use with IAM roles): arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Reboot/1.0
+-- | The actions to execute when this alarm transitions to the @INSUFFICIENT_DATA@ state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:/region/ :ec2:stop | arn:aws:automate:/region/ :ec2:terminate | arn:aws:automate:/region/ :ec2:recover | arn:aws:sns:/region/ :/account-id/ :/sns-topic-name/ | arn:aws:autoscaling:/region/ :/account-id/ :scalingPolicy:/policy-id/ autoScalingGroupName//group-friendly-name/ :policyName//policy-friendly-name/  Valid Values (for use with IAM roles): arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Reboot/1.0
 pmaInsufficientDataActions :: Lens' PutMetricAlarm [Text]
 pmaInsufficientDataActions = lens _pmaInsufficientDataActions (\ s a -> s{_pmaInsufficientDataActions = a}) . _Default . _Coerce;
 
@@ -204,7 +215,7 @@ pmaInsufficientDataActions = lens _pmaInsufficientDataActions (\ s a -> s{_pmaIn
 pmaDimensions :: Lens' PutMetricAlarm [Dimension]
 pmaDimensions = lens _pmaDimensions (\ s a -> s{_pmaDimensions = a}) . _Default . _Coerce;
 
--- | The actions to execute when this alarm transitions to the @ALARM@ state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:/region/ :ec2:stop | arn:aws:automate:/region/ :ec2:terminate | arn:aws:automate:/region/ :ec2:recover Valid Values (for use with IAM roles): arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:us-east-1:{/customer-account/ }:action/actions/AWS_EC2.InstanceId.Reboot/1.0
+-- | The actions to execute when this alarm transitions to the @ALARM@ state from any other state. Each action is specified as an Amazon Resource Name (ARN). Valid Values: arn:aws:automate:/region/ :ec2:stop | arn:aws:automate:/region/ :ec2:terminate | arn:aws:automate:/region/ :ec2:recover | arn:aws:sns:/region/ :/account-id/ :/sns-topic-name/ | arn:aws:autoscaling:/region/ :/account-id/ :scalingPolicy:/policy-id/ autoScalingGroupName//group-friendly-name/ :policyName//policy-friendly-name/  Valid Values (for use with IAM roles): arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Stop/1.0 | arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Terminate/1.0 | arn:aws:swf:/region/ :{/account-id/ }:action/actions/AWS_EC2.InstanceId.Reboot/1.0
 pmaAlarmActions :: Lens' PutMetricAlarm [Text]
 pmaAlarmActions = lens _pmaAlarmActions (\ s a -> s{_pmaAlarmActions = a}) . _Default . _Coerce;
 
@@ -212,11 +223,11 @@ pmaAlarmActions = lens _pmaAlarmActions (\ s a -> s{_pmaAlarmActions = a}) . _De
 pmaUnit :: Lens' PutMetricAlarm (Maybe StandardUnit)
 pmaUnit = lens _pmaUnit (\ s a -> s{_pmaUnit = a});
 
--- | The statistic for the metric associated with the alarm, other than percentile. For percentile statistics, use @ExtendedStatistic@ .
+-- | The statistic for the metric associated with the alarm, other than percentile. For percentile statistics, use @ExtendedStatistic@ . When you call @PutMetricAlarm@ , you must specify either @Statistic@ or @ExtendedStatistic,@ but not both.
 pmaStatistic :: Lens' PutMetricAlarm (Maybe Statistic)
 pmaStatistic = lens _pmaStatistic (\ s a -> s{_pmaStatistic = a});
 
--- | The percentile statistic for the metric associated with the alarm. Specify a value between p0.0 and p100.
+-- | The percentile statistic for the metric associated with the alarm. Specify a value between p0.0 and p100. When you call @PutMetricAlarm@ , you must specify either @Statistic@ or @ExtendedStatistic,@ but not both.
 pmaExtendedStatistic :: Lens' PutMetricAlarm (Maybe Text)
 pmaExtendedStatistic = lens _pmaExtendedStatistic (\ s a -> s{_pmaExtendedStatistic = a});
 
@@ -274,6 +285,7 @@ instance ToQuery PutMetricAlarm where
                  toQuery (toQueryList "member" <$> _pmaOKActions),
                "EvaluateLowSampleCountPercentile" =:
                  _pmaEvaluateLowSampleCountPercentile,
+               "DatapointsToAlarm" =: _pmaDatapointsToAlarm,
                "ActionsEnabled" =: _pmaActionsEnabled,
                "InsufficientDataActions" =:
                  toQuery

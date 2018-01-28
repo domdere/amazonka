@@ -72,6 +72,7 @@ module Network.AWS.AutoScaling.Types
     , asgEnabledMetrics
     , asgLaunchConfigurationName
     , asgInstances
+    , asgLaunchTemplate
     , asgAutoScalingGroupARN
     , asgPlacementGroup
     , asgSuspendedProcesses
@@ -90,6 +91,7 @@ module Network.AWS.AutoScaling.Types
     , AutoScalingInstanceDetails
     , autoScalingInstanceDetails
     , asidLaunchConfigurationName
+    , asidLaunchTemplate
     , asidInstanceId
     , asidAutoScalingGroupName
     , asidAvailabilityZone
@@ -140,6 +142,7 @@ module Network.AWS.AutoScaling.Types
     , Instance
     , instance'
     , iLaunchConfigurationName
+    , iLaunchTemplate
     , iInstanceId
     , iAvailabilityZone
     , iLifecycleState
@@ -174,6 +177,13 @@ module Network.AWS.AutoScaling.Types
     , lcInstanceType
     , lcCreatedTime
 
+    -- * LaunchTemplateSpecification
+    , LaunchTemplateSpecification
+    , launchTemplateSpecification
+    , ltsLaunchTemplateName
+    , ltsLaunchTemplateId
+    , ltsVersion
+
     -- * LifecycleHook
     , LifecycleHook
     , lifecycleHook
@@ -194,9 +204,9 @@ module Network.AWS.AutoScaling.Types
     , lhsHeartbeatTimeout
     , lhsNotificationMetadata
     , lhsNotificationTargetARN
-    , lhsLifecycleTransition
     , lhsRoleARN
     , lhsLifecycleHookName
+    , lhsLifecycleTransition
 
     -- * LoadBalancerState
     , LoadBalancerState

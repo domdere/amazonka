@@ -21,6 +21,8 @@
 -- Lists the assessment runs that correspond to the assessment templates that are specified by the ARNs of the assessment templates.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Inspector.ListAssessmentRuns
     (
     -- * Creating a Request
@@ -44,6 +46,7 @@ module Network.AWS.Inspector.ListAssessmentRuns
 import Network.AWS.Inspector.Types
 import Network.AWS.Inspector.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -94,6 +97,13 @@ larAssessmentTemplateARNs = lens _larAssessmentTemplateARNs (\ s a -> s{_larAsse
 -- | You can use this parameter to indicate the maximum number of items that you want in the response. The default value is 10. The maximum value is 500.
 larMaxResults :: Lens' ListAssessmentRuns (Maybe Int)
 larMaxResults = lens _larMaxResults (\ s a -> s{_larMaxResults = a});
+
+instance AWSPager ListAssessmentRuns where
+        page rq rs
+          | stop (rs ^. larrsNextToken) = Nothing
+          | stop (rs ^. larrsAssessmentRunARNs) = Nothing
+          | otherwise =
+            Just $ rq & larNextToken .~ rs ^. larrsNextToken
 
 instance AWSRequest ListAssessmentRuns where
         type Rs ListAssessmentRuns =

@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Enables enhanced Amazon Kinesis stream monitoring for shard-level metrics.
+-- Enables enhanced Kinesis stream monitoring for shard-level metrics.
 --
 --
 module Network.AWS.Kinesis.EnableEnhancedMonitoring

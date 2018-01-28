@@ -21,6 +21,8 @@
 -- Returns a paginated list of all attribute definitions for a particular 'TypedLinkFacet' . For more information, see <http://docs.aws.amazon.com/directoryservice/latest/admin-guide/objectsandlinks.html#typedlink Typed link> .
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListTypedLinkFacetAttributes
     (
     -- * Creating a Request
@@ -44,6 +46,7 @@ module Network.AWS.CloudDirectory.ListTypedLinkFacetAttributes
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -96,6 +99,13 @@ ltlfaSchemaARN = lens _ltlfaSchemaARN (\ s a -> s{_ltlfaSchemaARN = a});
 -- | The unique name of the typed link facet.
 ltlfaName :: Lens' ListTypedLinkFacetAttributes Text
 ltlfaName = lens _ltlfaName (\ s a -> s{_ltlfaName = a});
+
+instance AWSPager ListTypedLinkFacetAttributes where
+        page rq rs
+          | stop (rs ^. ltlfarsNextToken) = Nothing
+          | stop (rs ^. ltlfarsAttributes) = Nothing
+          | otherwise =
+            Just $ rq & ltlfaNextToken .~ rs ^. ltlfarsNextToken
 
 instance AWSRequest ListTypedLinkFacetAttributes
          where

@@ -34,9 +34,12 @@ data Build = Build'
   , _bArtifacts        :: !(Maybe BuildArtifacts)
   , _bEnvironment      :: !(Maybe ProjectEnvironment)
   , _bInitiator        :: !(Maybe Text)
+  , _bNetworkInterface :: !(Maybe NetworkInterface)
   , _bCurrentPhase     :: !(Maybe Text)
+  , _bCache            :: !(Maybe ProjectCache)
   , _bSourceVersion    :: !(Maybe Text)
   , _bLogs             :: !(Maybe LogsLocation)
+  , _bVpcConfig        :: !(Maybe VPCConfig)
   , _bEndTime          :: !(Maybe POSIX)
   , _bProjectName      :: !(Maybe Text)
   , _bBuildStatus      :: !(Maybe StatusType)
@@ -64,11 +67,17 @@ data Build = Build'
 --
 -- * 'bInitiator' - The entity that started the build. Valid values include:     * If AWS CodePipeline started the build, the pipeline's name (for example, @codepipeline/my-demo-pipeline@ ).     * If an AWS Identity and Access Management (IAM) user started the build, the user's name (for example @MyUserName@ ).     * If the Jenkins plugin for AWS CodeBuild started the build, the string @CodeBuild-Jenkins-Plugin@ .
 --
+-- * 'bNetworkInterface' - Describes a network interface.
+--
 -- * 'bCurrentPhase' - The current build phase.
+--
+-- * 'bCache' - Information about the cache for the build.
 --
 -- * 'bSourceVersion' - Any version identifier for the version of the source code to be built.
 --
 -- * 'bLogs' - Information about the build's logs in Amazon CloudWatch Logs.
+--
+-- * 'bVpcConfig' - If your AWS CodeBuild project accesses resources in an Amazon VPC, you provide this parameter that identifies the VPC ID and the list of security group IDs and subnet IDs. The security groups and subnets must belong to the same VPC. You must provide at least one security group and one subnet ID.
 --
 -- * 'bEndTime' - When the build process ended, expressed in Unix time format.
 --
@@ -92,9 +101,12 @@ build =
   , _bArtifacts = Nothing
   , _bEnvironment = Nothing
   , _bInitiator = Nothing
+  , _bNetworkInterface = Nothing
   , _bCurrentPhase = Nothing
+  , _bCache = Nothing
   , _bSourceVersion = Nothing
   , _bLogs = Nothing
+  , _bVpcConfig = Nothing
   , _bEndTime = Nothing
   , _bProjectName = Nothing
   , _bBuildStatus = Nothing
@@ -132,9 +144,17 @@ bEnvironment = lens _bEnvironment (\ s a -> s{_bEnvironment = a});
 bInitiator :: Lens' Build (Maybe Text)
 bInitiator = lens _bInitiator (\ s a -> s{_bInitiator = a});
 
+-- | Describes a network interface.
+bNetworkInterface :: Lens' Build (Maybe NetworkInterface)
+bNetworkInterface = lens _bNetworkInterface (\ s a -> s{_bNetworkInterface = a});
+
 -- | The current build phase.
 bCurrentPhase :: Lens' Build (Maybe Text)
 bCurrentPhase = lens _bCurrentPhase (\ s a -> s{_bCurrentPhase = a});
+
+-- | Information about the cache for the build.
+bCache :: Lens' Build (Maybe ProjectCache)
+bCache = lens _bCache (\ s a -> s{_bCache = a});
 
 -- | Any version identifier for the version of the source code to be built.
 bSourceVersion :: Lens' Build (Maybe Text)
@@ -143,6 +163,10 @@ bSourceVersion = lens _bSourceVersion (\ s a -> s{_bSourceVersion = a});
 -- | Information about the build's logs in Amazon CloudWatch Logs.
 bLogs :: Lens' Build (Maybe LogsLocation)
 bLogs = lens _bLogs (\ s a -> s{_bLogs = a});
+
+-- | If your AWS CodeBuild project accesses resources in an Amazon VPC, you provide this parameter that identifies the VPC ID and the list of security group IDs and subnet IDs. The security groups and subnets must belong to the same VPC. You must provide at least one security group and one subnet ID.
+bVpcConfig :: Lens' Build (Maybe VPCConfig)
+bVpcConfig = lens _bVpcConfig (\ s a -> s{_bVpcConfig = a});
 
 -- | When the build process ended, expressed in Unix time format.
 bEndTime :: Lens' Build (Maybe UTCTime)
@@ -180,9 +204,12 @@ instance FromJSON Build where
                      <*> (x .:? "artifacts")
                      <*> (x .:? "environment")
                      <*> (x .:? "initiator")
+                     <*> (x .:? "networkInterface")
                      <*> (x .:? "currentPhase")
+                     <*> (x .:? "cache")
                      <*> (x .:? "sourceVersion")
                      <*> (x .:? "logs")
+                     <*> (x .:? "vpcConfig")
                      <*> (x .:? "endTime")
                      <*> (x .:? "projectName")
                      <*> (x .:? "buildStatus")
@@ -376,7 +403,8 @@ instance NFData BuildPhase where
 --
 -- /See:/ 'environmentImage' smart constructor.
 data EnvironmentImage = EnvironmentImage'
-  { _eiName        :: !(Maybe Text)
+  { _eiVersions    :: !(Maybe [Text])
+  , _eiName        :: !(Maybe Text)
   , _eiDescription :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -385,14 +413,21 @@ data EnvironmentImage = EnvironmentImage'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'eiVersions' - A list of environment image versions.
+--
 -- * 'eiName' - The name of the Docker image.
 --
 -- * 'eiDescription' - The description of the Docker image.
 environmentImage
     :: EnvironmentImage
 environmentImage =
-  EnvironmentImage' {_eiName = Nothing, _eiDescription = Nothing}
+  EnvironmentImage'
+  {_eiVersions = Nothing, _eiName = Nothing, _eiDescription = Nothing}
 
+
+-- | A list of environment image versions.
+eiVersions :: Lens' EnvironmentImage [Text]
+eiVersions = lens _eiVersions (\ s a -> s{_eiVersions = a}) . _Default . _Coerce;
 
 -- | The name of the Docker image.
 eiName :: Lens' EnvironmentImage (Maybe Text)
@@ -407,7 +442,8 @@ instance FromJSON EnvironmentImage where
           = withObject "EnvironmentImage"
               (\ x ->
                  EnvironmentImage' <$>
-                   (x .:? "name") <*> (x .:? "description"))
+                   (x .:? "versions" .!= mempty) <*> (x .:? "name") <*>
+                     (x .:? "description"))
 
 instance Hashable EnvironmentImage where
 
@@ -611,6 +647,49 @@ instance Hashable LogsLocation where
 
 instance NFData LogsLocation where
 
+-- | Describes a network interface.
+--
+--
+--
+-- /See:/ 'networkInterface' smart constructor.
+data NetworkInterface = NetworkInterface'
+  { _niSubnetId           :: !(Maybe Text)
+  , _niNetworkInterfaceId :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'NetworkInterface' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'niSubnetId' - The ID of the subnet.
+--
+-- * 'niNetworkInterfaceId' - The ID of the network interface.
+networkInterface
+    :: NetworkInterface
+networkInterface =
+  NetworkInterface' {_niSubnetId = Nothing, _niNetworkInterfaceId = Nothing}
+
+
+-- | The ID of the subnet.
+niSubnetId :: Lens' NetworkInterface (Maybe Text)
+niSubnetId = lens _niSubnetId (\ s a -> s{_niSubnetId = a});
+
+-- | The ID of the network interface.
+niNetworkInterfaceId :: Lens' NetworkInterface (Maybe Text)
+niNetworkInterfaceId = lens _niNetworkInterfaceId (\ s a -> s{_niNetworkInterfaceId = a});
+
+instance FromJSON NetworkInterface where
+        parseJSON
+          = withObject "NetworkInterface"
+              (\ x ->
+                 NetworkInterface' <$>
+                   (x .:? "subnetId") <*> (x .:? "networkInterfaceId"))
+
+instance Hashable NetworkInterface where
+
+instance NFData NetworkInterface where
+
 -- | Additional information about a build phase that has an error. You can use this information to help troubleshoot a failed build.
 --
 --
@@ -663,8 +742,11 @@ data Project = Project'
   , _pArtifacts        :: !(Maybe ProjectArtifacts)
   , _pEnvironment      :: !(Maybe ProjectEnvironment)
   , _pCreated          :: !(Maybe POSIX)
+  , _pCache            :: !(Maybe ProjectCache)
   , _pName             :: !(Maybe Text)
+  , _pVpcConfig        :: !(Maybe VPCConfig)
   , _pSource           :: !(Maybe ProjectSource)
+  , _pBadge            :: !(Maybe ProjectBadge)
   , _pEncryptionKey    :: !(Maybe Text)
   , _pLastModified     :: !(Maybe POSIX)
   , _pWebhook          :: !(Maybe Webhook)
@@ -687,9 +769,15 @@ data Project = Project'
 --
 -- * 'pCreated' - When the build project was created, expressed in Unix time format.
 --
+-- * 'pCache' - Information about the cache for the build project.
+--
 -- * 'pName' - The name of the build project.
 --
+-- * 'pVpcConfig' - Information about the VPC configuration that AWS CodeBuild will access.
+--
 -- * 'pSource' - Information about the build input source code for this build project.
+--
+-- * 'pBadge' - Information about the build badge for the build project.
 --
 -- * 'pEncryptionKey' - The AWS Key Management Service (AWS KMS) customer master key (CMK) to be used for encrypting the build output artifacts. This is expressed either as the CMK's Amazon Resource Name (ARN) or, if specified, the CMK's alias (using the format @alias//alias-name/ @ ).
 --
@@ -712,8 +800,11 @@ project =
   , _pArtifacts = Nothing
   , _pEnvironment = Nothing
   , _pCreated = Nothing
+  , _pCache = Nothing
   , _pName = Nothing
+  , _pVpcConfig = Nothing
   , _pSource = Nothing
+  , _pBadge = Nothing
   , _pEncryptionKey = Nothing
   , _pLastModified = Nothing
   , _pWebhook = Nothing
@@ -740,13 +831,25 @@ pEnvironment = lens _pEnvironment (\ s a -> s{_pEnvironment = a});
 pCreated :: Lens' Project (Maybe UTCTime)
 pCreated = lens _pCreated (\ s a -> s{_pCreated = a}) . mapping _Time;
 
+-- | Information about the cache for the build project.
+pCache :: Lens' Project (Maybe ProjectCache)
+pCache = lens _pCache (\ s a -> s{_pCache = a});
+
 -- | The name of the build project.
 pName :: Lens' Project (Maybe Text)
 pName = lens _pName (\ s a -> s{_pName = a});
 
+-- | Information about the VPC configuration that AWS CodeBuild will access.
+pVpcConfig :: Lens' Project (Maybe VPCConfig)
+pVpcConfig = lens _pVpcConfig (\ s a -> s{_pVpcConfig = a});
+
 -- | Information about the build input source code for this build project.
 pSource :: Lens' Project (Maybe ProjectSource)
 pSource = lens _pSource (\ s a -> s{_pSource = a});
+
+-- | Information about the build badge for the build project.
+pBadge :: Lens' Project (Maybe ProjectBadge)
+pBadge = lens _pBadge (\ s a -> s{_pBadge = a});
 
 -- | The AWS Key Management Service (AWS KMS) customer master key (CMK) to be used for encrypting the build output artifacts. This is expressed either as the CMK's Amazon Resource Name (ARN) or, if specified, the CMK's alias (using the format @alias//alias-name/ @ ).
 pEncryptionKey :: Lens' Project (Maybe Text)
@@ -784,8 +887,11 @@ instance FromJSON Project where
                    (x .:? "arn") <*> (x .:? "artifacts") <*>
                      (x .:? "environment")
                      <*> (x .:? "created")
+                     <*> (x .:? "cache")
                      <*> (x .:? "name")
+                     <*> (x .:? "vpcConfig")
                      <*> (x .:? "source")
+                     <*> (x .:? "badge")
                      <*> (x .:? "encryptionKey")
                      <*> (x .:? "lastModified")
                      <*> (x .:? "webhook")
@@ -892,6 +998,99 @@ instance ToJSON ProjectArtifacts where
                   ("namespaceType" .=) <$> _paNamespaceType,
                   Just ("type" .= _paType)])
 
+-- | Information about the build badge for the build project.
+--
+--
+--
+-- /See:/ 'projectBadge' smart constructor.
+data ProjectBadge = ProjectBadge'
+  { _pbBadgeEnabled    :: !(Maybe Bool)
+  , _pbBadgeRequestURL :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ProjectBadge' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'pbBadgeEnabled' - Set this to true to generate a publicly-accessible URL for your project's build badge.
+--
+-- * 'pbBadgeRequestURL' - The publicly-accessible URL through which you can access the build badge for your project.
+projectBadge
+    :: ProjectBadge
+projectBadge =
+  ProjectBadge' {_pbBadgeEnabled = Nothing, _pbBadgeRequestURL = Nothing}
+
+
+-- | Set this to true to generate a publicly-accessible URL for your project's build badge.
+pbBadgeEnabled :: Lens' ProjectBadge (Maybe Bool)
+pbBadgeEnabled = lens _pbBadgeEnabled (\ s a -> s{_pbBadgeEnabled = a});
+
+-- | The publicly-accessible URL through which you can access the build badge for your project.
+pbBadgeRequestURL :: Lens' ProjectBadge (Maybe Text)
+pbBadgeRequestURL = lens _pbBadgeRequestURL (\ s a -> s{_pbBadgeRequestURL = a});
+
+instance FromJSON ProjectBadge where
+        parseJSON
+          = withObject "ProjectBadge"
+              (\ x ->
+                 ProjectBadge' <$>
+                   (x .:? "badgeEnabled") <*> (x .:? "badgeRequestUrl"))
+
+instance Hashable ProjectBadge where
+
+instance NFData ProjectBadge where
+
+-- | Information about the cache for the build project.
+--
+--
+--
+-- /See:/ 'projectCache' smart constructor.
+data ProjectCache = ProjectCache'
+  { _pcLocation :: !(Maybe Text)
+  , _pcType     :: !CacheType
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ProjectCache' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'pcLocation' - Information about the cache location, as follows:      * @NO_CACHE@ : This value will be ignored.     * @S3@ : This is the S3 bucket name/prefix.
+--
+-- * 'pcType' - The type of cache used by the build project. Valid values include:     * @NO_CACHE@ : The build project will not use any cache.     * @S3@ : The build project will read and write from/to S3.
+projectCache
+    :: CacheType -- ^ 'pcType'
+    -> ProjectCache
+projectCache pType_ = ProjectCache' {_pcLocation = Nothing, _pcType = pType_}
+
+
+-- | Information about the cache location, as follows:      * @NO_CACHE@ : This value will be ignored.     * @S3@ : This is the S3 bucket name/prefix.
+pcLocation :: Lens' ProjectCache (Maybe Text)
+pcLocation = lens _pcLocation (\ s a -> s{_pcLocation = a});
+
+-- | The type of cache used by the build project. Valid values include:     * @NO_CACHE@ : The build project will not use any cache.     * @S3@ : The build project will read and write from/to S3.
+pcType :: Lens' ProjectCache CacheType
+pcType = lens _pcType (\ s a -> s{_pcType = a});
+
+instance FromJSON ProjectCache where
+        parseJSON
+          = withObject "ProjectCache"
+              (\ x ->
+                 ProjectCache' <$>
+                   (x .:? "location") <*> (x .: "type"))
+
+instance Hashable ProjectCache where
+
+instance NFData ProjectCache where
+
+instance ToJSON ProjectCache where
+        toJSON ProjectCache'{..}
+          = object
+              (catMaybes
+                 [("location" .=) <$> _pcLocation,
+                  Just ("type" .= _pcType)])
+
 -- | Information about the build environment of the build project.
 --
 --
@@ -899,6 +1098,7 @@ instance ToJSON ProjectArtifacts where
 -- /See:/ 'projectEnvironment' smart constructor.
 data ProjectEnvironment = ProjectEnvironment'
   { _pePrivilegedMode       :: !(Maybe Bool)
+  , _peCertificate          :: !(Maybe Text)
   , _peEnvironmentVariables :: !(Maybe [EnvironmentVariable])
   , _peType                 :: !EnvironmentType
   , _peImage                :: !Text
@@ -911,6 +1111,8 @@ data ProjectEnvironment = ProjectEnvironment'
 -- Use one of the following lenses to modify other fields as desired:
 --
 -- * 'pePrivilegedMode' - If set to true, enables running the Docker daemon inside a Docker container; otherwise, false or not specified (the default). This value must be set to true only if this build project will be used to build Docker images, and the specified build environment image is not one provided by AWS CodeBuild with Docker support. Otherwise, all associated builds that attempt to interact with the Docker daemon will fail. Note that you must also start the Docker daemon so that your builds can interact with it as needed. One way to do this is to initialize the Docker daemon in the install phase of your build spec by running the following build commands. (Do not run the following build commands if the specified build environment image is provided by AWS CodeBuild with Docker support.) @- nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay& - timeout -t 15 sh -c "until docker info; do echo .; sleep 1; done"@
+--
+-- * 'peCertificate' - The certificate to use with this build project.
 --
 -- * 'peEnvironmentVariables' - A set of environment variables to make available to builds for this build project.
 --
@@ -927,6 +1129,7 @@ projectEnvironment
 projectEnvironment pType_ pImage_ pComputeType_ =
   ProjectEnvironment'
   { _pePrivilegedMode = Nothing
+  , _peCertificate = Nothing
   , _peEnvironmentVariables = Nothing
   , _peType = pType_
   , _peImage = pImage_
@@ -937,6 +1140,10 @@ projectEnvironment pType_ pImage_ pComputeType_ =
 -- | If set to true, enables running the Docker daemon inside a Docker container; otherwise, false or not specified (the default). This value must be set to true only if this build project will be used to build Docker images, and the specified build environment image is not one provided by AWS CodeBuild with Docker support. Otherwise, all associated builds that attempt to interact with the Docker daemon will fail. Note that you must also start the Docker daemon so that your builds can interact with it as needed. One way to do this is to initialize the Docker daemon in the install phase of your build spec by running the following build commands. (Do not run the following build commands if the specified build environment image is provided by AWS CodeBuild with Docker support.) @- nohup /usr/local/bin/dockerd --host=unix:///var/run/docker.sock --host=tcp://0.0.0.0:2375 --storage-driver=overlay& - timeout -t 15 sh -c "until docker info; do echo .; sleep 1; done"@
 pePrivilegedMode :: Lens' ProjectEnvironment (Maybe Bool)
 pePrivilegedMode = lens _pePrivilegedMode (\ s a -> s{_pePrivilegedMode = a});
+
+-- | The certificate to use with this build project.
+peCertificate :: Lens' ProjectEnvironment (Maybe Text)
+peCertificate = lens _peCertificate (\ s a -> s{_peCertificate = a});
 
 -- | A set of environment variables to make available to builds for this build project.
 peEnvironmentVariables :: Lens' ProjectEnvironment [EnvironmentVariable]
@@ -959,8 +1166,8 @@ instance FromJSON ProjectEnvironment where
           = withObject "ProjectEnvironment"
               (\ x ->
                  ProjectEnvironment' <$>
-                   (x .:? "privilegedMode") <*>
-                     (x .:? "environmentVariables" .!= mempty)
+                   (x .:? "privilegedMode") <*> (x .:? "certificate")
+                     <*> (x .:? "environmentVariables" .!= mempty)
                      <*> (x .: "type")
                      <*> (x .: "image")
                      <*> (x .: "computeType"))
@@ -974,6 +1181,7 @@ instance ToJSON ProjectEnvironment where
           = object
               (catMaybes
                  [("privilegedMode" .=) <$> _pePrivilegedMode,
+                  ("certificate" .=) <$> _peCertificate,
                   ("environmentVariables" .=) <$>
                     _peEnvironmentVariables,
                   Just ("type" .= _peType), Just ("image" .= _peImage),
@@ -985,10 +1193,12 @@ instance ToJSON ProjectEnvironment where
 --
 -- /See:/ 'projectSource' smart constructor.
 data ProjectSource = ProjectSource'
-  { _psLocation  :: !(Maybe Text)
-  , _psAuth      :: !(Maybe SourceAuth)
-  , _psBuildspec :: !(Maybe Text)
-  , _psType      :: !SourceType
+  { _psInsecureSSL   :: !(Maybe Bool)
+  , _psLocation      :: !(Maybe Text)
+  , _psAuth          :: !(Maybe SourceAuth)
+  , _psBuildspec     :: !(Maybe Text)
+  , _psGitCloneDepth :: !(Maybe Nat)
+  , _psType          :: !SourceType
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -996,11 +1206,15 @@ data ProjectSource = ProjectSource'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'psInsecureSSL' - Enable this flag to ignore SSL warnings while connecting to the project source code.
+--
 -- * 'psLocation' - Information about the location of the source code to be built. Valid values include:     * For source code settings that are specified in the source action of a pipeline in AWS CodePipeline, @location@ should not be specified. If it is specified, AWS CodePipeline will ignore it. This is because AWS CodePipeline uses the settings in a pipeline's source action instead of this value.     * For source code in an AWS CodeCommit repository, the HTTPS clone URL to the repository that contains the source code and the build spec (for example, @https://git-codecommit./region-ID/ .amazonaws.com/v1/repos//repo-name/ @ ).     * For source code in an Amazon Simple Storage Service (Amazon S3) input bucket, the path to the ZIP file that contains the source code (for example, @/bucket-name/ //path/ //to/ //object-name/ .zip@ )     * For source code in a GitHub repository, the HTTPS clone URL to the repository that contains the source and the build spec. Also, you must connect your AWS account to your GitHub account. To do this, use the AWS CodeBuild console to begin creating a build project. When you use the console to connect (or reconnect) with GitHub, on the GitHub __Authorize application__ page that displays, for __Organization access__ , choose __Request access__ next to each repository you want to allow AWS CodeBuild to have access to. Then choose __Authorize application__ . (After you have connected to your GitHub account, you do not need to finish creating the build project, and you may then leave the AWS CodeBuild console.) To instruct AWS CodeBuild to then use this connection, in the @source@ object, set the @auth@ object's @type@ value to @OAUTH@ .     * For source code in a Bitbucket repository, the HTTPS clone URL to the repository that contains the source and the build spec. Also, you must connect your AWS account to your Bitbucket account. To do this, use the AWS CodeBuild console to begin creating a build project. When you use the console to connect (or reconnect) with Bitbucket, on the Bitbucket __Confirm access to your account__ page that displays, choose __Grant access__ . (After you have connected to your Bitbucket account, you do not need to finish creating the build project, and you may then leave the AWS CodeBuild console.) To instruct AWS CodeBuild to then use this connection, in the @source@ object, set the @auth@ object's @type@ value to @OAUTH@ .
 --
 -- * 'psAuth' - Information about the authorization settings for AWS CodeBuild to access the source code to be built. This information is for the AWS CodeBuild console's use only. Your code should not get or set this information directly (unless the build project's source @type@ value is @BITBUCKET@ or @GITHUB@ ).
 --
 -- * 'psBuildspec' - The build spec declaration to use for the builds in this build project. If this value is not specified, a build spec must be included along with the source code to be built.
+--
+-- * 'psGitCloneDepth' - Information about the git clone depth for the build project.
 --
 -- * 'psType' - The type of repository that contains the source code to be built. Valid values include:     * @BITBUCKET@ : The source code is in a Bitbucket repository.     * @CODECOMMIT@ : The source code is in an AWS CodeCommit repository.     * @CODEPIPELINE@ : The source code settings are specified in the source action of a pipeline in AWS CodePipeline.     * @GITHUB@ : The source code is in a GitHub repository.     * @S3@ : The source code is in an Amazon Simple Storage Service (Amazon S3) input bucket.
 projectSource
@@ -1008,12 +1222,18 @@ projectSource
     -> ProjectSource
 projectSource pType_ =
   ProjectSource'
-  { _psLocation = Nothing
+  { _psInsecureSSL = Nothing
+  , _psLocation = Nothing
   , _psAuth = Nothing
   , _psBuildspec = Nothing
+  , _psGitCloneDepth = Nothing
   , _psType = pType_
   }
 
+
+-- | Enable this flag to ignore SSL warnings while connecting to the project source code.
+psInsecureSSL :: Lens' ProjectSource (Maybe Bool)
+psInsecureSSL = lens _psInsecureSSL (\ s a -> s{_psInsecureSSL = a});
 
 -- | Information about the location of the source code to be built. Valid values include:     * For source code settings that are specified in the source action of a pipeline in AWS CodePipeline, @location@ should not be specified. If it is specified, AWS CodePipeline will ignore it. This is because AWS CodePipeline uses the settings in a pipeline's source action instead of this value.     * For source code in an AWS CodeCommit repository, the HTTPS clone URL to the repository that contains the source code and the build spec (for example, @https://git-codecommit./region-ID/ .amazonaws.com/v1/repos//repo-name/ @ ).     * For source code in an Amazon Simple Storage Service (Amazon S3) input bucket, the path to the ZIP file that contains the source code (for example, @/bucket-name/ //path/ //to/ //object-name/ .zip@ )     * For source code in a GitHub repository, the HTTPS clone URL to the repository that contains the source and the build spec. Also, you must connect your AWS account to your GitHub account. To do this, use the AWS CodeBuild console to begin creating a build project. When you use the console to connect (or reconnect) with GitHub, on the GitHub __Authorize application__ page that displays, for __Organization access__ , choose __Request access__ next to each repository you want to allow AWS CodeBuild to have access to. Then choose __Authorize application__ . (After you have connected to your GitHub account, you do not need to finish creating the build project, and you may then leave the AWS CodeBuild console.) To instruct AWS CodeBuild to then use this connection, in the @source@ object, set the @auth@ object's @type@ value to @OAUTH@ .     * For source code in a Bitbucket repository, the HTTPS clone URL to the repository that contains the source and the build spec. Also, you must connect your AWS account to your Bitbucket account. To do this, use the AWS CodeBuild console to begin creating a build project. When you use the console to connect (or reconnect) with Bitbucket, on the Bitbucket __Confirm access to your account__ page that displays, choose __Grant access__ . (After you have connected to your Bitbucket account, you do not need to finish creating the build project, and you may then leave the AWS CodeBuild console.) To instruct AWS CodeBuild to then use this connection, in the @source@ object, set the @auth@ object's @type@ value to @OAUTH@ .
 psLocation :: Lens' ProjectSource (Maybe Text)
@@ -1027,6 +1247,10 @@ psAuth = lens _psAuth (\ s a -> s{_psAuth = a});
 psBuildspec :: Lens' ProjectSource (Maybe Text)
 psBuildspec = lens _psBuildspec (\ s a -> s{_psBuildspec = a});
 
+-- | Information about the git clone depth for the build project.
+psGitCloneDepth :: Lens' ProjectSource (Maybe Natural)
+psGitCloneDepth = lens _psGitCloneDepth (\ s a -> s{_psGitCloneDepth = a}) . mapping _Nat;
+
 -- | The type of repository that contains the source code to be built. Valid values include:     * @BITBUCKET@ : The source code is in a Bitbucket repository.     * @CODECOMMIT@ : The source code is in an AWS CodeCommit repository.     * @CODEPIPELINE@ : The source code settings are specified in the source action of a pipeline in AWS CodePipeline.     * @GITHUB@ : The source code is in a GitHub repository.     * @S3@ : The source code is in an Amazon Simple Storage Service (Amazon S3) input bucket.
 psType :: Lens' ProjectSource SourceType
 psType = lens _psType (\ s a -> s{_psType = a});
@@ -1036,8 +1260,10 @@ instance FromJSON ProjectSource where
           = withObject "ProjectSource"
               (\ x ->
                  ProjectSource' <$>
-                   (x .:? "location") <*> (x .:? "auth") <*>
-                     (x .:? "buildspec")
+                   (x .:? "insecureSsl") <*> (x .:? "location") <*>
+                     (x .:? "auth")
+                     <*> (x .:? "buildspec")
+                     <*> (x .:? "gitCloneDepth")
                      <*> (x .: "type"))
 
 instance Hashable ProjectSource where
@@ -1048,9 +1274,11 @@ instance ToJSON ProjectSource where
         toJSON ProjectSource'{..}
           = object
               (catMaybes
-                 [("location" .=) <$> _psLocation,
+                 [("insecureSsl" .=) <$> _psInsecureSSL,
+                  ("location" .=) <$> _psLocation,
                   ("auth" .=) <$> _psAuth,
                   ("buildspec" .=) <$> _psBuildspec,
+                  ("gitCloneDepth" .=) <$> _psGitCloneDepth,
                   Just ("type" .= _psType)])
 
 -- | Information about the authorization settings for AWS CodeBuild to access the source code to be built.
@@ -1152,13 +1380,76 @@ instance ToJSON Tag where
               (catMaybes
                  [("value" .=) <$> _tagValue, ("key" .=) <$> _tagKey])
 
+-- | Information about the VPC configuration that AWS CodeBuild will access.
+--
+--
+--
+-- /See:/ 'vpcConfig' smart constructor.
+data VPCConfig = VPCConfig'
+  { _vcSecurityGroupIds :: !(Maybe [Text])
+  , _vcVpcId            :: !(Maybe Text)
+  , _vcSubnets          :: !(Maybe [Text])
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'VPCConfig' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'vcSecurityGroupIds' - A list of one or more security groups IDs in your Amazon VPC.
+--
+-- * 'vcVpcId' - The ID of the Amazon VPC.
+--
+-- * 'vcSubnets' - A list of one or more subnet IDs in your Amazon VPC.
+vpcConfig
+    :: VPCConfig
+vpcConfig =
+  VPCConfig'
+  {_vcSecurityGroupIds = Nothing, _vcVpcId = Nothing, _vcSubnets = Nothing}
+
+
+-- | A list of one or more security groups IDs in your Amazon VPC.
+vcSecurityGroupIds :: Lens' VPCConfig [Text]
+vcSecurityGroupIds = lens _vcSecurityGroupIds (\ s a -> s{_vcSecurityGroupIds = a}) . _Default . _Coerce;
+
+-- | The ID of the Amazon VPC.
+vcVpcId :: Lens' VPCConfig (Maybe Text)
+vcVpcId = lens _vcVpcId (\ s a -> s{_vcVpcId = a});
+
+-- | A list of one or more subnet IDs in your Amazon VPC.
+vcSubnets :: Lens' VPCConfig [Text]
+vcSubnets = lens _vcSubnets (\ s a -> s{_vcSubnets = a}) . _Default . _Coerce;
+
+instance FromJSON VPCConfig where
+        parseJSON
+          = withObject "VPCConfig"
+              (\ x ->
+                 VPCConfig' <$>
+                   (x .:? "securityGroupIds" .!= mempty) <*>
+                     (x .:? "vpcId")
+                     <*> (x .:? "subnets" .!= mempty))
+
+instance Hashable VPCConfig where
+
+instance NFData VPCConfig where
+
+instance ToJSON VPCConfig where
+        toJSON VPCConfig'{..}
+          = object
+              (catMaybes
+                 [("securityGroupIds" .=) <$> _vcSecurityGroupIds,
+                  ("vpcId" .=) <$> _vcVpcId,
+                  ("subnets" .=) <$> _vcSubnets])
+
 -- | Information about a webhook in GitHub that connects repository events to a build project in AWS CodeBuild.
 --
 --
 --
 -- /See:/ 'webhook' smart constructor.
-newtype Webhook = Webhook'
-  { _wUrl :: Maybe Text
+data Webhook = Webhook'
+  { _wUrl        :: !(Maybe Text)
+  , _wSecret     :: !(Maybe Text)
+  , _wPayloadURL :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1167,19 +1458,34 @@ newtype Webhook = Webhook'
 -- Use one of the following lenses to modify other fields as desired:
 --
 -- * 'wUrl' - The URL to the webhook.
+--
+-- * 'wSecret' - Use this secret while creating a webhook in GitHub for Enterprise. The secret allows webhook requests sent by GitHub for Enterprise to be authenticated by AWS CodeBuild.
+--
+-- * 'wPayloadURL' - This is the server endpoint that will receive the webhook payload.
 webhook
     :: Webhook
-webhook = Webhook' {_wUrl = Nothing}
+webhook = Webhook' {_wUrl = Nothing, _wSecret = Nothing, _wPayloadURL = Nothing}
 
 
 -- | The URL to the webhook.
 wUrl :: Lens' Webhook (Maybe Text)
 wUrl = lens _wUrl (\ s a -> s{_wUrl = a});
 
+-- | Use this secret while creating a webhook in GitHub for Enterprise. The secret allows webhook requests sent by GitHub for Enterprise to be authenticated by AWS CodeBuild.
+wSecret :: Lens' Webhook (Maybe Text)
+wSecret = lens _wSecret (\ s a -> s{_wSecret = a});
+
+-- | This is the server endpoint that will receive the webhook payload.
+wPayloadURL :: Lens' Webhook (Maybe Text)
+wPayloadURL = lens _wPayloadURL (\ s a -> s{_wPayloadURL = a});
+
 instance FromJSON Webhook where
         parseJSON
           = withObject "Webhook"
-              (\ x -> Webhook' <$> (x .:? "url"))
+              (\ x ->
+                 Webhook' <$>
+                   (x .:? "url") <*> (x .:? "secret") <*>
+                     (x .:? "payloadUrl"))
 
 instance Hashable Webhook where
 

@@ -173,6 +173,7 @@ module Network.AWS.EMR.Types
     , cluReleaseLabel
     , cluRepoUpgradeOnBoot
     , cluLogURI
+    , cluKerberosAttributes
     , cluRunningAMIVersion
     , cluMasterPublicDNSName
     , cluTerminationProtected
@@ -488,6 +489,15 @@ module Network.AWS.EMR.Types
     , jficServiceAccessSecurityGroup
     , jficTerminationProtected
     , jficPlacement
+
+    -- * KerberosAttributes
+    , KerberosAttributes
+    , kerberosAttributes
+    , kaADDomainJoinPassword
+    , kaCrossRealmTrustPrincipalPassword
+    , kaADDomainJoinUser
+    , kaRealm
+    , kaKdcAdminPassword
 
     -- * KeyValue
     , KeyValue

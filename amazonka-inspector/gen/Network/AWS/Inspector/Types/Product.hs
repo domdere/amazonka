@@ -70,7 +70,13 @@ instance ToJSON AgentFilter where
 --
 -- /See:/ 'agentPreview' smart constructor.
 data AgentPreview = AgentPreview'
-  { _apAutoScalingGroup :: !(Maybe Text)
+  { _apHostname         :: !(Maybe Text)
+  , _apAutoScalingGroup :: !(Maybe Text)
+  , _apOperatingSystem  :: !(Maybe Text)
+  , _apAgentVersion     :: !(Maybe Text)
+  , _apKernelVersion    :: !(Maybe Text)
+  , _apAgentHealth      :: !(Maybe AgentHealth)
+  , _apIpv4Address      :: !(Maybe Text)
   , _apAgentId          :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -79,19 +85,64 @@ data AgentPreview = AgentPreview'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'apHostname' - The hostname of the EC2 instance on which the Amazon Inspector Agent is installed.
+--
 -- * 'apAutoScalingGroup' - The Auto Scaling group for the EC2 instance where the agent is installed.
+--
+-- * 'apOperatingSystem' - The operating system running on the EC2 instance on which the Amazon Inspector Agent is installed.
+--
+-- * 'apAgentVersion' - The version of the Amazon Inspector Agent.
+--
+-- * 'apKernelVersion' - The kernel version of the operating system running on the EC2 instance on which the Amazon Inspector Agent is installed.
+--
+-- * 'apAgentHealth' - The health status of the Amazon Inspector Agent.
+--
+-- * 'apIpv4Address' - The IP address of the EC2 instance on which the Amazon Inspector Agent is installed.
 --
 -- * 'apAgentId' - The ID of the EC2 instance where the agent is installed.
 agentPreview
     :: Text -- ^ 'apAgentId'
     -> AgentPreview
 agentPreview pAgentId_ =
-  AgentPreview' {_apAutoScalingGroup = Nothing, _apAgentId = pAgentId_}
+  AgentPreview'
+  { _apHostname = Nothing
+  , _apAutoScalingGroup = Nothing
+  , _apOperatingSystem = Nothing
+  , _apAgentVersion = Nothing
+  , _apKernelVersion = Nothing
+  , _apAgentHealth = Nothing
+  , _apIpv4Address = Nothing
+  , _apAgentId = pAgentId_
+  }
 
+
+-- | The hostname of the EC2 instance on which the Amazon Inspector Agent is installed.
+apHostname :: Lens' AgentPreview (Maybe Text)
+apHostname = lens _apHostname (\ s a -> s{_apHostname = a});
 
 -- | The Auto Scaling group for the EC2 instance where the agent is installed.
 apAutoScalingGroup :: Lens' AgentPreview (Maybe Text)
 apAutoScalingGroup = lens _apAutoScalingGroup (\ s a -> s{_apAutoScalingGroup = a});
+
+-- | The operating system running on the EC2 instance on which the Amazon Inspector Agent is installed.
+apOperatingSystem :: Lens' AgentPreview (Maybe Text)
+apOperatingSystem = lens _apOperatingSystem (\ s a -> s{_apOperatingSystem = a});
+
+-- | The version of the Amazon Inspector Agent.
+apAgentVersion :: Lens' AgentPreview (Maybe Text)
+apAgentVersion = lens _apAgentVersion (\ s a -> s{_apAgentVersion = a});
+
+-- | The kernel version of the operating system running on the EC2 instance on which the Amazon Inspector Agent is installed.
+apKernelVersion :: Lens' AgentPreview (Maybe Text)
+apKernelVersion = lens _apKernelVersion (\ s a -> s{_apKernelVersion = a});
+
+-- | The health status of the Amazon Inspector Agent.
+apAgentHealth :: Lens' AgentPreview (Maybe AgentHealth)
+apAgentHealth = lens _apAgentHealth (\ s a -> s{_apAgentHealth = a});
+
+-- | The IP address of the EC2 instance on which the Amazon Inspector Agent is installed.
+apIpv4Address :: Lens' AgentPreview (Maybe Text)
+apIpv4Address = lens _apIpv4Address (\ s a -> s{_apIpv4Address = a});
 
 -- | The ID of the EC2 instance where the agent is installed.
 apAgentId :: Lens' AgentPreview Text
@@ -102,7 +153,13 @@ instance FromJSON AgentPreview where
           = withObject "AgentPreview"
               (\ x ->
                  AgentPreview' <$>
-                   (x .:? "autoScalingGroup") <*> (x .: "agentId"))
+                   (x .:? "hostname") <*> (x .:? "autoScalingGroup") <*>
+                     (x .:? "operatingSystem")
+                     <*> (x .:? "agentVersion")
+                     <*> (x .:? "kernelVersion")
+                     <*> (x .:? "agentHealth")
+                     <*> (x .:? "ipv4Address")
+                     <*> (x .: "agentId"))
 
 instance Hashable AgentPreview where
 
@@ -723,12 +780,14 @@ instance ToJSON AssessmentTargetFilter where
 --
 -- /See:/ 'assessmentTemplate' smart constructor.
 data AssessmentTemplate = AssessmentTemplate'
-  { _atArn                       :: !Text
+  { _atLastAssessmentRunARN      :: !(Maybe Text)
+  , _atArn                       :: !Text
   , _atName                      :: !Text
   , _atAssessmentTargetARN       :: !Text
   , _atDurationInSeconds         :: !Nat
   , _atRulesPackageARNs          :: ![Text]
   , _atUserAttributesForFindings :: ![Attribute]
+  , _atAssessmentRunCount        :: !Int
   , _atCreatedAt                 :: !POSIX
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -736,6 +795,8 @@ data AssessmentTemplate = AssessmentTemplate'
 -- | Creates a value of 'AssessmentTemplate' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'atLastAssessmentRunARN' - The Amazon Resource Name (ARN) of the most recent assessment run associated with this assessment template. This value exists only when the value of assessmentRunCount is greater than zero.
 --
 -- * 'atArn' - The ARN of the assessment template.
 --
@@ -749,25 +810,34 @@ data AssessmentTemplate = AssessmentTemplate'
 --
 -- * 'atUserAttributesForFindings' - The user-defined attributes that are assigned to every generated finding from the assessment run that uses this assessment template.
 --
+-- * 'atAssessmentRunCount' - The number of existing assessment runs associated with this assessment template. This value can be zero or a positive integer.
+--
 -- * 'atCreatedAt' - The time at which the assessment template is created.
 assessmentTemplate
     :: Text -- ^ 'atArn'
     -> Text -- ^ 'atName'
     -> Text -- ^ 'atAssessmentTargetARN'
     -> Natural -- ^ 'atDurationInSeconds'
+    -> Int -- ^ 'atAssessmentRunCount'
     -> UTCTime -- ^ 'atCreatedAt'
     -> AssessmentTemplate
-assessmentTemplate pArn_ pName_ pAssessmentTargetARN_ pDurationInSeconds_ pCreatedAt_ =
+assessmentTemplate pArn_ pName_ pAssessmentTargetARN_ pDurationInSeconds_ pAssessmentRunCount_ pCreatedAt_ =
   AssessmentTemplate'
-  { _atArn = pArn_
+  { _atLastAssessmentRunARN = Nothing
+  , _atArn = pArn_
   , _atName = pName_
   , _atAssessmentTargetARN = pAssessmentTargetARN_
   , _atDurationInSeconds = _Nat # pDurationInSeconds_
   , _atRulesPackageARNs = mempty
   , _atUserAttributesForFindings = mempty
+  , _atAssessmentRunCount = pAssessmentRunCount_
   , _atCreatedAt = _Time # pCreatedAt_
   }
 
+
+-- | The Amazon Resource Name (ARN) of the most recent assessment run associated with this assessment template. This value exists only when the value of assessmentRunCount is greater than zero.
+atLastAssessmentRunARN :: Lens' AssessmentTemplate (Maybe Text)
+atLastAssessmentRunARN = lens _atLastAssessmentRunARN (\ s a -> s{_atLastAssessmentRunARN = a});
 
 -- | The ARN of the assessment template.
 atArn :: Lens' AssessmentTemplate Text
@@ -793,6 +863,10 @@ atRulesPackageARNs = lens _atRulesPackageARNs (\ s a -> s{_atRulesPackageARNs = 
 atUserAttributesForFindings :: Lens' AssessmentTemplate [Attribute]
 atUserAttributesForFindings = lens _atUserAttributesForFindings (\ s a -> s{_atUserAttributesForFindings = a}) . _Coerce;
 
+-- | The number of existing assessment runs associated with this assessment template. This value can be zero or a positive integer.
+atAssessmentRunCount :: Lens' AssessmentTemplate Int
+atAssessmentRunCount = lens _atAssessmentRunCount (\ s a -> s{_atAssessmentRunCount = a});
+
 -- | The time at which the assessment template is created.
 atCreatedAt :: Lens' AssessmentTemplate UTCTime
 atCreatedAt = lens _atCreatedAt (\ s a -> s{_atCreatedAt = a}) . _Time;
@@ -802,11 +876,13 @@ instance FromJSON AssessmentTemplate where
           = withObject "AssessmentTemplate"
               (\ x ->
                  AssessmentTemplate' <$>
-                   (x .: "arn") <*> (x .: "name") <*>
-                     (x .: "assessmentTargetArn")
+                   (x .:? "lastAssessmentRunArn") <*> (x .: "arn") <*>
+                     (x .: "name")
+                     <*> (x .: "assessmentTargetArn")
                      <*> (x .: "durationInSeconds")
                      <*> (x .:? "rulesPackageArns" .!= mempty)
                      <*> (x .:? "userAttributesForFindings" .!= mempty)
+                     <*> (x .: "assessmentRunCount")
                      <*> (x .: "createdAt"))
 
 instance Hashable AssessmentTemplate where

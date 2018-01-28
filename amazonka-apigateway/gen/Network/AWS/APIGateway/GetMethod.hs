@@ -37,6 +37,7 @@ module Network.AWS.APIGateway.GetMethod
     -- * Response Lenses
     , mMethodResponses
     , mHttpMethod
+    , mAuthorizationScopes
     , mRequestValidatorId
     , mRequestModels
     , mRequestParameters

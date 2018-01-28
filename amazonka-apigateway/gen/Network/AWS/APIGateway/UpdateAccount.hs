@@ -46,7 +46,7 @@ import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
 
--- | Requests Amazon API Gateway to change information about the current 'Account' resource.
+-- | Requests API Gateway to change information about the current 'Account' resource.
 --
 --
 --

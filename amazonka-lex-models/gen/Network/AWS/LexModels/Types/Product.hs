@@ -118,7 +118,9 @@ instance NFData BotAliasMetadata where
 --
 -- /See:/ 'botChannelAssociation' smart constructor.
 data BotChannelAssociation = BotChannelAssociation'
-  { _bcaBotAlias         :: !(Maybe Text)
+  { _bcaFailureReason    :: !(Maybe Text)
+  , _bcaStatus           :: !(Maybe ChannelStatus)
+  , _bcaBotAlias         :: !(Maybe Text)
   , _bcaBotName          :: !(Maybe Text)
   , _bcaBotConfiguration :: !(Maybe (Sensitive (Map Text Text)))
   , _bcaCreatedDate      :: !(Maybe POSIX)
@@ -131,6 +133,10 @@ data BotChannelAssociation = BotChannelAssociation'
 -- | Creates a value of 'BotChannelAssociation' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'bcaFailureReason' - If @status@ is @FAILED@ , Amazon Lex provides the reason that it failed to create the association.
+--
+-- * 'bcaStatus' - The status of the bot channel.      * @CREATED@ - The channel has been created and is ready for use.     * @IN_PROGRESS@ - Channel creation is in progress.     * @FAILED@ - There was an error creating the channel. For information about the reason for the failure, see the @failureReason@ field.
 --
 -- * 'bcaBotAlias' - An alias pointing to the specific version of the Amazon Lex bot to which this association is being made.
 --
@@ -149,7 +155,9 @@ botChannelAssociation
     :: BotChannelAssociation
 botChannelAssociation =
   BotChannelAssociation'
-  { _bcaBotAlias = Nothing
+  { _bcaFailureReason = Nothing
+  , _bcaStatus = Nothing
+  , _bcaBotAlias = Nothing
   , _bcaBotName = Nothing
   , _bcaBotConfiguration = Nothing
   , _bcaCreatedDate = Nothing
@@ -158,6 +166,14 @@ botChannelAssociation =
   , _bcaDescription = Nothing
   }
 
+
+-- | If @status@ is @FAILED@ , Amazon Lex provides the reason that it failed to create the association.
+bcaFailureReason :: Lens' BotChannelAssociation (Maybe Text)
+bcaFailureReason = lens _bcaFailureReason (\ s a -> s{_bcaFailureReason = a});
+
+-- | The status of the bot channel.      * @CREATED@ - The channel has been created and is ready for use.     * @IN_PROGRESS@ - Channel creation is in progress.     * @FAILED@ - There was an error creating the channel. For information about the reason for the failure, see the @failureReason@ field.
+bcaStatus :: Lens' BotChannelAssociation (Maybe ChannelStatus)
+bcaStatus = lens _bcaStatus (\ s a -> s{_bcaStatus = a});
 
 -- | An alias pointing to the specific version of the Amazon Lex bot to which this association is being made.
 bcaBotAlias :: Lens' BotChannelAssociation (Maybe Text)
@@ -192,8 +208,10 @@ instance FromJSON BotChannelAssociation where
           = withObject "BotChannelAssociation"
               (\ x ->
                  BotChannelAssociation' <$>
-                   (x .:? "botAlias") <*> (x .:? "botName") <*>
-                     (x .:? "botConfiguration" .!= mempty)
+                   (x .:? "failureReason") <*> (x .:? "status") <*>
+                     (x .:? "botAlias")
+                     <*> (x .:? "botName")
+                     <*> (x .:? "botConfiguration" .!= mempty)
                      <*> (x .:? "createdDate")
                      <*> (x .:? "name")
                      <*> (x .:? "type")

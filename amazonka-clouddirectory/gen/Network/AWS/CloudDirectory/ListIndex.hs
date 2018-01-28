@@ -18,9 +18,11 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Lists objects attached to the specified index.
+-- Lists objects and indexed values attached to the index.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListIndex
     (
     -- * Creating a Request
@@ -46,6 +48,7 @@ module Network.AWS.CloudDirectory.ListIndex
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -71,7 +74,7 @@ data ListIndex = ListIndex'
 --
 -- * 'liNextToken' - The pagination token.
 --
--- * 'liMaxResults' - The maximum number of results to retrieve from the index.
+-- * 'liMaxResults' - The maximum number of objects in a single page to retrieve from the index during a request. For more information, see <http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html#limits_cd AWS Directory Service Limits> .
 --
 -- * 'liDirectoryARN' - The ARN of the directory that the index exists in.
 --
@@ -103,7 +106,7 @@ liConsistencyLevel = lens _liConsistencyLevel (\ s a -> s{_liConsistencyLevel = 
 liNextToken :: Lens' ListIndex (Maybe Text)
 liNextToken = lens _liNextToken (\ s a -> s{_liNextToken = a});
 
--- | The maximum number of results to retrieve from the index.
+-- | The maximum number of objects in a single page to retrieve from the index during a request. For more information, see <http://docs.aws.amazon.com/directoryservice/latest/admin-guide/limits.html#limits_cd AWS Directory Service Limits> .
 liMaxResults :: Lens' ListIndex (Maybe Natural)
 liMaxResults = lens _liMaxResults (\ s a -> s{_liMaxResults = a}) . mapping _Nat;
 
@@ -114,6 +117,13 @@ liDirectoryARN = lens _liDirectoryARN (\ s a -> s{_liDirectoryARN = a});
 -- | The reference to the index to list.
 liIndexReference :: Lens' ListIndex ObjectReference
 liIndexReference = lens _liIndexReference (\ s a -> s{_liIndexReference = a});
+
+instance AWSPager ListIndex where
+        page rq rs
+          | stop (rs ^. lirsNextToken) = Nothing
+          | stop (rs ^. lirsIndexAttachments) = Nothing
+          | otherwise =
+            Just $ rq & liNextToken .~ rs ^. lirsNextToken
 
 instance AWSRequest ListIndex where
         type Rs ListIndex = ListIndexResponse

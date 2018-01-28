@@ -163,6 +163,9 @@ import Test.Tasty
 --         , requestCancelCommand $
 --             cancelCommand
 --
+--         , requestDescribeAutomationStepExecutions $
+--             describeAutomationStepExecutions
+--
 --         , requestGetCommandInvocation $
 --             getCommandInvocation
 --
@@ -453,6 +456,9 @@ import Test.Tasty
 --
 --         , responseCancelCommand $
 --             cancelCommandResponse
+--
+--         , responseDescribeAutomationStepExecutions $
+--             describeAutomationStepExecutionsResponse
 --
 --         , responseGetCommandInvocation $
 --             getCommandInvocationResponse
@@ -836,6 +842,11 @@ requestCancelCommand :: CancelCommand -> TestTree
 requestCancelCommand = req
     "CancelCommand"
     "fixture/CancelCommand.yaml"
+
+requestDescribeAutomationStepExecutions :: DescribeAutomationStepExecutions -> TestTree
+requestDescribeAutomationStepExecutions = req
+    "DescribeAutomationStepExecutions"
+    "fixture/DescribeAutomationStepExecutions.yaml"
 
 requestGetCommandInvocation :: GetCommandInvocation -> TestTree
 requestGetCommandInvocation = req
@@ -1408,6 +1419,13 @@ responseCancelCommand = res
     "fixture/CancelCommandResponse.proto"
     ssm
     (Proxy :: Proxy CancelCommand)
+
+responseDescribeAutomationStepExecutions :: DescribeAutomationStepExecutionsResponse -> TestTree
+responseDescribeAutomationStepExecutions = res
+    "DescribeAutomationStepExecutionsResponse"
+    "fixture/DescribeAutomationStepExecutionsResponse.proto"
+    ssm
+    (Proxy :: Proxy DescribeAutomationStepExecutions)
 
 responseGetCommandInvocation :: GetCommandInvocationResponse -> TestTree
 responseGetCommandInvocation = res

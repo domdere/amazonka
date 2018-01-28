@@ -23,13 +23,15 @@
 --
 -- The user who calls the API for an invitation to join must have the @organizations:CreateAccount@ permission. If you enabled all features in the organization, then the user must also have the @iam:CreateServiceLinkedRole@ permission so that Organizations can create the required service-linked role named /OrgsServiceLinkedRoleName/ . For more information, see <http://docs.aws.amazon.com/organizations/latest/userguide/orgs_integration_services.html#orgs_integration_service-linked-roles AWS Organizations and Service-Linked Roles> in the /AWS Organizations User Guide/ .
 --
--- The user in the master account who calls this API must also have the @iam:CreateRole@ permission because AWS Organizations preconfigures the new member account with a role (named @OrganizationAccountAccessRole@ ) that grants users in the master account administrator permissions in the new member account. Principals in the master account can assume the role. AWS Organizations clones the company name and address information for the new account from the organization's master account.
+-- The user in the master account who calls this API must also have the @iam:CreateRole@ permission because AWS Organizations preconfigures the new member account with a role (named @OrganizationAccountAccessRole@ by default) that grants users in the master account administrator permissions in the new member account. Principals in the master account can assume the role. AWS Organizations clones the company name and address information for the new account from the organization's master account.
 --
 -- This operation can be called only from the organization's master account.
 --
 -- For more information about creating accounts, see <http://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_create.html Creating an AWS Account in Your Organization> in the /AWS Organizations User Guide/ .
 --
 -- /Important:/ When you create an account in an organization using the AWS Organizations console, API, or CLI commands, the information required for the account to operate as a standalone account, such as a payment method and signing the End User Licence Agreement (EULA) is /not/ automatically collected. If you must remove an account from your organization later, you can do so only after you provide the missing information. Follow the steps at <http://docs.aws.amazon.com/organizations/latest/userguide/orgs_manage_accounts_remove.html#leave-without-all-info To leave an organization when all required account information has not yet been provided> in the /AWS Organizations User Guide/ .
+--
+-- This operation can be called only from the organization's master account.
 --
 -- /Important:/ If you get an exception that indicates that you exceeded your account limits for the organization or that you can"t add an account because your organization is still initializing, please contact <https://console.aws.amazon.com/support/home#/ AWS Customer Support> .
 --

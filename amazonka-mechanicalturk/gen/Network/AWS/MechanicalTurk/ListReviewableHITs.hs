@@ -21,6 +21,8 @@
 -- The @ListReviewableHITs@ operation retrieves the HITs with Status equal to Reviewable or Status equal to Reviewing that belong to the Requester calling the operation.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.MechanicalTurk.ListReviewableHITs
     (
     -- * Creating a Request
@@ -45,6 +47,7 @@ module Network.AWS.MechanicalTurk.ListReviewableHITs
 import Network.AWS.Lens
 import Network.AWS.MechanicalTurk.Types
 import Network.AWS.MechanicalTurk.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -95,6 +98,13 @@ lrhitNextToken = lens _lrhitNextToken (\ s a -> s{_lrhitNextToken = a});
 -- | Limit the number of results returned.
 lrhitMaxResults :: Lens' ListReviewableHITs (Maybe Natural)
 lrhitMaxResults = lens _lrhitMaxResults (\ s a -> s{_lrhitMaxResults = a}) . mapping _Nat;
+
+instance AWSPager ListReviewableHITs where
+        page rq rs
+          | stop (rs ^. lrhitrsNextToken) = Nothing
+          | stop (rs ^. lrhitrsHITs) = Nothing
+          | otherwise =
+            Just $ rq & lrhitNextToken .~ rs ^. lrhitrsNextToken
 
 instance AWSRequest ListReviewableHITs where
         type Rs ListReviewableHITs =

@@ -63,7 +63,7 @@ data DeleteAutoScalingGroup = DeleteAutoScalingGroup'
 --
 -- * 'dasgForceDelete' - Specifies that the group will be deleted along with all instances associated with the group, without waiting for all instances to be terminated. This parameter also deletes any lifecycle actions associated with the group.
 --
--- * 'dasgAutoScalingGroupName' - The name of the group to delete.
+-- * 'dasgAutoScalingGroupName' - The name of the Auto Scaling group.
 deleteAutoScalingGroup
     :: Text -- ^ 'dasgAutoScalingGroupName'
     -> DeleteAutoScalingGroup
@@ -78,7 +78,7 @@ deleteAutoScalingGroup pAutoScalingGroupName_ =
 dasgForceDelete :: Lens' DeleteAutoScalingGroup (Maybe Bool)
 dasgForceDelete = lens _dasgForceDelete (\ s a -> s{_dasgForceDelete = a});
 
--- | The name of the group to delete.
+-- | The name of the Auto Scaling group.
 dasgAutoScalingGroupName :: Lens' DeleteAutoScalingGroup Text
 dasgAutoScalingGroupName = lens _dasgAutoScalingGroupName (\ s a -> s{_dasgAutoScalingGroupName = a});
 

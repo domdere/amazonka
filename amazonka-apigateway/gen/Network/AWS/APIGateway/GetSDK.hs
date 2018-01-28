@@ -72,7 +72,7 @@ data GetSDK = GetSDK'
 --
 -- * 'gsdkStageName' - The name of the 'Stage' that the SDK will use.
 --
--- * 'gsdkSdkType' - The language for the generated SDK. Currently @java@ , @javascript@ , @android@ , @objectivec@ and @swift@ (for iOS) are supported.
+-- * 'gsdkSdkType' - The language for the generated SDK. Currently @java@ , @javascript@ , @android@ , @objectivec@ (for iOS), @swift@ (for iOS), and @ruby@ are supported.
 getSDK
     :: Text -- ^ 'gsdkRestAPIId'
     -> Text -- ^ 'gsdkStageName'
@@ -99,7 +99,7 @@ gsdkRestAPIId = lens _gsdkRestAPIId (\ s a -> s{_gsdkRestAPIId = a});
 gsdkStageName :: Lens' GetSDK Text
 gsdkStageName = lens _gsdkStageName (\ s a -> s{_gsdkStageName = a});
 
--- | The language for the generated SDK. Currently @java@ , @javascript@ , @android@ , @objectivec@ and @swift@ (for iOS) are supported.
+-- | The language for the generated SDK. Currently @java@ , @javascript@ , @android@ , @objectivec@ (for iOS), @swift@ (for iOS), and @ruby@ are supported.
 gsdkSdkType :: Lens' GetSDK Text
 gsdkSdkType = lens _gsdkSdkType (\ s a -> s{_gsdkSdkType = a});
 

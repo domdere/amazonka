@@ -28,6 +28,7 @@ module Network.AWS.StepFunctions.Types
     , _TaskDoesNotExist
     , _ActivityDoesNotExist
     , _StateMachineDeleting
+    , _MissingRequiredParameter
     , _InvalidARN
     , _InvalidToken
     , _ActivityWorkerLimitExceeded
@@ -335,6 +336,14 @@ _ActivityDoesNotExist = _MatchServiceError stepFunctions "ActivityDoesNotExist"
 --
 _StateMachineDeleting :: AsError a => Getting (First ServiceError) a ServiceError
 _StateMachineDeleting = _MatchServiceError stepFunctions "StateMachineDeleting"
+
+
+-- | Request is missing a required parameter. This error occurs if both @definition@ and @roleArn@ are not specified.
+--
+--
+_MissingRequiredParameter :: AsError a => Getting (First ServiceError) a ServiceError
+_MissingRequiredParameter =
+  _MatchServiceError stepFunctions "MissingRequiredParameter"
 
 
 -- | The provided Amazon Resource Name (ARN) is invalid.

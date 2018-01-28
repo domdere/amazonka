@@ -110,10 +110,10 @@ module Network.AWS.Budgets
     , Budget
     , budget
     , bCalculatedSpend
+    , bCostTypes
     , bCostFilters
     , bBudgetName
     , bBudgetLimit
-    , bCostTypes
     , bTimeUnit
     , bTimePeriod
     , bBudgetType
@@ -127,9 +127,17 @@ module Network.AWS.Budgets
     -- ** CostTypes
     , CostTypes
     , costTypes
-    , ctIncludeTax
-    , ctIncludeSubscription
+    , ctUseAmortized
+    , ctIncludeRecurring
     , ctUseBlended
+    , ctIncludeSupport
+    , ctIncludeDiscount
+    , ctIncludeSubscription
+    , ctIncludeRefund
+    , ctIncludeUpfront
+    , ctIncludeOtherSubscription
+    , ctIncludeTax
+    , ctIncludeCredit
 
     -- ** Notification
     , Notification

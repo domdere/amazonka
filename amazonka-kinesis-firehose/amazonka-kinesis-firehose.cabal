@@ -48,7 +48,6 @@ library
         , Network.AWS.Firehose.CreateDeliveryStream
         , Network.AWS.Firehose.DeleteDeliveryStream
         , Network.AWS.Firehose.DescribeDeliveryStream
-        , Network.AWS.Firehose.GetKinesisStream
         , Network.AWS.Firehose.ListDeliveryStreams
         , Network.AWS.Firehose.PutRecord
         , Network.AWS.Firehose.PutRecordBatch

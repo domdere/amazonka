@@ -18,9 +18,11 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Lists all Classifier objects in the metadata store.
+-- Lists all classifier objects in the Data Catalog.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Glue.GetClassifiers
     (
     -- * Creating a Request
@@ -42,6 +44,7 @@ module Network.AWS.Glue.GetClassifiers
 import Network.AWS.Glue.Types
 import Network.AWS.Glue.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -73,6 +76,13 @@ gcNextToken = lens _gcNextToken (\ s a -> s{_gcNextToken = a});
 -- | Size of the list to return (optional).
 gcMaxResults :: Lens' GetClassifiers (Maybe Natural)
 gcMaxResults = lens _gcMaxResults (\ s a -> s{_gcMaxResults = a}) . mapping _Nat;
+
+instance AWSPager GetClassifiers where
+        page rq rs
+          | stop (rs ^. gcsrsNextToken) = Nothing
+          | stop (rs ^. gcsrsClassifiers) = Nothing
+          | otherwise =
+            Just $ rq & gcNextToken .~ rs ^. gcsrsNextToken
 
 instance AWSRequest GetClassifiers where
         type Rs GetClassifiers = GetClassifiersResponse
@@ -125,7 +135,7 @@ data GetClassifiersResponse = GetClassifiersResponse'
 --
 -- * 'gcsrsNextToken' - A continuation token.
 --
--- * 'gcsrsClassifiers' - The requested list of @Classifier@ objects.
+-- * 'gcsrsClassifiers' - The requested list of classifier objects.
 --
 -- * 'gcsrsResponseStatus' - -- | The response status code.
 getClassifiersResponse
@@ -143,7 +153,7 @@ getClassifiersResponse pResponseStatus_ =
 gcsrsNextToken :: Lens' GetClassifiersResponse (Maybe Text)
 gcsrsNextToken = lens _gcsrsNextToken (\ s a -> s{_gcsrsNextToken = a});
 
--- | The requested list of @Classifier@ objects.
+-- | The requested list of classifier objects.
 gcsrsClassifiers :: Lens' GetClassifiersResponse [Classifier]
 gcsrsClassifiers = lens _gcsrsClassifiers (\ s a -> s{_gcsrsClassifiers = a}) . _Default . _Coerce;
 

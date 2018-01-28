@@ -59,7 +59,7 @@ data GetDocument = GetDocument'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'gdAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'gdAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'gdIncludeCustomMetadata' - Set this to @TRUE@ to include custom metadata in the response.
 --
@@ -75,7 +75,7 @@ getDocument pDocumentId_ =
   }
 
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 gdAuthenticationToken :: Lens' GetDocument (Maybe Text)
 gdAuthenticationToken = lens _gdAuthenticationToken (\ s a -> s{_gdAuthenticationToken = a}) . mapping _Sensitive;
 

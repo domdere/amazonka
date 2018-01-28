@@ -21,6 +21,8 @@
 -- Lists the agents of the assessment runs that are specified by the ARNs of the assessment runs.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Inspector.ListAssessmentRunAgents
     (
     -- * Creating a Request
@@ -44,6 +46,7 @@ module Network.AWS.Inspector.ListAssessmentRunAgents
 import Network.AWS.Inspector.Types
 import Network.AWS.Inspector.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -95,6 +98,13 @@ laraMaxResults = lens _laraMaxResults (\ s a -> s{_laraMaxResults = a});
 -- | The ARN that specifies the assessment run whose agents you want to list.
 laraAssessmentRunARN :: Lens' ListAssessmentRunAgents Text
 laraAssessmentRunARN = lens _laraAssessmentRunARN (\ s a -> s{_laraAssessmentRunARN = a});
+
+instance AWSPager ListAssessmentRunAgents where
+        page rq rs
+          | stop (rs ^. lararsNextToken) = Nothing
+          | stop (rs ^. lararsAssessmentRunAgents) = Nothing
+          | otherwise =
+            Just $ rq & laraNextToken .~ rs ^. lararsNextToken
 
 instance AWSRequest ListAssessmentRunAgents where
         type Rs ListAssessmentRunAgents =

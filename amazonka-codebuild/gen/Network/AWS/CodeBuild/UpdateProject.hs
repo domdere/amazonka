@@ -29,6 +29,9 @@ module Network.AWS.CodeBuild.UpdateProject
     -- * Request Lenses
     , upArtifacts
     , upEnvironment
+    , upBadgeEnabled
+    , upCache
+    , upVpcConfig
     , upSource
     , upEncryptionKey
     , upDescription
@@ -56,6 +59,9 @@ import Network.AWS.Response
 data UpdateProject = UpdateProject'
   { _upArtifacts        :: !(Maybe ProjectArtifacts)
   , _upEnvironment      :: !(Maybe ProjectEnvironment)
+  , _upBadgeEnabled     :: !(Maybe Bool)
+  , _upCache            :: !(Maybe ProjectCache)
+  , _upVpcConfig        :: !(Maybe VPCConfig)
   , _upSource           :: !(Maybe ProjectSource)
   , _upEncryptionKey    :: !(Maybe Text)
   , _upDescription      :: !(Maybe Text)
@@ -73,6 +79,12 @@ data UpdateProject = UpdateProject'
 -- * 'upArtifacts' - Information to be changed about the build output artifacts for the build project.
 --
 -- * 'upEnvironment' - Information to be changed about the build environment for the build project.
+--
+-- * 'upBadgeEnabled' - Set this to true to generate a publicly-accessible URL for your project's build badge.
+--
+-- * 'upCache' - Stores recently used information so that it can be quickly accessed at a later time.
+--
+-- * 'upVpcConfig' - VpcConfig enables AWS CodeBuild to access resources in an Amazon VPC.
 --
 -- * 'upSource' - Information to be changed about the build input source code for the build project.
 --
@@ -94,6 +106,9 @@ updateProject pName_ =
   UpdateProject'
   { _upArtifacts = Nothing
   , _upEnvironment = Nothing
+  , _upBadgeEnabled = Nothing
+  , _upCache = Nothing
+  , _upVpcConfig = Nothing
   , _upSource = Nothing
   , _upEncryptionKey = Nothing
   , _upDescription = Nothing
@@ -111,6 +126,18 @@ upArtifacts = lens _upArtifacts (\ s a -> s{_upArtifacts = a});
 -- | Information to be changed about the build environment for the build project.
 upEnvironment :: Lens' UpdateProject (Maybe ProjectEnvironment)
 upEnvironment = lens _upEnvironment (\ s a -> s{_upEnvironment = a});
+
+-- | Set this to true to generate a publicly-accessible URL for your project's build badge.
+upBadgeEnabled :: Lens' UpdateProject (Maybe Bool)
+upBadgeEnabled = lens _upBadgeEnabled (\ s a -> s{_upBadgeEnabled = a});
+
+-- | Stores recently used information so that it can be quickly accessed at a later time.
+upCache :: Lens' UpdateProject (Maybe ProjectCache)
+upCache = lens _upCache (\ s a -> s{_upCache = a});
+
+-- | VpcConfig enables AWS CodeBuild to access resources in an Amazon VPC.
+upVpcConfig :: Lens' UpdateProject (Maybe VPCConfig)
+upVpcConfig = lens _upVpcConfig (\ s a -> s{_upVpcConfig = a});
 
 -- | Information to be changed about the build input source code for the build project.
 upSource :: Lens' UpdateProject (Maybe ProjectSource)
@@ -168,6 +195,9 @@ instance ToJSON UpdateProject where
               (catMaybes
                  [("artifacts" .=) <$> _upArtifacts,
                   ("environment" .=) <$> _upEnvironment,
+                  ("badgeEnabled" .=) <$> _upBadgeEnabled,
+                  ("cache" .=) <$> _upCache,
+                  ("vpcConfig" .=) <$> _upVpcConfig,
                   ("source" .=) <$> _upSource,
                   ("encryptionKey" .=) <$> _upEncryptionKey,
                   ("description" .=) <$> _upDescription,

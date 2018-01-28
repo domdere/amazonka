@@ -29,6 +29,7 @@ module Network.AWS.IoT.DeleteCertificate
       deleteCertificate
     , DeleteCertificate
     -- * Request Lenses
+    , dcForceDelete
     , dcCertificateId
 
     -- * Destructuring the Response
@@ -48,8 +49,9 @@ import Network.AWS.Response
 --
 --
 -- /See:/ 'deleteCertificate' smart constructor.
-newtype DeleteCertificate = DeleteCertificate'
-  { _dcCertificateId :: Text
+data DeleteCertificate = DeleteCertificate'
+  { _dcForceDelete   :: !(Maybe Bool)
+  , _dcCertificateId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -57,13 +59,20 @@ newtype DeleteCertificate = DeleteCertificate'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'dcForceDelete' - Forces a certificate request to be deleted.
+--
 -- * 'dcCertificateId' - The ID of the certificate.
 deleteCertificate
     :: Text -- ^ 'dcCertificateId'
     -> DeleteCertificate
 deleteCertificate pCertificateId_ =
-  DeleteCertificate' {_dcCertificateId = pCertificateId_}
+  DeleteCertificate'
+  {_dcForceDelete = Nothing, _dcCertificateId = pCertificateId_}
 
+
+-- | Forces a certificate request to be deleted.
+dcForceDelete :: Lens' DeleteCertificate (Maybe Bool)
+dcForceDelete = lens _dcForceDelete (\ s a -> s{_dcForceDelete = a});
 
 -- | The ID of the certificate.
 dcCertificateId :: Lens' DeleteCertificate Text
@@ -86,7 +95,8 @@ instance ToPath DeleteCertificate where
           = mconcat ["/certificates/", toBS _dcCertificateId]
 
 instance ToQuery DeleteCertificate where
-        toQuery = const mempty
+        toQuery DeleteCertificate'{..}
+          = mconcat ["forceDelete" =: _dcForceDelete]
 
 -- | /See:/ 'deleteCertificateResponse' smart constructor.
 data DeleteCertificateResponse =

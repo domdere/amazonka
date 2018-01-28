@@ -82,16 +82,19 @@ module Network.AWS.DMS
     -- ** ReloadTables
     , module Network.AWS.DMS.ReloadTables
 
+    -- ** StartReplicationTaskAssessment
+    , module Network.AWS.DMS.StartReplicationTaskAssessment
+
     -- ** CreateEndpoint
     , module Network.AWS.DMS.CreateEndpoint
 
-    -- ** DescribeSchemas
+    -- ** DescribeSchemas (Paginated)
     , module Network.AWS.DMS.DescribeSchemas
 
     -- ** ModifyEventSubscription
     , module Network.AWS.DMS.ModifyEventSubscription
 
-    -- ** DescribeEvents
+    -- ** DescribeEvents (Paginated)
     , module Network.AWS.DMS.DescribeEvents
 
     -- ** DeleteEndpoint
@@ -100,16 +103,19 @@ module Network.AWS.DMS
     -- ** ListTagsForResource
     , module Network.AWS.DMS.ListTagsForResource
 
-    -- ** DescribeEndpointTypes
+    -- ** DescribeEndpointTypes (Paginated)
     , module Network.AWS.DMS.DescribeEndpointTypes
 
     -- ** DeleteReplicationTask
     , module Network.AWS.DMS.DeleteReplicationTask
 
+    -- ** DescribeReplicationTaskAssessmentResults (Paginated)
+    , module Network.AWS.DMS.DescribeReplicationTaskAssessmentResults
+
     -- ** TestConnection
     , module Network.AWS.DMS.TestConnection
 
-    -- ** DescribeConnections
+    -- ** DescribeConnections (Paginated)
     , module Network.AWS.DMS.DescribeConnections
 
     -- ** RemoveTagsFromResource
@@ -121,22 +127,22 @@ module Network.AWS.DMS
     -- ** CreateEventSubscription
     , module Network.AWS.DMS.CreateEventSubscription
 
-    -- ** DescribeCertificates
+    -- ** DescribeCertificates (Paginated)
     , module Network.AWS.DMS.DescribeCertificates
 
     -- ** DeleteEventSubscription
     , module Network.AWS.DMS.DeleteEventSubscription
 
-    -- ** DescribeTableStatistics
+    -- ** DescribeTableStatistics (Paginated)
     , module Network.AWS.DMS.DescribeTableStatistics
 
-    -- ** DescribeReplicationSubnetGroups
+    -- ** DescribeReplicationSubnetGroups (Paginated)
     , module Network.AWS.DMS.DescribeReplicationSubnetGroups
 
     -- ** StartReplicationTask
     , module Network.AWS.DMS.StartReplicationTask
 
-    -- ** DescribeEventSubscriptions
+    -- ** DescribeEventSubscriptions (Paginated)
     , module Network.AWS.DMS.DescribeEventSubscriptions
 
     -- ** AddTagsToResource
@@ -151,19 +157,19 @@ module Network.AWS.DMS
     -- ** RefreshSchemas
     , module Network.AWS.DMS.RefreshSchemas
 
-    -- ** DescribeReplicationTasks
+    -- ** DescribeReplicationTasks (Paginated)
     , module Network.AWS.DMS.DescribeReplicationTasks
 
     -- ** DescribeEventCategories
     , module Network.AWS.DMS.DescribeEventCategories
 
-    -- ** DescribeOrderableReplicationInstances
+    -- ** DescribeOrderableReplicationInstances (Paginated)
     , module Network.AWS.DMS.DescribeOrderableReplicationInstances
 
     -- ** CreateReplicationTask
     , module Network.AWS.DMS.CreateReplicationTask
 
-    -- ** DescribeEndpoints
+    -- ** DescribeEndpoints (Paginated)
     , module Network.AWS.DMS.DescribeEndpoints
 
     -- ** ModifyReplicationInstance
@@ -178,7 +184,7 @@ module Network.AWS.DMS
     -- ** DescribeAccountAttributes
     , module Network.AWS.DMS.DescribeAccountAttributes
 
-    -- ** DescribeReplicationInstances
+    -- ** DescribeReplicationInstances (Paginated)
     , module Network.AWS.DMS.DescribeReplicationInstances
 
     -- ** DescribeRefreshSchemasStatus
@@ -419,6 +425,17 @@ module Network.AWS.DMS
     , rReplicationInstanceARN
     , rLastFailureMessage
 
+    -- ** ReplicationTaskAssessmentResult
+    , ReplicationTaskAssessmentResult
+    , replicationTaskAssessmentResult
+    , rtarAssessmentResults
+    , rtarAssessmentResultsFile
+    , rtarReplicationTaskIdentifier
+    , rtarAssessmentStatus
+    , rtarS3ObjectURL
+    , rtarReplicationTaskLastAssessmentDate
+    , rtarReplicationTaskARN
+
     -- ** ReplicationTaskStats
     , ReplicationTaskStats
     , replicationTaskStats
@@ -457,15 +474,19 @@ module Network.AWS.DMS
     -- ** TableStatistics
     , TableStatistics
     , tableStatistics
+    , tsValidationState
     , tsFullLoadRows
     , tsInserts
     , tsFullLoadCondtnlChkFailedRows
+    , tsValidationFailedRecords
+    , tsValidationSuspendedRecords
     , tsSchemaName
     , tsTableState
     , tsFullLoadErrorRows
     , tsDdls
     , tsDeletes
     , tsUpdates
+    , tsValidationPendingRecords
     , tsLastUpdateTime
     , tsTableName
 
@@ -512,6 +533,7 @@ import Network.AWS.DMS.DescribeOrderableReplicationInstances
 import Network.AWS.DMS.DescribeRefreshSchemasStatus
 import Network.AWS.DMS.DescribeReplicationInstances
 import Network.AWS.DMS.DescribeReplicationSubnetGroups
+import Network.AWS.DMS.DescribeReplicationTaskAssessmentResults
 import Network.AWS.DMS.DescribeReplicationTasks
 import Network.AWS.DMS.DescribeSchemas
 import Network.AWS.DMS.DescribeTableStatistics
@@ -526,6 +548,7 @@ import Network.AWS.DMS.RefreshSchemas
 import Network.AWS.DMS.ReloadTables
 import Network.AWS.DMS.RemoveTagsFromResource
 import Network.AWS.DMS.StartReplicationTask
+import Network.AWS.DMS.StartReplicationTaskAssessment
 import Network.AWS.DMS.StopReplicationTask
 import Network.AWS.DMS.TestConnection
 import Network.AWS.DMS.Types

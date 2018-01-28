@@ -29,10 +29,11 @@ import Network.AWS.WAFRegional.Types.Sum
 --
 -- /See:/ 'activatedRule' smart constructor.
 data ActivatedRule = ActivatedRule'
-  { _arType     :: !(Maybe WafRuleType)
-  , _arPriority :: !Int
-  , _arRuleId   :: !Text
-  , _arAction   :: !WafAction
+  { _arOverrideAction :: !(Maybe WafOverrideAction)
+  , _arAction         :: !(Maybe WafAction)
+  , _arType           :: !(Maybe WafRuleType)
+  , _arPriority       :: !Int
+  , _arRuleId         :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -40,28 +41,38 @@ data ActivatedRule = ActivatedRule'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'arType' - The rule type, either @REGULAR@ , as defined by 'Rule' , or @RATE_BASED@ , as defined by 'RateBasedRule' . The default is REGULAR. Although this field is optional, be aware that if you try to add a RATE_BASED rule to a web ACL without setting the type, the 'UpdateWebACL' request will fail because the request tries to add a REGULAR rule with the specified ID, which does not exist.
+-- * 'arOverrideAction' - Use the @OverrideAction@ to test your @RuleGroup@ . Any rule in a @RuleGroup@ can potentially block a request. If you set the @OverrideAction@ to @None@ , the @RuleGroup@ will block a request if any individual rule in the @RuleGroup@ matches the request and is configured to block that request. However if you first want to test the @RuleGroup@ , set the @OverrideAction@ to @Count@ . The @RuleGroup@ will then override any block action specified by individual rules contained within the group. Instead of blocking matching requests, those requests will be counted. You can view a record of counted requests using 'GetSampledRequests' .  The @OverrideAction@ data type within @ActivatedRule@ is used only when submitting an @UpdateRuleGroup@ request. @ActivatedRule|OverrideAction@ is not applicable and therefore not available for @UpdateWebACL@ .
+--
+-- * 'arAction' - Specifies the action that CloudFront or AWS WAF takes when a web request matches the conditions in the @Rule@ . Valid values for @Action@ include the following:     * @ALLOW@ : CloudFront responds with the requested object.     * @BLOCK@ : CloudFront responds with an HTTP 403 (Forbidden) status code.     * @COUNT@ : AWS WAF increments a counter of requests that match the conditions in the rule and then continues to inspect the web request based on the remaining rules in the web ACL.  The @Action@ data type within @ActivatedRule@ is used only when submitting an @UpdateWebACL@ request. @ActivatedRule|Action@ is not applicable and therefore not available for @UpdateRuleGroup@ .
+--
+-- * 'arType' - The rule type, either @REGULAR@ , as defined by 'Rule' , @RATE_BASED@ , as defined by 'RateBasedRule' , or @GROUP@ , as defined by 'RuleGroup' . The default is REGULAR. Although this field is optional, be aware that if you try to add a RATE_BASED rule to a web ACL without setting the type, the 'UpdateWebACL' request will fail because the request tries to add a REGULAR rule with the specified ID, which does not exist.
 --
 -- * 'arPriority' - Specifies the order in which the @Rules@ in a @WebACL@ are evaluated. Rules with a lower value for @Priority@ are evaluated before @Rules@ with a higher value. The value must be a unique integer. If you add multiple @Rules@ to a @WebACL@ , the values don't need to be consecutive.
 --
 -- * 'arRuleId' - The @RuleId@ for a @Rule@ . You use @RuleId@ to get more information about a @Rule@ (see 'GetRule' ), update a @Rule@ (see 'UpdateRule' ), insert a @Rule@ into a @WebACL@ or delete a one from a @WebACL@ (see 'UpdateWebACL' ), or delete a @Rule@ from AWS WAF (see 'DeleteRule' ). @RuleId@ is returned by 'CreateRule' and by 'ListRules' .
---
--- * 'arAction' - Specifies the action that CloudFront or AWS WAF takes when a web request matches the conditions in the @Rule@ . Valid values for @Action@ include the following:     * @ALLOW@ : CloudFront responds with the requested object.     * @BLOCK@ : CloudFront responds with an HTTP 403 (Forbidden) status code.     * @COUNT@ : AWS WAF increments a counter of requests that match the conditions in the rule and then continues to inspect the web request based on the remaining rules in the web ACL.
 activatedRule
     :: Int -- ^ 'arPriority'
     -> Text -- ^ 'arRuleId'
-    -> WafAction -- ^ 'arAction'
     -> ActivatedRule
-activatedRule pPriority_ pRuleId_ pAction_ =
+activatedRule pPriority_ pRuleId_ =
   ActivatedRule'
-  { _arType = Nothing
+  { _arOverrideAction = Nothing
+  , _arAction = Nothing
+  , _arType = Nothing
   , _arPriority = pPriority_
   , _arRuleId = pRuleId_
-  , _arAction = pAction_
   }
 
 
--- | The rule type, either @REGULAR@ , as defined by 'Rule' , or @RATE_BASED@ , as defined by 'RateBasedRule' . The default is REGULAR. Although this field is optional, be aware that if you try to add a RATE_BASED rule to a web ACL without setting the type, the 'UpdateWebACL' request will fail because the request tries to add a REGULAR rule with the specified ID, which does not exist.
+-- | Use the @OverrideAction@ to test your @RuleGroup@ . Any rule in a @RuleGroup@ can potentially block a request. If you set the @OverrideAction@ to @None@ , the @RuleGroup@ will block a request if any individual rule in the @RuleGroup@ matches the request and is configured to block that request. However if you first want to test the @RuleGroup@ , set the @OverrideAction@ to @Count@ . The @RuleGroup@ will then override any block action specified by individual rules contained within the group. Instead of blocking matching requests, those requests will be counted. You can view a record of counted requests using 'GetSampledRequests' .  The @OverrideAction@ data type within @ActivatedRule@ is used only when submitting an @UpdateRuleGroup@ request. @ActivatedRule|OverrideAction@ is not applicable and therefore not available for @UpdateWebACL@ .
+arOverrideAction :: Lens' ActivatedRule (Maybe WafOverrideAction)
+arOverrideAction = lens _arOverrideAction (\ s a -> s{_arOverrideAction = a});
+
+-- | Specifies the action that CloudFront or AWS WAF takes when a web request matches the conditions in the @Rule@ . Valid values for @Action@ include the following:     * @ALLOW@ : CloudFront responds with the requested object.     * @BLOCK@ : CloudFront responds with an HTTP 403 (Forbidden) status code.     * @COUNT@ : AWS WAF increments a counter of requests that match the conditions in the rule and then continues to inspect the web request based on the remaining rules in the web ACL.  The @Action@ data type within @ActivatedRule@ is used only when submitting an @UpdateWebACL@ request. @ActivatedRule|Action@ is not applicable and therefore not available for @UpdateRuleGroup@ .
+arAction :: Lens' ActivatedRule (Maybe WafAction)
+arAction = lens _arAction (\ s a -> s{_arAction = a});
+
+-- | The rule type, either @REGULAR@ , as defined by 'Rule' , @RATE_BASED@ , as defined by 'RateBasedRule' , or @GROUP@ , as defined by 'RuleGroup' . The default is REGULAR. Although this field is optional, be aware that if you try to add a RATE_BASED rule to a web ACL without setting the type, the 'UpdateWebACL' request will fail because the request tries to add a REGULAR rule with the specified ID, which does not exist.
 arType :: Lens' ActivatedRule (Maybe WafRuleType)
 arType = lens _arType (\ s a -> s{_arType = a});
 
@@ -73,18 +84,15 @@ arPriority = lens _arPriority (\ s a -> s{_arPriority = a});
 arRuleId :: Lens' ActivatedRule Text
 arRuleId = lens _arRuleId (\ s a -> s{_arRuleId = a});
 
--- | Specifies the action that CloudFront or AWS WAF takes when a web request matches the conditions in the @Rule@ . Valid values for @Action@ include the following:     * @ALLOW@ : CloudFront responds with the requested object.     * @BLOCK@ : CloudFront responds with an HTTP 403 (Forbidden) status code.     * @COUNT@ : AWS WAF increments a counter of requests that match the conditions in the rule and then continues to inspect the web request based on the remaining rules in the web ACL.
-arAction :: Lens' ActivatedRule WafAction
-arAction = lens _arAction (\ s a -> s{_arAction = a});
-
 instance FromJSON ActivatedRule where
         parseJSON
           = withObject "ActivatedRule"
               (\ x ->
                  ActivatedRule' <$>
-                   (x .:? "Type") <*> (x .: "Priority") <*>
-                     (x .: "RuleId")
-                     <*> (x .: "Action"))
+                   (x .:? "OverrideAction") <*> (x .:? "Action") <*>
+                     (x .:? "Type")
+                     <*> (x .: "Priority")
+                     <*> (x .: "RuleId"))
 
 instance Hashable ActivatedRule where
 
@@ -94,10 +102,10 @@ instance ToJSON ActivatedRule where
         toJSON ActivatedRule'{..}
           = object
               (catMaybes
-                 [("Type" .=) <$> _arType,
+                 [("OverrideAction" .=) <$> _arOverrideAction,
+                  ("Action" .=) <$> _arAction, ("Type" .=) <$> _arType,
                   Just ("Priority" .= _arPriority),
-                  Just ("RuleId" .= _arRuleId),
-                  Just ("Action" .= _arAction)])
+                  Just ("RuleId" .= _arRuleId)])
 
 -- | In a 'GetByteMatchSet' request, @ByteMatchSet@ is a complex type that contains the @ByteMatchSetId@ and @Name@ of a @ByteMatchSet@ , and the values that you specified when you updated the @ByteMatchSet@ .
 --
@@ -1501,6 +1509,159 @@ instance Hashable Rule where
 
 instance NFData Rule where
 
+-- | A collection of predefined rules that you can add to a web ACL.
+--
+--
+-- Rule groups are subject to the following limits:
+--
+--     * Three rule groups per account. You can request an increase to this limit by contacting customer support.
+--
+--     * One rule group per web ACL.
+--
+--     * Ten rules per rule group.
+--
+--
+--
+--
+-- /See:/ 'ruleGroup' smart constructor.
+data RuleGroup = RuleGroup'
+  { _rgMetricName  :: !(Maybe Text)
+  , _rgName        :: !(Maybe Text)
+  , _rgRuleGroupId :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'RuleGroup' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rgMetricName' - A friendly name or description for the metrics for this @RuleGroup@ . The name can contain only alphanumeric characters (A-Z, a-z, 0-9); the name can't contain whitespace. You can't change the name of the metric after you create the @RuleGroup@ .
+--
+-- * 'rgName' - The friendly name or description for the @RuleGroup@ . You can't change the name of a @RuleGroup@ after you create it.
+--
+-- * 'rgRuleGroupId' - A unique identifier for a @RuleGroup@ . You use @RuleGroupId@ to get more information about a @RuleGroup@ (see 'GetRuleGroup' ), update a @RuleGroup@ (see 'UpdateRuleGroup' ), insert a @RuleGroup@ into a @WebACL@ or delete a one from a @WebACL@ (see 'UpdateWebACL' ), or delete a @RuleGroup@ from AWS WAF (see 'DeleteRuleGroup' ). @RuleGroupId@ is returned by 'CreateRuleGroup' and by 'ListRuleGroups' .
+ruleGroup
+    :: Text -- ^ 'rgRuleGroupId'
+    -> RuleGroup
+ruleGroup pRuleGroupId_ =
+  RuleGroup'
+  {_rgMetricName = Nothing, _rgName = Nothing, _rgRuleGroupId = pRuleGroupId_}
+
+
+-- | A friendly name or description for the metrics for this @RuleGroup@ . The name can contain only alphanumeric characters (A-Z, a-z, 0-9); the name can't contain whitespace. You can't change the name of the metric after you create the @RuleGroup@ .
+rgMetricName :: Lens' RuleGroup (Maybe Text)
+rgMetricName = lens _rgMetricName (\ s a -> s{_rgMetricName = a});
+
+-- | The friendly name or description for the @RuleGroup@ . You can't change the name of a @RuleGroup@ after you create it.
+rgName :: Lens' RuleGroup (Maybe Text)
+rgName = lens _rgName (\ s a -> s{_rgName = a});
+
+-- | A unique identifier for a @RuleGroup@ . You use @RuleGroupId@ to get more information about a @RuleGroup@ (see 'GetRuleGroup' ), update a @RuleGroup@ (see 'UpdateRuleGroup' ), insert a @RuleGroup@ into a @WebACL@ or delete a one from a @WebACL@ (see 'UpdateWebACL' ), or delete a @RuleGroup@ from AWS WAF (see 'DeleteRuleGroup' ). @RuleGroupId@ is returned by 'CreateRuleGroup' and by 'ListRuleGroups' .
+rgRuleGroupId :: Lens' RuleGroup Text
+rgRuleGroupId = lens _rgRuleGroupId (\ s a -> s{_rgRuleGroupId = a});
+
+instance FromJSON RuleGroup where
+        parseJSON
+          = withObject "RuleGroup"
+              (\ x ->
+                 RuleGroup' <$>
+                   (x .:? "MetricName") <*> (x .:? "Name") <*>
+                     (x .: "RuleGroupId"))
+
+instance Hashable RuleGroup where
+
+instance NFData RuleGroup where
+
+-- | Contains the identifier and the friendly name or description of the @RuleGroup@ .
+--
+--
+--
+-- /See:/ 'ruleGroupSummary' smart constructor.
+data RuleGroupSummary = RuleGroupSummary'
+  { _rgsRuleGroupId :: !Text
+  , _rgsName        :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'RuleGroupSummary' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rgsRuleGroupId' - A unique identifier for a @RuleGroup@ . You use @RuleGroupId@ to get more information about a @RuleGroup@ (see 'GetRuleGroup' ), update a @RuleGroup@ (see 'UpdateRuleGroup' ), insert a @RuleGroup@ into a @WebACL@ or delete one from a @WebACL@ (see 'UpdateWebACL' ), or delete a @RuleGroup@ from AWS WAF (see 'DeleteRuleGroup' ). @RuleGroupId@ is returned by 'CreateRuleGroup' and by 'ListRuleGroups' .
+--
+-- * 'rgsName' - A friendly name or description of the 'RuleGroup' . You can't change the name of a @RuleGroup@ after you create it.
+ruleGroupSummary
+    :: Text -- ^ 'rgsRuleGroupId'
+    -> Text -- ^ 'rgsName'
+    -> RuleGroupSummary
+ruleGroupSummary pRuleGroupId_ pName_ =
+  RuleGroupSummary' {_rgsRuleGroupId = pRuleGroupId_, _rgsName = pName_}
+
+
+-- | A unique identifier for a @RuleGroup@ . You use @RuleGroupId@ to get more information about a @RuleGroup@ (see 'GetRuleGroup' ), update a @RuleGroup@ (see 'UpdateRuleGroup' ), insert a @RuleGroup@ into a @WebACL@ or delete one from a @WebACL@ (see 'UpdateWebACL' ), or delete a @RuleGroup@ from AWS WAF (see 'DeleteRuleGroup' ). @RuleGroupId@ is returned by 'CreateRuleGroup' and by 'ListRuleGroups' .
+rgsRuleGroupId :: Lens' RuleGroupSummary Text
+rgsRuleGroupId = lens _rgsRuleGroupId (\ s a -> s{_rgsRuleGroupId = a});
+
+-- | A friendly name or description of the 'RuleGroup' . You can't change the name of a @RuleGroup@ after you create it.
+rgsName :: Lens' RuleGroupSummary Text
+rgsName = lens _rgsName (\ s a -> s{_rgsName = a});
+
+instance FromJSON RuleGroupSummary where
+        parseJSON
+          = withObject "RuleGroupSummary"
+              (\ x ->
+                 RuleGroupSummary' <$>
+                   (x .: "RuleGroupId") <*> (x .: "Name"))
+
+instance Hashable RuleGroupSummary where
+
+instance NFData RuleGroupSummary where
+
+-- | Specifies an @ActivatedRule@ and indicates whether you want to add it to a @RuleGroup@ or delete it from a @RuleGroup@ .
+--
+--
+--
+-- /See:/ 'ruleGroupUpdate' smart constructor.
+data RuleGroupUpdate = RuleGroupUpdate'
+  { _rguAction        :: !ChangeAction
+  , _rguActivatedRule :: !ActivatedRule
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'RuleGroupUpdate' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rguAction' - Specify @INSERT@ to add an @ActivatedRule@ to a @RuleGroup@ . Use @DELETE@ to remove an @ActivatedRule@ from a @RuleGroup@ .
+--
+-- * 'rguActivatedRule' - The @ActivatedRule@ object specifies a @Rule@ that you want to insert or delete, the priority of the @Rule@ in the @WebACL@ , and the action that you want AWS WAF to take when a web request matches the @Rule@ (@ALLOW@ , @BLOCK@ , or @COUNT@ ).
+ruleGroupUpdate
+    :: ChangeAction -- ^ 'rguAction'
+    -> ActivatedRule -- ^ 'rguActivatedRule'
+    -> RuleGroupUpdate
+ruleGroupUpdate pAction_ pActivatedRule_ =
+  RuleGroupUpdate' {_rguAction = pAction_, _rguActivatedRule = pActivatedRule_}
+
+
+-- | Specify @INSERT@ to add an @ActivatedRule@ to a @RuleGroup@ . Use @DELETE@ to remove an @ActivatedRule@ from a @RuleGroup@ .
+rguAction :: Lens' RuleGroupUpdate ChangeAction
+rguAction = lens _rguAction (\ s a -> s{_rguAction = a});
+
+-- | The @ActivatedRule@ object specifies a @Rule@ that you want to insert or delete, the priority of the @Rule@ in the @WebACL@ , and the action that you want AWS WAF to take when a web request matches the @Rule@ (@ALLOW@ , @BLOCK@ , or @COUNT@ ).
+rguActivatedRule :: Lens' RuleGroupUpdate ActivatedRule
+rguActivatedRule = lens _rguActivatedRule (\ s a -> s{_rguActivatedRule = a});
+
+instance Hashable RuleGroupUpdate where
+
+instance NFData RuleGroupUpdate where
+
+instance ToJSON RuleGroupUpdate where
+        toJSON RuleGroupUpdate'{..}
+          = object
+              (catMaybes
+                 [Just ("Action" .= _rguAction),
+                  Just ("ActivatedRule" .= _rguActivatedRule)])
+
 -- | Contains the identifier and the friendly name or description of the @Rule@ .
 --
 --
@@ -1596,16 +1757,19 @@ instance ToJSON RuleUpdate where
 --
 -- /See:/ 'sampledHTTPRequest' smart constructor.
 data SampledHTTPRequest = SampledHTTPRequest'
-  { _shttprAction    :: !(Maybe Text)
-  , _shttprTimestamp :: !(Maybe POSIX)
-  , _shttprRequest   :: !HTTPRequest
-  , _shttprWeight    :: !Nat
+  { _shttprRuleWithinRuleGroup :: !(Maybe Text)
+  , _shttprAction              :: !(Maybe Text)
+  , _shttprTimestamp           :: !(Maybe POSIX)
+  , _shttprRequest             :: !HTTPRequest
+  , _shttprWeight              :: !Nat
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
 -- | Creates a value of 'SampledHTTPRequest' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'shttprRuleWithinRuleGroup' - This value is returned if the @GetSampledRequests@ request specifies the ID of a @RuleGroup@ rather than the ID of an individual rule. @RuleWithinRuleGroup@ is the rule within the specified @RuleGroup@ that matched the request listed in the response.
 --
 -- * 'shttprAction' - The action for the @Rule@ that the request matched: @ALLOW@ , @BLOCK@ , or @COUNT@ .
 --
@@ -1620,12 +1784,17 @@ sampledHTTPRequest
     -> SampledHTTPRequest
 sampledHTTPRequest pRequest_ pWeight_ =
   SampledHTTPRequest'
-  { _shttprAction = Nothing
+  { _shttprRuleWithinRuleGroup = Nothing
+  , _shttprAction = Nothing
   , _shttprTimestamp = Nothing
   , _shttprRequest = pRequest_
   , _shttprWeight = _Nat # pWeight_
   }
 
+
+-- | This value is returned if the @GetSampledRequests@ request specifies the ID of a @RuleGroup@ rather than the ID of an individual rule. @RuleWithinRuleGroup@ is the rule within the specified @RuleGroup@ that matched the request listed in the response.
+shttprRuleWithinRuleGroup :: Lens' SampledHTTPRequest (Maybe Text)
+shttprRuleWithinRuleGroup = lens _shttprRuleWithinRuleGroup (\ s a -> s{_shttprRuleWithinRuleGroup = a});
 
 -- | The action for the @Rule@ that the request matched: @ALLOW@ , @BLOCK@ , or @COUNT@ .
 shttprAction :: Lens' SampledHTTPRequest (Maybe Text)
@@ -1648,8 +1817,9 @@ instance FromJSON SampledHTTPRequest where
           = withObject "SampledHTTPRequest"
               (\ x ->
                  SampledHTTPRequest' <$>
-                   (x .:? "Action") <*> (x .:? "Timestamp") <*>
-                     (x .: "Request")
+                   (x .:? "RuleWithinRuleGroup") <*> (x .:? "Action")
+                     <*> (x .:? "Timestamp")
+                     <*> (x .: "Request")
                      <*> (x .: "Weight"))
 
 instance Hashable SampledHTTPRequest where
@@ -2090,6 +2260,64 @@ instance ToJSON SqlInjectionMatchTuple where
                   Just
                     ("TextTransformation" .= _simtTextTransformation)])
 
+-- | A summary of the rule groups you are subscribed to.
+--
+--
+--
+-- /See:/ 'subscribedRuleGroupSummary' smart constructor.
+data SubscribedRuleGroupSummary = SubscribedRuleGroupSummary'
+  { _srgsRuleGroupId :: !Text
+  , _srgsName        :: !Text
+  , _srgsMetricName  :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'SubscribedRuleGroupSummary' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'srgsRuleGroupId' - A unique identifier for a @RuleGroup@ .
+--
+-- * 'srgsName' - A friendly name or description of the @RuleGroup@ . You can't change the name of a @RuleGroup@ after you create it.
+--
+-- * 'srgsMetricName' - A friendly name or description for the metrics for this @RuleGroup@ . The name can contain only alphanumeric characters (A-Z, a-z, 0-9); the name can't contain whitespace. You can't change the name of the metric after you create the @RuleGroup@ .
+subscribedRuleGroupSummary
+    :: Text -- ^ 'srgsRuleGroupId'
+    -> Text -- ^ 'srgsName'
+    -> Text -- ^ 'srgsMetricName'
+    -> SubscribedRuleGroupSummary
+subscribedRuleGroupSummary pRuleGroupId_ pName_ pMetricName_ =
+  SubscribedRuleGroupSummary'
+  { _srgsRuleGroupId = pRuleGroupId_
+  , _srgsName = pName_
+  , _srgsMetricName = pMetricName_
+  }
+
+
+-- | A unique identifier for a @RuleGroup@ .
+srgsRuleGroupId :: Lens' SubscribedRuleGroupSummary Text
+srgsRuleGroupId = lens _srgsRuleGroupId (\ s a -> s{_srgsRuleGroupId = a});
+
+-- | A friendly name or description of the @RuleGroup@ . You can't change the name of a @RuleGroup@ after you create it.
+srgsName :: Lens' SubscribedRuleGroupSummary Text
+srgsName = lens _srgsName (\ s a -> s{_srgsName = a});
+
+-- | A friendly name or description for the metrics for this @RuleGroup@ . The name can contain only alphanumeric characters (A-Z, a-z, 0-9); the name can't contain whitespace. You can't change the name of the metric after you create the @RuleGroup@ .
+srgsMetricName :: Lens' SubscribedRuleGroupSummary Text
+srgsMetricName = lens _srgsMetricName (\ s a -> s{_srgsMetricName = a});
+
+instance FromJSON SubscribedRuleGroupSummary where
+        parseJSON
+          = withObject "SubscribedRuleGroupSummary"
+              (\ x ->
+                 SubscribedRuleGroupSummary' <$>
+                   (x .: "RuleGroupId") <*> (x .: "Name") <*>
+                     (x .: "MetricName"))
+
+instance Hashable SubscribedRuleGroupSummary where
+
+instance NFData SubscribedRuleGroupSummary where
+
 -- | In a 'GetSampledRequests' request, the @StartTime@ and @EndTime@ objects specify the time range for which you want AWS WAF to return a sample of web requests.
 --
 --
@@ -2182,6 +2410,44 @@ instance NFData WafAction where
 instance ToJSON WafAction where
         toJSON WafAction'{..}
           = object (catMaybes [Just ("Type" .= _waType)])
+
+-- | The action to take if any rule within the @RuleGroup@ matches a request.
+--
+--
+--
+-- /See:/ 'wafOverrideAction' smart constructor.
+newtype WafOverrideAction = WafOverrideAction'
+  { _woaType :: WafOverrideActionType
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'WafOverrideAction' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'woaType' - @COUNT@ overrides the action specified by the individual rule within a @RuleGroup@ . If set to @NONE@ , the rule's action will take place.
+wafOverrideAction
+    :: WafOverrideActionType -- ^ 'woaType'
+    -> WafOverrideAction
+wafOverrideAction pType_ = WafOverrideAction' {_woaType = pType_}
+
+
+-- | @COUNT@ overrides the action specified by the individual rule within a @RuleGroup@ . If set to @NONE@ , the rule's action will take place.
+woaType :: Lens' WafOverrideAction WafOverrideActionType
+woaType = lens _woaType (\ s a -> s{_woaType = a});
+
+instance FromJSON WafOverrideAction where
+        parseJSON
+          = withObject "WafOverrideAction"
+              (\ x -> WafOverrideAction' <$> (x .: "Type"))
+
+instance Hashable WafOverrideAction where
+
+instance NFData WafOverrideAction where
+
+instance ToJSON WafOverrideAction where
+        toJSON WafOverrideAction'{..}
+          = object (catMaybes [Just ("Type" .= _woaType)])
 
 -- | Contains the @Rules@ that identify the requests that you want to allow, block, or count. In a @WebACL@ , you also specify a default action (@ALLOW@ or @BLOCK@ ), and the action for each @Rule@ that you add to a @WebACL@ , for example, block requests from specified IP addresses or block requests from specified referrers. You also associate the @WebACL@ with a CloudFront distribution to identify the requests that you want AWS WAF to filter. If you add more than one @Rule@ to a @WebACL@ , a request needs to match only one of the specifications to be allowed, blocked, or counted. For more information, see 'UpdateWebACL' .
 --

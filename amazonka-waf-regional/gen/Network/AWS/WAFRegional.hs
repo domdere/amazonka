@@ -25,6 +25,9 @@ module Network.AWS.WAFRegional
     -- ** WAFInvalidAccountException
     , _WAFInvalidAccountException
 
+    -- ** WAFSubscriptionNotFoundException
+    , _WAFSubscriptionNotFoundException
+
     -- ** WAFReferencedItemException
     , _WAFReferencedItemException
 
@@ -67,6 +70,9 @@ module Network.AWS.WAFRegional
     -- * Operations
     -- $operations
 
+    -- ** ListActivatedRulesInRuleGroup
+    , module Network.AWS.WAFRegional.ListActivatedRulesInRuleGroup
+
     -- ** ListRateBasedRules
     , module Network.AWS.WAFRegional.ListRateBasedRules
 
@@ -87,6 +93,9 @@ module Network.AWS.WAFRegional
 
     -- ** CreateIPSet
     , module Network.AWS.WAFRegional.CreateIPSet
+
+    -- ** GetRuleGroup
+    , module Network.AWS.WAFRegional.GetRuleGroup
 
     -- ** GetChangeTokenStatus
     , module Network.AWS.WAFRegional.GetChangeTokenStatus
@@ -117,6 +126,9 @@ module Network.AWS.WAFRegional
 
     -- ** ListGeoMatchSets
     , module Network.AWS.WAFRegional.ListGeoMatchSets
+
+    -- ** CreateRuleGroup
+    , module Network.AWS.WAFRegional.CreateRuleGroup
 
     -- ** DeleteRegexMatchSet
     , module Network.AWS.WAFRegional.DeleteRegexMatchSet
@@ -166,6 +178,9 @@ module Network.AWS.WAFRegional
     -- ** DisassociateWebACL
     , module Network.AWS.WAFRegional.DisassociateWebACL
 
+    -- ** ListSubscribedRuleGroups
+    , module Network.AWS.WAFRegional.ListSubscribedRuleGroups
+
     -- ** CreateSqlInjectionMatchSet
     , module Network.AWS.WAFRegional.CreateSqlInjectionMatchSet
 
@@ -213,6 +228,15 @@ module Network.AWS.WAFRegional
 
     -- ** GetByteMatchSet
     , module Network.AWS.WAFRegional.GetByteMatchSet
+
+    -- ** ListRuleGroups
+    , module Network.AWS.WAFRegional.ListRuleGroups
+
+    -- ** DeleteRuleGroup
+    , module Network.AWS.WAFRegional.DeleteRuleGroup
+
+    -- ** UpdateRuleGroup
+    , module Network.AWS.WAFRegional.UpdateRuleGroup
 
     -- ** CreateRegexMatchSet
     , module Network.AWS.WAFRegional.CreateRegexMatchSet
@@ -294,16 +318,20 @@ module Network.AWS.WAFRegional
     -- ** WafActionType
     , WafActionType (..)
 
+    -- ** WafOverrideActionType
+    , WafOverrideActionType (..)
+
     -- ** WafRuleType
     , WafRuleType (..)
 
     -- ** ActivatedRule
     , ActivatedRule
     , activatedRule
+    , arOverrideAction
+    , arAction
     , arType
     , arPriority
     , arRuleId
-    , arAction
 
     -- ** ByteMatchSet
     , ByteMatchSet
@@ -474,6 +502,25 @@ module Network.AWS.WAFRegional
     , rRuleId
     , rPredicates
 
+    -- ** RuleGroup
+    , RuleGroup
+    , ruleGroup
+    , rgMetricName
+    , rgName
+    , rgRuleGroupId
+
+    -- ** RuleGroupSummary
+    , RuleGroupSummary
+    , ruleGroupSummary
+    , rgsRuleGroupId
+    , rgsName
+
+    -- ** RuleGroupUpdate
+    , RuleGroupUpdate
+    , ruleGroupUpdate
+    , rguAction
+    , rguActivatedRule
+
     -- ** RuleSummary
     , RuleSummary
     , ruleSummary
@@ -489,6 +536,7 @@ module Network.AWS.WAFRegional
     -- ** SampledHTTPRequest
     , SampledHTTPRequest
     , sampledHTTPRequest
+    , shttprRuleWithinRuleGroup
     , shttprAction
     , shttprTimestamp
     , shttprRequest
@@ -546,6 +594,13 @@ module Network.AWS.WAFRegional
     , simtFieldToMatch
     , simtTextTransformation
 
+    -- ** SubscribedRuleGroupSummary
+    , SubscribedRuleGroupSummary
+    , subscribedRuleGroupSummary
+    , srgsRuleGroupId
+    , srgsName
+    , srgsMetricName
+
     -- ** TimeWindow
     , TimeWindow
     , timeWindow
@@ -556,6 +611,11 @@ module Network.AWS.WAFRegional
     , WafAction
     , wafAction
     , waType
+
+    -- ** WafOverrideAction
+    , WafOverrideAction
+    , wafOverrideAction
+    , woaType
 
     -- ** WebACL
     , WebACL
@@ -612,6 +672,7 @@ import Network.AWS.WAFRegional.CreateRateBasedRule
 import Network.AWS.WAFRegional.CreateRegexMatchSet
 import Network.AWS.WAFRegional.CreateRegexPatternSet
 import Network.AWS.WAFRegional.CreateRule
+import Network.AWS.WAFRegional.CreateRuleGroup
 import Network.AWS.WAFRegional.CreateSizeConstraintSet
 import Network.AWS.WAFRegional.CreateSqlInjectionMatchSet
 import Network.AWS.WAFRegional.CreateWebACL
@@ -623,6 +684,7 @@ import Network.AWS.WAFRegional.DeleteRateBasedRule
 import Network.AWS.WAFRegional.DeleteRegexMatchSet
 import Network.AWS.WAFRegional.DeleteRegexPatternSet
 import Network.AWS.WAFRegional.DeleteRule
+import Network.AWS.WAFRegional.DeleteRuleGroup
 import Network.AWS.WAFRegional.DeleteSizeConstraintSet
 import Network.AWS.WAFRegional.DeleteSqlInjectionMatchSet
 import Network.AWS.WAFRegional.DeleteWebACL
@@ -638,12 +700,14 @@ import Network.AWS.WAFRegional.GetRateBasedRuleManagedKeys
 import Network.AWS.WAFRegional.GetRegexMatchSet
 import Network.AWS.WAFRegional.GetRegexPatternSet
 import Network.AWS.WAFRegional.GetRule
+import Network.AWS.WAFRegional.GetRuleGroup
 import Network.AWS.WAFRegional.GetSampledRequests
 import Network.AWS.WAFRegional.GetSizeConstraintSet
 import Network.AWS.WAFRegional.GetSqlInjectionMatchSet
 import Network.AWS.WAFRegional.GetWebACL
 import Network.AWS.WAFRegional.GetWebACLForResource
 import Network.AWS.WAFRegional.GetXSSMatchSet
+import Network.AWS.WAFRegional.ListActivatedRulesInRuleGroup
 import Network.AWS.WAFRegional.ListByteMatchSets
 import Network.AWS.WAFRegional.ListGeoMatchSets
 import Network.AWS.WAFRegional.ListIPSets
@@ -651,9 +715,11 @@ import Network.AWS.WAFRegional.ListRateBasedRules
 import Network.AWS.WAFRegional.ListRegexMatchSets
 import Network.AWS.WAFRegional.ListRegexPatternSets
 import Network.AWS.WAFRegional.ListResourcesForWebACL
+import Network.AWS.WAFRegional.ListRuleGroups
 import Network.AWS.WAFRegional.ListRules
 import Network.AWS.WAFRegional.ListSizeConstraintSets
 import Network.AWS.WAFRegional.ListSqlInjectionMatchSets
+import Network.AWS.WAFRegional.ListSubscribedRuleGroups
 import Network.AWS.WAFRegional.ListWebACLs
 import Network.AWS.WAFRegional.ListXSSMatchSets
 import Network.AWS.WAFRegional.Types
@@ -664,6 +730,7 @@ import Network.AWS.WAFRegional.UpdateRateBasedRule
 import Network.AWS.WAFRegional.UpdateRegexMatchSet
 import Network.AWS.WAFRegional.UpdateRegexPatternSet
 import Network.AWS.WAFRegional.UpdateRule
+import Network.AWS.WAFRegional.UpdateRuleGroup
 import Network.AWS.WAFRegional.UpdateSizeConstraintSet
 import Network.AWS.WAFRegional.UpdateSqlInjectionMatchSet
 import Network.AWS.WAFRegional.UpdateWebACL

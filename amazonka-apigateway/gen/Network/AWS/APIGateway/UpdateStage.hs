@@ -37,6 +37,7 @@ module Network.AWS.APIGateway.UpdateStage
     -- * Response Lenses
     , sDeploymentId
     , sVariables
+    , sAccessLogSettings
     , sDocumentationVersion
     , sClientCertificateId
     , sCreatedDate
@@ -44,9 +45,11 @@ module Network.AWS.APIGateway.UpdateStage
     , sMethodSettings
     , sLastUpdatedDate
     , sCacheClusterSize
+    , sCanarySettings
     , sCacheClusterEnabled
     , sStageName
     , sDescription
+    , sTags
     ) where
 
 import Network.AWS.APIGateway.Types
@@ -56,7 +59,7 @@ import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
 
--- | Requests Amazon API Gateway to change information about a 'Stage' resource.
+-- | Requests API Gateway to change information about a 'Stage' resource.
 --
 --
 --

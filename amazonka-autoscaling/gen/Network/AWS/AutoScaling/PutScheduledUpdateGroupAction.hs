@@ -83,7 +83,7 @@ data PutScheduledUpdateGroupAction = PutScheduledUpdateGroupAction'
 --
 -- * 'psugaEndTime' - The time for the recurring schedule to end. Auto Scaling does not perform the action after this time.
 --
--- * 'psugaAutoScalingGroupName' - The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+-- * 'psugaAutoScalingGroupName' - The name of the Auto Scaling group.
 --
 -- * 'psugaScheduledActionName' - The name of this scaling action.
 putScheduledUpdateGroupAction
@@ -132,7 +132,7 @@ psugaMinSize = lens _psugaMinSize (\ s a -> s{_psugaMinSize = a});
 psugaEndTime :: Lens' PutScheduledUpdateGroupAction (Maybe UTCTime)
 psugaEndTime = lens _psugaEndTime (\ s a -> s{_psugaEndTime = a}) . mapping _Time;
 
--- | The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+-- | The name of the Auto Scaling group.
 psugaAutoScalingGroupName :: Lens' PutScheduledUpdateGroupAction Text
 psugaAutoScalingGroupName = lens _psugaAutoScalingGroupName (\ s a -> s{_psugaAutoScalingGroupName = a});
 

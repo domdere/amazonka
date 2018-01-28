@@ -232,21 +232,57 @@ instance Hashable CharacterSet where
 
 instance NFData CharacterSet where
 
--- | Contains the result of a successful invocation of the following actions:
+-- | The configuration setting for the log types to be enabled for export to CloudWatch Logs for a specific DB instance or DB cluster.
 --
 --
---     * 'CreateDBCluster'
 --
---     * 'DeleteDBCluster'
+-- /See:/ 'cloudwatchLogsExportConfiguration' smart constructor.
+data CloudwatchLogsExportConfiguration = CloudwatchLogsExportConfiguration'
+  { _clecDisableLogTypes :: !(Maybe [Text])
+  , _clecEnableLogTypes  :: !(Maybe [Text])
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CloudwatchLogsExportConfiguration' with the minimum fields required to make a request.
 --
---     * 'FailoverDBCluster'
+-- Use one of the following lenses to modify other fields as desired:
 --
---     * 'ModifyDBCluster'
+-- * 'clecDisableLogTypes' - The list of log types to disable.
 --
---     * 'RestoreDBClusterFromSnapshot'
---
---     * 'RestoreDBClusterToPointInTime'
---
+-- * 'clecEnableLogTypes' - The list of log types to enable.
+cloudwatchLogsExportConfiguration
+    :: CloudwatchLogsExportConfiguration
+cloudwatchLogsExportConfiguration =
+  CloudwatchLogsExportConfiguration'
+  {_clecDisableLogTypes = Nothing, _clecEnableLogTypes = Nothing}
+
+
+-- | The list of log types to disable.
+clecDisableLogTypes :: Lens' CloudwatchLogsExportConfiguration [Text]
+clecDisableLogTypes = lens _clecDisableLogTypes (\ s a -> s{_clecDisableLogTypes = a}) . _Default . _Coerce;
+
+-- | The list of log types to enable.
+clecEnableLogTypes :: Lens' CloudwatchLogsExportConfiguration [Text]
+clecEnableLogTypes = lens _clecEnableLogTypes (\ s a -> s{_clecEnableLogTypes = a}) . _Default . _Coerce;
+
+instance Hashable CloudwatchLogsExportConfiguration
+         where
+
+instance NFData CloudwatchLogsExportConfiguration
+         where
+
+instance ToQuery CloudwatchLogsExportConfiguration
+         where
+        toQuery CloudwatchLogsExportConfiguration'{..}
+          = mconcat
+              ["DisableLogTypes" =:
+                 toQuery
+                   (toQueryList "member" <$> _clecDisableLogTypes),
+               "EnableLogTypes" =:
+                 toQuery
+                   (toQueryList "member" <$> _clecEnableLogTypes)]
+
+-- | Contains the details of an Amazon RDS DB cluster.
 --
 --
 -- This data type is used as a response element in the 'DescribeDBClusters' action.
@@ -316,9 +352,9 @@ data DBCluster = DBCluster'
 --
 -- * 'dcMasterUsername' - Contains the master username for the DB cluster.
 --
--- * 'dcIAMDatabaseAuthenticationEnabled' - True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled; otherwise false.
+-- * 'dcIAMDatabaseAuthenticationEnabled' - True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled, and otherwise false.
 --
--- * 'dcDBClusterResourceId' - The region-unique, immutable identifier for the DB cluster. This identifier is found in AWS CloudTrail log entries whenever the KMS key for the DB cluster is accessed.
+-- * 'dcDBClusterResourceId' - The AWS Region-unique, immutable identifier for the DB cluster. This identifier is found in AWS CloudTrail log entries whenever the AWS KMS key for the DB cluster is accessed.
 --
 -- * 'dcEarliestRestorableTime' - Specifies the earliest time to which a database can be restored with point-in-time restore.
 --
@@ -336,7 +372,7 @@ data DBCluster = DBCluster'
 --
 -- * 'dcCharacterSetName' - If present, specifies the name of the character set that this cluster is associated with.
 --
--- * 'dcKMSKeyId' - If @StorageEncrypted@ is true, the KMS key identifier for the encrypted DB cluster.
+-- * 'dcKMSKeyId' - If @StorageEncrypted@ is true, the AWS KMS key identifier for the encrypted DB cluster.
 --
 -- * 'dcPreferredBackupWindow' - Specifies the daily time range during which automated backups are created if automated backups are enabled, as determined by the @BackupRetentionPeriod@ .
 --
@@ -352,7 +388,7 @@ data DBCluster = DBCluster'
 --
 -- * 'dcMultiAZ' - Specifies whether the DB cluster has instances in multiple Availability Zones.
 --
--- * 'dcAllocatedStorage' - For all database engines except Amazon Aurora, @AllocatedStorage@ specifies the allocated storage size in gigabytes (GB). For Aurora, @AllocatedStorage@ always returns 1, because Aurora DB cluster storage size is not fixed, but instead automatically adjusts as needed.
+-- * 'dcAllocatedStorage' - For all database engines except Amazon Aurora, @AllocatedStorage@ specifies the allocated storage size in gibibytes (GiB). For Aurora, @AllocatedStorage@ always returns 1, because Aurora DB cluster storage size is not fixed, but instead automatically adjusts as needed.
 --
 -- * 'dcClusterCreateTime' - Specifies the time when the DB cluster was created, in Universal Coordinated Time (UTC).
 --
@@ -447,11 +483,11 @@ dcDBClusterParameterGroup = lens _dcDBClusterParameterGroup (\ s a -> s{_dcDBClu
 dcMasterUsername :: Lens' DBCluster (Maybe Text)
 dcMasterUsername = lens _dcMasterUsername (\ s a -> s{_dcMasterUsername = a});
 
--- | True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled; otherwise false.
+-- | True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled, and otherwise false.
 dcIAMDatabaseAuthenticationEnabled :: Lens' DBCluster (Maybe Bool)
 dcIAMDatabaseAuthenticationEnabled = lens _dcIAMDatabaseAuthenticationEnabled (\ s a -> s{_dcIAMDatabaseAuthenticationEnabled = a});
 
--- | The region-unique, immutable identifier for the DB cluster. This identifier is found in AWS CloudTrail log entries whenever the KMS key for the DB cluster is accessed.
+-- | The AWS Region-unique, immutable identifier for the DB cluster. This identifier is found in AWS CloudTrail log entries whenever the AWS KMS key for the DB cluster is accessed.
 dcDBClusterResourceId :: Lens' DBCluster (Maybe Text)
 dcDBClusterResourceId = lens _dcDBClusterResourceId (\ s a -> s{_dcDBClusterResourceId = a});
 
@@ -487,7 +523,7 @@ dcAvailabilityZones = lens _dcAvailabilityZones (\ s a -> s{_dcAvailabilityZones
 dcCharacterSetName :: Lens' DBCluster (Maybe Text)
 dcCharacterSetName = lens _dcCharacterSetName (\ s a -> s{_dcCharacterSetName = a});
 
--- | If @StorageEncrypted@ is true, the KMS key identifier for the encrypted DB cluster.
+-- | If @StorageEncrypted@ is true, the AWS KMS key identifier for the encrypted DB cluster.
 dcKMSKeyId :: Lens' DBCluster (Maybe Text)
 dcKMSKeyId = lens _dcKMSKeyId (\ s a -> s{_dcKMSKeyId = a});
 
@@ -519,7 +555,7 @@ dcDatabaseName = lens _dcDatabaseName (\ s a -> s{_dcDatabaseName = a});
 dcMultiAZ :: Lens' DBCluster (Maybe Bool)
 dcMultiAZ = lens _dcMultiAZ (\ s a -> s{_dcMultiAZ = a});
 
--- | For all database engines except Amazon Aurora, @AllocatedStorage@ specifies the allocated storage size in gigabytes (GB). For Aurora, @AllocatedStorage@ always returns 1, because Aurora DB cluster storage size is not fixed, but instead automatically adjusts as needed.
+-- | For all database engines except Amazon Aurora, @AllocatedStorage@ specifies the allocated storage size in gibibytes (GiB). For Aurora, @AllocatedStorage@ always returns 1, because Aurora DB cluster storage size is not fixed, but instead automatically adjusts as needed.
 dcAllocatedStorage :: Lens' DBCluster (Maybe Int)
 dcAllocatedStorage = lens _dcAllocatedStorage (\ s a -> s{_dcAllocatedStorage = a});
 
@@ -707,10 +743,10 @@ instance Hashable DBClusterOptionGroupStatus where
 
 instance NFData DBClusterOptionGroupStatus where
 
--- | Contains the result of a successful invocation of the 'CreateDBClusterParameterGroup' or 'CopyDBClusterParameterGroup' action.
+-- | Contains the details of an Amazon RDS DB cluster parameter group.
 --
 --
--- This data type is used as a request parameter in the 'DeleteDBClusterParameterGroup' action, and as a response element in the 'DescribeDBClusterParameterGroups' action.
+-- This data type is used as a response element in the 'DescribeDBClusterParameterGroups' action.
 --
 --
 -- /See:/ 'dbClusterParameterGroup' smart constructor.
@@ -850,13 +886,7 @@ instance Hashable DBClusterRole where
 
 instance NFData DBClusterRole where
 
--- | Contains the result of a successful invocation of the following actions:
---
---
---     * 'CreateDBClusterSnapshot'
---
---     * 'DeleteDBClusterSnapshot'
---
+-- | Contains the details for an Amazon RDS DB cluster snapshot
 --
 --
 -- This data type is used as a response element in the 'DescribeDBClusterSnapshots' action.
@@ -901,7 +931,7 @@ data DBClusterSnapshot = DBClusterSnapshot'
 --
 -- * 'dcsMasterUsername' - Provides the master username for the DB cluster snapshot.
 --
--- * 'dcsIAMDatabaseAuthenticationEnabled' - True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled; otherwise false.
+-- * 'dcsIAMDatabaseAuthenticationEnabled' - True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled, and otherwise false.
 --
 -- * 'dcsDBClusterSnapshotARN' - The Amazon Resource Name (ARN) for the DB cluster snapshot.
 --
@@ -917,13 +947,13 @@ data DBClusterSnapshot = DBClusterSnapshot'
 --
 -- * 'dcsSnapshotType' - Provides the type of the DB cluster snapshot.
 --
--- * 'dcsKMSKeyId' - If @StorageEncrypted@ is true, the KMS key identifier for the encrypted DB cluster snapshot.
+-- * 'dcsKMSKeyId' - If @StorageEncrypted@ is true, the AWS KMS key identifier for the encrypted DB cluster snapshot.
 --
 -- * 'dcsSnapshotCreateTime' - Provides the time when the snapshot was taken, in Universal Coordinated Time (UTC).
 --
--- * 'dcsAllocatedStorage' - Specifies the allocated storage size in gigabytes (GB).
+-- * 'dcsAllocatedStorage' - Specifies the allocated storage size in gibibytes (GiB).
 --
--- * 'dcsSourceDBClusterSnapshotARN' - If the DB cluster snapshot was copied from a source DB cluster snapshot, the Amazon Resource Name (ARN) for the source DB cluster snapshot; otherwise, a null value.
+-- * 'dcsSourceDBClusterSnapshotARN' - If the DB cluster snapshot was copied from a source DB cluster snapshot, the Amazon Resource Name (ARN) for the source DB cluster snapshot, otherwise, a null value.
 --
 -- * 'dcsClusterCreateTime' - Specifies the time when the DB cluster was created, in Universal Coordinated Time (UTC).
 --
@@ -977,7 +1007,7 @@ dcsDBClusterIdentifier = lens _dcsDBClusterIdentifier (\ s a -> s{_dcsDBClusterI
 dcsMasterUsername :: Lens' DBClusterSnapshot (Maybe Text)
 dcsMasterUsername = lens _dcsMasterUsername (\ s a -> s{_dcsMasterUsername = a});
 
--- | True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled; otherwise false.
+-- | True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled, and otherwise false.
 dcsIAMDatabaseAuthenticationEnabled :: Lens' DBClusterSnapshot (Maybe Bool)
 dcsIAMDatabaseAuthenticationEnabled = lens _dcsIAMDatabaseAuthenticationEnabled (\ s a -> s{_dcsIAMDatabaseAuthenticationEnabled = a});
 
@@ -1009,7 +1039,7 @@ dcsAvailabilityZones = lens _dcsAvailabilityZones (\ s a -> s{_dcsAvailabilityZo
 dcsSnapshotType :: Lens' DBClusterSnapshot (Maybe Text)
 dcsSnapshotType = lens _dcsSnapshotType (\ s a -> s{_dcsSnapshotType = a});
 
--- | If @StorageEncrypted@ is true, the KMS key identifier for the encrypted DB cluster snapshot.
+-- | If @StorageEncrypted@ is true, the AWS KMS key identifier for the encrypted DB cluster snapshot.
 dcsKMSKeyId :: Lens' DBClusterSnapshot (Maybe Text)
 dcsKMSKeyId = lens _dcsKMSKeyId (\ s a -> s{_dcsKMSKeyId = a});
 
@@ -1017,11 +1047,11 @@ dcsKMSKeyId = lens _dcsKMSKeyId (\ s a -> s{_dcsKMSKeyId = a});
 dcsSnapshotCreateTime :: Lens' DBClusterSnapshot (Maybe UTCTime)
 dcsSnapshotCreateTime = lens _dcsSnapshotCreateTime (\ s a -> s{_dcsSnapshotCreateTime = a}) . mapping _Time;
 
--- | Specifies the allocated storage size in gigabytes (GB).
+-- | Specifies the allocated storage size in gibibytes (GiB).
 dcsAllocatedStorage :: Lens' DBClusterSnapshot (Maybe Int)
 dcsAllocatedStorage = lens _dcsAllocatedStorage (\ s a -> s{_dcsAllocatedStorage = a});
 
--- | If the DB cluster snapshot was copied from a source DB cluster snapshot, the Amazon Resource Name (ARN) for the source DB cluster snapshot; otherwise, a null value.
+-- | If the DB cluster snapshot was copied from a source DB cluster snapshot, the Amazon Resource Name (ARN) for the source DB cluster snapshot, otherwise, a null value.
 dcsSourceDBClusterSnapshotARN :: Lens' DBClusterSnapshot (Maybe Text)
 dcsSourceDBClusterSnapshotARN = lens _dcsSourceDBClusterSnapshotARN (\ s a -> s{_dcsSourceDBClusterSnapshotARN = a});
 
@@ -1169,15 +1199,17 @@ instance NFData DBClusterSnapshotAttributesResult
 --
 -- /See:/ 'dbEngineVersion' smart constructor.
 data DBEngineVersion = DBEngineVersion'
-  { _devEngineVersion              :: !(Maybe Text)
-  , _devDBEngineVersionDescription :: !(Maybe Text)
-  , _devDefaultCharacterSet        :: !(Maybe CharacterSet)
-  , _devEngine                     :: !(Maybe Text)
-  , _devDBParameterGroupFamily     :: !(Maybe Text)
-  , _devSupportedCharacterSets     :: !(Maybe [CharacterSet])
-  , _devDBEngineDescription        :: !(Maybe Text)
-  , _devValidUpgradeTarget         :: !(Maybe [UpgradeTarget])
-  , _devSupportedTimezones         :: !(Maybe [Timezone])
+  { _devEngineVersion                      :: !(Maybe Text)
+  , _devDBEngineVersionDescription         :: !(Maybe Text)
+  , _devDefaultCharacterSet                :: !(Maybe CharacterSet)
+  , _devEngine                             :: !(Maybe Text)
+  , _devDBParameterGroupFamily             :: !(Maybe Text)
+  , _devSupportedCharacterSets             :: !(Maybe [CharacterSet])
+  , _devDBEngineDescription                :: !(Maybe Text)
+  , _devValidUpgradeTarget                 :: !(Maybe [UpgradeTarget])
+  , _devSupportsLogExportsToCloudwatchLogs :: !(Maybe Bool)
+  , _devSupportedTimezones                 :: !(Maybe [Timezone])
+  , _devExportableLogTypes                 :: !(Maybe [Text])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1201,7 +1233,11 @@ data DBEngineVersion = DBEngineVersion'
 --
 -- * 'devValidUpgradeTarget' - A list of engine versions that this database engine version can be upgraded to.
 --
+-- * 'devSupportsLogExportsToCloudwatchLogs' - A value that indicates whether the engine version supports exporting the log types specified by ExportableLogTypes to CloudWatch Logs.
+--
 -- * 'devSupportedTimezones' - A list of the time zones supported by this engine for the @Timezone@ parameter of the @CreateDBInstance@ action.
+--
+-- * 'devExportableLogTypes' - The types of logs that the database engine has available for export to CloudWatch Logs.
 dbEngineVersion
     :: DBEngineVersion
 dbEngineVersion =
@@ -1214,7 +1250,9 @@ dbEngineVersion =
   , _devSupportedCharacterSets = Nothing
   , _devDBEngineDescription = Nothing
   , _devValidUpgradeTarget = Nothing
+  , _devSupportsLogExportsToCloudwatchLogs = Nothing
   , _devSupportedTimezones = Nothing
+  , _devExportableLogTypes = Nothing
   }
 
 
@@ -1250,9 +1288,17 @@ devDBEngineDescription = lens _devDBEngineDescription (\ s a -> s{_devDBEngineDe
 devValidUpgradeTarget :: Lens' DBEngineVersion [UpgradeTarget]
 devValidUpgradeTarget = lens _devValidUpgradeTarget (\ s a -> s{_devValidUpgradeTarget = a}) . _Default . _Coerce;
 
+-- | A value that indicates whether the engine version supports exporting the log types specified by ExportableLogTypes to CloudWatch Logs.
+devSupportsLogExportsToCloudwatchLogs :: Lens' DBEngineVersion (Maybe Bool)
+devSupportsLogExportsToCloudwatchLogs = lens _devSupportsLogExportsToCloudwatchLogs (\ s a -> s{_devSupportsLogExportsToCloudwatchLogs = a});
+
 -- | A list of the time zones supported by this engine for the @Timezone@ parameter of the @CreateDBInstance@ action.
 devSupportedTimezones :: Lens' DBEngineVersion [Timezone]
 devSupportedTimezones = lens _devSupportedTimezones (\ s a -> s{_devSupportedTimezones = a}) . _Default . _Coerce;
+
+-- | The types of logs that the database engine has available for export to CloudWatch Logs.
+devExportableLogTypes :: Lens' DBEngineVersion [Text]
+devExportableLogTypes = lens _devExportableLogTypes (\ s a -> s{_devExportableLogTypes = a}) . _Default . _Coerce;
 
 instance FromXML DBEngineVersion where
         parseXML x
@@ -1269,27 +1315,19 @@ instance FromXML DBEngineVersion where
                 <*>
                 (x .@? "ValidUpgradeTarget" .!@ mempty >>=
                    may (parseXMLList "UpgradeTarget"))
+                <*> (x .@? "SupportsLogExportsToCloudwatchLogs")
                 <*>
                 (x .@? "SupportedTimezones" .!@ mempty >>=
                    may (parseXMLList "Timezone"))
+                <*>
+                (x .@? "ExportableLogTypes" .!@ mempty >>=
+                   may (parseXMLList "member"))
 
 instance Hashable DBEngineVersion where
 
 instance NFData DBEngineVersion where
 
--- | Contains the result of a successful invocation of the following actions:
---
---
---     * 'CreateDBInstance'
---
---     * 'DeleteDBInstance'
---
---     * 'ModifyDBInstance'
---
---     * 'StopDBInstance'
---
---     * 'StartDBInstance'
---
+-- | Contains the details of an Amazon RDS DB instance.
 --
 --
 -- This data type is used as a response element in the 'DescribeDBInstances' action.
@@ -1330,6 +1368,7 @@ data DBInstance = DBInstance'
   , _diDBSubnetGroup :: !(Maybe DBSubnetGroup)
   , _diMultiAZ :: !(Maybe Bool)
   , _diOptionGroupMemberships :: !(Maybe [OptionGroupMembership])
+  , _diEnabledCloudwatchLogsExports :: !(Maybe [Text])
   , _diEnhancedMonitoringResourceARN :: !(Maybe Text)
   , _diSecondaryAvailabilityZone :: !(Maybe Text)
   , _diPerformanceInsightsEnabled :: !(Maybe Bool)
@@ -1373,9 +1412,9 @@ data DBInstance = DBInstance'
 --
 -- * 'diReadReplicaDBInstanceIdentifiers' - Contains one or more identifiers of the Read Replicas associated with this DB instance.
 --
--- * 'diIAMDatabaseAuthenticationEnabled' - True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled; otherwise false. IAM database authentication can be enabled for the following database engines     * For MySQL 5.6, minor version 5.6.34 or higher     * For MySQL 5.7, minor version 5.7.16 or higher     * Aurora 5.6 or higher. To enable IAM database authentication for Aurora, see DBCluster Type.
+-- * 'diIAMDatabaseAuthenticationEnabled' - True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled, and otherwise false. IAM database authentication can be enabled for the following database engines     * For MySQL 5.6, minor version 5.6.34 or higher     * For MySQL 5.7, minor version 5.7.16 or higher     * Aurora 5.6 or higher. To enable IAM database authentication for Aurora, see DBCluster Type.
 --
--- * 'diMonitoringRoleARN' - The ARN for the IAM role that permits RDS to send Enhanced Monitoring metrics to CloudWatch Logs.
+-- * 'diMonitoringRoleARN' - The ARN for the IAM role that permits RDS to send Enhanced Monitoring metrics to Amazon CloudWatch Logs.
 --
 -- * 'diIOPS' - Specifies the Provisioned IOPS (I/O operations per second) value.
 --
@@ -1403,7 +1442,7 @@ data DBInstance = DBInstance'
 --
 -- * 'diCharacterSetName' - If present, specifies the name of the character set that this instance is associated with.
 --
--- * 'diKMSKeyId' - If @StorageEncrypted@ is true, the KMS key identifier for the encrypted DB instance.
+-- * 'diKMSKeyId' - If @StorageEncrypted@ is true, the AWS KMS key identifier for the encrypted DB instance.
 --
 -- * 'diPreferredBackupWindow' - Specifies the daily time range during which automated backups are created if automated backups are enabled, as determined by the @BackupRetentionPeriod@ .
 --
@@ -1413,7 +1452,7 @@ data DBInstance = DBInstance'
 --
 -- * 'diBackupRetentionPeriod' - Specifies the number of days for which automatic DB snapshots are retained.
 --
--- * 'diPerformanceInsightsKMSKeyId' - The KMS key identifier for encryption of Performance Insights data. The KMS key ID is the Amazon Resource Name (ARN), KMS key identifier, or the KMS key alias for the KMS encryption key.
+-- * 'diPerformanceInsightsKMSKeyId' - The AWS KMS key identifier for encryption of Performance Insights data. The KMS key ID is the Amazon Resource Name (ARN), KMS key identifier, or the KMS key alias for the KMS encryption key.
 --
 -- * 'diDBSubnetGroup' - Specifies information on the subnet group associated with the DB instance, including the name, description, and subnets in the subnet group.
 --
@@ -1421,15 +1460,17 @@ data DBInstance = DBInstance'
 --
 -- * 'diOptionGroupMemberships' - Provides the list of option group memberships for this DB instance.
 --
+-- * 'diEnabledCloudwatchLogsExports' - A list of log types that this DB instance is configured to export to CloudWatch Logs.
+--
 -- * 'diEnhancedMonitoringResourceARN' - The Amazon Resource Name (ARN) of the Amazon CloudWatch Logs log stream that receives the Enhanced Monitoring metrics data for the DB instance.
 --
 -- * 'diSecondaryAvailabilityZone' - If present, specifies the name of the secondary Availability Zone for a DB instance with multi-AZ support.
 --
--- * 'diPerformanceInsightsEnabled' - True if Performance Insights is enabled for the DB instance; otherwise false.
+-- * 'diPerformanceInsightsEnabled' - True if Performance Insights is enabled for the DB instance, and otherwise false.
 --
--- * 'diAllocatedStorage' - Specifies the allocated storage size specified in gigabytes.
+-- * 'diAllocatedStorage' - Specifies the allocated storage size specified in gibibytes.
 --
--- * 'diDBiResourceId' - The region-unique, immutable identifier for the DB instance. This identifier is found in AWS CloudTrail log entries whenever the KMS key for the DB instance is accessed.
+-- * 'diDBiResourceId' - The AWS Region-unique, immutable identifier for the DB instance. This identifier is found in AWS CloudTrail log entries whenever the AWS KMS key for the DB instance is accessed.
 --
 -- * 'diDBParameterGroups' - Provides the list of DB parameter groups applied to this DB instance.
 --
@@ -1493,6 +1534,7 @@ dbInstance =
   , _diDBSubnetGroup = Nothing
   , _diMultiAZ = Nothing
   , _diOptionGroupMemberships = Nothing
+  , _diEnabledCloudwatchLogsExports = Nothing
   , _diEnhancedMonitoringResourceARN = Nothing
   , _diSecondaryAvailabilityZone = Nothing
   , _diPerformanceInsightsEnabled = Nothing
@@ -1550,11 +1592,11 @@ diMasterUsername = lens _diMasterUsername (\ s a -> s{_diMasterUsername = a});
 diReadReplicaDBInstanceIdentifiers :: Lens' DBInstance [Text]
 diReadReplicaDBInstanceIdentifiers = lens _diReadReplicaDBInstanceIdentifiers (\ s a -> s{_diReadReplicaDBInstanceIdentifiers = a}) . _Default . _Coerce;
 
--- | True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled; otherwise false. IAM database authentication can be enabled for the following database engines     * For MySQL 5.6, minor version 5.6.34 or higher     * For MySQL 5.7, minor version 5.7.16 or higher     * Aurora 5.6 or higher. To enable IAM database authentication for Aurora, see DBCluster Type.
+-- | True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled, and otherwise false. IAM database authentication can be enabled for the following database engines     * For MySQL 5.6, minor version 5.6.34 or higher     * For MySQL 5.7, minor version 5.7.16 or higher     * Aurora 5.6 or higher. To enable IAM database authentication for Aurora, see DBCluster Type.
 diIAMDatabaseAuthenticationEnabled :: Lens' DBInstance (Maybe Bool)
 diIAMDatabaseAuthenticationEnabled = lens _diIAMDatabaseAuthenticationEnabled (\ s a -> s{_diIAMDatabaseAuthenticationEnabled = a});
 
--- | The ARN for the IAM role that permits RDS to send Enhanced Monitoring metrics to CloudWatch Logs.
+-- | The ARN for the IAM role that permits RDS to send Enhanced Monitoring metrics to Amazon CloudWatch Logs.
 diMonitoringRoleARN :: Lens' DBInstance (Maybe Text)
 diMonitoringRoleARN = lens _diMonitoringRoleARN (\ s a -> s{_diMonitoringRoleARN = a});
 
@@ -1610,7 +1652,7 @@ diDBInstanceIdentifier = lens _diDBInstanceIdentifier (\ s a -> s{_diDBInstanceI
 diCharacterSetName :: Lens' DBInstance (Maybe Text)
 diCharacterSetName = lens _diCharacterSetName (\ s a -> s{_diCharacterSetName = a});
 
--- | If @StorageEncrypted@ is true, the KMS key identifier for the encrypted DB instance.
+-- | If @StorageEncrypted@ is true, the AWS KMS key identifier for the encrypted DB instance.
 diKMSKeyId :: Lens' DBInstance (Maybe Text)
 diKMSKeyId = lens _diKMSKeyId (\ s a -> s{_diKMSKeyId = a});
 
@@ -1630,7 +1672,7 @@ diVPCSecurityGroups = lens _diVPCSecurityGroups (\ s a -> s{_diVPCSecurityGroups
 diBackupRetentionPeriod :: Lens' DBInstance (Maybe Int)
 diBackupRetentionPeriod = lens _diBackupRetentionPeriod (\ s a -> s{_diBackupRetentionPeriod = a});
 
--- | The KMS key identifier for encryption of Performance Insights data. The KMS key ID is the Amazon Resource Name (ARN), KMS key identifier, or the KMS key alias for the KMS encryption key.
+-- | The AWS KMS key identifier for encryption of Performance Insights data. The KMS key ID is the Amazon Resource Name (ARN), KMS key identifier, or the KMS key alias for the KMS encryption key.
 diPerformanceInsightsKMSKeyId :: Lens' DBInstance (Maybe Text)
 diPerformanceInsightsKMSKeyId = lens _diPerformanceInsightsKMSKeyId (\ s a -> s{_diPerformanceInsightsKMSKeyId = a});
 
@@ -1646,6 +1688,10 @@ diMultiAZ = lens _diMultiAZ (\ s a -> s{_diMultiAZ = a});
 diOptionGroupMemberships :: Lens' DBInstance [OptionGroupMembership]
 diOptionGroupMemberships = lens _diOptionGroupMemberships (\ s a -> s{_diOptionGroupMemberships = a}) . _Default . _Coerce;
 
+-- | A list of log types that this DB instance is configured to export to CloudWatch Logs.
+diEnabledCloudwatchLogsExports :: Lens' DBInstance [Text]
+diEnabledCloudwatchLogsExports = lens _diEnabledCloudwatchLogsExports (\ s a -> s{_diEnabledCloudwatchLogsExports = a}) . _Default . _Coerce;
+
 -- | The Amazon Resource Name (ARN) of the Amazon CloudWatch Logs log stream that receives the Enhanced Monitoring metrics data for the DB instance.
 diEnhancedMonitoringResourceARN :: Lens' DBInstance (Maybe Text)
 diEnhancedMonitoringResourceARN = lens _diEnhancedMonitoringResourceARN (\ s a -> s{_diEnhancedMonitoringResourceARN = a});
@@ -1654,15 +1700,15 @@ diEnhancedMonitoringResourceARN = lens _diEnhancedMonitoringResourceARN (\ s a -
 diSecondaryAvailabilityZone :: Lens' DBInstance (Maybe Text)
 diSecondaryAvailabilityZone = lens _diSecondaryAvailabilityZone (\ s a -> s{_diSecondaryAvailabilityZone = a});
 
--- | True if Performance Insights is enabled for the DB instance; otherwise false.
+-- | True if Performance Insights is enabled for the DB instance, and otherwise false.
 diPerformanceInsightsEnabled :: Lens' DBInstance (Maybe Bool)
 diPerformanceInsightsEnabled = lens _diPerformanceInsightsEnabled (\ s a -> s{_diPerformanceInsightsEnabled = a});
 
--- | Specifies the allocated storage size specified in gigabytes.
+-- | Specifies the allocated storage size specified in gibibytes.
 diAllocatedStorage :: Lens' DBInstance (Maybe Int)
 diAllocatedStorage = lens _diAllocatedStorage (\ s a -> s{_diAllocatedStorage = a});
 
--- | The region-unique, immutable identifier for the DB instance. This identifier is found in AWS CloudTrail log entries whenever the KMS key for the DB instance is accessed.
+-- | The AWS Region-unique, immutable identifier for the DB instance. This identifier is found in AWS CloudTrail log entries whenever the AWS KMS key for the DB instance is accessed.
 diDBiResourceId :: Lens' DBInstance (Maybe Text)
 diDBiResourceId = lens _diDBiResourceId (\ s a -> s{_diDBiResourceId = a});
 
@@ -1762,6 +1808,9 @@ instance FromXML DBInstance where
                 <*>
                 (x .@? "OptionGroupMemberships" .!@ mempty >>=
                    may (parseXMLList "OptionGroupMembership"))
+                <*>
+                (x .@? "EnabledCloudwatchLogsExports" .!@ mempty >>=
+                   may (parseXMLList "member"))
                 <*> (x .@? "EnhancedMonitoringResourceArn")
                 <*> (x .@? "SecondaryAvailabilityZone")
                 <*> (x .@? "PerformanceInsightsEnabled")
@@ -1856,10 +1905,10 @@ instance Hashable DBInstanceStatusInfo where
 
 instance NFData DBInstanceStatusInfo where
 
--- | Contains the result of a successful invocation of the 'CreateDBParameterGroup' action.
+-- | Contains the details of an Amazon RDS DB parameter group.
 --
 --
--- This data type is used as a request parameter in the 'DeleteDBParameterGroup' action, and as a response element in the 'DescribeDBParameterGroups' action.
+-- This data type is used as a response element in the 'DescribeDBParameterGroups' action.
 --
 --
 -- /See:/ 'dbParameterGroup' smart constructor.
@@ -2014,17 +2063,7 @@ instance Hashable DBParameterGroupStatus where
 
 instance NFData DBParameterGroupStatus where
 
--- | Contains the result of a successful invocation of the following actions:
---
---
---     * 'DescribeDBSecurityGroups'
---
---     * 'AuthorizeDBSecurityGroupIngress'
---
---     * 'CreateDBSecurityGroup'
---
---     * 'RevokeDBSecurityGroupIngress'
---
+-- | Contains the details for an Amazon RDS DB security group.
 --
 --
 -- This data type is used as a response element in the 'DescribeDBSecurityGroups' action.
@@ -2171,13 +2210,7 @@ instance Hashable DBSecurityGroupMembership where
 
 instance NFData DBSecurityGroupMembership where
 
--- | Contains the result of a successful invocation of the following actions:
---
---
---     * 'CreateDBSnapshot'
---
---     * 'DeleteDBSnapshot'
---
+-- | Contains the details of an Amazon RDS DB snapshot.
 --
 --
 -- This data type is used as a response element in the 'DescribeDBSnapshots' action.
@@ -2228,7 +2261,7 @@ data DBSnapshot = DBSnapshot'
 --
 -- * 'dsSourceRegion' - The AWS Region that the DB snapshot was created in or copied from.
 --
--- * 'dsIAMDatabaseAuthenticationEnabled' - True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled; otherwise false.
+-- * 'dsIAMDatabaseAuthenticationEnabled' - True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled, and otherwise false.
 --
 -- * 'dsIOPS' - Specifies the Provisioned IOPS (I/O operations per second) value of the DB instance at the time of the snapshot.
 --
@@ -2250,13 +2283,13 @@ data DBSnapshot = DBSnapshot'
 --
 -- * 'dsDBInstanceIdentifier' - Specifies the DB instance identifier of the DB instance this DB snapshot was created from.
 --
--- * 'dsKMSKeyId' - If @Encrypted@ is true, the KMS key identifier for the encrypted DB snapshot.
+-- * 'dsKMSKeyId' - If @Encrypted@ is true, the AWS KMS key identifier for the encrypted DB snapshot.
 --
 -- * 'dsAvailabilityZone' - Specifies the name of the Availability Zone the DB instance was located in at the time of the DB snapshot.
 --
 -- * 'dsSnapshotCreateTime' - Provides the time when the snapshot was taken, in Universal Coordinated Time (UTC).
 --
--- * 'dsAllocatedStorage' - Specifies the allocated storage size in gigabytes (GB).
+-- * 'dsAllocatedStorage' - Specifies the allocated storage size in gibibytes (GiB).
 --
 -- * 'dsOptionGroupName' - Provides the option group name for the DB snapshot.
 --
@@ -2322,7 +2355,7 @@ dsMasterUsername = lens _dsMasterUsername (\ s a -> s{_dsMasterUsername = a});
 dsSourceRegion :: Lens' DBSnapshot (Maybe Text)
 dsSourceRegion = lens _dsSourceRegion (\ s a -> s{_dsSourceRegion = a});
 
--- | True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled; otherwise false.
+-- | True if mapping of AWS Identity and Access Management (IAM) accounts to database accounts is enabled, and otherwise false.
 dsIAMDatabaseAuthenticationEnabled :: Lens' DBSnapshot (Maybe Bool)
 dsIAMDatabaseAuthenticationEnabled = lens _dsIAMDatabaseAuthenticationEnabled (\ s a -> s{_dsIAMDatabaseAuthenticationEnabled = a});
 
@@ -2366,7 +2399,7 @@ dsSnapshotType = lens _dsSnapshotType (\ s a -> s{_dsSnapshotType = a});
 dsDBInstanceIdentifier :: Lens' DBSnapshot (Maybe Text)
 dsDBInstanceIdentifier = lens _dsDBInstanceIdentifier (\ s a -> s{_dsDBInstanceIdentifier = a});
 
--- | If @Encrypted@ is true, the KMS key identifier for the encrypted DB snapshot.
+-- | If @Encrypted@ is true, the AWS KMS key identifier for the encrypted DB snapshot.
 dsKMSKeyId :: Lens' DBSnapshot (Maybe Text)
 dsKMSKeyId = lens _dsKMSKeyId (\ s a -> s{_dsKMSKeyId = a});
 
@@ -2378,7 +2411,7 @@ dsAvailabilityZone = lens _dsAvailabilityZone (\ s a -> s{_dsAvailabilityZone = 
 dsSnapshotCreateTime :: Lens' DBSnapshot (Maybe UTCTime)
 dsSnapshotCreateTime = lens _dsSnapshotCreateTime (\ s a -> s{_dsSnapshotCreateTime = a}) . mapping _Time;
 
--- | Specifies the allocated storage size in gigabytes (GB).
+-- | Specifies the allocated storage size in gibibytes (GiB).
 dsAllocatedStorage :: Lens' DBSnapshot (Maybe Int)
 dsAllocatedStorage = lens _dsAllocatedStorage (\ s a -> s{_dsAllocatedStorage = a});
 
@@ -2531,17 +2564,7 @@ instance Hashable DBSnapshotAttributesResult where
 
 instance NFData DBSnapshotAttributesResult where
 
--- | Contains the result of a successful invocation of the following actions:
---
---
---     * 'CreateDBSubnetGroup'
---
---     * 'ModifyDBSubnetGroup'
---
---     * 'DescribeDBSubnetGroups'
---
---     * 'DeleteDBSubnetGroup'
---
+-- | Contains the details of an Amazon RDS DB subnet group.
 --
 --
 -- This data type is used as a response element in the 'DescribeDBSubnetGroups' action.
@@ -4023,7 +4046,7 @@ data OptionVersion = OptionVersion'
 --
 -- * 'ovVersion' - The version of the option.
 --
--- * 'ovIsDefault' - True if the version is the default version of the option; otherwise, false.
+-- * 'ovIsDefault' - True if the version is the default version of the option, and otherwise false.
 optionVersion
     :: OptionVersion
 optionVersion = OptionVersion' {_ovVersion = Nothing, _ovIsDefault = Nothing}
@@ -4033,7 +4056,7 @@ optionVersion = OptionVersion' {_ovVersion = Nothing, _ovIsDefault = Nothing}
 ovVersion :: Lens' OptionVersion (Maybe Text)
 ovVersion = lens _ovVersion (\ s a -> s{_ovVersion = a});
 
--- | True if the version is the default version of the option; otherwise, false.
+-- | True if the version is the default version of the option, and otherwise false.
 ovIsDefault :: Lens' OptionVersion (Maybe Bool)
 ovIsDefault = lens _ovIsDefault (\ s a -> s{_ovIsDefault = a});
 
@@ -4388,6 +4411,52 @@ instance ToQuery Parameter where
                "ParameterName" =: _pParameterName,
                "Description" =: _pDescription]
 
+-- | A list of the log types whose configuration is still pending. In other words, these log types are in the process of being activated or deactivated.
+--
+--
+--
+-- /See:/ 'pendingCloudwatchLogsExports' smart constructor.
+data PendingCloudwatchLogsExports = PendingCloudwatchLogsExports'
+  { _pcleLogTypesToEnable  :: !(Maybe [Text])
+  , _pcleLogTypesToDisable :: !(Maybe [Text])
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'PendingCloudwatchLogsExports' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'pcleLogTypesToEnable' - Log types that are in the process of being deactivated. After they are deactivated, these log types aren't exported to CloudWatch Logs.
+--
+-- * 'pcleLogTypesToDisable' - Log types that are in the process of being enabled. After they are enabled, these log types are exported to CloudWatch Logs.
+pendingCloudwatchLogsExports
+    :: PendingCloudwatchLogsExports
+pendingCloudwatchLogsExports =
+  PendingCloudwatchLogsExports'
+  {_pcleLogTypesToEnable = Nothing, _pcleLogTypesToDisable = Nothing}
+
+
+-- | Log types that are in the process of being deactivated. After they are deactivated, these log types aren't exported to CloudWatch Logs.
+pcleLogTypesToEnable :: Lens' PendingCloudwatchLogsExports [Text]
+pcleLogTypesToEnable = lens _pcleLogTypesToEnable (\ s a -> s{_pcleLogTypesToEnable = a}) . _Default . _Coerce;
+
+-- | Log types that are in the process of being enabled. After they are enabled, these log types are exported to CloudWatch Logs.
+pcleLogTypesToDisable :: Lens' PendingCloudwatchLogsExports [Text]
+pcleLogTypesToDisable = lens _pcleLogTypesToDisable (\ s a -> s{_pcleLogTypesToDisable = a}) . _Default . _Coerce;
+
+instance FromXML PendingCloudwatchLogsExports where
+        parseXML x
+          = PendingCloudwatchLogsExports' <$>
+              (x .@? "LogTypesToEnable" .!@ mempty >>=
+                 may (parseXMLList "member"))
+                <*>
+                (x .@? "LogTypesToDisable" .!@ mempty >>=
+                   may (parseXMLList "member"))
+
+instance Hashable PendingCloudwatchLogsExports where
+
+instance NFData PendingCloudwatchLogsExports where
+
 -- | Provides information about a pending maintenance action for a resource.
 --
 --
@@ -4474,19 +4543,20 @@ instance NFData PendingMaintenanceAction where
 --
 -- /See:/ 'pendingModifiedValues' smart constructor.
 data PendingModifiedValues = PendingModifiedValues'
-  { _pmvEngineVersion           :: !(Maybe Text)
-  , _pmvMasterUserPassword      :: !(Maybe Text)
-  , _pmvDBSubnetGroupName       :: !(Maybe Text)
-  , _pmvIOPS                    :: !(Maybe Int)
-  , _pmvDBInstanceClass         :: !(Maybe Text)
-  , _pmvLicenseModel            :: !(Maybe Text)
-  , _pmvCACertificateIdentifier :: !(Maybe Text)
-  , _pmvDBInstanceIdentifier    :: !(Maybe Text)
-  , _pmvBackupRetentionPeriod   :: !(Maybe Int)
-  , _pmvMultiAZ                 :: !(Maybe Bool)
-  , _pmvAllocatedStorage        :: !(Maybe Int)
-  , _pmvPort                    :: !(Maybe Int)
-  , _pmvStorageType             :: !(Maybe Text)
+  { _pmvEngineVersion                :: !(Maybe Text)
+  , _pmvMasterUserPassword           :: !(Maybe Text)
+  , _pmvDBSubnetGroupName            :: !(Maybe Text)
+  , _pmvIOPS                         :: !(Maybe Int)
+  , _pmvDBInstanceClass              :: !(Maybe Text)
+  , _pmvLicenseModel                 :: !(Maybe Text)
+  , _pmvCACertificateIdentifier      :: !(Maybe Text)
+  , _pmvDBInstanceIdentifier         :: !(Maybe Text)
+  , _pmvPendingCloudwatchLogsExports :: !(Maybe PendingCloudwatchLogsExports)
+  , _pmvBackupRetentionPeriod        :: !(Maybe Int)
+  , _pmvMultiAZ                      :: !(Maybe Bool)
+  , _pmvAllocatedStorage             :: !(Maybe Int)
+  , _pmvPort                         :: !(Maybe Int)
+  , _pmvStorageType                  :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -4510,6 +4580,8 @@ data PendingModifiedValues = PendingModifiedValues'
 --
 -- * 'pmvDBInstanceIdentifier' - Contains the new @DBInstanceIdentifier@ for the DB instance that will be applied or is currently being applied.
 --
+-- * 'pmvPendingCloudwatchLogsExports' - Undocumented member.
+--
 -- * 'pmvBackupRetentionPeriod' - Specifies the pending number of days for which automated backups are retained.
 --
 -- * 'pmvMultiAZ' - Indicates that the Single-AZ DB instance is to change to a Multi-AZ deployment.
@@ -4531,6 +4603,7 @@ pendingModifiedValues =
   , _pmvLicenseModel = Nothing
   , _pmvCACertificateIdentifier = Nothing
   , _pmvDBInstanceIdentifier = Nothing
+  , _pmvPendingCloudwatchLogsExports = Nothing
   , _pmvBackupRetentionPeriod = Nothing
   , _pmvMultiAZ = Nothing
   , _pmvAllocatedStorage = Nothing
@@ -4571,6 +4644,10 @@ pmvCACertificateIdentifier = lens _pmvCACertificateIdentifier (\ s a -> s{_pmvCA
 pmvDBInstanceIdentifier :: Lens' PendingModifiedValues (Maybe Text)
 pmvDBInstanceIdentifier = lens _pmvDBInstanceIdentifier (\ s a -> s{_pmvDBInstanceIdentifier = a});
 
+-- | Undocumented member.
+pmvPendingCloudwatchLogsExports :: Lens' PendingModifiedValues (Maybe PendingCloudwatchLogsExports)
+pmvPendingCloudwatchLogsExports = lens _pmvPendingCloudwatchLogsExports (\ s a -> s{_pmvPendingCloudwatchLogsExports = a});
+
 -- | Specifies the pending number of days for which automated backups are retained.
 pmvBackupRetentionPeriod :: Lens' PendingModifiedValues (Maybe Int)
 pmvBackupRetentionPeriod = lens _pmvBackupRetentionPeriod (\ s a -> s{_pmvBackupRetentionPeriod = a});
@@ -4602,6 +4679,7 @@ instance FromXML PendingModifiedValues where
                 <*> (x .@? "LicenseModel")
                 <*> (x .@? "CACertificateIdentifier")
                 <*> (x .@? "DBInstanceIdentifier")
+                <*> (x .@? "PendingCloudwatchLogsExports")
                 <*> (x .@? "BackupRetentionPeriod")
                 <*> (x .@? "MultiAZ")
                 <*> (x .@? "AllocatedStorage")
@@ -5151,19 +5229,19 @@ data Tag = Tag'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'tagValue' - A value is the optional value of the tag. The string value can be from 1 to 256 Unicode characters in length and cannot be prefixed with "aws:" or "rds:". The string can only contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$").
+-- * 'tagValue' - A value is the optional value of the tag. The string value can be from 1 to 256 Unicode characters in length and can't be prefixed with "aws:" or "rds:". The string can only contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$").
 --
--- * 'tagKey' - A key is the required name of the tag. The string value can be from 1 to 128 Unicode characters in length and cannot be prefixed with "aws:" or "rds:". The string can only contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$").
+-- * 'tagKey' - A key is the required name of the tag. The string value can be from 1 to 128 Unicode characters in length and can't be prefixed with "aws:" or "rds:". The string can only contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$").
 tag
     :: Tag
 tag = Tag' {_tagValue = Nothing, _tagKey = Nothing}
 
 
--- | A value is the optional value of the tag. The string value can be from 1 to 256 Unicode characters in length and cannot be prefixed with "aws:" or "rds:". The string can only contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$").
+-- | A value is the optional value of the tag. The string value can be from 1 to 256 Unicode characters in length and can't be prefixed with "aws:" or "rds:". The string can only contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$").
 tagValue :: Lens' Tag (Maybe Text)
 tagValue = lens _tagValue (\ s a -> s{_tagValue = a});
 
--- | A key is the required name of the tag. The string value can be from 1 to 128 Unicode characters in length and cannot be prefixed with "aws:" or "rds:". The string can only contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$").
+-- | A key is the required name of the tag. The string value can be from 1 to 128 Unicode characters in length and can't be prefixed with "aws:" or "rds:". The string can only contain only the set of Unicode letters, digits, white-space, '_', '.', '/', '=', '+', '-' (Java regex: "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$").
 tagKey :: Lens' Tag (Maybe Text)
 tagKey = lens _tagKey (\ s a -> s{_tagKey = a});
 
@@ -5379,11 +5457,11 @@ data ValidStorageOptions = ValidStorageOptions'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'vsoStorageSize' - The valid range of storage in gigabytes. For example, 100 to 6144.
+-- * 'vsoStorageSize' - The valid range of storage in gibibytes. For example, 100 to 16384.
 --
 -- * 'vsoProvisionedIOPS' - The valid range of provisioned IOPS. For example, 1000-20000.
 --
--- * 'vsoIOPSToStorageRatio' - The valid range of Provisioned IOPS to gigabytes of storage multiplier. For example, 3-10, which means that provisioned IOPS can be between 3 and 10 times storage.
+-- * 'vsoIOPSToStorageRatio' - The valid range of Provisioned IOPS to gibibytes of storage multiplier. For example, 3-10, which means that provisioned IOPS can be between 3 and 10 times storage.
 --
 -- * 'vsoStorageType' - The valid storage types for your DB instance. For example, gp2, io1.
 validStorageOptions
@@ -5397,7 +5475,7 @@ validStorageOptions =
   }
 
 
--- | The valid range of storage in gigabytes. For example, 100 to 6144.
+-- | The valid range of storage in gibibytes. For example, 100 to 16384.
 vsoStorageSize :: Lens' ValidStorageOptions [Range]
 vsoStorageSize = lens _vsoStorageSize (\ s a -> s{_vsoStorageSize = a}) . _Default . _Coerce;
 
@@ -5405,7 +5483,7 @@ vsoStorageSize = lens _vsoStorageSize (\ s a -> s{_vsoStorageSize = a}) . _Defau
 vsoProvisionedIOPS :: Lens' ValidStorageOptions [Range]
 vsoProvisionedIOPS = lens _vsoProvisionedIOPS (\ s a -> s{_vsoProvisionedIOPS = a}) . _Default . _Coerce;
 
--- | The valid range of Provisioned IOPS to gigabytes of storage multiplier. For example, 3-10, which means that provisioned IOPS can be between 3 and 10 times storage.
+-- | The valid range of Provisioned IOPS to gibibytes of storage multiplier. For example, 3-10, which means that provisioned IOPS can be between 3 and 10 times storage.
 vsoIOPSToStorageRatio :: Lens' ValidStorageOptions [DoubleRange]
 vsoIOPSToStorageRatio = lens _vsoIOPSToStorageRatio (\ s a -> s{_vsoIOPSToStorageRatio = a}) . _Default . _Coerce;
 

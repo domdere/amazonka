@@ -18,8 +18,10 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Create a new provisioning artifact for the specified product. This operation does not work with a product that has been shared with you.
+-- Creates a provisioning artifact (also known as a version) for the specified product.
 --
+--
+-- You cannot create a provisioning artifact for a product that was shared with you.
 --
 module Network.AWS.ServiceCatalog.CreateProvisioningArtifact
     (
@@ -66,9 +68,9 @@ data CreateProvisioningArtifact = CreateProvisioningArtifact'
 --
 -- * 'cpaProductId' - The product identifier.
 --
--- * 'cpaParameters' - The parameters to use when creating the new provisioning artifact.
+-- * 'cpaParameters' - The configuration for the provisioning artifact.
 --
--- * 'cpaIdempotencyToken' - A token to disambiguate duplicate requests. You can use the same input in multiple requests, provided that you also specify a different idempotency token for each request.
+-- * 'cpaIdempotencyToken' - A unique identifier that you provide to ensure idempotency. If multiple requests differ only by the idempotency token, the same response is returned for each repeated request.
 createProvisioningArtifact
     :: Text -- ^ 'cpaProductId'
     -> ProvisioningArtifactProperties -- ^ 'cpaParameters'
@@ -91,11 +93,11 @@ cpaAcceptLanguage = lens _cpaAcceptLanguage (\ s a -> s{_cpaAcceptLanguage = a})
 cpaProductId :: Lens' CreateProvisioningArtifact Text
 cpaProductId = lens _cpaProductId (\ s a -> s{_cpaProductId = a});
 
--- | The parameters to use when creating the new provisioning artifact.
+-- | The configuration for the provisioning artifact.
 cpaParameters :: Lens' CreateProvisioningArtifact ProvisioningArtifactProperties
 cpaParameters = lens _cpaParameters (\ s a -> s{_cpaParameters = a});
 
--- | A token to disambiguate duplicate requests. You can use the same input in multiple requests, provided that you also specify a different idempotency token for each request.
+-- | A unique identifier that you provide to ensure idempotency. If multiple requests differ only by the idempotency token, the same response is returned for each repeated request.
 cpaIdempotencyToken :: Lens' CreateProvisioningArtifact Text
 cpaIdempotencyToken = lens _cpaIdempotencyToken (\ s a -> s{_cpaIdempotencyToken = a});
 
@@ -155,9 +157,9 @@ data CreateProvisioningArtifactResponse = CreateProvisioningArtifactResponse'
 --
 -- * 'cparsStatus' - The status of the current request.
 --
--- * 'cparsInfo' - Additional information about the creation request for the provisioning artifact.
+-- * 'cparsInfo' - The URL of the CloudFormation template in Amazon S3, in JSON format.
 --
--- * 'cparsProvisioningArtifactDetail' - The resulting detailed provisioning artifact information.
+-- * 'cparsProvisioningArtifactDetail' - Information about the provisioning artifact.
 --
 -- * 'cparsResponseStatus' - -- | The response status code.
 createProvisioningArtifactResponse
@@ -176,11 +178,11 @@ createProvisioningArtifactResponse pResponseStatus_ =
 cparsStatus :: Lens' CreateProvisioningArtifactResponse (Maybe RequestStatus)
 cparsStatus = lens _cparsStatus (\ s a -> s{_cparsStatus = a});
 
--- | Additional information about the creation request for the provisioning artifact.
+-- | The URL of the CloudFormation template in Amazon S3, in JSON format.
 cparsInfo :: Lens' CreateProvisioningArtifactResponse (HashMap Text Text)
 cparsInfo = lens _cparsInfo (\ s a -> s{_cparsInfo = a}) . _Default . _Map;
 
--- | The resulting detailed provisioning artifact information.
+-- | Information about the provisioning artifact.
 cparsProvisioningArtifactDetail :: Lens' CreateProvisioningArtifactResponse (Maybe ProvisioningArtifactDetail)
 cparsProvisioningArtifactDetail = lens _cparsProvisioningArtifactDetail (\ s a -> s{_cparsProvisioningArtifactDetail = a});
 

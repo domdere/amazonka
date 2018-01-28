@@ -76,7 +76,7 @@ data EnhancedMonitoringOutput = EnhancedMonitoringOutput'
 --
 -- * 'emoCurrentShardLevelMetrics' - Represents the current state of the metrics that are in the enhanced state before the operation.
 --
--- * 'emoStreamName' - The name of the Amazon Kinesis stream.
+-- * 'emoStreamName' - The name of the Kinesis stream.
 enhancedMonitoringOutput
     :: EnhancedMonitoringOutput
 enhancedMonitoringOutput =
@@ -95,7 +95,7 @@ emoDesiredShardLevelMetrics = lens _emoDesiredShardLevelMetrics (\ s a -> s{_emo
 emoCurrentShardLevelMetrics :: Lens' EnhancedMonitoringOutput [MetricsName]
 emoCurrentShardLevelMetrics = lens _emoCurrentShardLevelMetrics (\ s a -> s{_emoCurrentShardLevelMetrics = a}) . _Default . _Coerce;
 
--- | The name of the Amazon Kinesis stream.
+-- | The name of the Kinesis stream.
 emoStreamName :: Lens' EnhancedMonitoringOutput (Maybe Text)
 emoStreamName = lens _emoStreamName (\ s a -> s{_emoStreamName = a});
 
@@ -279,7 +279,7 @@ instance Hashable PutRecordsResultEntry where
 
 instance NFData PutRecordsResultEntry where
 
--- | The unit of data of the Amazon Kinesis stream, which is composed of a sequence number, a partition key, and a data blob.
+-- | The unit of data of the Kinesis stream, which is composed of a sequence number, a partition key, and a data blob.
 --
 --
 --
@@ -303,7 +303,7 @@ data Record = Record'
 --
 -- * 'rSequenceNumber' - The unique identifier of the record within its shard.
 --
--- * 'rData' - The data blob. The data in the blob is both opaque and immutable to the Amazon Kinesis service, which does not inspect, interpret, or change the data in the blob in any way. When the data blob (the payload before base64-encoding) is added to the partition key size, the total size must not exceed the maximum record size (1 MB).-- /Note:/ This 'Lens' automatically encodes and decodes Base64 data. The underlying isomorphism will encode to Base64 representation during serialisation, and decode from Base64 representation during deserialisation. This 'Lens' accepts and returns only raw unencoded data.
+-- * 'rData' - The data blob. The data in the blob is both opaque and immutable to Kinesis Streams, which does not inspect, interpret, or change the data in the blob in any way. When the data blob (the payload before base64-encoding) is added to the partition key size, the total size must not exceed the maximum record size (1 MB).-- /Note:/ This 'Lens' automatically encodes and decodes Base64 data. The underlying isomorphism will encode to Base64 representation during serialisation, and decode from Base64 representation during deserialisation. This 'Lens' accepts and returns only raw unencoded data.
 --
 -- * 'rPartitionKey' - Identifies which shard in the stream the data record is assigned to.
 record
@@ -333,7 +333,7 @@ rApproximateArrivalTimestamp = lens _rApproximateArrivalTimestamp (\ s a -> s{_r
 rSequenceNumber :: Lens' Record Text
 rSequenceNumber = lens _rSequenceNumber (\ s a -> s{_rSequenceNumber = a});
 
--- | The data blob. The data in the blob is both opaque and immutable to the Amazon Kinesis service, which does not inspect, interpret, or change the data in the blob in any way. When the data blob (the payload before base64-encoding) is added to the partition key size, the total size must not exceed the maximum record size (1 MB).-- /Note:/ This 'Lens' automatically encodes and decodes Base64 data. The underlying isomorphism will encode to Base64 representation during serialisation, and decode from Base64 representation during deserialisation. This 'Lens' accepts and returns only raw unencoded data.
+-- | The data blob. The data in the blob is both opaque and immutable to Kinesis Streams, which does not inspect, interpret, or change the data in the blob in any way. When the data blob (the payload before base64-encoding) is added to the partition key size, the total size must not exceed the maximum record size (1 MB).-- /Note:/ This 'Lens' automatically encodes and decodes Base64 data. The underlying isomorphism will encode to Base64 representation during serialisation, and decode from Base64 representation during deserialisation. This 'Lens' accepts and returns only raw unencoded data.
 rData :: Lens' Record ByteString
 rData = lens _rData (\ s a -> s{_rData = a}) . _Base64;
 
@@ -404,7 +404,7 @@ instance Hashable SequenceNumberRange where
 
 instance NFData SequenceNumberRange where
 
--- | A uniquely identified group of data records in an Amazon Kinesis stream.
+-- | A uniquely identified group of data records in a Kinesis stream.
 --
 --
 --
@@ -506,13 +506,13 @@ data StreamDescription = StreamDescription'
 --
 -- * 'sdEncryptionType' - The server-side encryption type used on the stream. This parameter can be one of the following values:     * @NONE@ : Do not encrypt the records in the stream.     * @KMS@ : Use server-side encryption on the records in the stream using a customer-managed KMS key.
 --
--- * 'sdKeyId' - The GUID for the customer-managed KMS key used for encryption on the stream.
+-- * 'sdKeyId' - The GUID for the customer-managed KMS key to use for encryption. This value can be a globally unique identifier, a fully specified ARN to either an alias or a key, or an alias name prefixed by "alias/".You can also use a master key owned by Kinesis Streams by specifying the alias @aws/kinesis@ .     * Key ARN example: @arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012@      * Alias ARN example: @arn:aws:kms:us-east-1:123456789012:alias/MyAliasName@      * Globally unique key ID example: @12345678-1234-1234-1234-123456789012@      * Alias name example: @alias/MyAliasName@      * Master key owned by Kinesis Streams: @alias/aws/kinesis@
 --
 -- * 'sdStreamName' - The name of the stream being described.
 --
 -- * 'sdStreamARN' - The Amazon Resource Name (ARN) for the stream being described.
 --
--- * 'sdStreamStatus' - The current status of the stream being described. The stream status is one of the following states:     * @CREATING@ - The stream is being created. Amazon Kinesis immediately returns and sets @StreamStatus@ to @CREATING@ .     * @DELETING@ - The stream is being deleted. The specified stream is in the @DELETING@ state until Amazon Kinesis completes the deletion.     * @ACTIVE@ - The stream exists and is ready for read and write operations or deletion. You should perform read and write operations only on an @ACTIVE@ stream.     * @UPDATING@ - Shards in the stream are being merged or split. Read and write operations continue to work while the stream is in the @UPDATING@ state.
+-- * 'sdStreamStatus' - The current status of the stream being described. The stream status is one of the following states:     * @CREATING@ - The stream is being created. Kinesis Streams immediately returns and sets @StreamStatus@ to @CREATING@ .     * @DELETING@ - The stream is being deleted. The specified stream is in the @DELETING@ state until Kinesis Streams completes the deletion.     * @ACTIVE@ - The stream exists and is ready for read and write operations or deletion. You should perform read and write operations only on an @ACTIVE@ stream.     * @UPDATING@ - Shards in the stream are being merged or split. Read and write operations continue to work while the stream is in the @UPDATING@ state.
 --
 -- * 'sdShards' - The shards that comprise the stream.
 --
@@ -550,7 +550,7 @@ streamDescription pStreamName_ pStreamARN_ pStreamStatus_ pHasMoreShards_ pReten
 sdEncryptionType :: Lens' StreamDescription (Maybe EncryptionType)
 sdEncryptionType = lens _sdEncryptionType (\ s a -> s{_sdEncryptionType = a});
 
--- | The GUID for the customer-managed KMS key used for encryption on the stream.
+-- | The GUID for the customer-managed KMS key to use for encryption. This value can be a globally unique identifier, a fully specified ARN to either an alias or a key, or an alias name prefixed by "alias/".You can also use a master key owned by Kinesis Streams by specifying the alias @aws/kinesis@ .     * Key ARN example: @arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012@      * Alias ARN example: @arn:aws:kms:us-east-1:123456789012:alias/MyAliasName@      * Globally unique key ID example: @12345678-1234-1234-1234-123456789012@      * Alias name example: @alias/MyAliasName@      * Master key owned by Kinesis Streams: @alias/aws/kinesis@
 sdKeyId :: Lens' StreamDescription (Maybe Text)
 sdKeyId = lens _sdKeyId (\ s a -> s{_sdKeyId = a});
 
@@ -562,7 +562,7 @@ sdStreamName = lens _sdStreamName (\ s a -> s{_sdStreamName = a});
 sdStreamARN :: Lens' StreamDescription Text
 sdStreamARN = lens _sdStreamARN (\ s a -> s{_sdStreamARN = a});
 
--- | The current status of the stream being described. The stream status is one of the following states:     * @CREATING@ - The stream is being created. Amazon Kinesis immediately returns and sets @StreamStatus@ to @CREATING@ .     * @DELETING@ - The stream is being deleted. The specified stream is in the @DELETING@ state until Amazon Kinesis completes the deletion.     * @ACTIVE@ - The stream exists and is ready for read and write operations or deletion. You should perform read and write operations only on an @ACTIVE@ stream.     * @UPDATING@ - Shards in the stream are being merged or split. Read and write operations continue to work while the stream is in the @UPDATING@ state.
+-- | The current status of the stream being described. The stream status is one of the following states:     * @CREATING@ - The stream is being created. Kinesis Streams immediately returns and sets @StreamStatus@ to @CREATING@ .     * @DELETING@ - The stream is being deleted. The specified stream is in the @DELETING@ state until Kinesis Streams completes the deletion.     * @ACTIVE@ - The stream exists and is ready for read and write operations or deletion. You should perform read and write operations only on an @ACTIVE@ stream.     * @UPDATING@ - Shards in the stream are being merged or split. Read and write operations continue to work while the stream is in the @UPDATING@ state.
 sdStreamStatus :: Lens' StreamDescription StreamStatus
 sdStreamStatus = lens _sdStreamStatus (\ s a -> s{_sdStreamStatus = a});
 
@@ -604,6 +604,121 @@ instance FromJSON StreamDescription where
 instance Hashable StreamDescription where
 
 instance NFData StreamDescription where
+
+-- | Represents the output for 'DescribeStreamSummary'
+--
+--
+--
+-- /See:/ 'streamDescriptionSummary' smart constructor.
+data StreamDescriptionSummary = StreamDescriptionSummary'
+  { _sdsEncryptionType          :: !(Maybe EncryptionType)
+  , _sdsKeyId                   :: !(Maybe Text)
+  , _sdsStreamName              :: !Text
+  , _sdsStreamARN               :: !Text
+  , _sdsStreamStatus            :: !StreamStatus
+  , _sdsRetentionPeriodHours    :: !Nat
+  , _sdsStreamCreationTimestamp :: !POSIX
+  , _sdsEnhancedMonitoring      :: ![EnhancedMetrics]
+  , _sdsOpenShardCount          :: !Nat
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'StreamDescriptionSummary' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'sdsEncryptionType' - The encryption type used. This value is one of the following:     * @KMS@      * @NONE@
+--
+-- * 'sdsKeyId' - The GUID for the customer-managed KMS key to use for encryption. This value can be a globally unique identifier, a fully specified ARN to either an alias or a key, or an alias name prefixed by "alias/".You can also use a master key owned by Kinesis Streams by specifying the alias @aws/kinesis@ .     * Key ARN example: @arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012@      * Alias ARN example: @arn:aws:kms:us-east-1:123456789012:alias/MyAliasName@      * Globally unique key ID example: @12345678-1234-1234-1234-123456789012@      * Alias name example: @alias/MyAliasName@      * Master key owned by Kinesis: @alias/aws/kinesis@
+--
+-- * 'sdsStreamName' - The name of the stream being described.
+--
+-- * 'sdsStreamARN' - The Amazon Resource Name (ARN) for the stream being described.
+--
+-- * 'sdsStreamStatus' - The current status of the stream being described. The stream status is one of the following states:     * @CREATING@ - The stream is being created. Kinesis Streams immediately returns and sets @StreamStatus@ to @CREATING@ .     * @DELETING@ - The stream is being deleted. The specified stream is in the @DELETING@ state until Kinesis Streams completes the deletion.     * @ACTIVE@ - The stream exists and is ready for read and write operations or deletion. You should perform read and write operations only on an @ACTIVE@ stream.     * @UPDATING@ - Shards in the stream are being merged or split. Read and write operations continue to work while the stream is in the @UPDATING@ state.
+--
+-- * 'sdsRetentionPeriodHours' - The current retention period, in hours.
+--
+-- * 'sdsStreamCreationTimestamp' - The approximate time that the stream was created.
+--
+-- * 'sdsEnhancedMonitoring' - Represents the current enhanced monitoring settings of the stream.
+--
+-- * 'sdsOpenShardCount' - The number of open shards in the stream.
+streamDescriptionSummary
+    :: Text -- ^ 'sdsStreamName'
+    -> Text -- ^ 'sdsStreamARN'
+    -> StreamStatus -- ^ 'sdsStreamStatus'
+    -> Natural -- ^ 'sdsRetentionPeriodHours'
+    -> UTCTime -- ^ 'sdsStreamCreationTimestamp'
+    -> Natural -- ^ 'sdsOpenShardCount'
+    -> StreamDescriptionSummary
+streamDescriptionSummary pStreamName_ pStreamARN_ pStreamStatus_ pRetentionPeriodHours_ pStreamCreationTimestamp_ pOpenShardCount_ =
+  StreamDescriptionSummary'
+  { _sdsEncryptionType = Nothing
+  , _sdsKeyId = Nothing
+  , _sdsStreamName = pStreamName_
+  , _sdsStreamARN = pStreamARN_
+  , _sdsStreamStatus = pStreamStatus_
+  , _sdsRetentionPeriodHours = _Nat # pRetentionPeriodHours_
+  , _sdsStreamCreationTimestamp = _Time # pStreamCreationTimestamp_
+  , _sdsEnhancedMonitoring = mempty
+  , _sdsOpenShardCount = _Nat # pOpenShardCount_
+  }
+
+
+-- | The encryption type used. This value is one of the following:     * @KMS@      * @NONE@
+sdsEncryptionType :: Lens' StreamDescriptionSummary (Maybe EncryptionType)
+sdsEncryptionType = lens _sdsEncryptionType (\ s a -> s{_sdsEncryptionType = a});
+
+-- | The GUID for the customer-managed KMS key to use for encryption. This value can be a globally unique identifier, a fully specified ARN to either an alias or a key, or an alias name prefixed by "alias/".You can also use a master key owned by Kinesis Streams by specifying the alias @aws/kinesis@ .     * Key ARN example: @arn:aws:kms:us-east-1:123456789012:key/12345678-1234-1234-1234-123456789012@      * Alias ARN example: @arn:aws:kms:us-east-1:123456789012:alias/MyAliasName@      * Globally unique key ID example: @12345678-1234-1234-1234-123456789012@      * Alias name example: @alias/MyAliasName@      * Master key owned by Kinesis: @alias/aws/kinesis@
+sdsKeyId :: Lens' StreamDescriptionSummary (Maybe Text)
+sdsKeyId = lens _sdsKeyId (\ s a -> s{_sdsKeyId = a});
+
+-- | The name of the stream being described.
+sdsStreamName :: Lens' StreamDescriptionSummary Text
+sdsStreamName = lens _sdsStreamName (\ s a -> s{_sdsStreamName = a});
+
+-- | The Amazon Resource Name (ARN) for the stream being described.
+sdsStreamARN :: Lens' StreamDescriptionSummary Text
+sdsStreamARN = lens _sdsStreamARN (\ s a -> s{_sdsStreamARN = a});
+
+-- | The current status of the stream being described. The stream status is one of the following states:     * @CREATING@ - The stream is being created. Kinesis Streams immediately returns and sets @StreamStatus@ to @CREATING@ .     * @DELETING@ - The stream is being deleted. The specified stream is in the @DELETING@ state until Kinesis Streams completes the deletion.     * @ACTIVE@ - The stream exists and is ready for read and write operations or deletion. You should perform read and write operations only on an @ACTIVE@ stream.     * @UPDATING@ - Shards in the stream are being merged or split. Read and write operations continue to work while the stream is in the @UPDATING@ state.
+sdsStreamStatus :: Lens' StreamDescriptionSummary StreamStatus
+sdsStreamStatus = lens _sdsStreamStatus (\ s a -> s{_sdsStreamStatus = a});
+
+-- | The current retention period, in hours.
+sdsRetentionPeriodHours :: Lens' StreamDescriptionSummary Natural
+sdsRetentionPeriodHours = lens _sdsRetentionPeriodHours (\ s a -> s{_sdsRetentionPeriodHours = a}) . _Nat;
+
+-- | The approximate time that the stream was created.
+sdsStreamCreationTimestamp :: Lens' StreamDescriptionSummary UTCTime
+sdsStreamCreationTimestamp = lens _sdsStreamCreationTimestamp (\ s a -> s{_sdsStreamCreationTimestamp = a}) . _Time;
+
+-- | Represents the current enhanced monitoring settings of the stream.
+sdsEnhancedMonitoring :: Lens' StreamDescriptionSummary [EnhancedMetrics]
+sdsEnhancedMonitoring = lens _sdsEnhancedMonitoring (\ s a -> s{_sdsEnhancedMonitoring = a}) . _Coerce;
+
+-- | The number of open shards in the stream.
+sdsOpenShardCount :: Lens' StreamDescriptionSummary Natural
+sdsOpenShardCount = lens _sdsOpenShardCount (\ s a -> s{_sdsOpenShardCount = a}) . _Nat;
+
+instance FromJSON StreamDescriptionSummary where
+        parseJSON
+          = withObject "StreamDescriptionSummary"
+              (\ x ->
+                 StreamDescriptionSummary' <$>
+                   (x .:? "EncryptionType") <*> (x .:? "KeyId") <*>
+                     (x .: "StreamName")
+                     <*> (x .: "StreamARN")
+                     <*> (x .: "StreamStatus")
+                     <*> (x .: "RetentionPeriodHours")
+                     <*> (x .: "StreamCreationTimestamp")
+                     <*> (x .:? "EnhancedMonitoring" .!= mempty)
+                     <*> (x .: "OpenShardCount"))
+
+instance Hashable StreamDescriptionSummary where
+
+instance NFData StreamDescriptionSummary where
 
 -- | Metadata assigned to the stream, consisting of a key-value pair.
 --

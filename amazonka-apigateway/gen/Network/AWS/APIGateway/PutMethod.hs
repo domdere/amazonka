@@ -27,6 +27,7 @@ module Network.AWS.APIGateway.PutMethod
       putMethod
     , PutMethod
     -- * Request Lenses
+    , putAuthorizationScopes
     , putRequestValidatorId
     , putRequestModels
     , putRequestParameters
@@ -44,6 +45,7 @@ module Network.AWS.APIGateway.PutMethod
     -- * Response Lenses
     , mMethodResponses
     , mHttpMethod
+    , mAuthorizationScopes
     , mRequestValidatorId
     , mRequestModels
     , mRequestParameters
@@ -67,16 +69,17 @@ import Network.AWS.Response
 --
 -- /See:/ 'putMethod' smart constructor.
 data PutMethod = PutMethod'
-  { _putRequestValidatorId :: !(Maybe Text)
-  , _putRequestModels      :: !(Maybe (Map Text Text))
-  , _putRequestParameters  :: !(Maybe (Map Text Bool))
-  , _putAuthorizerId       :: !(Maybe Text)
-  , _putOperationName      :: !(Maybe Text)
-  , _putApiKeyRequired     :: !(Maybe Bool)
-  , _putRestAPIId          :: !Text
-  , _putResourceId         :: !Text
-  , _putHttpMethod         :: !Text
-  , _putAuthorizationType  :: !Text
+  { _putAuthorizationScopes :: !(Maybe [Text])
+  , _putRequestValidatorId  :: !(Maybe Text)
+  , _putRequestModels       :: !(Maybe (Map Text Text))
+  , _putRequestParameters   :: !(Maybe (Map Text Bool))
+  , _putAuthorizerId        :: !(Maybe Text)
+  , _putOperationName       :: !(Maybe Text)
+  , _putApiKeyRequired      :: !(Maybe Bool)
+  , _putRestAPIId           :: !Text
+  , _putResourceId          :: !Text
+  , _putHttpMethod          :: !Text
+  , _putAuthorizationType   :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -84,11 +87,13 @@ data PutMethod = PutMethod'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'putAuthorizationScopes' - A list of authorization scopes configured on the method. The scopes are used with a @COGNITO_USER_POOL@ authorizer to authorize the method invocation. The authorization works by matching the method scopes against the scopes parsed from the access token in the incoming request. The method invocation is authorized if any method scopes matches a claimed scope in the access token. Otherwise, the invocation is not authorized. When the method scope is configured, the client must provide an access token instead of an identity token for authorization purposes.
+--
 -- * 'putRequestValidatorId' - The identifier of a 'RequestValidator' for validating the method request.
 --
 -- * 'putRequestModels' - Specifies the 'Model' resources used for the request's content type. Request models are represented as a key/value map, with a content type as the key and a 'Model' name as the value.
 --
--- * 'putRequestParameters' - A key-value map defining required or optional method request parameters that can be accepted by Amazon API Gateway. A key defines a method request parameter name matching the pattern of @method.request.{location}.{name}@ , where @location@ is @querystring@ , @path@ , or @header@ and @name@ is a valid and unique parameter name. The value associated with the key is a Boolean flag indicating whether the parameter is required (@true@ ) or optional (@false@ ). The method request parameter names defined here are available in 'Integration' to be mapped to integration request parameters or body-mapping templates.
+-- * 'putRequestParameters' - A key-value map defining required or optional method request parameters that can be accepted by API Gateway. A key defines a method request parameter name matching the pattern of @method.request.{location}.{name}@ , where @location@ is @querystring@ , @path@ , or @header@ and @name@ is a valid and unique parameter name. The value associated with the key is a Boolean flag indicating whether the parameter is required (@true@ ) or optional (@false@ ). The method request parameter names defined here are available in 'Integration' to be mapped to integration request parameters or body-mapping templates.
 --
 -- * 'putAuthorizerId' - Specifies the identifier of an 'Authorizer' to use on this Method, if the type is CUSTOM.
 --
@@ -111,7 +116,8 @@ putMethod
     -> PutMethod
 putMethod pRestAPIId_ pResourceId_ pHttpMethod_ pAuthorizationType_ =
   PutMethod'
-  { _putRequestValidatorId = Nothing
+  { _putAuthorizationScopes = Nothing
+  , _putRequestValidatorId = Nothing
   , _putRequestModels = Nothing
   , _putRequestParameters = Nothing
   , _putAuthorizerId = Nothing
@@ -124,6 +130,10 @@ putMethod pRestAPIId_ pResourceId_ pHttpMethod_ pAuthorizationType_ =
   }
 
 
+-- | A list of authorization scopes configured on the method. The scopes are used with a @COGNITO_USER_POOL@ authorizer to authorize the method invocation. The authorization works by matching the method scopes against the scopes parsed from the access token in the incoming request. The method invocation is authorized if any method scopes matches a claimed scope in the access token. Otherwise, the invocation is not authorized. When the method scope is configured, the client must provide an access token instead of an identity token for authorization purposes.
+putAuthorizationScopes :: Lens' PutMethod [Text]
+putAuthorizationScopes = lens _putAuthorizationScopes (\ s a -> s{_putAuthorizationScopes = a}) . _Default . _Coerce;
+
 -- | The identifier of a 'RequestValidator' for validating the method request.
 putRequestValidatorId :: Lens' PutMethod (Maybe Text)
 putRequestValidatorId = lens _putRequestValidatorId (\ s a -> s{_putRequestValidatorId = a});
@@ -132,7 +142,7 @@ putRequestValidatorId = lens _putRequestValidatorId (\ s a -> s{_putRequestValid
 putRequestModels :: Lens' PutMethod (HashMap Text Text)
 putRequestModels = lens _putRequestModels (\ s a -> s{_putRequestModels = a}) . _Default . _Map;
 
--- | A key-value map defining required or optional method request parameters that can be accepted by Amazon API Gateway. A key defines a method request parameter name matching the pattern of @method.request.{location}.{name}@ , where @location@ is @querystring@ , @path@ , or @header@ and @name@ is a valid and unique parameter name. The value associated with the key is a Boolean flag indicating whether the parameter is required (@true@ ) or optional (@false@ ). The method request parameter names defined here are available in 'Integration' to be mapped to integration request parameters or body-mapping templates.
+-- | A key-value map defining required or optional method request parameters that can be accepted by API Gateway. A key defines a method request parameter name matching the pattern of @method.request.{location}.{name}@ , where @location@ is @querystring@ , @path@ , or @header@ and @name@ is a valid and unique parameter name. The value associated with the key is a Boolean flag indicating whether the parameter is required (@true@ ) or optional (@false@ ). The method request parameter names defined here are available in 'Integration' to be mapped to integration request parameters or body-mapping templates.
 putRequestParameters :: Lens' PutMethod (HashMap Text Bool)
 putRequestParameters = lens _putRequestParameters (\ s a -> s{_putRequestParameters = a}) . _Default . _Map;
 
@@ -183,8 +193,9 @@ instance ToJSON PutMethod where
         toJSON PutMethod'{..}
           = object
               (catMaybes
-                 [("requestValidatorId" .=) <$>
-                    _putRequestValidatorId,
+                 [("authorizationScopes" .=) <$>
+                    _putAuthorizationScopes,
+                  ("requestValidatorId" .=) <$> _putRequestValidatorId,
                   ("requestModels" .=) <$> _putRequestModels,
                   ("requestParameters" .=) <$> _putRequestParameters,
                   ("authorizerId" .=) <$> _putAuthorizerId,

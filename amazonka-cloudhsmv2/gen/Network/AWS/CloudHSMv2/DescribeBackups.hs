@@ -23,6 +23,8 @@
 --
 -- This is a paginated operation, which means that each response might contain only a subset of all the backups. When the response contains only a subset of backups, it includes a @NextToken@ value. Use this value in a subsequent @DescribeBackups@ request to get more backups. When you receive a response with no @NextToken@ (or an empty or null value), that means there are no more backups to get.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudHSMv2.DescribeBackups
     (
     -- * Creating a Request
@@ -45,6 +47,7 @@ module Network.AWS.CloudHSMv2.DescribeBackups
 import Network.AWS.CloudHSMv2.Types
 import Network.AWS.CloudHSMv2.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -84,6 +87,13 @@ dbNextToken = lens _dbNextToken (\ s a -> s{_dbNextToken = a});
 -- | The maximum number of backups to return in the response. When there are more backups than the number you specify, the response contains a @NextToken@ value.
 dbMaxResults :: Lens' DescribeBackups (Maybe Natural)
 dbMaxResults = lens _dbMaxResults (\ s a -> s{_dbMaxResults = a}) . mapping _Nat;
+
+instance AWSPager DescribeBackups where
+        page rq rs
+          | stop (rs ^. dbrsNextToken) = Nothing
+          | stop (rs ^. dbrsBackups) = Nothing
+          | otherwise =
+            Just $ rq & dbNextToken .~ rs ^. dbrsNextToken
 
 instance AWSRequest DescribeBackups where
         type Rs DescribeBackups = DescribeBackupsResponse

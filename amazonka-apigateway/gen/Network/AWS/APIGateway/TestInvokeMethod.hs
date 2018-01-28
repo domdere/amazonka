@@ -205,7 +205,7 @@ data TestInvokeMethodResponse = TestInvokeMethodResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'timrsLog' - The Amazon API Gateway execution log for the test invoke request.
+-- * 'timrsLog' - The API Gateway execution log for the test invoke request.
 --
 -- * 'timrsStatus' - The HTTP status code.
 --
@@ -230,7 +230,7 @@ testInvokeMethodResponse pResponseStatus_ =
   }
 
 
--- | The Amazon API Gateway execution log for the test invoke request.
+-- | The API Gateway execution log for the test invoke request.
 timrsLog :: Lens' TestInvokeMethodResponse (Maybe Text)
 timrsLog = lens _timrsLog (\ s a -> s{_timrsLog = a});
 

@@ -59,7 +59,7 @@ data CreateSecurityConfiguration = CreateSecurityConfiguration'
 --
 -- * 'cscName' - The name of the security configuration.
 --
--- * 'cscSecurityConfiguration' - The security configuration details in JSON format.
+-- * 'cscSecurityConfiguration' - The security configuration details in JSON format. For JSON parameters and examples, see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-security-configurations.html Use Security Configurations to Set Up Cluster Security> in the /Amazon EMR Management Guide/ .
 createSecurityConfiguration
     :: Text -- ^ 'cscName'
     -> Text -- ^ 'cscSecurityConfiguration'
@@ -73,7 +73,7 @@ createSecurityConfiguration pName_ pSecurityConfiguration_ =
 cscName :: Lens' CreateSecurityConfiguration Text
 cscName = lens _cscName (\ s a -> s{_cscName = a});
 
--- | The security configuration details in JSON format.
+-- | The security configuration details in JSON format. For JSON parameters and examples, see <http://docs.aws.amazon.com/emr/latest/ManagementGuide/emr-security-configurations.html Use Security Configurations to Set Up Cluster Security> in the /Amazon EMR Management Guide/ .
 cscSecurityConfiguration :: Lens' CreateSecurityConfiguration Text
 cscSecurityConfiguration = lens _cscSecurityConfiguration (\ s a -> s{_cscSecurityConfiguration = a});
 

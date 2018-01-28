@@ -256,6 +256,7 @@ data ImageBuilderState
   | IBSSnapshotting
   | IBSStopped
   | IBSStopping
+  | IBSUpdatingAgent
   deriving (Eq, Ord, Read, Show, Enum, Bounded, Data, Typeable, Generic)
 
 
@@ -269,8 +270,9 @@ instance FromText ImageBuilderState where
         "snapshotting" -> pure IBSSnapshotting
         "stopped" -> pure IBSStopped
         "stopping" -> pure IBSStopping
+        "updating_agent" -> pure IBSUpdatingAgent
         e -> fromTextError $ "Failure parsing ImageBuilderState from value: '" <> e
-           <> "'. Accepted values: deleting, failed, pending, rebooting, running, snapshotting, stopped, stopping"
+           <> "'. Accepted values: deleting, failed, pending, rebooting, running, snapshotting, stopped, stopping, updating_agent"
 
 instance ToText ImageBuilderState where
     toText = \case
@@ -282,6 +284,7 @@ instance ToText ImageBuilderState where
         IBSSnapshotting -> "SNAPSHOTTING"
         IBSStopped -> "STOPPED"
         IBSStopping -> "STOPPING"
+        IBSUpdatingAgent -> "UPDATING_AGENT"
 
 instance Hashable     ImageBuilderState
 instance NFData       ImageBuilderState

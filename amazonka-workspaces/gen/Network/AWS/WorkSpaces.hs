@@ -13,7 +13,7 @@
 --
 -- __Amazon WorkSpaces Service__
 --
--- This reference provides detailed information about the Amazon WorkSpaces operations.
+-- Amazon WorkSpaces enables you to provision virtual, cloud-based Microsoft Windows desktops for your users.
 --
 module Network.AWS.WorkSpaces
     (
@@ -103,6 +103,12 @@ module Network.AWS.WorkSpaces
     -- ** ConnectionState
     , ConnectionState (..)
 
+    -- ** ModificationResourceEnum
+    , ModificationResourceEnum (..)
+
+    -- ** ModificationStateEnum
+    , ModificationStateEnum (..)
+
     -- ** RunningMode
     , RunningMode (..)
 
@@ -143,6 +149,12 @@ module Network.AWS.WorkSpaces
     , fwcrWorkspaceId
     , fwcrErrorMessage
 
+    -- ** ModificationState
+    , ModificationState
+    , modificationState
+    , msState
+    , msResource
+
     -- ** RebootRequest
     , RebootRequest
     , rebootRequest
@@ -152,6 +164,11 @@ module Network.AWS.WorkSpaces
     , RebuildRequest
     , rebuildRequest
     , rrWorkspaceId
+
+    -- ** RootStorage
+    , RootStorage
+    , rootStorage
+    , rsCapacity
 
     -- ** StartRequest
     , StartRequest
@@ -185,6 +202,7 @@ module Network.AWS.WorkSpaces
     , wDirectoryId
     , wState
     , wIPAddress
+    , wModificationStates
     , wUserName
     , wSubnetId
     , wBundleId
@@ -202,6 +220,7 @@ module Network.AWS.WorkSpaces
     , workspaceBundle
     , wbBundleId
     , wbOwner
+    , wbRootStorage
     , wbName
     , wbComputeType
     , wbUserStorage
@@ -234,8 +253,11 @@ module Network.AWS.WorkSpaces
     -- ** WorkspaceProperties
     , WorkspaceProperties
     , workspaceProperties
+    , wpComputeTypeName
     , wpRunningMode
+    , wpRootVolumeSizeGib
     , wpRunningModeAutoStopTimeoutInMinutes
+    , wpUserVolumeSizeGib
 
     -- ** WorkspaceRequest
     , WorkspaceRequest

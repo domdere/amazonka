@@ -231,6 +231,7 @@ data AutoScalingGroup = AutoScalingGroup'
   , _asgEnabledMetrics                   :: !(Maybe [EnabledMetric])
   , _asgLaunchConfigurationName          :: !(Maybe Text)
   , _asgInstances                        :: !(Maybe [Instance])
+  , _asgLaunchTemplate                   :: !(Maybe LaunchTemplateSpecification)
   , _asgAutoScalingGroupARN              :: !(Maybe Text)
   , _asgPlacementGroup                   :: !(Maybe Text)
   , _asgSuspendedProcesses               :: !(Maybe [SuspendedProcess])
@@ -269,7 +270,9 @@ data AutoScalingGroup = AutoScalingGroup'
 --
 -- * 'asgInstances' - The EC2 instances associated with the group.
 --
--- * 'asgAutoScalingGroupARN' - The Amazon Resource Name (ARN) of the group.
+-- * 'asgLaunchTemplate' - The launch template for the group.
+--
+-- * 'asgAutoScalingGroupARN' - The Amazon Resource Name (ARN) of the Auto Scaling group.
 --
 -- * 'asgPlacementGroup' - The name of the placement group into which you'll launch your instances, if any. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html Placement Groups> in the /Amazon Elastic Compute Cloud User Guide/ .
 --
@@ -279,7 +282,7 @@ data AutoScalingGroup = AutoScalingGroup'
 --
 -- * 'asgTags' - The tags for the group.
 --
--- * 'asgAutoScalingGroupName' - The name of the group.
+-- * 'asgAutoScalingGroupName' - The name of the Auto Scaling group.
 --
 -- * 'asgMinSize' - The minimum size of the group.
 --
@@ -315,6 +318,7 @@ autoScalingGroup pAutoScalingGroupName_ pMinSize_ pMaxSize_ pDesiredCapacity_ pD
   , _asgEnabledMetrics = Nothing
   , _asgLaunchConfigurationName = Nothing
   , _asgInstances = Nothing
+  , _asgLaunchTemplate = Nothing
   , _asgAutoScalingGroupARN = Nothing
   , _asgPlacementGroup = Nothing
   , _asgSuspendedProcesses = Nothing
@@ -367,7 +371,11 @@ asgLaunchConfigurationName = lens _asgLaunchConfigurationName (\ s a -> s{_asgLa
 asgInstances :: Lens' AutoScalingGroup [Instance]
 asgInstances = lens _asgInstances (\ s a -> s{_asgInstances = a}) . _Default . _Coerce;
 
--- | The Amazon Resource Name (ARN) of the group.
+-- | The launch template for the group.
+asgLaunchTemplate :: Lens' AutoScalingGroup (Maybe LaunchTemplateSpecification)
+asgLaunchTemplate = lens _asgLaunchTemplate (\ s a -> s{_asgLaunchTemplate = a});
+
+-- | The Amazon Resource Name (ARN) of the Auto Scaling group.
 asgAutoScalingGroupARN :: Lens' AutoScalingGroup (Maybe Text)
 asgAutoScalingGroupARN = lens _asgAutoScalingGroupARN (\ s a -> s{_asgAutoScalingGroupARN = a});
 
@@ -387,7 +395,7 @@ asgLoadBalancerNames = lens _asgLoadBalancerNames (\ s a -> s{_asgLoadBalancerNa
 asgTags :: Lens' AutoScalingGroup [TagDescription]
 asgTags = lens _asgTags (\ s a -> s{_asgTags = a}) . _Default . _Coerce;
 
--- | The name of the group.
+-- | The name of the Auto Scaling group.
 asgAutoScalingGroupName :: Lens' AutoScalingGroup Text
 asgAutoScalingGroupName = lens _asgAutoScalingGroupName (\ s a -> s{_asgAutoScalingGroupName = a});
 
@@ -438,6 +446,7 @@ instance FromXML AutoScalingGroup where
                 <*>
                 (x .@? "Instances" .!@ mempty >>=
                    may (parseXMLList "member"))
+                <*> (x .@? "LaunchTemplate")
                 <*> (x .@? "AutoScalingGroupARN")
                 <*> (x .@? "PlacementGroup")
                 <*>
@@ -471,6 +480,7 @@ instance NFData AutoScalingGroup where
 -- /See:/ 'autoScalingInstanceDetails' smart constructor.
 data AutoScalingInstanceDetails = AutoScalingInstanceDetails'
   { _asidLaunchConfigurationName :: !(Maybe Text)
+  , _asidLaunchTemplate          :: !(Maybe LaunchTemplateSpecification)
   , _asidInstanceId              :: !Text
   , _asidAutoScalingGroupName    :: !Text
   , _asidAvailabilityZone        :: !Text
@@ -486,9 +496,11 @@ data AutoScalingInstanceDetails = AutoScalingInstanceDetails'
 --
 -- * 'asidLaunchConfigurationName' - The launch configuration used to launch the instance. This value is not available if you attached the instance to the Auto Scaling group.
 --
+-- * 'asidLaunchTemplate' - The launch template for the instance.
+--
 -- * 'asidInstanceId' - The ID of the instance.
 --
--- * 'asidAutoScalingGroupName' - The name of the Auto Scaling group associated with the instance.
+-- * 'asidAutoScalingGroupName' - The name of the Auto Scaling group for the instance.
 --
 -- * 'asidAvailabilityZone' - The Availability Zone for the instance.
 --
@@ -508,6 +520,7 @@ autoScalingInstanceDetails
 autoScalingInstanceDetails pInstanceId_ pAutoScalingGroupName_ pAvailabilityZone_ pLifecycleState_ pHealthStatus_ pProtectedFromScaleIn_ =
   AutoScalingInstanceDetails'
   { _asidLaunchConfigurationName = Nothing
+  , _asidLaunchTemplate = Nothing
   , _asidInstanceId = pInstanceId_
   , _asidAutoScalingGroupName = pAutoScalingGroupName_
   , _asidAvailabilityZone = pAvailabilityZone_
@@ -521,11 +534,15 @@ autoScalingInstanceDetails pInstanceId_ pAutoScalingGroupName_ pAvailabilityZone
 asidLaunchConfigurationName :: Lens' AutoScalingInstanceDetails (Maybe Text)
 asidLaunchConfigurationName = lens _asidLaunchConfigurationName (\ s a -> s{_asidLaunchConfigurationName = a});
 
+-- | The launch template for the instance.
+asidLaunchTemplate :: Lens' AutoScalingInstanceDetails (Maybe LaunchTemplateSpecification)
+asidLaunchTemplate = lens _asidLaunchTemplate (\ s a -> s{_asidLaunchTemplate = a});
+
 -- | The ID of the instance.
 asidInstanceId :: Lens' AutoScalingInstanceDetails Text
 asidInstanceId = lens _asidInstanceId (\ s a -> s{_asidInstanceId = a});
 
--- | The name of the Auto Scaling group associated with the instance.
+-- | The name of the Auto Scaling group for the instance.
 asidAutoScalingGroupName :: Lens' AutoScalingInstanceDetails Text
 asidAutoScalingGroupName = lens _asidAutoScalingGroupName (\ s a -> s{_asidAutoScalingGroupName = a});
 
@@ -549,7 +566,8 @@ instance FromXML AutoScalingInstanceDetails where
         parseXML x
           = AutoScalingInstanceDetails' <$>
               (x .@? "LaunchConfigurationName") <*>
-                (x .@ "InstanceId")
+                (x .@? "LaunchTemplate")
+                <*> (x .@ "InstanceId")
                 <*> (x .@ "AutoScalingGroupName")
                 <*> (x .@ "AvailabilityZone")
                 <*> (x .@ "LifecycleState")
@@ -895,6 +913,7 @@ instance ToQuery Filter where
 -- /See:/ 'instance'' smart constructor.
 data Instance = Instance'
   { _iLaunchConfigurationName :: !(Maybe Text)
+  , _iLaunchTemplate          :: !(Maybe LaunchTemplateSpecification)
   , _iInstanceId              :: !Text
   , _iAvailabilityZone        :: !Text
   , _iLifecycleState          :: !LifecycleState
@@ -908,6 +927,8 @@ data Instance = Instance'
 -- Use one of the following lenses to modify other fields as desired:
 --
 -- * 'iLaunchConfigurationName' - The launch configuration associated with the instance.
+--
+-- * 'iLaunchTemplate' - The launch template for the instance.
 --
 -- * 'iInstanceId' - The ID of the instance.
 --
@@ -928,6 +949,7 @@ instance'
 instance' pInstanceId_ pAvailabilityZone_ pLifecycleState_ pHealthStatus_ pProtectedFromScaleIn_ =
   Instance'
   { _iLaunchConfigurationName = Nothing
+  , _iLaunchTemplate = Nothing
   , _iInstanceId = pInstanceId_
   , _iAvailabilityZone = pAvailabilityZone_
   , _iLifecycleState = pLifecycleState_
@@ -939,6 +961,10 @@ instance' pInstanceId_ pAvailabilityZone_ pLifecycleState_ pHealthStatus_ pProte
 -- | The launch configuration associated with the instance.
 iLaunchConfigurationName :: Lens' Instance (Maybe Text)
 iLaunchConfigurationName = lens _iLaunchConfigurationName (\ s a -> s{_iLaunchConfigurationName = a});
+
+-- | The launch template for the instance.
+iLaunchTemplate :: Lens' Instance (Maybe LaunchTemplateSpecification)
+iLaunchTemplate = lens _iLaunchTemplate (\ s a -> s{_iLaunchTemplate = a});
 
 -- | The ID of the instance.
 iInstanceId :: Lens' Instance Text
@@ -964,7 +990,8 @@ instance FromXML Instance where
         parseXML x
           = Instance' <$>
               (x .@? "LaunchConfigurationName") <*>
-                (x .@ "InstanceId")
+                (x .@? "LaunchTemplate")
+                <*> (x .@ "InstanceId")
                 <*> (x .@ "AvailabilityZone")
                 <*> (x .@ "LifecycleState")
                 <*> (x .@ "HealthStatus")
@@ -1217,6 +1244,67 @@ instance Hashable LaunchConfiguration where
 
 instance NFData LaunchConfiguration where
 
+-- | Describes a launch template.
+--
+--
+--
+-- /See:/ 'launchTemplateSpecification' smart constructor.
+data LaunchTemplateSpecification = LaunchTemplateSpecification'
+  { _ltsLaunchTemplateName :: !(Maybe Text)
+  , _ltsLaunchTemplateId   :: !(Maybe Text)
+  , _ltsVersion            :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'LaunchTemplateSpecification' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ltsLaunchTemplateName' - The name of the launch template. You must specify either a template name or a template ID.
+--
+-- * 'ltsLaunchTemplateId' - The ID of the launch template. You must specify either a template ID or a template name.
+--
+-- * 'ltsVersion' - The version number. By default, the default version of the launch template is used.
+launchTemplateSpecification
+    :: LaunchTemplateSpecification
+launchTemplateSpecification =
+  LaunchTemplateSpecification'
+  { _ltsLaunchTemplateName = Nothing
+  , _ltsLaunchTemplateId = Nothing
+  , _ltsVersion = Nothing
+  }
+
+
+-- | The name of the launch template. You must specify either a template name or a template ID.
+ltsLaunchTemplateName :: Lens' LaunchTemplateSpecification (Maybe Text)
+ltsLaunchTemplateName = lens _ltsLaunchTemplateName (\ s a -> s{_ltsLaunchTemplateName = a});
+
+-- | The ID of the launch template. You must specify either a template ID or a template name.
+ltsLaunchTemplateId :: Lens' LaunchTemplateSpecification (Maybe Text)
+ltsLaunchTemplateId = lens _ltsLaunchTemplateId (\ s a -> s{_ltsLaunchTemplateId = a});
+
+-- | The version number. By default, the default version of the launch template is used.
+ltsVersion :: Lens' LaunchTemplateSpecification (Maybe Text)
+ltsVersion = lens _ltsVersion (\ s a -> s{_ltsVersion = a});
+
+instance FromXML LaunchTemplateSpecification where
+        parseXML x
+          = LaunchTemplateSpecification' <$>
+              (x .@? "LaunchTemplateName") <*>
+                (x .@? "LaunchTemplateId")
+                <*> (x .@? "Version")
+
+instance Hashable LaunchTemplateSpecification where
+
+instance NFData LaunchTemplateSpecification where
+
+instance ToQuery LaunchTemplateSpecification where
+        toQuery LaunchTemplateSpecification'{..}
+          = mconcat
+              ["LaunchTemplateName" =: _ltsLaunchTemplateName,
+               "LaunchTemplateId" =: _ltsLaunchTemplateId,
+               "Version" =: _ltsVersion]
+
 -- | Describes a lifecycle hook, which tells Auto Scaling that you want to perform an action whenever it launches instances or whenever it terminates instances.
 --
 --
@@ -1339,9 +1427,9 @@ data LifecycleHookSpecification = LifecycleHookSpecification'
   , _lhsHeartbeatTimeout      :: !(Maybe Int)
   , _lhsNotificationMetadata  :: !(Maybe Text)
   , _lhsNotificationTargetARN :: !(Maybe Text)
-  , _lhsLifecycleTransition   :: !(Maybe Text)
   , _lhsRoleARN               :: !(Maybe Text)
   , _lhsLifecycleHookName     :: !Text
+  , _lhsLifecycleTransition   :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1349,7 +1437,7 @@ data LifecycleHookSpecification = LifecycleHookSpecification'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'lhsDefaultResult' - Defines the action the Auto Scaling group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. The valid values are @CONTINUE@ and @ABANDON@ . The default value is @CONTINUE@ .
+-- * 'lhsDefaultResult' - Defines the action the Auto Scaling group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. The valid values are @CONTINUE@ and @ABANDON@ .
 --
 -- * 'lhsHeartbeatTimeout' - The maximum time, in seconds, that can elapse before the lifecycle hook times out. If the lifecycle hook times out, Auto Scaling performs the default action. You can prevent the lifecycle hook from timing out by calling 'RecordLifecycleActionHeartbeat' .
 --
@@ -1357,27 +1445,28 @@ data LifecycleHookSpecification = LifecycleHookSpecification'
 --
 -- * 'lhsNotificationTargetARN' - The ARN of the target that Auto Scaling sends notifications to when an instance is in the transition state for the lifecycle hook. The notification target can be either an SQS queue or an SNS topic.
 --
--- * 'lhsLifecycleTransition' - The state of the EC2 instance to which you want to attach the lifecycle hook. For a list of lifecycle hook types, see 'DescribeLifecycleHookTypes' .
---
 -- * 'lhsRoleARN' - The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target.
 --
 -- * 'lhsLifecycleHookName' - The name of the lifecycle hook.
+--
+-- * 'lhsLifecycleTransition' - The state of the EC2 instance to which you want to attach the lifecycle hook. For a list of lifecycle hook types, see 'DescribeLifecycleHookTypes' .
 lifecycleHookSpecification
     :: Text -- ^ 'lhsLifecycleHookName'
+    -> Text -- ^ 'lhsLifecycleTransition'
     -> LifecycleHookSpecification
-lifecycleHookSpecification pLifecycleHookName_ =
+lifecycleHookSpecification pLifecycleHookName_ pLifecycleTransition_ =
   LifecycleHookSpecification'
   { _lhsDefaultResult = Nothing
   , _lhsHeartbeatTimeout = Nothing
   , _lhsNotificationMetadata = Nothing
   , _lhsNotificationTargetARN = Nothing
-  , _lhsLifecycleTransition = Nothing
   , _lhsRoleARN = Nothing
   , _lhsLifecycleHookName = pLifecycleHookName_
+  , _lhsLifecycleTransition = pLifecycleTransition_
   }
 
 
--- | Defines the action the Auto Scaling group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. The valid values are @CONTINUE@ and @ABANDON@ . The default value is @CONTINUE@ .
+-- | Defines the action the Auto Scaling group should take when the lifecycle hook timeout elapses or if an unexpected failure occurs. The valid values are @CONTINUE@ and @ABANDON@ .
 lhsDefaultResult :: Lens' LifecycleHookSpecification (Maybe Text)
 lhsDefaultResult = lens _lhsDefaultResult (\ s a -> s{_lhsDefaultResult = a});
 
@@ -1393,10 +1482,6 @@ lhsNotificationMetadata = lens _lhsNotificationMetadata (\ s a -> s{_lhsNotifica
 lhsNotificationTargetARN :: Lens' LifecycleHookSpecification (Maybe Text)
 lhsNotificationTargetARN = lens _lhsNotificationTargetARN (\ s a -> s{_lhsNotificationTargetARN = a});
 
--- | The state of the EC2 instance to which you want to attach the lifecycle hook. For a list of lifecycle hook types, see 'DescribeLifecycleHookTypes' .
-lhsLifecycleTransition :: Lens' LifecycleHookSpecification (Maybe Text)
-lhsLifecycleTransition = lens _lhsLifecycleTransition (\ s a -> s{_lhsLifecycleTransition = a});
-
 -- | The ARN of the IAM role that allows the Auto Scaling group to publish to the specified notification target.
 lhsRoleARN :: Lens' LifecycleHookSpecification (Maybe Text)
 lhsRoleARN = lens _lhsRoleARN (\ s a -> s{_lhsRoleARN = a});
@@ -1404,6 +1489,10 @@ lhsRoleARN = lens _lhsRoleARN (\ s a -> s{_lhsRoleARN = a});
 -- | The name of the lifecycle hook.
 lhsLifecycleHookName :: Lens' LifecycleHookSpecification Text
 lhsLifecycleHookName = lens _lhsLifecycleHookName (\ s a -> s{_lhsLifecycleHookName = a});
+
+-- | The state of the EC2 instance to which you want to attach the lifecycle hook. For a list of lifecycle hook types, see 'DescribeLifecycleHookTypes' .
+lhsLifecycleTransition :: Lens' LifecycleHookSpecification Text
+lhsLifecycleTransition = lens _lhsLifecycleTransition (\ s a -> s{_lhsLifecycleTransition = a});
 
 instance Hashable LifecycleHookSpecification where
 
@@ -1416,9 +1505,9 @@ instance ToQuery LifecycleHookSpecification where
                "HeartbeatTimeout" =: _lhsHeartbeatTimeout,
                "NotificationMetadata" =: _lhsNotificationMetadata,
                "NotificationTargetARN" =: _lhsNotificationTargetARN,
-               "LifecycleTransition" =: _lhsLifecycleTransition,
                "RoleARN" =: _lhsRoleARN,
-               "LifecycleHookName" =: _lhsLifecycleHookName]
+               "LifecycleHookName" =: _lhsLifecycleHookName,
+               "LifecycleTransition" =: _lhsLifecycleTransition]
 
 -- | Describes the state of a Classic Load Balancer.
 --
@@ -1639,7 +1728,7 @@ data NotificationConfiguration = NotificationConfiguration'
 --
 -- * 'ncTopicARN' - The Amazon Resource Name (ARN) of the Amazon Simple Notification Service (SNS) topic.
 --
--- * 'ncAutoScalingGroupName' - The name of the group.
+-- * 'ncAutoScalingGroupName' - The name of the Auto Scaling group.
 --
 -- * 'ncNotificationType' - One of the following event notification types:     * @autoscaling:EC2_INSTANCE_LAUNCH@      * @autoscaling:EC2_INSTANCE_LAUNCH_ERROR@      * @autoscaling:EC2_INSTANCE_TERMINATE@      * @autoscaling:EC2_INSTANCE_TERMINATE_ERROR@      * @autoscaling:TEST_NOTIFICATION@
 notificationConfiguration
@@ -1656,7 +1745,7 @@ notificationConfiguration =
 ncTopicARN :: Lens' NotificationConfiguration (Maybe Text)
 ncTopicARN = lens _ncTopicARN (\ s a -> s{_ncTopicARN = a});
 
--- | The name of the group.
+-- | The name of the Auto Scaling group.
 ncAutoScalingGroupName :: Lens' NotificationConfiguration (Maybe Text)
 ncAutoScalingGroupName = lens _ncAutoScalingGroupName (\ s a -> s{_ncAutoScalingGroupName = a});
 
@@ -1689,7 +1778,7 @@ data PredefinedMetricSpecification = PredefinedMetricSpecification'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'pmsResourceLabel' - Identifies the resource associated with the metric type. The following predefined metrics are available:     * @ASGAverageCPUUtilization@ - average CPU utilization of the Auto Scaling group     * @ASGAverageNetworkIn@ - average number of bytes received on all network interfaces by the Auto Scaling group     * @ASGAverageNetworkOut@ - average number of bytes sent out on all network interfaces by the Auto Scaling group     * @ALBRequestCountPerTarget@ - number of requests completed per target in an Application Load Balancer target group For predefined metric types @ASGAverageCPUUtilization@ , @ASGAverageNetworkIn@ and @ASGAverageNetworkOut@ , the parameter must not be specified as the resource associated with the metric type is the Auto Scaling group. For predefined metric type @ALBRequestCountPerTarget@ , the parameter must be specified in the format: @app//load-balancer-name/ //load-balancer-id/ /targetgroup//target-group-name/ //target-group-id/ @ , where @app//load-balancer-name/ //load-balancer-id/ @ is the final portion of the load balancer ARN, and @targetgroup//target-group-name/ //target-group-id/ @ is the final portion of the target group ARN. The target group must be attached to the Auto Scaling group.
+-- * 'pmsResourceLabel' - Identifies the resource associated with the metric type. The following predefined metrics are available:     * @ASGAverageCPUUtilization@ - average CPU utilization of the Auto Scaling group     * @ASGAverageNetworkIn@ - average number of bytes received on all network interfaces by the Auto Scaling group     * @ASGAverageNetworkOut@ - average number of bytes sent out on all network interfaces by the Auto Scaling group     * @ALBRequestCountPerTarget@ - number of requests completed per target in an Application Load Balancer target group For predefined metric types @ASGAverageCPUUtilization@ , @ASGAverageNetworkIn@ , and @ASGAverageNetworkOut@ , the parameter must not be specified as the resource associated with the metric type is the Auto Scaling group. For predefined metric type @ALBRequestCountPerTarget@ , the parameter must be specified in the format: @app//load-balancer-name/ //load-balancer-id/ /targetgroup//target-group-name/ //target-group-id/ @ , where @app//load-balancer-name/ //load-balancer-id/ @ is the final portion of the load balancer ARN, and @targetgroup//target-group-name/ //target-group-id/ @ is the final portion of the target group ARN. The target group must be attached to the Auto Scaling group.
 --
 -- * 'pmsPredefinedMetricType' - The metric type.
 predefinedMetricSpecification
@@ -1702,7 +1791,7 @@ predefinedMetricSpecification pPredefinedMetricType_ =
   }
 
 
--- | Identifies the resource associated with the metric type. The following predefined metrics are available:     * @ASGAverageCPUUtilization@ - average CPU utilization of the Auto Scaling group     * @ASGAverageNetworkIn@ - average number of bytes received on all network interfaces by the Auto Scaling group     * @ASGAverageNetworkOut@ - average number of bytes sent out on all network interfaces by the Auto Scaling group     * @ALBRequestCountPerTarget@ - number of requests completed per target in an Application Load Balancer target group For predefined metric types @ASGAverageCPUUtilization@ , @ASGAverageNetworkIn@ and @ASGAverageNetworkOut@ , the parameter must not be specified as the resource associated with the metric type is the Auto Scaling group. For predefined metric type @ALBRequestCountPerTarget@ , the parameter must be specified in the format: @app//load-balancer-name/ //load-balancer-id/ /targetgroup//target-group-name/ //target-group-id/ @ , where @app//load-balancer-name/ //load-balancer-id/ @ is the final portion of the load balancer ARN, and @targetgroup//target-group-name/ //target-group-id/ @ is the final portion of the target group ARN. The target group must be attached to the Auto Scaling group.
+-- | Identifies the resource associated with the metric type. The following predefined metrics are available:     * @ASGAverageCPUUtilization@ - average CPU utilization of the Auto Scaling group     * @ASGAverageNetworkIn@ - average number of bytes received on all network interfaces by the Auto Scaling group     * @ASGAverageNetworkOut@ - average number of bytes sent out on all network interfaces by the Auto Scaling group     * @ALBRequestCountPerTarget@ - number of requests completed per target in an Application Load Balancer target group For predefined metric types @ASGAverageCPUUtilization@ , @ASGAverageNetworkIn@ , and @ASGAverageNetworkOut@ , the parameter must not be specified as the resource associated with the metric type is the Auto Scaling group. For predefined metric type @ALBRequestCountPerTarget@ , the parameter must be specified in the format: @app//load-balancer-name/ //load-balancer-id/ /targetgroup//target-group-name/ //target-group-id/ @ , where @app//load-balancer-name/ //load-balancer-id/ @ is the final portion of the load balancer ARN, and @targetgroup//target-group-name/ //target-group-id/ @ is the final portion of the target group ARN. The target group must be attached to the Auto Scaling group.
 pmsResourceLabel :: Lens' PredefinedMetricSpecification (Maybe Text)
 pmsResourceLabel = lens _pmsResourceLabel (\ s a -> s{_pmsResourceLabel = a});
 
@@ -1801,7 +1890,7 @@ data ScalingPolicy = ScalingPolicy'
 --
 -- * 'sAdjustmentType' - The adjustment type, which specifies how @ScalingAdjustment@ is interpreted. Valid values are @ChangeInCapacity@ , @ExactCapacity@ , and @PercentChangeInCapacity@ .
 --
--- * 'sAutoScalingGroupName' - The name of the Auto Scaling group associated with this scaling policy.
+-- * 'sAutoScalingGroupName' - The name of the Auto Scaling group.
 --
 -- * 'sScalingAdjustment' - The amount by which to scale, based on the specified adjustment type. A positive value adds to the current capacity while a negative number removes from the current capacity.
 --
@@ -1863,7 +1952,7 @@ sTargetTrackingConfiguration = lens _sTargetTrackingConfiguration (\ s a -> s{_s
 sAdjustmentType :: Lens' ScalingPolicy (Maybe Text)
 sAdjustmentType = lens _sAdjustmentType (\ s a -> s{_sAdjustmentType = a});
 
--- | The name of the Auto Scaling group associated with this scaling policy.
+-- | The name of the Auto Scaling group.
 sAutoScalingGroupName :: Lens' ScalingPolicy (Maybe Text)
 sAutoScalingGroupName = lens _sAutoScalingGroupName (\ s a -> s{_sAutoScalingGroupName = a});
 
@@ -1930,7 +2019,7 @@ data ScalingProcessQuery = ScalingProcessQuery'
 --
 -- * 'spqScalingProcesses' - One or more of the following processes. If you omit this parameter, all processes are specified.     * @Launch@      * @Terminate@      * @HealthCheck@      * @ReplaceUnhealthy@      * @AZRebalance@      * @AlarmNotification@      * @ScheduledActions@      * @AddToLoadBalancer@
 --
--- * 'spqAutoScalingGroupName' - The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+-- * 'spqAutoScalingGroupName' - The name of the Auto Scaling group.
 scalingProcessQuery
     :: Text -- ^ 'spqAutoScalingGroupName'
     -> ScalingProcessQuery
@@ -1945,7 +2034,7 @@ scalingProcessQuery pAutoScalingGroupName_ =
 spqScalingProcesses :: Lens' ScalingProcessQuery [Text]
 spqScalingProcesses = lens _spqScalingProcesses (\ s a -> s{_spqScalingProcesses = a}) . _Default . _Coerce;
 
--- | The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+-- | The name of the Auto Scaling group.
 spqAutoScalingGroupName :: Lens' ScalingProcessQuery Text
 spqAutoScalingGroupName = lens _spqAutoScalingGroupName (\ s a -> s{_spqAutoScalingGroupName = a});
 
@@ -2000,7 +2089,7 @@ data ScheduledUpdateGroupAction = ScheduledUpdateGroupAction'
 --
 -- * 'sugaMinSize' - The minimum size of the group.
 --
--- * 'sugaAutoScalingGroupName' - The name of the group.
+-- * 'sugaAutoScalingGroupName' - The name of the Auto Scaling group.
 --
 -- * 'sugaEndTime' - The date and time that the action is scheduled to end. This date and time can be up to one month in the future.
 scheduledUpdateGroupAction
@@ -2052,7 +2141,7 @@ sugaDesiredCapacity = lens _sugaDesiredCapacity (\ s a -> s{_sugaDesiredCapacity
 sugaMinSize :: Lens' ScheduledUpdateGroupAction (Maybe Int)
 sugaMinSize = lens _sugaMinSize (\ s a -> s{_sugaMinSize = a});
 
--- | The name of the group.
+-- | The name of the Auto Scaling group.
 sugaAutoScalingGroupName :: Lens' ScheduledUpdateGroupAction (Maybe Text)
 sugaAutoScalingGroupName = lens _sugaAutoScalingGroupName (\ s a -> s{_sugaAutoScalingGroupName = a});
 

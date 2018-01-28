@@ -21,6 +21,8 @@
 -- Retrieves all current jobs.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Glue.GetJobs
     (
     -- * Creating a Request
@@ -42,6 +44,7 @@ module Network.AWS.Glue.GetJobs
 import Network.AWS.Glue.Types
 import Network.AWS.Glue.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -72,6 +75,13 @@ gjNextToken = lens _gjNextToken (\ s a -> s{_gjNextToken = a});
 -- | The maximum size of the response.
 gjMaxResults :: Lens' GetJobs (Maybe Natural)
 gjMaxResults = lens _gjMaxResults (\ s a -> s{_gjMaxResults = a}) . mapping _Nat;
+
+instance AWSPager GetJobs where
+        page rq rs
+          | stop (rs ^. gjsrsNextToken) = Nothing
+          | stop (rs ^. gjsrsJobs) = Nothing
+          | otherwise =
+            Just $ rq & gjNextToken .~ rs ^. gjsrsNextToken
 
 instance AWSRequest GetJobs where
         type Rs GetJobs = GetJobsResponse

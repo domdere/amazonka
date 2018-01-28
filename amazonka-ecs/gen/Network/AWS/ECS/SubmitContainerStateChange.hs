@@ -70,7 +70,7 @@ data SubmitContainerStateChange = SubmitContainerStateChange'
 --
 -- * 'scscStatus' - The status of the state change request.
 --
--- * 'scscCluster' - The short name or full Amazon Resource Name (ARN) of the cluster that hosts the container.
+-- * 'scscCluster' - The short name or full ARN of the cluster that hosts the container.
 --
 -- * 'scscContainerName' - The name of the container.
 --
@@ -101,7 +101,7 @@ scscNetworkBindings = lens _scscNetworkBindings (\ s a -> s{_scscNetworkBindings
 scscStatus :: Lens' SubmitContainerStateChange (Maybe Text)
 scscStatus = lens _scscStatus (\ s a -> s{_scscStatus = a});
 
--- | The short name or full Amazon Resource Name (ARN) of the cluster that hosts the container.
+-- | The short name or full ARN of the cluster that hosts the container.
 scscCluster :: Lens' SubmitContainerStateChange (Maybe Text)
 scscCluster = lens _scscCluster (\ s a -> s{_scscCluster = a});
 

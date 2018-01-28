@@ -32,6 +32,7 @@ module Network.AWS.ELB.Types
     , _InvalidSecurityGroupException
     , _ListenerNotFoundException
     , _InvalidEndPointException
+    , _OperationNotPermittedException
     , _DependencyThrottleException
     , _InvalidSchemeException
     , _TooManyAccessPointsException
@@ -395,6 +396,14 @@ _ListenerNotFoundException =
 _InvalidEndPointException :: AsError a => Getting (First ServiceError) a ServiceError
 _InvalidEndPointException =
   _MatchServiceError elb "InvalidInstance" . hasStatus 400
+
+
+-- | This operation is not allowed.
+--
+--
+_OperationNotPermittedException :: AsError a => Getting (First ServiceError) a ServiceError
+_OperationNotPermittedException =
+  _MatchServiceError elb "OperationNotPermitted" . hasStatus 400
 
 
 -- | Prism for DependencyThrottleException' errors.

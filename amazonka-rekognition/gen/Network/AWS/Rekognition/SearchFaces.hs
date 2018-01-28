@@ -23,7 +23,7 @@
 --
 -- The operation response returns an array of faces that match, ordered by similarity score with the highest similarity first. More specifically, it is an array of metadata for each face match that is found. Along with the metadata, the response also includes a @confidence@ value for each face match, indicating the confidence that the specific face matches the input face.
 --
--- For an example, see 'example3' .
+-- For an example, see 'search-face-with-id-procedure' .
 --
 -- This operation requires permissions to perform the @rekognition:SearchFaces@ action.
 --
@@ -43,6 +43,7 @@ module Network.AWS.Rekognition.SearchFaces
     , SearchFacesResponse
     -- * Response Lenses
     , sfrsFaceMatches
+    , sfrsFaceModelVersion
     , sfrsSearchedFaceId
     , sfrsResponseStatus
     ) where
@@ -111,7 +112,8 @@ instance AWSRequest SearchFaces where
               (\ s h x ->
                  SearchFacesResponse' <$>
                    (x .?> "FaceMatches" .!@ mempty) <*>
-                     (x .?> "SearchedFaceId")
+                     (x .?> "FaceModelVersion")
+                     <*> (x .?> "SearchedFaceId")
                      <*> (pure (fromEnum s)))
 
 instance Hashable SearchFaces where
@@ -144,9 +146,10 @@ instance ToQuery SearchFaces where
 
 -- | /See:/ 'searchFacesResponse' smart constructor.
 data SearchFacesResponse = SearchFacesResponse'
-  { _sfrsFaceMatches    :: !(Maybe [FaceMatch])
-  , _sfrsSearchedFaceId :: !(Maybe Text)
-  , _sfrsResponseStatus :: !Int
+  { _sfrsFaceMatches      :: !(Maybe [FaceMatch])
+  , _sfrsFaceModelVersion :: !(Maybe Text)
+  , _sfrsSearchedFaceId   :: !(Maybe Text)
+  , _sfrsResponseStatus   :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -155,6 +158,8 @@ data SearchFacesResponse = SearchFacesResponse'
 -- Use one of the following lenses to modify other fields as desired:
 --
 -- * 'sfrsFaceMatches' - An array of faces that matched the input face, along with the confidence in the match.
+--
+-- * 'sfrsFaceModelVersion' - Version number of the face detection model associated with the input collection (@CollectionId@ ).
 --
 -- * 'sfrsSearchedFaceId' - ID of the face that was searched for matches in a collection.
 --
@@ -165,6 +170,7 @@ searchFacesResponse
 searchFacesResponse pResponseStatus_ =
   SearchFacesResponse'
   { _sfrsFaceMatches = Nothing
+  , _sfrsFaceModelVersion = Nothing
   , _sfrsSearchedFaceId = Nothing
   , _sfrsResponseStatus = pResponseStatus_
   }
@@ -173,6 +179,10 @@ searchFacesResponse pResponseStatus_ =
 -- | An array of faces that matched the input face, along with the confidence in the match.
 sfrsFaceMatches :: Lens' SearchFacesResponse [FaceMatch]
 sfrsFaceMatches = lens _sfrsFaceMatches (\ s a -> s{_sfrsFaceMatches = a}) . _Default . _Coerce;
+
+-- | Version number of the face detection model associated with the input collection (@CollectionId@ ).
+sfrsFaceModelVersion :: Lens' SearchFacesResponse (Maybe Text)
+sfrsFaceModelVersion = lens _sfrsFaceModelVersion (\ s a -> s{_sfrsFaceModelVersion = a});
 
 -- | ID of the face that was searched for matches in a collection.
 sfrsSearchedFaceId :: Lens' SearchFacesResponse (Maybe Text)

@@ -74,7 +74,7 @@ module Network.AWS.CloudWatch
     -- ** PutMetricData
     , module Network.AWS.CloudWatch.PutMetricData
 
-    -- ** ListDashboards
+    -- ** ListDashboards (Paginated)
     , module Network.AWS.CloudWatch.ListDashboards
 
     -- ** DescribeAlarms (Paginated)
@@ -196,6 +196,7 @@ module Network.AWS.CloudWatch
     , maOKActions
     , maEvaluateLowSampleCountPercentile
     , maStateValue
+    , maDatapointsToAlarm
     , maThreshold
     , maAlarmConfigurationUpdatedTimestamp
     , maActionsEnabled

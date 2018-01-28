@@ -66,9 +66,9 @@ data UpdateStack = UpdateStack'
 --
 -- * 'usStorageConnectors' - The storage connectors to enable.
 --
--- * 'usDisplayName' - The stack name displayed to end users.
+-- * 'usDisplayName' - The stack name for display.
 --
--- * 'usDescription' - The description displayed to end users.
+-- * 'usDescription' - The description for display.
 --
 -- * 'usName' - The name of the stack.
 updateStack
@@ -92,11 +92,11 @@ usDeleteStorageConnectors = lens _usDeleteStorageConnectors (\ s a -> s{_usDelet
 usStorageConnectors :: Lens' UpdateStack [StorageConnector]
 usStorageConnectors = lens _usStorageConnectors (\ s a -> s{_usStorageConnectors = a}) . _Default . _Coerce;
 
--- | The stack name displayed to end users.
+-- | The stack name for display.
 usDisplayName :: Lens' UpdateStack (Maybe Text)
 usDisplayName = lens _usDisplayName (\ s a -> s{_usDisplayName = a});
 
--- | The description displayed to end users.
+-- | The description for display.
 usDescription :: Lens' UpdateStack (Maybe Text)
 usDescription = lens _usDescription (\ s a -> s{_usDescription = a});
 

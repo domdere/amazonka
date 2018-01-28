@@ -16,22 +16,41 @@ module Network.AWS.DynamoDB.Types
       dynamoDB
 
     -- * Errors
+    , _BackupNotFoundException
+    , _TableInUseException
+    , _ContinuousBackupsUnavailableException
     , _ProvisionedThroughputExceededException
+    , _GlobalTableNotFoundException
     , _ConditionalCheckFailedException
+    , _GlobalTableAlreadyExistsException
+    , _ReplicaNotFoundException
+    , _TableAlreadyExistsException
     , _ItemCollectionSizeLimitExceededException
     , _InternalServerError
+    , _TableNotFoundException
+    , _BackupInUseException
     , _ResourceNotFoundException
+    , _ReplicaAlreadyExistsException
     , _LimitExceededException
     , _ResourceInUseException
 
     -- * AttributeAction
     , AttributeAction (..)
 
+    -- * BackupStatus
+    , BackupStatus (..)
+
     -- * ComparisonOperator
     , ComparisonOperator (..)
 
     -- * ConditionalOperator
     , ConditionalOperator (..)
+
+    -- * ContinuousBackupsStatus
+    , ContinuousBackupsStatus (..)
+
+    -- * GlobalTableStatus
+    , GlobalTableStatus (..)
 
     -- * IndexStatus
     , IndexStatus (..)
@@ -92,6 +111,34 @@ module Network.AWS.DynamoDB.Types
     , avuValue
     , avuAction
 
+    -- * BackupDescription
+    , BackupDescription
+    , backupDescription
+    , bdBackupDetails
+    , bdSourceTableDetails
+    , bdSourceTableFeatureDetails
+
+    -- * BackupDetails
+    , BackupDetails
+    , backupDetails
+    , bdBackupSizeBytes
+    , bdBackupARN
+    , bdBackupName
+    , bdBackupStatus
+    , bdBackupCreationDateTime
+
+    -- * BackupSummary
+    , BackupSummary
+    , backupSummary
+    , bsTableARN
+    , bsBackupName
+    , bsBackupStatus
+    , bsBackupSizeBytes
+    , bsBackupARN
+    , bsTableId
+    , bsBackupCreationDateTime
+    , bsTableName
+
     -- * Capacity
     , Capacity
     , capacity
@@ -112,6 +159,11 @@ module Network.AWS.DynamoDB.Types
     , ccTable
     , ccTableName
 
+    -- * ContinuousBackupsDescription
+    , ContinuousBackupsDescription
+    , continuousBackupsDescription
+    , cbdContinuousBackupsStatus
+
     -- * CreateGlobalSecondaryIndexAction
     , CreateGlobalSecondaryIndexAction
     , createGlobalSecondaryIndexAction
@@ -120,10 +172,20 @@ module Network.AWS.DynamoDB.Types
     , cgsiaProjection
     , cgsiaProvisionedThroughput
 
+    -- * CreateReplicaAction
+    , CreateReplicaAction
+    , createReplicaAction
+    , craRegionName
+
     -- * DeleteGlobalSecondaryIndexAction
     , DeleteGlobalSecondaryIndexAction
     , deleteGlobalSecondaryIndexAction
     , dgsiaIndexName
+
+    -- * DeleteReplicaAction
+    , DeleteReplicaAction
+    , deleteReplicaAction
+    , draRegionName
 
     -- * DeleteRequest
     , DeleteRequest
@@ -159,12 +221,35 @@ module Network.AWS.DynamoDB.Types
     , gsidItemCount
     , gsidIndexName
 
+    -- * GlobalSecondaryIndexInfo
+    , GlobalSecondaryIndexInfo
+    , globalSecondaryIndexInfo
+    , gsiiProvisionedThroughput
+    , gsiiKeySchema
+    , gsiiProjection
+    , gsiiIndexName
+
     -- * GlobalSecondaryIndexUpdate
     , GlobalSecondaryIndexUpdate
     , globalSecondaryIndexUpdate
     , gsiuCreate
     , gsiuDelete
     , gsiuUpdate
+
+    -- * GlobalTable
+    , GlobalTable
+    , globalTable
+    , gtGlobalTableName
+    , gtReplicationGroup
+
+    -- * GlobalTableDescription
+    , GlobalTableDescription
+    , globalTableDescription
+    , gtdGlobalTableStatus
+    , gtdGlobalTableName
+    , gtdGlobalTableARN
+    , gtdCreationDateTime
+    , gtdReplicationGroup
 
     -- * ItemCollectionMetrics
     , ItemCollectionMetrics
@@ -204,6 +289,13 @@ module Network.AWS.DynamoDB.Types
     , lsidItemCount
     , lsidIndexName
 
+    -- * LocalSecondaryIndexInfo
+    , LocalSecondaryIndexInfo
+    , localSecondaryIndexInfo
+    , lsiiKeySchema
+    , lsiiProjection
+    , lsiiIndexName
+
     -- * Projection
     , Projection
     , projection
@@ -230,6 +322,50 @@ module Network.AWS.DynamoDB.Types
     , putRequest
     , prItem
 
+    -- * Replica
+    , Replica
+    , replica
+    , rRegionName
+
+    -- * ReplicaDescription
+    , ReplicaDescription
+    , replicaDescription
+    , rdRegionName
+
+    -- * ReplicaUpdate
+    , ReplicaUpdate
+    , replicaUpdate
+    , ruCreate
+    , ruDelete
+
+    -- * RestoreSummary
+    , RestoreSummary
+    , restoreSummary
+    , rsSourceTableARN
+    , rsSourceBackupARN
+    , rsRestoreDateTime
+    , rsRestoreInProgress
+
+    -- * SourceTableDetails
+    , SourceTableDetails
+    , sourceTableDetails
+    , stdTableSizeBytes
+    , stdTableARN
+    , stdItemCount
+    , stdTableName
+    , stdTableId
+    , stdKeySchema
+    , stdTableCreationDateTime
+    , stdProvisionedThroughput
+
+    -- * SourceTableFeatureDetails
+    , SourceTableFeatureDetails
+    , sourceTableFeatureDetails
+    , stfdStreamDescription
+    , stfdGlobalSecondaryIndexes
+    , stfdLocalSecondaryIndexes
+    , stfdTimeToLiveDescription
+
     -- * StreamSpecification
     , StreamSpecification
     , streamSpecification
@@ -239,6 +375,7 @@ module Network.AWS.DynamoDB.Types
     -- * TableDescription
     , TableDescription
     , tableDescription
+    , tdRestoreSummary
     , tdTableSizeBytes
     , tdAttributeDefinitions
     , tdLatestStreamARN
@@ -250,6 +387,7 @@ module Network.AWS.DynamoDB.Types
     , tdLatestStreamLabel
     , tdLocalSecondaryIndexes
     , tdCreationDateTime
+    , tdTableId
     , tdItemCount
     , tdTableName
     , tdStreamSpecification
@@ -330,6 +468,28 @@ dynamoDB =
       | otherwise = Nothing
 
 
+-- | Backup not found for the given BackupARN.
+--
+--
+_BackupNotFoundException :: AsError a => Getting (First ServiceError) a ServiceError
+_BackupNotFoundException = _MatchServiceError dynamoDB "BackupNotFoundException"
+
+
+-- | A table by that name is either being created or deleted.
+--
+--
+_TableInUseException :: AsError a => Getting (First ServiceError) a ServiceError
+_TableInUseException = _MatchServiceError dynamoDB "TableInUseException"
+
+
+-- | Backups have not yet been enabled for this table.
+--
+--
+_ContinuousBackupsUnavailableException :: AsError a => Getting (First ServiceError) a ServiceError
+_ContinuousBackupsUnavailableException =
+  _MatchServiceError dynamoDB "ContinuousBackupsUnavailableException"
+
+
 -- | Your request rate is too high. The AWS SDKs for DynamoDB automatically retry requests that receive this exception. Your request is eventually successful, unless your retry queue is too large to finish. Reduce the frequency of requests and use exponential backoff. For more information, go to <http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/Programming.Errors.html#Programming.Errors.RetryAndBackoff Error Retries and Exponential Backoff> in the /Amazon DynamoDB Developer Guide/ .
 --
 --
@@ -338,12 +498,44 @@ _ProvisionedThroughputExceededException =
   _MatchServiceError dynamoDB "ProvisionedThroughputExceededException"
 
 
+-- | The specified global table does not exist.
+--
+--
+_GlobalTableNotFoundException :: AsError a => Getting (First ServiceError) a ServiceError
+_GlobalTableNotFoundException =
+  _MatchServiceError dynamoDB "GlobalTableNotFoundException"
+
+
 -- | A condition specified in the operation could not be evaluated.
 --
 --
 _ConditionalCheckFailedException :: AsError a => Getting (First ServiceError) a ServiceError
 _ConditionalCheckFailedException =
   _MatchServiceError dynamoDB "ConditionalCheckFailedException"
+
+
+-- | The specified global table already exists.
+--
+--
+_GlobalTableAlreadyExistsException :: AsError a => Getting (First ServiceError) a ServiceError
+_GlobalTableAlreadyExistsException =
+  _MatchServiceError dynamoDB "GlobalTableAlreadyExistsException"
+
+
+-- | The specified replica is no longer part of the global table.
+--
+--
+_ReplicaNotFoundException :: AsError a => Getting (First ServiceError) a ServiceError
+_ReplicaNotFoundException =
+  _MatchServiceError dynamoDB "ReplicaNotFoundException"
+
+
+-- | A table with the name already exists.
+--
+--
+_TableAlreadyExistsException :: AsError a => Getting (First ServiceError) a ServiceError
+_TableAlreadyExistsException =
+  _MatchServiceError dynamoDB "TableAlreadyExistsException"
 
 
 -- | An item collection is too large. This exception is only returned for tables that have one or more local secondary indexes.
@@ -361,12 +553,34 @@ _InternalServerError :: AsError a => Getting (First ServiceError) a ServiceError
 _InternalServerError = _MatchServiceError dynamoDB "InternalServerError"
 
 
+-- | A table with the name @TableName@ does not currently exist within the subscriber's account.
+--
+--
+_TableNotFoundException :: AsError a => Getting (First ServiceError) a ServiceError
+_TableNotFoundException = _MatchServiceError dynamoDB "TableNotFoundException"
+
+
+-- | There is another ongoing conflicting backup control plane operation on the table. The backups is either being created, deleted or restored to a table.
+--
+--
+_BackupInUseException :: AsError a => Getting (First ServiceError) a ServiceError
+_BackupInUseException = _MatchServiceError dynamoDB "BackupInUseException"
+
+
 -- | The operation tried to access a nonexistent table or index. The resource might not be specified correctly, or its status might not be @ACTIVE@ .
 --
 --
 _ResourceNotFoundException :: AsError a => Getting (First ServiceError) a ServiceError
 _ResourceNotFoundException =
   _MatchServiceError dynamoDB "ResourceNotFoundException"
+
+
+-- | The specified replica is already part of the global table.
+--
+--
+_ReplicaAlreadyExistsException :: AsError a => Getting (First ServiceError) a ServiceError
+_ReplicaAlreadyExistsException =
+  _MatchServiceError dynamoDB "ReplicaAlreadyExistsException"
 
 
 -- | The number of concurrent table requests (cumulative number of tables in the @CREATING@ , @DELETING@ or @UPDATING@ state) exceeds the maximum allowed of 10.

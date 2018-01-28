@@ -18,14 +18,16 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Detects faces within an image (JPEG or PNG) that is provided as input.
+-- Detects faces within an image that is provided as input.
 --
 --
--- For each face detected, the operation returns face details including a bounding box of the face, a confidence value (that the bounding box contains a face), and a fixed set of attributes such as facial landmarks (for example, coordinates of eye and mouth), gender, presence of beard, sunglasses, etc.
+-- @DetectFaces@ detects the 100 largest faces in the image. For each face detected, the operation returns face details including a bounding box of the face, a confidence value (that the bounding box contains a face), and a fixed set of attributes such as facial landmarks (for example, coordinates of eye and mouth), gender, presence of beard, sunglasses, etc.
 --
 -- The face-detection algorithm is most effective on frontal faces. For non-frontal or obscured faces, the algorithm may not detect the faces or might detect faces with lower confidence.
 --
--- For an example, see 'get-started-exercise-detect-faces' .
+-- You pass the input image either as base64-encoded image bytes or as a reference to an image in an Amazon S3 bucket. If you use the Amazon CLI to call Amazon Rekognition operations, passing image bytes is not supported. The image must be either a PNG or JPEG formatted file.
+--
+-- For an example, see 'procedure-detecting-faces-in-images' .
 --
 -- This operation requires permissions to perform the @rekognition:DetectFaces@ action.
 --
@@ -67,7 +69,7 @@ data DetectFaces = DetectFaces'
 --
 -- * 'dfAttributes' - An array of facial attributes you want to be returned. This can be the default list of attributes or all attributes. If you don't specify a value for @Attributes@ or if you specify @["DEFAULT"]@ , the API returns the following subset of facial attributes: @BoundingBox@ , @Confidence@ , @Pose@ , @Quality@ and @Landmarks@ . If you provide @["ALL"]@ , all facial attributes are returned but the operation will take longer to complete. If you provide both, @["ALL", "DEFAULT"]@ , the service uses a logical AND operator to determine which attributes to return (in this case, all attributes).
 --
--- * 'dfImage' - The image in which you want to detect faces. You can specify a blob or an S3 object.
+-- * 'dfImage' - The input image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing base64-encoded image bytes is not supported.
 detectFaces
     :: Image -- ^ 'dfImage'
     -> DetectFaces
@@ -78,7 +80,7 @@ detectFaces pImage_ = DetectFaces' {_dfAttributes = Nothing, _dfImage = pImage_}
 dfAttributes :: Lens' DetectFaces [Attribute]
 dfAttributes = lens _dfAttributes (\ s a -> s{_dfAttributes = a}) . _Default . _Coerce;
 
--- | The image in which you want to detect faces. You can specify a blob or an S3 object.
+-- | The input image as base64-encoded bytes or an S3 object. If you use the AWS CLI to call Amazon Rekognition operations, passing base64-encoded image bytes is not supported.
 dfImage :: Lens' DetectFaces Image
 dfImage = lens _dfImage (\ s a -> s{_dfImage = a});
 

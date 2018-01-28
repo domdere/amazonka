@@ -83,7 +83,7 @@ data CompleteLifecycleAction = CompleteLifecycleAction'
 --
 -- * 'claLifecycleHookName' - The name of the lifecycle hook.
 --
--- * 'claAutoScalingGroupName' - The name of the group for the lifecycle hook.
+-- * 'claAutoScalingGroupName' - The name of the Auto Scaling group.
 --
 -- * 'claLifecycleActionResult' - The action for the group to take. This parameter can be either @CONTINUE@ or @ABANDON@ .
 completeLifecycleAction
@@ -113,7 +113,7 @@ claLifecycleActionToken = lens _claLifecycleActionToken (\ s a -> s{_claLifecycl
 claLifecycleHookName :: Lens' CompleteLifecycleAction Text
 claLifecycleHookName = lens _claLifecycleHookName (\ s a -> s{_claLifecycleHookName = a});
 
--- | The name of the group for the lifecycle hook.
+-- | The name of the Auto Scaling group.
 claAutoScalingGroupName :: Lens' CompleteLifecycleAction Text
 claAutoScalingGroupName = lens _claAutoScalingGroupName (\ s a -> s{_claAutoScalingGroupName = a});
 

@@ -61,11 +61,11 @@ data UpdateDocument = UpdateDocument'
 --
 -- * 'udParentFolderId' - The ID of the parent folder.
 --
--- * 'udAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'udAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'udName' - The name of the document.
 --
--- * 'udResourceState' - The resource state of the document. Note that only ACTIVE and RECYCLED are supported.
+-- * 'udResourceState' - The resource state of the document. Only ACTIVE and RECYCLED are supported.
 --
 -- * 'udDocumentId' - The ID of the document.
 updateDocument
@@ -85,7 +85,7 @@ updateDocument pDocumentId_ =
 udParentFolderId :: Lens' UpdateDocument (Maybe Text)
 udParentFolderId = lens _udParentFolderId (\ s a -> s{_udParentFolderId = a});
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 udAuthenticationToken :: Lens' UpdateDocument (Maybe Text)
 udAuthenticationToken = lens _udAuthenticationToken (\ s a -> s{_udAuthenticationToken = a}) . mapping _Sensitive;
 
@@ -93,7 +93,7 @@ udAuthenticationToken = lens _udAuthenticationToken (\ s a -> s{_udAuthenticatio
 udName :: Lens' UpdateDocument (Maybe Text)
 udName = lens _udName (\ s a -> s{_udName = a});
 
--- | The resource state of the document. Note that only ACTIVE and RECYCLED are supported.
+-- | The resource state of the document. Only ACTIVE and RECYCLED are supported.
 udResourceState :: Lens' UpdateDocument (Maybe ResourceStateType)
 udResourceState = lens _udResourceState (\ s a -> s{_udResourceState = a});
 

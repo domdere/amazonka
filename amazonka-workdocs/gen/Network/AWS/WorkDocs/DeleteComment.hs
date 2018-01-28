@@ -57,7 +57,7 @@ data DeleteComment = DeleteComment'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'delAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'delAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'delDocumentId' - The ID of the document.
 --
@@ -78,7 +78,7 @@ deleteComment pDocumentId_ pVersionId_ pCommentId_ =
   }
 
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 delAuthenticationToken :: Lens' DeleteComment (Maybe Text)
 delAuthenticationToken = lens _delAuthenticationToken (\ s a -> s{_delAuthenticationToken = a}) . mapping _Sensitive;
 

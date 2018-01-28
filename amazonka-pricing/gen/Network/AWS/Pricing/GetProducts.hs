@@ -21,6 +21,8 @@
 -- Returns a list of all products that match the filter criteria.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Pricing.GetProducts
     (
     -- * Creating a Request
@@ -44,6 +46,7 @@ module Network.AWS.Pricing.GetProducts
     ) where
 
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Pricing.Types
 import Network.AWS.Pricing.Types.Product
@@ -104,6 +107,13 @@ gpServiceCode = lens _gpServiceCode (\ s a -> s{_gpServiceCode = a});
 -- | The maximum number of results to return in the response.
 gpMaxResults :: Lens' GetProducts (Maybe Natural)
 gpMaxResults = lens _gpMaxResults (\ s a -> s{_gpMaxResults = a}) . mapping _Nat;
+
+instance AWSPager GetProducts where
+        page rq rs
+          | stop (rs ^. gprsNextToken) = Nothing
+          | stop (rs ^. gprsPriceList) = Nothing
+          | otherwise =
+            Just $ rq & gpNextToken .~ rs ^. gprsNextToken
 
 instance AWSRequest GetProducts where
         type Rs GetProducts = GetProductsResponse

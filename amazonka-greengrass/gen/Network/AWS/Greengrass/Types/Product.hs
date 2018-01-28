@@ -664,8 +664,10 @@ instance ToJSON FunctionConfiguration where
 -- | Environment of the function configuration
 --
 -- /See:/ 'functionConfigurationEnvironment' smart constructor.
-newtype FunctionConfigurationEnvironment = FunctionConfigurationEnvironment'
-  { _fceVariables :: Maybe (Map Text Text)
+data FunctionConfigurationEnvironment = FunctionConfigurationEnvironment'
+  { _fceVariables              :: !(Maybe (Map Text Text))
+  , _fceResourceAccessPolicies :: !(Maybe [ResourceAccessPolicy])
+  , _fceAccessSysfs            :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -674,15 +676,31 @@ newtype FunctionConfigurationEnvironment = FunctionConfigurationEnvironment'
 -- Use one of the following lenses to modify other fields as desired:
 --
 -- * 'fceVariables' - Environment variables for the lambda function.
+--
+-- * 'fceResourceAccessPolicies' - Policies for the function to access resources.
+--
+-- * 'fceAccessSysfs' - Flag to allow lambda access sys filesystem.
 functionConfigurationEnvironment
     :: FunctionConfigurationEnvironment
 functionConfigurationEnvironment =
-  FunctionConfigurationEnvironment' {_fceVariables = Nothing}
+  FunctionConfigurationEnvironment'
+  { _fceVariables = Nothing
+  , _fceResourceAccessPolicies = Nothing
+  , _fceAccessSysfs = Nothing
+  }
 
 
 -- | Environment variables for the lambda function.
 fceVariables :: Lens' FunctionConfigurationEnvironment (HashMap Text Text)
 fceVariables = lens _fceVariables (\ s a -> s{_fceVariables = a}) . _Default . _Map;
+
+-- | Policies for the function to access resources.
+fceResourceAccessPolicies :: Lens' FunctionConfigurationEnvironment [ResourceAccessPolicy]
+fceResourceAccessPolicies = lens _fceResourceAccessPolicies (\ s a -> s{_fceResourceAccessPolicies = a}) . _Default . _Coerce;
+
+-- | Flag to allow lambda access sys filesystem.
+fceAccessSysfs :: Lens' FunctionConfigurationEnvironment (Maybe Bool)
+fceAccessSysfs = lens _fceAccessSysfs (\ s a -> s{_fceAccessSysfs = a});
 
 instance FromJSON FunctionConfigurationEnvironment
          where
@@ -690,7 +708,9 @@ instance FromJSON FunctionConfigurationEnvironment
           = withObject "FunctionConfigurationEnvironment"
               (\ x ->
                  FunctionConfigurationEnvironment' <$>
-                   (x .:? "Variables" .!= mempty))
+                   (x .:? "Variables" .!= mempty) <*>
+                     (x .:? "ResourceAccessPolicies" .!= mempty)
+                     <*> (x .:? "AccessSysfs"))
 
 instance Hashable FunctionConfigurationEnvironment
          where
@@ -702,7 +722,11 @@ instance ToJSON FunctionConfigurationEnvironment
          where
         toJSON FunctionConfigurationEnvironment'{..}
           = object
-              (catMaybes [("Variables" .=) <$> _fceVariables])
+              (catMaybes
+                 [("Variables" .=) <$> _fceVariables,
+                  ("ResourceAccessPolicies" .=) <$>
+                    _fceResourceAccessPolicies,
+                  ("AccessSysfs" .=) <$> _fceAccessSysfs])
 
 -- | Information on the function definition version
 --
@@ -959,11 +983,60 @@ instance Hashable GroupInformation where
 
 instance NFData GroupInformation where
 
+-- | Group owner related settings for local resources.
+--
+-- /See:/ 'groupOwnerSetting' smart constructor.
+data GroupOwnerSetting = GroupOwnerSetting'
+  { _gosAutoAddGroupOwner :: !(Maybe Bool)
+  , _gosGroupOwner        :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'GroupOwnerSetting' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'gosAutoAddGroupOwner' - Eanble the auto added group owner.
+--
+-- * 'gosGroupOwner' - Name of the group owner.
+groupOwnerSetting
+    :: GroupOwnerSetting
+groupOwnerSetting =
+  GroupOwnerSetting' {_gosAutoAddGroupOwner = Nothing, _gosGroupOwner = Nothing}
+
+
+-- | Eanble the auto added group owner.
+gosAutoAddGroupOwner :: Lens' GroupOwnerSetting (Maybe Bool)
+gosAutoAddGroupOwner = lens _gosAutoAddGroupOwner (\ s a -> s{_gosAutoAddGroupOwner = a});
+
+-- | Name of the group owner.
+gosGroupOwner :: Lens' GroupOwnerSetting (Maybe Text)
+gosGroupOwner = lens _gosGroupOwner (\ s a -> s{_gosGroupOwner = a});
+
+instance FromJSON GroupOwnerSetting where
+        parseJSON
+          = withObject "GroupOwnerSetting"
+              (\ x ->
+                 GroupOwnerSetting' <$>
+                   (x .:? "AutoAddGroupOwner") <*> (x .:? "GroupOwner"))
+
+instance Hashable GroupOwnerSetting where
+
+instance NFData GroupOwnerSetting where
+
+instance ToJSON GroupOwnerSetting where
+        toJSON GroupOwnerSetting'{..}
+          = object
+              (catMaybes
+                 [("AutoAddGroupOwner" .=) <$> _gosAutoAddGroupOwner,
+                  ("GroupOwner" .=) <$> _gosGroupOwner])
+
 -- | Information on group version
 --
 -- /See:/ 'groupVersion' smart constructor.
 data GroupVersion = GroupVersion'
-  { _gvSubscriptionDefinitionVersionARN :: !(Maybe Text)
+  { _gvResourceDefinitionVersionARN     :: !(Maybe Text)
+  , _gvSubscriptionDefinitionVersionARN :: !(Maybe Text)
   , _gvCoreDefinitionVersionARN         :: !(Maybe Text)
   , _gvDeviceDefinitionVersionARN       :: !(Maybe Text)
   , _gvFunctionDefinitionVersionARN     :: !(Maybe Text)
@@ -975,6 +1048,8 @@ data GroupVersion = GroupVersion'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'gvResourceDefinitionVersionARN' - Resource definition version arn for this group.
+--
 -- * 'gvSubscriptionDefinitionVersionARN' - Subscription definition version arn for this group.
 --
 -- * 'gvCoreDefinitionVersionARN' - Core definition version arn for this group.
@@ -983,18 +1058,23 @@ data GroupVersion = GroupVersion'
 --
 -- * 'gvFunctionDefinitionVersionARN' - Function definition version arn for this group.
 --
--- * 'gvLoggerDefinitionVersionARN' - Logger definitionv ersion arn for this group.
+-- * 'gvLoggerDefinitionVersionARN' - Logger definition version arn for this group.
 groupVersion
     :: GroupVersion
 groupVersion =
   GroupVersion'
-  { _gvSubscriptionDefinitionVersionARN = Nothing
+  { _gvResourceDefinitionVersionARN = Nothing
+  , _gvSubscriptionDefinitionVersionARN = Nothing
   , _gvCoreDefinitionVersionARN = Nothing
   , _gvDeviceDefinitionVersionARN = Nothing
   , _gvFunctionDefinitionVersionARN = Nothing
   , _gvLoggerDefinitionVersionARN = Nothing
   }
 
+
+-- | Resource definition version arn for this group.
+gvResourceDefinitionVersionARN :: Lens' GroupVersion (Maybe Text)
+gvResourceDefinitionVersionARN = lens _gvResourceDefinitionVersionARN (\ s a -> s{_gvResourceDefinitionVersionARN = a});
 
 -- | Subscription definition version arn for this group.
 gvSubscriptionDefinitionVersionARN :: Lens' GroupVersion (Maybe Text)
@@ -1012,7 +1092,7 @@ gvDeviceDefinitionVersionARN = lens _gvDeviceDefinitionVersionARN (\ s a -> s{_g
 gvFunctionDefinitionVersionARN :: Lens' GroupVersion (Maybe Text)
 gvFunctionDefinitionVersionARN = lens _gvFunctionDefinitionVersionARN (\ s a -> s{_gvFunctionDefinitionVersionARN = a});
 
--- | Logger definitionv ersion arn for this group.
+-- | Logger definition version arn for this group.
 gvLoggerDefinitionVersionARN :: Lens' GroupVersion (Maybe Text)
 gvLoggerDefinitionVersionARN = lens _gvLoggerDefinitionVersionARN (\ s a -> s{_gvLoggerDefinitionVersionARN = a});
 
@@ -1021,8 +1101,9 @@ instance FromJSON GroupVersion where
           = withObject "GroupVersion"
               (\ x ->
                  GroupVersion' <$>
-                   (x .:? "SubscriptionDefinitionVersionArn") <*>
-                     (x .:? "CoreDefinitionVersionArn")
+                   (x .:? "ResourceDefinitionVersionArn") <*>
+                     (x .:? "SubscriptionDefinitionVersionArn")
+                     <*> (x .:? "CoreDefinitionVersionArn")
                      <*> (x .:? "DeviceDefinitionVersionArn")
                      <*> (x .:? "FunctionDefinitionVersionArn")
                      <*> (x .:? "LoggerDefinitionVersionArn"))
@@ -1035,7 +1116,9 @@ instance ToJSON GroupVersion where
         toJSON GroupVersion'{..}
           = object
               (catMaybes
-                 [("SubscriptionDefinitionVersionArn" .=) <$>
+                 [("ResourceDefinitionVersionArn" .=) <$>
+                    _gvResourceDefinitionVersionARN,
+                  ("SubscriptionDefinitionVersionArn" .=) <$>
                     _gvSubscriptionDefinitionVersionARN,
                   ("CoreDefinitionVersionArn" .=) <$>
                     _gvCoreDefinitionVersionARN,
@@ -1045,6 +1128,117 @@ instance ToJSON GroupVersion where
                     _gvFunctionDefinitionVersionARN,
                   ("LoggerDefinitionVersionArn" .=) <$>
                     _gvLoggerDefinitionVersionARN])
+
+-- | Attributes that define the Local Device Resource.
+--
+-- /See:/ 'localDeviceResourceData' smart constructor.
+data LocalDeviceResourceData = LocalDeviceResourceData'
+  { _ldrdGroupOwnerSetting :: !(Maybe GroupOwnerSetting)
+  , _ldrdSourcePath        :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'LocalDeviceResourceData' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ldrdGroupOwnerSetting' - Group owner related settings for local resources.
+--
+-- * 'ldrdSourcePath' - Local source path of the resource.
+localDeviceResourceData
+    :: LocalDeviceResourceData
+localDeviceResourceData =
+  LocalDeviceResourceData'
+  {_ldrdGroupOwnerSetting = Nothing, _ldrdSourcePath = Nothing}
+
+
+-- | Group owner related settings for local resources.
+ldrdGroupOwnerSetting :: Lens' LocalDeviceResourceData (Maybe GroupOwnerSetting)
+ldrdGroupOwnerSetting = lens _ldrdGroupOwnerSetting (\ s a -> s{_ldrdGroupOwnerSetting = a});
+
+-- | Local source path of the resource.
+ldrdSourcePath :: Lens' LocalDeviceResourceData (Maybe Text)
+ldrdSourcePath = lens _ldrdSourcePath (\ s a -> s{_ldrdSourcePath = a});
+
+instance FromJSON LocalDeviceResourceData where
+        parseJSON
+          = withObject "LocalDeviceResourceData"
+              (\ x ->
+                 LocalDeviceResourceData' <$>
+                   (x .:? "GroupOwnerSetting") <*> (x .:? "SourcePath"))
+
+instance Hashable LocalDeviceResourceData where
+
+instance NFData LocalDeviceResourceData where
+
+instance ToJSON LocalDeviceResourceData where
+        toJSON LocalDeviceResourceData'{..}
+          = object
+              (catMaybes
+                 [("GroupOwnerSetting" .=) <$> _ldrdGroupOwnerSetting,
+                  ("SourcePath" .=) <$> _ldrdSourcePath])
+
+-- | Attributes that define the Local Volume Resource.
+--
+-- /See:/ 'localVolumeResourceData' smart constructor.
+data LocalVolumeResourceData = LocalVolumeResourceData'
+  { _lvrdGroupOwnerSetting :: !(Maybe GroupOwnerSetting)
+  , _lvrdDestinationPath   :: !(Maybe Text)
+  , _lvrdSourcePath        :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'LocalVolumeResourceData' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'lvrdGroupOwnerSetting' - Group owner related settings for local resources.
+--
+-- * 'lvrdDestinationPath' - Local destination path of the resource.
+--
+-- * 'lvrdSourcePath' - Local source path of the resource.
+localVolumeResourceData
+    :: LocalVolumeResourceData
+localVolumeResourceData =
+  LocalVolumeResourceData'
+  { _lvrdGroupOwnerSetting = Nothing
+  , _lvrdDestinationPath = Nothing
+  , _lvrdSourcePath = Nothing
+  }
+
+
+-- | Group owner related settings for local resources.
+lvrdGroupOwnerSetting :: Lens' LocalVolumeResourceData (Maybe GroupOwnerSetting)
+lvrdGroupOwnerSetting = lens _lvrdGroupOwnerSetting (\ s a -> s{_lvrdGroupOwnerSetting = a});
+
+-- | Local destination path of the resource.
+lvrdDestinationPath :: Lens' LocalVolumeResourceData (Maybe Text)
+lvrdDestinationPath = lens _lvrdDestinationPath (\ s a -> s{_lvrdDestinationPath = a});
+
+-- | Local source path of the resource.
+lvrdSourcePath :: Lens' LocalVolumeResourceData (Maybe Text)
+lvrdSourcePath = lens _lvrdSourcePath (\ s a -> s{_lvrdSourcePath = a});
+
+instance FromJSON LocalVolumeResourceData where
+        parseJSON
+          = withObject "LocalVolumeResourceData"
+              (\ x ->
+                 LocalVolumeResourceData' <$>
+                   (x .:? "GroupOwnerSetting") <*>
+                     (x .:? "DestinationPath")
+                     <*> (x .:? "SourcePath"))
+
+instance Hashable LocalVolumeResourceData where
+
+instance NFData LocalVolumeResourceData where
+
+instance ToJSON LocalVolumeResourceData where
+        toJSON LocalVolumeResourceData'{..}
+          = object
+              (catMaybes
+                 [("GroupOwnerSetting" .=) <$> _lvrdGroupOwnerSetting,
+                  ("DestinationPath" .=) <$> _lvrdDestinationPath,
+                  ("SourcePath" .=) <$> _lvrdSourcePath])
 
 -- | Information on logger definition version
 --
@@ -1082,6 +1276,202 @@ instance NFData LoggerDefinitionVersion where
 instance ToJSON LoggerDefinitionVersion where
         toJSON LoggerDefinitionVersion'{..}
           = object (catMaybes [("Loggers" .=) <$> _ldvLoggers])
+
+-- | Information on the resource.
+--
+-- /See:/ 'resource' smart constructor.
+data Resource = Resource'
+  { _rResourceDataContainer :: !(Maybe ResourceDataContainer)
+  , _rName                  :: !(Maybe Text)
+  , _rId                    :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'Resource' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rResourceDataContainer' - A container of data for all resource types.
+--
+-- * 'rName' - A descriptive resource name.
+--
+-- * 'rId' - Resource Id.
+resource
+    :: Resource
+resource =
+  Resource'
+  {_rResourceDataContainer = Nothing, _rName = Nothing, _rId = Nothing}
+
+
+-- | A container of data for all resource types.
+rResourceDataContainer :: Lens' Resource (Maybe ResourceDataContainer)
+rResourceDataContainer = lens _rResourceDataContainer (\ s a -> s{_rResourceDataContainer = a});
+
+-- | A descriptive resource name.
+rName :: Lens' Resource (Maybe Text)
+rName = lens _rName (\ s a -> s{_rName = a});
+
+-- | Resource Id.
+rId :: Lens' Resource (Maybe Text)
+rId = lens _rId (\ s a -> s{_rId = a});
+
+instance FromJSON Resource where
+        parseJSON
+          = withObject "Resource"
+              (\ x ->
+                 Resource' <$>
+                   (x .:? "ResourceDataContainer") <*> (x .:? "Name")
+                     <*> (x .:? "Id"))
+
+instance Hashable Resource where
+
+instance NFData Resource where
+
+instance ToJSON Resource where
+        toJSON Resource'{..}
+          = object
+              (catMaybes
+                 [("ResourceDataContainer" .=) <$>
+                    _rResourceDataContainer,
+                  ("Name" .=) <$> _rName, ("Id" .=) <$> _rId])
+
+-- | Policy for the function to access a resource.
+--
+-- /See:/ 'resourceAccessPolicy' smart constructor.
+data ResourceAccessPolicy = ResourceAccessPolicy'
+  { _rapResourceId :: !(Maybe Text)
+  , _rapPermission :: !(Maybe Permission)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ResourceAccessPolicy' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rapResourceId' - Id of the resource. A reference to the resource definiton.
+--
+-- * 'rapPermission' - The function's access permission to the resource.
+resourceAccessPolicy
+    :: ResourceAccessPolicy
+resourceAccessPolicy =
+  ResourceAccessPolicy' {_rapResourceId = Nothing, _rapPermission = Nothing}
+
+
+-- | Id of the resource. A reference to the resource definiton.
+rapResourceId :: Lens' ResourceAccessPolicy (Maybe Text)
+rapResourceId = lens _rapResourceId (\ s a -> s{_rapResourceId = a});
+
+-- | The function's access permission to the resource.
+rapPermission :: Lens' ResourceAccessPolicy (Maybe Permission)
+rapPermission = lens _rapPermission (\ s a -> s{_rapPermission = a});
+
+instance FromJSON ResourceAccessPolicy where
+        parseJSON
+          = withObject "ResourceAccessPolicy"
+              (\ x ->
+                 ResourceAccessPolicy' <$>
+                   (x .:? "ResourceId") <*> (x .:? "Permission"))
+
+instance Hashable ResourceAccessPolicy where
+
+instance NFData ResourceAccessPolicy where
+
+instance ToJSON ResourceAccessPolicy where
+        toJSON ResourceAccessPolicy'{..}
+          = object
+              (catMaybes
+                 [("ResourceId" .=) <$> _rapResourceId,
+                  ("Permission" .=) <$> _rapPermission])
+
+-- | A container of data for all resource types.
+--
+-- /See:/ 'resourceDataContainer' smart constructor.
+data ResourceDataContainer = ResourceDataContainer'
+  { _rdcLocalVolumeResourceData :: !(Maybe LocalVolumeResourceData)
+  , _rdcLocalDeviceResourceData :: !(Maybe LocalDeviceResourceData)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ResourceDataContainer' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rdcLocalVolumeResourceData' - Attributes that define the Local Volume Resource.
+--
+-- * 'rdcLocalDeviceResourceData' - Attributes that define the Local Device Resource.
+resourceDataContainer
+    :: ResourceDataContainer
+resourceDataContainer =
+  ResourceDataContainer'
+  {_rdcLocalVolumeResourceData = Nothing, _rdcLocalDeviceResourceData = Nothing}
+
+
+-- | Attributes that define the Local Volume Resource.
+rdcLocalVolumeResourceData :: Lens' ResourceDataContainer (Maybe LocalVolumeResourceData)
+rdcLocalVolumeResourceData = lens _rdcLocalVolumeResourceData (\ s a -> s{_rdcLocalVolumeResourceData = a});
+
+-- | Attributes that define the Local Device Resource.
+rdcLocalDeviceResourceData :: Lens' ResourceDataContainer (Maybe LocalDeviceResourceData)
+rdcLocalDeviceResourceData = lens _rdcLocalDeviceResourceData (\ s a -> s{_rdcLocalDeviceResourceData = a});
+
+instance FromJSON ResourceDataContainer where
+        parseJSON
+          = withObject "ResourceDataContainer"
+              (\ x ->
+                 ResourceDataContainer' <$>
+                   (x .:? "LocalVolumeResourceData") <*>
+                     (x .:? "LocalDeviceResourceData"))
+
+instance Hashable ResourceDataContainer where
+
+instance NFData ResourceDataContainer where
+
+instance ToJSON ResourceDataContainer where
+        toJSON ResourceDataContainer'{..}
+          = object
+              (catMaybes
+                 [("LocalVolumeResourceData" .=) <$>
+                    _rdcLocalVolumeResourceData,
+                  ("LocalDeviceResourceData" .=) <$>
+                    _rdcLocalDeviceResourceData])
+
+-- | Information on resource definition version
+--
+-- /See:/ 'resourceDefinitionVersion' smart constructor.
+newtype ResourceDefinitionVersion = ResourceDefinitionVersion'
+  { _rdvResources :: Maybe [Resource]
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ResourceDefinitionVersion' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rdvResources' - List of resources.
+resourceDefinitionVersion
+    :: ResourceDefinitionVersion
+resourceDefinitionVersion = ResourceDefinitionVersion' {_rdvResources = Nothing}
+
+
+-- | List of resources.
+rdvResources :: Lens' ResourceDefinitionVersion [Resource]
+rdvResources = lens _rdvResources (\ s a -> s{_rdvResources = a}) . _Default . _Coerce;
+
+instance FromJSON ResourceDefinitionVersion where
+        parseJSON
+          = withObject "ResourceDefinitionVersion"
+              (\ x ->
+                 ResourceDefinitionVersion' <$>
+                   (x .:? "Resources" .!= mempty))
+
+instance Hashable ResourceDefinitionVersion where
+
+instance NFData ResourceDefinitionVersion where
+
+instance ToJSON ResourceDefinitionVersion where
+        toJSON ResourceDefinitionVersion'{..}
+          = object
+              (catMaybes [("Resources" .=) <$> _rdvResources])
 
 -- | Information on subscription
 --

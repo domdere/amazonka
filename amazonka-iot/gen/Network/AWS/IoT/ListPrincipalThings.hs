@@ -66,7 +66,7 @@ data ListPrincipalThings = ListPrincipalThings'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'lptNextToken' - The token for the next set of results, or __null__ if there are no additional results.
+-- * 'lptNextToken' - The token used to get the next set of results, or __null__ if there are no additional results.
 --
 -- * 'lptMaxResults' - The maximum number of results to return in this operation.
 --
@@ -82,7 +82,7 @@ listPrincipalThings pPrincipal_ =
   }
 
 
--- | The token for the next set of results, or __null__ if there are no additional results.
+-- | The token used to get the next set of results, or __null__ if there are no additional results.
 lptNextToken :: Lens' ListPrincipalThings (Maybe Text)
 lptNextToken = lens _lptNextToken (\ s a -> s{_lptNextToken = a});
 
@@ -145,7 +145,7 @@ data ListPrincipalThingsResponse = ListPrincipalThingsResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'lptrsNextToken' - The token for the next set of results, or __null__ if there are no additional results.
+-- * 'lptrsNextToken' - The token used to get the next set of results, or __null__ if there are no additional results.
 --
 -- * 'lptrsThings' - The things.
 --
@@ -161,7 +161,7 @@ listPrincipalThingsResponse pResponseStatus_ =
   }
 
 
--- | The token for the next set of results, or __null__ if there are no additional results.
+-- | The token used to get the next set of results, or __null__ if there are no additional results.
 lptrsNextToken :: Lens' ListPrincipalThingsResponse (Maybe Text)
 lptrsNextToken = lens _lptrsNextToken (\ s a -> s{_lptrsNextToken = a});
 

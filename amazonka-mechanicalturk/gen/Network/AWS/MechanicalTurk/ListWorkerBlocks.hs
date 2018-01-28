@@ -21,6 +21,8 @@
 -- The @ListWorkersBlocks@ operation retrieves a list of Workers who are blocked from working on your HITs.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.MechanicalTurk.ListWorkerBlocks
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.MechanicalTurk.ListWorkerBlocks
 import Network.AWS.Lens
 import Network.AWS.MechanicalTurk.Types
 import Network.AWS.MechanicalTurk.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -74,6 +77,13 @@ lwbNextToken = lens _lwbNextToken (\ s a -> s{_lwbNextToken = a});
 -- | Undocumented member.
 lwbMaxResults :: Lens' ListWorkerBlocks (Maybe Natural)
 lwbMaxResults = lens _lwbMaxResults (\ s a -> s{_lwbMaxResults = a}) . mapping _Nat;
+
+instance AWSPager ListWorkerBlocks where
+        page rq rs
+          | stop (rs ^. lwbrsNextToken) = Nothing
+          | stop (rs ^. lwbrsWorkerBlocks) = Nothing
+          | otherwise =
+            Just $ rq & lwbNextToken .~ rs ^. lwbrsNextToken
 
 instance AWSRequest ListWorkerBlocks where
         type Rs ListWorkerBlocks = ListWorkerBlocksResponse

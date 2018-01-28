@@ -21,6 +21,8 @@
 -- Retrieves metrics about specified crawlers.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Glue.GetCrawlerMetrics
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.Glue.GetCrawlerMetrics
 import Network.AWS.Glue.Types
 import Network.AWS.Glue.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -85,6 +88,13 @@ gcmMaxResults = lens _gcmMaxResults (\ s a -> s{_gcmMaxResults = a}) . mapping _
 -- | A list of the names of crawlers about which to retrieve metrics.
 gcmCrawlerNameList :: Lens' GetCrawlerMetrics [Text]
 gcmCrawlerNameList = lens _gcmCrawlerNameList (\ s a -> s{_gcmCrawlerNameList = a}) . _Default . _Coerce;
+
+instance AWSPager GetCrawlerMetrics where
+        page rq rs
+          | stop (rs ^. gcmrsNextToken) = Nothing
+          | stop (rs ^. gcmrsCrawlerMetricsList) = Nothing
+          | otherwise =
+            Just $ rq & gcmNextToken .~ rs ^. gcmrsNextToken
 
 instance AWSRequest GetCrawlerMetrics where
         type Rs GetCrawlerMetrics = GetCrawlerMetricsResponse

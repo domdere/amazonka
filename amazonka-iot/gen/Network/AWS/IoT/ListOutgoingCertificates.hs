@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Lists certificates that are being transfered but not yet accepted.
+-- Lists certificates that are being transferred but not yet accepted.
 --
 --
 --
@@ -144,7 +144,7 @@ data ListOutgoingCertificatesResponse = ListOutgoingCertificatesResponse'
 --
 -- * 'locrsNextMarker' - The marker for the next set of results.
 --
--- * 'locrsOutgoingCertificates' - The certificates that are being transfered but not yet accepted.
+-- * 'locrsOutgoingCertificates' - The certificates that are being transferred but not yet accepted.
 --
 -- * 'locrsResponseStatus' - -- | The response status code.
 listOutgoingCertificatesResponse
@@ -162,7 +162,7 @@ listOutgoingCertificatesResponse pResponseStatus_ =
 locrsNextMarker :: Lens' ListOutgoingCertificatesResponse (Maybe Text)
 locrsNextMarker = lens _locrsNextMarker (\ s a -> s{_locrsNextMarker = a});
 
--- | The certificates that are being transfered but not yet accepted.
+-- | The certificates that are being transferred but not yet accepted.
 locrsOutgoingCertificates :: Lens' ListOutgoingCertificatesResponse [OutgoingCertificate]
 locrsOutgoingCertificates = lens _locrsOutgoingCertificates (\ s a -> s{_locrsOutgoingCertificates = a}) . _Default . _Coerce;
 

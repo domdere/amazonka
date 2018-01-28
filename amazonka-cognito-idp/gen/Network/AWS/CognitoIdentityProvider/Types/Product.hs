@@ -21,7 +21,182 @@ import Network.AWS.CognitoIdentityProvider.Types.Sum
 import Network.AWS.Lens
 import Network.AWS.Prelude
 
--- | The type of configuration for creating a new user profile.
+-- | Account takeover action type.
+--
+--
+--
+-- /See:/ 'accountTakeoverActionType' smart constructor.
+data AccountTakeoverActionType = AccountTakeoverActionType'
+  { _atatNotify      :: !Bool
+  , _atatEventAction :: !AccountTakeoverEventActionType
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'AccountTakeoverActionType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'atatNotify' - Flag specifying whether to send a notification.
+--
+-- * 'atatEventAction' - The event action.     * @BLOCK@ Choosing this action will block the request.     * @MFA_IF_CONFIGURED@ Throw MFA challenge if user has configured it, else allow the request.     * @MFA_REQUIRED@ Throw MFA challenge if user has configured it, else block the request.     * @NO_ACTION@ Allow the user sign-in.
+accountTakeoverActionType
+    :: Bool -- ^ 'atatNotify'
+    -> AccountTakeoverEventActionType -- ^ 'atatEventAction'
+    -> AccountTakeoverActionType
+accountTakeoverActionType pNotify_ pEventAction_ =
+  AccountTakeoverActionType'
+  {_atatNotify = pNotify_, _atatEventAction = pEventAction_}
+
+
+-- | Flag specifying whether to send a notification.
+atatNotify :: Lens' AccountTakeoverActionType Bool
+atatNotify = lens _atatNotify (\ s a -> s{_atatNotify = a});
+
+-- | The event action.     * @BLOCK@ Choosing this action will block the request.     * @MFA_IF_CONFIGURED@ Throw MFA challenge if user has configured it, else allow the request.     * @MFA_REQUIRED@ Throw MFA challenge if user has configured it, else block the request.     * @NO_ACTION@ Allow the user sign-in.
+atatEventAction :: Lens' AccountTakeoverActionType AccountTakeoverEventActionType
+atatEventAction = lens _atatEventAction (\ s a -> s{_atatEventAction = a});
+
+instance FromJSON AccountTakeoverActionType where
+        parseJSON
+          = withObject "AccountTakeoverActionType"
+              (\ x ->
+                 AccountTakeoverActionType' <$>
+                   (x .: "Notify") <*> (x .: "EventAction"))
+
+instance Hashable AccountTakeoverActionType where
+
+instance NFData AccountTakeoverActionType where
+
+instance ToJSON AccountTakeoverActionType where
+        toJSON AccountTakeoverActionType'{..}
+          = object
+              (catMaybes
+                 [Just ("Notify" .= _atatNotify),
+                  Just ("EventAction" .= _atatEventAction)])
+
+-- | Account takeover actions type.
+--
+--
+--
+-- /See:/ 'accountTakeoverActionsType' smart constructor.
+data AccountTakeoverActionsType = AccountTakeoverActionsType'
+  { _atatLowAction    :: !(Maybe AccountTakeoverActionType)
+  , _atatHighAction   :: !(Maybe AccountTakeoverActionType)
+  , _atatMediumAction :: !(Maybe AccountTakeoverActionType)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'AccountTakeoverActionsType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'atatLowAction' - Action to take for a low risk.
+--
+-- * 'atatHighAction' - Action to take for a high risk.
+--
+-- * 'atatMediumAction' - Action to take for a medium risk.
+accountTakeoverActionsType
+    :: AccountTakeoverActionsType
+accountTakeoverActionsType =
+  AccountTakeoverActionsType'
+  { _atatLowAction = Nothing
+  , _atatHighAction = Nothing
+  , _atatMediumAction = Nothing
+  }
+
+
+-- | Action to take for a low risk.
+atatLowAction :: Lens' AccountTakeoverActionsType (Maybe AccountTakeoverActionType)
+atatLowAction = lens _atatLowAction (\ s a -> s{_atatLowAction = a});
+
+-- | Action to take for a high risk.
+atatHighAction :: Lens' AccountTakeoverActionsType (Maybe AccountTakeoverActionType)
+atatHighAction = lens _atatHighAction (\ s a -> s{_atatHighAction = a});
+
+-- | Action to take for a medium risk.
+atatMediumAction :: Lens' AccountTakeoverActionsType (Maybe AccountTakeoverActionType)
+atatMediumAction = lens _atatMediumAction (\ s a -> s{_atatMediumAction = a});
+
+instance FromJSON AccountTakeoverActionsType where
+        parseJSON
+          = withObject "AccountTakeoverActionsType"
+              (\ x ->
+                 AccountTakeoverActionsType' <$>
+                   (x .:? "LowAction") <*> (x .:? "HighAction") <*>
+                     (x .:? "MediumAction"))
+
+instance Hashable AccountTakeoverActionsType where
+
+instance NFData AccountTakeoverActionsType where
+
+instance ToJSON AccountTakeoverActionsType where
+        toJSON AccountTakeoverActionsType'{..}
+          = object
+              (catMaybes
+                 [("LowAction" .=) <$> _atatLowAction,
+                  ("HighAction" .=) <$> _atatHighAction,
+                  ("MediumAction" .=) <$> _atatMediumAction])
+
+-- | Configuration for mitigation actions and notification for different levels of risk detected for a potential account takeover.
+--
+--
+--
+-- /See:/ 'accountTakeoverRiskConfigurationType' smart constructor.
+data AccountTakeoverRiskConfigurationType = AccountTakeoverRiskConfigurationType'
+  { _atrctNotifyConfiguration :: !(Maybe NotifyConfigurationType)
+  , _atrctActions             :: !AccountTakeoverActionsType
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'AccountTakeoverRiskConfigurationType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'atrctNotifyConfiguration' - The notify configuration used to construct email notifications.
+--
+-- * 'atrctActions' - Account takeover risk configuration actions
+accountTakeoverRiskConfigurationType
+    :: AccountTakeoverActionsType -- ^ 'atrctActions'
+    -> AccountTakeoverRiskConfigurationType
+accountTakeoverRiskConfigurationType pActions_ =
+  AccountTakeoverRiskConfigurationType'
+  {_atrctNotifyConfiguration = Nothing, _atrctActions = pActions_}
+
+
+-- | The notify configuration used to construct email notifications.
+atrctNotifyConfiguration :: Lens' AccountTakeoverRiskConfigurationType (Maybe NotifyConfigurationType)
+atrctNotifyConfiguration = lens _atrctNotifyConfiguration (\ s a -> s{_atrctNotifyConfiguration = a});
+
+-- | Account takeover risk configuration actions
+atrctActions :: Lens' AccountTakeoverRiskConfigurationType AccountTakeoverActionsType
+atrctActions = lens _atrctActions (\ s a -> s{_atrctActions = a});
+
+instance FromJSON
+           AccountTakeoverRiskConfigurationType
+         where
+        parseJSON
+          = withObject "AccountTakeoverRiskConfigurationType"
+              (\ x ->
+                 AccountTakeoverRiskConfigurationType' <$>
+                   (x .:? "NotifyConfiguration") <*> (x .: "Actions"))
+
+instance Hashable
+           AccountTakeoverRiskConfigurationType
+         where
+
+instance NFData AccountTakeoverRiskConfigurationType
+         where
+
+instance ToJSON AccountTakeoverRiskConfigurationType
+         where
+        toJSON AccountTakeoverRiskConfigurationType'{..}
+          = object
+              (catMaybes
+                 [("NotifyConfiguration" .=) <$>
+                    _atrctNotifyConfiguration,
+                  Just ("Actions" .= _atrctActions)])
+
+-- | The configuration for creating a new user profile.
 --
 --
 --
@@ -41,7 +216,7 @@ data AdminCreateUserConfigType = AdminCreateUserConfigType'
 --
 -- * 'acuctUnusedAccountValidityDays' - The user account expiration limit, in days, after which the account is no longer usable. To reset the account after that time limit, you must call @AdminCreateUser@ again, specifying @"RESEND"@ for the @MessageAction@ parameter. The default value for this parameter is 7.
 --
--- * 'acuctInviteMessageTemplate' - The message template to be used for the welcome message to new users.
+-- * 'acuctInviteMessageTemplate' - The message template to be used for the welcome message to new users. See also <http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-message-customizations.html#cognito-user-pool-settings-user-invitation-message-customization Customizing User Invitation Messages> .
 adminCreateUserConfigType
     :: AdminCreateUserConfigType
 adminCreateUserConfigType =
@@ -60,7 +235,7 @@ acuctAllowAdminCreateUserOnly = lens _acuctAllowAdminCreateUserOnly (\ s a -> s{
 acuctUnusedAccountValidityDays :: Lens' AdminCreateUserConfigType (Maybe Natural)
 acuctUnusedAccountValidityDays = lens _acuctUnusedAccountValidityDays (\ s a -> s{_acuctUnusedAccountValidityDays = a}) . mapping _Nat;
 
--- | The message template to be used for the welcome message to new users.
+-- | The message template to be used for the welcome message to new users. See also <http://docs.aws.amazon.com/cognito/latest/developerguide/cognito-user-pool-settings-message-customizations.html#cognito-user-pool-settings-user-invitation-message-customization Customizing User Invitation Messages> .
 acuctInviteMessageTemplate :: Lens' AdminCreateUserConfigType (Maybe MessageTemplateType)
 acuctInviteMessageTemplate = lens _acuctInviteMessageTemplate (\ s a -> s{_acuctInviteMessageTemplate = a});
 
@@ -87,6 +262,120 @@ instance ToJSON AdminCreateUserConfigType where
                     _acuctUnusedAccountValidityDays,
                   ("InviteMessageTemplate" .=) <$>
                     _acuctInviteMessageTemplate])
+
+-- | The Amazon Pinpoint analytics configuration for collecting metrics for a user pool.
+--
+--
+--
+-- /See:/ 'analyticsConfigurationType' smart constructor.
+data AnalyticsConfigurationType = AnalyticsConfigurationType'
+  { _actUserDataShared :: !(Maybe Bool)
+  , _actApplicationId  :: !Text
+  , _actRoleARN        :: !Text
+  , _actExternalId     :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'AnalyticsConfigurationType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'actUserDataShared' - If @UserDataShared@ is @true@ , Amazon Cognito will include user data in the events it publishes to Amazon Pinpoint analytics.
+--
+-- * 'actApplicationId' - The application ID for an Amazon Pinpoint application.
+--
+-- * 'actRoleARN' - The ARN of an IAM role that authorizes Amazon Cognito to publish events to Amazon Pinpoint analytics.
+--
+-- * 'actExternalId' - The external ID.
+analyticsConfigurationType
+    :: Text -- ^ 'actApplicationId'
+    -> Text -- ^ 'actRoleARN'
+    -> Text -- ^ 'actExternalId'
+    -> AnalyticsConfigurationType
+analyticsConfigurationType pApplicationId_ pRoleARN_ pExternalId_ =
+  AnalyticsConfigurationType'
+  { _actUserDataShared = Nothing
+  , _actApplicationId = pApplicationId_
+  , _actRoleARN = pRoleARN_
+  , _actExternalId = pExternalId_
+  }
+
+
+-- | If @UserDataShared@ is @true@ , Amazon Cognito will include user data in the events it publishes to Amazon Pinpoint analytics.
+actUserDataShared :: Lens' AnalyticsConfigurationType (Maybe Bool)
+actUserDataShared = lens _actUserDataShared (\ s a -> s{_actUserDataShared = a});
+
+-- | The application ID for an Amazon Pinpoint application.
+actApplicationId :: Lens' AnalyticsConfigurationType Text
+actApplicationId = lens _actApplicationId (\ s a -> s{_actApplicationId = a});
+
+-- | The ARN of an IAM role that authorizes Amazon Cognito to publish events to Amazon Pinpoint analytics.
+actRoleARN :: Lens' AnalyticsConfigurationType Text
+actRoleARN = lens _actRoleARN (\ s a -> s{_actRoleARN = a});
+
+-- | The external ID.
+actExternalId :: Lens' AnalyticsConfigurationType Text
+actExternalId = lens _actExternalId (\ s a -> s{_actExternalId = a});
+
+instance FromJSON AnalyticsConfigurationType where
+        parseJSON
+          = withObject "AnalyticsConfigurationType"
+              (\ x ->
+                 AnalyticsConfigurationType' <$>
+                   (x .:? "UserDataShared") <*> (x .: "ApplicationId")
+                     <*> (x .: "RoleArn")
+                     <*> (x .: "ExternalId"))
+
+instance Hashable AnalyticsConfigurationType where
+
+instance NFData AnalyticsConfigurationType where
+
+instance ToJSON AnalyticsConfigurationType where
+        toJSON AnalyticsConfigurationType'{..}
+          = object
+              (catMaybes
+                 [("UserDataShared" .=) <$> _actUserDataShared,
+                  Just ("ApplicationId" .= _actApplicationId),
+                  Just ("RoleArn" .= _actRoleARN),
+                  Just ("ExternalId" .= _actExternalId)])
+
+-- | An Amazon Pinpoint analytics endpoint.
+--
+--
+-- An endpoint uniquely identifies a mobile device, email address, or phone number that can receive messages from Amazon Pinpoint analytics.
+--
+--
+-- /See:/ 'analyticsMetadataType' smart constructor.
+newtype AnalyticsMetadataType = AnalyticsMetadataType'
+  { _amtAnalyticsEndpointId :: Maybe Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'AnalyticsMetadataType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'amtAnalyticsEndpointId' - The endpoint ID.
+analyticsMetadataType
+    :: AnalyticsMetadataType
+analyticsMetadataType =
+  AnalyticsMetadataType' {_amtAnalyticsEndpointId = Nothing}
+
+
+-- | The endpoint ID.
+amtAnalyticsEndpointId :: Lens' AnalyticsMetadataType (Maybe Text)
+amtAnalyticsEndpointId = lens _amtAnalyticsEndpointId (\ s a -> s{_amtAnalyticsEndpointId = a});
+
+instance Hashable AnalyticsMetadataType where
+
+instance NFData AnalyticsMetadataType where
+
+instance ToJSON AnalyticsMetadataType where
+        toJSON AnalyticsMetadataType'{..}
+          = object
+              (catMaybes
+                 [("AnalyticsEndpointId" .=) <$>
+                    _amtAnalyticsEndpointId])
 
 -- | Specifies whether the attribute is standard or custom.
 --
@@ -137,7 +426,107 @@ instance ToJSON AttributeType where
                  [("Value" .=) <$> _atValue,
                   Just ("Name" .= _atName)])
 
--- | The result type of the authentication result.
+-- | The authentication event type.
+--
+--
+--
+-- /See:/ 'authEventType' smart constructor.
+data AuthEventType = AuthEventType'
+  { _aetEventRisk          :: !(Maybe EventRiskType)
+  , _aetEventResponse      :: !(Maybe EventResponseType)
+  , _aetEventContextData   :: !(Maybe EventContextDataType)
+  , _aetChallengeResponses :: !(Maybe [ChallengeResponseType])
+  , _aetEventType          :: !(Maybe EventType)
+  , _aetCreationDate       :: !(Maybe POSIX)
+  , _aetEventFeedback      :: !(Maybe EventFeedbackType)
+  , _aetEventId            :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'AuthEventType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'aetEventRisk' - The event risk.
+--
+-- * 'aetEventResponse' - The event response.
+--
+-- * 'aetEventContextData' - The user context data captured at the time of an event request. It provides additional information about the client from which event the request is received.
+--
+-- * 'aetChallengeResponses' - The challenge responses.
+--
+-- * 'aetEventType' - The event type.
+--
+-- * 'aetCreationDate' - The creation date
+--
+-- * 'aetEventFeedback' - A flag specifying the user feedback captured at the time of an event request is good or bad.
+--
+-- * 'aetEventId' - The event ID.
+authEventType
+    :: AuthEventType
+authEventType =
+  AuthEventType'
+  { _aetEventRisk = Nothing
+  , _aetEventResponse = Nothing
+  , _aetEventContextData = Nothing
+  , _aetChallengeResponses = Nothing
+  , _aetEventType = Nothing
+  , _aetCreationDate = Nothing
+  , _aetEventFeedback = Nothing
+  , _aetEventId = Nothing
+  }
+
+
+-- | The event risk.
+aetEventRisk :: Lens' AuthEventType (Maybe EventRiskType)
+aetEventRisk = lens _aetEventRisk (\ s a -> s{_aetEventRisk = a});
+
+-- | The event response.
+aetEventResponse :: Lens' AuthEventType (Maybe EventResponseType)
+aetEventResponse = lens _aetEventResponse (\ s a -> s{_aetEventResponse = a});
+
+-- | The user context data captured at the time of an event request. It provides additional information about the client from which event the request is received.
+aetEventContextData :: Lens' AuthEventType (Maybe EventContextDataType)
+aetEventContextData = lens _aetEventContextData (\ s a -> s{_aetEventContextData = a});
+
+-- | The challenge responses.
+aetChallengeResponses :: Lens' AuthEventType [ChallengeResponseType]
+aetChallengeResponses = lens _aetChallengeResponses (\ s a -> s{_aetChallengeResponses = a}) . _Default . _Coerce;
+
+-- | The event type.
+aetEventType :: Lens' AuthEventType (Maybe EventType)
+aetEventType = lens _aetEventType (\ s a -> s{_aetEventType = a});
+
+-- | The creation date
+aetCreationDate :: Lens' AuthEventType (Maybe UTCTime)
+aetCreationDate = lens _aetCreationDate (\ s a -> s{_aetCreationDate = a}) . mapping _Time;
+
+-- | A flag specifying the user feedback captured at the time of an event request is good or bad.
+aetEventFeedback :: Lens' AuthEventType (Maybe EventFeedbackType)
+aetEventFeedback = lens _aetEventFeedback (\ s a -> s{_aetEventFeedback = a});
+
+-- | The event ID.
+aetEventId :: Lens' AuthEventType (Maybe Text)
+aetEventId = lens _aetEventId (\ s a -> s{_aetEventId = a});
+
+instance FromJSON AuthEventType where
+        parseJSON
+          = withObject "AuthEventType"
+              (\ x ->
+                 AuthEventType' <$>
+                   (x .:? "EventRisk") <*> (x .:? "EventResponse") <*>
+                     (x .:? "EventContextData")
+                     <*> (x .:? "ChallengeResponses" .!= mempty)
+                     <*> (x .:? "EventType")
+                     <*> (x .:? "CreationDate")
+                     <*> (x .:? "EventFeedback")
+                     <*> (x .:? "EventId"))
+
+instance Hashable AuthEventType where
+
+instance NFData AuthEventType where
+
+-- | The authentication result.
 --
 --
 --
@@ -156,17 +545,17 @@ data AuthenticationResultType = AuthenticationResultType'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'artAccessToken' - The access token of the authentication result.
+-- * 'artAccessToken' - The access token.
 --
--- * 'artRefreshToken' - The refresh token of the authentication result.
+-- * 'artRefreshToken' - The refresh token.
 --
 -- * 'artNewDeviceMetadata' - The new device metadata from an authentication result.
 --
 -- * 'artExpiresIn' - The expiration period of the authentication result.
 --
--- * 'artTokenType' - The token type of the authentication result.
+-- * 'artTokenType' - The token type.
 --
--- * 'artIdToken' - The ID token of the authentication result.
+-- * 'artIdToken' - The ID token.
 authenticationResultType
     :: AuthenticationResultType
 authenticationResultType =
@@ -180,11 +569,11 @@ authenticationResultType =
   }
 
 
--- | The access token of the authentication result.
+-- | The access token.
 artAccessToken :: Lens' AuthenticationResultType (Maybe Text)
 artAccessToken = lens _artAccessToken (\ s a -> s{_artAccessToken = a}) . mapping _Sensitive;
 
--- | The refresh token of the authentication result.
+-- | The refresh token.
 artRefreshToken :: Lens' AuthenticationResultType (Maybe Text)
 artRefreshToken = lens _artRefreshToken (\ s a -> s{_artRefreshToken = a}) . mapping _Sensitive;
 
@@ -196,11 +585,11 @@ artNewDeviceMetadata = lens _artNewDeviceMetadata (\ s a -> s{_artNewDeviceMetad
 artExpiresIn :: Lens' AuthenticationResultType (Maybe Int)
 artExpiresIn = lens _artExpiresIn (\ s a -> s{_artExpiresIn = a});
 
--- | The token type of the authentication result.
+-- | The token type.
 artTokenType :: Lens' AuthenticationResultType (Maybe Text)
 artTokenType = lens _artTokenType (\ s a -> s{_artTokenType = a});
 
--- | The ID token of the authentication result.
+-- | The ID token.
 artIdToken :: Lens' AuthenticationResultType (Maybe Text)
 artIdToken = lens _artIdToken (\ s a -> s{_artIdToken = a}) . mapping _Sensitive;
 
@@ -219,7 +608,52 @@ instance Hashable AuthenticationResultType where
 
 instance NFData AuthenticationResultType where
 
--- | The type of code delivery details being returned from the server.
+-- | The challenge response type.
+--
+--
+--
+-- /See:/ 'challengeResponseType' smart constructor.
+data ChallengeResponseType = ChallengeResponseType'
+  { _crtChallengeName     :: !(Maybe ChallengeName)
+  , _crtChallengeResponse :: !(Maybe ChallengeResponse)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ChallengeResponseType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'crtChallengeName' - The challenge name
+--
+-- * 'crtChallengeResponse' - The challenge response.
+challengeResponseType
+    :: ChallengeResponseType
+challengeResponseType =
+  ChallengeResponseType'
+  {_crtChallengeName = Nothing, _crtChallengeResponse = Nothing}
+
+
+-- | The challenge name
+crtChallengeName :: Lens' ChallengeResponseType (Maybe ChallengeName)
+crtChallengeName = lens _crtChallengeName (\ s a -> s{_crtChallengeName = a});
+
+-- | The challenge response.
+crtChallengeResponse :: Lens' ChallengeResponseType (Maybe ChallengeResponse)
+crtChallengeResponse = lens _crtChallengeResponse (\ s a -> s{_crtChallengeResponse = a});
+
+instance FromJSON ChallengeResponseType where
+        parseJSON
+          = withObject "ChallengeResponseType"
+              (\ x ->
+                 ChallengeResponseType' <$>
+                   (x .:? "ChallengeName") <*>
+                     (x .:? "ChallengeResponse"))
+
+instance Hashable ChallengeResponseType where
+
+instance NFData ChallengeResponseType where
+
+-- | The code delivery details being returned from the server.
 --
 --
 --
@@ -239,7 +673,7 @@ data CodeDeliveryDetailsType = CodeDeliveryDetailsType'
 --
 -- * 'cddtDeliveryMedium' - The delivery medium (email message or phone number).
 --
--- * 'cddtAttributeName' - The name of the attribute in the code delivery details type.
+-- * 'cddtAttributeName' - The attribute name.
 codeDeliveryDetailsType
     :: CodeDeliveryDetailsType
 codeDeliveryDetailsType =
@@ -258,7 +692,7 @@ cddtDestination = lens _cddtDestination (\ s a -> s{_cddtDestination = a});
 cddtDeliveryMedium :: Lens' CodeDeliveryDetailsType (Maybe DeliveryMediumType)
 cddtDeliveryMedium = lens _cddtDeliveryMedium (\ s a -> s{_cddtDeliveryMedium = a});
 
--- | The name of the attribute in the code delivery details type.
+-- | The attribute name.
 cddtAttributeName :: Lens' CodeDeliveryDetailsType (Maybe Text)
 cddtAttributeName = lens _cddtAttributeName (\ s a -> s{_cddtAttributeName = a});
 
@@ -274,7 +708,193 @@ instance Hashable CodeDeliveryDetailsType where
 
 instance NFData CodeDeliveryDetailsType where
 
--- | The type of configuration for the user pool's device tracking.
+-- | The compromised credentials actions type
+--
+--
+--
+-- /See:/ 'compromisedCredentialsActionsType' smart constructor.
+newtype CompromisedCredentialsActionsType = CompromisedCredentialsActionsType'
+  { _ccatEventAction :: CompromisedCredentialsEventActionType
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CompromisedCredentialsActionsType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ccatEventAction' - The event action.
+compromisedCredentialsActionsType
+    :: CompromisedCredentialsEventActionType -- ^ 'ccatEventAction'
+    -> CompromisedCredentialsActionsType
+compromisedCredentialsActionsType pEventAction_ =
+  CompromisedCredentialsActionsType' {_ccatEventAction = pEventAction_}
+
+
+-- | The event action.
+ccatEventAction :: Lens' CompromisedCredentialsActionsType CompromisedCredentialsEventActionType
+ccatEventAction = lens _ccatEventAction (\ s a -> s{_ccatEventAction = a});
+
+instance FromJSON CompromisedCredentialsActionsType
+         where
+        parseJSON
+          = withObject "CompromisedCredentialsActionsType"
+              (\ x ->
+                 CompromisedCredentialsActionsType' <$>
+                   (x .: "EventAction"))
+
+instance Hashable CompromisedCredentialsActionsType
+         where
+
+instance NFData CompromisedCredentialsActionsType
+         where
+
+instance ToJSON CompromisedCredentialsActionsType
+         where
+        toJSON CompromisedCredentialsActionsType'{..}
+          = object
+              (catMaybes
+                 [Just ("EventAction" .= _ccatEventAction)])
+
+-- | The compromised credentials risk configuration type.
+--
+--
+--
+-- /See:/ 'compromisedCredentialsRiskConfigurationType' smart constructor.
+data CompromisedCredentialsRiskConfigurationType = CompromisedCredentialsRiskConfigurationType'
+  { _ccrctEventFilter :: !(Maybe [EventFilterType])
+  , _ccrctActions     :: !CompromisedCredentialsActionsType
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CompromisedCredentialsRiskConfigurationType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ccrctEventFilter' - Perform the action for these events. The default is to perform all events if no event filter is specified.
+--
+-- * 'ccrctActions' - The compromised credentials risk configuration actions.
+compromisedCredentialsRiskConfigurationType
+    :: CompromisedCredentialsActionsType -- ^ 'ccrctActions'
+    -> CompromisedCredentialsRiskConfigurationType
+compromisedCredentialsRiskConfigurationType pActions_ =
+  CompromisedCredentialsRiskConfigurationType'
+  {_ccrctEventFilter = Nothing, _ccrctActions = pActions_}
+
+
+-- | Perform the action for these events. The default is to perform all events if no event filter is specified.
+ccrctEventFilter :: Lens' CompromisedCredentialsRiskConfigurationType [EventFilterType]
+ccrctEventFilter = lens _ccrctEventFilter (\ s a -> s{_ccrctEventFilter = a}) . _Default . _Coerce;
+
+-- | The compromised credentials risk configuration actions.
+ccrctActions :: Lens' CompromisedCredentialsRiskConfigurationType CompromisedCredentialsActionsType
+ccrctActions = lens _ccrctActions (\ s a -> s{_ccrctActions = a});
+
+instance FromJSON
+           CompromisedCredentialsRiskConfigurationType
+         where
+        parseJSON
+          = withObject
+              "CompromisedCredentialsRiskConfigurationType"
+              (\ x ->
+                 CompromisedCredentialsRiskConfigurationType' <$>
+                   (x .:? "EventFilter" .!= mempty) <*>
+                     (x .: "Actions"))
+
+instance Hashable
+           CompromisedCredentialsRiskConfigurationType
+         where
+
+instance NFData
+           CompromisedCredentialsRiskConfigurationType
+         where
+
+instance ToJSON
+           CompromisedCredentialsRiskConfigurationType
+         where
+        toJSON
+          CompromisedCredentialsRiskConfigurationType'{..}
+          = object
+              (catMaybes
+                 [("EventFilter" .=) <$> _ccrctEventFilter,
+                  Just ("Actions" .= _ccrctActions)])
+
+-- | Contextual user data type used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.
+--
+--
+--
+-- /See:/ 'contextDataType' smart constructor.
+data ContextDataType = ContextDataType'
+  { _cdtEncodedData :: !(Maybe Text)
+  , _cdtIPAddress   :: !Text
+  , _cdtServerName  :: !Text
+  , _cdtServerPath  :: !Text
+  , _cdtHTTPHeaders :: ![HTTPHeader]
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ContextDataType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'cdtEncodedData' - Encoded data containing device fingerprinting details, collected using the Amazon Cognito context data collection library.
+--
+-- * 'cdtIPAddress' - Source IP address of your user.
+--
+-- * 'cdtServerName' - Your server endpoint where this API is invoked.
+--
+-- * 'cdtServerPath' - Your server path where this API is invoked.
+--
+-- * 'cdtHTTPHeaders' - HttpHeaders received on your server in same order.
+contextDataType
+    :: Text -- ^ 'cdtIPAddress'
+    -> Text -- ^ 'cdtServerName'
+    -> Text -- ^ 'cdtServerPath'
+    -> ContextDataType
+contextDataType pIPAddress_ pServerName_ pServerPath_ =
+  ContextDataType'
+  { _cdtEncodedData = Nothing
+  , _cdtIPAddress = pIPAddress_
+  , _cdtServerName = pServerName_
+  , _cdtServerPath = pServerPath_
+  , _cdtHTTPHeaders = mempty
+  }
+
+
+-- | Encoded data containing device fingerprinting details, collected using the Amazon Cognito context data collection library.
+cdtEncodedData :: Lens' ContextDataType (Maybe Text)
+cdtEncodedData = lens _cdtEncodedData (\ s a -> s{_cdtEncodedData = a});
+
+-- | Source IP address of your user.
+cdtIPAddress :: Lens' ContextDataType Text
+cdtIPAddress = lens _cdtIPAddress (\ s a -> s{_cdtIPAddress = a});
+
+-- | Your server endpoint where this API is invoked.
+cdtServerName :: Lens' ContextDataType Text
+cdtServerName = lens _cdtServerName (\ s a -> s{_cdtServerName = a});
+
+-- | Your server path where this API is invoked.
+cdtServerPath :: Lens' ContextDataType Text
+cdtServerPath = lens _cdtServerPath (\ s a -> s{_cdtServerPath = a});
+
+-- | HttpHeaders received on your server in same order.
+cdtHTTPHeaders :: Lens' ContextDataType [HTTPHeader]
+cdtHTTPHeaders = lens _cdtHTTPHeaders (\ s a -> s{_cdtHTTPHeaders = a}) . _Coerce;
+
+instance Hashable ContextDataType where
+
+instance NFData ContextDataType where
+
+instance ToJSON ContextDataType where
+        toJSON ContextDataType'{..}
+          = object
+              (catMaybes
+                 [("EncodedData" .=) <$> _cdtEncodedData,
+                  Just ("IpAddress" .= _cdtIPAddress),
+                  Just ("ServerName" .= _cdtServerName),
+                  Just ("ServerPath" .= _cdtServerPath),
+                  Just ("HttpHeaders" .= _cdtHTTPHeaders)])
+
+-- | The configuration for the user pool's device tracking.
 --
 --
 --
@@ -557,7 +1177,7 @@ data EmailConfigurationType = EmailConfigurationType'
 --
 -- * 'ectSourceARN' - The Amazon Resource Name (ARN) of the email source.
 --
--- * 'ectReplyToEmailAddress' - The REPLY-TO email address.
+-- * 'ectReplyToEmailAddress' - The destination to which the receiver of the email should reply to.
 emailConfigurationType
     :: EmailConfigurationType
 emailConfigurationType =
@@ -569,7 +1189,7 @@ emailConfigurationType =
 ectSourceARN :: Lens' EmailConfigurationType (Maybe Text)
 ectSourceARN = lens _ectSourceARN (\ s a -> s{_ectSourceARN = a});
 
--- | The REPLY-TO email address.
+-- | The destination to which the receiver of the email should reply to.
 ectReplyToEmailAddress :: Lens' EmailConfigurationType (Maybe Text)
 ectReplyToEmailAddress = lens _ectReplyToEmailAddress (\ s a -> s{_ectReplyToEmailAddress = a});
 
@@ -592,6 +1212,179 @@ instance ToJSON EmailConfigurationType where
                  [("SourceArn" .=) <$> _ectSourceARN,
                   ("ReplyToEmailAddress" .=) <$>
                     _ectReplyToEmailAddress])
+
+-- | Specifies the user context data captured at the time of an event request.
+--
+--
+--
+-- /See:/ 'eventContextDataType' smart constructor.
+data EventContextDataType = EventContextDataType'
+  { _ecdtIPAddress  :: !(Maybe Text)
+  , _ecdtCountry    :: !(Maybe Text)
+  , _ecdtCity       :: !(Maybe Text)
+  , _ecdtDeviceName :: !(Maybe Text)
+  , _ecdtTimezone   :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'EventContextDataType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ecdtIPAddress' - The user's IP address.
+--
+-- * 'ecdtCountry' - The user's country.
+--
+-- * 'ecdtCity' - The user's city.
+--
+-- * 'ecdtDeviceName' - The user's device name.
+--
+-- * 'ecdtTimezone' - The user's time zone.
+eventContextDataType
+    :: EventContextDataType
+eventContextDataType =
+  EventContextDataType'
+  { _ecdtIPAddress = Nothing
+  , _ecdtCountry = Nothing
+  , _ecdtCity = Nothing
+  , _ecdtDeviceName = Nothing
+  , _ecdtTimezone = Nothing
+  }
+
+
+-- | The user's IP address.
+ecdtIPAddress :: Lens' EventContextDataType (Maybe Text)
+ecdtIPAddress = lens _ecdtIPAddress (\ s a -> s{_ecdtIPAddress = a});
+
+-- | The user's country.
+ecdtCountry :: Lens' EventContextDataType (Maybe Text)
+ecdtCountry = lens _ecdtCountry (\ s a -> s{_ecdtCountry = a});
+
+-- | The user's city.
+ecdtCity :: Lens' EventContextDataType (Maybe Text)
+ecdtCity = lens _ecdtCity (\ s a -> s{_ecdtCity = a});
+
+-- | The user's device name.
+ecdtDeviceName :: Lens' EventContextDataType (Maybe Text)
+ecdtDeviceName = lens _ecdtDeviceName (\ s a -> s{_ecdtDeviceName = a});
+
+-- | The user's time zone.
+ecdtTimezone :: Lens' EventContextDataType (Maybe Text)
+ecdtTimezone = lens _ecdtTimezone (\ s a -> s{_ecdtTimezone = a});
+
+instance FromJSON EventContextDataType where
+        parseJSON
+          = withObject "EventContextDataType"
+              (\ x ->
+                 EventContextDataType' <$>
+                   (x .:? "IpAddress") <*> (x .:? "Country") <*>
+                     (x .:? "City")
+                     <*> (x .:? "DeviceName")
+                     <*> (x .:? "Timezone"))
+
+instance Hashable EventContextDataType where
+
+instance NFData EventContextDataType where
+
+-- | Specifies the event feedback type.
+--
+--
+--
+-- /See:/ 'eventFeedbackType' smart constructor.
+data EventFeedbackType = EventFeedbackType'
+  { _eftFeedbackDate  :: !(Maybe POSIX)
+  , _eftFeedbackValue :: !FeedbackValueType
+  , _eftProvider      :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'EventFeedbackType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'eftFeedbackDate' - The event feedback date.
+--
+-- * 'eftFeedbackValue' - The event feedback value.
+--
+-- * 'eftProvider' - The provider.
+eventFeedbackType
+    :: FeedbackValueType -- ^ 'eftFeedbackValue'
+    -> Text -- ^ 'eftProvider'
+    -> EventFeedbackType
+eventFeedbackType pFeedbackValue_ pProvider_ =
+  EventFeedbackType'
+  { _eftFeedbackDate = Nothing
+  , _eftFeedbackValue = pFeedbackValue_
+  , _eftProvider = pProvider_
+  }
+
+
+-- | The event feedback date.
+eftFeedbackDate :: Lens' EventFeedbackType (Maybe UTCTime)
+eftFeedbackDate = lens _eftFeedbackDate (\ s a -> s{_eftFeedbackDate = a}) . mapping _Time;
+
+-- | The event feedback value.
+eftFeedbackValue :: Lens' EventFeedbackType FeedbackValueType
+eftFeedbackValue = lens _eftFeedbackValue (\ s a -> s{_eftFeedbackValue = a});
+
+-- | The provider.
+eftProvider :: Lens' EventFeedbackType Text
+eftProvider = lens _eftProvider (\ s a -> s{_eftProvider = a});
+
+instance FromJSON EventFeedbackType where
+        parseJSON
+          = withObject "EventFeedbackType"
+              (\ x ->
+                 EventFeedbackType' <$>
+                   (x .:? "FeedbackDate") <*> (x .: "FeedbackValue") <*>
+                     (x .: "Provider"))
+
+instance Hashable EventFeedbackType where
+
+instance NFData EventFeedbackType where
+
+-- | The event risk type.
+--
+--
+--
+-- /See:/ 'eventRiskType' smart constructor.
+data EventRiskType = EventRiskType'
+  { _ertRiskLevel    :: !(Maybe RiskLevelType)
+  , _ertRiskDecision :: !(Maybe RiskDecisionType)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'EventRiskType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ertRiskLevel' - The risk level.
+--
+-- * 'ertRiskDecision' - The risk decision.
+eventRiskType
+    :: EventRiskType
+eventRiskType =
+  EventRiskType' {_ertRiskLevel = Nothing, _ertRiskDecision = Nothing}
+
+
+-- | The risk level.
+ertRiskLevel :: Lens' EventRiskType (Maybe RiskLevelType)
+ertRiskLevel = lens _ertRiskLevel (\ s a -> s{_ertRiskLevel = a});
+
+-- | The risk decision.
+ertRiskDecision :: Lens' EventRiskType (Maybe RiskDecisionType)
+ertRiskDecision = lens _ertRiskDecision (\ s a -> s{_ertRiskDecision = a});
+
+instance FromJSON EventRiskType where
+        parseJSON
+          = withObject "EventRiskType"
+              (\ x ->
+                 EventRiskType' <$>
+                   (x .:? "RiskLevel") <*> (x .:? "RiskDecision"))
+
+instance Hashable EventRiskType where
+
+instance NFData EventRiskType where
 
 -- | The group type.
 --
@@ -683,6 +1476,49 @@ instance FromJSON GroupType where
 instance Hashable GroupType where
 
 instance NFData GroupType where
+
+-- | The HTTP header.
+--
+--
+--
+-- /See:/ 'hTTPHeader' smart constructor.
+data HTTPHeader = HTTPHeader'
+  { _httphHeaderValue :: !(Maybe Text)
+  , _httphHeaderName  :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'HTTPHeader' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'httphHeaderValue' - The header value.
+--
+-- * 'httphHeaderName' - The header name
+hTTPHeader
+    :: HTTPHeader
+hTTPHeader =
+  HTTPHeader' {_httphHeaderValue = Nothing, _httphHeaderName = Nothing}
+
+
+-- | The header value.
+httphHeaderValue :: Lens' HTTPHeader (Maybe Text)
+httphHeaderValue = lens _httphHeaderValue (\ s a -> s{_httphHeaderValue = a});
+
+-- | The header name
+httphHeaderName :: Lens' HTTPHeader (Maybe Text)
+httphHeaderName = lens _httphHeaderName (\ s a -> s{_httphHeaderName = a});
+
+instance Hashable HTTPHeader where
+
+instance NFData HTTPHeader where
+
+instance ToJSON HTTPHeader where
+        toJSON HTTPHeader'{..}
+          = object
+              (catMaybes
+                 [("headerValue" .=) <$> _httphHeaderValue,
+                  ("headerName" .=) <$> _httphHeaderName])
 
 -- | A container for information about an identity provider.
 --
@@ -784,7 +1620,7 @@ instance Hashable IdentityProviderType where
 
 instance NFData IdentityProviderType where
 
--- | Specifies the type of configuration for AWS Lambda triggers.
+-- | Specifies the configuration for AWS Lambda triggers.
 --
 --
 --
@@ -797,6 +1633,7 @@ data LambdaConfigType = LambdaConfigType'
   , _lctCustomMessage               :: !(Maybe Text)
   , _lctDefineAuthChallenge         :: !(Maybe Text)
   , _lctPostConfirmation            :: !(Maybe Text)
+  , _lctPreTokenGeneration          :: !(Maybe Text)
   , _lctPreSignUp                   :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -819,6 +1656,8 @@ data LambdaConfigType = LambdaConfigType'
 --
 -- * 'lctPostConfirmation' - A post-confirmation AWS Lambda trigger.
 --
+-- * 'lctPreTokenGeneration' - A Lambda trigger that is invoked before token generation.
+--
 -- * 'lctPreSignUp' - A pre-registration AWS Lambda trigger.
 lambdaConfigType
     :: LambdaConfigType
@@ -831,6 +1670,7 @@ lambdaConfigType =
   , _lctCustomMessage = Nothing
   , _lctDefineAuthChallenge = Nothing
   , _lctPostConfirmation = Nothing
+  , _lctPreTokenGeneration = Nothing
   , _lctPreSignUp = Nothing
   }
 
@@ -863,6 +1703,10 @@ lctDefineAuthChallenge = lens _lctDefineAuthChallenge (\ s a -> s{_lctDefineAuth
 lctPostConfirmation :: Lens' LambdaConfigType (Maybe Text)
 lctPostConfirmation = lens _lctPostConfirmation (\ s a -> s{_lctPostConfirmation = a});
 
+-- | A Lambda trigger that is invoked before token generation.
+lctPreTokenGeneration :: Lens' LambdaConfigType (Maybe Text)
+lctPreTokenGeneration = lens _lctPreTokenGeneration (\ s a -> s{_lctPreTokenGeneration = a});
+
 -- | A pre-registration AWS Lambda trigger.
 lctPreSignUp :: Lens' LambdaConfigType (Maybe Text)
 lctPreSignUp = lens _lctPreSignUp (\ s a -> s{_lctPreSignUp = a});
@@ -879,6 +1723,7 @@ instance FromJSON LambdaConfigType where
                      <*> (x .:? "CustomMessage")
                      <*> (x .:? "DefineAuthChallenge")
                      <*> (x .:? "PostConfirmation")
+                     <*> (x .:? "PreTokenGeneration")
                      <*> (x .:? "PreSignUp"))
 
 instance Hashable LambdaConfigType where
@@ -899,6 +1744,7 @@ instance ToJSON LambdaConfigType where
                   ("DefineAuthChallenge" .=) <$>
                     _lctDefineAuthChallenge,
                   ("PostConfirmation" .=) <$> _lctPostConfirmation,
+                  ("PreTokenGeneration" .=) <$> _lctPreTokenGeneration,
                   ("PreSignUp" .=) <$> _lctPreSignUp])
 
 -- | Specifies the different settings for multi-factor authentication (MFA).
@@ -1057,6 +1903,161 @@ instance FromJSON NewDeviceMetadataType where
 instance Hashable NewDeviceMetadataType where
 
 instance NFData NewDeviceMetadataType where
+
+-- | The notify configuration type.
+--
+--
+--
+-- /See:/ 'notifyConfigurationType' smart constructor.
+data NotifyConfigurationType = NotifyConfigurationType'
+  { _nctNoActionEmail :: !(Maybe NotifyEmailType)
+  , _nctFrom          :: !(Maybe Text)
+  , _nctReplyTo       :: !(Maybe Text)
+  , _nctBlockEmail    :: !(Maybe NotifyEmailType)
+  , _nctMFAEmail      :: !(Maybe NotifyEmailType)
+  , _nctSourceARN     :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'NotifyConfigurationType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'nctNoActionEmail' - The email template used when a detected risk event is allowed.
+--
+-- * 'nctFrom' - The email address that is sending the email. It must be either individually verified with Amazon SES, or from a domain that has been verified with Amazon SES.
+--
+-- * 'nctReplyTo' - The destination to which the receiver of an email should reply to.
+--
+-- * 'nctBlockEmail' - Email template used when a detected risk event is blocked.
+--
+-- * 'nctMFAEmail' - The MFA email template used when MFA is challenged as part of a detected risk.
+--
+-- * 'nctSourceARN' - The Amazon Resource Name (ARN) of the identity that is associated with the sending authorization policy. It permits Amazon Cognito to send for the email address specified in the @From@ parameter.
+notifyConfigurationType
+    :: Text -- ^ 'nctSourceARN'
+    -> NotifyConfigurationType
+notifyConfigurationType pSourceARN_ =
+  NotifyConfigurationType'
+  { _nctNoActionEmail = Nothing
+  , _nctFrom = Nothing
+  , _nctReplyTo = Nothing
+  , _nctBlockEmail = Nothing
+  , _nctMFAEmail = Nothing
+  , _nctSourceARN = pSourceARN_
+  }
+
+
+-- | The email template used when a detected risk event is allowed.
+nctNoActionEmail :: Lens' NotifyConfigurationType (Maybe NotifyEmailType)
+nctNoActionEmail = lens _nctNoActionEmail (\ s a -> s{_nctNoActionEmail = a});
+
+-- | The email address that is sending the email. It must be either individually verified with Amazon SES, or from a domain that has been verified with Amazon SES.
+nctFrom :: Lens' NotifyConfigurationType (Maybe Text)
+nctFrom = lens _nctFrom (\ s a -> s{_nctFrom = a});
+
+-- | The destination to which the receiver of an email should reply to.
+nctReplyTo :: Lens' NotifyConfigurationType (Maybe Text)
+nctReplyTo = lens _nctReplyTo (\ s a -> s{_nctReplyTo = a});
+
+-- | Email template used when a detected risk event is blocked.
+nctBlockEmail :: Lens' NotifyConfigurationType (Maybe NotifyEmailType)
+nctBlockEmail = lens _nctBlockEmail (\ s a -> s{_nctBlockEmail = a});
+
+-- | The MFA email template used when MFA is challenged as part of a detected risk.
+nctMFAEmail :: Lens' NotifyConfigurationType (Maybe NotifyEmailType)
+nctMFAEmail = lens _nctMFAEmail (\ s a -> s{_nctMFAEmail = a});
+
+-- | The Amazon Resource Name (ARN) of the identity that is associated with the sending authorization policy. It permits Amazon Cognito to send for the email address specified in the @From@ parameter.
+nctSourceARN :: Lens' NotifyConfigurationType Text
+nctSourceARN = lens _nctSourceARN (\ s a -> s{_nctSourceARN = a});
+
+instance FromJSON NotifyConfigurationType where
+        parseJSON
+          = withObject "NotifyConfigurationType"
+              (\ x ->
+                 NotifyConfigurationType' <$>
+                   (x .:? "NoActionEmail") <*> (x .:? "From") <*>
+                     (x .:? "ReplyTo")
+                     <*> (x .:? "BlockEmail")
+                     <*> (x .:? "MfaEmail")
+                     <*> (x .: "SourceArn"))
+
+instance Hashable NotifyConfigurationType where
+
+instance NFData NotifyConfigurationType where
+
+instance ToJSON NotifyConfigurationType where
+        toJSON NotifyConfigurationType'{..}
+          = object
+              (catMaybes
+                 [("NoActionEmail" .=) <$> _nctNoActionEmail,
+                  ("From" .=) <$> _nctFrom,
+                  ("ReplyTo" .=) <$> _nctReplyTo,
+                  ("BlockEmail" .=) <$> _nctBlockEmail,
+                  ("MfaEmail" .=) <$> _nctMFAEmail,
+                  Just ("SourceArn" .= _nctSourceARN)])
+
+-- | The notify email type.
+--
+--
+--
+-- /See:/ 'notifyEmailType' smart constructor.
+data NotifyEmailType = NotifyEmailType'
+  { _netTextBody :: !(Maybe Text)
+  , _netHTMLBody :: !(Maybe Text)
+  , _netSubject  :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'NotifyEmailType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'netTextBody' - The text body.
+--
+-- * 'netHTMLBody' - The HTML body.
+--
+-- * 'netSubject' - The subject.
+notifyEmailType
+    :: Text -- ^ 'netSubject'
+    -> NotifyEmailType
+notifyEmailType pSubject_ =
+  NotifyEmailType'
+  {_netTextBody = Nothing, _netHTMLBody = Nothing, _netSubject = pSubject_}
+
+
+-- | The text body.
+netTextBody :: Lens' NotifyEmailType (Maybe Text)
+netTextBody = lens _netTextBody (\ s a -> s{_netTextBody = a});
+
+-- | The HTML body.
+netHTMLBody :: Lens' NotifyEmailType (Maybe Text)
+netHTMLBody = lens _netHTMLBody (\ s a -> s{_netHTMLBody = a});
+
+-- | The subject.
+netSubject :: Lens' NotifyEmailType Text
+netSubject = lens _netSubject (\ s a -> s{_netSubject = a});
+
+instance FromJSON NotifyEmailType where
+        parseJSON
+          = withObject "NotifyEmailType"
+              (\ x ->
+                 NotifyEmailType' <$>
+                   (x .:? "TextBody") <*> (x .:? "HtmlBody") <*>
+                     (x .: "Subject"))
+
+instance Hashable NotifyEmailType where
+
+instance NFData NotifyEmailType where
+
+instance ToJSON NotifyEmailType where
+        toJSON NotifyEmailType'{..}
+          = object
+              (catMaybes
+                 [("TextBody" .=) <$> _netTextBody,
+                  ("HtmlBody" .=) <$> _netHTMLBody,
+                  Just ("Subject" .= _netSubject)])
 
 -- | The minimum and maximum value of an attribute that is of the number data type.
 --
@@ -1433,6 +2434,189 @@ instance Hashable ResourceServerType where
 
 instance NFData ResourceServerType where
 
+-- | The risk configuration type.
+--
+--
+--
+-- /See:/ 'riskConfigurationType' smart constructor.
+data RiskConfigurationType = RiskConfigurationType'
+  { _rctRiskExceptionConfiguration :: !(Maybe RiskExceptionConfigurationType)
+  , _rctClientId :: !(Maybe (Sensitive Text))
+  , _rctAccountTakeoverRiskConfiguration :: !(Maybe AccountTakeoverRiskConfigurationType)
+  , _rctLastModifiedDate :: !(Maybe POSIX)
+  , _rctUserPoolId :: !(Maybe Text)
+  , _rctCompromisedCredentialsRiskConfiguration :: !(Maybe CompromisedCredentialsRiskConfigurationType)
+  } deriving (Eq, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'RiskConfigurationType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rctRiskExceptionConfiguration' - The configuration to override the risk decision.
+--
+-- * 'rctClientId' - The app client ID.
+--
+-- * 'rctAccountTakeoverRiskConfiguration' - The account takeover risk configuration object including the @NotifyConfiguration@ object and @Actions@ to take in the case of an account takeover.
+--
+-- * 'rctLastModifiedDate' - The last modified date.
+--
+-- * 'rctUserPoolId' - The user pool ID.
+--
+-- * 'rctCompromisedCredentialsRiskConfiguration' - The compromised credentials risk configuration object including the @EventFilter@ and the @EventAction@
+riskConfigurationType
+    :: RiskConfigurationType
+riskConfigurationType =
+  RiskConfigurationType'
+  { _rctRiskExceptionConfiguration = Nothing
+  , _rctClientId = Nothing
+  , _rctAccountTakeoverRiskConfiguration = Nothing
+  , _rctLastModifiedDate = Nothing
+  , _rctUserPoolId = Nothing
+  , _rctCompromisedCredentialsRiskConfiguration = Nothing
+  }
+
+
+-- | The configuration to override the risk decision.
+rctRiskExceptionConfiguration :: Lens' RiskConfigurationType (Maybe RiskExceptionConfigurationType)
+rctRiskExceptionConfiguration = lens _rctRiskExceptionConfiguration (\ s a -> s{_rctRiskExceptionConfiguration = a});
+
+-- | The app client ID.
+rctClientId :: Lens' RiskConfigurationType (Maybe Text)
+rctClientId = lens _rctClientId (\ s a -> s{_rctClientId = a}) . mapping _Sensitive;
+
+-- | The account takeover risk configuration object including the @NotifyConfiguration@ object and @Actions@ to take in the case of an account takeover.
+rctAccountTakeoverRiskConfiguration :: Lens' RiskConfigurationType (Maybe AccountTakeoverRiskConfigurationType)
+rctAccountTakeoverRiskConfiguration = lens _rctAccountTakeoverRiskConfiguration (\ s a -> s{_rctAccountTakeoverRiskConfiguration = a});
+
+-- | The last modified date.
+rctLastModifiedDate :: Lens' RiskConfigurationType (Maybe UTCTime)
+rctLastModifiedDate = lens _rctLastModifiedDate (\ s a -> s{_rctLastModifiedDate = a}) . mapping _Time;
+
+-- | The user pool ID.
+rctUserPoolId :: Lens' RiskConfigurationType (Maybe Text)
+rctUserPoolId = lens _rctUserPoolId (\ s a -> s{_rctUserPoolId = a});
+
+-- | The compromised credentials risk configuration object including the @EventFilter@ and the @EventAction@
+rctCompromisedCredentialsRiskConfiguration :: Lens' RiskConfigurationType (Maybe CompromisedCredentialsRiskConfigurationType)
+rctCompromisedCredentialsRiskConfiguration = lens _rctCompromisedCredentialsRiskConfiguration (\ s a -> s{_rctCompromisedCredentialsRiskConfiguration = a});
+
+instance FromJSON RiskConfigurationType where
+        parseJSON
+          = withObject "RiskConfigurationType"
+              (\ x ->
+                 RiskConfigurationType' <$>
+                   (x .:? "RiskExceptionConfiguration") <*>
+                     (x .:? "ClientId")
+                     <*> (x .:? "AccountTakeoverRiskConfiguration")
+                     <*> (x .:? "LastModifiedDate")
+                     <*> (x .:? "UserPoolId")
+                     <*>
+                     (x .:? "CompromisedCredentialsRiskConfiguration"))
+
+instance Hashable RiskConfigurationType where
+
+instance NFData RiskConfigurationType where
+
+-- | The type of the configuration to override the risk decision.
+--
+--
+--
+-- /See:/ 'riskExceptionConfigurationType' smart constructor.
+data RiskExceptionConfigurationType = RiskExceptionConfigurationType'
+  { _rectSkippedIPRangeList :: !(Maybe [Text])
+  , _rectBlockedIPRangeList :: !(Maybe [Text])
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'RiskExceptionConfigurationType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rectSkippedIPRangeList' - Risk detection is not performed on the IP addresses in the range list. The IP range is in CIDR notation.
+--
+-- * 'rectBlockedIPRangeList' - Overrides the risk decision to always block the pre-authentication requests. The IP range is in CIDR notation: a compact representation of an IP address and its associated routing prefix.
+riskExceptionConfigurationType
+    :: RiskExceptionConfigurationType
+riskExceptionConfigurationType =
+  RiskExceptionConfigurationType'
+  {_rectSkippedIPRangeList = Nothing, _rectBlockedIPRangeList = Nothing}
+
+
+-- | Risk detection is not performed on the IP addresses in the range list. The IP range is in CIDR notation.
+rectSkippedIPRangeList :: Lens' RiskExceptionConfigurationType [Text]
+rectSkippedIPRangeList = lens _rectSkippedIPRangeList (\ s a -> s{_rectSkippedIPRangeList = a}) . _Default . _Coerce;
+
+-- | Overrides the risk decision to always block the pre-authentication requests. The IP range is in CIDR notation: a compact representation of an IP address and its associated routing prefix.
+rectBlockedIPRangeList :: Lens' RiskExceptionConfigurationType [Text]
+rectBlockedIPRangeList = lens _rectBlockedIPRangeList (\ s a -> s{_rectBlockedIPRangeList = a}) . _Default . _Coerce;
+
+instance FromJSON RiskExceptionConfigurationType
+         where
+        parseJSON
+          = withObject "RiskExceptionConfigurationType"
+              (\ x ->
+                 RiskExceptionConfigurationType' <$>
+                   (x .:? "SkippedIPRangeList" .!= mempty) <*>
+                     (x .:? "BlockedIPRangeList" .!= mempty))
+
+instance Hashable RiskExceptionConfigurationType
+         where
+
+instance NFData RiskExceptionConfigurationType where
+
+instance ToJSON RiskExceptionConfigurationType where
+        toJSON RiskExceptionConfigurationType'{..}
+          = object
+              (catMaybes
+                 [("SkippedIPRangeList" .=) <$>
+                    _rectSkippedIPRangeList,
+                  ("BlockedIPRangeList" .=) <$>
+                    _rectBlockedIPRangeList])
+
+-- | The SMS multi-factor authentication (MFA) settings type.
+--
+--
+--
+-- /See:/ 'sMSMFASettingsType' smart constructor.
+data SMSMFASettingsType = SMSMFASettingsType'
+  { _smsmstEnabled      :: !(Maybe Bool)
+  , _smsmstPreferredMFA :: !(Maybe Bool)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'SMSMFASettingsType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'smsmstEnabled' - Specifies whether SMS text message MFA is enabled.
+--
+-- * 'smsmstPreferredMFA' - The preferred MFA method.
+sMSMFASettingsType
+    :: SMSMFASettingsType
+sMSMFASettingsType =
+  SMSMFASettingsType' {_smsmstEnabled = Nothing, _smsmstPreferredMFA = Nothing}
+
+
+-- | Specifies whether SMS text message MFA is enabled.
+smsmstEnabled :: Lens' SMSMFASettingsType (Maybe Bool)
+smsmstEnabled = lens _smsmstEnabled (\ s a -> s{_smsmstEnabled = a});
+
+-- | The preferred MFA method.
+smsmstPreferredMFA :: Lens' SMSMFASettingsType (Maybe Bool)
+smsmstPreferredMFA = lens _smsmstPreferredMFA (\ s a -> s{_smsmstPreferredMFA = a});
+
+instance Hashable SMSMFASettingsType where
+
+instance NFData SMSMFASettingsType where
+
+instance ToJSON SMSMFASettingsType where
+        toJSON SMSMFASettingsType'{..}
+          = object
+              (catMaybes
+                 [("Enabled" .=) <$> _smsmstEnabled,
+                  ("PreferredMfa" .=) <$> _smsmstPreferredMFA])
+
 -- | Contains information about the schema attribute.
 --
 --
@@ -1592,7 +2776,144 @@ instance ToJSON SmsConfigurationType where
                  [("ExternalId" .=) <$> _sctExternalId,
                   Just ("SnsCallerArn" .= _sctSNSCallerARN)])
 
--- | The type of constraints associated with an attribute of the string type.
+-- | The SMS text message multi-factor authentication (MFA) configuration type.
+--
+--
+--
+-- /See:/ 'smsMFAConfigType' smart constructor.
+data SmsMFAConfigType = SmsMFAConfigType'
+  { _smctSmsAuthenticationMessage :: !(Maybe Text)
+  , _smctSmsConfiguration         :: !(Maybe SmsConfigurationType)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'SmsMFAConfigType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'smctSmsAuthenticationMessage' - The SMS authentication message.
+--
+-- * 'smctSmsConfiguration' - The SMS configuration.
+smsMFAConfigType
+    :: SmsMFAConfigType
+smsMFAConfigType =
+  SmsMFAConfigType'
+  {_smctSmsAuthenticationMessage = Nothing, _smctSmsConfiguration = Nothing}
+
+
+-- | The SMS authentication message.
+smctSmsAuthenticationMessage :: Lens' SmsMFAConfigType (Maybe Text)
+smctSmsAuthenticationMessage = lens _smctSmsAuthenticationMessage (\ s a -> s{_smctSmsAuthenticationMessage = a});
+
+-- | The SMS configuration.
+smctSmsConfiguration :: Lens' SmsMFAConfigType (Maybe SmsConfigurationType)
+smctSmsConfiguration = lens _smctSmsConfiguration (\ s a -> s{_smctSmsConfiguration = a});
+
+instance FromJSON SmsMFAConfigType where
+        parseJSON
+          = withObject "SmsMFAConfigType"
+              (\ x ->
+                 SmsMFAConfigType' <$>
+                   (x .:? "SmsAuthenticationMessage") <*>
+                     (x .:? "SmsConfiguration"))
+
+instance Hashable SmsMFAConfigType where
+
+instance NFData SmsMFAConfigType where
+
+instance ToJSON SmsMFAConfigType where
+        toJSON SmsMFAConfigType'{..}
+          = object
+              (catMaybes
+                 [("SmsAuthenticationMessage" .=) <$>
+                    _smctSmsAuthenticationMessage,
+                  ("SmsConfiguration" .=) <$> _smctSmsConfiguration])
+
+-- | The type used for enabling software token MFA at the user pool level.
+--
+--
+--
+-- /See:/ 'softwareTokenMFAConfigType' smart constructor.
+newtype SoftwareTokenMFAConfigType = SoftwareTokenMFAConfigType'
+  { _stmctEnabled :: Maybe Bool
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'SoftwareTokenMFAConfigType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'stmctEnabled' - Specifies whether software token MFA is enabled.
+softwareTokenMFAConfigType
+    :: SoftwareTokenMFAConfigType
+softwareTokenMFAConfigType =
+  SoftwareTokenMFAConfigType' {_stmctEnabled = Nothing}
+
+
+-- | Specifies whether software token MFA is enabled.
+stmctEnabled :: Lens' SoftwareTokenMFAConfigType (Maybe Bool)
+stmctEnabled = lens _stmctEnabled (\ s a -> s{_stmctEnabled = a});
+
+instance FromJSON SoftwareTokenMFAConfigType where
+        parseJSON
+          = withObject "SoftwareTokenMFAConfigType"
+              (\ x ->
+                 SoftwareTokenMFAConfigType' <$> (x .:? "Enabled"))
+
+instance Hashable SoftwareTokenMFAConfigType where
+
+instance NFData SoftwareTokenMFAConfigType where
+
+instance ToJSON SoftwareTokenMFAConfigType where
+        toJSON SoftwareTokenMFAConfigType'{..}
+          = object
+              (catMaybes [("Enabled" .=) <$> _stmctEnabled])
+
+-- | The type used for enabling software token MFA at the user level.
+--
+--
+--
+-- /See:/ 'softwareTokenMFASettingsType' smart constructor.
+data SoftwareTokenMFASettingsType = SoftwareTokenMFASettingsType'
+  { _stmstEnabled      :: !(Maybe Bool)
+  , _stmstPreferredMFA :: !(Maybe Bool)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'SoftwareTokenMFASettingsType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'stmstEnabled' - Specifies whether software token MFA is enabled.
+--
+-- * 'stmstPreferredMFA' - The preferred MFA method.
+softwareTokenMFASettingsType
+    :: SoftwareTokenMFASettingsType
+softwareTokenMFASettingsType =
+  SoftwareTokenMFASettingsType'
+  {_stmstEnabled = Nothing, _stmstPreferredMFA = Nothing}
+
+
+-- | Specifies whether software token MFA is enabled.
+stmstEnabled :: Lens' SoftwareTokenMFASettingsType (Maybe Bool)
+stmstEnabled = lens _stmstEnabled (\ s a -> s{_stmstEnabled = a});
+
+-- | The preferred MFA method.
+stmstPreferredMFA :: Lens' SoftwareTokenMFASettingsType (Maybe Bool)
+stmstPreferredMFA = lens _stmstPreferredMFA (\ s a -> s{_stmstPreferredMFA = a});
+
+instance Hashable SoftwareTokenMFASettingsType where
+
+instance NFData SoftwareTokenMFASettingsType where
+
+instance ToJSON SoftwareTokenMFASettingsType where
+        toJSON SoftwareTokenMFASettingsType'{..}
+          = object
+              (catMaybes
+                 [("Enabled" .=) <$> _stmstEnabled,
+                  ("PreferredMfa" .=) <$> _stmstPreferredMFA])
+
+-- | The constraints associated with a string attribute.
 --
 --
 --
@@ -1607,9 +2928,9 @@ data StringAttributeConstraintsType = StringAttributeConstraintsType'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'sactMaxLength' - The maximum length of an attribute value of the string type.
+-- * 'sactMaxLength' - The maximum length.
 --
--- * 'sactMinLength' - The minimum length of an attribute value of the string type.
+-- * 'sactMinLength' - The minimum length.
 stringAttributeConstraintsType
     :: StringAttributeConstraintsType
 stringAttributeConstraintsType =
@@ -1617,11 +2938,11 @@ stringAttributeConstraintsType =
   {_sactMaxLength = Nothing, _sactMinLength = Nothing}
 
 
--- | The maximum length of an attribute value of the string type.
+-- | The maximum length.
 sactMaxLength :: Lens' StringAttributeConstraintsType (Maybe Text)
 sactMaxLength = lens _sactMaxLength (\ s a -> s{_sactMaxLength = a});
 
--- | The minimum length of an attribute value of the string type.
+-- | The minimum length.
 sactMinLength :: Lens' StringAttributeConstraintsType (Maybe Text)
 sactMinLength = lens _sactMinLength (\ s a -> s{_sactMinLength = a});
 
@@ -1735,6 +3056,39 @@ instance FromJSON UICustomizationType where
 instance Hashable UICustomizationType where
 
 instance NFData UICustomizationType where
+
+-- | Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.
+--
+--
+--
+-- /See:/ 'userContextDataType' smart constructor.
+newtype UserContextDataType = UserContextDataType'
+  { _ucdtEncodedData :: Maybe Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'UserContextDataType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ucdtEncodedData' - Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.
+userContextDataType
+    :: UserContextDataType
+userContextDataType = UserContextDataType' {_ucdtEncodedData = Nothing}
+
+
+-- | Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.
+ucdtEncodedData :: Lens' UserContextDataType (Maybe Text)
+ucdtEncodedData = lens _ucdtEncodedData (\ s a -> s{_ucdtEncodedData = a});
+
+instance Hashable UserContextDataType where
+
+instance NFData UserContextDataType where
+
+instance ToJSON UserContextDataType where
+        toJSON UserContextDataType'{..}
+          = object
+              (catMaybes [("EncodedData" .=) <$> _ucdtEncodedData])
 
 -- | The user import job type.
 --
@@ -1881,6 +3235,51 @@ instance Hashable UserImportJobType where
 
 instance NFData UserImportJobType where
 
+-- | The user pool add-ons type.
+--
+--
+--
+-- /See:/ 'userPoolAddOnsType' smart constructor.
+newtype UserPoolAddOnsType = UserPoolAddOnsType'
+  { _upaotAdvancedSecurityMode :: AdvancedSecurityModeType
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'UserPoolAddOnsType' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'upaotAdvancedSecurityMode' - The advanced security mode.
+userPoolAddOnsType
+    :: AdvancedSecurityModeType -- ^ 'upaotAdvancedSecurityMode'
+    -> UserPoolAddOnsType
+userPoolAddOnsType pAdvancedSecurityMode_ =
+  UserPoolAddOnsType' {_upaotAdvancedSecurityMode = pAdvancedSecurityMode_}
+
+
+-- | The advanced security mode.
+upaotAdvancedSecurityMode :: Lens' UserPoolAddOnsType AdvancedSecurityModeType
+upaotAdvancedSecurityMode = lens _upaotAdvancedSecurityMode (\ s a -> s{_upaotAdvancedSecurityMode = a});
+
+instance FromJSON UserPoolAddOnsType where
+        parseJSON
+          = withObject "UserPoolAddOnsType"
+              (\ x ->
+                 UserPoolAddOnsType' <$>
+                   (x .: "AdvancedSecurityMode"))
+
+instance Hashable UserPoolAddOnsType where
+
+instance NFData UserPoolAddOnsType where
+
+instance ToJSON UserPoolAddOnsType where
+        toJSON UserPoolAddOnsType'{..}
+          = object
+              (catMaybes
+                 [Just
+                    ("AdvancedSecurityMode" .=
+                       _upaotAdvancedSecurityMode)])
+
 -- | The description of the user pool client.
 --
 --
@@ -1957,6 +3356,7 @@ data UserPoolClientType = UserPoolClientType'
   , _upctReadAttributes                  :: !(Maybe [Text])
   , _upctAllowedOAuthScopes              :: !(Maybe [Text])
   , _upctAllowedOAuthFlows               :: !(Maybe [OAuthFlowType])
+  , _upctAnalyticsConfiguration          :: !(Maybe AnalyticsConfigurationType)
   , _upctClientName                      :: !(Maybe Text)
   , _upctCallbackURLs                    :: !(Maybe [Text])
   } deriving (Eq, Show, Data, Typeable, Generic)
@@ -1996,6 +3396,8 @@ data UserPoolClientType = UserPoolClientType'
 --
 -- * 'upctAllowedOAuthFlows' - Set to @code@ to initiate a code grant flow, which provides an authorization code as the response. This code can be exchanged for access tokens with the token endpoint. Set to @token@ to specify that the client should get the access token (and, optionally, ID token, based on scopes) directly.
 --
+-- * 'upctAnalyticsConfiguration' - The Amazon Pinpoint analytics configuration for the user pool client.
+--
 -- * 'upctClientName' - The client name from the user pool request of the client type.
 --
 -- * 'upctCallbackURLs' - A list of allowed callback URLs for the identity providers.
@@ -2018,6 +3420,7 @@ userPoolClientType =
   , _upctReadAttributes = Nothing
   , _upctAllowedOAuthScopes = Nothing
   , _upctAllowedOAuthFlows = Nothing
+  , _upctAnalyticsConfiguration = Nothing
   , _upctClientName = Nothing
   , _upctCallbackURLs = Nothing
   }
@@ -2083,6 +3486,10 @@ upctAllowedOAuthScopes = lens _upctAllowedOAuthScopes (\ s a -> s{_upctAllowedOA
 upctAllowedOAuthFlows :: Lens' UserPoolClientType [OAuthFlowType]
 upctAllowedOAuthFlows = lens _upctAllowedOAuthFlows (\ s a -> s{_upctAllowedOAuthFlows = a}) . _Default . _Coerce;
 
+-- | The Amazon Pinpoint analytics configuration for the user pool client.
+upctAnalyticsConfiguration :: Lens' UserPoolClientType (Maybe AnalyticsConfigurationType)
+upctAnalyticsConfiguration = lens _upctAnalyticsConfiguration (\ s a -> s{_upctAnalyticsConfiguration = a});
+
 -- | The client name from the user pool request of the client type.
 upctClientName :: Lens' UserPoolClientType (Maybe Text)
 upctClientName = lens _upctClientName (\ s a -> s{_upctClientName = a});
@@ -2110,6 +3517,7 @@ instance FromJSON UserPoolClientType where
                      <*> (x .:? "ReadAttributes" .!= mempty)
                      <*> (x .:? "AllowedOAuthScopes" .!= mempty)
                      <*> (x .:? "AllowedOAuthFlows" .!= mempty)
+                     <*> (x .:? "AnalyticsConfiguration")
                      <*> (x .:? "ClientName")
                      <*> (x .:? "CallbackURLs" .!= mempty))
 
@@ -2199,7 +3607,7 @@ instance Hashable UserPoolDescriptionType where
 
 instance NFData UserPoolDescriptionType where
 
--- | The type of policy in a user pool.
+-- | The policy associated with a user pool.
 --
 --
 --
@@ -2213,13 +3621,13 @@ newtype UserPoolPolicyType = UserPoolPolicyType'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'upptPasswordPolicy' - A container for information about the user pool password policy.
+-- * 'upptPasswordPolicy' - The password policy.
 userPoolPolicyType
     :: UserPoolPolicyType
 userPoolPolicyType = UserPoolPolicyType' {_upptPasswordPolicy = Nothing}
 
 
--- | A container for information about the user pool password policy.
+-- | The password policy.
 upptPasswordPolicy :: Lens' UserPoolPolicyType (Maybe PasswordPolicyType)
 upptPasswordPolicy = lens _upptPasswordPolicy (\ s a -> s{_upptPasswordPolicy = a});
 
@@ -2239,7 +3647,7 @@ instance ToJSON UserPoolPolicyType where
               (catMaybes
                  [("PasswordPolicy" .=) <$> _upptPasswordPolicy])
 
--- | A container for information about the user pool type.
+-- | A container for information about the user pool.
 --
 --
 --
@@ -2251,8 +3659,10 @@ data UserPoolType = UserPoolType'
   , _uptLastModifiedDate            :: !(Maybe POSIX)
   , _uptVerificationMessageTemplate :: !(Maybe VerificationMessageTemplateType)
   , _uptEstimatedNumberOfUsers      :: !(Maybe Int)
+  , _uptDomain                      :: !(Maybe Text)
   , _uptEmailVerificationMessage    :: !(Maybe Text)
   , _uptSmsAuthenticationMessage    :: !(Maybe Text)
+  , _uptUserPoolAddOns              :: !(Maybe UserPoolAddOnsType)
   , _uptSchemaAttributes            :: !(Maybe (List1 SchemaAttributeType))
   , _uptEmailVerificationSubject    :: !(Maybe Text)
   , _uptUsernameAttributes          :: !(Maybe [UsernameAttributeType])
@@ -2289,9 +3699,13 @@ data UserPoolType = UserPoolType'
 --
 -- * 'uptEstimatedNumberOfUsers' - A number estimating the size of the user pool.
 --
+-- * 'uptDomain' - Holds the domain prefix if the user pool has a domain associated with it.
+--
 -- * 'uptEmailVerificationMessage' - The contents of the email verification message.
 --
 -- * 'uptSmsAuthenticationMessage' - The contents of the SMS authentication message.
+--
+-- * 'uptUserPoolAddOns' - The user pool add-ons.
 --
 -- * 'uptSchemaAttributes' - A container with the schema attributes of a user pool.
 --
@@ -2315,7 +3729,7 @@ data UserPoolType = UserPoolType'
 --
 -- * 'uptCreationDate' - The date the user pool was created.
 --
--- * 'uptLambdaConfig' - A container for the AWS Lambda triggers associated with a user pool.
+-- * 'uptLambdaConfig' - The AWS Lambda triggers associated with tue user pool.
 --
 -- * 'uptSmsConfiguration' - The SMS configuration.
 --
@@ -2325,7 +3739,7 @@ data UserPoolType = UserPoolType'
 --
 -- * 'uptAutoVerifiedAttributes' - Specifies the attributes that are auto-verified in a user pool.
 --
--- * 'uptPolicies' - A container for the policies associated with a user pool.
+-- * 'uptPolicies' - The policies associated with the user pool.
 userPoolType
     :: UserPoolType
 userPoolType =
@@ -2336,8 +3750,10 @@ userPoolType =
   , _uptLastModifiedDate = Nothing
   , _uptVerificationMessageTemplate = Nothing
   , _uptEstimatedNumberOfUsers = Nothing
+  , _uptDomain = Nothing
   , _uptEmailVerificationMessage = Nothing
   , _uptSmsAuthenticationMessage = Nothing
+  , _uptUserPoolAddOns = Nothing
   , _uptSchemaAttributes = Nothing
   , _uptEmailVerificationSubject = Nothing
   , _uptUsernameAttributes = Nothing
@@ -2382,6 +3798,10 @@ uptVerificationMessageTemplate = lens _uptVerificationMessageTemplate (\ s a -> 
 uptEstimatedNumberOfUsers :: Lens' UserPoolType (Maybe Int)
 uptEstimatedNumberOfUsers = lens _uptEstimatedNumberOfUsers (\ s a -> s{_uptEstimatedNumberOfUsers = a});
 
+-- | Holds the domain prefix if the user pool has a domain associated with it.
+uptDomain :: Lens' UserPoolType (Maybe Text)
+uptDomain = lens _uptDomain (\ s a -> s{_uptDomain = a});
+
 -- | The contents of the email verification message.
 uptEmailVerificationMessage :: Lens' UserPoolType (Maybe Text)
 uptEmailVerificationMessage = lens _uptEmailVerificationMessage (\ s a -> s{_uptEmailVerificationMessage = a});
@@ -2389,6 +3809,10 @@ uptEmailVerificationMessage = lens _uptEmailVerificationMessage (\ s a -> s{_upt
 -- | The contents of the SMS authentication message.
 uptSmsAuthenticationMessage :: Lens' UserPoolType (Maybe Text)
 uptSmsAuthenticationMessage = lens _uptSmsAuthenticationMessage (\ s a -> s{_uptSmsAuthenticationMessage = a});
+
+-- | The user pool add-ons.
+uptUserPoolAddOns :: Lens' UserPoolType (Maybe UserPoolAddOnsType)
+uptUserPoolAddOns = lens _uptUserPoolAddOns (\ s a -> s{_uptUserPoolAddOns = a});
 
 -- | A container with the schema attributes of a user pool.
 uptSchemaAttributes :: Lens' UserPoolType (Maybe (NonEmpty SchemaAttributeType))
@@ -2434,7 +3858,7 @@ uptSmsConfigurationFailure = lens _uptSmsConfigurationFailure (\ s a -> s{_uptSm
 uptCreationDate :: Lens' UserPoolType (Maybe UTCTime)
 uptCreationDate = lens _uptCreationDate (\ s a -> s{_uptCreationDate = a}) . mapping _Time;
 
--- | A container for the AWS Lambda triggers associated with a user pool.
+-- | The AWS Lambda triggers associated with tue user pool.
 uptLambdaConfig :: Lens' UserPoolType (Maybe LambdaConfigType)
 uptLambdaConfig = lens _uptLambdaConfig (\ s a -> s{_uptLambdaConfig = a});
 
@@ -2454,7 +3878,7 @@ uptDeviceConfiguration = lens _uptDeviceConfiguration (\ s a -> s{_uptDeviceConf
 uptAutoVerifiedAttributes :: Lens' UserPoolType [VerifiedAttributeType]
 uptAutoVerifiedAttributes = lens _uptAutoVerifiedAttributes (\ s a -> s{_uptAutoVerifiedAttributes = a}) . _Default . _Coerce;
 
--- | A container for the policies associated with a user pool.
+-- | The policies associated with the user pool.
 uptPolicies :: Lens' UserPoolType (Maybe UserPoolPolicyType)
 uptPolicies = lens _uptPolicies (\ s a -> s{_uptPolicies = a});
 
@@ -2469,8 +3893,10 @@ instance FromJSON UserPoolType where
                      <*> (x .:? "LastModifiedDate")
                      <*> (x .:? "VerificationMessageTemplate")
                      <*> (x .:? "EstimatedNumberOfUsers")
+                     <*> (x .:? "Domain")
                      <*> (x .:? "EmailVerificationMessage")
                      <*> (x .:? "SmsAuthenticationMessage")
+                     <*> (x .:? "UserPoolAddOns")
                      <*> (x .:? "SchemaAttributes")
                      <*> (x .:? "EmailVerificationSubject")
                      <*> (x .:? "UsernameAttributes" .!= mempty)

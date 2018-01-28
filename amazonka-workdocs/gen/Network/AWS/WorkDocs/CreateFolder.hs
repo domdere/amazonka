@@ -58,7 +58,7 @@ data CreateFolder = CreateFolder'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cfAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'cfAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'cfName' - The name of the new folder.
 --
@@ -74,7 +74,7 @@ createFolder pParentFolderId_ =
   }
 
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 cfAuthenticationToken :: Lens' CreateFolder (Maybe Text)
 cfAuthenticationToken = lens _cfAuthenticationToken (\ s a -> s{_cfAuthenticationToken = a}) . mapping _Sensitive;
 

@@ -138,7 +138,7 @@ data GetObjectInformationResponse = GetObjectInformationResponse'
 --
 -- * 'goirsObjectIdentifier' - The @ObjectIdentifier@ of the specified object.
 --
--- * 'goirsSchemaFacets' - The facets attached to the specified object.
+-- * 'goirsSchemaFacets' - The facets attached to the specified object. Although the response does not include minor version information, the most recently applied minor version of each Facet is in effect. See 'GetAppliedSchemaVersion' for details.
 --
 -- * 'goirsResponseStatus' - -- | The response status code.
 getObjectInformationResponse
@@ -156,7 +156,7 @@ getObjectInformationResponse pResponseStatus_ =
 goirsObjectIdentifier :: Lens' GetObjectInformationResponse (Maybe Text)
 goirsObjectIdentifier = lens _goirsObjectIdentifier (\ s a -> s{_goirsObjectIdentifier = a});
 
--- | The facets attached to the specified object.
+-- | The facets attached to the specified object. Although the response does not include minor version information, the most recently applied minor version of each Facet is in effect. See 'GetAppliedSchemaVersion' for details.
 goirsSchemaFacets :: Lens' GetObjectInformationResponse [SchemaFacet]
 goirsSchemaFacets = lens _goirsSchemaFacets (\ s a -> s{_goirsSchemaFacets = a}) . _Default . _Coerce;
 

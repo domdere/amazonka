@@ -21,6 +21,8 @@
 -- Returns a paginated list of @TypedLink@ facet names for a particular schema. For more information, see <http://docs.aws.amazon.com/directoryservice/latest/admin-guide/objectsandlinks.html#typedlink Typed link> .
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListTypedLinkFacetNames
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.CloudDirectory.ListTypedLinkFacetNames
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -86,6 +89,13 @@ ltlfnMaxResults = lens _ltlfnMaxResults (\ s a -> s{_ltlfnMaxResults = a}) . map
 -- | The Amazon Resource Name (ARN) that is associated with the schema. For more information, see 'arns' .
 ltlfnSchemaARN :: Lens' ListTypedLinkFacetNames Text
 ltlfnSchemaARN = lens _ltlfnSchemaARN (\ s a -> s{_ltlfnSchemaARN = a});
+
+instance AWSPager ListTypedLinkFacetNames where
+        page rq rs
+          | stop (rs ^. ltlfnrsNextToken) = Nothing
+          | stop (rs ^. ltlfnrsFacetNames) = Nothing
+          | otherwise =
+            Just $ rq & ltlfnNextToken .~ rs ^. ltlfnrsNextToken
 
 instance AWSRequest ListTypedLinkFacetNames where
         type Rs ListTypedLinkFacetNames =

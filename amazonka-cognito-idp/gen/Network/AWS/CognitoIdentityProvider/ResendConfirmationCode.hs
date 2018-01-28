@@ -27,6 +27,8 @@ module Network.AWS.CognitoIdentityProvider.ResendConfirmationCode
       resendConfirmationCode
     , ResendConfirmationCode
     -- * Request Lenses
+    , rccAnalyticsMetadata
+    , rccUserContextData
     , rccSecretHash
     , rccClientId
     , rccUsername
@@ -52,15 +54,21 @@ import Network.AWS.Response
 --
 -- /See:/ 'resendConfirmationCode' smart constructor.
 data ResendConfirmationCode = ResendConfirmationCode'
-  { _rccSecretHash :: !(Maybe (Sensitive Text))
-  , _rccClientId   :: !(Sensitive Text)
-  , _rccUsername   :: !(Sensitive Text)
+  { _rccAnalyticsMetadata :: !(Maybe AnalyticsMetadataType)
+  , _rccUserContextData   :: !(Maybe UserContextDataType)
+  , _rccSecretHash        :: !(Maybe (Sensitive Text))
+  , _rccClientId          :: !(Sensitive Text)
+  , _rccUsername          :: !(Sensitive Text)
   } deriving (Eq, Show, Data, Typeable, Generic)
 
 
 -- | Creates a value of 'ResendConfirmationCode' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rccAnalyticsMetadata' - The Amazon Pinpoint analytics metadata for collecting metrics for @ResendConfirmationCode@ calls.
+--
+-- * 'rccUserContextData' - Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.
 --
 -- * 'rccSecretHash' - A keyed-hash message authentication code (HMAC) calculated using the secret key of a user pool client and username plus the client ID in the message.
 --
@@ -73,11 +81,21 @@ resendConfirmationCode
     -> ResendConfirmationCode
 resendConfirmationCode pClientId_ pUsername_ =
   ResendConfirmationCode'
-  { _rccSecretHash = Nothing
+  { _rccAnalyticsMetadata = Nothing
+  , _rccUserContextData = Nothing
+  , _rccSecretHash = Nothing
   , _rccClientId = _Sensitive # pClientId_
   , _rccUsername = _Sensitive # pUsername_
   }
 
+
+-- | The Amazon Pinpoint analytics metadata for collecting metrics for @ResendConfirmationCode@ calls.
+rccAnalyticsMetadata :: Lens' ResendConfirmationCode (Maybe AnalyticsMetadataType)
+rccAnalyticsMetadata = lens _rccAnalyticsMetadata (\ s a -> s{_rccAnalyticsMetadata = a});
+
+-- | Contextual data such as the user's device fingerprint, IP address, or location used for evaluating the risk of an unexpected event by Amazon Cognito advanced security.
+rccUserContextData :: Lens' ResendConfirmationCode (Maybe UserContextDataType)
+rccUserContextData = lens _rccUserContextData (\ s a -> s{_rccUserContextData = a});
 
 -- | A keyed-hash message authentication code (HMAC) calculated using the secret key of a user pool client and username plus the client ID in the message.
 rccSecretHash :: Lens' ResendConfirmationCode (Maybe Text)
@@ -120,7 +138,9 @@ instance ToJSON ResendConfirmationCode where
         toJSON ResendConfirmationCode'{..}
           = object
               (catMaybes
-                 [("SecretHash" .=) <$> _rccSecretHash,
+                 [("AnalyticsMetadata" .=) <$> _rccAnalyticsMetadata,
+                  ("UserContextData" .=) <$> _rccUserContextData,
+                  ("SecretHash" .=) <$> _rccSecretHash,
                   Just ("ClientId" .= _rccClientId),
                   Just ("Username" .= _rccUsername)])
 

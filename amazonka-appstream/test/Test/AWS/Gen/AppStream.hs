@@ -61,6 +61,9 @@ import Test.Tasty
 --         , requestCreateImageBuilder $
 --             createImageBuilder
 --
+--         , requestListTagsForResource $
+--             listTagsForResource
+--
 --         , requestDescribeDirectoryConfigs $
 --             describeDirectoryConfigs
 --
@@ -100,8 +103,14 @@ import Test.Tasty
 --         , requestExpireSession $
 --             expireSession
 --
+--         , requestTagResource $
+--             tagResource
+--
 --         , requestCreateStreamingURL $
 --             createStreamingURL
+--
+--         , requestUntagResource $
+--             untagResource
 --
 --         , requestStartFleet $
 --             startFleet
@@ -151,6 +160,9 @@ import Test.Tasty
 --         , responseCreateImageBuilder $
 --             createImageBuilderResponse
 --
+--         , responseListTagsForResource $
+--             listTagsForResourceResponse
+--
 --         , responseDescribeDirectoryConfigs $
 --             describeDirectoryConfigsResponse
 --
@@ -190,8 +202,14 @@ import Test.Tasty
 --         , responseExpireSession $
 --             expireSessionResponse
 --
+--         , responseTagResource $
+--             tagResourceResponse
+--
 --         , responseCreateStreamingURL $
 --             createStreamingURLResponse
+--
+--         , responseUntagResource $
+--             untagResourceResponse
 --
 --         , responseStartFleet $
 --             startFleetResponse
@@ -265,6 +283,11 @@ requestCreateImageBuilder = req
     "CreateImageBuilder"
     "fixture/CreateImageBuilder.yaml"
 
+requestListTagsForResource :: ListTagsForResource -> TestTree
+requestListTagsForResource = req
+    "ListTagsForResource"
+    "fixture/ListTagsForResource.yaml"
+
 requestDescribeDirectoryConfigs :: DescribeDirectoryConfigs -> TestTree
 requestDescribeDirectoryConfigs = req
     "DescribeDirectoryConfigs"
@@ -330,10 +353,20 @@ requestExpireSession = req
     "ExpireSession"
     "fixture/ExpireSession.yaml"
 
+requestTagResource :: TagResource -> TestTree
+requestTagResource = req
+    "TagResource"
+    "fixture/TagResource.yaml"
+
 requestCreateStreamingURL :: CreateStreamingURL -> TestTree
 requestCreateStreamingURL = req
     "CreateStreamingURL"
     "fixture/CreateStreamingURL.yaml"
+
+requestUntagResource :: UntagResource -> TestTree
+requestUntagResource = req
+    "UntagResource"
+    "fixture/UntagResource.yaml"
 
 requestStartFleet :: StartFleet -> TestTree
 requestStartFleet = req
@@ -434,6 +467,13 @@ responseCreateImageBuilder = res
     appStream
     (Proxy :: Proxy CreateImageBuilder)
 
+responseListTagsForResource :: ListTagsForResourceResponse -> TestTree
+responseListTagsForResource = res
+    "ListTagsForResourceResponse"
+    "fixture/ListTagsForResourceResponse.proto"
+    appStream
+    (Proxy :: Proxy ListTagsForResource)
+
 responseDescribeDirectoryConfigs :: DescribeDirectoryConfigsResponse -> TestTree
 responseDescribeDirectoryConfigs = res
     "DescribeDirectoryConfigsResponse"
@@ -525,12 +565,26 @@ responseExpireSession = res
     appStream
     (Proxy :: Proxy ExpireSession)
 
+responseTagResource :: TagResourceResponse -> TestTree
+responseTagResource = res
+    "TagResourceResponse"
+    "fixture/TagResourceResponse.proto"
+    appStream
+    (Proxy :: Proxy TagResource)
+
 responseCreateStreamingURL :: CreateStreamingURLResponse -> TestTree
 responseCreateStreamingURL = res
     "CreateStreamingURLResponse"
     "fixture/CreateStreamingURLResponse.proto"
     appStream
     (Proxy :: Proxy CreateStreamingURL)
+
+responseUntagResource :: UntagResourceResponse -> TestTree
+responseUntagResource = res
+    "UntagResourceResponse"
+    "fixture/UntagResourceResponse.proto"
+    appStream
+    (Proxy :: Proxy UntagResource)
 
 responseStartFleet :: StartFleetResponse -> TestTree
 responseStartFleet = res

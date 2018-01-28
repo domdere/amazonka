@@ -37,6 +37,8 @@ module Network.AWS.LexModels.GetBotChannelAssociation
     , getBotChannelAssociationResponse
     , GetBotChannelAssociationResponse
     -- * Response Lenses
+    , gbcarsFailureReason
+    , gbcarsStatus
     , gbcarsBotAlias
     , gbcarsBotName
     , gbcarsBotConfiguration
@@ -101,8 +103,10 @@ instance AWSRequest GetBotChannelAssociation where
           = receiveJSON
               (\ s h x ->
                  GetBotChannelAssociationResponse' <$>
-                   (x .?> "botAlias") <*> (x .?> "botName") <*>
-                     (x .?> "botConfiguration" .!@ mempty)
+                   (x .?> "failureReason") <*> (x .?> "status") <*>
+                     (x .?> "botAlias")
+                     <*> (x .?> "botName")
+                     <*> (x .?> "botConfiguration" .!@ mempty)
                      <*> (x .?> "createdDate")
                      <*> (x .?> "name")
                      <*> (x .?> "type")
@@ -131,7 +135,9 @@ instance ToQuery GetBotChannelAssociation where
 
 -- | /See:/ 'getBotChannelAssociationResponse' smart constructor.
 data GetBotChannelAssociationResponse = GetBotChannelAssociationResponse'
-  { _gbcarsBotAlias         :: !(Maybe Text)
+  { _gbcarsFailureReason    :: !(Maybe Text)
+  , _gbcarsStatus           :: !(Maybe ChannelStatus)
+  , _gbcarsBotAlias         :: !(Maybe Text)
   , _gbcarsBotName          :: !(Maybe Text)
   , _gbcarsBotConfiguration :: !(Maybe (Sensitive (Map Text Text)))
   , _gbcarsCreatedDate      :: !(Maybe POSIX)
@@ -145,6 +151,10 @@ data GetBotChannelAssociationResponse = GetBotChannelAssociationResponse'
 -- | Creates a value of 'GetBotChannelAssociationResponse' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'gbcarsFailureReason' - If @status@ is @FAILED@ , Amazon Lex provides the reason that it failed to create the association.
+--
+-- * 'gbcarsStatus' - The status of the bot channel.      * @CREATED@ - The channel has been created and is ready for use.     * @IN_PROGRESS@ - Channel creation is in progress.     * @FAILED@ - There was an error creating the channel. For information about the reason for the failure, see the @failureReason@ field.
 --
 -- * 'gbcarsBotAlias' - An alias pointing to the specific version of the Amazon Lex bot to which this association is being made.
 --
@@ -166,7 +176,9 @@ getBotChannelAssociationResponse
     -> GetBotChannelAssociationResponse
 getBotChannelAssociationResponse pResponseStatus_ =
   GetBotChannelAssociationResponse'
-  { _gbcarsBotAlias = Nothing
+  { _gbcarsFailureReason = Nothing
+  , _gbcarsStatus = Nothing
+  , _gbcarsBotAlias = Nothing
   , _gbcarsBotName = Nothing
   , _gbcarsBotConfiguration = Nothing
   , _gbcarsCreatedDate = Nothing
@@ -176,6 +188,14 @@ getBotChannelAssociationResponse pResponseStatus_ =
   , _gbcarsResponseStatus = pResponseStatus_
   }
 
+
+-- | If @status@ is @FAILED@ , Amazon Lex provides the reason that it failed to create the association.
+gbcarsFailureReason :: Lens' GetBotChannelAssociationResponse (Maybe Text)
+gbcarsFailureReason = lens _gbcarsFailureReason (\ s a -> s{_gbcarsFailureReason = a});
+
+-- | The status of the bot channel.      * @CREATED@ - The channel has been created and is ready for use.     * @IN_PROGRESS@ - Channel creation is in progress.     * @FAILED@ - There was an error creating the channel. For information about the reason for the failure, see the @failureReason@ field.
+gbcarsStatus :: Lens' GetBotChannelAssociationResponse (Maybe ChannelStatus)
+gbcarsStatus = lens _gbcarsStatus (\ s a -> s{_gbcarsStatus = a});
 
 -- | An alias pointing to the specific version of the Amazon Lex bot to which this association is being made.
 gbcarsBotAlias :: Lens' GetBotChannelAssociationResponse (Maybe Text)

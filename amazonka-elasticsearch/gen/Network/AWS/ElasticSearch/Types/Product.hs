@@ -463,6 +463,7 @@ data ElasticsearchDomainConfig = ElasticsearchDomainConfig'
   , _edcLogPublishingOptions       :: !(Maybe LogPublishingOptionsStatus)
   , _edcElasticsearchClusterConfig :: !(Maybe ElasticsearchClusterConfigStatus)
   , _edcSnapshotOptions            :: !(Maybe SnapshotOptionsStatus)
+  , _edcEncryptionAtRestOptions    :: !(Maybe EncryptionAtRestOptionsStatus)
   , _edcVPCOptions                 :: !(Maybe VPCDerivedInfoStatus)
   , _edcAdvancedOptions            :: !(Maybe AdvancedOptionsStatus)
   , _edcElasticsearchVersion       :: !(Maybe ElasticsearchVersionStatus)
@@ -483,6 +484,8 @@ data ElasticsearchDomainConfig = ElasticsearchDomainConfig'
 --
 -- * 'edcSnapshotOptions' - Specifies the @SnapshotOptions@ for the Elasticsearch domain.
 --
+-- * 'edcEncryptionAtRestOptions' - Specifies the @EncryptionAtRestOptions@ for the Elasticsearch domain.
+--
 -- * 'edcVPCOptions' - The @VPCOptions@ for the specified domain. For more information, see <http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-vpc.html VPC Endpoints for Amazon Elasticsearch Service Domains> .
 --
 -- * 'edcAdvancedOptions' - Specifies the @AdvancedOptions@ for the domain. See <http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-createupdatedomains.html#es-createdomain-configure-advanced-options Configuring Advanced Options> for more information.
@@ -497,6 +500,7 @@ elasticsearchDomainConfig =
   , _edcLogPublishingOptions = Nothing
   , _edcElasticsearchClusterConfig = Nothing
   , _edcSnapshotOptions = Nothing
+  , _edcEncryptionAtRestOptions = Nothing
   , _edcVPCOptions = Nothing
   , _edcAdvancedOptions = Nothing
   , _edcElasticsearchVersion = Nothing
@@ -523,6 +527,10 @@ edcElasticsearchClusterConfig = lens _edcElasticsearchClusterConfig (\ s a -> s{
 edcSnapshotOptions :: Lens' ElasticsearchDomainConfig (Maybe SnapshotOptionsStatus)
 edcSnapshotOptions = lens _edcSnapshotOptions (\ s a -> s{_edcSnapshotOptions = a});
 
+-- | Specifies the @EncryptionAtRestOptions@ for the Elasticsearch domain.
+edcEncryptionAtRestOptions :: Lens' ElasticsearchDomainConfig (Maybe EncryptionAtRestOptionsStatus)
+edcEncryptionAtRestOptions = lens _edcEncryptionAtRestOptions (\ s a -> s{_edcEncryptionAtRestOptions = a});
+
 -- | The @VPCOptions@ for the specified domain. For more information, see <http://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-vpc.html VPC Endpoints for Amazon Elasticsearch Service Domains> .
 edcVPCOptions :: Lens' ElasticsearchDomainConfig (Maybe VPCDerivedInfoStatus)
 edcVPCOptions = lens _edcVPCOptions (\ s a -> s{_edcVPCOptions = a});
@@ -544,6 +552,7 @@ instance FromJSON ElasticsearchDomainConfig where
                      (x .:? "LogPublishingOptions")
                      <*> (x .:? "ElasticsearchClusterConfig")
                      <*> (x .:? "SnapshotOptions")
+                     <*> (x .:? "EncryptionAtRestOptions")
                      <*> (x .:? "VPCOptions")
                      <*> (x .:? "AdvancedOptions")
                      <*> (x .:? "ElasticsearchVersion"))
@@ -563,6 +572,7 @@ data ElasticsearchDomainStatus = ElasticsearchDomainStatus'
   , _edsLogPublishingOptions       :: !(Maybe (Map LogType LogPublishingOption))
   , _edsCreated                    :: !(Maybe Bool)
   , _edsSnapshotOptions            :: !(Maybe SnapshotOptions)
+  , _edsEncryptionAtRestOptions    :: !(Maybe EncryptionAtRestOptions)
   , _edsDeleted                    :: !(Maybe Bool)
   , _edsVPCOptions                 :: !(Maybe VPCDerivedInfo)
   , _edsEndpoints                  :: !(Maybe (Map Text Text))
@@ -590,6 +600,8 @@ data ElasticsearchDomainStatus = ElasticsearchDomainStatus'
 -- * 'edsCreated' - The domain creation status. @True@ if the creation of an Elasticsearch domain is complete. @False@ if domain creation is still in progress.
 --
 -- * 'edsSnapshotOptions' - Specifies the status of the @SnapshotOptions@
+--
+-- * 'edsEncryptionAtRestOptions' - Specifies the status of the @EncryptionAtRestOptions@ .
 --
 -- * 'edsDeleted' - The domain deletion status. @True@ if a delete request has been received for the domain but resource cleanup is still in progress. @False@ if the domain has not been deleted. Once domain deletion is complete, the status of the domain is no longer returned.
 --
@@ -625,6 +637,7 @@ elasticsearchDomainStatus pDomainId_ pDomainName_ pARN_ pElasticsearchClusterCon
   , _edsLogPublishingOptions = Nothing
   , _edsCreated = Nothing
   , _edsSnapshotOptions = Nothing
+  , _edsEncryptionAtRestOptions = Nothing
   , _edsDeleted = Nothing
   , _edsVPCOptions = Nothing
   , _edsEndpoints = Nothing
@@ -658,6 +671,10 @@ edsCreated = lens _edsCreated (\ s a -> s{_edsCreated = a});
 -- | Specifies the status of the @SnapshotOptions@
 edsSnapshotOptions :: Lens' ElasticsearchDomainStatus (Maybe SnapshotOptions)
 edsSnapshotOptions = lens _edsSnapshotOptions (\ s a -> s{_edsSnapshotOptions = a});
+
+-- | Specifies the status of the @EncryptionAtRestOptions@ .
+edsEncryptionAtRestOptions :: Lens' ElasticsearchDomainStatus (Maybe EncryptionAtRestOptions)
+edsEncryptionAtRestOptions = lens _edsEncryptionAtRestOptions (\ s a -> s{_edsEncryptionAtRestOptions = a});
 
 -- | The domain deletion status. @True@ if a delete request has been received for the domain but resource cleanup is still in progress. @False@ if the domain has not been deleted. Once domain deletion is complete, the status of the domain is no longer returned.
 edsDeleted :: Lens' ElasticsearchDomainStatus (Maybe Bool)
@@ -712,6 +729,7 @@ instance FromJSON ElasticsearchDomainStatus where
                      (x .:? "LogPublishingOptions" .!= mempty)
                      <*> (x .:? "Created")
                      <*> (x .:? "SnapshotOptions")
+                     <*> (x .:? "EncryptionAtRestOptions")
                      <*> (x .:? "Deleted")
                      <*> (x .:? "VPCOptions")
                      <*> (x .:? "Endpoints" .!= mempty)
@@ -772,6 +790,102 @@ instance FromJSON ElasticsearchVersionStatus where
 instance Hashable ElasticsearchVersionStatus where
 
 instance NFData ElasticsearchVersionStatus where
+
+-- | Specifies the Encryption At Rest Options.
+--
+--
+--
+-- /See:/ 'encryptionAtRestOptions' smart constructor.
+data EncryptionAtRestOptions = EncryptionAtRestOptions'
+  { _earoEnabled  :: !(Maybe Bool)
+  , _earoKMSKeyId :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'EncryptionAtRestOptions' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'earoEnabled' - Specifies the option to enable Encryption At Rest.
+--
+-- * 'earoKMSKeyId' - Specifies the KMS Key ID for Encryption At Rest options.
+encryptionAtRestOptions
+    :: EncryptionAtRestOptions
+encryptionAtRestOptions =
+  EncryptionAtRestOptions' {_earoEnabled = Nothing, _earoKMSKeyId = Nothing}
+
+
+-- | Specifies the option to enable Encryption At Rest.
+earoEnabled :: Lens' EncryptionAtRestOptions (Maybe Bool)
+earoEnabled = lens _earoEnabled (\ s a -> s{_earoEnabled = a});
+
+-- | Specifies the KMS Key ID for Encryption At Rest options.
+earoKMSKeyId :: Lens' EncryptionAtRestOptions (Maybe Text)
+earoKMSKeyId = lens _earoKMSKeyId (\ s a -> s{_earoKMSKeyId = a});
+
+instance FromJSON EncryptionAtRestOptions where
+        parseJSON
+          = withObject "EncryptionAtRestOptions"
+              (\ x ->
+                 EncryptionAtRestOptions' <$>
+                   (x .:? "Enabled") <*> (x .:? "KmsKeyId"))
+
+instance Hashable EncryptionAtRestOptions where
+
+instance NFData EncryptionAtRestOptions where
+
+instance ToJSON EncryptionAtRestOptions where
+        toJSON EncryptionAtRestOptions'{..}
+          = object
+              (catMaybes
+                 [("Enabled" .=) <$> _earoEnabled,
+                  ("KmsKeyId" .=) <$> _earoKMSKeyId])
+
+-- | Status of the Encryption At Rest options for the specified Elasticsearch domain.
+--
+--
+--
+-- /See:/ 'encryptionAtRestOptionsStatus' smart constructor.
+data EncryptionAtRestOptionsStatus = EncryptionAtRestOptionsStatus'
+  { _earosOptions :: !EncryptionAtRestOptions
+  , _earosStatus  :: !OptionStatus
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'EncryptionAtRestOptionsStatus' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'earosOptions' - Specifies the Encryption At Rest options for the specified Elasticsearch domain.
+--
+-- * 'earosStatus' - Specifies the status of the Encryption At Rest options for the specified Elasticsearch domain.
+encryptionAtRestOptionsStatus
+    :: EncryptionAtRestOptions -- ^ 'earosOptions'
+    -> OptionStatus -- ^ 'earosStatus'
+    -> EncryptionAtRestOptionsStatus
+encryptionAtRestOptionsStatus pOptions_ pStatus_ =
+  EncryptionAtRestOptionsStatus'
+  {_earosOptions = pOptions_, _earosStatus = pStatus_}
+
+
+-- | Specifies the Encryption At Rest options for the specified Elasticsearch domain.
+earosOptions :: Lens' EncryptionAtRestOptionsStatus EncryptionAtRestOptions
+earosOptions = lens _earosOptions (\ s a -> s{_earosOptions = a});
+
+-- | Specifies the status of the Encryption At Rest options for the specified Elasticsearch domain.
+earosStatus :: Lens' EncryptionAtRestOptionsStatus OptionStatus
+earosStatus = lens _earosStatus (\ s a -> s{_earosStatus = a});
+
+instance FromJSON EncryptionAtRestOptionsStatus where
+        parseJSON
+          = withObject "EncryptionAtRestOptionsStatus"
+              (\ x ->
+                 EncryptionAtRestOptionsStatus' <$>
+                   (x .: "Options") <*> (x .: "Status"))
+
+instance Hashable EncryptionAtRestOptionsStatus where
+
+instance NFData EncryptionAtRestOptionsStatus where
 
 -- | InstanceCountLimits represents the limits on number of instances that be created in Amazon Elasticsearch for given InstanceType.
 --

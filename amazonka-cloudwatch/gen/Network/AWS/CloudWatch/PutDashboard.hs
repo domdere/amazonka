@@ -53,8 +53,8 @@ import Network.AWS.Response
 
 -- | /See:/ 'putDashboard' smart constructor.
 data PutDashboard = PutDashboard'
-  { _pdDashboardName :: !(Maybe Text)
-  , _pdDashboardBody :: !(Maybe Text)
+  { _pdDashboardName :: !Text
+  , _pdDashboardBody :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -62,21 +62,24 @@ data PutDashboard = PutDashboard'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'pdDashboardName' - The name of the dashboard. If a dashboard with this name already exists, this call modifies that dashboard, replacing its current contents. Otherwise, a new dashboard is created. The maximum length is 255, and valid characters are A-Z, a-z, 0-9, "-", and "_".
+-- * 'pdDashboardName' - The name of the dashboard. If a dashboard with this name already exists, this call modifies that dashboard, replacing its current contents. Otherwise, a new dashboard is created. The maximum length is 255, and valid characters are A-Z, a-z, 0-9, "-", and "_". This parameter is required.
 --
--- * 'pdDashboardBody' - The detailed information about the dashboard in JSON format, including the widgets to include and their location on the dashboard. For more information about the syntax, see 'CloudWatch-Dashboard-Body-Structure' .
+-- * 'pdDashboardBody' - The detailed information about the dashboard in JSON format, including the widgets to include and their location on the dashboard. This parameter is required. For more information about the syntax, see 'CloudWatch-Dashboard-Body-Structure' .
 putDashboard
-    :: PutDashboard
-putDashboard =
-  PutDashboard' {_pdDashboardName = Nothing, _pdDashboardBody = Nothing}
+    :: Text -- ^ 'pdDashboardName'
+    -> Text -- ^ 'pdDashboardBody'
+    -> PutDashboard
+putDashboard pDashboardName_ pDashboardBody_ =
+  PutDashboard'
+  {_pdDashboardName = pDashboardName_, _pdDashboardBody = pDashboardBody_}
 
 
--- | The name of the dashboard. If a dashboard with this name already exists, this call modifies that dashboard, replacing its current contents. Otherwise, a new dashboard is created. The maximum length is 255, and valid characters are A-Z, a-z, 0-9, "-", and "_".
-pdDashboardName :: Lens' PutDashboard (Maybe Text)
+-- | The name of the dashboard. If a dashboard with this name already exists, this call modifies that dashboard, replacing its current contents. Otherwise, a new dashboard is created. The maximum length is 255, and valid characters are A-Z, a-z, 0-9, "-", and "_". This parameter is required.
+pdDashboardName :: Lens' PutDashboard Text
 pdDashboardName = lens _pdDashboardName (\ s a -> s{_pdDashboardName = a});
 
--- | The detailed information about the dashboard in JSON format, including the widgets to include and their location on the dashboard. For more information about the syntax, see 'CloudWatch-Dashboard-Body-Structure' .
-pdDashboardBody :: Lens' PutDashboard (Maybe Text)
+-- | The detailed information about the dashboard in JSON format, including the widgets to include and their location on the dashboard. This parameter is required. For more information about the syntax, see 'CloudWatch-Dashboard-Body-Structure' .
+pdDashboardBody :: Lens' PutDashboard Text
 pdDashboardBody = lens _pdDashboardBody (\ s a -> s{_pdDashboardBody = a});
 
 instance AWSRequest PutDashboard where

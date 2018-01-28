@@ -66,7 +66,7 @@ data DescribeScalingActivities = DescribeScalingActivities'
 --
 -- * 'desNextToken' - The token for the next set of items to return. (You received this token from a previous call.)
 --
--- * 'desAutoScalingGroupName' - The name of the group.
+-- * 'desAutoScalingGroupName' - The name of the Auto Scaling group.
 --
 -- * 'desMaxRecords' - The maximum number of items to return with this call. The default value is 100.
 --
@@ -86,7 +86,7 @@ describeScalingActivities =
 desNextToken :: Lens' DescribeScalingActivities (Maybe Text)
 desNextToken = lens _desNextToken (\ s a -> s{_desNextToken = a});
 
--- | The name of the group.
+-- | The name of the Auto Scaling group.
 desAutoScalingGroupName :: Lens' DescribeScalingActivities (Maybe Text)
 desAutoScalingGroupName = lens _desAutoScalingGroupName (\ s a -> s{_desAutoScalingGroupName = a});
 

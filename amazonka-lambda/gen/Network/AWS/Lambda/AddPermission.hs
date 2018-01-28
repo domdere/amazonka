@@ -37,6 +37,7 @@ module Network.AWS.Lambda.AddPermission
     , apEventSourceToken
     , apSourceARN
     , apQualifier
+    , apRevisionId
     , apFunctionName
     , apStatementId
     , apAction
@@ -67,6 +68,7 @@ data AddPermission = AddPermission'
   , _apEventSourceToken :: !(Maybe Text)
   , _apSourceARN        :: !(Maybe Text)
   , _apQualifier        :: !(Maybe Text)
+  , _apRevisionId       :: !(Maybe Text)
   , _apFunctionName     :: !Text
   , _apStatementId      :: !Text
   , _apAction           :: !Text
@@ -85,6 +87,8 @@ data AddPermission = AddPermission'
 -- * 'apSourceARN' - This is optional; however, when granting permission to invoke your function, you should specify this field with the Amazon Resource Name (ARN) as its value. This ensures that only events generated from the specified source can invoke the function. /Important:/ If you add a permission without providing the source ARN, any AWS account that creates a mapping to your function ARN can send events to invoke your Lambda function.
 --
 -- * 'apQualifier' - You can use this optional query parameter to describe a qualified ARN using a function version or an alias name. The permission will then apply to the specific qualified ARN. For example, if you specify function version 2 as the qualifier, then permission applies only when request is made using qualified function ARN: @arn:aws:lambda:aws-region:acct-id:function:function-name:2@  If you specify an alias name, for example @PROD@ , then the permission is valid only for requests made using the alias ARN: @arn:aws:lambda:aws-region:acct-id:function:function-name:PROD@  If the qualifier is not specified, the permission is valid only when requests is made using unqualified function ARN. @arn:aws:lambda:aws-region:acct-id:function:function-name@
+--
+-- * 'apRevisionId' - An optional value you can use to ensure you are updating the latest update of the function version or alias. If the @RevisionID@ you pass doesn't match the latest @RevisionId@ of the function or alias, it will fail with an error message, advising you to retrieve the latest function version or alias @RevisionID@ using either or .
 --
 -- * 'apFunctionName' - Name of the Lambda function whose resource policy you are updating by adding a new permission. You can specify a function name (for example, @Thumbnail@ ) or you can specify Amazon Resource Name (ARN) of the function (for example, @arn:aws:lambda:us-west-2:account-id:function:ThumbNail@ ). AWS Lambda also allows you to specify partial ARN (for example, @account-id:Thumbnail@ ). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.
 --
@@ -105,6 +109,7 @@ addPermission pFunctionName_ pStatementId_ pAction_ pPrincipal_ =
   , _apEventSourceToken = Nothing
   , _apSourceARN = Nothing
   , _apQualifier = Nothing
+  , _apRevisionId = Nothing
   , _apFunctionName = pFunctionName_
   , _apStatementId = pStatementId_
   , _apAction = pAction_
@@ -127,6 +132,10 @@ apSourceARN = lens _apSourceARN (\ s a -> s{_apSourceARN = a});
 -- | You can use this optional query parameter to describe a qualified ARN using a function version or an alias name. The permission will then apply to the specific qualified ARN. For example, if you specify function version 2 as the qualifier, then permission applies only when request is made using qualified function ARN: @arn:aws:lambda:aws-region:acct-id:function:function-name:2@  If you specify an alias name, for example @PROD@ , then the permission is valid only for requests made using the alias ARN: @arn:aws:lambda:aws-region:acct-id:function:function-name:PROD@  If the qualifier is not specified, the permission is valid only when requests is made using unqualified function ARN. @arn:aws:lambda:aws-region:acct-id:function:function-name@
 apQualifier :: Lens' AddPermission (Maybe Text)
 apQualifier = lens _apQualifier (\ s a -> s{_apQualifier = a});
+
+-- | An optional value you can use to ensure you are updating the latest update of the function version or alias. If the @RevisionID@ you pass doesn't match the latest @RevisionId@ of the function or alias, it will fail with an error message, advising you to retrieve the latest function version or alias @RevisionID@ using either or .
+apRevisionId :: Lens' AddPermission (Maybe Text)
+apRevisionId = lens _apRevisionId (\ s a -> s{_apRevisionId = a});
 
 -- | Name of the Lambda function whose resource policy you are updating by adding a new permission. You can specify a function name (for example, @Thumbnail@ ) or you can specify Amazon Resource Name (ARN) of the function (for example, @arn:aws:lambda:us-west-2:account-id:function:ThumbNail@ ). AWS Lambda also allows you to specify partial ARN (for example, @account-id:Thumbnail@ ). Note that the length constraint applies only to the ARN. If you specify only the function name, it is limited to 64 characters in length.
 apFunctionName :: Lens' AddPermission Text
@@ -167,6 +176,7 @@ instance ToJSON AddPermission where
                  [("SourceAccount" .=) <$> _apSourceAccount,
                   ("EventSourceToken" .=) <$> _apEventSourceToken,
                   ("SourceArn" .=) <$> _apSourceARN,
+                  ("RevisionId" .=) <$> _apRevisionId,
                   Just ("StatementId" .= _apStatementId),
                   Just ("Action" .= _apAction),
                   Just ("Principal" .= _apPrincipal)])

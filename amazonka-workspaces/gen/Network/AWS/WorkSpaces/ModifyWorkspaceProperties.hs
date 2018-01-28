@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Modifies the WorkSpace properties, including the running mode and AutoStop time.
+-- Modifies the specified WorkSpace properties.
 --
 --
 module Network.AWS.WorkSpaces.ModifyWorkspaceProperties
@@ -57,7 +57,7 @@ data ModifyWorkspaceProperties = ModifyWorkspaceProperties'
 --
 -- * 'mwpWorkspaceId' - The ID of the WorkSpace.
 --
--- * 'mwpWorkspaceProperties' - The WorkSpace properties of the request.
+-- * 'mwpWorkspaceProperties' - The properties of the WorkSpace.
 modifyWorkspaceProperties
     :: Text -- ^ 'mwpWorkspaceId'
     -> WorkspaceProperties -- ^ 'mwpWorkspaceProperties'
@@ -73,7 +73,7 @@ modifyWorkspaceProperties pWorkspaceId_ pWorkspaceProperties_ =
 mwpWorkspaceId :: Lens' ModifyWorkspaceProperties Text
 mwpWorkspaceId = lens _mwpWorkspaceId (\ s a -> s{_mwpWorkspaceId = a});
 
--- | The WorkSpace properties of the request.
+-- | The properties of the WorkSpace.
 mwpWorkspaceProperties :: Lens' ModifyWorkspaceProperties WorkspaceProperties
 mwpWorkspaceProperties = lens _mwpWorkspaceProperties (\ s a -> s{_mwpWorkspaceProperties = a});
 

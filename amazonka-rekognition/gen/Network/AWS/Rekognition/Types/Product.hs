@@ -105,7 +105,7 @@ instance Hashable Beard where
 
 instance NFData Beard where
 
--- | Identifies the bounding box around the object or face. The @left@ (x-coordinate) and @top@ (y-coordinate) are coordinates representing the top and left sides of the bounding box. Note that the upper-left corner of the image is the origin (0,0).
+-- | Identifies the bounding box around the object, face or text. The @left@ (x-coordinate) and @top@ (y-coordinate) are coordinates representing the top and left sides of the bounding box. Note that the upper-left corner of the image is the origin (0,0).
 --
 --
 -- The @top@ and @left@ values returned are ratios of the overall image size. For example, if the input image is 700x200 pixels, and the top-left coordinate of the bounding box is 350x50 pixels, the API returns a @left@ value of 0.5 (350/700) and a @top@ value of 0.25 (50/200).
@@ -242,6 +242,131 @@ instance FromJSON Celebrity where
 instance Hashable Celebrity where
 
 instance NFData Celebrity where
+
+-- | Information about a recognized celebrity.
+--
+--
+--
+-- /See:/ 'celebrityDetail' smart constructor.
+data CelebrityDetail = CelebrityDetail'
+  { _cdBoundingBox :: !(Maybe BoundingBox)
+  , _cdURLs        :: !(Maybe [Text])
+  , _cdConfidence  :: !(Maybe Double)
+  , _cdName        :: !(Maybe Text)
+  , _cdId          :: !(Maybe Text)
+  , _cdFace        :: !(Maybe FaceDetail)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CelebrityDetail' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'cdBoundingBox' - Bounding box around the body of a celebrity.
+--
+-- * 'cdURLs' - An array of URLs pointing to additional celebrity information.
+--
+-- * 'cdConfidence' - The confidence, in percentage, that Amazon Rekognition has that the recognized face is the celebrity.
+--
+-- * 'cdName' - The name of the celebrity.
+--
+-- * 'cdId' - The unique identifier for the celebrity.
+--
+-- * 'cdFace' - Face details for the recognized celebrity.
+celebrityDetail
+    :: CelebrityDetail
+celebrityDetail =
+  CelebrityDetail'
+  { _cdBoundingBox = Nothing
+  , _cdURLs = Nothing
+  , _cdConfidence = Nothing
+  , _cdName = Nothing
+  , _cdId = Nothing
+  , _cdFace = Nothing
+  }
+
+
+-- | Bounding box around the body of a celebrity.
+cdBoundingBox :: Lens' CelebrityDetail (Maybe BoundingBox)
+cdBoundingBox = lens _cdBoundingBox (\ s a -> s{_cdBoundingBox = a});
+
+-- | An array of URLs pointing to additional celebrity information.
+cdURLs :: Lens' CelebrityDetail [Text]
+cdURLs = lens _cdURLs (\ s a -> s{_cdURLs = a}) . _Default . _Coerce;
+
+-- | The confidence, in percentage, that Amazon Rekognition has that the recognized face is the celebrity.
+cdConfidence :: Lens' CelebrityDetail (Maybe Double)
+cdConfidence = lens _cdConfidence (\ s a -> s{_cdConfidence = a});
+
+-- | The name of the celebrity.
+cdName :: Lens' CelebrityDetail (Maybe Text)
+cdName = lens _cdName (\ s a -> s{_cdName = a});
+
+-- | The unique identifier for the celebrity.
+cdId :: Lens' CelebrityDetail (Maybe Text)
+cdId = lens _cdId (\ s a -> s{_cdId = a});
+
+-- | Face details for the recognized celebrity.
+cdFace :: Lens' CelebrityDetail (Maybe FaceDetail)
+cdFace = lens _cdFace (\ s a -> s{_cdFace = a});
+
+instance FromJSON CelebrityDetail where
+        parseJSON
+          = withObject "CelebrityDetail"
+              (\ x ->
+                 CelebrityDetail' <$>
+                   (x .:? "BoundingBox") <*> (x .:? "Urls" .!= mempty)
+                     <*> (x .:? "Confidence")
+                     <*> (x .:? "Name")
+                     <*> (x .:? "Id")
+                     <*> (x .:? "Face"))
+
+instance Hashable CelebrityDetail where
+
+instance NFData CelebrityDetail where
+
+-- | Information about a detected celebrity and the time the celebrity was detected in a stored video. For more information, see .
+--
+--
+--
+-- /See:/ 'celebrityRecognition' smart constructor.
+data CelebrityRecognition = CelebrityRecognition'
+  { _crCelebrity :: !(Maybe CelebrityDetail)
+  , _crTimestamp :: !(Maybe Integer)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CelebrityRecognition' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'crCelebrity' - Information about a recognized celebrity.
+--
+-- * 'crTimestamp' - The time, in milliseconds from the start of the video, that the celebrity was recognized.
+celebrityRecognition
+    :: CelebrityRecognition
+celebrityRecognition =
+  CelebrityRecognition' {_crCelebrity = Nothing, _crTimestamp = Nothing}
+
+
+-- | Information about a recognized celebrity.
+crCelebrity :: Lens' CelebrityRecognition (Maybe CelebrityDetail)
+crCelebrity = lens _crCelebrity (\ s a -> s{_crCelebrity = a});
+
+-- | The time, in milliseconds from the start of the video, that the celebrity was recognized.
+crTimestamp :: Lens' CelebrityRecognition (Maybe Integer)
+crTimestamp = lens _crTimestamp (\ s a -> s{_crTimestamp = a});
+
+instance FromJSON CelebrityRecognition where
+        parseJSON
+          = withObject "CelebrityRecognition"
+              (\ x ->
+                 CelebrityRecognition' <$>
+                   (x .:? "Celebrity") <*> (x .:? "Timestamp"))
+
+instance Hashable CelebrityRecognition where
+
+instance NFData CelebrityRecognition where
 
 -- | Provides information about a face in a target image that matches the source image face analysed by @CompareFaces@ . The @Face@ property contains the bounding box of the face in the target image. The @Similarity@ property is the confidence that the source image face matches the face in the bounding box.
 --
@@ -402,6 +527,50 @@ instance FromJSON ComparedSourceImageFace where
 instance Hashable ComparedSourceImageFace where
 
 instance NFData ComparedSourceImageFace where
+
+-- | Information about a moderation label detection in a stored video.
+--
+--
+--
+-- /See:/ 'contentModerationDetection' smart constructor.
+data ContentModerationDetection = ContentModerationDetection'
+  { _cmdModerationLabel :: !(Maybe ModerationLabel)
+  , _cmdTimestamp       :: !(Maybe Integer)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ContentModerationDetection' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'cmdModerationLabel' - The moderation label detected by in the stored video.
+--
+-- * 'cmdTimestamp' - Time, in milliseconds from the beginning of the video, that the moderation label was detected.
+contentModerationDetection
+    :: ContentModerationDetection
+contentModerationDetection =
+  ContentModerationDetection'
+  {_cmdModerationLabel = Nothing, _cmdTimestamp = Nothing}
+
+
+-- | The moderation label detected by in the stored video.
+cmdModerationLabel :: Lens' ContentModerationDetection (Maybe ModerationLabel)
+cmdModerationLabel = lens _cmdModerationLabel (\ s a -> s{_cmdModerationLabel = a});
+
+-- | Time, in milliseconds from the beginning of the video, that the moderation label was detected.
+cmdTimestamp :: Lens' ContentModerationDetection (Maybe Integer)
+cmdTimestamp = lens _cmdTimestamp (\ s a -> s{_cmdTimestamp = a});
+
+instance FromJSON ContentModerationDetection where
+        parseJSON
+          = withObject "ContentModerationDetection"
+              (\ x ->
+                 ContentModerationDetection' <$>
+                   (x .:? "ModerationLabel") <*> (x .:? "Timestamp"))
+
+instance Hashable ContentModerationDetection where
+
+instance NFData ContentModerationDetection where
 
 -- | The emotions detected on the face, and the confidence level in the determination. For example, HAPPY, SAD, and ANGRY.
 --
@@ -764,6 +933,48 @@ instance Hashable FaceDetail where
 
 instance NFData FaceDetail where
 
+-- | Information about a face detected in a video analysis request and the time the face was detected in the video.
+--
+--
+--
+-- /See:/ 'faceDetection' smart constructor.
+data FaceDetection = FaceDetection'
+  { _fdTimestamp :: !(Maybe Integer)
+  , _fdFace      :: !(Maybe FaceDetail)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'FaceDetection' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'fdTimestamp' - Time, in milliseconds from the start of the video, that the face was detected.
+--
+-- * 'fdFace' - The face properties for the detected face.
+faceDetection
+    :: FaceDetection
+faceDetection = FaceDetection' {_fdTimestamp = Nothing, _fdFace = Nothing}
+
+
+-- | Time, in milliseconds from the start of the video, that the face was detected.
+fdTimestamp :: Lens' FaceDetection (Maybe Integer)
+fdTimestamp = lens _fdTimestamp (\ s a -> s{_fdTimestamp = a});
+
+-- | The face properties for the detected face.
+fdFace :: Lens' FaceDetection (Maybe FaceDetail)
+fdFace = lens _fdFace (\ s a -> s{_fdFace = a});
+
+instance FromJSON FaceDetection where
+        parseJSON
+          = withObject "FaceDetection"
+              (\ x ->
+                 FaceDetection' <$>
+                   (x .:? "Timestamp") <*> (x .:? "Face"))
+
+instance Hashable FaceDetection where
+
+instance NFData FaceDetection where
+
 -- | Provides face metadata. In addition, it also provides the confidence in the match of this face with the input face.
 --
 --
@@ -848,6 +1059,59 @@ instance Hashable FaceRecord where
 
 instance NFData FaceRecord where
 
+-- | Input face recognition parameters for an Amazon Rekognition stream processor. @FaceRecognitionSettings@ is a request parameter for .
+--
+--
+--
+-- /See:/ 'faceSearchSettings' smart constructor.
+data FaceSearchSettings = FaceSearchSettings'
+  { _fssFaceMatchThreshold :: !(Maybe Double)
+  , _fssCollectionId       :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'FaceSearchSettings' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'fssFaceMatchThreshold' - Minimum face match confidence score that must be met to return a result for a recognized face. Default is 70. 0 is the lowest confidence. 100 is the highest confidence.
+--
+-- * 'fssCollectionId' - The ID of a collection that contains faces that you want to search for.
+faceSearchSettings
+    :: FaceSearchSettings
+faceSearchSettings =
+  FaceSearchSettings'
+  {_fssFaceMatchThreshold = Nothing, _fssCollectionId = Nothing}
+
+
+-- | Minimum face match confidence score that must be met to return a result for a recognized face. Default is 70. 0 is the lowest confidence. 100 is the highest confidence.
+fssFaceMatchThreshold :: Lens' FaceSearchSettings (Maybe Double)
+fssFaceMatchThreshold = lens _fssFaceMatchThreshold (\ s a -> s{_fssFaceMatchThreshold = a});
+
+-- | The ID of a collection that contains faces that you want to search for.
+fssCollectionId :: Lens' FaceSearchSettings (Maybe Text)
+fssCollectionId = lens _fssCollectionId (\ s a -> s{_fssCollectionId = a});
+
+instance FromJSON FaceSearchSettings where
+        parseJSON
+          = withObject "FaceSearchSettings"
+              (\ x ->
+                 FaceSearchSettings' <$>
+                   (x .:? "FaceMatchThreshold") <*>
+                     (x .:? "CollectionId"))
+
+instance Hashable FaceSearchSettings where
+
+instance NFData FaceSearchSettings where
+
+instance ToJSON FaceSearchSettings where
+        toJSON FaceSearchSettings'{..}
+          = object
+              (catMaybes
+                 [("FaceMatchThreshold" .=) <$>
+                    _fssFaceMatchThreshold,
+                  ("CollectionId" .=) <$> _fssCollectionId])
+
 -- | Gender of the face and the confidence level in the determination.
 --
 --
@@ -889,10 +1153,53 @@ instance Hashable Gender where
 
 instance NFData Gender where
 
+-- | Information about where text detected by is located on an image.
+--
+--
+--
+-- /See:/ 'geometry' smart constructor.
+data Geometry = Geometry'
+  { _gBoundingBox :: !(Maybe BoundingBox)
+  , _gPolygon     :: !(Maybe [Point])
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'Geometry' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'gBoundingBox' - An axis-aligned coarse representation of the detected text's location on the image.
+--
+-- * 'gPolygon' - Within the bounding box, a fine-grained polygon around the detected text.
+geometry
+    :: Geometry
+geometry = Geometry' {_gBoundingBox = Nothing, _gPolygon = Nothing}
+
+
+-- | An axis-aligned coarse representation of the detected text's location on the image.
+gBoundingBox :: Lens' Geometry (Maybe BoundingBox)
+gBoundingBox = lens _gBoundingBox (\ s a -> s{_gBoundingBox = a});
+
+-- | Within the bounding box, a fine-grained polygon around the detected text.
+gPolygon :: Lens' Geometry [Point]
+gPolygon = lens _gPolygon (\ s a -> s{_gPolygon = a}) . _Default . _Coerce;
+
+instance FromJSON Geometry where
+        parseJSON
+          = withObject "Geometry"
+              (\ x ->
+                 Geometry' <$>
+                   (x .:? "BoundingBox") <*>
+                     (x .:? "Polygon" .!= mempty))
+
+instance Hashable Geometry where
+
+instance NFData Geometry where
+
 -- | Provides the input image either as bytes or an S3 object.
 --
 --
--- You pass image bytes to a Rekognition API operation by using the @Bytes@ property. For example, you would use the @Bytes@ property to pass an image loaded from a local file system. Image bytes passed by using the @Bytes@ property must be base64-encoded. Your code may not need to encode image bytes if you are using an AWS SDK to call Rekognition API operations. For more information, see 'example4' .
+-- You pass image bytes to a Rekognition API operation by using the @Bytes@ property. For example, you would use the @Bytes@ property to pass an image loaded from a local file system. Image bytes passed by using the @Bytes@ property must be base64-encoded. Your code may not need to encode image bytes if you are using an AWS SDK to call Rekognition API operations. For more information, see 'images-bytes' .
 --
 -- You pass images stored in an S3 bucket to a Rekognition API operation by using the @S3Object@ property. Images stored in an S3 bucket do not need to be base64-encoded.
 --
@@ -983,6 +1290,80 @@ instance Hashable ImageQuality where
 
 instance NFData ImageQuality where
 
+-- | The Kinesis data stream Amazon Rekognition to which the analysis results of a Amazon Rekognition stream processor are streamed. For more information, see .
+--
+--
+--
+-- /See:/ 'kinesisDataStream' smart constructor.
+newtype KinesisDataStream = KinesisDataStream'
+  { _kdsARN :: Maybe Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'KinesisDataStream' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'kdsARN' - ARN of the output Amazon Kinesis Data Streams stream.
+kinesisDataStream
+    :: KinesisDataStream
+kinesisDataStream = KinesisDataStream' {_kdsARN = Nothing}
+
+
+-- | ARN of the output Amazon Kinesis Data Streams stream.
+kdsARN :: Lens' KinesisDataStream (Maybe Text)
+kdsARN = lens _kdsARN (\ s a -> s{_kdsARN = a});
+
+instance FromJSON KinesisDataStream where
+        parseJSON
+          = withObject "KinesisDataStream"
+              (\ x -> KinesisDataStream' <$> (x .:? "Arn"))
+
+instance Hashable KinesisDataStream where
+
+instance NFData KinesisDataStream where
+
+instance ToJSON KinesisDataStream where
+        toJSON KinesisDataStream'{..}
+          = object (catMaybes [("Arn" .=) <$> _kdsARN])
+
+-- | Kinesis video stream stream that provides the source streaming video for a Rekognition Video stream processor. For more information, see .
+--
+--
+--
+-- /See:/ 'kinesisVideoStream' smart constructor.
+newtype KinesisVideoStream = KinesisVideoStream'
+  { _kvsARN :: Maybe Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'KinesisVideoStream' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'kvsARN' - ARN of the Kinesis video stream stream that streams the source video.
+kinesisVideoStream
+    :: KinesisVideoStream
+kinesisVideoStream = KinesisVideoStream' {_kvsARN = Nothing}
+
+
+-- | ARN of the Kinesis video stream stream that streams the source video.
+kvsARN :: Lens' KinesisVideoStream (Maybe Text)
+kvsARN = lens _kvsARN (\ s a -> s{_kvsARN = a});
+
+instance FromJSON KinesisVideoStream where
+        parseJSON
+          = withObject "KinesisVideoStream"
+              (\ x -> KinesisVideoStream' <$> (x .:? "Arn"))
+
+instance Hashable KinesisVideoStream where
+
+instance NFData KinesisVideoStream where
+
+instance ToJSON KinesisVideoStream where
+        toJSON KinesisVideoStream'{..}
+          = object (catMaybes [("Arn" .=) <$> _kvsARN])
+
 -- | Structure containing details about the detected label, including name, and level of confidence.
 --
 --
@@ -1023,6 +1404,48 @@ instance FromJSON Label where
 instance Hashable Label where
 
 instance NFData Label where
+
+-- | Information about a label detected in a video analysis request and the time the label was detected in the video.
+--
+--
+--
+-- /See:/ 'labelDetection' smart constructor.
+data LabelDetection = LabelDetection'
+  { _ldLabel     :: !(Maybe Label)
+  , _ldTimestamp :: !(Maybe Integer)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'LabelDetection' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ldLabel' - Details about the detected label.
+--
+-- * 'ldTimestamp' - Time, in milliseconds from the start of the video, that the label was detected.
+labelDetection
+    :: LabelDetection
+labelDetection = LabelDetection' {_ldLabel = Nothing, _ldTimestamp = Nothing}
+
+
+-- | Details about the detected label.
+ldLabel :: Lens' LabelDetection (Maybe Label)
+ldLabel = lens _ldLabel (\ s a -> s{_ldLabel = a});
+
+-- | Time, in milliseconds from the start of the video, that the label was detected.
+ldTimestamp :: Lens' LabelDetection (Maybe Integer)
+ldTimestamp = lens _ldTimestamp (\ s a -> s{_ldTimestamp = a});
+
+instance FromJSON LabelDetection where
+        parseJSON
+          = withObject "LabelDetection"
+              (\ x ->
+                 LabelDetection' <$>
+                   (x .:? "Label") <*> (x .:? "Timestamp"))
+
+instance Hashable LabelDetection where
+
+instance NFData LabelDetection where
 
 -- | Indicates the location of the landmark on the face.
 --
@@ -1073,7 +1496,7 @@ instance Hashable Landmark where
 
 instance NFData Landmark where
 
--- | Provides information about a single type of moderated content found in an image. Each type of moderated content has a label within a hierarchical taxonomy. For more information, see 'image-moderation' .
+-- | Provides information about a single type of moderated content found in an image or video. Each type of moderated content has a label within a hierarchical taxonomy. For more information, see 'moderation' .
 --
 --
 --
@@ -1208,6 +1631,239 @@ instance FromJSON Mustache where
 instance Hashable Mustache where
 
 instance NFData Mustache where
+
+-- | The Amazon Simple Notification Service topic to which Amazon Rekognition publishes the completion status of a video analysis operation. For more information, see 'api-video' .
+--
+--
+--
+-- /See:/ 'notificationChannel' smart constructor.
+data NotificationChannel = NotificationChannel'
+  { _ncSNSTopicARN :: !Text
+  , _ncRoleARN     :: !Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'NotificationChannel' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ncSNSTopicARN' - The Amazon SNS topic to which Amazon Rekognition to posts the completion status.
+--
+-- * 'ncRoleARN' - The ARN of an IAM role that gives Amazon Rekognition publishing permissions to the Amazon SNS topic.
+notificationChannel
+    :: Text -- ^ 'ncSNSTopicARN'
+    -> Text -- ^ 'ncRoleARN'
+    -> NotificationChannel
+notificationChannel pSNSTopicARN_ pRoleARN_ =
+  NotificationChannel' {_ncSNSTopicARN = pSNSTopicARN_, _ncRoleARN = pRoleARN_}
+
+
+-- | The Amazon SNS topic to which Amazon Rekognition to posts the completion status.
+ncSNSTopicARN :: Lens' NotificationChannel Text
+ncSNSTopicARN = lens _ncSNSTopicARN (\ s a -> s{_ncSNSTopicARN = a});
+
+-- | The ARN of an IAM role that gives Amazon Rekognition publishing permissions to the Amazon SNS topic.
+ncRoleARN :: Lens' NotificationChannel Text
+ncRoleARN = lens _ncRoleARN (\ s a -> s{_ncRoleARN = a});
+
+instance Hashable NotificationChannel where
+
+instance NFData NotificationChannel where
+
+instance ToJSON NotificationChannel where
+        toJSON NotificationChannel'{..}
+          = object
+              (catMaybes
+                 [Just ("SNSTopicArn" .= _ncSNSTopicARN),
+                  Just ("RoleArn" .= _ncRoleARN)])
+
+-- | Details about a person detected in a video analysis request.
+--
+--
+--
+-- /See:/ 'personDetail' smart constructor.
+data PersonDetail = PersonDetail'
+  { _pdBoundingBox :: !(Maybe BoundingBox)
+  , _pdIndex       :: !(Maybe Integer)
+  , _pdFace        :: !(Maybe FaceDetail)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'PersonDetail' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'pdBoundingBox' - Bounding box around the detected person.
+--
+-- * 'pdIndex' - Identifier for the person detected person within a video. Use to keep track of the person throughout the video. The identifier is not stored by Amazon Rekognition.
+--
+-- * 'pdFace' - Face details for the detected person.
+personDetail
+    :: PersonDetail
+personDetail =
+  PersonDetail'
+  {_pdBoundingBox = Nothing, _pdIndex = Nothing, _pdFace = Nothing}
+
+
+-- | Bounding box around the detected person.
+pdBoundingBox :: Lens' PersonDetail (Maybe BoundingBox)
+pdBoundingBox = lens _pdBoundingBox (\ s a -> s{_pdBoundingBox = a});
+
+-- | Identifier for the person detected person within a video. Use to keep track of the person throughout the video. The identifier is not stored by Amazon Rekognition.
+pdIndex :: Lens' PersonDetail (Maybe Integer)
+pdIndex = lens _pdIndex (\ s a -> s{_pdIndex = a});
+
+-- | Face details for the detected person.
+pdFace :: Lens' PersonDetail (Maybe FaceDetail)
+pdFace = lens _pdFace (\ s a -> s{_pdFace = a});
+
+instance FromJSON PersonDetail where
+        parseJSON
+          = withObject "PersonDetail"
+              (\ x ->
+                 PersonDetail' <$>
+                   (x .:? "BoundingBox") <*> (x .:? "Index") <*>
+                     (x .:? "Face"))
+
+instance Hashable PersonDetail where
+
+instance NFData PersonDetail where
+
+-- | Details and tracking information for a single time a person is tracked in a video. Amazon Rekognition operations that track persons return an array of @PersonDetection@ objects with elements for each time a person is tracked in a video. For more information, see .
+--
+--
+--
+-- /See:/ 'personDetection' smart constructor.
+data PersonDetection = PersonDetection'
+  { _pdPerson    :: !(Maybe PersonDetail)
+  , _pdTimestamp :: !(Maybe Integer)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'PersonDetection' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'pdPerson' - Details about a person tracked in a video.
+--
+-- * 'pdTimestamp' - The time, in milliseconds from the start of the video, that the person was tracked.
+personDetection
+    :: PersonDetection
+personDetection = PersonDetection' {_pdPerson = Nothing, _pdTimestamp = Nothing}
+
+
+-- | Details about a person tracked in a video.
+pdPerson :: Lens' PersonDetection (Maybe PersonDetail)
+pdPerson = lens _pdPerson (\ s a -> s{_pdPerson = a});
+
+-- | The time, in milliseconds from the start of the video, that the person was tracked.
+pdTimestamp :: Lens' PersonDetection (Maybe Integer)
+pdTimestamp = lens _pdTimestamp (\ s a -> s{_pdTimestamp = a});
+
+instance FromJSON PersonDetection where
+        parseJSON
+          = withObject "PersonDetection"
+              (\ x ->
+                 PersonDetection' <$>
+                   (x .:? "Person") <*> (x .:? "Timestamp"))
+
+instance Hashable PersonDetection where
+
+instance NFData PersonDetection where
+
+-- | Information about a person whose face matches a face(s) in a Amazon Rekognition collection. Includes information about the faces in the Amazon Rekognition collection (,information about the person ('PersonDetail' ) and the timestamp for when the person was detected in a video. An array of @PersonMatch@ objects is returned by .
+--
+--
+--
+-- /See:/ 'personMatch' smart constructor.
+data PersonMatch = PersonMatch'
+  { _pmFaceMatches :: !(Maybe [FaceMatch])
+  , _pmPerson      :: !(Maybe PersonDetail)
+  , _pmTimestamp   :: !(Maybe Integer)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'PersonMatch' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'pmFaceMatches' - Information about the faces in the input collection that match the face of a person in the video.
+--
+-- * 'pmPerson' - Information about the matched person.
+--
+-- * 'pmTimestamp' - The time, in milliseconds from the beginning of the video, that the person was matched in the video.
+personMatch
+    :: PersonMatch
+personMatch =
+  PersonMatch'
+  {_pmFaceMatches = Nothing, _pmPerson = Nothing, _pmTimestamp = Nothing}
+
+
+-- | Information about the faces in the input collection that match the face of a person in the video.
+pmFaceMatches :: Lens' PersonMatch [FaceMatch]
+pmFaceMatches = lens _pmFaceMatches (\ s a -> s{_pmFaceMatches = a}) . _Default . _Coerce;
+
+-- | Information about the matched person.
+pmPerson :: Lens' PersonMatch (Maybe PersonDetail)
+pmPerson = lens _pmPerson (\ s a -> s{_pmPerson = a});
+
+-- | The time, in milliseconds from the beginning of the video, that the person was matched in the video.
+pmTimestamp :: Lens' PersonMatch (Maybe Integer)
+pmTimestamp = lens _pmTimestamp (\ s a -> s{_pmTimestamp = a});
+
+instance FromJSON PersonMatch where
+        parseJSON
+          = withObject "PersonMatch"
+              (\ x ->
+                 PersonMatch' <$>
+                   (x .:? "FaceMatches" .!= mempty) <*> (x .:? "Person")
+                     <*> (x .:? "Timestamp"))
+
+instance Hashable PersonMatch where
+
+instance NFData PersonMatch where
+
+-- | The X and Y coordinates of a point on an image. The X and Y values returned are ratios of the overall image size. For example, if the input image is 700x200 and the operation returns X=0.5 and Y=0.25, then the point is at the (350,50) pixel coordinate on the image.
+--
+--
+-- An array of @Point@ objects, @Polygon@ , is returned by . @Polygon@ represents a fine-grained polygon around detected text. For more information, see .
+--
+--
+-- /See:/ 'point' smart constructor.
+data Point = Point'
+  { _pX :: !(Maybe Double)
+  , _pY :: !(Maybe Double)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'Point' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'pX' - The value of the X coordinate for a point on a @Polygon@ .
+--
+-- * 'pY' - The value of the Y coordinate for a point on a @Polygon@ .
+point
+    :: Point
+point = Point' {_pX = Nothing, _pY = Nothing}
+
+
+-- | The value of the X coordinate for a point on a @Polygon@ .
+pX :: Lens' Point (Maybe Double)
+pX = lens _pX (\ s a -> s{_pX = a});
+
+-- | The value of the Y coordinate for a point on a @Polygon@ .
+pY :: Lens' Point (Maybe Double)
+pY = lens _pY (\ s a -> s{_pY = a});
+
+instance FromJSON Point where
+        parseJSON
+          = withObject "Point"
+              (\ x -> Point' <$> (x .:? "X") <*> (x .:? "Y"))
+
+instance Hashable Point where
+
+instance NFData Point where
 
 -- | Indicates the pose of the face as determined by its pitch, roll, and yaw.
 --
@@ -1354,6 +2010,170 @@ instance Hashable Smile where
 
 instance NFData Smile where
 
+-- | An object that recognizes faces in a streaming video. An Amazon Rekognition stream processor is created by a call to . The request parameters for @CreateStreamProcessor@ describe the Kinesis video stream source for the streaming video, face recognition parameters, and where to stream the analysis resullts.
+--
+--
+--
+-- /See:/ 'streamProcessor' smart constructor.
+data StreamProcessor = StreamProcessor'
+  { _spStatus :: !(Maybe StreamProcessorStatus)
+  , _spName   :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'StreamProcessor' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'spStatus' - Current status of the Amazon Rekognition stream processor.
+--
+-- * 'spName' - Name of the Amazon Rekognition stream processor.
+streamProcessor
+    :: StreamProcessor
+streamProcessor = StreamProcessor' {_spStatus = Nothing, _spName = Nothing}
+
+
+-- | Current status of the Amazon Rekognition stream processor.
+spStatus :: Lens' StreamProcessor (Maybe StreamProcessorStatus)
+spStatus = lens _spStatus (\ s a -> s{_spStatus = a});
+
+-- | Name of the Amazon Rekognition stream processor.
+spName :: Lens' StreamProcessor (Maybe Text)
+spName = lens _spName (\ s a -> s{_spName = a});
+
+instance FromJSON StreamProcessor where
+        parseJSON
+          = withObject "StreamProcessor"
+              (\ x ->
+                 StreamProcessor' <$>
+                   (x .:? "Status") <*> (x .:? "Name"))
+
+instance Hashable StreamProcessor where
+
+instance NFData StreamProcessor where
+
+-- | Information about the source streaming video.
+--
+--
+--
+-- /See:/ 'streamProcessorInput' smart constructor.
+newtype StreamProcessorInput = StreamProcessorInput'
+  { _spiKinesisVideoStream :: Maybe KinesisVideoStream
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'StreamProcessorInput' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'spiKinesisVideoStream' - The Kinesis video stream input stream for the source streaming video.
+streamProcessorInput
+    :: StreamProcessorInput
+streamProcessorInput = StreamProcessorInput' {_spiKinesisVideoStream = Nothing}
+
+
+-- | The Kinesis video stream input stream for the source streaming video.
+spiKinesisVideoStream :: Lens' StreamProcessorInput (Maybe KinesisVideoStream)
+spiKinesisVideoStream = lens _spiKinesisVideoStream (\ s a -> s{_spiKinesisVideoStream = a});
+
+instance FromJSON StreamProcessorInput where
+        parseJSON
+          = withObject "StreamProcessorInput"
+              (\ x ->
+                 StreamProcessorInput' <$>
+                   (x .:? "KinesisVideoStream"))
+
+instance Hashable StreamProcessorInput where
+
+instance NFData StreamProcessorInput where
+
+instance ToJSON StreamProcessorInput where
+        toJSON StreamProcessorInput'{..}
+          = object
+              (catMaybes
+                 [("KinesisVideoStream" .=) <$>
+                    _spiKinesisVideoStream])
+
+-- | Information about the Amazon Kinesis Data Streams stream to which a Rekognition Video stream processor streams the results of a video analysis. For more information, see .
+--
+--
+--
+-- /See:/ 'streamProcessorOutput' smart constructor.
+newtype StreamProcessorOutput = StreamProcessorOutput'
+  { _spoKinesisDataStream :: Maybe KinesisDataStream
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'StreamProcessorOutput' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'spoKinesisDataStream' - The Amazon Kinesis Data Streams stream to which the Amazon Rekognition stream processor streams the analysis results.
+streamProcessorOutput
+    :: StreamProcessorOutput
+streamProcessorOutput = StreamProcessorOutput' {_spoKinesisDataStream = Nothing}
+
+
+-- | The Amazon Kinesis Data Streams stream to which the Amazon Rekognition stream processor streams the analysis results.
+spoKinesisDataStream :: Lens' StreamProcessorOutput (Maybe KinesisDataStream)
+spoKinesisDataStream = lens _spoKinesisDataStream (\ s a -> s{_spoKinesisDataStream = a});
+
+instance FromJSON StreamProcessorOutput where
+        parseJSON
+          = withObject "StreamProcessorOutput"
+              (\ x ->
+                 StreamProcessorOutput' <$>
+                   (x .:? "KinesisDataStream"))
+
+instance Hashable StreamProcessorOutput where
+
+instance NFData StreamProcessorOutput where
+
+instance ToJSON StreamProcessorOutput where
+        toJSON StreamProcessorOutput'{..}
+          = object
+              (catMaybes
+                 [("KinesisDataStream" .=) <$> _spoKinesisDataStream])
+
+-- | Input parameters used to recognize faces in a streaming video analyzed by a Amazon Rekognition stream processor.
+--
+--
+--
+-- /See:/ 'streamProcessorSettings' smart constructor.
+newtype StreamProcessorSettings = StreamProcessorSettings'
+  { _spsFaceSearch :: Maybe FaceSearchSettings
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'StreamProcessorSettings' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'spsFaceSearch' - Face search settings to use on a streaming video.
+streamProcessorSettings
+    :: StreamProcessorSettings
+streamProcessorSettings = StreamProcessorSettings' {_spsFaceSearch = Nothing}
+
+
+-- | Face search settings to use on a streaming video.
+spsFaceSearch :: Lens' StreamProcessorSettings (Maybe FaceSearchSettings)
+spsFaceSearch = lens _spsFaceSearch (\ s a -> s{_spsFaceSearch = a});
+
+instance FromJSON StreamProcessorSettings where
+        parseJSON
+          = withObject "StreamProcessorSettings"
+              (\ x ->
+                 StreamProcessorSettings' <$> (x .:? "FaceSearch"))
+
+instance Hashable StreamProcessorSettings where
+
+instance NFData StreamProcessorSettings where
+
+instance ToJSON StreamProcessorSettings where
+        toJSON StreamProcessorSettings'{..}
+          = object
+              (catMaybes [("FaceSearch" .=) <$> _spsFaceSearch])
+
 -- | Indicates whether or not the face is wearing sunglasses, and the confidence level in the determination.
 --
 --
@@ -1395,3 +2215,205 @@ instance FromJSON Sunglasses where
 instance Hashable Sunglasses where
 
 instance NFData Sunglasses where
+
+-- | Information about a word or line of text detected by .
+--
+--
+-- The @DetectedText@ field contains the text that Amazon Rekognition detected in the image.
+--
+-- Every word and line has an identifier (@Id@ ). Each word belongs to a line and has a parent identifier (@ParentId@ ) that identifies the line of text in which the word appears. The word @Id@ is also an index for the word within a line of words.
+--
+-- For more information, see 'text-detection' .
+--
+--
+-- /See:/ 'textDetection' smart constructor.
+data TextDetection = TextDetection'
+  { _tdDetectedText :: !(Maybe Text)
+  , _tdConfidence   :: !(Maybe Double)
+  , _tdGeometry     :: !(Maybe Geometry)
+  , _tdId           :: !(Maybe Nat)
+  , _tdType         :: !(Maybe TextTypes)
+  , _tdParentId     :: !(Maybe Nat)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'TextDetection' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'tdDetectedText' - The word or line of text recognized by Amazon Rekognition.
+--
+-- * 'tdConfidence' - The confidence that Amazon Rekognition has in the accuracy of the detected text and the accuracy of the geometry points around the detected text.
+--
+-- * 'tdGeometry' - The location of the detected text on the image. Includes an axis aligned coarse bounding box surrounding the text and a finer grain polygon for more accurate spatial information.
+--
+-- * 'tdId' - The identifier for the detected text. The identifier is only unique for a single call to @DetectText@ .
+--
+-- * 'tdType' - The type of text that was detected.
+--
+-- * 'tdParentId' - The Parent identifier for the detected text identified by the value of @ID@ . If the type of detected text is @LINE@ , the value of @ParentId@ is @Null@ .
+textDetection
+    :: TextDetection
+textDetection =
+  TextDetection'
+  { _tdDetectedText = Nothing
+  , _tdConfidence = Nothing
+  , _tdGeometry = Nothing
+  , _tdId = Nothing
+  , _tdType = Nothing
+  , _tdParentId = Nothing
+  }
+
+
+-- | The word or line of text recognized by Amazon Rekognition.
+tdDetectedText :: Lens' TextDetection (Maybe Text)
+tdDetectedText = lens _tdDetectedText (\ s a -> s{_tdDetectedText = a});
+
+-- | The confidence that Amazon Rekognition has in the accuracy of the detected text and the accuracy of the geometry points around the detected text.
+tdConfidence :: Lens' TextDetection (Maybe Double)
+tdConfidence = lens _tdConfidence (\ s a -> s{_tdConfidence = a});
+
+-- | The location of the detected text on the image. Includes an axis aligned coarse bounding box surrounding the text and a finer grain polygon for more accurate spatial information.
+tdGeometry :: Lens' TextDetection (Maybe Geometry)
+tdGeometry = lens _tdGeometry (\ s a -> s{_tdGeometry = a});
+
+-- | The identifier for the detected text. The identifier is only unique for a single call to @DetectText@ .
+tdId :: Lens' TextDetection (Maybe Natural)
+tdId = lens _tdId (\ s a -> s{_tdId = a}) . mapping _Nat;
+
+-- | The type of text that was detected.
+tdType :: Lens' TextDetection (Maybe TextTypes)
+tdType = lens _tdType (\ s a -> s{_tdType = a});
+
+-- | The Parent identifier for the detected text identified by the value of @ID@ . If the type of detected text is @LINE@ , the value of @ParentId@ is @Null@ .
+tdParentId :: Lens' TextDetection (Maybe Natural)
+tdParentId = lens _tdParentId (\ s a -> s{_tdParentId = a}) . mapping _Nat;
+
+instance FromJSON TextDetection where
+        parseJSON
+          = withObject "TextDetection"
+              (\ x ->
+                 TextDetection' <$>
+                   (x .:? "DetectedText") <*> (x .:? "Confidence") <*>
+                     (x .:? "Geometry")
+                     <*> (x .:? "Id")
+                     <*> (x .:? "Type")
+                     <*> (x .:? "ParentId"))
+
+instance Hashable TextDetection where
+
+instance NFData TextDetection where
+
+-- | Video file stored in an Amazon S3 bucket. Amazon Rekognition video start operations such as use @Video@ to specify a video for analysis. The supported file formats are .mp4, .mov and .avi.
+--
+--
+--
+-- /See:/ 'video' smart constructor.
+newtype Video = Video'
+  { _vS3Object :: Maybe S3Object
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'Video' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'vS3Object' - The Amazon S3 bucket name and file name for the video.
+video
+    :: Video
+video = Video' {_vS3Object = Nothing}
+
+
+-- | The Amazon S3 bucket name and file name for the video.
+vS3Object :: Lens' Video (Maybe S3Object)
+vS3Object = lens _vS3Object (\ s a -> s{_vS3Object = a});
+
+instance Hashable Video where
+
+instance NFData Video where
+
+instance ToJSON Video where
+        toJSON Video'{..}
+          = object (catMaybes [("S3Object" .=) <$> _vS3Object])
+
+-- | Information about a video that Amazon Rekognition analyzed. @Videometadata@ is returned in every page of paginated responses from a Amazon Rekognition video operation.
+--
+--
+--
+-- /See:/ 'videoMetadata' smart constructor.
+data VideoMetadata = VideoMetadata'
+  { _vmFrameRate      :: !(Maybe Double)
+  , _vmFormat         :: !(Maybe Text)
+  , _vmCodec          :: !(Maybe Text)
+  , _vmFrameHeight    :: !(Maybe Nat)
+  , _vmDurationMillis :: !(Maybe Nat)
+  , _vmFrameWidth     :: !(Maybe Nat)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'VideoMetadata' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'vmFrameRate' - Number of frames per second in the video.
+--
+-- * 'vmFormat' - Format of the analyzed video. Possible values are MP4, MOV and AVI.
+--
+-- * 'vmCodec' - Type of compression used in the analyzed video.
+--
+-- * 'vmFrameHeight' - Vertical pixel dimension of the video.
+--
+-- * 'vmDurationMillis' - Length of the video in milliseconds.
+--
+-- * 'vmFrameWidth' - Horizontal pixel dimension of the video.
+videoMetadata
+    :: VideoMetadata
+videoMetadata =
+  VideoMetadata'
+  { _vmFrameRate = Nothing
+  , _vmFormat = Nothing
+  , _vmCodec = Nothing
+  , _vmFrameHeight = Nothing
+  , _vmDurationMillis = Nothing
+  , _vmFrameWidth = Nothing
+  }
+
+
+-- | Number of frames per second in the video.
+vmFrameRate :: Lens' VideoMetadata (Maybe Double)
+vmFrameRate = lens _vmFrameRate (\ s a -> s{_vmFrameRate = a});
+
+-- | Format of the analyzed video. Possible values are MP4, MOV and AVI.
+vmFormat :: Lens' VideoMetadata (Maybe Text)
+vmFormat = lens _vmFormat (\ s a -> s{_vmFormat = a});
+
+-- | Type of compression used in the analyzed video.
+vmCodec :: Lens' VideoMetadata (Maybe Text)
+vmCodec = lens _vmCodec (\ s a -> s{_vmCodec = a});
+
+-- | Vertical pixel dimension of the video.
+vmFrameHeight :: Lens' VideoMetadata (Maybe Natural)
+vmFrameHeight = lens _vmFrameHeight (\ s a -> s{_vmFrameHeight = a}) . mapping _Nat;
+
+-- | Length of the video in milliseconds.
+vmDurationMillis :: Lens' VideoMetadata (Maybe Natural)
+vmDurationMillis = lens _vmDurationMillis (\ s a -> s{_vmDurationMillis = a}) . mapping _Nat;
+
+-- | Horizontal pixel dimension of the video.
+vmFrameWidth :: Lens' VideoMetadata (Maybe Natural)
+vmFrameWidth = lens _vmFrameWidth (\ s a -> s{_vmFrameWidth = a}) . mapping _Nat;
+
+instance FromJSON VideoMetadata where
+        parseJSON
+          = withObject "VideoMetadata"
+              (\ x ->
+                 VideoMetadata' <$>
+                   (x .:? "FrameRate") <*> (x .:? "Format") <*>
+                     (x .:? "Codec")
+                     <*> (x .:? "FrameHeight")
+                     <*> (x .:? "DurationMillis")
+                     <*> (x .:? "FrameWidth"))
+
+instance Hashable VideoMetadata where
+
+instance NFData VideoMetadata where

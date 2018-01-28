@@ -28,7 +28,10 @@ import Test.Tasty
 -- fixtures :: TestTree
 -- fixtures =
 --     [ testGroup "request"
---         [ requestListRateBasedRules $
+--         [ requestListActivatedRulesInRuleGroup $
+--             listActivatedRulesInRuleGroup
+--
+--         , requestListRateBasedRules $
 --             listRateBasedRules
 --
 --         , requestGetSizeConstraintSet $
@@ -48,6 +51,9 @@ import Test.Tasty
 --
 --         , requestCreateIPSet $
 --             createIPSet
+--
+--         , requestGetRuleGroup $
+--             getRuleGroup
 --
 --         , requestGetChangeTokenStatus $
 --             getChangeTokenStatus
@@ -78,6 +84,9 @@ import Test.Tasty
 --
 --         , requestListGeoMatchSets $
 --             listGeoMatchSets
+--
+--         , requestCreateRuleGroup $
+--             createRuleGroup
 --
 --         , requestDeleteRegexMatchSet $
 --             deleteRegexMatchSet
@@ -117,6 +126,9 @@ import Test.Tasty
 --
 --         , requestGetSqlInjectionMatchSet $
 --             getSqlInjectionMatchSet
+--
+--         , requestListSubscribedRuleGroups $
+--             listSubscribedRuleGroups
 --
 --         , requestCreateSqlInjectionMatchSet $
 --             createSqlInjectionMatchSet
@@ -163,6 +175,15 @@ import Test.Tasty
 --         , requestGetByteMatchSet $
 --             getByteMatchSet
 --
+--         , requestListRuleGroups $
+--             listRuleGroups
+--
+--         , requestDeleteRuleGroup $
+--             deleteRuleGroup
+--
+--         , requestUpdateRuleGroup $
+--             updateRuleGroup
+--
 --         , requestCreateRegexMatchSet $
 --             createRegexMatchSet
 --
@@ -208,7 +229,10 @@ import Test.Tasty
 --           ]
 
 --     , testGroup "response"
---         [ responseListRateBasedRules $
+--         [ responseListActivatedRulesInRuleGroup $
+--             listActivatedRulesInRuleGroupResponse
+--
+--         , responseListRateBasedRules $
 --             listRateBasedRulesResponse
 --
 --         , responseGetSizeConstraintSet $
@@ -228,6 +252,9 @@ import Test.Tasty
 --
 --         , responseCreateIPSet $
 --             createIPSetResponse
+--
+--         , responseGetRuleGroup $
+--             getRuleGroupResponse
 --
 --         , responseGetChangeTokenStatus $
 --             getChangeTokenStatusResponse
@@ -258,6 +285,9 @@ import Test.Tasty
 --
 --         , responseListGeoMatchSets $
 --             listGeoMatchSetsResponse
+--
+--         , responseCreateRuleGroup $
+--             createRuleGroupResponse
 --
 --         , responseDeleteRegexMatchSet $
 --             deleteRegexMatchSetResponse
@@ -297,6 +327,9 @@ import Test.Tasty
 --
 --         , responseGetSqlInjectionMatchSet $
 --             getSqlInjectionMatchSetResponse
+--
+--         , responseListSubscribedRuleGroups $
+--             listSubscribedRuleGroupsResponse
 --
 --         , responseCreateSqlInjectionMatchSet $
 --             createSqlInjectionMatchSetResponse
@@ -342,6 +375,15 @@ import Test.Tasty
 --
 --         , responseGetByteMatchSet $
 --             getByteMatchSetResponse
+--
+--         , responseListRuleGroups $
+--             listRuleGroupsResponse
+--
+--         , responseDeleteRuleGroup $
+--             deleteRuleGroupResponse
+--
+--         , responseUpdateRuleGroup $
+--             updateRuleGroupResponse
 --
 --         , responseCreateRegexMatchSet $
 --             createRegexMatchSetResponse
@@ -390,6 +432,11 @@ import Test.Tasty
 
 -- Requests
 
+requestListActivatedRulesInRuleGroup :: ListActivatedRulesInRuleGroup -> TestTree
+requestListActivatedRulesInRuleGroup = req
+    "ListActivatedRulesInRuleGroup"
+    "fixture/ListActivatedRulesInRuleGroup.yaml"
+
 requestListRateBasedRules :: ListRateBasedRules -> TestTree
 requestListRateBasedRules = req
     "ListRateBasedRules"
@@ -424,6 +471,11 @@ requestCreateIPSet :: CreateIPSet -> TestTree
 requestCreateIPSet = req
     "CreateIPSet"
     "fixture/CreateIPSet.yaml"
+
+requestGetRuleGroup :: GetRuleGroup -> TestTree
+requestGetRuleGroup = req
+    "GetRuleGroup"
+    "fixture/GetRuleGroup.yaml"
 
 requestGetChangeTokenStatus :: GetChangeTokenStatus -> TestTree
 requestGetChangeTokenStatus = req
@@ -474,6 +526,11 @@ requestListGeoMatchSets :: ListGeoMatchSets -> TestTree
 requestListGeoMatchSets = req
     "ListGeoMatchSets"
     "fixture/ListGeoMatchSets.yaml"
+
+requestCreateRuleGroup :: CreateRuleGroup -> TestTree
+requestCreateRuleGroup = req
+    "CreateRuleGroup"
+    "fixture/CreateRuleGroup.yaml"
 
 requestDeleteRegexMatchSet :: DeleteRegexMatchSet -> TestTree
 requestDeleteRegexMatchSet = req
@@ -539,6 +596,11 @@ requestGetSqlInjectionMatchSet :: GetSqlInjectionMatchSet -> TestTree
 requestGetSqlInjectionMatchSet = req
     "GetSqlInjectionMatchSet"
     "fixture/GetSqlInjectionMatchSet.yaml"
+
+requestListSubscribedRuleGroups :: ListSubscribedRuleGroups -> TestTree
+requestListSubscribedRuleGroups = req
+    "ListSubscribedRuleGroups"
+    "fixture/ListSubscribedRuleGroups.yaml"
 
 requestCreateSqlInjectionMatchSet :: CreateSqlInjectionMatchSet -> TestTree
 requestCreateSqlInjectionMatchSet = req
@@ -615,6 +677,21 @@ requestGetByteMatchSet = req
     "GetByteMatchSet"
     "fixture/GetByteMatchSet.yaml"
 
+requestListRuleGroups :: ListRuleGroups -> TestTree
+requestListRuleGroups = req
+    "ListRuleGroups"
+    "fixture/ListRuleGroups.yaml"
+
+requestDeleteRuleGroup :: DeleteRuleGroup -> TestTree
+requestDeleteRuleGroup = req
+    "DeleteRuleGroup"
+    "fixture/DeleteRuleGroup.yaml"
+
+requestUpdateRuleGroup :: UpdateRuleGroup -> TestTree
+requestUpdateRuleGroup = req
+    "UpdateRuleGroup"
+    "fixture/UpdateRuleGroup.yaml"
+
 requestCreateRegexMatchSet :: CreateRegexMatchSet -> TestTree
 requestCreateRegexMatchSet = req
     "CreateRegexMatchSet"
@@ -687,6 +764,13 @@ requestUpdateSqlInjectionMatchSet = req
 
 -- Responses
 
+responseListActivatedRulesInRuleGroup :: ListActivatedRulesInRuleGroupResponse -> TestTree
+responseListActivatedRulesInRuleGroup = res
+    "ListActivatedRulesInRuleGroupResponse"
+    "fixture/ListActivatedRulesInRuleGroupResponse.proto"
+    waf
+    (Proxy :: Proxy ListActivatedRulesInRuleGroup)
+
 responseListRateBasedRules :: ListRateBasedRulesResponse -> TestTree
 responseListRateBasedRules = res
     "ListRateBasedRulesResponse"
@@ -735,6 +819,13 @@ responseCreateIPSet = res
     "fixture/CreateIPSetResponse.proto"
     waf
     (Proxy :: Proxy CreateIPSet)
+
+responseGetRuleGroup :: GetRuleGroupResponse -> TestTree
+responseGetRuleGroup = res
+    "GetRuleGroupResponse"
+    "fixture/GetRuleGroupResponse.proto"
+    waf
+    (Proxy :: Proxy GetRuleGroup)
 
 responseGetChangeTokenStatus :: GetChangeTokenStatusResponse -> TestTree
 responseGetChangeTokenStatus = res
@@ -805,6 +896,13 @@ responseListGeoMatchSets = res
     "fixture/ListGeoMatchSetsResponse.proto"
     waf
     (Proxy :: Proxy ListGeoMatchSets)
+
+responseCreateRuleGroup :: CreateRuleGroupResponse -> TestTree
+responseCreateRuleGroup = res
+    "CreateRuleGroupResponse"
+    "fixture/CreateRuleGroupResponse.proto"
+    waf
+    (Proxy :: Proxy CreateRuleGroup)
 
 responseDeleteRegexMatchSet :: DeleteRegexMatchSetResponse -> TestTree
 responseDeleteRegexMatchSet = res
@@ -896,6 +994,13 @@ responseGetSqlInjectionMatchSet = res
     "fixture/GetSqlInjectionMatchSetResponse.proto"
     waf
     (Proxy :: Proxy GetSqlInjectionMatchSet)
+
+responseListSubscribedRuleGroups :: ListSubscribedRuleGroupsResponse -> TestTree
+responseListSubscribedRuleGroups = res
+    "ListSubscribedRuleGroupsResponse"
+    "fixture/ListSubscribedRuleGroupsResponse.proto"
+    waf
+    (Proxy :: Proxy ListSubscribedRuleGroups)
 
 responseCreateSqlInjectionMatchSet :: CreateSqlInjectionMatchSetResponse -> TestTree
 responseCreateSqlInjectionMatchSet = res
@@ -1001,6 +1106,27 @@ responseGetByteMatchSet = res
     "fixture/GetByteMatchSetResponse.proto"
     waf
     (Proxy :: Proxy GetByteMatchSet)
+
+responseListRuleGroups :: ListRuleGroupsResponse -> TestTree
+responseListRuleGroups = res
+    "ListRuleGroupsResponse"
+    "fixture/ListRuleGroupsResponse.proto"
+    waf
+    (Proxy :: Proxy ListRuleGroups)
+
+responseDeleteRuleGroup :: DeleteRuleGroupResponse -> TestTree
+responseDeleteRuleGroup = res
+    "DeleteRuleGroupResponse"
+    "fixture/DeleteRuleGroupResponse.proto"
+    waf
+    (Proxy :: Proxy DeleteRuleGroup)
+
+responseUpdateRuleGroup :: UpdateRuleGroupResponse -> TestTree
+responseUpdateRuleGroup = res
+    "UpdateRuleGroupResponse"
+    "fixture/UpdateRuleGroupResponse.proto"
+    waf
+    (Proxy :: Proxy UpdateRuleGroup)
 
 responseCreateRegexMatchSet :: CreateRegexMatchSetResponse -> TestTree
 responseCreateRegexMatchSet = res

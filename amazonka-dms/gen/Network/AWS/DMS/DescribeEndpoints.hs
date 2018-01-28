@@ -21,6 +21,8 @@
 -- Returns information about the endpoints for your account in the current region.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.DMS.DescribeEndpoints
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.DMS.DescribeEndpoints
 import Network.AWS.DMS.Types
 import Network.AWS.DMS.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -86,6 +89,13 @@ desMarker = lens _desMarker (\ s a -> s{_desMarker = a});
 -- | The maximum number of records to include in the response. If more records exist than the specified @MaxRecords@ value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.  Default: 100 Constraints: Minimum 20, maximum 100.
 desMaxRecords :: Lens' DescribeEndpoints (Maybe Int)
 desMaxRecords = lens _desMaxRecords (\ s a -> s{_desMaxRecords = a});
+
+instance AWSPager DescribeEndpoints where
+        page rq rs
+          | stop (rs ^. dersMarker) = Nothing
+          | stop (rs ^. dersEndpoints) = Nothing
+          | otherwise =
+            Just $ rq & desMarker .~ rs ^. dersMarker
 
 instance AWSRequest DescribeEndpoints where
         type Rs DescribeEndpoints = DescribeEndpointsResponse

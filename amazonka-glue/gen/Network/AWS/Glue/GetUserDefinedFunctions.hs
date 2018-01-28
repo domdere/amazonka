@@ -21,6 +21,8 @@
 -- Retrieves a multiple function definitions from the Data Catalog.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Glue.GetUserDefinedFunctions
     (
     -- * Creating a Request
@@ -45,6 +47,7 @@ module Network.AWS.Glue.GetUserDefinedFunctions
 import Network.AWS.Glue.Types
 import Network.AWS.Glue.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -105,6 +108,13 @@ gudfDatabaseName = lens _gudfDatabaseName (\ s a -> s{_gudfDatabaseName = a});
 -- | An optional function-name pattern string that filters the function definitions returned.
 gudfPattern :: Lens' GetUserDefinedFunctions Text
 gudfPattern = lens _gudfPattern (\ s a -> s{_gudfPattern = a});
+
+instance AWSPager GetUserDefinedFunctions where
+        page rq rs
+          | stop (rs ^. gudfrsNextToken) = Nothing
+          | stop (rs ^. gudfrsUserDefinedFunctions) = Nothing
+          | otherwise =
+            Just $ rq & gudfNextToken .~ rs ^. gudfrsNextToken
 
 instance AWSRequest GetUserDefinedFunctions where
         type Rs GetUserDefinedFunctions =

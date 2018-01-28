@@ -28,8 +28,32 @@ module Network.AWS.Glacier.Types
     -- * ActionCode
     , ActionCode (..)
 
+    -- * CannedACL
+    , CannedACL (..)
+
+    -- * EncryptionType
+    , EncryptionType (..)
+
+    -- * ExpressionType
+    , ExpressionType (..)
+
+    -- * FileHeaderInfo
+    , FileHeaderInfo (..)
+
+    -- * Permission
+    , Permission (..)
+
+    -- * QuoteFields
+    , QuoteFields (..)
+
     -- * StatusCode
     , StatusCode (..)
+
+    -- * StorageClass
+    , StorageClass (..)
+
+    -- * Type
+    , Type (..)
 
     -- * ArchiveCreationOutput
     , ArchiveCreationOutput
@@ -37,6 +61,25 @@ module Network.AWS.Glacier.Types
     , acoArchiveId
     , acoChecksum
     , acoLocation
+
+    -- * CSVInput
+    , CSVInput
+    , csvInput
+    , ciQuoteCharacter
+    , ciRecordDelimiter
+    , ciFileHeaderInfo
+    , ciQuoteEscapeCharacter
+    , ciComments
+    , ciFieldDelimiter
+
+    -- * CSVOutput
+    , CSVOutput
+    , csvOutput
+    , coQuoteCharacter
+    , coQuoteFields
+    , coRecordDelimiter
+    , coQuoteEscapeCharacter
+    , coFieldDelimiter
 
     -- * DataRetrievalPolicy
     , DataRetrievalPolicy
@@ -59,12 +102,21 @@ module Network.AWS.Glacier.Types
     , dvoCreationDate
     , dvoNumberOfArchives
 
+    -- * Encryption
+    , Encryption
+    , encryption
+    , eEncryptionType
+    , eKMSKeyId
+    , eKMSContext
+
     -- * GlacierJobDescription
     , GlacierJobDescription
     , glacierJobDescription
     , gjdSHA256TreeHash
     , gjdArchiveId
+    , gjdSelectParameters
     , gjdJobId
+    , gjdJobOutputPath
     , gjdRetrievalByteRange
     , gjdInventoryRetrievalParameters
     , gjdAction
@@ -72,6 +124,7 @@ module Network.AWS.Glacier.Types
     , gjdSNSTopic
     , gjdStatusMessage
     , gjdVaultARN
+    , gjdOutputLocation
     , gjdTier
     , gjdArchiveSHA256TreeHash
     , gjdCreationDate
@@ -80,6 +133,26 @@ module Network.AWS.Glacier.Types
     , gjdInventorySizeInBytes
     , gjdArchiveSizeInBytes
     , gjdStatusCode
+
+    -- * Grant
+    , Grant
+    , grant
+    , gPermission
+    , gGrantee
+
+    -- * Grantee
+    , Grantee
+    , grantee
+    , gURI
+    , gEmailAddress
+    , gDisplayName
+    , gId
+    , gType
+
+    -- * InputSerialization
+    , InputSerialization
+    , inputSerialization
+    , isCsv
 
     -- * InventoryRetrievalJobDescription
     , InventoryRetrievalJobDescription
@@ -102,13 +175,25 @@ module Network.AWS.Glacier.Types
     , JobParameters
     , jobParameters
     , jpArchiveId
+    , jpSelectParameters
     , jpFormat
     , jpRetrievalByteRange
     , jpInventoryRetrievalParameters
     , jpSNSTopic
+    , jpOutputLocation
     , jpTier
     , jpType
     , jpDescription
+
+    -- * OutputLocation
+    , OutputLocation
+    , outputLocation
+    , olS3
+
+    -- * OutputSerialization
+    , OutputSerialization
+    , outputSerialization
+    , osCsv
 
     -- * PartListElement
     , PartListElement
@@ -122,6 +207,26 @@ module Network.AWS.Glacier.Types
     , pcdCapacityId
     , pcdStartDate
     , pcdExpirationDate
+
+    -- * S3Location
+    , S3Location
+    , s3Location
+    , slCannedACL
+    , slPrefix
+    , slBucketName
+    , slAccessControlList
+    , slUserMetadata
+    , slEncryption
+    , slStorageClass
+    , slTagging
+
+    -- * SelectParameters
+    , SelectParameters
+    , selectParameters
+    , spExpressionType
+    , spOutputSerialization
+    , spExpression
+    , spInputSerialization
 
     -- * UploadListElement
     , UploadListElement
@@ -187,6 +292,8 @@ glacier =
       | has (hasStatus 504) e = Just "gateway_timeout"
       | has (hasStatus 502) e = Just "bad_gateway"
       | has (hasStatus 503) e = Just "service_unavailable"
+      | has (hasCode "RequestTimeoutException" . hasStatus 408) e =
+        Just "timeouts"
       | has (hasStatus 500) e = Just "general_server_error"
       | has (hasStatus 509) e = Just "limit_exceeded"
       | otherwise = Nothing

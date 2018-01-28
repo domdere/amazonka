@@ -21,6 +21,8 @@
 -- Returns information about the replication instance types that can be created in the specified region.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.DMS.DescribeOrderableReplicationInstances
     (
     -- * Creating a Request
@@ -42,6 +44,7 @@ module Network.AWS.DMS.DescribeOrderableReplicationInstances
 import Network.AWS.DMS.Types
 import Network.AWS.DMS.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -78,6 +81,16 @@ doriMarker = lens _doriMarker (\ s a -> s{_doriMarker = a});
 -- | The maximum number of records to include in the response. If more records exist than the specified @MaxRecords@ value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.  Default: 100 Constraints: Minimum 20, maximum 100.
 doriMaxRecords :: Lens' DescribeOrderableReplicationInstances (Maybe Int)
 doriMaxRecords = lens _doriMaxRecords (\ s a -> s{_doriMaxRecords = a});
+
+instance AWSPager
+           DescribeOrderableReplicationInstances
+         where
+        page rq rs
+          | stop (rs ^. dorirsMarker) = Nothing
+          | stop (rs ^. dorirsOrderableReplicationInstances) =
+            Nothing
+          | otherwise =
+            Just $ rq & doriMarker .~ rs ^. dorirsMarker
 
 instance AWSRequest
            DescribeOrderableReplicationInstances

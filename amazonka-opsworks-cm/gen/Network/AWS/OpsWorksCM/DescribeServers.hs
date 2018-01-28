@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Lists all configuration management servers that are identified with your account. Only the stored results from Amazon DynamoDB are returned. AWS OpsWorks for Chef Automate does not query other services.
+-- Lists all configuration management servers that are identified with your account. Only the stored results from Amazon DynamoDB are returned. AWS OpsWorks CM does not query other services.
 --
 --
 -- This operation is synchronous.
@@ -137,7 +137,7 @@ data DescribeServersResponse = DescribeServersResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dssrsServers' - Contains the response to a @DescribeServers@ request.
+-- * 'dssrsServers' - Contains the response to a @DescribeServers@ request. /For Puppet Server:/ @DescribeServersResponse$Servers$EngineAttributes@ contains PUPPET_API_CA_CERT. This is the PEM-encoded CA certificate that is used by the Puppet API over TCP port number 8140. The CA certificate is also used to sign node certificates.
 --
 -- * 'dssrsNextToken' - NextToken is a string that is returned in some command responses. It indicates that not all entries have been returned, and that you must run at least one more request to get remaining items. To get remaining results, call @DescribeServers@ again, and assign the token from the previous results as the value of the @nextToken@ parameter. If there are no more results, the response object's @nextToken@ parameter value is @null@ . Setting a @nextToken@ value that was not returned in your previous results causes an @InvalidNextTokenException@ to occur.
 --
@@ -153,7 +153,7 @@ describeServersResponse pResponseStatus_ =
   }
 
 
--- | Contains the response to a @DescribeServers@ request.
+-- | Contains the response to a @DescribeServers@ request. /For Puppet Server:/ @DescribeServersResponse$Servers$EngineAttributes@ contains PUPPET_API_CA_CERT. This is the PEM-encoded CA certificate that is used by the Puppet API over TCP port number 8140. The CA certificate is also used to sign node certificates.
 dssrsServers :: Lens' DescribeServersResponse [Server]
 dssrsServers = lens _dssrsServers (\ s a -> s{_dssrsServers = a}) . _Default . _Coerce;
 

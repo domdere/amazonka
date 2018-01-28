@@ -130,6 +130,7 @@ instance ToJSON AlarmConfiguration where
 -- /See:/ 'applicationInfo' smart constructor.
 data ApplicationInfo = ApplicationInfo'
   { _aiLinkedToGitHub    :: !(Maybe Bool)
+  , _aiComputePlatform   :: !(Maybe ComputePlatform)
   , _aiApplicationId     :: !(Maybe Text)
   , _aiApplicationName   :: !(Maybe Text)
   , _aiGitHubAccountName :: !(Maybe Text)
@@ -143,6 +144,8 @@ data ApplicationInfo = ApplicationInfo'
 --
 -- * 'aiLinkedToGitHub' - True if the user has authenticated with GitHub for the specified application; otherwise, false.
 --
+-- * 'aiComputePlatform' - The destination platform type for deployment of the application (@Lambda@ or @Server@ ).
+--
 -- * 'aiApplicationId' - The application ID.
 --
 -- * 'aiApplicationName' - The application name.
@@ -155,6 +158,7 @@ applicationInfo
 applicationInfo =
   ApplicationInfo'
   { _aiLinkedToGitHub = Nothing
+  , _aiComputePlatform = Nothing
   , _aiApplicationId = Nothing
   , _aiApplicationName = Nothing
   , _aiGitHubAccountName = Nothing
@@ -165,6 +169,10 @@ applicationInfo =
 -- | True if the user has authenticated with GitHub for the specified application; otherwise, false.
 aiLinkedToGitHub :: Lens' ApplicationInfo (Maybe Bool)
 aiLinkedToGitHub = lens _aiLinkedToGitHub (\ s a -> s{_aiLinkedToGitHub = a});
+
+-- | The destination platform type for deployment of the application (@Lambda@ or @Server@ ).
+aiComputePlatform :: Lens' ApplicationInfo (Maybe ComputePlatform)
+aiComputePlatform = lens _aiComputePlatform (\ s a -> s{_aiComputePlatform = a});
 
 -- | The application ID.
 aiApplicationId :: Lens' ApplicationInfo (Maybe Text)
@@ -187,7 +195,9 @@ instance FromJSON ApplicationInfo where
           = withObject "ApplicationInfo"
               (\ x ->
                  ApplicationInfo' <$>
-                   (x .:? "linkedToGitHub") <*> (x .:? "applicationId")
+                   (x .:? "linkedToGitHub") <*>
+                     (x .:? "computePlatform")
+                     <*> (x .:? "applicationId")
                      <*> (x .:? "applicationName")
                      <*> (x .:? "gitHubAccountName")
                      <*> (x .:? "createTime"))
@@ -420,7 +430,9 @@ instance ToJSON BlueInstanceTerminationOption where
 -- /See:/ 'deploymentConfigInfo' smart constructor.
 data DeploymentConfigInfo = DeploymentConfigInfo'
   { _dciDeploymentConfigName :: !(Maybe Text)
+  , _dciComputePlatform      :: !(Maybe ComputePlatform)
   , _dciMinimumHealthyHosts  :: !(Maybe MinimumHealthyHosts)
+  , _dciTrafficRoutingConfig :: !(Maybe TrafficRoutingConfig)
   , _dciDeploymentConfigId   :: !(Maybe Text)
   , _dciCreateTime           :: !(Maybe POSIX)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -432,7 +444,11 @@ data DeploymentConfigInfo = DeploymentConfigInfo'
 --
 -- * 'dciDeploymentConfigName' - The deployment configuration name.
 --
+-- * 'dciComputePlatform' - The destination platform type for the deployment (@Lambda@ or @Server@ ).
+--
 -- * 'dciMinimumHealthyHosts' - Information about the number or percentage of minimum healthy instance.
+--
+-- * 'dciTrafficRoutingConfig' - The configuration specifying how the deployment traffic will be routed. Only deployments with a Lambda compute platform can specify this.
 --
 -- * 'dciDeploymentConfigId' - The deployment configuration ID.
 --
@@ -442,7 +458,9 @@ deploymentConfigInfo
 deploymentConfigInfo =
   DeploymentConfigInfo'
   { _dciDeploymentConfigName = Nothing
+  , _dciComputePlatform = Nothing
   , _dciMinimumHealthyHosts = Nothing
+  , _dciTrafficRoutingConfig = Nothing
   , _dciDeploymentConfigId = Nothing
   , _dciCreateTime = Nothing
   }
@@ -452,9 +470,17 @@ deploymentConfigInfo =
 dciDeploymentConfigName :: Lens' DeploymentConfigInfo (Maybe Text)
 dciDeploymentConfigName = lens _dciDeploymentConfigName (\ s a -> s{_dciDeploymentConfigName = a});
 
+-- | The destination platform type for the deployment (@Lambda@ or @Server@ ).
+dciComputePlatform :: Lens' DeploymentConfigInfo (Maybe ComputePlatform)
+dciComputePlatform = lens _dciComputePlatform (\ s a -> s{_dciComputePlatform = a});
+
 -- | Information about the number or percentage of minimum healthy instance.
 dciMinimumHealthyHosts :: Lens' DeploymentConfigInfo (Maybe MinimumHealthyHosts)
 dciMinimumHealthyHosts = lens _dciMinimumHealthyHosts (\ s a -> s{_dciMinimumHealthyHosts = a});
+
+-- | The configuration specifying how the deployment traffic will be routed. Only deployments with a Lambda compute platform can specify this.
+dciTrafficRoutingConfig :: Lens' DeploymentConfigInfo (Maybe TrafficRoutingConfig)
+dciTrafficRoutingConfig = lens _dciTrafficRoutingConfig (\ s a -> s{_dciTrafficRoutingConfig = a});
 
 -- | The deployment configuration ID.
 dciDeploymentConfigId :: Lens' DeploymentConfigInfo (Maybe Text)
@@ -470,7 +496,9 @@ instance FromJSON DeploymentConfigInfo where
               (\ x ->
                  DeploymentConfigInfo' <$>
                    (x .:? "deploymentConfigName") <*>
-                     (x .:? "minimumHealthyHosts")
+                     (x .:? "computePlatform")
+                     <*> (x .:? "minimumHealthyHosts")
+                     <*> (x .:? "trafficRoutingConfig")
                      <*> (x .:? "deploymentConfigId")
                      <*> (x .:? "createTime"))
 
@@ -489,6 +517,7 @@ data DeploymentGroupInfo = DeploymentGroupInfo'
   , _dgiDeploymentConfigName :: !(Maybe Text)
   , _dgiLastAttemptedDeployment :: !(Maybe LastDeploymentInfo)
   , _dgiOnPremisesTagSet :: !(Maybe OnPremisesTagSet)
+  , _dgiComputePlatform :: !(Maybe ComputePlatform)
   , _dgiTargetRevision :: !(Maybe RevisionLocation)
   , _dgiEc2TagFilters :: !(Maybe [EC2TagFilter])
   , _dgiBlueGreenDeploymentConfiguration :: !(Maybe BlueGreenDeploymentConfiguration)
@@ -519,6 +548,8 @@ data DeploymentGroupInfo = DeploymentGroupInfo'
 -- * 'dgiLastAttemptedDeployment' - Information about the most recent attempted deployment to the deployment group.
 --
 -- * 'dgiOnPremisesTagSet' - Information about groups of tags applied to an on-premises instance. The deployment group includes only on-premises instances identified by all the tag groups. Cannot be used in the same call as onPremisesInstanceTagFilters.
+--
+-- * 'dgiComputePlatform' - The destination platform type for the deployment group (@Lambda@ or @Server@ ).
 --
 -- * 'dgiTargetRevision' - Information about the deployment group's target revision, including type and location.
 --
@@ -556,6 +587,7 @@ deploymentGroupInfo =
   , _dgiDeploymentConfigName = Nothing
   , _dgiLastAttemptedDeployment = Nothing
   , _dgiOnPremisesTagSet = Nothing
+  , _dgiComputePlatform = Nothing
   , _dgiTargetRevision = Nothing
   , _dgiEc2TagFilters = Nothing
   , _dgiBlueGreenDeploymentConfiguration = Nothing
@@ -592,6 +624,10 @@ dgiLastAttemptedDeployment = lens _dgiLastAttemptedDeployment (\ s a -> s{_dgiLa
 -- | Information about groups of tags applied to an on-premises instance. The deployment group includes only on-premises instances identified by all the tag groups. Cannot be used in the same call as onPremisesInstanceTagFilters.
 dgiOnPremisesTagSet :: Lens' DeploymentGroupInfo (Maybe OnPremisesTagSet)
 dgiOnPremisesTagSet = lens _dgiOnPremisesTagSet (\ s a -> s{_dgiOnPremisesTagSet = a});
+
+-- | The destination platform type for the deployment group (@Lambda@ or @Server@ ).
+dgiComputePlatform :: Lens' DeploymentGroupInfo (Maybe ComputePlatform)
+dgiComputePlatform = lens _dgiComputePlatform (\ s a -> s{_dgiComputePlatform = a});
 
 -- | Information about the deployment group's target revision, including type and location.
 dgiTargetRevision :: Lens' DeploymentGroupInfo (Maybe RevisionLocation)
@@ -658,6 +694,7 @@ instance FromJSON DeploymentGroupInfo where
                      (x .:? "deploymentConfigName")
                      <*> (x .:? "lastAttemptedDeployment")
                      <*> (x .:? "onPremisesTagSet")
+                     <*> (x .:? "computePlatform")
                      <*> (x .:? "targetRevision")
                      <*> (x .:? "ec2TagFilters" .!= mempty)
                      <*> (x .:? "blueGreenDeploymentConfiguration")
@@ -687,8 +724,10 @@ data DeploymentInfo = DeploymentInfo'
   , _diStatus :: !(Maybe DeploymentStatus)
   , _diDeploymentId :: !(Maybe Text)
   , _diDeploymentConfigName :: !(Maybe Text)
+  , _diComputePlatform :: !(Maybe ComputePlatform)
   , _diPreviousRevision :: !(Maybe RevisionLocation)
   , _diInstanceTerminationWaitTimeStarted :: !(Maybe Bool)
+  , _diDeploymentStatusMessages :: !(Maybe [Text])
   , _diStartTime :: !(Maybe POSIX)
   , _diCompleteTime :: !(Maybe POSIX)
   , _diBlueGreenDeploymentConfiguration :: !(Maybe BlueGreenDeploymentConfiguration)
@@ -723,9 +762,13 @@ data DeploymentInfo = DeploymentInfo'
 --
 -- * 'diDeploymentConfigName' - The deployment configuration name.
 --
+-- * 'diComputePlatform' - The destination platform type for the deployment (@Lambda@ or @Server@ ).
+--
 -- * 'diPreviousRevision' - Information about the application revision that was deployed to the deployment group before the most recent successful deployment.
 --
 -- * 'diInstanceTerminationWaitTimeStarted' - Indicates whether the wait period set for the termination of instances in the original environment has started. Status is 'false' if the KEEP_ALIVE option is specified; otherwise, 'true' as soon as the termination wait period starts.
+--
+-- * 'diDeploymentStatusMessages' - Messages that contain information about the status of a deployment.
 --
 -- * 'diStartTime' - A timestamp indicating when the deployment was deployed to the deployment group. In some cases, the reported value of the start time may be later than the complete time. This is due to differences in the clock settings of back-end servers that participate in the deployment process.
 --
@@ -772,8 +815,10 @@ deploymentInfo =
   , _diStatus = Nothing
   , _diDeploymentId = Nothing
   , _diDeploymentConfigName = Nothing
+  , _diComputePlatform = Nothing
   , _diPreviousRevision = Nothing
   , _diInstanceTerminationWaitTimeStarted = Nothing
+  , _diDeploymentStatusMessages = Nothing
   , _diStartTime = Nothing
   , _diCompleteTime = Nothing
   , _diBlueGreenDeploymentConfiguration = Nothing
@@ -812,6 +857,10 @@ diDeploymentId = lens _diDeploymentId (\ s a -> s{_diDeploymentId = a});
 diDeploymentConfigName :: Lens' DeploymentInfo (Maybe Text)
 diDeploymentConfigName = lens _diDeploymentConfigName (\ s a -> s{_diDeploymentConfigName = a});
 
+-- | The destination platform type for the deployment (@Lambda@ or @Server@ ).
+diComputePlatform :: Lens' DeploymentInfo (Maybe ComputePlatform)
+diComputePlatform = lens _diComputePlatform (\ s a -> s{_diComputePlatform = a});
+
 -- | Information about the application revision that was deployed to the deployment group before the most recent successful deployment.
 diPreviousRevision :: Lens' DeploymentInfo (Maybe RevisionLocation)
 diPreviousRevision = lens _diPreviousRevision (\ s a -> s{_diPreviousRevision = a});
@@ -819,6 +868,10 @@ diPreviousRevision = lens _diPreviousRevision (\ s a -> s{_diPreviousRevision = 
 -- | Indicates whether the wait period set for the termination of instances in the original environment has started. Status is 'false' if the KEEP_ALIVE option is specified; otherwise, 'true' as soon as the termination wait period starts.
 diInstanceTerminationWaitTimeStarted :: Lens' DeploymentInfo (Maybe Bool)
 diInstanceTerminationWaitTimeStarted = lens _diInstanceTerminationWaitTimeStarted (\ s a -> s{_diInstanceTerminationWaitTimeStarted = a});
+
+-- | Messages that contain information about the status of a deployment.
+diDeploymentStatusMessages :: Lens' DeploymentInfo [Text]
+diDeploymentStatusMessages = lens _diDeploymentStatusMessages (\ s a -> s{_diDeploymentStatusMessages = a}) . _Default . _Coerce;
 
 -- | A timestamp indicating when the deployment was deployed to the deployment group. In some cases, the reported value of the start time may be later than the complete time. This is due to differences in the clock settings of back-end servers that participate in the deployment process.
 diStartTime :: Lens' DeploymentInfo (Maybe UTCTime)
@@ -904,8 +957,10 @@ instance FromJSON DeploymentInfo where
                    (x .:? "creator") <*> (x .:? "status") <*>
                      (x .:? "deploymentId")
                      <*> (x .:? "deploymentConfigName")
+                     <*> (x .:? "computePlatform")
                      <*> (x .:? "previousRevision")
                      <*> (x .:? "instanceTerminationWaitTimeStarted")
+                     <*> (x .:? "deploymentStatusMessages" .!= mempty)
                      <*> (x .:? "startTime")
                      <*> (x .:? "completeTime")
                      <*> (x .:? "blueGreenDeploymentConfiguration")
@@ -1290,13 +1345,13 @@ newtype ELBInfo = ELBInfo'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'elbiName' - For blue/green deployments, the name of the load balancer that will be used to route traffic from original instances to replacement instances in a blue/green deployment. For in-place deployments, the name of the load balancer that instances are deregistered from, so they are not serving traffic during a deployment, and then re-registered with after the deployment completes.
+-- * 'elbiName' - For blue/green deployments, the name of the load balancer that will be used to route traffic from original instances to replacement instances in a blue/green deployment. For in-place deployments, the name of the load balancer that instances are deregistered from so they are not serving traffic during a deployment, and then re-registered with after the deployment completes.
 eLBInfo
     :: ELBInfo
 eLBInfo = ELBInfo' {_elbiName = Nothing}
 
 
--- | For blue/green deployments, the name of the load balancer that will be used to route traffic from original instances to replacement instances in a blue/green deployment. For in-place deployments, the name of the load balancer that instances are deregistered from, so they are not serving traffic during a deployment, and then re-registered with after the deployment completes.
+-- | For blue/green deployments, the name of the load balancer that will be used to route traffic from original instances to replacement instances in a blue/green deployment. For in-place deployments, the name of the load balancer that instances are deregistered from so they are not serving traffic during a deployment, and then re-registered with after the deployment completes.
 elbiName :: Lens' ELBInfo (Maybe Text)
 elbiName = lens _elbiName (\ s a -> s{_elbiName = a});
 
@@ -1972,6 +2027,55 @@ instance ToJSON OnPremisesTagSet where
                  [("onPremisesTagSetList" .=) <$>
                     _optsOnPremisesTagSetList])
 
+-- | A revision for an AWS Lambda deployment that is a YAML-formatted or JSON-formatted string. For AWS Lambda deployments, the revision is the same as the AppSpec file.
+--
+--
+--
+-- /See:/ 'rawString' smart constructor.
+data RawString = RawString'
+  { _rsContent :: !(Maybe Text)
+  , _rsSha256  :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'RawString' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'rsContent' - The YAML-formatted or JSON-formatted revision string. It includes information about which Lambda function to update and optional Lambda functions that validate deployment lifecycle events.
+--
+-- * 'rsSha256' - The SHA256 hash value of the revision that is specified as a RawString.
+rawString
+    :: RawString
+rawString = RawString' {_rsContent = Nothing, _rsSha256 = Nothing}
+
+
+-- | The YAML-formatted or JSON-formatted revision string. It includes information about which Lambda function to update and optional Lambda functions that validate deployment lifecycle events.
+rsContent :: Lens' RawString (Maybe Text)
+rsContent = lens _rsContent (\ s a -> s{_rsContent = a});
+
+-- | The SHA256 hash value of the revision that is specified as a RawString.
+rsSha256 :: Lens' RawString (Maybe Text)
+rsSha256 = lens _rsSha256 (\ s a -> s{_rsSha256 = a});
+
+instance FromJSON RawString where
+        parseJSON
+          = withObject "RawString"
+              (\ x ->
+                 RawString' <$>
+                   (x .:? "content") <*> (x .:? "sha256"))
+
+instance Hashable RawString where
+
+instance NFData RawString where
+
+instance ToJSON RawString where
+        toJSON RawString'{..}
+          = object
+              (catMaybes
+                 [("content" .=) <$> _rsContent,
+                  ("sha256" .=) <$> _rsSha256])
+
 -- | Information about an application revision.
 --
 --
@@ -2023,7 +2127,8 @@ instance NFData RevisionInfo where
 --
 -- /See:/ 'revisionLocation' smart constructor.
 data RevisionLocation = RevisionLocation'
-  { _rlRevisionType   :: !(Maybe RevisionLocationType)
+  { _rlString         :: !(Maybe RawString)
+  , _rlRevisionType   :: !(Maybe RevisionLocationType)
   , _rlS3Location     :: !(Maybe S3Location)
   , _rlGitHubLocation :: !(Maybe GitHubLocation)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -2033,26 +2138,33 @@ data RevisionLocation = RevisionLocation'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'rlRevisionType' - The type of application revision:     * S3: An application revision stored in Amazon S3.     * GitHub: An application revision stored in GitHub.
+-- * 'rlString' - Information about the location of an AWS Lambda deployment revision stored as a RawString.
 --
--- * 'rlS3Location' - Information about the location of application artifacts stored in Amazon S3.
+-- * 'rlRevisionType' - The type of application revision:     * S3: An application revision stored in Amazon S3.     * GitHub: An application revision stored in GitHub (EC2/On-premises deployments only)     * String: A YAML-formatted or JSON-formatted string (AWS Lambda deployments only)
+--
+-- * 'rlS3Location' - Information about the location of a revision stored in Amazon S3.
 --
 -- * 'rlGitHubLocation' - Information about the location of application artifacts stored in GitHub.
 revisionLocation
     :: RevisionLocation
 revisionLocation =
   RevisionLocation'
-  { _rlRevisionType = Nothing
+  { _rlString = Nothing
+  , _rlRevisionType = Nothing
   , _rlS3Location = Nothing
   , _rlGitHubLocation = Nothing
   }
 
 
--- | The type of application revision:     * S3: An application revision stored in Amazon S3.     * GitHub: An application revision stored in GitHub.
+-- | Information about the location of an AWS Lambda deployment revision stored as a RawString.
+rlString :: Lens' RevisionLocation (Maybe RawString)
+rlString = lens _rlString (\ s a -> s{_rlString = a});
+
+-- | The type of application revision:     * S3: An application revision stored in Amazon S3.     * GitHub: An application revision stored in GitHub (EC2/On-premises deployments only)     * String: A YAML-formatted or JSON-formatted string (AWS Lambda deployments only)
 rlRevisionType :: Lens' RevisionLocation (Maybe RevisionLocationType)
 rlRevisionType = lens _rlRevisionType (\ s a -> s{_rlRevisionType = a});
 
--- | Information about the location of application artifacts stored in Amazon S3.
+-- | Information about the location of a revision stored in Amazon S3.
 rlS3Location :: Lens' RevisionLocation (Maybe S3Location)
 rlS3Location = lens _rlS3Location (\ s a -> s{_rlS3Location = a});
 
@@ -2065,8 +2177,9 @@ instance FromJSON RevisionLocation where
           = withObject "RevisionLocation"
               (\ x ->
                  RevisionLocation' <$>
-                   (x .:? "revisionType") <*> (x .:? "s3Location") <*>
-                     (x .:? "gitHubLocation"))
+                   (x .:? "string") <*> (x .:? "revisionType") <*>
+                     (x .:? "s3Location")
+                     <*> (x .:? "gitHubLocation"))
 
 instance Hashable RevisionLocation where
 
@@ -2076,7 +2189,8 @@ instance ToJSON RevisionLocation where
         toJSON RevisionLocation'{..}
           = object
               (catMaybes
-                 [("revisionType" .=) <$> _rlRevisionType,
+                 [("string" .=) <$> _rlString,
+                  ("revisionType" .=) <$> _rlRevisionType,
                   ("s3Location" .=) <$> _rlS3Location,
                   ("gitHubLocation" .=) <$> _rlGitHubLocation])
 
@@ -2421,6 +2535,110 @@ instance ToJSON TargetInstances where
                   ("tagFilters" .=) <$> _tiTagFilters,
                   ("autoScalingGroups" .=) <$> _tiAutoScalingGroups])
 
+-- | A configuration that shifts traffic from one version of a Lambda function to another in two increments. The original and target Lambda function versions are specified in the deployment's AppSpec file.
+--
+--
+--
+-- /See:/ 'timeBasedCanary' smart constructor.
+data TimeBasedCanary = TimeBasedCanary'
+  { _tbcCanaryInterval   :: !(Maybe Int)
+  , _tbcCanaryPercentage :: !(Maybe Int)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'TimeBasedCanary' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'tbcCanaryInterval' - The number of minutes between the first and second traffic shifts of a @TimeBasedCanary@ deployment.
+--
+-- * 'tbcCanaryPercentage' - The percentage of traffic to shift in the first increment of a @TimeBasedCanary@ deployment.
+timeBasedCanary
+    :: TimeBasedCanary
+timeBasedCanary =
+  TimeBasedCanary'
+  {_tbcCanaryInterval = Nothing, _tbcCanaryPercentage = Nothing}
+
+
+-- | The number of minutes between the first and second traffic shifts of a @TimeBasedCanary@ deployment.
+tbcCanaryInterval :: Lens' TimeBasedCanary (Maybe Int)
+tbcCanaryInterval = lens _tbcCanaryInterval (\ s a -> s{_tbcCanaryInterval = a});
+
+-- | The percentage of traffic to shift in the first increment of a @TimeBasedCanary@ deployment.
+tbcCanaryPercentage :: Lens' TimeBasedCanary (Maybe Int)
+tbcCanaryPercentage = lens _tbcCanaryPercentage (\ s a -> s{_tbcCanaryPercentage = a});
+
+instance FromJSON TimeBasedCanary where
+        parseJSON
+          = withObject "TimeBasedCanary"
+              (\ x ->
+                 TimeBasedCanary' <$>
+                   (x .:? "canaryInterval") <*>
+                     (x .:? "canaryPercentage"))
+
+instance Hashable TimeBasedCanary where
+
+instance NFData TimeBasedCanary where
+
+instance ToJSON TimeBasedCanary where
+        toJSON TimeBasedCanary'{..}
+          = object
+              (catMaybes
+                 [("canaryInterval" .=) <$> _tbcCanaryInterval,
+                  ("canaryPercentage" .=) <$> _tbcCanaryPercentage])
+
+-- | A configuration that shifts traffic from one version of a Lambda function to another in equal increments, with an equal number of minutes between each increment. The original and target Lambda function versions are specified in the deployment's AppSpec file.
+--
+--
+--
+-- /See:/ 'timeBasedLinear' smart constructor.
+data TimeBasedLinear = TimeBasedLinear'
+  { _tblLinearInterval   :: !(Maybe Int)
+  , _tblLinearPercentage :: !(Maybe Int)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'TimeBasedLinear' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'tblLinearInterval' - The number of minutes between each incremental traffic shift of a @TimeBasedLinear@ deployment.
+--
+-- * 'tblLinearPercentage' - The percentage of traffic that is shifted at the start of each increment of a @TimeBasedLinear@ deployment.
+timeBasedLinear
+    :: TimeBasedLinear
+timeBasedLinear =
+  TimeBasedLinear'
+  {_tblLinearInterval = Nothing, _tblLinearPercentage = Nothing}
+
+
+-- | The number of minutes between each incremental traffic shift of a @TimeBasedLinear@ deployment.
+tblLinearInterval :: Lens' TimeBasedLinear (Maybe Int)
+tblLinearInterval = lens _tblLinearInterval (\ s a -> s{_tblLinearInterval = a});
+
+-- | The percentage of traffic that is shifted at the start of each increment of a @TimeBasedLinear@ deployment.
+tblLinearPercentage :: Lens' TimeBasedLinear (Maybe Int)
+tblLinearPercentage = lens _tblLinearPercentage (\ s a -> s{_tblLinearPercentage = a});
+
+instance FromJSON TimeBasedLinear where
+        parseJSON
+          = withObject "TimeBasedLinear"
+              (\ x ->
+                 TimeBasedLinear' <$>
+                   (x .:? "linearInterval") <*>
+                     (x .:? "linearPercentage"))
+
+instance Hashable TimeBasedLinear where
+
+instance NFData TimeBasedLinear where
+
+instance ToJSON TimeBasedLinear where
+        toJSON TimeBasedLinear'{..}
+          = object
+              (catMaybes
+                 [("linearInterval" .=) <$> _tblLinearInterval,
+                  ("linearPercentage" .=) <$> _tblLinearPercentage])
+
 -- | Information about a time range.
 --
 --
@@ -2461,6 +2679,70 @@ instance ToJSON TimeRange where
           = object
               (catMaybes
                  [("start" .=) <$> _trStart, ("end" .=) <$> _trEnd])
+
+-- | The configuration that specifies how traffic is shifted from one version of a Lambda function to another version during an AWS Lambda deployment.
+--
+--
+--
+-- /See:/ 'trafficRoutingConfig' smart constructor.
+data TrafficRoutingConfig = TrafficRoutingConfig'
+  { _trcTimeBasedCanary :: !(Maybe TimeBasedCanary)
+  , _trcTimeBasedLinear :: !(Maybe TimeBasedLinear)
+  , _trcType            :: !(Maybe TrafficRoutingType)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'TrafficRoutingConfig' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'trcTimeBasedCanary' - A configuration that shifts traffic from one version of a Lambda function to another in two increments. The original and target Lambda function versions are specified in the deployment's AppSpec file.
+--
+-- * 'trcTimeBasedLinear' - A configuration that shifts traffic from one version of a Lambda function to another in equal increments, with an equal number of minutes between each increment. The original and target Lambda function versions are specified in the deployment's AppSpec file.
+--
+-- * 'trcType' - The type of traffic shifting (@TimeBasedCanary@ or @TimeBasedLinear@ ) used by a deployment configuration .
+trafficRoutingConfig
+    :: TrafficRoutingConfig
+trafficRoutingConfig =
+  TrafficRoutingConfig'
+  { _trcTimeBasedCanary = Nothing
+  , _trcTimeBasedLinear = Nothing
+  , _trcType = Nothing
+  }
+
+
+-- | A configuration that shifts traffic from one version of a Lambda function to another in two increments. The original and target Lambda function versions are specified in the deployment's AppSpec file.
+trcTimeBasedCanary :: Lens' TrafficRoutingConfig (Maybe TimeBasedCanary)
+trcTimeBasedCanary = lens _trcTimeBasedCanary (\ s a -> s{_trcTimeBasedCanary = a});
+
+-- | A configuration that shifts traffic from one version of a Lambda function to another in equal increments, with an equal number of minutes between each increment. The original and target Lambda function versions are specified in the deployment's AppSpec file.
+trcTimeBasedLinear :: Lens' TrafficRoutingConfig (Maybe TimeBasedLinear)
+trcTimeBasedLinear = lens _trcTimeBasedLinear (\ s a -> s{_trcTimeBasedLinear = a});
+
+-- | The type of traffic shifting (@TimeBasedCanary@ or @TimeBasedLinear@ ) used by a deployment configuration .
+trcType :: Lens' TrafficRoutingConfig (Maybe TrafficRoutingType)
+trcType = lens _trcType (\ s a -> s{_trcType = a});
+
+instance FromJSON TrafficRoutingConfig where
+        parseJSON
+          = withObject "TrafficRoutingConfig"
+              (\ x ->
+                 TrafficRoutingConfig' <$>
+                   (x .:? "timeBasedCanary") <*>
+                     (x .:? "timeBasedLinear")
+                     <*> (x .:? "type"))
+
+instance Hashable TrafficRoutingConfig where
+
+instance NFData TrafficRoutingConfig where
+
+instance ToJSON TrafficRoutingConfig where
+        toJSON TrafficRoutingConfig'{..}
+          = object
+              (catMaybes
+                 [("timeBasedCanary" .=) <$> _trcTimeBasedCanary,
+                  ("timeBasedLinear" .=) <$> _trcTimeBasedLinear,
+                  ("type" .=) <$> _trcType])
 
 -- | Information about notification triggers for the deployment group.
 --

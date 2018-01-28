@@ -18,9 +18,11 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Lists schemas applied to a directory.
+-- Lists schema major versions applied to a directory. If @SchemaArn@ is provided, lists the minor version.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListAppliedSchemaARNs
     (
     -- * Creating a Request
@@ -28,6 +30,7 @@ module Network.AWS.CloudDirectory.ListAppliedSchemaARNs
     , ListAppliedSchemaARNs
     -- * Request Lenses
     , lasaNextToken
+    , lasaSchemaARN
     , lasaMaxResults
     , lasaDirectoryARN
 
@@ -43,6 +46,7 @@ module Network.AWS.CloudDirectory.ListAppliedSchemaARNs
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -50,6 +54,7 @@ import Network.AWS.Response
 -- | /See:/ 'listAppliedSchemaARNs' smart constructor.
 data ListAppliedSchemaARNs = ListAppliedSchemaARNs'
   { _lasaNextToken    :: !(Maybe Text)
+  , _lasaSchemaARN    :: !(Maybe Text)
   , _lasaMaxResults   :: !(Maybe Nat)
   , _lasaDirectoryARN :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -61,6 +66,8 @@ data ListAppliedSchemaARNs = ListAppliedSchemaARNs'
 --
 -- * 'lasaNextToken' - The pagination token.
 --
+-- * 'lasaSchemaARN' - The response for @ListAppliedSchemaArns@ when this parameter is used will list all minor version ARNs for a major version.
+--
 -- * 'lasaMaxResults' - The maximum number of results to retrieve.
 --
 -- * 'lasaDirectoryARN' - The ARN of the directory you are listing.
@@ -70,6 +77,7 @@ listAppliedSchemaARNs
 listAppliedSchemaARNs pDirectoryARN_ =
   ListAppliedSchemaARNs'
   { _lasaNextToken = Nothing
+  , _lasaSchemaARN = Nothing
   , _lasaMaxResults = Nothing
   , _lasaDirectoryARN = pDirectoryARN_
   }
@@ -79,6 +87,10 @@ listAppliedSchemaARNs pDirectoryARN_ =
 lasaNextToken :: Lens' ListAppliedSchemaARNs (Maybe Text)
 lasaNextToken = lens _lasaNextToken (\ s a -> s{_lasaNextToken = a});
 
+-- | The response for @ListAppliedSchemaArns@ when this parameter is used will list all minor version ARNs for a major version.
+lasaSchemaARN :: Lens' ListAppliedSchemaARNs (Maybe Text)
+lasaSchemaARN = lens _lasaSchemaARN (\ s a -> s{_lasaSchemaARN = a});
+
 -- | The maximum number of results to retrieve.
 lasaMaxResults :: Lens' ListAppliedSchemaARNs (Maybe Natural)
 lasaMaxResults = lens _lasaMaxResults (\ s a -> s{_lasaMaxResults = a}) . mapping _Nat;
@@ -86,6 +98,13 @@ lasaMaxResults = lens _lasaMaxResults (\ s a -> s{_lasaMaxResults = a}) . mappin
 -- | The ARN of the directory you are listing.
 lasaDirectoryARN :: Lens' ListAppliedSchemaARNs Text
 lasaDirectoryARN = lens _lasaDirectoryARN (\ s a -> s{_lasaDirectoryARN = a});
+
+instance AWSPager ListAppliedSchemaARNs where
+        page rq rs
+          | stop (rs ^. lasarsNextToken) = Nothing
+          | stop (rs ^. lasarsSchemaARNs) = Nothing
+          | otherwise =
+            Just $ rq & lasaNextToken .~ rs ^. lasarsNextToken
 
 instance AWSRequest ListAppliedSchemaARNs where
         type Rs ListAppliedSchemaARNs =
@@ -111,6 +130,7 @@ instance ToJSON ListAppliedSchemaARNs where
           = object
               (catMaybes
                  [("NextToken" .=) <$> _lasaNextToken,
+                  ("SchemaArn" .=) <$> _lasaSchemaARN,
                   ("MaxResults" .=) <$> _lasaMaxResults,
                   Just ("DirectoryArn" .= _lasaDirectoryARN)])
 

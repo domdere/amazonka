@@ -61,7 +61,7 @@ data DisassociatePrincipalFromPortfolio = DisassociatePrincipalFromPortfolio'
 --
 -- * 'disPortfolioId' - The portfolio identifier.
 --
--- * 'disPrincipalARN' - The ARN representing the principal (IAM user, role, or group).
+-- * 'disPrincipalARN' - The ARN of the principal (IAM user, role, or group).
 disassociatePrincipalFromPortfolio
     :: Text -- ^ 'disPortfolioId'
     -> Text -- ^ 'disPrincipalARN'
@@ -82,7 +82,7 @@ disAcceptLanguage = lens _disAcceptLanguage (\ s a -> s{_disAcceptLanguage = a})
 disPortfolioId :: Lens' DisassociatePrincipalFromPortfolio Text
 disPortfolioId = lens _disPortfolioId (\ s a -> s{_disPortfolioId = a});
 
--- | The ARN representing the principal (IAM user, role, or group).
+-- | The ARN of the principal (IAM user, role, or group).
 disPrincipalARN :: Lens' DisassociatePrincipalFromPortfolio Text
 disPrincipalARN = lens _disPrincipalARN (\ s a -> s{_disPrincipalARN = a});
 

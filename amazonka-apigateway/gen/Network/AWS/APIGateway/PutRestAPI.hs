@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- A feature of the Amazon API Gateway control service for updating an existing API with an input of external API definitions. The update can take the form of merging the supplied definition into the existing API or overwriting the existing API.
+-- A feature of the API Gateway control service for updating an existing API with an input of external API definitions. The update can take the form of merging the supplied definition into the existing API or overwriting the existing API.
 --
 --
 module Network.AWS.APIGateway.PutRestAPI
@@ -37,11 +37,13 @@ module Network.AWS.APIGateway.PutRestAPI
     , restAPI
     , RestAPI
     -- * Response Lenses
+    , raMinimumCompressionSize
     , raBinaryMediaTypes
     , raWarnings
     , raCreatedDate
     , raName
     , raVersion
+    , raApiKeySource
     , raId
     , raEndpointConfiguration
     , raDescription

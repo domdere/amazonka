@@ -61,11 +61,11 @@ data ChangePassword = ChangePassword'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cpPreviousPassword' - The old password in the change password request.
+-- * 'cpPreviousPassword' - The old password.
 --
--- * 'cpProposedPassword' - The new password in the change password request.
+-- * 'cpProposedPassword' - The new password.
 --
--- * 'cpAccessToken' - The access token in the change password request.
+-- * 'cpAccessToken' - The access token.
 changePassword
     :: Text -- ^ 'cpPreviousPassword'
     -> Text -- ^ 'cpProposedPassword'
@@ -79,15 +79,15 @@ changePassword pPreviousPassword_ pProposedPassword_ pAccessToken_ =
   }
 
 
--- | The old password in the change password request.
+-- | The old password.
 cpPreviousPassword :: Lens' ChangePassword Text
 cpPreviousPassword = lens _cpPreviousPassword (\ s a -> s{_cpPreviousPassword = a}) . _Sensitive;
 
--- | The new password in the change password request.
+-- | The new password.
 cpProposedPassword :: Lens' ChangePassword Text
 cpProposedPassword = lens _cpProposedPassword (\ s a -> s{_cpProposedPassword = a}) . _Sensitive;
 
--- | The access token in the change password request.
+-- | The access token.
 cpAccessToken :: Lens' ChangePassword Text
 cpAccessToken = lens _cpAccessToken (\ s a -> s{_cpAccessToken = a}) . _Sensitive;
 

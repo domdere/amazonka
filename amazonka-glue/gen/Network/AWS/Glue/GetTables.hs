@@ -21,6 +21,8 @@
 -- Retrieves the definitions of some or all of the tables in a given @Database@ .
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Glue.GetTables
     (
     -- * Creating a Request
@@ -45,6 +47,7 @@ module Network.AWS.Glue.GetTables
 import Network.AWS.Glue.Types
 import Network.AWS.Glue.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -71,7 +74,7 @@ data GetTables = GetTables'
 --
 -- * 'gtMaxResults' - The maximum number of tables to return in a single response.
 --
--- * 'gtDatabaseName' - The database in the catalog whose tables to list.
+-- * 'gtDatabaseName' - The database in the catalog whose tables to list. For Hive compatibility, this name is entirely lowercase.
 getTables
     :: Text -- ^ 'gtDatabaseName'
     -> GetTables
@@ -101,9 +104,16 @@ gtExpression = lens _gtExpression (\ s a -> s{_gtExpression = a});
 gtMaxResults :: Lens' GetTables (Maybe Natural)
 gtMaxResults = lens _gtMaxResults (\ s a -> s{_gtMaxResults = a}) . mapping _Nat;
 
--- | The database in the catalog whose tables to list.
+-- | The database in the catalog whose tables to list. For Hive compatibility, this name is entirely lowercase.
 gtDatabaseName :: Lens' GetTables Text
 gtDatabaseName = lens _gtDatabaseName (\ s a -> s{_gtDatabaseName = a});
+
+instance AWSPager GetTables where
+        page rq rs
+          | stop (rs ^. gtsrsNextToken) = Nothing
+          | stop (rs ^. gtsrsTableList) = Nothing
+          | otherwise =
+            Just $ rq & gtNextToken .~ rs ^. gtsrsNextToken
 
 instance AWSRequest GetTables where
         type Rs GetTables = GetTablesResponse

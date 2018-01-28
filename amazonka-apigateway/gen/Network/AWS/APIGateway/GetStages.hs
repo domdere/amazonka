@@ -45,7 +45,7 @@ import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
 
--- | Requests Amazon API Gateway to get information about one or more 'Stage' resources.
+-- | Requests API Gateway to get information about one or more 'Stage' resources.
 --
 --
 --

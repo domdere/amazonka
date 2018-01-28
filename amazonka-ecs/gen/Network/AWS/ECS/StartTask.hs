@@ -21,7 +21,7 @@
 -- Starts a new task from the specified task definition on the specified container instance or instances.
 --
 --
--- Alternatively, you can use 'RunTask' to place tasks for you. For more information, see <http://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html Scheduling Tasks> in the /Amazon EC2 Container Service Developer Guide/ .
+-- Alternatively, you can use 'RunTask' to place tasks for you. For more information, see <http://docs.aws.amazon.com/AmazonECS/latest/developerguide/scheduling_tasks.html Scheduling Tasks> in the /Amazon Elastic Container Service Developer Guide/ .
 --
 module Network.AWS.ECS.StartTask
     (
@@ -33,6 +33,7 @@ module Network.AWS.ECS.StartTask
     , sGroup
     , sCluster
     , sStartedBy
+    , sNetworkConfiguration
     , sTaskDefinition
     , sContainerInstances
 
@@ -54,12 +55,13 @@ import Network.AWS.Response
 
 -- | /See:/ 'startTask' smart constructor.
 data StartTask = StartTask'
-  { _sOverrides          :: !(Maybe TaskOverride)
-  , _sGroup              :: !(Maybe Text)
-  , _sCluster            :: !(Maybe Text)
-  , _sStartedBy          :: !(Maybe Text)
-  , _sTaskDefinition     :: !Text
-  , _sContainerInstances :: ![Text]
+  { _sOverrides            :: !(Maybe TaskOverride)
+  , _sGroup                :: !(Maybe Text)
+  , _sCluster              :: !(Maybe Text)
+  , _sStartedBy            :: !(Maybe Text)
+  , _sNetworkConfiguration :: !(Maybe NetworkConfiguration)
+  , _sTaskDefinition       :: !Text
+  , _sContainerInstances   :: ![Text]
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -75,9 +77,11 @@ data StartTask = StartTask'
 --
 -- * 'sStartedBy' - An optional tag specified when a task is started. For example if you automatically trigger a task to run a batch process job, you could apply a unique identifier for that job to your task with the @startedBy@ parameter. You can then identify which tasks belong to that job by filtering the results of a 'ListTasks' call with the @startedBy@ value. Up to 36 letters (uppercase and lowercase), numbers, hyphens, and underscores are allowed. If a task is started by an Amazon ECS service, then the @startedBy@ parameter contains the deployment ID of the service that starts it.
 --
--- * 'sTaskDefinition' - The @family@ and @revision@ (@family:revision@ ) or full Amazon Resource Name (ARN) of the task definition to start. If a @revision@ is not specified, the latest @ACTIVE@ revision is used.
+-- * 'sNetworkConfiguration' - The VPC subnet and security group configuration for tasks that receive their own Elastic Network Interface by using the @awsvpc@ networking mode.
 --
--- * 'sContainerInstances' - The container instance IDs or full Amazon Resource Name (ARN) entries for the container instances on which you would like to place your task. You can specify up to 10 container instances.
+-- * 'sTaskDefinition' - The @family@ and @revision@ (@family:revision@ ) or full ARN of the task definition to start. If a @revision@ is not specified, the latest @ACTIVE@ revision is used.
+--
+-- * 'sContainerInstances' - The container instance IDs or full ARN entries for the container instances on which you would like to place your task. You can specify up to 10 container instances.
 startTask
     :: Text -- ^ 'sTaskDefinition'
     -> StartTask
@@ -87,6 +91,7 @@ startTask pTaskDefinition_ =
   , _sGroup = Nothing
   , _sCluster = Nothing
   , _sStartedBy = Nothing
+  , _sNetworkConfiguration = Nothing
   , _sTaskDefinition = pTaskDefinition_
   , _sContainerInstances = mempty
   }
@@ -108,11 +113,15 @@ sCluster = lens _sCluster (\ s a -> s{_sCluster = a});
 sStartedBy :: Lens' StartTask (Maybe Text)
 sStartedBy = lens _sStartedBy (\ s a -> s{_sStartedBy = a});
 
--- | The @family@ and @revision@ (@family:revision@ ) or full Amazon Resource Name (ARN) of the task definition to start. If a @revision@ is not specified, the latest @ACTIVE@ revision is used.
+-- | The VPC subnet and security group configuration for tasks that receive their own Elastic Network Interface by using the @awsvpc@ networking mode.
+sNetworkConfiguration :: Lens' StartTask (Maybe NetworkConfiguration)
+sNetworkConfiguration = lens _sNetworkConfiguration (\ s a -> s{_sNetworkConfiguration = a});
+
+-- | The @family@ and @revision@ (@family:revision@ ) or full ARN of the task definition to start. If a @revision@ is not specified, the latest @ACTIVE@ revision is used.
 sTaskDefinition :: Lens' StartTask Text
 sTaskDefinition = lens _sTaskDefinition (\ s a -> s{_sTaskDefinition = a});
 
--- | The container instance IDs or full Amazon Resource Name (ARN) entries for the container instances on which you would like to place your task. You can specify up to 10 container instances.
+-- | The container instance IDs or full ARN entries for the container instances on which you would like to place your task. You can specify up to 10 container instances.
 sContainerInstances :: Lens' StartTask [Text]
 sContainerInstances = lens _sContainerInstances (\ s a -> s{_sContainerInstances = a}) . _Coerce;
 
@@ -149,6 +158,8 @@ instance ToJSON StartTask where
                   ("group" .=) <$> _sGroup,
                   ("cluster" .=) <$> _sCluster,
                   ("startedBy" .=) <$> _sStartedBy,
+                  ("networkConfiguration" .=) <$>
+                    _sNetworkConfiguration,
                   Just ("taskDefinition" .= _sTaskDefinition),
                   Just ("containerInstances" .= _sContainerInstances)])
 
@@ -172,7 +183,7 @@ data StartTaskResponse = StartTaskResponse'
 --
 -- * 'strsFailures' - Any failures associated with the call.
 --
--- * 'strsTasks' - A full description of the tasks that were started. Each task that was successfully placed on your container instances are described here.
+-- * 'strsTasks' - A full description of the tasks that were started. Each task that was successfully placed on your container instances is described.
 --
 -- * 'strsResponseStatus' - -- | The response status code.
 startTaskResponse
@@ -190,7 +201,7 @@ startTaskResponse pResponseStatus_ =
 strsFailures :: Lens' StartTaskResponse [Failure]
 strsFailures = lens _strsFailures (\ s a -> s{_strsFailures = a}) . _Default . _Coerce;
 
--- | A full description of the tasks that were started. Each task that was successfully placed on your container instances are described here.
+-- | A full description of the tasks that were started. Each task that was successfully placed on your container instances is described.
 strsTasks :: Lens' StartTaskResponse [Task]
 strsTasks = lens _strsTasks (\ s a -> s{_strsTasks = a}) . _Default . _Coerce;
 

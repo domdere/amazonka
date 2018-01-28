@@ -27,11 +27,32 @@ module Network.AWS.DynamoDB
     -- * Errors
     -- $errors
 
+    -- ** BackupNotFoundException
+    , _BackupNotFoundException
+
+    -- ** TableInUseException
+    , _TableInUseException
+
+    -- ** ContinuousBackupsUnavailableException
+    , _ContinuousBackupsUnavailableException
+
     -- ** ProvisionedThroughputExceededException
     , _ProvisionedThroughputExceededException
 
+    -- ** GlobalTableNotFoundException
+    , _GlobalTableNotFoundException
+
     -- ** ConditionalCheckFailedException
     , _ConditionalCheckFailedException
+
+    -- ** GlobalTableAlreadyExistsException
+    , _GlobalTableAlreadyExistsException
+
+    -- ** ReplicaNotFoundException
+    , _ReplicaNotFoundException
+
+    -- ** TableAlreadyExistsException
+    , _TableAlreadyExistsException
 
     -- ** ItemCollectionSizeLimitExceededException
     , _ItemCollectionSizeLimitExceededException
@@ -39,8 +60,17 @@ module Network.AWS.DynamoDB
     -- ** InternalServerError
     , _InternalServerError
 
+    -- ** TableNotFoundException
+    , _TableNotFoundException
+
+    -- ** BackupInUseException
+    , _BackupInUseException
+
     -- ** ResourceNotFoundException
     , _ResourceNotFoundException
+
+    -- ** ReplicaAlreadyExistsException
+    , _ReplicaAlreadyExistsException
 
     -- ** LimitExceededException
     , _LimitExceededException
@@ -69,6 +99,12 @@ module Network.AWS.DynamoDB
     -- ** UpdateItem
     , module Network.AWS.DynamoDB.UpdateItem
 
+    -- ** ListGlobalTables
+    , module Network.AWS.DynamoDB.ListGlobalTables
+
+    -- ** UpdateGlobalTable
+    , module Network.AWS.DynamoDB.UpdateGlobalTable
+
     -- ** DeleteTable
     , module Network.AWS.DynamoDB.DeleteTable
 
@@ -78,8 +114,20 @@ module Network.AWS.DynamoDB
     -- ** BatchGetItem
     , module Network.AWS.DynamoDB.BatchGetItem
 
+    -- ** ListBackups
+    , module Network.AWS.DynamoDB.ListBackups
+
+    -- ** DeleteBackup
+    , module Network.AWS.DynamoDB.DeleteBackup
+
+    -- ** CreateBackup
+    , module Network.AWS.DynamoDB.CreateBackup
+
     -- ** ListTagsOfResource
     , module Network.AWS.DynamoDB.ListTagsOfResource
+
+    -- ** DescribeGlobalTable
+    , module Network.AWS.DynamoDB.DescribeGlobalTable
 
     -- ** DescribeTable
     , module Network.AWS.DynamoDB.DescribeTable
@@ -89,6 +137,9 @@ module Network.AWS.DynamoDB
 
     -- ** GetItem
     , module Network.AWS.DynamoDB.GetItem
+
+    -- ** DescribeBackup
+    , module Network.AWS.DynamoDB.DescribeBackup
 
     -- ** BatchWriteItem
     , module Network.AWS.DynamoDB.BatchWriteItem
@@ -108,25 +159,43 @@ module Network.AWS.DynamoDB
     -- ** DescribeTimeToLive
     , module Network.AWS.DynamoDB.DescribeTimeToLive
 
+    -- ** DescribeContinuousBackups
+    , module Network.AWS.DynamoDB.DescribeContinuousBackups
+
     -- ** TagResource
     , module Network.AWS.DynamoDB.TagResource
 
     -- ** UntagResource
     , module Network.AWS.DynamoDB.UntagResource
 
+    -- ** RestoreTableFromBackup
+    , module Network.AWS.DynamoDB.RestoreTableFromBackup
+
     -- ** UpdateTimeToLive
     , module Network.AWS.DynamoDB.UpdateTimeToLive
+
+    -- ** CreateGlobalTable
+    , module Network.AWS.DynamoDB.CreateGlobalTable
 
     -- * Types
 
     -- ** AttributeAction
     , AttributeAction (..)
 
+    -- ** BackupStatus
+    , BackupStatus (..)
+
     -- ** ComparisonOperator
     , ComparisonOperator (..)
 
     -- ** ConditionalOperator
     , ConditionalOperator (..)
+
+    -- ** ContinuousBackupsStatus
+    , ContinuousBackupsStatus (..)
+
+    -- ** GlobalTableStatus
+    , GlobalTableStatus (..)
 
     -- ** IndexStatus
     , IndexStatus (..)
@@ -187,6 +256,34 @@ module Network.AWS.DynamoDB
     , avuValue
     , avuAction
 
+    -- ** BackupDescription
+    , BackupDescription
+    , backupDescription
+    , bdBackupDetails
+    , bdSourceTableDetails
+    , bdSourceTableFeatureDetails
+
+    -- ** BackupDetails
+    , BackupDetails
+    , backupDetails
+    , bdBackupSizeBytes
+    , bdBackupARN
+    , bdBackupName
+    , bdBackupStatus
+    , bdBackupCreationDateTime
+
+    -- ** BackupSummary
+    , BackupSummary
+    , backupSummary
+    , bsTableARN
+    , bsBackupName
+    , bsBackupStatus
+    , bsBackupSizeBytes
+    , bsBackupARN
+    , bsTableId
+    , bsBackupCreationDateTime
+    , bsTableName
+
     -- ** Capacity
     , Capacity
     , capacity
@@ -207,6 +304,11 @@ module Network.AWS.DynamoDB
     , ccTable
     , ccTableName
 
+    -- ** ContinuousBackupsDescription
+    , ContinuousBackupsDescription
+    , continuousBackupsDescription
+    , cbdContinuousBackupsStatus
+
     -- ** CreateGlobalSecondaryIndexAction
     , CreateGlobalSecondaryIndexAction
     , createGlobalSecondaryIndexAction
@@ -215,10 +317,20 @@ module Network.AWS.DynamoDB
     , cgsiaProjection
     , cgsiaProvisionedThroughput
 
+    -- ** CreateReplicaAction
+    , CreateReplicaAction
+    , createReplicaAction
+    , craRegionName
+
     -- ** DeleteGlobalSecondaryIndexAction
     , DeleteGlobalSecondaryIndexAction
     , deleteGlobalSecondaryIndexAction
     , dgsiaIndexName
+
+    -- ** DeleteReplicaAction
+    , DeleteReplicaAction
+    , deleteReplicaAction
+    , draRegionName
 
     -- ** DeleteRequest
     , DeleteRequest
@@ -254,12 +366,35 @@ module Network.AWS.DynamoDB
     , gsidItemCount
     , gsidIndexName
 
+    -- ** GlobalSecondaryIndexInfo
+    , GlobalSecondaryIndexInfo
+    , globalSecondaryIndexInfo
+    , gsiiProvisionedThroughput
+    , gsiiKeySchema
+    , gsiiProjection
+    , gsiiIndexName
+
     -- ** GlobalSecondaryIndexUpdate
     , GlobalSecondaryIndexUpdate
     , globalSecondaryIndexUpdate
     , gsiuCreate
     , gsiuDelete
     , gsiuUpdate
+
+    -- ** GlobalTable
+    , GlobalTable
+    , globalTable
+    , gtGlobalTableName
+    , gtReplicationGroup
+
+    -- ** GlobalTableDescription
+    , GlobalTableDescription
+    , globalTableDescription
+    , gtdGlobalTableStatus
+    , gtdGlobalTableName
+    , gtdGlobalTableARN
+    , gtdCreationDateTime
+    , gtdReplicationGroup
 
     -- ** ItemCollectionMetrics
     , ItemCollectionMetrics
@@ -299,6 +434,13 @@ module Network.AWS.DynamoDB
     , lsidItemCount
     , lsidIndexName
 
+    -- ** LocalSecondaryIndexInfo
+    , LocalSecondaryIndexInfo
+    , localSecondaryIndexInfo
+    , lsiiKeySchema
+    , lsiiProjection
+    , lsiiIndexName
+
     -- ** Projection
     , Projection
     , projection
@@ -325,6 +467,50 @@ module Network.AWS.DynamoDB
     , putRequest
     , prItem
 
+    -- ** Replica
+    , Replica
+    , replica
+    , rRegionName
+
+    -- ** ReplicaDescription
+    , ReplicaDescription
+    , replicaDescription
+    , rdRegionName
+
+    -- ** ReplicaUpdate
+    , ReplicaUpdate
+    , replicaUpdate
+    , ruCreate
+    , ruDelete
+
+    -- ** RestoreSummary
+    , RestoreSummary
+    , restoreSummary
+    , rsSourceTableARN
+    , rsSourceBackupARN
+    , rsRestoreDateTime
+    , rsRestoreInProgress
+
+    -- ** SourceTableDetails
+    , SourceTableDetails
+    , sourceTableDetails
+    , stdTableSizeBytes
+    , stdTableARN
+    , stdItemCount
+    , stdTableName
+    , stdTableId
+    , stdKeySchema
+    , stdTableCreationDateTime
+    , stdProvisionedThroughput
+
+    -- ** SourceTableFeatureDetails
+    , SourceTableFeatureDetails
+    , sourceTableFeatureDetails
+    , stfdStreamDescription
+    , stfdGlobalSecondaryIndexes
+    , stfdLocalSecondaryIndexes
+    , stfdTimeToLiveDescription
+
     -- ** StreamSpecification
     , StreamSpecification
     , streamSpecification
@@ -334,6 +520,7 @@ module Network.AWS.DynamoDB
     -- ** TableDescription
     , TableDescription
     , tableDescription
+    , tdRestoreSummary
     , tdTableSizeBytes
     , tdAttributeDefinitions
     , tdLatestStreamARN
@@ -345,6 +532,7 @@ module Network.AWS.DynamoDB
     , tdLatestStreamLabel
     , tdLocalSecondaryIndexes
     , tdCreationDateTime
+    , tdTableId
     , tdItemCount
     , tdTableName
     , tdStreamSpecification
@@ -382,21 +570,31 @@ module Network.AWS.DynamoDB
 
 import Network.AWS.DynamoDB.BatchGetItem
 import Network.AWS.DynamoDB.BatchWriteItem
+import Network.AWS.DynamoDB.CreateBackup
+import Network.AWS.DynamoDB.CreateGlobalTable
 import Network.AWS.DynamoDB.CreateTable
+import Network.AWS.DynamoDB.DeleteBackup
 import Network.AWS.DynamoDB.DeleteItem
 import Network.AWS.DynamoDB.DeleteTable
+import Network.AWS.DynamoDB.DescribeBackup
+import Network.AWS.DynamoDB.DescribeContinuousBackups
+import Network.AWS.DynamoDB.DescribeGlobalTable
 import Network.AWS.DynamoDB.DescribeLimits
 import Network.AWS.DynamoDB.DescribeTable
 import Network.AWS.DynamoDB.DescribeTimeToLive
 import Network.AWS.DynamoDB.GetItem
+import Network.AWS.DynamoDB.ListBackups
+import Network.AWS.DynamoDB.ListGlobalTables
 import Network.AWS.DynamoDB.ListTables
 import Network.AWS.DynamoDB.ListTagsOfResource
 import Network.AWS.DynamoDB.PutItem
 import Network.AWS.DynamoDB.Query
+import Network.AWS.DynamoDB.RestoreTableFromBackup
 import Network.AWS.DynamoDB.Scan
 import Network.AWS.DynamoDB.TagResource
 import Network.AWS.DynamoDB.Types
 import Network.AWS.DynamoDB.UntagResource
+import Network.AWS.DynamoDB.UpdateGlobalTable
 import Network.AWS.DynamoDB.UpdateItem
 import Network.AWS.DynamoDB.UpdateTable
 import Network.AWS.DynamoDB.UpdateTimeToLive

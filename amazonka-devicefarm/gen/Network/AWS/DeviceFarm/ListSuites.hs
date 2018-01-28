@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Gets information about suites.
+-- Gets information about test suites for a given job.
 --
 --
 --
@@ -66,7 +66,7 @@ data ListSuites = ListSuites'
 --
 -- * 'lNextToken' - An identifier that was returned from the previous call to this operation, which can be used to return the next set of items in the list.
 --
--- * 'lArn' - The suites' ARNs.
+-- * 'lArn' - The job's Amazon Resource Name (ARN).
 listSuites
     :: Text -- ^ 'lArn'
     -> ListSuites
@@ -77,7 +77,7 @@ listSuites pArn_ = ListSuites' {_lNextToken = Nothing, _lArn = pArn_}
 lNextToken :: Lens' ListSuites (Maybe Text)
 lNextToken = lens _lNextToken (\ s a -> s{_lNextToken = a});
 
--- | The suites' ARNs.
+-- | The job's Amazon Resource Name (ARN).
 lArn :: Lens' ListSuites Text
 lArn = lens _lArn (\ s a -> s{_lArn = a});
 

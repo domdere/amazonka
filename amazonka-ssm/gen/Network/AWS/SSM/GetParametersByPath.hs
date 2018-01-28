@@ -23,6 +23,8 @@
 --
 -- Request results are returned on a best-effort basis. If you specify @MaxResults@ in the request, the response includes information up to the limit specified. The number of items returned, however, can be between zero and the value of @MaxResults@ . If the service reaches an internal limit while processing the results, it stops the operation and returns the matching values up to that point and a @NextToken@ . You can specify the @NextToken@ in a subsequent call to get the next set of results.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.SSM.GetParametersByPath
     (
     -- * Creating a Request
@@ -46,6 +48,7 @@ module Network.AWS.SSM.GetParametersByPath
     ) where
 
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -77,7 +80,7 @@ data GetParametersByPath = GetParametersByPath'
 --
 -- * 'gpbpMaxResults' - The maximum number of items to return for this call. The call also returns a token that you can specify in a subsequent call to get the next set of results.
 --
--- * 'gpbpPath' - The hierarchy for the parameter. Hierarchies start with a forward slash (/) and end with the parameter name. A hierarchy can have a maximum of five levels. Examples: /Environment/Test/DBString003 /Finance/Prod/IAD/OS/WinServ2016/license15
+-- * 'gpbpPath' - The hierarchy for the parameter. Hierarchies start with a forward slash (/) and end with the parameter name. A hierarchy can have a maximum of 15 levels. Here is an example of a hierarchy: @/Finance/Prod/IAD/WinServ2016/license33@
 getParametersByPath
     :: Text -- ^ 'gpbpPath'
     -> GetParametersByPath
@@ -112,9 +115,16 @@ gpbpRecursive = lens _gpbpRecursive (\ s a -> s{_gpbpRecursive = a});
 gpbpMaxResults :: Lens' GetParametersByPath (Maybe Natural)
 gpbpMaxResults = lens _gpbpMaxResults (\ s a -> s{_gpbpMaxResults = a}) . mapping _Nat;
 
--- | The hierarchy for the parameter. Hierarchies start with a forward slash (/) and end with the parameter name. A hierarchy can have a maximum of five levels. Examples: /Environment/Test/DBString003 /Finance/Prod/IAD/OS/WinServ2016/license15
+-- | The hierarchy for the parameter. Hierarchies start with a forward slash (/) and end with the parameter name. A hierarchy can have a maximum of 15 levels. Here is an example of a hierarchy: @/Finance/Prod/IAD/WinServ2016/license33@
 gpbpPath :: Lens' GetParametersByPath Text
 gpbpPath = lens _gpbpPath (\ s a -> s{_gpbpPath = a});
+
+instance AWSPager GetParametersByPath where
+        page rq rs
+          | stop (rs ^. gpbprsNextToken) = Nothing
+          | stop (rs ^. gpbprsParameters) = Nothing
+          | otherwise =
+            Just $ rq & gpbpNextToken .~ rs ^. gpbprsNextToken
 
 instance AWSRequest GetParametersByPath where
         type Rs GetParametersByPath =

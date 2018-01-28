@@ -58,7 +58,7 @@ data GetJobRun = GetJobRun'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'gPredecessorsIncluded' - A list of the predecessor runs to return as well.
+-- * 'gPredecessorsIncluded' - True if a list of predecessor runs should be returned.
 --
 -- * 'gJobName' - Name of the job being run.
 --
@@ -72,7 +72,7 @@ getJobRun pJobName_ pRunId_ =
   {_gPredecessorsIncluded = Nothing, _gJobName = pJobName_, _gRunId = pRunId_}
 
 
--- | A list of the predecessor runs to return as well.
+-- | True if a list of predecessor runs should be returned.
 gPredecessorsIncluded :: Lens' GetJobRun (Maybe Bool)
 gPredecessorsIncluded = lens _gPredecessorsIncluded (\ s a -> s{_gPredecessorsIncluded = a});
 

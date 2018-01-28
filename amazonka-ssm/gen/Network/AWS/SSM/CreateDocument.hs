@@ -30,6 +30,8 @@ module Network.AWS.SSM.CreateDocument
     , CreateDocument
     -- * Request Lenses
     , cdDocumentType
+    , cdTargetType
+    , cdDocumentFormat
     , cdContent
     , cdName
 
@@ -50,9 +52,11 @@ import Network.AWS.SSM.Types.Product
 
 -- | /See:/ 'createDocument' smart constructor.
 data CreateDocument = CreateDocument'
-  { _cdDocumentType :: !(Maybe DocumentType)
-  , _cdContent      :: !Text
-  , _cdName         :: !Text
+  { _cdDocumentType   :: !(Maybe DocumentType)
+  , _cdTargetType     :: !(Maybe Text)
+  , _cdDocumentFormat :: !(Maybe DocumentFormat)
+  , _cdContent        :: !Text
+  , _cdName           :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -62,7 +66,11 @@ data CreateDocument = CreateDocument'
 --
 -- * 'cdDocumentType' - The type of document to create. Valid document types include: Policy, Automation, and Command.
 --
--- * 'cdContent' - A valid JSON string.
+-- * 'cdTargetType' - Specify a target type to define the kinds of resources the document can run on. For example, to run a document on EC2 instances, specify the following value: /AWS::EC2::Instance. If you specify a value of '/' the document can run on all types of resources. If you don't specify a value, the document can't run on any resources. For a list of valid resource types, see <http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html AWS Resource Types Reference> in the /AWS CloudFormation User Guide/ .
+--
+-- * 'cdDocumentFormat' - Specify the document format for the request. The document format can be either JSON or YAML. JSON is the default format.
+--
+-- * 'cdContent' - A valid JSON or YAML string.
 --
 -- * 'cdName' - A name for the Systems Manager document.
 createDocument
@@ -71,14 +79,27 @@ createDocument
     -> CreateDocument
 createDocument pContent_ pName_ =
   CreateDocument'
-  {_cdDocumentType = Nothing, _cdContent = pContent_, _cdName = pName_}
+  { _cdDocumentType = Nothing
+  , _cdTargetType = Nothing
+  , _cdDocumentFormat = Nothing
+  , _cdContent = pContent_
+  , _cdName = pName_
+  }
 
 
 -- | The type of document to create. Valid document types include: Policy, Automation, and Command.
 cdDocumentType :: Lens' CreateDocument (Maybe DocumentType)
 cdDocumentType = lens _cdDocumentType (\ s a -> s{_cdDocumentType = a});
 
--- | A valid JSON string.
+-- | Specify a target type to define the kinds of resources the document can run on. For example, to run a document on EC2 instances, specify the following value: /AWS::EC2::Instance. If you specify a value of '/' the document can run on all types of resources. If you don't specify a value, the document can't run on any resources. For a list of valid resource types, see <http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-template-resource-type-ref.html AWS Resource Types Reference> in the /AWS CloudFormation User Guide/ .
+cdTargetType :: Lens' CreateDocument (Maybe Text)
+cdTargetType = lens _cdTargetType (\ s a -> s{_cdTargetType = a});
+
+-- | Specify the document format for the request. The document format can be either JSON or YAML. JSON is the default format.
+cdDocumentFormat :: Lens' CreateDocument (Maybe DocumentFormat)
+cdDocumentFormat = lens _cdDocumentFormat (\ s a -> s{_cdDocumentFormat = a});
+
+-- | A valid JSON or YAML string.
 cdContent :: Lens' CreateDocument Text
 cdContent = lens _cdContent (\ s a -> s{_cdContent = a});
 
@@ -114,6 +135,8 @@ instance ToJSON CreateDocument where
           = object
               (catMaybes
                  [("DocumentType" .=) <$> _cdDocumentType,
+                  ("TargetType" .=) <$> _cdTargetType,
+                  ("DocumentFormat" .=) <$> _cdDocumentFormat,
                   Just ("Content" .= _cdContent),
                   Just ("Name" .= _cdName)])
 

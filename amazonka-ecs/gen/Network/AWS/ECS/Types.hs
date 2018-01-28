@@ -16,22 +16,40 @@ module Network.AWS.ECS.Types
       ecs
 
     -- * Errors
+    , _AccessDeniedException
     , _InvalidParameterException
     , _ServerException
+    , _ClusterContainsTasksException
+    , _PlatformUnknownException
     , _ClusterContainsServicesException
     , _ClusterContainsContainerInstancesException
     , _ServiceNotActiveException
     , _ClusterNotFoundException
     , _NoUpdateAvailableException
+    , _UnsupportedFeatureException
     , _ServiceNotFoundException
+    , _PlatformTaskDefinitionIncompatibilityException
     , _MissingVersionException
     , _UpdateInProgressException
+    , _BlockedException
     , _TargetNotFoundException
     , _AttributeLimitExceededException
     , _ClientException
 
     -- * AgentUpdateStatus
     , AgentUpdateStatus (..)
+
+    -- * AssignPublicIP
+    , AssignPublicIP (..)
+
+    -- * ClusterField
+    , ClusterField (..)
+
+    -- * Compatibility
+    , Compatibility (..)
+
+    -- * Connectivity
+    , Connectivity (..)
 
     -- * ContainerInstanceStatus
     , ContainerInstanceStatus (..)
@@ -41,6 +59,9 @@ module Network.AWS.ECS.Types
 
     -- * DeviceCgroupPermission
     , DeviceCgroupPermission (..)
+
+    -- * LaunchType
+    , LaunchType (..)
 
     -- * LogDriver
     , LogDriver (..)
@@ -75,6 +96,27 @@ module Network.AWS.ECS.Types
     -- * UlimitName
     , UlimitName (..)
 
+    -- * AWSVPCConfiguration
+    , AWSVPCConfiguration
+    , awsVPCConfiguration
+    , avcSecurityGroups
+    , avcAssignPublicIP
+    , avcSubnets
+
+    -- * Attachment
+    , Attachment
+    , attachment
+    , aStatus
+    , aDetails
+    , aId
+    , aType
+
+    -- * AttachmentStateChange
+    , AttachmentStateChange
+    , attachmentStateChange
+    , ascAttachmentARN
+    , ascStatus
+
     -- * Attribute
     , Attribute
     , attribute
@@ -92,6 +134,7 @@ module Network.AWS.ECS.Types
     , cRegisteredContainerInstancesCount
     , cPendingTasksCount
     , cClusterName
+    , cStatistics
     , cActiveServicesCount
 
     -- * Container
@@ -99,6 +142,7 @@ module Network.AWS.ECS.Types
     , container
     , cNetworkBindings
     , cContainerARN
+    , cNetworkInterfaces
     , cTaskARN
     , cLastStatus
     , cReason
@@ -140,6 +184,7 @@ module Network.AWS.ECS.Types
     , ContainerInstance
     , containerInstance
     , ciStatus
+    , ciAttachments
     , ciRunningTasksCount
     , ciRemainingResources
     , ciEc2InstanceId
@@ -170,6 +215,7 @@ module Network.AWS.ECS.Types
     , csStatus
     , csClusterARN
     , csCreatedAt
+    , csPlatformVersion
     , csDesiredCount
     , csLoadBalancers
     , csPendingCount
@@ -178,10 +224,22 @@ module Network.AWS.ECS.Types
     , csPlacementStrategy
     , csDeployments
     , csServiceName
+    , csLaunchType
     , csServiceARN
     , csTaskDefinition
+    , csHealthCheckGracePeriodSeconds
+    , csNetworkConfiguration
     , csRoleARN
     , csDeploymentConfiguration
+
+    -- * ContainerStateChange
+    , ContainerStateChange
+    , containerStateChange
+    , cscNetworkBindings
+    , cscStatus
+    , cscContainerName
+    , cscReason
+    , cscExitCode
 
     -- * Deployment
     , Deployment
@@ -189,11 +247,14 @@ module Network.AWS.ECS.Types
     , dRunningCount
     , dStatus
     , dCreatedAt
+    , dPlatformVersion
     , dDesiredCount
     , dPendingCount
     , dId
+    , dLaunchType
     , dUpdatedAt
     , dTaskDefinition
+    , dNetworkConfiguration
 
     -- * DeploymentConfiguration
     , DeploymentConfiguration
@@ -273,6 +334,18 @@ module Network.AWS.ECS.Types
     , nbHostPort
     , nbContainerPort
 
+    -- * NetworkConfiguration
+    , NetworkConfiguration
+    , networkConfiguration
+    , ncAwsvpcConfiguration
+
+    -- * NetworkInterface
+    , NetworkInterface
+    , networkInterface
+    , niIpv6Address
+    , niPrivateIPv4Address
+    , niAttachmentId
+
     -- * PlacementConstraint
     , PlacementConstraint
     , placementConstraint
@@ -317,29 +390,45 @@ module Network.AWS.ECS.Types
     , tOverrides
     , tClusterARN
     , tGroup
+    , tAttachments
     , tCreatedAt
+    , tPlatformVersion
     , tTaskARN
     , tContainerInstanceARN
+    , tExecutionStoppedAt
     , tLastStatus
+    , tMemory
+    , tPullStoppedAt
     , tContainers
     , tStartedAt
     , tVersion
     , tStartedBy
     , tStoppedReason
+    , tConnectivity
+    , tStoppingAt
+    , tLaunchType
     , tTaskDefinitionARN
+    , tConnectivityAt
+    , tCpu
+    , tPullStartedAt
 
     -- * TaskDefinition
     , TaskDefinition
     , taskDefinition
     , tdStatus
+    , tdExecutionRoleARN
+    , tdRequiresCompatibilities
     , tdFamily
     , tdContainerDefinitions
+    , tdMemory
     , tdTaskRoleARN
     , tdPlacementConstraints
     , tdNetworkMode
     , tdTaskDefinitionARN
+    , tdCompatibilities
     , tdRevision
     , tdVolumes
+    , tdCpu
     , tdRequiresAttributes
 
     -- * TaskDefinitionPlacementConstraint
@@ -352,6 +441,7 @@ module Network.AWS.ECS.Types
     , TaskOverride
     , taskOverride
     , toContainerOverrides
+    , toExecutionRoleARN
     , toTaskRoleARN
 
     -- * Ulimit
@@ -424,6 +514,13 @@ ecs =
       | otherwise = Nothing
 
 
+-- | You do not have authorization to perform the requested action.
+--
+--
+_AccessDeniedException :: AsError a => Getting (First ServiceError) a ServiceError
+_AccessDeniedException = _MatchServiceError ecs "AccessDeniedException"
+
+
 -- | The specified parameter is invalid. Review the available parameters for the API request.
 --
 --
@@ -436,6 +533,21 @@ _InvalidParameterException = _MatchServiceError ecs "InvalidParameterException"
 --
 _ServerException :: AsError a => Getting (First ServiceError) a ServiceError
 _ServerException = _MatchServiceError ecs "ServerException"
+
+
+-- | You cannot delete a cluster that has active tasks.
+--
+--
+_ClusterContainsTasksException :: AsError a => Getting (First ServiceError) a ServiceError
+_ClusterContainsTasksException =
+  _MatchServiceError ecs "ClusterContainsTasksException"
+
+
+-- | The specified platform version does not exist.
+--
+--
+_PlatformUnknownException :: AsError a => Getting (First ServiceError) a ServiceError
+_PlatformUnknownException = _MatchServiceError ecs "PlatformUnknownException"
 
 
 -- | You cannot delete a cluster that contains services. You must first update the service to reduce its desired task count to 0 and then delete the service. For more information, see 'UpdateService' and 'DeleteService' .
@@ -454,7 +566,7 @@ _ClusterContainsContainerInstancesException =
   _MatchServiceError ecs "ClusterContainsContainerInstancesException"
 
 
--- | The specified service is not active. You cannot update a service that is not active. If you have previously deleted a service, you can re-create it with 'CreateService' .
+-- | The specified service is not active. You can't update a service that is inactive. If you have previously deleted a service, you can re-create it with 'CreateService' .
 --
 --
 _ServiceNotActiveException :: AsError a => Getting (First ServiceError) a ServiceError
@@ -476,11 +588,27 @@ _NoUpdateAvailableException =
   _MatchServiceError ecs "NoUpdateAvailableException"
 
 
+-- | The specified task is not supported in this region.
+--
+--
+_UnsupportedFeatureException :: AsError a => Getting (First ServiceError) a ServiceError
+_UnsupportedFeatureException =
+  _MatchServiceError ecs "UnsupportedFeatureException"
+
+
 -- | The specified service could not be found. You can view your available services with 'ListServices' . Amazon ECS services are cluster-specific and region-specific.
 --
 --
 _ServiceNotFoundException :: AsError a => Getting (First ServiceError) a ServiceError
 _ServiceNotFoundException = _MatchServiceError ecs "ServiceNotFoundException"
+
+
+-- | The specified platform version does not satisfy the task definition’s required capabilities.
+--
+--
+_PlatformTaskDefinitionIncompatibilityException :: AsError a => Getting (First ServiceError) a ServiceError
+_PlatformTaskDefinitionIncompatibilityException =
+  _MatchServiceError ecs "PlatformTaskDefinitionIncompatibilityException"
 
 
 -- | Amazon ECS is unable to determine the current version of the Amazon ECS container agent on the container instance and does not have enough information to proceed with an update. This could be because the agent running on the container instance is an older or custom version that does not use our version information.
@@ -495,6 +623,13 @@ _MissingVersionException = _MatchServiceError ecs "MissingVersionException"
 --
 _UpdateInProgressException :: AsError a => Getting (First ServiceError) a ServiceError
 _UpdateInProgressException = _MatchServiceError ecs "UpdateInProgressException"
+
+
+-- | Your AWS account has been blocked. <http://aws.amazon.com/contact-us/ Contact AWS Customer Support> for more information.
+--
+--
+_BlockedException :: AsError a => Getting (First ServiceError) a ServiceError
+_BlockedException = _MatchServiceError ecs "BlockedException"
 
 
 -- | The specified target could not be found. You can view your available container instances with 'ListContainerInstances' . Amazon ECS container instances are cluster-specific and region-specific.
@@ -512,7 +647,7 @@ _AttributeLimitExceededException =
   _MatchServiceError ecs "AttributeLimitExceededException"
 
 
--- | These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn't have permission to use the action or resource, or specifying an identifier that is not valid.
+-- | These errors are usually caused by a client action, such as using an action or resource on behalf of a user that doesn't have permissions to use the action or resource, or specifying an identifier that is not valid.
 --
 --
 _ClientException :: AsError a => Getting (First ServiceError) a ServiceError

@@ -62,7 +62,7 @@ data DescribeNotificationConfigurations = DescribeNotificationConfigurations'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dncAutoScalingGroupNames' - The name of the group.
+-- * 'dncAutoScalingGroupNames' - The name of the Auto Scaling group.
 --
 -- * 'dncNextToken' - The token for the next set of items to return. (You received this token from a previous call.)
 --
@@ -77,7 +77,7 @@ describeNotificationConfigurations =
   }
 
 
--- | The name of the group.
+-- | The name of the Auto Scaling group.
 dncAutoScalingGroupNames :: Lens' DescribeNotificationConfigurations [Text]
 dncAutoScalingGroupNames = lens _dncAutoScalingGroupNames (\ s a -> s{_dncAutoScalingGroupNames = a}) . _Default . _Coerce;
 

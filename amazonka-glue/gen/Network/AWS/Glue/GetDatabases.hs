@@ -21,6 +21,8 @@
 -- Retrieves all Databases defined in a given Data Catalog.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Glue.GetDatabases
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.Glue.GetDatabases
 import Network.AWS.Glue.Types
 import Network.AWS.Glue.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -82,6 +85,13 @@ gdNextToken = lens _gdNextToken (\ s a -> s{_gdNextToken = a});
 -- | The maximum number of databases to return in one response.
 gdMaxResults :: Lens' GetDatabases (Maybe Natural)
 gdMaxResults = lens _gdMaxResults (\ s a -> s{_gdMaxResults = a}) . mapping _Nat;
+
+instance AWSPager GetDatabases where
+        page rq rs
+          | stop (rs ^. gdsrsNextToken) = Nothing
+          | stop (rs ^. gdsrsDatabaseList) = Nothing
+          | otherwise =
+            Just $ rq & gdNextToken .~ rs ^. gdsrsNextToken
 
 instance AWSRequest GetDatabases where
         type Rs GetDatabases = GetDatabasesResponse

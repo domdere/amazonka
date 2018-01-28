@@ -98,6 +98,7 @@ module Network.AWS.ElasticSearch.Types
     , edcLogPublishingOptions
     , edcElasticsearchClusterConfig
     , edcSnapshotOptions
+    , edcEncryptionAtRestOptions
     , edcVPCOptions
     , edcAdvancedOptions
     , edcElasticsearchVersion
@@ -110,6 +111,7 @@ module Network.AWS.ElasticSearch.Types
     , edsLogPublishingOptions
     , edsCreated
     , edsSnapshotOptions
+    , edsEncryptionAtRestOptions
     , edsDeleted
     , edsVPCOptions
     , edsEndpoints
@@ -127,6 +129,18 @@ module Network.AWS.ElasticSearch.Types
     , elasticsearchVersionStatus
     , evsOptions
     , evsStatus
+
+    -- * EncryptionAtRestOptions
+    , EncryptionAtRestOptions
+    , encryptionAtRestOptions
+    , earoEnabled
+    , earoKMSKeyId
+
+    -- * EncryptionAtRestOptionsStatus
+    , EncryptionAtRestOptionsStatus
+    , encryptionAtRestOptionsStatus
+    , earosOptions
+    , earosStatus
 
     -- * InstanceCountLimits
     , InstanceCountLimits

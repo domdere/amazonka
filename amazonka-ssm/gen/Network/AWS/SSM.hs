@@ -11,11 +11,11 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- __Amazon EC2 Systems Manager__
+-- __AWS Systems Manager__
 --
--- Amazon EC2 Systems Manager is a collection of capabilities that helps you automate management tasks such as collecting system inventory, applying operating system (OS) patches, automating the creation of Amazon Machine Images (AMIs), and configuring operating systems (OSs) and applications at scale. Systems Manager lets you remotely and securely manage the configuration of your managed instances. A /managed instance/ is any Amazon EC2 instance or on-premises machine in your hybrid environment that has been configured for Systems Manager.
+-- AWS Systems Manager is a collection of capabilities that helps you automate management tasks such as collecting system inventory, applying operating system (OS) patches, automating the creation of Amazon Machine Images (AMIs), and configuring operating systems (OSs) and applications at scale. Systems Manager lets you remotely and securely manage the configuration of your managed instances. A /managed instance/ is any Amazon EC2 instance or on-premises machine in your hybrid environment that has been configured for Systems Manager.
 --
--- This reference is intended to be used with the <http://docs.aws.amazon.com/systems-manager/latest/userguide/ Amazon EC2 Systems Manager User Guide> .
+-- This reference is intended to be used with the <http://docs.aws.amazon.com/systems-manager/latest/userguide/ AWS Systems Manager User Guide> .
 --
 -- To get started, verify prerequisites and configure managed instances. For more information, see <http://docs.aws.amazon.com/systems-manager/latest/userguide/systems-manager-setting-up.html Systems Manager Prerequisites> .
 --
@@ -43,6 +43,9 @@ module Network.AWS.SSM
 
     -- ** UnsupportedParameterType
     , _UnsupportedParameterType
+
+    -- ** InvalidAutomationStatusUpdateException
+    , _InvalidAutomationStatusUpdateException
 
     -- ** InvalidPluginName
     , _InvalidPluginName
@@ -272,6 +275,9 @@ module Network.AWS.SSM
     -- ** DocumentPermissionLimit
     , _DocumentPermissionLimit
 
+    -- ** AutomationStepNotFoundException
+    , _AutomationStepNotFoundException
+
     -- ** DuplicateDocumentContent
     , _DuplicateDocumentContent
 
@@ -326,7 +332,7 @@ module Network.AWS.SSM
     -- ** DescribeParameters (Paginated)
     , module Network.AWS.SSM.DescribeParameters
 
-    -- ** GetParametersByPath
+    -- ** GetParametersByPath (Paginated)
     , module Network.AWS.SSM.GetParametersByPath
 
     -- ** PutComplianceItems
@@ -431,6 +437,9 @@ module Network.AWS.SSM
     -- ** CancelCommand
     , module Network.AWS.SSM.CancelCommand
 
+    -- ** DescribeAutomationStepExecutions
+    , module Network.AWS.SSM.DescribeAutomationStepExecutions
+
     -- ** GetCommandInvocation
     , module Network.AWS.SSM.GetCommandInvocation
 
@@ -497,7 +506,7 @@ module Network.AWS.SSM
     -- ** UpdateMaintenanceWindowTask
     , module Network.AWS.SSM.UpdateMaintenanceWindowTask
 
-    -- ** GetParameterHistory
+    -- ** GetParameterHistory (Paginated)
     , module Network.AWS.SSM.GetParameterHistory
 
     -- ** CreateMaintenanceWindow
@@ -625,6 +634,9 @@ module Network.AWS.SSM
     -- ** DocumentFilterKey
     , DocumentFilterKey (..)
 
+    -- ** DocumentFormat
+    , DocumentFormat (..)
+
     -- ** DocumentHashType
     , DocumentHashType (..)
 
@@ -639,6 +651,9 @@ module Network.AWS.SSM
 
     -- ** DocumentType
     , DocumentType (..)
+
+    -- ** ExecutionMode
+    , ExecutionMode (..)
 
     -- ** Fault
     , Fault (..)
@@ -714,6 +729,12 @@ module Network.AWS.SSM
 
     -- ** SignalType
     , SignalType (..)
+
+    -- ** StepExecutionFilterKey
+    , StepExecutionFilterKey (..)
+
+    -- ** StopType
+    , StopType (..)
 
     -- ** Activation
     , Activation
@@ -800,16 +821,28 @@ module Network.AWS.SSM
     -- ** AutomationExecution
     , AutomationExecution
     , automationExecution
+    , aeCurrentStepName
+    , aeTargetParameterName
+    , aeExecutedBy
     , aeDocumentName
     , aeExecutionEndTime
     , aeFailureMessage
+    , aeMode
+    , aeStepExecutionsTruncated
     , aeAutomationExecutionStatus
+    , aeParentAutomationExecutionId
     , aeOutputs
+    , aeMaxErrors
     , aeExecutionStartTime
+    , aeCurrentAction
+    , aeTargets
+    , aeResolvedTargets
     , aeParameters
     , aeDocumentVersion
     , aeAutomationExecutionId
     , aeStepExecutions
+    , aeMaxConcurrency
+    , aeTarget
 
     -- ** AutomationExecutionFilter
     , AutomationExecutionFilter
@@ -820,15 +853,26 @@ module Network.AWS.SSM
     -- ** AutomationExecutionMetadata
     , AutomationExecutionMetadata
     , automationExecutionMetadata
+    , aemCurrentStepName
+    , aemTargetParameterName
     , aemLogFile
     , aemExecutedBy
     , aemDocumentName
     , aemExecutionEndTime
+    , aemFailureMessage
+    , aemMode
     , aemAutomationExecutionStatus
+    , aemParentAutomationExecutionId
     , aemOutputs
+    , aemMaxErrors
     , aemExecutionStartTime
+    , aemCurrentAction
+    , aemTargets
+    , aemResolvedTargets
     , aemDocumentVersion
     , aemAutomationExecutionId
+    , aemMaxConcurrency
+    , aemTarget
 
     -- ** Command
     , Command
@@ -976,9 +1020,11 @@ module Network.AWS.SSM
     , dSchemaVersion
     , dSha1
     , dDefaultVersion
+    , dTargetType
     , dOwner
     , dPlatformTypes
     , dCreatedDate
+    , dDocumentFormat
     , dName
     , dHashType
     , dParameters
@@ -998,8 +1044,10 @@ module Network.AWS.SSM
     , documentIdentifier
     , diDocumentType
     , diSchemaVersion
+    , diTargetType
     , diOwner
     , diPlatformTypes
+    , diDocumentFormat
     , diName
     , diDocumentVersion
     , diTags
@@ -1022,6 +1070,7 @@ module Network.AWS.SSM
     , DocumentVersionInfo
     , documentVersionInfo
     , dviCreatedDate
+    , dviDocumentFormat
     , dviName
     , dviDocumentVersion
     , dviIsDefaultVersion
@@ -1145,6 +1194,12 @@ module Network.AWS.SSM
     , ipsfValues
     , ipsfType
 
+    -- ** InventoryAggregator
+    , InventoryAggregator
+    , inventoryAggregator
+    , iaAggregators
+    , iaExpression
+
     -- ** InventoryFilter
     , InventoryFilter
     , inventoryFilter
@@ -1172,6 +1227,7 @@ module Network.AWS.SSM
     , InventoryItemSchema
     , inventoryItemSchema
     , iisVersion
+    , iisDisplayName
     , iisTypeName
     , iisAttributes
 
@@ -1461,6 +1517,12 @@ module Network.AWS.SSM
     , psDeploymentStatus
     , psComplianceLevel
 
+    -- ** ResolvedTargets
+    , ResolvedTargets
+    , resolvedTargets
+    , rtTruncated
+    , rtParameterValues
+
     -- ** ResourceComplianceSummaryItem
     , ResourceComplianceSummaryItem
     , resourceComplianceSummaryItem
@@ -1531,8 +1593,19 @@ module Network.AWS.SSM
     , seAction
     , seResponseCode
     , seStepStatus
+    , seOverriddenParameters
     , seOutputs
     , seExecutionStartTime
+    , seMaxAttempts
+    , seStepExecutionId
+    , seTimeoutSeconds
+    , seOnFailure
+
+    -- ** StepExecutionFilter
+    , StepExecutionFilter
+    , stepExecutionFilter
+    , sefKey
+    , sefValues
 
     -- ** Tag
     , Tag
@@ -1571,6 +1644,7 @@ import Network.AWS.SSM.DeregisterTaskFromMaintenanceWindow
 import Network.AWS.SSM.DescribeActivations
 import Network.AWS.SSM.DescribeAssociation
 import Network.AWS.SSM.DescribeAutomationExecutions
+import Network.AWS.SSM.DescribeAutomationStepExecutions
 import Network.AWS.SSM.DescribeAvailablePatches
 import Network.AWS.SSM.DescribeDocument
 import Network.AWS.SSM.DescribeDocumentPermission

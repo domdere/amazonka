@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Represents a get integration.
+-- Get the integration settings.
 --
 --
 module Network.AWS.APIGateway.GetIntegration
@@ -38,13 +38,16 @@ module Network.AWS.APIGateway.GetIntegration
     , iHttpMethod
     , iRequestTemplates
     , iCredentials
+    , iConnectionId
     , iRequestParameters
     , iContentHandling
     , iPassthroughBehavior
     , iUri
     , iIntegrationResponses
     , iCacheNamespace
+    , iTimeoutInMillis
     , iType
+    , iConnectionType
     , iCacheKeyParameters
     ) where
 
@@ -55,7 +58,7 @@ import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
 
--- | Represents a get integration request.
+-- | Represents a request to get the integration configuration.
 --
 --
 --

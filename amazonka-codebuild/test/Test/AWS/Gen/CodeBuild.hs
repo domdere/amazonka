@@ -58,6 +58,9 @@ import Test.Tasty
 --         , requestDeleteWebhook $
 --             deleteWebhook
 --
+--         , requestInvalidateProjectCache $
+--             invalidateProjectCache
+--
 --         , requestBatchDeleteBuilds $
 --             batchDeleteBuilds
 --
@@ -102,6 +105,9 @@ import Test.Tasty
 --
 --         , responseDeleteWebhook $
 --             deleteWebhookResponse
+--
+--         , responseInvalidateProjectCache $
+--             invalidateProjectCacheResponse
 --
 --         , responseBatchDeleteBuilds $
 --             batchDeleteBuildsResponse
@@ -169,6 +175,11 @@ requestDeleteWebhook :: DeleteWebhook -> TestTree
 requestDeleteWebhook = req
     "DeleteWebhook"
     "fixture/DeleteWebhook.yaml"
+
+requestInvalidateProjectCache :: InvalidateProjectCache -> TestTree
+requestInvalidateProjectCache = req
+    "InvalidateProjectCache"
+    "fixture/InvalidateProjectCache.yaml"
 
 requestBatchDeleteBuilds :: BatchDeleteBuilds -> TestTree
 requestBatchDeleteBuilds = req
@@ -261,6 +272,13 @@ responseDeleteWebhook = res
     "fixture/DeleteWebhookResponse.proto"
     codeBuild
     (Proxy :: Proxy DeleteWebhook)
+
+responseInvalidateProjectCache :: InvalidateProjectCacheResponse -> TestTree
+responseInvalidateProjectCache = res
+    "InvalidateProjectCacheResponse"
+    "fixture/InvalidateProjectCacheResponse.proto"
+    codeBuild
+    (Proxy :: Proxy InvalidateProjectCache)
 
 responseBatchDeleteBuilds :: BatchDeleteBuildsResponse -> TestTree
 responseBatchDeleteBuilds = res

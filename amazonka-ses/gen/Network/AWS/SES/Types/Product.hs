@@ -336,7 +336,7 @@ data BulkEmailDestinationStatus = BulkEmailDestinationStatus'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'bedsStatus' - The status of a message sent using the @SendBulkTemplatedEmail@ operation. Possible values for this parameter include:     * @Success@ : Amazon SES accepted the message, and will attempt to deliver it to the recipients.     * @MessageRejected@ : The message was rejected because it contained a virus.     * @MailFromDomainNotVerified@ : The sender's email address or domain was not verified.     * @ConfigurationSetDoesNotExist@ : The configuration set you specified does not exist.     * @TemplateDoesNotExist@ : The template you specified does not exist.     * @AccountSuspended@ : Your account has been shut down because of issues related to your email sending practices.     * @AccountThrottled@ : The number of emails you can send has been reduced because your account has exceeded its allocated sending limit.     * @AccountDailyQuotaExceeded@ : You have reached or exceeded the maximum number of emails you can send from your account in a 24-hour period.     * @InvalidSendingPoolName@ : The configuration set you specified refers to an IP pool that does not exist.     * @InvalidParameterValue@ : One or more of the parameters you specified when calling this operation was invalid. See the error message for additional information.     * @TransientFailure@ : Amazon SES was unable to process your request because of a temporary issue.     * @Failed@ : Amazon SES was unable to process your request. See the error message for additional information.
+-- * 'bedsStatus' - The status of a message sent using the @SendBulkTemplatedEmail@ operation. Possible values for this parameter include:     * @Success@ : Amazon SES accepted the message, and will attempt to deliver it to the recipients.     * @MessageRejected@ : The message was rejected because it contained a virus.     * @MailFromDomainNotVerified@ : The sender's email address or domain was not verified.     * @ConfigurationSetDoesNotExist@ : The configuration set you specified does not exist.     * @TemplateDoesNotExist@ : The template you specified does not exist.     * @AccountSuspended@ : Your account has been shut down because of issues related to your email sending practices.     * @AccountThrottled@ : The number of emails you can send has been reduced because your account has exceeded its allocated sending limit.     * @AccountDailyQuotaExceeded@ : You have reached or exceeded the maximum number of emails you can send from your account in a 24-hour period.     * @InvalidSendingPoolName@ : The configuration set you specified refers to an IP pool that does not exist.     * @AccountSendingPaused@ : Email sending for the Amazon SES account was disabled using the 'UpdateAccountSendingEnabled' operation.     * @ConfigurationSetSendingPaused@ : Email sending for this configuration set was disabled using the 'UpdateConfigurationSetSendingEnabled' operation.     * @InvalidParameterValue@ : One or more of the parameters you specified when calling this operation was invalid. See the error message for additional information.     * @TransientFailure@ : Amazon SES was unable to process your request because of a temporary issue.     * @Failed@ : Amazon SES was unable to process your request. See the error message for additional information.
 --
 -- * 'bedsError' - A description of an error that prevented a message being sent using the @SendBulkTemplatedEmail@ operation.
 --
@@ -348,7 +348,7 @@ bulkEmailDestinationStatus =
   {_bedsStatus = Nothing, _bedsError = Nothing, _bedsMessageId = Nothing}
 
 
--- | The status of a message sent using the @SendBulkTemplatedEmail@ operation. Possible values for this parameter include:     * @Success@ : Amazon SES accepted the message, and will attempt to deliver it to the recipients.     * @MessageRejected@ : The message was rejected because it contained a virus.     * @MailFromDomainNotVerified@ : The sender's email address or domain was not verified.     * @ConfigurationSetDoesNotExist@ : The configuration set you specified does not exist.     * @TemplateDoesNotExist@ : The template you specified does not exist.     * @AccountSuspended@ : Your account has been shut down because of issues related to your email sending practices.     * @AccountThrottled@ : The number of emails you can send has been reduced because your account has exceeded its allocated sending limit.     * @AccountDailyQuotaExceeded@ : You have reached or exceeded the maximum number of emails you can send from your account in a 24-hour period.     * @InvalidSendingPoolName@ : The configuration set you specified refers to an IP pool that does not exist.     * @InvalidParameterValue@ : One or more of the parameters you specified when calling this operation was invalid. See the error message for additional information.     * @TransientFailure@ : Amazon SES was unable to process your request because of a temporary issue.     * @Failed@ : Amazon SES was unable to process your request. See the error message for additional information.
+-- | The status of a message sent using the @SendBulkTemplatedEmail@ operation. Possible values for this parameter include:     * @Success@ : Amazon SES accepted the message, and will attempt to deliver it to the recipients.     * @MessageRejected@ : The message was rejected because it contained a virus.     * @MailFromDomainNotVerified@ : The sender's email address or domain was not verified.     * @ConfigurationSetDoesNotExist@ : The configuration set you specified does not exist.     * @TemplateDoesNotExist@ : The template you specified does not exist.     * @AccountSuspended@ : Your account has been shut down because of issues related to your email sending practices.     * @AccountThrottled@ : The number of emails you can send has been reduced because your account has exceeded its allocated sending limit.     * @AccountDailyQuotaExceeded@ : You have reached or exceeded the maximum number of emails you can send from your account in a 24-hour period.     * @InvalidSendingPoolName@ : The configuration set you specified refers to an IP pool that does not exist.     * @AccountSendingPaused@ : Email sending for the Amazon SES account was disabled using the 'UpdateAccountSendingEnabled' operation.     * @ConfigurationSetSendingPaused@ : Email sending for this configuration set was disabled using the 'UpdateConfigurationSetSendingEnabled' operation.     * @InvalidParameterValue@ : One or more of the parameters you specified when calling this operation was invalid. See the error message for additional information.     * @TransientFailure@ : Amazon SES was unable to process your request because of a temporary issue.     * @Failed@ : Amazon SES was unable to process your request. See the error message for additional information.
 bedsStatus :: Lens' BulkEmailDestinationStatus (Maybe BulkEmailStatus)
 bedsStatus = lens _bedsStatus (\ s a -> s{_bedsStatus = a});
 
@@ -431,11 +431,11 @@ data CloudWatchDimensionConfiguration = CloudWatchDimensionConfiguration'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'cwdcDimensionName' - The name of an Amazon CloudWatch dimension associated with an email sending metric. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
+-- * 'cwdcDimensionName' - The name of an Amazon CloudWatch dimension associated with an email sending metric. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
 --
 -- * 'cwdcDimensionValueSource' - The place where Amazon SES finds the value of a dimension to publish to Amazon CloudWatch. If you want Amazon SES to use the message tags that you specify using an @X-SES-MESSAGE-TAGS@ header or a parameter to the @SendEmail@ /@SendRawEmail@ API, choose @messageTag@ . If you want Amazon SES to use your own email headers, choose @emailHeader@ .
 --
--- * 'cwdcDefaultDimensionValue' - The default value of the dimension that is published to Amazon CloudWatch if you do not provide the value of the dimension when you send an email. The default value must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
+-- * 'cwdcDefaultDimensionValue' - The default value of the dimension that is published to Amazon CloudWatch if you do not provide the value of the dimension when you send an email. The default value must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
 cloudWatchDimensionConfiguration
     :: Text -- ^ 'cwdcDimensionName'
     -> DimensionValueSource -- ^ 'cwdcDimensionValueSource'
@@ -449,7 +449,7 @@ cloudWatchDimensionConfiguration pDimensionName_ pDimensionValueSource_ pDefault
   }
 
 
--- | The name of an Amazon CloudWatch dimension associated with an email sending metric. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
+-- | The name of an Amazon CloudWatch dimension associated with an email sending metric. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
 cwdcDimensionName :: Lens' CloudWatchDimensionConfiguration Text
 cwdcDimensionName = lens _cwdcDimensionName (\ s a -> s{_cwdcDimensionName = a});
 
@@ -457,7 +457,7 @@ cwdcDimensionName = lens _cwdcDimensionName (\ s a -> s{_cwdcDimensionName = a})
 cwdcDimensionValueSource :: Lens' CloudWatchDimensionConfiguration DimensionValueSource
 cwdcDimensionValueSource = lens _cwdcDimensionValueSource (\ s a -> s{_cwdcDimensionValueSource = a});
 
--- | The default value of the dimension that is published to Amazon CloudWatch if you do not provide the value of the dimension when you send an email. The default value must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
+-- | The default value of the dimension that is published to Amazon CloudWatch if you do not provide the value of the dimension when you send an email. The default value must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
 cwdcDefaultDimensionValue :: Lens' CloudWatchDimensionConfiguration Text
 cwdcDefaultDimensionValue = lens _cwdcDefaultDimensionValue (\ s a -> s{_cwdcDefaultDimensionValue = a});
 
@@ -564,10 +564,81 @@ instance ToQuery Content where
         toQuery Content'{..}
           = mconcat ["Charset" =: _cCharset, "Data" =: _cData]
 
+-- | Contains information about a custom verification email template.
+--
+--
+--
+-- /See:/ 'customVerificationEmailTemplate' smart constructor.
+data CustomVerificationEmailTemplate = CustomVerificationEmailTemplate'
+  { _cvetFromEmailAddress      :: !(Maybe Text)
+  , _cvetTemplateName          :: !(Maybe Text)
+  , _cvetFailureRedirectionURL :: !(Maybe Text)
+  , _cvetTemplateSubject       :: !(Maybe Text)
+  , _cvetSuccessRedirectionURL :: !(Maybe Text)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'CustomVerificationEmailTemplate' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'cvetFromEmailAddress' - The email address that the custom verification email is sent from.
+--
+-- * 'cvetTemplateName' - The name of the custom verification email template.
+--
+-- * 'cvetFailureRedirectionURL' - The URL that the recipient of the verification email is sent to if his or her address is not successfully verified.
+--
+-- * 'cvetTemplateSubject' - The subject line of the custom verification email.
+--
+-- * 'cvetSuccessRedirectionURL' - The URL that the recipient of the verification email is sent to if his or her address is successfully verified.
+customVerificationEmailTemplate
+    :: CustomVerificationEmailTemplate
+customVerificationEmailTemplate =
+  CustomVerificationEmailTemplate'
+  { _cvetFromEmailAddress = Nothing
+  , _cvetTemplateName = Nothing
+  , _cvetFailureRedirectionURL = Nothing
+  , _cvetTemplateSubject = Nothing
+  , _cvetSuccessRedirectionURL = Nothing
+  }
+
+
+-- | The email address that the custom verification email is sent from.
+cvetFromEmailAddress :: Lens' CustomVerificationEmailTemplate (Maybe Text)
+cvetFromEmailAddress = lens _cvetFromEmailAddress (\ s a -> s{_cvetFromEmailAddress = a});
+
+-- | The name of the custom verification email template.
+cvetTemplateName :: Lens' CustomVerificationEmailTemplate (Maybe Text)
+cvetTemplateName = lens _cvetTemplateName (\ s a -> s{_cvetTemplateName = a});
+
+-- | The URL that the recipient of the verification email is sent to if his or her address is not successfully verified.
+cvetFailureRedirectionURL :: Lens' CustomVerificationEmailTemplate (Maybe Text)
+cvetFailureRedirectionURL = lens _cvetFailureRedirectionURL (\ s a -> s{_cvetFailureRedirectionURL = a});
+
+-- | The subject line of the custom verification email.
+cvetTemplateSubject :: Lens' CustomVerificationEmailTemplate (Maybe Text)
+cvetTemplateSubject = lens _cvetTemplateSubject (\ s a -> s{_cvetTemplateSubject = a});
+
+-- | The URL that the recipient of the verification email is sent to if his or her address is successfully verified.
+cvetSuccessRedirectionURL :: Lens' CustomVerificationEmailTemplate (Maybe Text)
+cvetSuccessRedirectionURL = lens _cvetSuccessRedirectionURL (\ s a -> s{_cvetSuccessRedirectionURL = a});
+
+instance FromXML CustomVerificationEmailTemplate
+         where
+        parseXML x
+          = CustomVerificationEmailTemplate' <$>
+              (x .@? "FromEmailAddress") <*> (x .@? "TemplateName")
+                <*> (x .@? "FailureRedirectionURL")
+                <*> (x .@? "TemplateSubject")
+                <*> (x .@? "SuccessRedirectionURL")
+
+instance Hashable CustomVerificationEmailTemplate
+         where
+
+instance NFData CustomVerificationEmailTemplate where
+
 -- | Represents the destination of the message, consisting of To:, CC:, and BCC: fields.
 --
---
--- By default, the string must be 7-bit ASCII. If the text must contain any other characters, then you must use MIME encoded-word syntax (RFC 2047) instead of a literal string. MIME encoded-word syntax uses the following form: @=?charset?encoding?encoded-text?=@ . For more information, see <https://tools.ietf.org/html/rfc2047 RFC 2047> .
 --
 --
 -- /See:/ 'destination' smart constructor.
@@ -649,7 +720,7 @@ data EventDestination = EventDestination'
 --
 -- * 'edSNSDestination' - An object that contains the topic ARN associated with an Amazon Simple Notification Service (Amazon SNS) event destination.
 --
--- * 'edName' - The name of the event destination. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 64 characters.
+-- * 'edName' - The name of the event destination. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 64 characters.
 --
 -- * 'edMatchingEventTypes' - The type of email sending events to publish to the event destination.
 eventDestination
@@ -682,7 +753,7 @@ edCloudWatchDestination = lens _edCloudWatchDestination (\ s a -> s{_edCloudWatc
 edSNSDestination :: Lens' EventDestination (Maybe SNSDestination)
 edSNSDestination = lens _edSNSDestination (\ s a -> s{_edSNSDestination = a});
 
--- | The name of the event destination. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 64 characters.
+-- | The name of the event destination. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 64 characters.
 edName :: Lens' EventDestination Text
 edName = lens _edName (\ s a -> s{_edName = a});
 
@@ -1255,9 +1326,9 @@ data MessageTag = MessageTag'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'mtName' - The name of the tag. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
+-- * 'mtName' - The name of the tag. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
 --
--- * 'mtValue' - The value of the tag. The value must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
+-- * 'mtValue' - The value of the tag. The value must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
 messageTag
     :: Text -- ^ 'mtName'
     -> Text -- ^ 'mtValue'
@@ -1265,11 +1336,11 @@ messageTag
 messageTag pName_ pValue_ = MessageTag' {_mtName = pName_, _mtValue = pValue_}
 
 
--- | The name of the tag. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
+-- | The name of the tag. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
 mtName :: Lens' MessageTag Text
 mtName = lens _mtName (\ s a -> s{_mtName = a});
 
--- | The value of the tag. The value must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
+-- | The value of the tag. The value must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Contain less than 256 characters.
 mtValue :: Lens' MessageTag Text
 mtValue = lens _mtValue (\ s a -> s{_mtValue = a});
 
@@ -1432,7 +1503,7 @@ data ReceiptFilter = ReceiptFilter'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'rfName' - The name of the IP address filter. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
+-- * 'rfName' - The name of the IP address filter. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
 --
 -- * 'rfIPFilter' - A structure that provides the IP addresses to block or allow, and whether to block or allow incoming mail from them.
 receiptFilter
@@ -1443,7 +1514,7 @@ receiptFilter pName_ pIPFilter_ =
   ReceiptFilter' {_rfName = pName_, _rfIPFilter = pIPFilter_}
 
 
--- | The name of the IP address filter. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
+-- | The name of the IP address filter. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
 rfName :: Lens' ReceiptFilter Text
 rfName = lens _rfName (\ s a -> s{_rfName = a});
 
@@ -1548,7 +1619,7 @@ data ReceiptRule = ReceiptRule'
 --
 -- * 'rrTLSPolicy' - Specifies whether Amazon SES should require that incoming email is delivered over a connection encrypted with Transport Layer Security (TLS). If this parameter is set to @Require@ , Amazon SES will bounce emails that are not received over TLS. The default is @Optional@ .
 --
--- * 'rrName' - The name of the receipt rule. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
+-- * 'rrName' - The name of the receipt rule. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
 receiptRule
     :: Text -- ^ 'rrName'
     -> ReceiptRule
@@ -1583,7 +1654,7 @@ rrRecipients = lens _rrRecipients (\ s a -> s{_rrRecipients = a}) . _Default . _
 rrTLSPolicy :: Lens' ReceiptRule (Maybe TLSPolicy)
 rrTLSPolicy = lens _rrTLSPolicy (\ s a -> s{_rrTLSPolicy = a});
 
--- | The name of the receipt rule. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
+-- | The name of the receipt rule. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
 rrName :: Lens' ReceiptRule Text
 rrName = lens _rrName (\ s a -> s{_rrName = a});
 
@@ -1633,7 +1704,7 @@ data ReceiptRuleSetMetadata = ReceiptRuleSetMetadata'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'rrsmName' - The name of the receipt rule set. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
+-- * 'rrsmName' - The name of the receipt rule set. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
 --
 -- * 'rrsmCreatedTimestamp' - The date and time the receipt rule set was created.
 receiptRuleSetMetadata
@@ -1642,7 +1713,7 @@ receiptRuleSetMetadata =
   ReceiptRuleSetMetadata' {_rrsmName = Nothing, _rrsmCreatedTimestamp = Nothing}
 
 
--- | The name of the receipt rule set. The name must:     * Contain only ASCII letters (a-z, A-Z), numbers (0-9), periods (.), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
+-- | The name of the receipt rule set. The name must:     * This value can only contain ASCII letters (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-).     * Start and end with a letter or number.     * Contain less than 64 characters.
 rrsmName :: Lens' ReceiptRuleSetMetadata (Maybe Text)
 rrsmName = lens _rrsmName (\ s a -> s{_rrsmName = a});
 
@@ -1753,6 +1824,60 @@ instance ToQuery RecipientDsnFields where
                    (toQueryList "member" <$> _rdfExtensionFields),
                "LastAttemptDate" =: _rdfLastAttemptDate,
                "Action" =: _rdfAction, "Status" =: _rdfStatus]
+
+-- | Contains information about the reputation settings for a configuration set.
+--
+--
+--
+-- /See:/ 'reputationOptions' smart constructor.
+data ReputationOptions = ReputationOptions'
+  { _roLastFreshStart           :: !(Maybe ISO8601)
+  , _roReputationMetricsEnabled :: !(Maybe Bool)
+  , _roSendingEnabled           :: !(Maybe Bool)
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+
+
+-- | Creates a value of 'ReputationOptions' with the minimum fields required to make a request.
+--
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'roLastFreshStart' - The date and time at which the reputation metrics for the configuration set were last reset. Resetting these metrics is known as a /fresh start/ . When you disable email sending for a configuration set using 'UpdateConfigurationSetSendingEnabled' and later re-enable it, the reputation metrics for the configuration set (but not for the entire Amazon SES account) are reset. If email sending for the configuration set has never been disabled and later re-enabled, the value of this attribute is @null@ .
+--
+-- * 'roReputationMetricsEnabled' - Describes whether or not Amazon SES publishes reputation metrics for the configuration set, such as bounce and complaint rates, to Amazon CloudWatch. If the value is @true@ , reputation metrics are published. If the value is @false@ , reputation metrics are not published. The default value is @false@ .
+--
+-- * 'roSendingEnabled' - Describes whether email sending is enabled or disabled for the configuration set. If the value is @true@ , then Amazon SES will send emails that use the configuration set. If the value is @false@ , Amazon SES will not send emails that use the configuration set. The default value is @true@ . You can change this setting using 'UpdateConfigurationSetSendingEnabled' .
+reputationOptions
+    :: ReputationOptions
+reputationOptions =
+  ReputationOptions'
+  { _roLastFreshStart = Nothing
+  , _roReputationMetricsEnabled = Nothing
+  , _roSendingEnabled = Nothing
+  }
+
+
+-- | The date and time at which the reputation metrics for the configuration set were last reset. Resetting these metrics is known as a /fresh start/ . When you disable email sending for a configuration set using 'UpdateConfigurationSetSendingEnabled' and later re-enable it, the reputation metrics for the configuration set (but not for the entire Amazon SES account) are reset. If email sending for the configuration set has never been disabled and later re-enabled, the value of this attribute is @null@ .
+roLastFreshStart :: Lens' ReputationOptions (Maybe UTCTime)
+roLastFreshStart = lens _roLastFreshStart (\ s a -> s{_roLastFreshStart = a}) . mapping _Time;
+
+-- | Describes whether or not Amazon SES publishes reputation metrics for the configuration set, such as bounce and complaint rates, to Amazon CloudWatch. If the value is @true@ , reputation metrics are published. If the value is @false@ , reputation metrics are not published. The default value is @false@ .
+roReputationMetricsEnabled :: Lens' ReputationOptions (Maybe Bool)
+roReputationMetricsEnabled = lens _roReputationMetricsEnabled (\ s a -> s{_roReputationMetricsEnabled = a});
+
+-- | Describes whether email sending is enabled or disabled for the configuration set. If the value is @true@ , then Amazon SES will send emails that use the configuration set. If the value is @false@ , Amazon SES will not send emails that use the configuration set. The default value is @true@ . You can change this setting using 'UpdateConfigurationSetSendingEnabled' .
+roSendingEnabled :: Lens' ReputationOptions (Maybe Bool)
+roSendingEnabled = lens _roSendingEnabled (\ s a -> s{_roSendingEnabled = a});
+
+instance FromXML ReputationOptions where
+        parseXML x
+          = ReputationOptions' <$>
+              (x .@? "LastFreshStart") <*>
+                (x .@? "ReputationMetricsEnabled")
+                <*> (x .@? "SendingEnabled")
+
+instance Hashable ReputationOptions where
+
+instance NFData ReputationOptions where
 
 -- | When included in a receipt rule, this action saves the received message to an Amazon Simple Storage Service (Amazon S3) bucket and, optionally, publishes a notification to Amazon Simple Notification Service (Amazon SNS).
 --
@@ -2111,7 +2236,7 @@ instance ToQuery Template where
                "HtmlPart" =: _tHTMLPart,
                "TemplateName" =: _tTemplateName]
 
--- | Information about an email template.
+-- | Contains information about an email template.
 --
 --
 --

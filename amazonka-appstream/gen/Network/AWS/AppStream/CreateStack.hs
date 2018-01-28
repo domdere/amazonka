@@ -62,9 +62,9 @@ data CreateStack = CreateStack'
 --
 -- * 'csStorageConnectors' - The storage connectors to enable.
 --
--- * 'csDisplayName' - The stack name displayed to end users.
+-- * 'csDisplayName' - The stack name for display.
 --
--- * 'csDescription' - The description displayed to end users.
+-- * 'csDescription' - The description for display.
 --
 -- * 'csName' - The name of the stack.
 createStack
@@ -83,11 +83,11 @@ createStack pName_ =
 csStorageConnectors :: Lens' CreateStack [StorageConnector]
 csStorageConnectors = lens _csStorageConnectors (\ s a -> s{_csStorageConnectors = a}) . _Default . _Coerce;
 
--- | The stack name displayed to end users.
+-- | The stack name for display.
 csDisplayName :: Lens' CreateStack (Maybe Text)
 csDisplayName = lens _csDisplayName (\ s a -> s{_csDisplayName = a});
 
--- | The description displayed to end users.
+-- | The description for display.
 csDescription :: Lens' CreateStack (Maybe Text)
 csDescription = lens _csDescription (\ s a -> s{_csDescription = a});
 

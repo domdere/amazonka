@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Gets a description for one or more file shares from a file gateway. This operation is only supported in file gateways.
+-- Gets a description for one or more file shares from a file gateway. This operation is only supported in the file gateway type.
 --
 --
 module Network.AWS.StorageGateway.DescribeNFSFileShares

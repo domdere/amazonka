@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Accepts an offer to share a portfolio.
+-- Accepts an offer to share the specified portfolio.
 --
 --
 module Network.AWS.ServiceCatalog.AcceptPortfolioShare

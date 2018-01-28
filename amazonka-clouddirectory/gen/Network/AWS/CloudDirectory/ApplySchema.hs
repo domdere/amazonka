@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Copies the input published schema into the 'Directory' with the same name and version as that of the published schema .
+-- Copies the input published schema, at the specified version, into the 'Directory' with the same name and version as that of the published schema.
 --
 --
 module Network.AWS.CloudDirectory.ApplySchema

@@ -59,9 +59,9 @@ data DeleteTable = DeleteTable'
 --
 -- * 'dtCatalogId' - The ID of the Data Catalog where the table resides. If none is supplied, the AWS account ID is used by default.
 --
--- * 'dtDatabaseName' - The name of the catalog database in which the table resides.
+-- * 'dtDatabaseName' - The name of the catalog database in which the table resides. For Hive compatibility, this name is entirely lowercase.
 --
--- * 'dtName' - The name of the table to be deleted.
+-- * 'dtName' - The name of the table to be deleted. For Hive compatibility, this name is entirely lowercase.
 deleteTable
     :: Text -- ^ 'dtDatabaseName'
     -> Text -- ^ 'dtName'
@@ -75,11 +75,11 @@ deleteTable pDatabaseName_ pName_ =
 dtCatalogId :: Lens' DeleteTable (Maybe Text)
 dtCatalogId = lens _dtCatalogId (\ s a -> s{_dtCatalogId = a});
 
--- | The name of the catalog database in which the table resides.
+-- | The name of the catalog database in which the table resides. For Hive compatibility, this name is entirely lowercase.
 dtDatabaseName :: Lens' DeleteTable Text
 dtDatabaseName = lens _dtDatabaseName (\ s a -> s{_dtDatabaseName = a});
 
--- | The name of the table to be deleted.
+-- | The name of the table to be deleted. For Hive compatibility, this name is entirely lowercase.
 dtName :: Lens' DeleteTable Text
 dtName = lens _dtName (\ s a -> s{_dtName = a});
 

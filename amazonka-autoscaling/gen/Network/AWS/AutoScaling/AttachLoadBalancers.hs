@@ -61,7 +61,7 @@ data AttachLoadBalancers = AttachLoadBalancers'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'albAutoScalingGroupName' - The name of the group.
+-- * 'albAutoScalingGroupName' - The name of the Auto Scaling group.
 --
 -- * 'albLoadBalancerNames' - One or more load balancer names.
 attachLoadBalancers
@@ -74,7 +74,7 @@ attachLoadBalancers pAutoScalingGroupName_ =
   }
 
 
--- | The name of the group.
+-- | The name of the Auto Scaling group.
 albAutoScalingGroupName :: Lens' AttachLoadBalancers Text
 albAutoScalingGroupName = lens _albAutoScalingGroupName (\ s a -> s{_albAutoScalingGroupName = a});
 

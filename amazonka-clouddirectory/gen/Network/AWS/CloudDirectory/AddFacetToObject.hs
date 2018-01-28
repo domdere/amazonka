@@ -63,7 +63,7 @@ data AddFacetToObject = AddFacetToObject'
 --
 -- * 'aftoDirectoryARN' - The Amazon Resource Name (ARN) that is associated with the 'Directory' where the object resides. For more information, see 'arns' .
 --
--- * 'aftoSchemaFacet' - Identifiers for the facet that you are adding to the object.
+-- * 'aftoSchemaFacet' - Identifiers for the facet that you are adding to the object. See 'SchemaFacet' for details.
 --
 -- * 'aftoObjectReference' - A reference to the object you are adding the specified facet to.
 addFacetToObject
@@ -88,7 +88,7 @@ aftoObjectAttributeList = lens _aftoObjectAttributeList (\ s a -> s{_aftoObjectA
 aftoDirectoryARN :: Lens' AddFacetToObject Text
 aftoDirectoryARN = lens _aftoDirectoryARN (\ s a -> s{_aftoDirectoryARN = a});
 
--- | Identifiers for the facet that you are adding to the object.
+-- | Identifiers for the facet that you are adding to the object. See 'SchemaFacet' for details.
 aftoSchemaFacet :: Lens' AddFacetToObject SchemaFacet
 aftoSchemaFacet = lens _aftoSchemaFacet (\ s a -> s{_aftoSchemaFacet = a});
 

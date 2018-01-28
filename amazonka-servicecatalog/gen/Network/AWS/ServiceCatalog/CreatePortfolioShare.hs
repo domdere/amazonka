@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Creates a new portfolio share.
+-- Shares the specified portfolio with the specified account.
 --
 --
 module Network.AWS.ServiceCatalog.CreatePortfolioShare
@@ -61,7 +61,7 @@ data CreatePortfolioShare = CreatePortfolioShare'
 --
 -- * 'cpsPortfolioId' - The portfolio identifier.
 --
--- * 'cpsAccountId' - The account ID with which to share the portfolio.
+-- * 'cpsAccountId' - The AWS account ID.
 createPortfolioShare
     :: Text -- ^ 'cpsPortfolioId'
     -> Text -- ^ 'cpsAccountId'
@@ -82,7 +82,7 @@ cpsAcceptLanguage = lens _cpsAcceptLanguage (\ s a -> s{_cpsAcceptLanguage = a})
 cpsPortfolioId :: Lens' CreatePortfolioShare Text
 cpsPortfolioId = lens _cpsPortfolioId (\ s a -> s{_cpsPortfolioId = a});
 
--- | The account ID with which to share the portfolio.
+-- | The AWS account ID.
 cpsAccountId :: Lens' CreatePortfolioShare Text
 cpsAccountId = lens _cpsAccountId (\ s a -> s{_cpsAccountId = a});
 

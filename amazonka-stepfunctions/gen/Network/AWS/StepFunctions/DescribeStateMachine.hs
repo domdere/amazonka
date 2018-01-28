@@ -140,7 +140,7 @@ data DescribeStateMachineResponse = DescribeStateMachineResponse'
 --
 -- * 'dsmrsRoleARN' - The Amazon Resource Name (ARN) of the IAM role used when creating this state machine. (The IAM role maintains security by granting Step Functions access to AWS resources.)
 --
--- * 'dsmrsCreationDate' - The date the state machine was created.
+-- * 'dsmrsCreationDate' - The date the state machine is created.
 describeStateMachineResponse
     :: Int -- ^ 'dsmrsResponseStatus'
     -> Text -- ^ 'dsmrsStateMachineARN'
@@ -185,7 +185,7 @@ dsmrsDefinition = lens _dsmrsDefinition (\ s a -> s{_dsmrsDefinition = a});
 dsmrsRoleARN :: Lens' DescribeStateMachineResponse Text
 dsmrsRoleARN = lens _dsmrsRoleARN (\ s a -> s{_dsmrsRoleARN = a});
 
--- | The date the state machine was created.
+-- | The date the state machine is created.
 dsmrsCreationDate :: Lens' DescribeStateMachineResponse UTCTime
 dsmrsCreationDate = lens _dsmrsCreationDate (\ s a -> s{_dsmrsCreationDate = a}) . _Time;
 

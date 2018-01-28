@@ -86,6 +86,9 @@ module Network.AWS.Batch
 
     -- * Types
 
+    -- ** ArrayJobDependency
+    , ArrayJobDependency (..)
+
     -- ** CEState
     , CEState (..)
 
@@ -109,6 +112,24 @@ module Network.AWS.Batch
 
     -- ** JobStatus
     , JobStatus (..)
+
+    -- ** ArrayProperties
+    , ArrayProperties
+    , arrayProperties
+    , apSize
+
+    -- ** ArrayPropertiesDetail
+    , ArrayPropertiesDetail
+    , arrayPropertiesDetail
+    , apdSize
+    , apdStatusSummary
+    , apdIndex
+
+    -- ** ArrayPropertiesSummary
+    , ArrayPropertiesSummary
+    , arrayPropertiesSummary
+    , apsSize
+    , apsIndex
 
     -- ** AttemptContainerDetail
     , AttemptContainerDetail
@@ -215,6 +236,12 @@ module Network.AWS.Batch
     , cpVcpus
     , cpMemory
 
+    -- ** ContainerSummary
+    , ContainerSummary
+    , containerSummary
+    , csReason
+    , csExitCode
+
     -- ** Host
     , Host
     , host
@@ -223,19 +250,20 @@ module Network.AWS.Batch
     -- ** JobDefinition
     , JobDefinition
     , jobDefinition
-    , jStatus
-    , jRetryStrategy
-    , jParameters
-    , jContainerProperties
-    , jJobDefinitionName
-    , jJobDefinitionARN
-    , jRevision
-    , jType
+    , jobStatus
+    , jobRetryStrategy
+    , jobParameters
+    , jobContainerProperties
+    , jobJobDefinitionName
+    , jobJobDefinitionARN
+    , jobRevision
+    , jobType
 
     -- ** JobDependency
     , JobDependency
     , jobDependency
     , jJobId
+    , jType
 
     -- ** JobDetail
     , JobDetail
@@ -248,6 +276,7 @@ module Network.AWS.Batch
     , jdContainer
     , jdParameters
     , jdStatusReason
+    , jdArrayProperties
     , jdJobName
     , jdJobId
     , jdJobQueue
@@ -269,6 +298,13 @@ module Network.AWS.Batch
     -- ** JobSummary
     , JobSummary
     , jobSummary
+    , jsStoppedAt
+    , jsStatus
+    , jsCreatedAt
+    , jsStartedAt
+    , jsContainer
+    , jsStatusReason
+    , jsArrayProperties
     , jsJobId
     , jsJobName
 

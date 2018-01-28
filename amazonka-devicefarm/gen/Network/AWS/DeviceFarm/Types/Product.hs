@@ -450,6 +450,7 @@ data Device = Device'
   , _devImage               :: !(Maybe Text)
   , _devManufacturer        :: !(Maybe Text)
   , _devPlatform            :: !(Maybe DevicePlatform)
+  , _devModelId             :: !(Maybe Text)
   , _devRemoteAccessEnabled :: !(Maybe Bool)
   , _devArn                 :: !(Maybe Text)
   , _devFormFactor          :: !(Maybe DeviceFormFactor)
@@ -478,6 +479,8 @@ data Device = Device'
 -- * 'devManufacturer' - The device's manufacturer name.
 --
 -- * 'devPlatform' - The device's platform. Allowed values include:     * ANDROID: The Android platform.     * IOS: The iOS platform.
+--
+-- * 'devModelId' - The device's model ID.
 --
 -- * 'devRemoteAccessEnabled' - Specifies whether remote access has been enabled for the specified device.
 --
@@ -514,6 +517,7 @@ device =
   , _devImage = Nothing
   , _devManufacturer = Nothing
   , _devPlatform = Nothing
+  , _devModelId = Nothing
   , _devRemoteAccessEnabled = Nothing
   , _devArn = Nothing
   , _devFormFactor = Nothing
@@ -546,6 +550,10 @@ devManufacturer = lens _devManufacturer (\ s a -> s{_devManufacturer = a});
 -- | The device's platform. Allowed values include:     * ANDROID: The Android platform.     * IOS: The iOS platform.
 devPlatform :: Lens' Device (Maybe DevicePlatform)
 devPlatform = lens _devPlatform (\ s a -> s{_devPlatform = a});
+
+-- | The device's model ID.
+devModelId :: Lens' Device (Maybe Text)
+devModelId = lens _devModelId (\ s a -> s{_devModelId = a});
 
 -- | Specifies whether remote access has been enabled for the specified device.
 devRemoteAccessEnabled :: Lens' Device (Maybe Bool)
@@ -611,6 +619,7 @@ instance FromJSON Device where
                    (x .:? "carrier") <*> (x .:? "image") <*>
                      (x .:? "manufacturer")
                      <*> (x .:? "platform")
+                     <*> (x .:? "modelId")
                      <*> (x .:? "remoteAccessEnabled")
                      <*> (x .:? "arn")
                      <*> (x .:? "formFactor")
@@ -1079,6 +1088,13 @@ lLatitude = lens _lLatitude (\ s a -> s{_lLatitude = a});
 -- | The longitude.
 lLongitude :: Lens' Location Double
 lLongitude = lens _lLongitude (\ s a -> s{_lLongitude = a});
+
+instance FromJSON Location where
+        parseJSON
+          = withObject "Location"
+              (\ x ->
+                 Location' <$>
+                   (x .: "latitude") <*> (x .: "longitude"))
 
 instance Hashable Location where
 
@@ -1766,6 +1782,15 @@ rBluetooth = lens _rBluetooth (\ s a -> s{_rBluetooth = a});
 rWifi :: Lens' Radios (Maybe Bool)
 rWifi = lens _rWifi (\ s a -> s{_rWifi = a});
 
+instance FromJSON Radios where
+        parseJSON
+          = withObject "Radios"
+              (\ x ->
+                 Radios' <$>
+                   (x .:? "nfc") <*> (x .:? "gps") <*>
+                     (x .:? "bluetooth")
+                     <*> (x .:? "wifi"))
+
 instance Hashable Radios where
 
 instance NFData Radios where
@@ -1826,22 +1851,25 @@ instance NFData RecurringCharge where
 --
 -- /See:/ 'remoteAccessSession' smart constructor.
 data RemoteAccessSession = RemoteAccessSession'
-  { _rasBillingMethod      :: !(Maybe BillingMethod)
-  , _rasClientId           :: !(Maybe Text)
-  , _rasDeviceUdid         :: !(Maybe Text)
-  , _rasStatus             :: !(Maybe ExecutionStatus)
-  , _rasArn                :: !(Maybe Text)
-  , _rasCreated            :: !(Maybe POSIX)
-  , _rasDevice             :: !(Maybe Device)
-  , _rasStopped            :: !(Maybe POSIX)
-  , _rasResult             :: !(Maybe ExecutionResult)
-  , _rasName               :: !(Maybe Text)
-  , _rasDeviceMinutes      :: !(Maybe DeviceMinutes)
-  , _rasRemoteDebugEnabled :: !(Maybe Bool)
-  , _rasEndpoint           :: !(Maybe Text)
-  , _rasMessage            :: !(Maybe Text)
-  , _rasHostAddress        :: !(Maybe Text)
-  , _rasStarted            :: !(Maybe POSIX)
+  { _rasBillingMethod       :: !(Maybe BillingMethod)
+  , _rasClientId            :: !(Maybe Text)
+  , _rasDeviceUdid          :: !(Maybe Text)
+  , _rasStatus              :: !(Maybe ExecutionStatus)
+  , _rasRemoteRecordEnabled :: !(Maybe Bool)
+  , _rasArn                 :: !(Maybe Text)
+  , _rasRemoteRecordAppARN  :: !(Maybe Text)
+  , _rasCreated             :: !(Maybe POSIX)
+  , _rasDevice              :: !(Maybe Device)
+  , _rasStopped             :: !(Maybe POSIX)
+  , _rasResult              :: !(Maybe ExecutionResult)
+  , _rasName                :: !(Maybe Text)
+  , _rasDeviceMinutes       :: !(Maybe DeviceMinutes)
+  , _rasRemoteDebugEnabled  :: !(Maybe Bool)
+  , _rasEndpoint            :: !(Maybe Text)
+  , _rasMessage             :: !(Maybe Text)
+  , _rasHostAddress         :: !(Maybe Text)
+  , _rasInteractionMode     :: !(Maybe InteractionMode)
+  , _rasStarted             :: !(Maybe POSIX)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1857,7 +1885,11 @@ data RemoteAccessSession = RemoteAccessSession'
 --
 -- * 'rasStatus' - The status of the remote access session. Can be any of the following:     * PENDING: A pending status.     * PENDING_CONCURRENCY: A pending concurrency status.     * PENDING_DEVICE: A pending device status.     * PROCESSING: A processing status.     * SCHEDULING: A scheduling status.     * PREPARING: A preparing status.     * RUNNING: A running status.     * COMPLETED: A completed status.     * STOPPING: A stopping status.
 --
+-- * 'rasRemoteRecordEnabled' - This flag is set to @true@ if remote recording is enabled for the remote access session.
+--
 -- * 'rasArn' - The Amazon Resource Name (ARN) of the remote access session.
+--
+-- * 'rasRemoteRecordAppARN' - The Amazon Resource Name (ARN) for the app to be recorded in the remote access session.
 --
 -- * 'rasCreated' - The date and time the remote access session was created.
 --
@@ -1879,6 +1911,8 @@ data RemoteAccessSession = RemoteAccessSession'
 --
 -- * 'rasHostAddress' - IP address of the EC2 host where you need to connect to remotely debug devices. Only returned if remote debugging is enabled for the remote access session.
 --
+-- * 'rasInteractionMode' - The interaction mode of the remote access session. Valid values are:     * INTERACTIVE: You can interact with the iOS device by viewing, touching, and rotating the screen. You __cannot__ run XCUITest framework-based tests in this mode.     * NO_VIDEO: You are connected to the device but cannot interact with it or view the screen. This mode has the fastest test execution speed. You __can__ run XCUITest framework-based tests in this mode.     * VIDEO_ONLY: You can view the screen but cannot touch or rotate it. You __can__ run XCUITest framework-based tests and watch the screen in this mode.
+--
 -- * 'rasStarted' - The date and time the remote access session was started.
 remoteAccessSession
     :: RemoteAccessSession
@@ -1888,7 +1922,9 @@ remoteAccessSession =
   , _rasClientId = Nothing
   , _rasDeviceUdid = Nothing
   , _rasStatus = Nothing
+  , _rasRemoteRecordEnabled = Nothing
   , _rasArn = Nothing
+  , _rasRemoteRecordAppARN = Nothing
   , _rasCreated = Nothing
   , _rasDevice = Nothing
   , _rasStopped = Nothing
@@ -1899,6 +1935,7 @@ remoteAccessSession =
   , _rasEndpoint = Nothing
   , _rasMessage = Nothing
   , _rasHostAddress = Nothing
+  , _rasInteractionMode = Nothing
   , _rasStarted = Nothing
   }
 
@@ -1919,9 +1956,17 @@ rasDeviceUdid = lens _rasDeviceUdid (\ s a -> s{_rasDeviceUdid = a});
 rasStatus :: Lens' RemoteAccessSession (Maybe ExecutionStatus)
 rasStatus = lens _rasStatus (\ s a -> s{_rasStatus = a});
 
+-- | This flag is set to @true@ if remote recording is enabled for the remote access session.
+rasRemoteRecordEnabled :: Lens' RemoteAccessSession (Maybe Bool)
+rasRemoteRecordEnabled = lens _rasRemoteRecordEnabled (\ s a -> s{_rasRemoteRecordEnabled = a});
+
 -- | The Amazon Resource Name (ARN) of the remote access session.
 rasArn :: Lens' RemoteAccessSession (Maybe Text)
 rasArn = lens _rasArn (\ s a -> s{_rasArn = a});
+
+-- | The Amazon Resource Name (ARN) for the app to be recorded in the remote access session.
+rasRemoteRecordAppARN :: Lens' RemoteAccessSession (Maybe Text)
+rasRemoteRecordAppARN = lens _rasRemoteRecordAppARN (\ s a -> s{_rasRemoteRecordAppARN = a});
 
 -- | The date and time the remote access session was created.
 rasCreated :: Lens' RemoteAccessSession (Maybe UTCTime)
@@ -1963,6 +2008,10 @@ rasMessage = lens _rasMessage (\ s a -> s{_rasMessage = a});
 rasHostAddress :: Lens' RemoteAccessSession (Maybe Text)
 rasHostAddress = lens _rasHostAddress (\ s a -> s{_rasHostAddress = a});
 
+-- | The interaction mode of the remote access session. Valid values are:     * INTERACTIVE: You can interact with the iOS device by viewing, touching, and rotating the screen. You __cannot__ run XCUITest framework-based tests in this mode.     * NO_VIDEO: You are connected to the device but cannot interact with it or view the screen. This mode has the fastest test execution speed. You __can__ run XCUITest framework-based tests in this mode.     * VIDEO_ONLY: You can view the screen but cannot touch or rotate it. You __can__ run XCUITest framework-based tests and watch the screen in this mode.
+rasInteractionMode :: Lens' RemoteAccessSession (Maybe InteractionMode)
+rasInteractionMode = lens _rasInteractionMode (\ s a -> s{_rasInteractionMode = a});
+
 -- | The date and time the remote access session was started.
 rasStarted :: Lens' RemoteAccessSession (Maybe UTCTime)
 rasStarted = lens _rasStarted (\ s a -> s{_rasStarted = a}) . mapping _Time;
@@ -1975,7 +2024,9 @@ instance FromJSON RemoteAccessSession where
                    (x .:? "billingMethod") <*> (x .:? "clientId") <*>
                      (x .:? "deviceUdid")
                      <*> (x .:? "status")
+                     <*> (x .:? "remoteRecordEnabled")
                      <*> (x .:? "arn")
+                     <*> (x .:? "remoteRecordAppArn")
                      <*> (x .:? "created")
                      <*> (x .:? "device")
                      <*> (x .:? "stopped")
@@ -1986,6 +2037,7 @@ instance FromJSON RemoteAccessSession where
                      <*> (x .:? "endpoint")
                      <*> (x .:? "message")
                      <*> (x .:? "hostAddress")
+                     <*> (x .:? "interactionMode")
                      <*> (x .:? "started"))
 
 instance Hashable RemoteAccessSession where
@@ -2100,21 +2152,30 @@ data Run = Run'
   { _runBillingMethod         :: !(Maybe BillingMethod)
   , _runStatus                :: !(Maybe ExecutionStatus)
   , _runCustomerArtifactPaths :: !(Maybe CustomerArtifactPaths)
+  , _runEventCount            :: !(Maybe Int)
   , _runCounters              :: !(Maybe Counters)
   , _runPlatform              :: !(Maybe DevicePlatform)
+  , _runSeed                  :: !(Maybe Int)
+  , _runRadios                :: !(Maybe Radios)
   , _runArn                   :: !(Maybe Text)
+  , _runLocation              :: !(Maybe Location)
   , _runCreated               :: !(Maybe POSIX)
+  , _runLocale                :: !(Maybe Text)
   , _runStopped               :: !(Maybe POSIX)
   , _runResult                :: !(Maybe ExecutionResult)
+  , _runJobTimeoutMinutes     :: !(Maybe Int)
   , _runCompletedJobs         :: !(Maybe Int)
   , _runResultCode            :: !(Maybe ExecutionResultCode)
   , _runName                  :: !(Maybe Text)
+  , _runAppUpload             :: !(Maybe Text)
   , _runParsingResultURL      :: !(Maybe Text)
   , _runNetworkProfile        :: !(Maybe NetworkProfile)
   , _runDeviceMinutes         :: !(Maybe DeviceMinutes)
   , _runType                  :: !(Maybe TestType)
   , _runMessage               :: !(Maybe Text)
+  , _runWebURL                :: !(Maybe Text)
   , _runTotalJobs             :: !(Maybe Int)
+  , _runDevicePoolARN         :: !(Maybe Text)
   , _runStarted               :: !(Maybe POSIX)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -2129,23 +2190,37 @@ data Run = Run'
 --
 -- * 'runCustomerArtifactPaths' - Output @CustomerArtifactPaths@ object for the test run.
 --
+-- * 'runEventCount' - For fuzz tests, this is the number of events, between 1 and 10000, that the UI fuzz test should perform.
+--
 -- * 'runCounters' - The run's result counters.
 --
 -- * 'runPlatform' - The run's platform. Allowed values include:     * ANDROID: The Android platform.     * IOS: The iOS platform.
 --
+-- * 'runSeed' - For fuzz tests, this is a seed to use for randomizing the UI fuzz test. Using the same seed value between tests ensures identical event sequences.
+--
+-- * 'runRadios' - Information about the radio states for the run.
+--
 -- * 'runArn' - The run's ARN.
 --
+-- * 'runLocation' - Information about the location that is used for the run.
+--
 -- * 'runCreated' - When the run was created.
+--
+-- * 'runLocale' - Information about the locale that is used for the run.
 --
 -- * 'runStopped' - The run's stop time.
 --
 -- * 'runResult' - The run's result. Allowed values include:     * PENDING: A pending condition.     * PASSED: A passing condition.     * WARNED: A warning condition.     * FAILED: A failed condition.     * SKIPPED: A skipped condition.     * ERRORED: An error condition.     * STOPPED: A stopped condition.
+--
+-- * 'runJobTimeoutMinutes' - The number of minutes the job will execute before it times out.
 --
 -- * 'runCompletedJobs' - The total number of completed jobs.
 --
 -- * 'runResultCode' - Supporting field for the result field. Set only if @result@ is @SKIPPED@ . @PARSING_FAILED@ if the result is skipped because of test package parsing failure.
 --
 -- * 'runName' - The run's name.
+--
+-- * 'runAppUpload' - An app to upload or that has been uploaded.
 --
 -- * 'runParsingResultURL' - Read-only URL for an object in S3 bucket where you can get the parsing results of the test package. If the test package doesn't parse, the reason why it doesn't parse appears in the file that this URL points to.
 --
@@ -2157,7 +2232,11 @@ data Run = Run'
 --
 -- * 'runMessage' - A message about the run's result.
 --
+-- * 'runWebURL' - A pre-signed Amazon S3 URL that can be used with a corresponding GET request to download the symbol file for the run.
+--
 -- * 'runTotalJobs' - The total number of jobs for the run.
+--
+-- * 'runDevicePoolARN' - The ARN of the device pool for the run.
 --
 -- * 'runStarted' - The run's start time.
 run
@@ -2167,21 +2246,30 @@ run =
   { _runBillingMethod = Nothing
   , _runStatus = Nothing
   , _runCustomerArtifactPaths = Nothing
+  , _runEventCount = Nothing
   , _runCounters = Nothing
   , _runPlatform = Nothing
+  , _runSeed = Nothing
+  , _runRadios = Nothing
   , _runArn = Nothing
+  , _runLocation = Nothing
   , _runCreated = Nothing
+  , _runLocale = Nothing
   , _runStopped = Nothing
   , _runResult = Nothing
+  , _runJobTimeoutMinutes = Nothing
   , _runCompletedJobs = Nothing
   , _runResultCode = Nothing
   , _runName = Nothing
+  , _runAppUpload = Nothing
   , _runParsingResultURL = Nothing
   , _runNetworkProfile = Nothing
   , _runDeviceMinutes = Nothing
   , _runType = Nothing
   , _runMessage = Nothing
+  , _runWebURL = Nothing
   , _runTotalJobs = Nothing
+  , _runDevicePoolARN = Nothing
   , _runStarted = Nothing
   }
 
@@ -2198,6 +2286,10 @@ runStatus = lens _runStatus (\ s a -> s{_runStatus = a});
 runCustomerArtifactPaths :: Lens' Run (Maybe CustomerArtifactPaths)
 runCustomerArtifactPaths = lens _runCustomerArtifactPaths (\ s a -> s{_runCustomerArtifactPaths = a});
 
+-- | For fuzz tests, this is the number of events, between 1 and 10000, that the UI fuzz test should perform.
+runEventCount :: Lens' Run (Maybe Int)
+runEventCount = lens _runEventCount (\ s a -> s{_runEventCount = a});
+
 -- | The run's result counters.
 runCounters :: Lens' Run (Maybe Counters)
 runCounters = lens _runCounters (\ s a -> s{_runCounters = a});
@@ -2206,13 +2298,29 @@ runCounters = lens _runCounters (\ s a -> s{_runCounters = a});
 runPlatform :: Lens' Run (Maybe DevicePlatform)
 runPlatform = lens _runPlatform (\ s a -> s{_runPlatform = a});
 
+-- | For fuzz tests, this is a seed to use for randomizing the UI fuzz test. Using the same seed value between tests ensures identical event sequences.
+runSeed :: Lens' Run (Maybe Int)
+runSeed = lens _runSeed (\ s a -> s{_runSeed = a});
+
+-- | Information about the radio states for the run.
+runRadios :: Lens' Run (Maybe Radios)
+runRadios = lens _runRadios (\ s a -> s{_runRadios = a});
+
 -- | The run's ARN.
 runArn :: Lens' Run (Maybe Text)
 runArn = lens _runArn (\ s a -> s{_runArn = a});
 
+-- | Information about the location that is used for the run.
+runLocation :: Lens' Run (Maybe Location)
+runLocation = lens _runLocation (\ s a -> s{_runLocation = a});
+
 -- | When the run was created.
 runCreated :: Lens' Run (Maybe UTCTime)
 runCreated = lens _runCreated (\ s a -> s{_runCreated = a}) . mapping _Time;
+
+-- | Information about the locale that is used for the run.
+runLocale :: Lens' Run (Maybe Text)
+runLocale = lens _runLocale (\ s a -> s{_runLocale = a});
 
 -- | The run's stop time.
 runStopped :: Lens' Run (Maybe UTCTime)
@@ -2221,6 +2329,10 @@ runStopped = lens _runStopped (\ s a -> s{_runStopped = a}) . mapping _Time;
 -- | The run's result. Allowed values include:     * PENDING: A pending condition.     * PASSED: A passing condition.     * WARNED: A warning condition.     * FAILED: A failed condition.     * SKIPPED: A skipped condition.     * ERRORED: An error condition.     * STOPPED: A stopped condition.
 runResult :: Lens' Run (Maybe ExecutionResult)
 runResult = lens _runResult (\ s a -> s{_runResult = a});
+
+-- | The number of minutes the job will execute before it times out.
+runJobTimeoutMinutes :: Lens' Run (Maybe Int)
+runJobTimeoutMinutes = lens _runJobTimeoutMinutes (\ s a -> s{_runJobTimeoutMinutes = a});
 
 -- | The total number of completed jobs.
 runCompletedJobs :: Lens' Run (Maybe Int)
@@ -2233,6 +2345,10 @@ runResultCode = lens _runResultCode (\ s a -> s{_runResultCode = a});
 -- | The run's name.
 runName :: Lens' Run (Maybe Text)
 runName = lens _runName (\ s a -> s{_runName = a});
+
+-- | An app to upload or that has been uploaded.
+runAppUpload :: Lens' Run (Maybe Text)
+runAppUpload = lens _runAppUpload (\ s a -> s{_runAppUpload = a});
 
 -- | Read-only URL for an object in S3 bucket where you can get the parsing results of the test package. If the test package doesn't parse, the reason why it doesn't parse appears in the file that this URL points to.
 runParsingResultURL :: Lens' Run (Maybe Text)
@@ -2254,9 +2370,17 @@ runType = lens _runType (\ s a -> s{_runType = a});
 runMessage :: Lens' Run (Maybe Text)
 runMessage = lens _runMessage (\ s a -> s{_runMessage = a});
 
+-- | A pre-signed Amazon S3 URL that can be used with a corresponding GET request to download the symbol file for the run.
+runWebURL :: Lens' Run (Maybe Text)
+runWebURL = lens _runWebURL (\ s a -> s{_runWebURL = a});
+
 -- | The total number of jobs for the run.
 runTotalJobs :: Lens' Run (Maybe Int)
 runTotalJobs = lens _runTotalJobs (\ s a -> s{_runTotalJobs = a});
+
+-- | The ARN of the device pool for the run.
+runDevicePoolARN :: Lens' Run (Maybe Text)
+runDevicePoolARN = lens _runDevicePoolARN (\ s a -> s{_runDevicePoolARN = a});
 
 -- | The run's start time.
 runStarted :: Lens' Run (Maybe UTCTime)
@@ -2269,21 +2393,30 @@ instance FromJSON Run where
                  Run' <$>
                    (x .:? "billingMethod") <*> (x .:? "status") <*>
                      (x .:? "customerArtifactPaths")
+                     <*> (x .:? "eventCount")
                      <*> (x .:? "counters")
                      <*> (x .:? "platform")
+                     <*> (x .:? "seed")
+                     <*> (x .:? "radios")
                      <*> (x .:? "arn")
+                     <*> (x .:? "location")
                      <*> (x .:? "created")
+                     <*> (x .:? "locale")
                      <*> (x .:? "stopped")
                      <*> (x .:? "result")
+                     <*> (x .:? "jobTimeoutMinutes")
                      <*> (x .:? "completedJobs")
                      <*> (x .:? "resultCode")
                      <*> (x .:? "name")
+                     <*> (x .:? "appUpload")
                      <*> (x .:? "parsingResultUrl")
                      <*> (x .:? "networkProfile")
                      <*> (x .:? "deviceMinutes")
                      <*> (x .:? "type")
                      <*> (x .:? "message")
+                     <*> (x .:? "webUrl")
                      <*> (x .:? "totalJobs")
+                     <*> (x .:? "devicePoolArn")
                      <*> (x .:? "started"))
 
 instance Hashable Run where

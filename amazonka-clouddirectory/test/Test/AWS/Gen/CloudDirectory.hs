@@ -37,6 +37,9 @@ import Test.Tasty
 --         , requestListIndex $
 --             listIndex
 --
+--         , requestUpgradeAppliedSchema $
+--             upgradeAppliedSchema
+--
 --         , requestGetDirectory $
 --             getDirectory
 --
@@ -82,6 +85,9 @@ import Test.Tasty
 --         , requestDeleteTypedLinkFacet $
 --             deleteTypedLinkFacet
 --
+--         , requestGetAppliedSchemaVersion $
+--             getAppliedSchemaVersion
+--
 --         , requestRemoveFacetFromObject $
 --             removeFacetFromObject
 --
@@ -114,6 +120,9 @@ import Test.Tasty
 --
 --         , requestCreateObject $
 --             createObject
+--
+--         , requestUpgradePublishedSchema $
+--             upgradePublishedSchema
 --
 --         , requestCreateFacet $
 --             createFacet
@@ -217,6 +226,9 @@ import Test.Tasty
 --         , responseListIndex $
 --             listIndexResponse
 --
+--         , responseUpgradeAppliedSchema $
+--             upgradeAppliedSchemaResponse
+--
 --         , responseGetDirectory $
 --             getDirectoryResponse
 --
@@ -262,6 +274,9 @@ import Test.Tasty
 --         , responseDeleteTypedLinkFacet $
 --             deleteTypedLinkFacetResponse
 --
+--         , responseGetAppliedSchemaVersion $
+--             getAppliedSchemaVersionResponse
+--
 --         , responseRemoveFacetFromObject $
 --             removeFacetFromObjectResponse
 --
@@ -294,6 +309,9 @@ import Test.Tasty
 --
 --         , responseCreateObject $
 --             createObjectResponse
+--
+--         , responseUpgradePublishedSchema $
+--             upgradePublishedSchemaResponse
 --
 --         , responseCreateFacet $
 --             createFacetResponse
@@ -405,6 +423,11 @@ requestListIndex = req
     "ListIndex"
     "fixture/ListIndex.yaml"
 
+requestUpgradeAppliedSchema :: UpgradeAppliedSchema -> TestTree
+requestUpgradeAppliedSchema = req
+    "UpgradeAppliedSchema"
+    "fixture/UpgradeAppliedSchema.yaml"
+
 requestGetDirectory :: GetDirectory -> TestTree
 requestGetDirectory = req
     "GetDirectory"
@@ -480,6 +503,11 @@ requestDeleteTypedLinkFacet = req
     "DeleteTypedLinkFacet"
     "fixture/DeleteTypedLinkFacet.yaml"
 
+requestGetAppliedSchemaVersion :: GetAppliedSchemaVersion -> TestTree
+requestGetAppliedSchemaVersion = req
+    "GetAppliedSchemaVersion"
+    "fixture/GetAppliedSchemaVersion.yaml"
+
 requestRemoveFacetFromObject :: RemoveFacetFromObject -> TestTree
 requestRemoveFacetFromObject = req
     "RemoveFacetFromObject"
@@ -534,6 +562,11 @@ requestCreateObject :: CreateObject -> TestTree
 requestCreateObject = req
     "CreateObject"
     "fixture/CreateObject.yaml"
+
+requestUpgradePublishedSchema :: UpgradePublishedSchema -> TestTree
+requestUpgradePublishedSchema = req
+    "UpgradePublishedSchema"
+    "fixture/UpgradePublishedSchema.yaml"
 
 requestCreateFacet :: CreateFacet -> TestTree
 requestCreateFacet = req
@@ -708,6 +741,13 @@ responseListIndex = res
     cloudDirectory
     (Proxy :: Proxy ListIndex)
 
+responseUpgradeAppliedSchema :: UpgradeAppliedSchemaResponse -> TestTree
+responseUpgradeAppliedSchema = res
+    "UpgradeAppliedSchemaResponse"
+    "fixture/UpgradeAppliedSchemaResponse.proto"
+    cloudDirectory
+    (Proxy :: Proxy UpgradeAppliedSchema)
+
 responseGetDirectory :: GetDirectoryResponse -> TestTree
 responseGetDirectory = res
     "GetDirectoryResponse"
@@ -813,6 +853,13 @@ responseDeleteTypedLinkFacet = res
     cloudDirectory
     (Proxy :: Proxy DeleteTypedLinkFacet)
 
+responseGetAppliedSchemaVersion :: GetAppliedSchemaVersionResponse -> TestTree
+responseGetAppliedSchemaVersion = res
+    "GetAppliedSchemaVersionResponse"
+    "fixture/GetAppliedSchemaVersionResponse.proto"
+    cloudDirectory
+    (Proxy :: Proxy GetAppliedSchemaVersion)
+
 responseRemoveFacetFromObject :: RemoveFacetFromObjectResponse -> TestTree
 responseRemoveFacetFromObject = res
     "RemoveFacetFromObjectResponse"
@@ -889,6 +936,13 @@ responseCreateObject = res
     "fixture/CreateObjectResponse.proto"
     cloudDirectory
     (Proxy :: Proxy CreateObject)
+
+responseUpgradePublishedSchema :: UpgradePublishedSchemaResponse -> TestTree
+responseUpgradePublishedSchema = res
+    "UpgradePublishedSchemaResponse"
+    "fixture/UpgradePublishedSchemaResponse.proto"
+    cloudDirectory
+    (Proxy :: Proxy UpgradePublishedSchema)
 
 responseCreateFacet :: CreateFacetResponse -> TestTree
 responseCreateFacet = res

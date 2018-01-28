@@ -33,11 +33,13 @@ module Network.AWS.APIGateway.GetRestAPI
     , restAPI
     , RestAPI
     -- * Response Lenses
+    , raMinimumCompressionSize
     , raBinaryMediaTypes
     , raWarnings
     , raCreatedDate
     , raName
     , raVersion
+    , raApiKeySource
     , raId
     , raEndpointConfiguration
     , raDescription

@@ -70,7 +70,7 @@ data DescribeTags = DescribeTags'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dtFilters' - One or more filters.     * @key@ - The tag key.     * @resource-id@ - The resource ID.     * @resource-type@ - The resource type (@customer-gateway@ | @dhcp-options@ | @image@ | @instance@ | @internet-gateway@ | @network-acl@ | @network-interface@ | @reserved-instances@ | @route-table@ | @security-group@ | @snapshot@ | @spot-instances-request@ | @subnet@ | @volume@ | @vpc@ | @vpn-connection@ | @vpn-gateway@ ).     * @value@ - The tag value.
+-- * 'dtFilters' - One or more filters.     * @key@ - The tag key.     * @resource-id@ - The resource ID.     * @resource-type@ - The resource type (@customer-gateway@ | @dhcp-options@ | @elastic-ip@ | @fpga-image@ | @image@ | @instance@ | @internet-gateway@ | @launch-template@ | @natgateway@ | @network-acl@ | @network-interface@ | @reserved-instances@ | @route-table@ | @security-group@ | @snapshot@ | @spot-instances-request@ | @subnet@ | @volume@ | @vpc@ | @vpc-peering-connection@ | @vpn-connection@ | @vpn-gateway@ ).     * @value@ - The tag value.
 --
 -- * 'dtNextToken' - The token to retrieve the next page of results.
 --
@@ -88,7 +88,7 @@ describeTags =
   }
 
 
--- | One or more filters.     * @key@ - The tag key.     * @resource-id@ - The resource ID.     * @resource-type@ - The resource type (@customer-gateway@ | @dhcp-options@ | @image@ | @instance@ | @internet-gateway@ | @network-acl@ | @network-interface@ | @reserved-instances@ | @route-table@ | @security-group@ | @snapshot@ | @spot-instances-request@ | @subnet@ | @volume@ | @vpc@ | @vpn-connection@ | @vpn-gateway@ ).     * @value@ - The tag value.
+-- | One or more filters.     * @key@ - The tag key.     * @resource-id@ - The resource ID.     * @resource-type@ - The resource type (@customer-gateway@ | @dhcp-options@ | @elastic-ip@ | @fpga-image@ | @image@ | @instance@ | @internet-gateway@ | @launch-template@ | @natgateway@ | @network-acl@ | @network-interface@ | @reserved-instances@ | @route-table@ | @security-group@ | @snapshot@ | @spot-instances-request@ | @subnet@ | @volume@ | @vpc@ | @vpc-peering-connection@ | @vpn-connection@ | @vpn-gateway@ ).     * @value@ - The tag value.
 dtFilters :: Lens' DescribeTags [Filter]
 dtFilters = lens _dtFilters (\ s a -> s{_dtFilters = a}) . _Default . _Coerce;
 

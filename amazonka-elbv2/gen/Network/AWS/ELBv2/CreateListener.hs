@@ -21,9 +21,9 @@
 -- Creates a listener for the specified Application Load Balancer or Network Load Balancer.
 --
 --
--- To update a listener, use 'ModifyListener' . When you are finished with a listener, you can delete it using 'DeleteListener' . If you are finished with both the listener and the load balancer, you can delete them both using 'DeleteLoadBalancer' .
+-- You can create up to 10 listeners per load balancer.
 --
--- This operation is idempotent, which means that it completes at most one time. If you attempt to create multiple listeners with the same settings, each call succeeds.
+-- To update a listener, use 'ModifyListener' . When you are finished with a listener, you can delete it using 'DeleteListener' . If you are finished with both the listener and the load balancer, you can delete them both using 'DeleteLoadBalancer' .
 --
 -- For more information, see <http://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-listeners.html Listeners for Your Application Load Balancers> in the /Application Load Balancers Guide/ and <http://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-listeners.html Listeners for Your Network Load Balancers> in the /Network Load Balancers Guide/ .
 --

@@ -72,7 +72,7 @@ data RegisterContainerInstance = RegisterContainerInstance'
 --
 -- * 'rciInstanceIdentityDocument' - The instance identity document for the EC2 instance to register. This document can be found by running the following command from the instance: @curl http://169.254.169.254/latest/dynamic/instance-identity/document/@
 --
--- * 'rciContainerInstanceARN' - The Amazon Resource Name (ARN) of the container instance (if it was previously registered).
+-- * 'rciContainerInstanceARN' - The ARN of the container instance (if it was previously registered).
 --
 -- * 'rciVersionInfo' - The version information for the Amazon ECS container agent and Docker daemon running on the container instance.
 --
@@ -105,7 +105,7 @@ rciCluster = lens _rciCluster (\ s a -> s{_rciCluster = a});
 rciInstanceIdentityDocument :: Lens' RegisterContainerInstance (Maybe Text)
 rciInstanceIdentityDocument = lens _rciInstanceIdentityDocument (\ s a -> s{_rciInstanceIdentityDocument = a});
 
--- | The Amazon Resource Name (ARN) of the container instance (if it was previously registered).
+-- | The ARN of the container instance (if it was previously registered).
 rciContainerInstanceARN :: Lens' RegisterContainerInstance (Maybe Text)
 rciContainerInstanceARN = lens _rciContainerInstanceARN (\ s a -> s{_rciContainerInstanceARN = a});
 

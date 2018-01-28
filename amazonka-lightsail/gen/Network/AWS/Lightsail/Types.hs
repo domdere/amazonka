@@ -30,8 +30,20 @@ module Network.AWS.Lightsail.Types
     -- * BlueprintType
     , BlueprintType (..)
 
+    -- * DiskSnapshotState
+    , DiskSnapshotState (..)
+
+    -- * DiskState
+    , DiskState (..)
+
     -- * InstanceAccessProtocol
     , InstanceAccessProtocol (..)
+
+    -- * InstanceHealthReason
+    , InstanceHealthReason (..)
+
+    -- * InstanceHealthState
+    , InstanceHealthState (..)
 
     -- * InstanceMetricName
     , InstanceMetricName (..)
@@ -41,6 +53,33 @@ module Network.AWS.Lightsail.Types
 
     -- * InstanceSnapshotState
     , InstanceSnapshotState (..)
+
+    -- * LoadBalancerAttributeName
+    , LoadBalancerAttributeName (..)
+
+    -- * LoadBalancerMetricName
+    , LoadBalancerMetricName (..)
+
+    -- * LoadBalancerProtocol
+    , LoadBalancerProtocol (..)
+
+    -- * LoadBalancerState
+    , LoadBalancerState (..)
+
+    -- * LoadBalancerTLSCertificateDomainStatus
+    , LoadBalancerTLSCertificateDomainStatus (..)
+
+    -- * LoadBalancerTLSCertificateFailureReason
+    , LoadBalancerTLSCertificateFailureReason (..)
+
+    -- * LoadBalancerTLSCertificateRenewalStatus
+    , LoadBalancerTLSCertificateRenewalStatus (..)
+
+    -- * LoadBalancerTLSCertificateRevocationReason
+    , LoadBalancerTLSCertificateRevocationReason (..)
+
+    -- * LoadBalancerTLSCertificateStatus
+    , LoadBalancerTLSCertificateStatus (..)
 
     -- * MetricStatistic
     , MetricStatistic (..)
@@ -109,6 +148,7 @@ module Network.AWS.Lightsail.Types
     -- * Disk
     , Disk
     , disk
+    , dState
     , dResourceType
     , dArn
     , dPath
@@ -124,6 +164,27 @@ module Network.AWS.Lightsail.Types
     , dAttachedTo
     , dGbInUse
 
+    -- * DiskMap
+    , DiskMap
+    , diskMap
+    , dmNewDiskName
+    , dmOriginalDiskPath
+
+    -- * DiskSnapshot
+    , DiskSnapshot
+    , diskSnapshot
+    , dsFromDiskName
+    , dsState
+    , dsResourceType
+    , dsArn
+    , dsCreatedAt
+    , dsLocation
+    , dsProgress
+    , dsName
+    , dsSizeInGb
+    , dsSupportCode
+    , dsFromDiskARN
+
     -- * Domain
     , Domain
     , domain
@@ -138,6 +199,7 @@ module Network.AWS.Lightsail.Types
     -- * DomainEntry
     , DomainEntry
     , domainEntry
+    , deIsAlias
     , deName
     , deId
     , deOptions
@@ -186,6 +248,13 @@ module Network.AWS.Lightsail.Types
     , ihDisks
     , ihRamSizeInGb
 
+    -- * InstanceHealthSummary
+    , InstanceHealthSummary
+    , instanceHealthSummary
+    , ihsInstanceHealth
+    , ihsInstanceName
+    , ihsInstanceHealthReason
+
     -- * InstanceNetworking
     , InstanceNetworking
     , instanceNetworking
@@ -217,6 +286,7 @@ module Network.AWS.Lightsail.Types
     , insFromBlueprintId
     , insState
     , insResourceType
+    , insFromAttachedDisks
     , insArn
     , insCreatedAt
     , insLocation
@@ -244,6 +314,80 @@ module Network.AWS.Lightsail.Types
     , kpFingerprint
     , kpName
     , kpSupportCode
+
+    -- * LoadBalancer
+    , LoadBalancer
+    , loadBalancer
+    , lbHealthCheckPath
+    , lbState
+    , lbResourceType
+    , lbArn
+    , lbCreatedAt
+    , lbLocation
+    , lbInstancePort
+    , lbConfigurationOptions
+    , lbProtocol
+    , lbTlsCertificateSummaries
+    , lbName
+    , lbSupportCode
+    , lbPublicPorts
+    , lbDnsName
+    , lbInstanceHealthSummary
+
+    -- * LoadBalancerTLSCertificate
+    , LoadBalancerTLSCertificate
+    , loadBalancerTLSCertificate
+    , lbtcFailureReason
+    , lbtcSubject
+    , lbtcStatus
+    , lbtcSubjectAlternativeNames
+    , lbtcResourceType
+    , lbtcArn
+    , lbtcCreatedAt
+    , lbtcLocation
+    , lbtcLoadBalancerName
+    , lbtcSerial
+    , lbtcIsAttached
+    , lbtcRevokedAt
+    , lbtcNotBefore
+    , lbtcRevocationReason
+    , lbtcDomainName
+    , lbtcName
+    , lbtcRenewalSummary
+    , lbtcSupportCode
+    , lbtcDomainValidationRecords
+    , lbtcIssuedAt
+    , lbtcKeyAlgorithm
+    , lbtcSignatureAlgorithm
+    , lbtcIssuer
+    , lbtcNotAfter
+
+    -- * LoadBalancerTLSCertificateDomainValidationOption
+    , LoadBalancerTLSCertificateDomainValidationOption
+    , loadBalancerTLSCertificateDomainValidationOption
+    , lbtcdvoDomainName
+    , lbtcdvoValidationStatus
+
+    -- * LoadBalancerTLSCertificateDomainValidationRecord
+    , LoadBalancerTLSCertificateDomainValidationRecord
+    , loadBalancerTLSCertificateDomainValidationRecord
+    , lbtcdvrValue
+    , lbtcdvrDomainName
+    , lbtcdvrName
+    , lbtcdvrValidationStatus
+    , lbtcdvrType
+
+    -- * LoadBalancerTLSCertificateRenewalSummary
+    , LoadBalancerTLSCertificateRenewalSummary
+    , loadBalancerTLSCertificateRenewalSummary
+    , lbtcrsRenewalStatus
+    , lbtcrsDomainValidationOptions
+
+    -- * LoadBalancerTLSCertificateSummary
+    , LoadBalancerTLSCertificateSummary
+    , loadBalancerTLSCertificateSummary
+    , lbtcsIsAttached
+    , lbtcsName
 
     -- * MetricDatapoint
     , MetricDatapoint

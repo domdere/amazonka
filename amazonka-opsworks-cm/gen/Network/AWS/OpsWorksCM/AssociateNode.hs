@@ -18,12 +18,18 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Associates a new node with the Chef server. This command is an alternative to @knife bootstrap@ . For more information about how to disassociate a node, see 'DisassociateNode' .
+-- Associates a new node with the server. For more information about how to disassociate a node, see 'DisassociateNode' .
 --
+--
+-- On a Chef server: This command is an alternative to @knife bootstrap@ .
+--
+-- Example (Chef): @aws opsworks-cm associate-node --server-name /MyServer/ --node-name /MyManagedNode/ --engine-attributes "Name=/CHEF_ORGANIZATION/ ,Value=default" "Name=/CHEF_NODE_PUBLIC_KEY/ ,Value=/public-key-pem/ "@
+--
+-- On a Puppet server, this command is an alternative to the @puppet cert sign@ command that signs a Puppet node CSR.
+--
+-- Example (Chef): @aws opsworks-cm associate-node --server-name /MyServer/ --node-name /MyManagedNode/ --engine-attributes "Name=/PUPPET_NODE_CSR/ ,Value=/csr-pem/ "@
 --
 -- A node can can only be associated with servers that are in a @HEALTHY@ state. Otherwise, an @InvalidStateException@ is thrown. A @ResourceNotFoundException@ is thrown when the server does not exist. A @ValidationException@ is raised when parameters of the request are not valid. The AssociateNode API call can be integrated into Auto Scaling configurations, AWS Cloudformation templates, or the user data of a server's instance.
---
--- Example: @aws opsworks-cm associate-node --server-name /MyServer/ --node-name /MyManagedNode/ --engine-attributes "Name=/MyOrganization/ ,Value=default" "Name=/Chef_node_public_key/ ,Value=/Public_key_contents/ "@
 --
 module Network.AWS.OpsWorksCM.AssociateNode
     (
@@ -64,9 +70,9 @@ data AssociateNode = AssociateNode'
 --
 -- * 'anServerName' - The name of the server with which to associate the node.
 --
--- * 'anNodeName' - The name of the Chef client node.
+-- * 'anNodeName' - The name of the node.
 --
--- * 'anEngineAttributes' - Engine attributes used for associating the node.  __Attributes accepted in a AssociateNode request:__      * @CHEF_ORGANIZATION@ : The Chef organization with which the node is associated. By default only one organization named @default@ can exist.      * @CHEF_NODE_PUBLIC_KEY@ : A PEM-formatted public key. This key is required for the @chef-client@ agent to access the Chef API.
+-- * 'anEngineAttributes' - Engine attributes used for associating the node.  __Attributes accepted in a AssociateNode request for Chef__      * @CHEF_ORGANIZATION@ : The Chef organization with which the node is associated. By default only one organization named @default@ can exist.      * @CHEF_NODE_PUBLIC_KEY@ : A PEM-formatted public key. This key is required for the @chef-client@ agent to access the Chef API.  __Attributes accepted in a AssociateNode request for Puppet__      * @PUPPET_NODE_CSR@ : A PEM-formatted certificate-signing request (CSR) that is created by the node.
 associateNode
     :: Text -- ^ 'anServerName'
     -> Text -- ^ 'anNodeName'
@@ -83,11 +89,11 @@ associateNode pServerName_ pNodeName_ =
 anServerName :: Lens' AssociateNode Text
 anServerName = lens _anServerName (\ s a -> s{_anServerName = a});
 
--- | The name of the Chef client node.
+-- | The name of the node.
 anNodeName :: Lens' AssociateNode Text
 anNodeName = lens _anNodeName (\ s a -> s{_anNodeName = a});
 
--- | Engine attributes used for associating the node.  __Attributes accepted in a AssociateNode request:__      * @CHEF_ORGANIZATION@ : The Chef organization with which the node is associated. By default only one organization named @default@ can exist.      * @CHEF_NODE_PUBLIC_KEY@ : A PEM-formatted public key. This key is required for the @chef-client@ agent to access the Chef API.
+-- | Engine attributes used for associating the node.  __Attributes accepted in a AssociateNode request for Chef__      * @CHEF_ORGANIZATION@ : The Chef organization with which the node is associated. By default only one organization named @default@ can exist.      * @CHEF_NODE_PUBLIC_KEY@ : A PEM-formatted public key. This key is required for the @chef-client@ agent to access the Chef API.  __Attributes accepted in a AssociateNode request for Puppet__      * @PUPPET_NODE_CSR@ : A PEM-formatted certificate-signing request (CSR) that is created by the node.
 anEngineAttributes :: Lens' AssociateNode [EngineAttribute]
 anEngineAttributes = lens _anEngineAttributes (\ s a -> s{_anEngineAttributes = a}) . _Coerce;
 

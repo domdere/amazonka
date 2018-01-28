@@ -23,6 +23,8 @@
 --
 -- This is a paginated operation, which means that each response might contain only a subset of all the tags. When the response contains only a subset of tags, it includes a @NextToken@ value. Use this value in a subsequent @ListTags@ request to get more tags. When you receive a response with no @NextToken@ (or an empty or null value), that means there are no more tags to get.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudHSMv2.ListTags
     (
     -- * Creating a Request
@@ -45,6 +47,7 @@ module Network.AWS.CloudHSMv2.ListTags
 import Network.AWS.CloudHSMv2.Types
 import Network.AWS.CloudHSMv2.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -88,6 +91,13 @@ ltMaxResults = lens _ltMaxResults (\ s a -> s{_ltMaxResults = a}) . mapping _Nat
 -- | The cluster identifier (ID) for the cluster whose tags you are getting. To find the cluster ID, use 'DescribeClusters' .
 ltResourceId :: Lens' ListTags Text
 ltResourceId = lens _ltResourceId (\ s a -> s{_ltResourceId = a});
+
+instance AWSPager ListTags where
+        page rq rs
+          | stop (rs ^. ltrsNextToken) = Nothing
+          | stop (rs ^. ltrsTagList) = Nothing
+          | otherwise =
+            Just $ rq & ltNextToken .~ rs ^. ltrsNextToken
 
 instance AWSRequest ListTags where
         type Rs ListTags = ListTagsResponse

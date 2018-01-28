@@ -21,6 +21,8 @@
 -- Lists events for a given source identifier and source type. You can also specify a start and end time. For more information on AWS DMS events, see <http://docs.aws.amazon.com/dms/latest/userguide/CHAP_Events.html Working with Events and Notifications > .
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.DMS.DescribeEvents
     (
     -- * Creating a Request
@@ -49,6 +51,7 @@ module Network.AWS.DMS.DescribeEvents
 import Network.AWS.DMS.Types
 import Network.AWS.DMS.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -143,6 +146,13 @@ deEndTime = lens _deEndTime (\ s a -> s{_deEndTime = a}) . mapping _Time;
 -- | The duration of the events to be listed.
 deDuration :: Lens' DescribeEvents (Maybe Int)
 deDuration = lens _deDuration (\ s a -> s{_deDuration = a});
+
+instance AWSPager DescribeEvents where
+        page rq rs
+          | stop (rs ^. deersMarker) = Nothing
+          | stop (rs ^. deersEvents) = Nothing
+          | otherwise =
+            Just $ rq & deMarker .~ rs ^. deersMarker
 
 instance AWSRequest DescribeEvents where
         type Rs DescribeEvents = DescribeEventsResponse

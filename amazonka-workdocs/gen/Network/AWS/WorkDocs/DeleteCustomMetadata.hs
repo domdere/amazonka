@@ -65,7 +65,7 @@ data DeleteCustomMetadata = DeleteCustomMetadata'
 --
 -- * 'dcmDeleteAll' - Flag to indicate removal of all custom metadata properties from the specified resource.
 --
--- * 'dcmAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'dcmAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'dcmKeys' - List of properties to remove.
 --
@@ -91,7 +91,7 @@ dcmVersionId = lens _dcmVersionId (\ s a -> s{_dcmVersionId = a});
 dcmDeleteAll :: Lens' DeleteCustomMetadata (Maybe Bool)
 dcmDeleteAll = lens _dcmDeleteAll (\ s a -> s{_dcmDeleteAll = a});
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 dcmAuthenticationToken :: Lens' DeleteCustomMetadata (Maybe Text)
 dcmAuthenticationToken = lens _dcmAuthenticationToken (\ s a -> s{_dcmAuthenticationToken = a}) . mapping _Sensitive;
 

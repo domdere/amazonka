@@ -59,7 +59,7 @@ data CreateTable = CreateTable'
 --
 -- * 'ctCatalogId' - The ID of the Data Catalog in which to create the @Table@ . If none is supplied, the AWS account ID is used by default.
 --
--- * 'ctDatabaseName' - The catalog database in which to create the new table.
+-- * 'ctDatabaseName' - The catalog database in which to create the new table. For Hive compatibility, this name is entirely lowercase.
 --
 -- * 'ctTableInput' - The @TableInput@ object that defines the metadata table to create in the catalog.
 createTable
@@ -78,7 +78,7 @@ createTable pDatabaseName_ pTableInput_ =
 ctCatalogId :: Lens' CreateTable (Maybe Text)
 ctCatalogId = lens _ctCatalogId (\ s a -> s{_ctCatalogId = a});
 
--- | The catalog database in which to create the new table.
+-- | The catalog database in which to create the new table. For Hive compatibility, this name is entirely lowercase.
 ctDatabaseName :: Lens' CreateTable Text
 ctDatabaseName = lens _ctDatabaseName (\ s a -> s{_ctDatabaseName = a});
 

@@ -29,6 +29,8 @@
 --
 -- This operation requires permissions to perform the @polly:DescribeVoices@ action.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Polly.DescribeVoices
     (
     -- * Creating a Request
@@ -48,6 +50,7 @@ module Network.AWS.Polly.DescribeVoices
     ) where
 
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Polly.Types
 import Network.AWS.Polly.Types.Product
 import Network.AWS.Prelude
@@ -81,6 +84,13 @@ dvLanguageCode = lens _dvLanguageCode (\ s a -> s{_dvLanguageCode = a});
 -- | An opaque pagination token returned from the previous @DescribeVoices@ operation. If present, this indicates where to continue the listing.
 dvNextToken :: Lens' DescribeVoices (Maybe Text)
 dvNextToken = lens _dvNextToken (\ s a -> s{_dvNextToken = a});
+
+instance AWSPager DescribeVoices where
+        page rq rs
+          | stop (rs ^. dvrsNextToken) = Nothing
+          | stop (rs ^. dvrsVoices) = Nothing
+          | otherwise =
+            Just $ rq & dvNextToken .~ rs ^. dvrsNextToken
 
 instance AWSRequest DescribeVoices where
         type Rs DescribeVoices = DescribeVoicesResponse

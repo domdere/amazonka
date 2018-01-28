@@ -26,6 +26,8 @@ module Network.AWS.IoT.DescribeEndpoint
     -- * Creating a Request
       describeEndpoint
     , DescribeEndpoint
+    -- * Request Lenses
+    , deEndpointType
 
     -- * Destructuring the Response
     , describeEndpointResponse
@@ -47,17 +49,24 @@ import Network.AWS.Response
 --
 --
 -- /See:/ 'describeEndpoint' smart constructor.
-data DescribeEndpoint =
-  DescribeEndpoint'
-  deriving (Eq, Read, Show, Data, Typeable, Generic)
+newtype DescribeEndpoint = DescribeEndpoint'
+  { _deEndpointType :: Maybe Text
+  } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
 -- | Creates a value of 'DescribeEndpoint' with the minimum fields required to make a request.
 --
+-- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'deEndpointType' - The endpoint type.
 describeEndpoint
     :: DescribeEndpoint
-describeEndpoint = DescribeEndpoint'
+describeEndpoint = DescribeEndpoint' {_deEndpointType = Nothing}
 
+
+-- | The endpoint type.
+deEndpointType :: Lens' DescribeEndpoint (Maybe Text)
+deEndpointType = lens _deEndpointType (\ s a -> s{_deEndpointType = a});
 
 instance AWSRequest DescribeEndpoint where
         type Rs DescribeEndpoint = DescribeEndpointResponse
@@ -79,7 +88,8 @@ instance ToPath DescribeEndpoint where
         toPath = const "/endpoint"
 
 instance ToQuery DescribeEndpoint where
-        toQuery = const mempty
+        toQuery DescribeEndpoint'{..}
+          = mconcat ["endpointType" =: _deEndpointType]
 
 -- | The output from the DescribeEndpoint operation.
 --

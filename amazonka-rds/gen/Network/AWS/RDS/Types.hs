@@ -127,6 +127,12 @@ module Network.AWS.RDS.Types
     , csCharacterSetName
     , csCharacterSetDescription
 
+    -- * CloudwatchLogsExportConfiguration
+    , CloudwatchLogsExportConfiguration
+    , cloudwatchLogsExportConfiguration
+    , clecDisableLogTypes
+    , clecEnableLogTypes
+
     -- * DBCluster
     , DBCluster
     , dbCluster
@@ -246,7 +252,9 @@ module Network.AWS.RDS.Types
     , devSupportedCharacterSets
     , devDBEngineDescription
     , devValidUpgradeTarget
+    , devSupportsLogExportsToCloudwatchLogs
     , devSupportedTimezones
+    , devExportableLogTypes
 
     -- * DBInstance
     , DBInstance
@@ -284,6 +292,7 @@ module Network.AWS.RDS.Types
     , diDBSubnetGroup
     , diMultiAZ
     , diOptionGroupMemberships
+    , diEnabledCloudwatchLogsExports
     , diEnhancedMonitoringResourceARN
     , diSecondaryAvailabilityZone
     , diPerformanceInsightsEnabled
@@ -612,6 +621,12 @@ module Network.AWS.RDS.Types
     , pParameterName
     , pDescription
 
+    -- * PendingCloudwatchLogsExports
+    , PendingCloudwatchLogsExports
+    , pendingCloudwatchLogsExports
+    , pcleLogTypesToEnable
+    , pcleLogTypesToDisable
+
     -- * PendingMaintenanceAction
     , PendingMaintenanceAction
     , pendingMaintenanceAction
@@ -633,6 +648,7 @@ module Network.AWS.RDS.Types
     , pmvLicenseModel
     , pmvCACertificateIdentifier
     , pmvDBInstanceIdentifier
+    , pmvPendingCloudwatchLogsExports
     , pmvBackupRetentionPeriod
     , pmvMultiAZ
     , pmvAllocatedStorage

@@ -63,13 +63,13 @@ data ListAttacks = ListAttacks'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'laStartTime' - The time period for the attacks.
+-- * 'laStartTime' - The start of the time period for the attacks. This is a @timestamp@ type. The sample request above indicates a @number@ type because the default used by WAF is Unix time in seconds. However any valid <http://docs.aws.amazon.com/cli/latest/userguide/cli-using-param.html#parameter-types timestamp format> is allowed.
 --
 -- * 'laResourceARNs' - The ARN (Amazon Resource Name) of the resource that was attacked. If this is left blank, all applicable resources for this account will be included.
 --
 -- * 'laNextToken' - The @ListAttacksRequest.NextMarker@ value from a previous call to @ListAttacksRequest@ . Pass null if this is the first call.
 --
--- * 'laEndTime' - The end of the time period for the attacks.
+-- * 'laEndTime' - The end of the time period for the attacks. This is a @timestamp@ type. The sample request above indicates a @number@ type because the default used by WAF is Unix time in seconds. However any valid <http://docs.aws.amazon.com/cli/latest/userguide/cli-using-param.html#parameter-types timestamp format> is allowed.
 --
 -- * 'laMaxResults' - The maximum number of 'AttackSummary' objects to be returned. If this is left blank, the first 20 results will be returned.
 listAttacks
@@ -84,7 +84,7 @@ listAttacks =
   }
 
 
--- | The time period for the attacks.
+-- | The start of the time period for the attacks. This is a @timestamp@ type. The sample request above indicates a @number@ type because the default used by WAF is Unix time in seconds. However any valid <http://docs.aws.amazon.com/cli/latest/userguide/cli-using-param.html#parameter-types timestamp format> is allowed.
 laStartTime :: Lens' ListAttacks (Maybe TimeRange)
 laStartTime = lens _laStartTime (\ s a -> s{_laStartTime = a});
 
@@ -96,7 +96,7 @@ laResourceARNs = lens _laResourceARNs (\ s a -> s{_laResourceARNs = a}) . _Defau
 laNextToken :: Lens' ListAttacks (Maybe Text)
 laNextToken = lens _laNextToken (\ s a -> s{_laNextToken = a});
 
--- | The end of the time period for the attacks.
+-- | The end of the time period for the attacks. This is a @timestamp@ type. The sample request above indicates a @number@ type because the default used by WAF is Unix time in seconds. However any valid <http://docs.aws.amazon.com/cli/latest/userguide/cli-using-param.html#parameter-types timestamp format> is allowed.
 laEndTime :: Lens' ListAttacks (Maybe TimeRange)
 laEndTime = lens _laEndTime (\ s a -> s{_laEndTime = a});
 

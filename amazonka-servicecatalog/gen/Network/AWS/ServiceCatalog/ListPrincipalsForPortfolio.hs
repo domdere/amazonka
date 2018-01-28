@@ -21,6 +21,8 @@
 -- Lists all principal ARNs associated with the specified portfolio.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.ServiceCatalog.ListPrincipalsForPortfolio
     (
     -- * Creating a Request
@@ -42,6 +44,7 @@ module Network.AWS.ServiceCatalog.ListPrincipalsForPortfolio
     ) where
 
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -63,9 +66,9 @@ data ListPrincipalsForPortfolio = ListPrincipalsForPortfolio'
 --
 -- * 'lpfpAcceptLanguage' - The language code.     * @en@ - English (default)     * @jp@ - Japanese     * @zh@ - Chinese
 --
--- * 'lpfpPageToken' - The page token of the first page retrieved. If null, this retrieves the first page of size @PageSize@ .
+-- * 'lpfpPageToken' - The page token for the next set of results. To retrieve the first set of results, use null.
 --
--- * 'lpfpPageSize' - The maximum number of items to return in the results. If more results exist than fit in the specified @PageSize@ , the value of @NextPageToken@ in the response is non-null.
+-- * 'lpfpPageSize' - The maximum number of items to return with this call.
 --
 -- * 'lpfpPortfolioId' - The portfolio identifier.
 listPrincipalsForPortfolio
@@ -84,17 +87,24 @@ listPrincipalsForPortfolio pPortfolioId_ =
 lpfpAcceptLanguage :: Lens' ListPrincipalsForPortfolio (Maybe Text)
 lpfpAcceptLanguage = lens _lpfpAcceptLanguage (\ s a -> s{_lpfpAcceptLanguage = a});
 
--- | The page token of the first page retrieved. If null, this retrieves the first page of size @PageSize@ .
+-- | The page token for the next set of results. To retrieve the first set of results, use null.
 lpfpPageToken :: Lens' ListPrincipalsForPortfolio (Maybe Text)
 lpfpPageToken = lens _lpfpPageToken (\ s a -> s{_lpfpPageToken = a});
 
--- | The maximum number of items to return in the results. If more results exist than fit in the specified @PageSize@ , the value of @NextPageToken@ in the response is non-null.
+-- | The maximum number of items to return with this call.
 lpfpPageSize :: Lens' ListPrincipalsForPortfolio (Maybe Natural)
 lpfpPageSize = lens _lpfpPageSize (\ s a -> s{_lpfpPageSize = a}) . mapping _Nat;
 
 -- | The portfolio identifier.
 lpfpPortfolioId :: Lens' ListPrincipalsForPortfolio Text
 lpfpPortfolioId = lens _lpfpPortfolioId (\ s a -> s{_lpfpPortfolioId = a});
+
+instance AWSPager ListPrincipalsForPortfolio where
+        page rq rs
+          | stop (rs ^. lisrsNextPageToken) = Nothing
+          | stop (rs ^. lisrsPrincipals) = Nothing
+          | otherwise =
+            Just $ rq & lpfpPageToken .~ rs ^. lisrsNextPageToken
 
 instance AWSRequest ListPrincipalsForPortfolio where
         type Rs ListPrincipalsForPortfolio =
@@ -149,7 +159,7 @@ data ListPrincipalsForPortfolioResponse = ListPrincipalsForPortfolioResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'lisrsNextPageToken' - The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.
+-- * 'lisrsNextPageToken' - The page token to use to retrieve the next set of results. If there are no additional results, this value is null.
 --
 -- * 'lisrsPrincipals' - The IAM principals (users or roles) associated with the portfolio.
 --
@@ -165,7 +175,7 @@ listPrincipalsForPortfolioResponse pResponseStatus_ =
   }
 
 
--- | The page token to use to retrieve the next page of results for this operation. If there are no more pages, this value is null.
+-- | The page token to use to retrieve the next set of results. If there are no additional results, this value is null.
 lisrsNextPageToken :: Lens' ListPrincipalsForPortfolioResponse (Maybe Text)
 lisrsNextPageToken = lens _lisrsNextPageToken (\ s a -> s{_lisrsNextPageToken = a});
 

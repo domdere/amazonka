@@ -18,9 +18,11 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Describes the running instances for the specified Spot fleet.
+-- Describes the running instances for the specified Spot Fleet.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.EC2.DescribeSpotFleetInstances
     (
     -- * Creating a Request
@@ -45,6 +47,7 @@ module Network.AWS.EC2.DescribeSpotFleetInstances
 import Network.AWS.EC2.Types
 import Network.AWS.EC2.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -72,7 +75,7 @@ data DescribeSpotFleetInstances = DescribeSpotFleetInstances'
 --
 -- * 'dsfiMaxResults' - The maximum number of results to return in a single call. Specify a value between 1 and 1000. The default value is 1000. To retrieve the remaining results, make another call with the returned @NextToken@ value.
 --
--- * 'dsfiSpotFleetRequestId' - The ID of the Spot fleet request.
+-- * 'dsfiSpotFleetRequestId' - The ID of the Spot Fleet request.
 describeSpotFleetInstances
     :: Text -- ^ 'dsfiSpotFleetRequestId'
     -> DescribeSpotFleetInstances
@@ -97,9 +100,16 @@ dsfiDryRun = lens _dsfiDryRun (\ s a -> s{_dsfiDryRun = a});
 dsfiMaxResults :: Lens' DescribeSpotFleetInstances (Maybe Int)
 dsfiMaxResults = lens _dsfiMaxResults (\ s a -> s{_dsfiMaxResults = a});
 
--- | The ID of the Spot fleet request.
+-- | The ID of the Spot Fleet request.
 dsfiSpotFleetRequestId :: Lens' DescribeSpotFleetInstances Text
 dsfiSpotFleetRequestId = lens _dsfiSpotFleetRequestId (\ s a -> s{_dsfiSpotFleetRequestId = a});
+
+instance AWSPager DescribeSpotFleetInstances where
+        page rq rs
+          | stop (rs ^. dsfirsNextToken) = Nothing
+          | stop (rs ^. dsfirsActiveInstances) = Nothing
+          | otherwise =
+            Just $ rq & dsfiNextToken .~ rs ^. dsfirsNextToken
 
 instance AWSRequest DescribeSpotFleetInstances where
         type Rs DescribeSpotFleetInstances =
@@ -158,7 +168,7 @@ data DescribeSpotFleetInstancesResponse = DescribeSpotFleetInstancesResponse'
 --
 -- * 'dsfirsActiveInstances' - The running instances. Note that this list is refreshed periodically and might be out of date.
 --
--- * 'dsfirsSpotFleetRequestId' - The ID of the Spot fleet request.
+-- * 'dsfirsSpotFleetRequestId' - The ID of the Spot Fleet request.
 describeSpotFleetInstancesResponse
     :: Int -- ^ 'dsfirsResponseStatus'
     -> Text -- ^ 'dsfirsSpotFleetRequestId'
@@ -184,7 +194,7 @@ dsfirsResponseStatus = lens _dsfirsResponseStatus (\ s a -> s{_dsfirsResponseSta
 dsfirsActiveInstances :: Lens' DescribeSpotFleetInstancesResponse [ActiveInstance]
 dsfirsActiveInstances = lens _dsfirsActiveInstances (\ s a -> s{_dsfirsActiveInstances = a}) . _Coerce;
 
--- | The ID of the Spot fleet request.
+-- | The ID of the Spot Fleet request.
 dsfirsSpotFleetRequestId :: Lens' DescribeSpotFleetInstancesResponse Text
 dsfirsSpotFleetRequestId = lens _dsfirsSpotFleetRequestId (\ s a -> s{_dsfirsSpotFleetRequestId = a});
 

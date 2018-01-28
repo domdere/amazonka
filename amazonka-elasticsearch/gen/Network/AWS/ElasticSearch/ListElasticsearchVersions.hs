@@ -21,6 +21,8 @@
 -- List all supported Elasticsearch versions
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.ElasticSearch.ListElasticsearchVersions
     (
     -- * Creating a Request
@@ -42,6 +44,7 @@ module Network.AWS.ElasticSearch.ListElasticsearchVersions
 import Network.AWS.ElasticSearch.Types
 import Network.AWS.ElasticSearch.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -81,6 +84,13 @@ levNextToken = lens _levNextToken (\ s a -> s{_levNextToken = a});
 -- | Set this value to limit the number of results returned. Value provided must be greater than 10 else it wont be honored.
 levMaxResults :: Lens' ListElasticsearchVersions (Maybe Int)
 levMaxResults = lens _levMaxResults (\ s a -> s{_levMaxResults = a});
+
+instance AWSPager ListElasticsearchVersions where
+        page rq rs
+          | stop (rs ^. levrsNextToken) = Nothing
+          | stop (rs ^. levrsElasticsearchVersions) = Nothing
+          | otherwise =
+            Just $ rq & levNextToken .~ rs ^. levrsNextToken
 
 instance AWSRequest ListElasticsearchVersions where
         type Rs ListElasticsearchVersions =

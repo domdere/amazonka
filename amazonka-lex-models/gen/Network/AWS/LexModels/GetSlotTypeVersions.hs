@@ -27,6 +27,8 @@
 --
 -- This operation requires permissions for the @lex:GetSlotTypeVersions@ action.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.LexModels.GetSlotTypeVersions
     (
     -- * Creating a Request
@@ -49,6 +51,7 @@ module Network.AWS.LexModels.GetSlotTypeVersions
 import Network.AWS.Lens
 import Network.AWS.LexModels.Types
 import Network.AWS.LexModels.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -89,6 +92,13 @@ gstvMaxResults = lens _gstvMaxResults (\ s a -> s{_gstvMaxResults = a}) . mappin
 -- | The name of the slot type for which versions should be returned.
 gstvName :: Lens' GetSlotTypeVersions Text
 gstvName = lens _gstvName (\ s a -> s{_gstvName = a});
+
+instance AWSPager GetSlotTypeVersions where
+        page rq rs
+          | stop (rs ^. gstvrsNextToken) = Nothing
+          | stop (rs ^. gstvrsSlotTypes) = Nothing
+          | otherwise =
+            Just $ rq & gstvNextToken .~ rs ^. gstvrsNextToken
 
 instance AWSRequest GetSlotTypeVersions where
         type Rs GetSlotTypeVersions =

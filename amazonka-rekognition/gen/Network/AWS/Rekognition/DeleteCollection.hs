@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Deletes the specified collection. Note that this operation removes all faces in the collection. For an example, see 'example1' .
+-- Deletes the specified collection. Note that this operation removes all faces in the collection. For an example, see 'delete-collection-procedure' .
 --
 --
 -- This operation requires permissions to perform the @rekognition:DeleteCollection@ action.

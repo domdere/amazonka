@@ -59,7 +59,7 @@ data DeleteLifecycleHook = DeleteLifecycleHook'
 --
 -- * 'delLifecycleHookName' - The name of the lifecycle hook.
 --
--- * 'delAutoScalingGroupName' - The name of the Auto Scaling group for the lifecycle hook.
+-- * 'delAutoScalingGroupName' - The name of the Auto Scaling group.
 deleteLifecycleHook
     :: Text -- ^ 'delLifecycleHookName'
     -> Text -- ^ 'delAutoScalingGroupName'
@@ -75,7 +75,7 @@ deleteLifecycleHook pLifecycleHookName_ pAutoScalingGroupName_ =
 delLifecycleHookName :: Lens' DeleteLifecycleHook Text
 delLifecycleHookName = lens _delLifecycleHookName (\ s a -> s{_delLifecycleHookName = a});
 
--- | The name of the Auto Scaling group for the lifecycle hook.
+-- | The name of the Auto Scaling group.
 delAutoScalingGroupName :: Lens' DeleteLifecycleHook Text
 delAutoScalingGroupName = lens _delAutoScalingGroupName (\ s a -> s{_delAutoScalingGroupName = a});
 

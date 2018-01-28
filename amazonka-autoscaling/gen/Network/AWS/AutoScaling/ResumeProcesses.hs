@@ -57,7 +57,7 @@ data ResumeProcesses = ResumeProcesses'
 --
 -- * 'rpScalingProcesses' - One or more of the following processes. If you omit this parameter, all processes are specified.     * @Launch@      * @Terminate@      * @HealthCheck@      * @ReplaceUnhealthy@      * @AZRebalance@      * @AlarmNotification@      * @ScheduledActions@      * @AddToLoadBalancer@
 --
--- * 'rpAutoScalingGroupName' - The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+-- * 'rpAutoScalingGroupName' - The name of the Auto Scaling group.
 resumeProcesses
     :: Text -- ^ 'rpAutoScalingGroupName'
     -> ResumeProcesses
@@ -72,7 +72,7 @@ resumeProcesses pAutoScalingGroupName_ =
 rpScalingProcesses :: Lens' ResumeProcesses [Text]
 rpScalingProcesses = lens _rpScalingProcesses (\ s a -> s{_rpScalingProcesses = a}) . _Default . _Coerce;
 
--- | The name or Amazon Resource Name (ARN) of the Auto Scaling group.
+-- | The name of the Auto Scaling group.
 rpAutoScalingGroupName :: Lens' ResumeProcesses Text
 rpAutoScalingGroupName = lens _rpAutoScalingGroupName (\ s a -> s{_rpAutoScalingGroupName = a});
 

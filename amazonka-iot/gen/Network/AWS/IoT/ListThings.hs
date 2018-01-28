@@ -74,7 +74,7 @@ data ListThings = ListThings'
 --
 -- * 'ltThingTypeName' - The name of the thing type used to search for things.
 --
--- * 'ltNextToken' - The token for the next set of results, or __null__ if there are no additional results.
+-- * 'ltNextToken' - The token used to get the next set of results, or __null__ if there are no additional results.
 --
 -- * 'ltAttributeName' - The attribute name used to search for things.
 --
@@ -99,7 +99,7 @@ ltAttributeValue = lens _ltAttributeValue (\ s a -> s{_ltAttributeValue = a});
 ltThingTypeName :: Lens' ListThings (Maybe Text)
 ltThingTypeName = lens _ltThingTypeName (\ s a -> s{_ltThingTypeName = a});
 
--- | The token for the next set of results, or __null__ if there are no additional results.
+-- | The token used to get the next set of results, or __null__ if there are no additional results.
 ltNextToken :: Lens' ListThings (Maybe Text)
 ltNextToken = lens _ltNextToken (\ s a -> s{_ltNextToken = a});
 
@@ -163,7 +163,7 @@ data ListThingsResponse = ListThingsResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ltrsNextToken' - The token for the next set of results, or __null__ if there are no additional results.
+-- * 'ltrsNextToken' - The token used to get the next set of results, or __null__ if there are no additional results.
 --
 -- * 'ltrsThings' - The things.
 --
@@ -179,7 +179,7 @@ listThingsResponse pResponseStatus_ =
   }
 
 
--- | The token for the next set of results, or __null__ if there are no additional results.
+-- | The token used to get the next set of results, or __null__ if there are no additional results.
 ltrsNextToken :: Lens' ListThingsResponse (Maybe Text)
 ltrsNextToken = lens _ltrsNextToken (\ s a -> s{_ltrsNextToken = a});
 

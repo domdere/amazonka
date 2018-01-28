@@ -66,11 +66,11 @@ data DescribePolicies = DescribePolicies'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dpsPolicyNames' - One or more policy names or policy ARNs to be described. If you omit this parameter, all policy names are described. If an group name is provided, the results are limited to that group. This list is limited to 50 items. If you specify an unknown policy name, it is ignored with no error.
+-- * 'dpsPolicyNames' - The names of one or more policies. If you omit this parameter, all policies are described. If an group name is provided, the results are limited to that group. This list is limited to 50 items. If you specify an unknown policy name, it is ignored with no error.
 --
 -- * 'dpsNextToken' - The token for the next set of items to return. (You received this token from a previous call.)
 --
--- * 'dpsAutoScalingGroupName' - The name of the group.
+-- * 'dpsAutoScalingGroupName' - The name of the Auto Scaling group.
 --
 -- * 'dpsMaxRecords' - The maximum number of items to be returned with each call. The default value is 50 and the maximum value is 100.
 --
@@ -87,7 +87,7 @@ describePolicies =
   }
 
 
--- | One or more policy names or policy ARNs to be described. If you omit this parameter, all policy names are described. If an group name is provided, the results are limited to that group. This list is limited to 50 items. If you specify an unknown policy name, it is ignored with no error.
+-- | The names of one or more policies. If you omit this parameter, all policies are described. If an group name is provided, the results are limited to that group. This list is limited to 50 items. If you specify an unknown policy name, it is ignored with no error.
 dpsPolicyNames :: Lens' DescribePolicies [Text]
 dpsPolicyNames = lens _dpsPolicyNames (\ s a -> s{_dpsPolicyNames = a}) . _Default . _Coerce;
 
@@ -95,7 +95,7 @@ dpsPolicyNames = lens _dpsPolicyNames (\ s a -> s{_dpsPolicyNames = a}) . _Defau
 dpsNextToken :: Lens' DescribePolicies (Maybe Text)
 dpsNextToken = lens _dpsNextToken (\ s a -> s{_dpsNextToken = a});
 
--- | The name of the group.
+-- | The name of the Auto Scaling group.
 dpsAutoScalingGroupName :: Lens' DescribePolicies (Maybe Text)
 dpsAutoScalingGroupName = lens _dpsAutoScalingGroupName (\ s a -> s{_dpsAutoScalingGroupName = a});
 

@@ -21,6 +21,8 @@
 -- Returns all of the @ObjectIdentifiers@ to which a given policy is attached.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListPolicyAttachments
     (
     -- * Creating a Request
@@ -45,6 +47,7 @@ module Network.AWS.CloudDirectory.ListPolicyAttachments
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -105,6 +108,13 @@ lpaDirectoryARN = lens _lpaDirectoryARN (\ s a -> s{_lpaDirectoryARN = a});
 -- | The reference that identifies the policy object.
 lpaPolicyReference :: Lens' ListPolicyAttachments ObjectReference
 lpaPolicyReference = lens _lpaPolicyReference (\ s a -> s{_lpaPolicyReference = a});
+
+instance AWSPager ListPolicyAttachments where
+        page rq rs
+          | stop (rs ^. lparsNextToken) = Nothing
+          | stop (rs ^. lparsObjectIdentifiers) = Nothing
+          | otherwise =
+            Just $ rq & lpaNextToken .~ rs ^. lparsNextToken
 
 instance AWSRequest ListPolicyAttachments where
         type Rs ListPolicyAttachments =

@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Creates a cached volume on a specified cached volume gateway. This operation is only supported in the cached volume gateway architecture.
+-- Creates a cached volume on a specified cached volume gateway. This operation is only supported in the cached volume gateway type.
 --
 --
 -- In the request, you must specify the gateway, size of the volume in bytes, the iSCSI target name, an IP address on which to expose the target, and a unique client token. In response, the gateway creates the volume and returns information about it. This information includes the volume Amazon Resource Name (ARN), its size, and the iSCSI target ARN that initiators can use to connect to the volume target.

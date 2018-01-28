@@ -122,7 +122,7 @@ data DescribeActivityResponse = DescribeActivityResponse'
 --
 -- * 'desrsName' - The name of the activity. A name must /not/ contain:     * whitespace     * brackets @< > { } [ ]@      * wildcard characters @? *@      * special characters @" # % \ ^ | ~ ` $ & , ; : /@      * control characters (@U+0000-001F@ , @U+007F-009F@ )
 --
--- * 'desrsCreationDate' - The date the activity was created.
+-- * 'desrsCreationDate' - The date the activity is created.
 describeActivityResponse
     :: Int -- ^ 'desrsResponseStatus'
     -> Text -- ^ 'desrsActivityARN'
@@ -150,7 +150,7 @@ desrsActivityARN = lens _desrsActivityARN (\ s a -> s{_desrsActivityARN = a});
 desrsName :: Lens' DescribeActivityResponse Text
 desrsName = lens _desrsName (\ s a -> s{_desrsName = a});
 
--- | The date the activity was created.
+-- | The date the activity is created.
 desrsCreationDate :: Lens' DescribeActivityResponse UTCTime
 desrsCreationDate = lens _desrsCreationDate (\ s a -> s{_desrsCreationDate = a}) . _Time;
 

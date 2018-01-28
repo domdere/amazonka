@@ -51,6 +51,7 @@ library
         , Network.AWS.Kinesis.DeleteStream
         , Network.AWS.Kinesis.DescribeLimits
         , Network.AWS.Kinesis.DescribeStream
+        , Network.AWS.Kinesis.DescribeStreamSummary
         , Network.AWS.Kinesis.DisableEnhancedMonitoring
         , Network.AWS.Kinesis.EnableEnhancedMonitoring
         , Network.AWS.Kinesis.GetRecords

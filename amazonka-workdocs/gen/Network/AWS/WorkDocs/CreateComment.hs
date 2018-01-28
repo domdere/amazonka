@@ -70,7 +70,7 @@ data CreateComment = CreateComment'
 --
 -- * 'ccNotifyCollaborators' - Set this parameter to TRUE to send an email out to the document collaborators after the comment is created.
 --
--- * 'ccAuthenticationToken' - Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- * 'ccAuthenticationToken' - Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 --
 -- * 'ccVisibility' - The visibility of the comment. Options are either PRIVATE, where the comment is visible only to the comment author and document owner and co-owners, or PUBLIC, where the comment is visible to document owners, co-owners, and contributors.
 --
@@ -105,7 +105,7 @@ createComment pDocumentId_ pVersionId_ pText_ =
 ccNotifyCollaborators :: Lens' CreateComment (Maybe Bool)
 ccNotifyCollaborators = lens _ccNotifyCollaborators (\ s a -> s{_ccNotifyCollaborators = a});
 
--- | Amazon WorkDocs authentication token. This field should not be set when using administrative API actions, as in accessing the API using AWS credentials.
+-- | Amazon WorkDocs authentication token. Do not set this field when using administrative API actions, as in accessing the API using AWS credentials.
 ccAuthenticationToken :: Lens' CreateComment (Maybe Text)
 ccAuthenticationToken = lens _ccAuthenticationToken (\ s a -> s{_ccAuthenticationToken = a}) . mapping _Sensitive;
 

@@ -30,6 +30,7 @@ module Network.AWS.APIGateway.CreateDeployment
     , cdStageDescription
     , cdVariables
     , cdCacheClusterSize
+    , cdCanarySettings
     , cdCacheClusterEnabled
     , cdStageName
     , cdDescription
@@ -52,7 +53,7 @@ import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
 
--- | Requests Amazon API Gateway to create a 'Deployment' resource.
+-- | Requests API Gateway to create a 'Deployment' resource.
 --
 --
 --
@@ -61,6 +62,7 @@ data CreateDeployment = CreateDeployment'
   { _cdStageDescription    :: !(Maybe Text)
   , _cdVariables           :: !(Maybe (Map Text Text))
   , _cdCacheClusterSize    :: !(Maybe CacheClusterSize)
+  , _cdCanarySettings      :: !(Maybe DeploymentCanarySettings)
   , _cdCacheClusterEnabled :: !(Maybe Bool)
   , _cdStageName           :: !(Maybe Text)
   , _cdDescription         :: !(Maybe Text)
@@ -78,6 +80,8 @@ data CreateDeployment = CreateDeployment'
 --
 -- * 'cdCacheClusterSize' - Specifies the cache cluster size for the 'Stage' resource specified in the input, if a cache cluster is enabled.
 --
+-- * 'cdCanarySettings' - The input configuration for the canary deployment when the deployment is a canary release deployment.
+--
 -- * 'cdCacheClusterEnabled' - Enables a cache cluster for the 'Stage' resource specified in the input.
 --
 -- * 'cdStageName' - The name of the 'Stage' resource for the 'Deployment' resource to create.
@@ -93,6 +97,7 @@ createDeployment pRestAPIId_ =
   { _cdStageDescription = Nothing
   , _cdVariables = Nothing
   , _cdCacheClusterSize = Nothing
+  , _cdCanarySettings = Nothing
   , _cdCacheClusterEnabled = Nothing
   , _cdStageName = Nothing
   , _cdDescription = Nothing
@@ -111,6 +116,10 @@ cdVariables = lens _cdVariables (\ s a -> s{_cdVariables = a}) . _Default . _Map
 -- | Specifies the cache cluster size for the 'Stage' resource specified in the input, if a cache cluster is enabled.
 cdCacheClusterSize :: Lens' CreateDeployment (Maybe CacheClusterSize)
 cdCacheClusterSize = lens _cdCacheClusterSize (\ s a -> s{_cdCacheClusterSize = a});
+
+-- | The input configuration for the canary deployment when the deployment is a canary release deployment.
+cdCanarySettings :: Lens' CreateDeployment (Maybe DeploymentCanarySettings)
+cdCanarySettings = lens _cdCanarySettings (\ s a -> s{_cdCanarySettings = a});
 
 -- | Enables a cache cluster for the 'Stage' resource specified in the input.
 cdCacheClusterEnabled :: Lens' CreateDeployment (Maybe Bool)
@@ -150,6 +159,7 @@ instance ToJSON CreateDeployment where
                  [("stageDescription" .=) <$> _cdStageDescription,
                   ("variables" .=) <$> _cdVariables,
                   ("cacheClusterSize" .=) <$> _cdCacheClusterSize,
+                  ("canarySettings" .=) <$> _cdCanarySettings,
                   ("cacheClusterEnabled" .=) <$>
                     _cdCacheClusterEnabled,
                   ("stageName" .=) <$> _cdStageName,

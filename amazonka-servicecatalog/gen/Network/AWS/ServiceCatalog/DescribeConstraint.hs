@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Retrieves detailed information for a specified constraint.
+-- Gets information about the specified constraint.
 --
 --
 module Network.AWS.ServiceCatalog.DescribeConstraint
@@ -130,9 +130,9 @@ data DescribeConstraintResponse = DescribeConstraintResponse'
 --
 -- * 'desrsStatus' - The status of the current request.
 --
--- * 'desrsConstraintDetail' - Detailed constraint information.
+-- * 'desrsConstraintDetail' - Information about the constraint.
 --
--- * 'desrsConstraintParameters' - The current parameters associated with the specified constraint.
+-- * 'desrsConstraintParameters' - The constraint parameters.
 --
 -- * 'desrsResponseStatus' - -- | The response status code.
 describeConstraintResponse
@@ -151,11 +151,11 @@ describeConstraintResponse pResponseStatus_ =
 desrsStatus :: Lens' DescribeConstraintResponse (Maybe RequestStatus)
 desrsStatus = lens _desrsStatus (\ s a -> s{_desrsStatus = a});
 
--- | Detailed constraint information.
+-- | Information about the constraint.
 desrsConstraintDetail :: Lens' DescribeConstraintResponse (Maybe ConstraintDetail)
 desrsConstraintDetail = lens _desrsConstraintDetail (\ s a -> s{_desrsConstraintDetail = a});
 
--- | The current parameters associated with the specified constraint.
+-- | The constraint parameters.
 desrsConstraintParameters :: Lens' DescribeConstraintResponse (Maybe Text)
 desrsConstraintParameters = lens _desrsConstraintParameters (\ s a -> s{_desrsConstraintParameters = a});
 

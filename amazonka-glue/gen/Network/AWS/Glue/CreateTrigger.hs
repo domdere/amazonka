@@ -64,13 +64,13 @@ data CreateTrigger = CreateTrigger'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ctSchedule' - A @cron@ expression used to specify the schedule (see <http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html Time-Based Schedules for Jobs and Crawlers> . For example, to run something every day at 12:15 UTC, you would specify: @cron(15 12 * * ? *)@ .
+-- * 'ctSchedule' - A @cron@ expression used to specify the schedule (see <http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html Time-Based Schedules for Jobs and Crawlers> . For example, to run something every day at 12:15 UTC, you would specify: @cron(15 12 * * ? *)@ . This field is required when the trigger type is SCHEDULED.
 --
--- * 'ctPredicate' - A predicate to specify when the new trigger should fire.
+-- * 'ctPredicate' - A predicate to specify when the new trigger should fire. This field is required when the trigger type is CONDITIONAL.
 --
 -- * 'ctDescription' - A description of the new trigger.
 --
--- * 'ctName' - The name to assign to the new trigger.
+-- * 'ctName' - The name of the trigger.
 --
 -- * 'ctType' - The type of the new trigger.
 --
@@ -90,11 +90,11 @@ createTrigger pName_ pType_ =
   }
 
 
--- | A @cron@ expression used to specify the schedule (see <http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html Time-Based Schedules for Jobs and Crawlers> . For example, to run something every day at 12:15 UTC, you would specify: @cron(15 12 * * ? *)@ .
+-- | A @cron@ expression used to specify the schedule (see <http://docs.aws.amazon.com/glue/latest/dg/monitor-data-warehouse-schedule.html Time-Based Schedules for Jobs and Crawlers> . For example, to run something every day at 12:15 UTC, you would specify: @cron(15 12 * * ? *)@ . This field is required when the trigger type is SCHEDULED.
 ctSchedule :: Lens' CreateTrigger (Maybe Text)
 ctSchedule = lens _ctSchedule (\ s a -> s{_ctSchedule = a});
 
--- | A predicate to specify when the new trigger should fire.
+-- | A predicate to specify when the new trigger should fire. This field is required when the trigger type is CONDITIONAL.
 ctPredicate :: Lens' CreateTrigger (Maybe Predicate)
 ctPredicate = lens _ctPredicate (\ s a -> s{_ctPredicate = a});
 
@@ -102,7 +102,7 @@ ctPredicate = lens _ctPredicate (\ s a -> s{_ctPredicate = a});
 ctDescription :: Lens' CreateTrigger (Maybe Text)
 ctDescription = lens _ctDescription (\ s a -> s{_ctDescription = a});
 
--- | The name to assign to the new trigger.
+-- | The name of the trigger.
 ctName :: Lens' CreateTrigger Text
 ctName = lens _ctName (\ s a -> s{_ctName = a});
 
@@ -163,7 +163,7 @@ data CreateTriggerResponse = CreateTriggerResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ctrsName' - The name assigned to the new trigger.
+-- * 'ctrsName' - The name of the trigger.
 --
 -- * 'ctrsResponseStatus' - -- | The response status code.
 createTriggerResponse
@@ -174,7 +174,7 @@ createTriggerResponse pResponseStatus_ =
   {_ctrsName = Nothing, _ctrsResponseStatus = pResponseStatus_}
 
 
--- | The name assigned to the new trigger.
+-- | The name of the trigger.
 ctrsName :: Lens' CreateTriggerResponse (Maybe Text)
 ctrsName = lens _ctrsName (\ s a -> s{_ctrsName = a});
 

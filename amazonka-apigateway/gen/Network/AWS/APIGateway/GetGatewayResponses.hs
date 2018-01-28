@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Gets the 'GatewayResponses' collection on the given 'RestApi' . If an API developer has not added any definitions for gateway responses, the result will be the Amazon API Gateway-generated default 'GatewayResponses' collection for the supported response types.
+-- Gets the 'GatewayResponses' collection on the given 'RestApi' . If an API developer has not added any definitions for gateway responses, the result will be the API Gateway-generated default 'GatewayResponses' collection for the supported response types.
 --
 --
 module Network.AWS.APIGateway.GetGatewayResponses
@@ -47,7 +47,7 @@ import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
 
--- | Gets the 'GatewayResponses' collection on the given 'RestApi' . If an API developer has not added any definitions for gateway responses, the result will be the Amazon API Gateway-generated default 'GatewayResponses' collection for the supported response types.
+-- | Gets the 'GatewayResponses' collection on the given 'RestApi' . If an API developer has not added any definitions for gateway responses, the result will be the API Gateway-generated default 'GatewayResponses' collection for the supported response types.
 --
 --
 --
@@ -123,7 +123,7 @@ instance ToQuery GetGatewayResponses where
 -- | The collection of the 'GatewayResponse' instances of a 'RestApi' as a @responseType@ -to-'GatewayResponse' object map of key-value pairs. As such, pagination is not supported for querying this collection.
 --
 --
--- For more information about valid gateway response types, see <http://docs.aws.amazon.com/apigateway/latest/developerguide/supported-gateway-response-types.html Gateway Response Types Supported by Amazon API Gateway> __Example: Get the collection of gateway responses of an API__
+-- For more information about valid gateway response types, see <http://docs.aws.amazon.com/apigateway/latest/developerguide/supported-gateway-response-types.html Gateway Response Types Supported by API Gateway> __Example: Get the collection of gateway responses of an API__
 -- __Request__
 -- This example request shows how to retrieve the 'GatewayResponses' collection from an API.
 --

@@ -64,7 +64,7 @@ module Network.AWS.ElasticSearch
     -- ** DescribeElasticsearchDomains
     , module Network.AWS.ElasticSearch.DescribeElasticsearchDomains
 
-    -- ** ListElasticsearchInstanceTypes
+    -- ** ListElasticsearchInstanceTypes (Paginated)
     , module Network.AWS.ElasticSearch.ListElasticsearchInstanceTypes
 
     -- ** DeleteElasticsearchServiceRole
@@ -88,7 +88,7 @@ module Network.AWS.ElasticSearch
     -- ** UpdateElasticsearchDomainConfig
     , module Network.AWS.ElasticSearch.UpdateElasticsearchDomainConfig
 
-    -- ** ListElasticsearchVersions
+    -- ** ListElasticsearchVersions (Paginated)
     , module Network.AWS.ElasticSearch.ListElasticsearchVersions
 
     -- ** AddTags
@@ -172,6 +172,7 @@ module Network.AWS.ElasticSearch
     , edcLogPublishingOptions
     , edcElasticsearchClusterConfig
     , edcSnapshotOptions
+    , edcEncryptionAtRestOptions
     , edcVPCOptions
     , edcAdvancedOptions
     , edcElasticsearchVersion
@@ -184,6 +185,7 @@ module Network.AWS.ElasticSearch
     , edsLogPublishingOptions
     , edsCreated
     , edsSnapshotOptions
+    , edsEncryptionAtRestOptions
     , edsDeleted
     , edsVPCOptions
     , edsEndpoints
@@ -201,6 +203,18 @@ module Network.AWS.ElasticSearch
     , elasticsearchVersionStatus
     , evsOptions
     , evsStatus
+
+    -- ** EncryptionAtRestOptions
+    , EncryptionAtRestOptions
+    , encryptionAtRestOptions
+    , earoEnabled
+    , earoKMSKeyId
+
+    -- ** EncryptionAtRestOptionsStatus
+    , EncryptionAtRestOptionsStatus
+    , encryptionAtRestOptionsStatus
+    , earosOptions
+    , earosStatus
 
     -- ** InstanceCountLimits
     , InstanceCountLimits

@@ -21,6 +21,8 @@
 -- Provides a description of the certificate.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.DMS.DescribeCertificates
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.DMS.DescribeCertificates
 import Network.AWS.DMS.Types
 import Network.AWS.DMS.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -82,6 +85,12 @@ dMarker = lens _dMarker (\ s a -> s{_dMarker = a});
 -- | The maximum number of records to include in the response. If more records exist than the specified @MaxRecords@ value, a pagination token called a marker is included in the response so that the remaining results can be retrieved.  Default: 10
 dMaxRecords :: Lens' DescribeCertificates (Maybe Int)
 dMaxRecords = lens _dMaxRecords (\ s a -> s{_dMaxRecords = a});
+
+instance AWSPager DescribeCertificates where
+        page rq rs
+          | stop (rs ^. dcrsMarker) = Nothing
+          | stop (rs ^. dcrsCertificates) = Nothing
+          | otherwise = Just $ rq & dMarker .~ rs ^. dcrsMarker
 
 instance AWSRequest DescribeCertificates where
         type Rs DescribeCertificates =

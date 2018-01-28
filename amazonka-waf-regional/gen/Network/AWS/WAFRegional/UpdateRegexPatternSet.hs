@@ -18,12 +18,12 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Inserts or deletes 'RegexMatchSetUpdate' objects (filters) in a 'RegexPatternSet' . For each @RegexPatternSet@ object, you specify the following values:
+-- Inserts or deletes @RegexPatternString@ objects in a 'RegexPatternSet' . For each @RegexPatternString@ object, you specify the following values:
 --
 --
---     * Whether to insert or delete the object from the array. If you want to change a @RegexPatternSet@ object, you delete the existing object and add a new one.
+--     * Whether to insert or delete the @RegexPatternString@ .
 --
---     * The regular expression pattern that you want AWS WAF to look for. For more information, see 'RegexPatternSet' .
+--     * The regular expression pattern that you want to insert or delete. For more information, see 'RegexPatternSet' .
 --
 --
 --

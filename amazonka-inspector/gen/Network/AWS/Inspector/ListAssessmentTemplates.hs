@@ -21,6 +21,8 @@
 -- Lists the assessment templates that correspond to the assessment targets that are specified by the ARNs of the assessment targets.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.Inspector.ListAssessmentTemplates
     (
     -- * Creating a Request
@@ -44,6 +46,7 @@ module Network.AWS.Inspector.ListAssessmentTemplates
 import Network.AWS.Inspector.Types
 import Network.AWS.Inspector.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -94,6 +97,13 @@ latMaxResults = lens _latMaxResults (\ s a -> s{_latMaxResults = a});
 -- | A list of ARNs that specifies the assessment targets whose assessment templates you want to list.
 latAssessmentTargetARNs :: Lens' ListAssessmentTemplates [Text]
 latAssessmentTargetARNs = lens _latAssessmentTargetARNs (\ s a -> s{_latAssessmentTargetARNs = a}) . _Default . _Coerce;
+
+instance AWSPager ListAssessmentTemplates where
+        page rq rs
+          | stop (rs ^. latrsNextToken) = Nothing
+          | stop (rs ^. latrsAssessmentTemplateARNs) = Nothing
+          | otherwise =
+            Just $ rq & latNextToken .~ rs ^. latrsNextToken
 
 instance AWSRequest ListAssessmentTemplates where
         type Rs ListAssessmentTemplates =

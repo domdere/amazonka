@@ -68,7 +68,7 @@ data DetachInstances = DetachInstances'
 --
 -- * 'diInstanceIds' - One or more instance IDs.
 --
--- * 'diAutoScalingGroupName' - The name of the group.
+-- * 'diAutoScalingGroupName' - The name of the Auto Scaling group.
 --
 -- * 'diShouldDecrementDesiredCapacity' - If @True@ , the Auto Scaling group decrements the desired capacity value by the number of instances detached.
 detachInstances
@@ -87,7 +87,7 @@ detachInstances pAutoScalingGroupName_ pShouldDecrementDesiredCapacity_ =
 diInstanceIds :: Lens' DetachInstances [Text]
 diInstanceIds = lens _diInstanceIds (\ s a -> s{_diInstanceIds = a}) . _Default . _Coerce;
 
--- | The name of the group.
+-- | The name of the Auto Scaling group.
 diAutoScalingGroupName :: Lens' DetachInstances Text
 diAutoScalingGroupName = lens _diAutoScalingGroupName (\ s a -> s{_diAutoScalingGroupName = a});
 

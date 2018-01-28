@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Disables the specified rule.
+-- Disables the rule.
 --
 --
 module Network.AWS.IoT.DisableTopicRule

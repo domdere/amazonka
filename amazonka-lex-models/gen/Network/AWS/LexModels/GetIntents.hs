@@ -29,6 +29,8 @@
 --
 -- The operation requires permission for the @lex:GetIntents@ action.
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.LexModels.GetIntents
     (
     -- * Creating a Request
@@ -51,6 +53,7 @@ module Network.AWS.LexModels.GetIntents
 import Network.AWS.Lens
 import Network.AWS.LexModels.Types
 import Network.AWS.LexModels.Types.Product
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -90,6 +93,13 @@ giNextToken = lens _giNextToken (\ s a -> s{_giNextToken = a});
 -- | The maximum number of intents to return in the response. The default is 10.
 giMaxResults :: Lens' GetIntents (Maybe Natural)
 giMaxResults = lens _giMaxResults (\ s a -> s{_giMaxResults = a}) . mapping _Nat;
+
+instance AWSPager GetIntents where
+        page rq rs
+          | stop (rs ^. gisrsNextToken) = Nothing
+          | stop (rs ^. gisrsIntents) = Nothing
+          | otherwise =
+            Just $ rq & giNextToken .~ rs ^. gisrsNextToken
 
 instance AWSRequest GetIntents where
         type Rs GetIntents = GetIntentsResponse

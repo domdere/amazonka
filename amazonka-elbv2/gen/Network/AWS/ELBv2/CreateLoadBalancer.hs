@@ -25,9 +25,7 @@
 --
 -- To create listeners for your load balancer, use 'CreateListener' . To describe your current load balancers, see 'DescribeLoadBalancers' . When you are finished with a load balancer, you can delete it using 'DeleteLoadBalancer' .
 --
--- For limit information, see <http://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-limits.html Limits for Your Application Load Balancer> in the /Application Load Balancers Guide/ and <http://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-limits.html Limits for Your Network Load Balancer> in the /Network Load Balancers Guide/ .
---
--- This operation is idempotent, which means that it completes at most one time. If you attempt to create multiple load balancers with the same settings, each call succeeds.
+-- You can create up to 20 load balancers per region per account. You can request an increase for the number of load balancers for your account. For more information, see <http://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-limits.html Limits for Your Application Load Balancer> in the /Application Load Balancers Guide/ and <http://docs.aws.amazon.com/elasticloadbalancing/latest/network/load-balancer-limits.html Limits for Your Network Load Balancer> in the /Network Load Balancers Guide/ .
 --
 -- For more information, see <http://docs.aws.amazon.com/elasticloadbalancing/latest/application/application-load-balancers.html Application Load Balancers> in the /Application Load Balancers Guide/ and <http://docs.aws.amazon.com/elasticloadbalancing/latest/network/network-load-balancers.html Network Load Balancers> in the /Network Load Balancers Guide/ .
 --
@@ -78,11 +76,11 @@ data CreateLoadBalancer = CreateLoadBalancer'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'clbSubnetMappings' - The IDs of the subnets to attach to the load balancer. You can specify only one subnet per Availability Zone. You must specify either subnets or subnet mappings. [Application Load Balancers] You must specify subnets from at least two Availability Zones. You cannot specify Elastic IP addresses for your subnets. [Network Load Balancers] You can specify subnets from one or more Availability Zones. You can specify one Elastic IP address per subnet.
+-- * 'clbSubnetMappings' - The IDs of the subnets to attach to the load balancer. You can specify only one subnet per Availability Zone. You must specify either subnets or subnet mappings. [Network Load Balancers] You can specify one Elastic IP address per subnet. [Application Load Balancers] You cannot specify Elastic IP addresses for your subnets.
 --
 -- * 'clbSecurityGroups' - [Application Load Balancers] The IDs of the security groups to assign to the load balancer.
 --
--- * 'clbSubnets' - The IDs of the subnets to attach to the load balancer. You can specify only one subnet per Availability Zone. You must specify either subnets or subnet mappings. [Application Load Balancers] You must specify subnets from at least two Availability Zones. [Network Load Balancers] You can specify subnets from one or more Availability Zones.
+-- * 'clbSubnets' - The IDs of the subnets to attach to the load balancer. You can specify only one subnet per Availability Zone. You must specify either subnets or subnet mappings. [Application Load Balancers] You must specify subnets from at least two Availability Zones.
 --
 -- * 'clbIPAddressType' - [Application Load Balancers] The type of IP addresses used by the subnets for your load balancer. The possible values are @ipv4@ (for IPv4 addresses) and @dualstack@ (for IPv4 and IPv6 addresses). Internal load balancers must use @ipv4@ .
 --
@@ -109,7 +107,7 @@ createLoadBalancer pName_ =
   }
 
 
--- | The IDs of the subnets to attach to the load balancer. You can specify only one subnet per Availability Zone. You must specify either subnets or subnet mappings. [Application Load Balancers] You must specify subnets from at least two Availability Zones. You cannot specify Elastic IP addresses for your subnets. [Network Load Balancers] You can specify subnets from one or more Availability Zones. You can specify one Elastic IP address per subnet.
+-- | The IDs of the subnets to attach to the load balancer. You can specify only one subnet per Availability Zone. You must specify either subnets or subnet mappings. [Network Load Balancers] You can specify one Elastic IP address per subnet. [Application Load Balancers] You cannot specify Elastic IP addresses for your subnets.
 clbSubnetMappings :: Lens' CreateLoadBalancer [SubnetMapping]
 clbSubnetMappings = lens _clbSubnetMappings (\ s a -> s{_clbSubnetMappings = a}) . _Default . _Coerce;
 
@@ -117,7 +115,7 @@ clbSubnetMappings = lens _clbSubnetMappings (\ s a -> s{_clbSubnetMappings = a})
 clbSecurityGroups :: Lens' CreateLoadBalancer [Text]
 clbSecurityGroups = lens _clbSecurityGroups (\ s a -> s{_clbSecurityGroups = a}) . _Default . _Coerce;
 
--- | The IDs of the subnets to attach to the load balancer. You can specify only one subnet per Availability Zone. You must specify either subnets or subnet mappings. [Application Load Balancers] You must specify subnets from at least two Availability Zones. [Network Load Balancers] You can specify subnets from one or more Availability Zones.
+-- | The IDs of the subnets to attach to the load balancer. You can specify only one subnet per Availability Zone. You must specify either subnets or subnet mappings. [Application Load Balancers] You must specify subnets from at least two Availability Zones.
 clbSubnets :: Lens' CreateLoadBalancer [Text]
 clbSubnets = lens _clbSubnets (\ s a -> s{_clbSubnets = a}) . _Default . _Coerce;
 

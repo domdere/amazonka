@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Describes a TagOption.
+-- Gets information about the specified TagOption.
 --
 --
 module Network.AWS.ServiceCatalog.DescribeTagOption
@@ -54,14 +54,14 @@ newtype DescribeTagOption = DescribeTagOption'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dtoId' - The identifier of the TagOption.
+-- * 'dtoId' - The TagOption identifier.
 describeTagOption
     :: Text -- ^ 'dtoId'
     -> DescribeTagOption
 describeTagOption pId_ = DescribeTagOption' {_dtoId = pId_}
 
 
--- | The identifier of the TagOption.
+-- | The TagOption identifier.
 dtoId :: Lens' DescribeTagOption Text
 dtoId = lens _dtoId (\ s a -> s{_dtoId = a});
 
@@ -109,7 +109,7 @@ data DescribeTagOptionResponse = DescribeTagOptionResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dtorsTagOptionDetail' - The resulting detailed TagOption information.
+-- * 'dtorsTagOptionDetail' - Information about the TagOption.
 --
 -- * 'dtorsResponseStatus' - -- | The response status code.
 describeTagOptionResponse
@@ -120,7 +120,7 @@ describeTagOptionResponse pResponseStatus_ =
   {_dtorsTagOptionDetail = Nothing, _dtorsResponseStatus = pResponseStatus_}
 
 
--- | The resulting detailed TagOption information.
+-- | Information about the TagOption.
 dtorsTagOptionDetail :: Lens' DescribeTagOptionResponse (Maybe TagOptionDetail)
 dtorsTagOptionDetail = lens _dtorsTagOptionDetail (\ s a -> s{_dtorsTagOptionDetail = a});
 

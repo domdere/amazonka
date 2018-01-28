@@ -27,6 +27,7 @@ module Network.AWS.CodeDeploy.CreateApplication
       createApplication
     , CreateApplication
     -- * Request Lenses
+    , caComputePlatform
     , caApplicationName
 
     -- * Destructuring the Response
@@ -49,8 +50,9 @@ import Network.AWS.Response
 --
 --
 -- /See:/ 'createApplication' smart constructor.
-newtype CreateApplication = CreateApplication'
-  { _caApplicationName :: Text
+data CreateApplication = CreateApplication'
+  { _caComputePlatform :: !(Maybe ComputePlatform)
+  , _caApplicationName :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -58,13 +60,20 @@ newtype CreateApplication = CreateApplication'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
+-- * 'caComputePlatform' - The destination platform type for the deployment (@Lambda@ or @Server@ ).
+--
 -- * 'caApplicationName' - The name of the application. This name must be unique with the applicable IAM user or AWS account.
 createApplication
     :: Text -- ^ 'caApplicationName'
     -> CreateApplication
 createApplication pApplicationName_ =
-  CreateApplication' {_caApplicationName = pApplicationName_}
+  CreateApplication'
+  {_caComputePlatform = Nothing, _caApplicationName = pApplicationName_}
 
+
+-- | The destination platform type for the deployment (@Lambda@ or @Server@ ).
+caComputePlatform :: Lens' CreateApplication (Maybe ComputePlatform)
+caComputePlatform = lens _caComputePlatform (\ s a -> s{_caComputePlatform = a});
 
 -- | The name of the application. This name must be unique with the applicable IAM user or AWS account.
 caApplicationName :: Lens' CreateApplication Text
@@ -97,7 +106,8 @@ instance ToJSON CreateApplication where
         toJSON CreateApplication'{..}
           = object
               (catMaybes
-                 [Just ("applicationName" .= _caApplicationName)])
+                 [("computePlatform" .=) <$> _caComputePlatform,
+                  Just ("applicationName" .= _caApplicationName)])
 
 instance ToPath CreateApplication where
         toPath = const "/"

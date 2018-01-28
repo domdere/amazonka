@@ -36,6 +36,7 @@ module Network.AWS.S3.RestoreObject
     , RestoreObjectResponse
     -- * Response Lenses
     , rorsRequestCharged
+    , rorsRestoreOutputPath
     , rorsResponseStatus
     ) where
 
@@ -53,7 +54,7 @@ data RestoreObject = RestoreObject'
   , _roRestoreRequest :: !(Maybe RestoreRequest)
   , _roBucket         :: !BucketName
   , _roKey            :: !ObjectKey
-  } deriving (Eq, Read, Show, Data, Typeable, Generic)
+  } deriving (Eq, Show, Data, Typeable, Generic)
 
 
 -- | Creates a value of 'RestoreObject' with the minimum fields required to make a request.
@@ -111,7 +112,8 @@ instance AWSRequest RestoreObject where
               (\ s h x ->
                  RestoreObjectResponse' <$>
                    (h .#? "x-amz-request-charged") <*>
-                     (pure (fromEnum s)))
+                     (h .#? "x-amz-restore-output-path")
+                     <*> (pure (fromEnum s)))
 
 instance Hashable RestoreObject where
 
@@ -138,8 +140,9 @@ instance ToQuery RestoreObject where
 
 -- | /See:/ 'restoreObjectResponse' smart constructor.
 data RestoreObjectResponse = RestoreObjectResponse'
-  { _rorsRequestCharged :: !(Maybe RequestCharged)
-  , _rorsResponseStatus :: !Int
+  { _rorsRequestCharged    :: !(Maybe RequestCharged)
+  , _rorsRestoreOutputPath :: !(Maybe Text)
+  , _rorsResponseStatus    :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -149,18 +152,27 @@ data RestoreObjectResponse = RestoreObjectResponse'
 --
 -- * 'rorsRequestCharged' - Undocumented member.
 --
+-- * 'rorsRestoreOutputPath' - Indicates the path in the provided S3 output location where Select results will be restored to.
+--
 -- * 'rorsResponseStatus' - -- | The response status code.
 restoreObjectResponse
     :: Int -- ^ 'rorsResponseStatus'
     -> RestoreObjectResponse
 restoreObjectResponse pResponseStatus_ =
   RestoreObjectResponse'
-  {_rorsRequestCharged = Nothing, _rorsResponseStatus = pResponseStatus_}
+  { _rorsRequestCharged = Nothing
+  , _rorsRestoreOutputPath = Nothing
+  , _rorsResponseStatus = pResponseStatus_
+  }
 
 
 -- | Undocumented member.
 rorsRequestCharged :: Lens' RestoreObjectResponse (Maybe RequestCharged)
 rorsRequestCharged = lens _rorsRequestCharged (\ s a -> s{_rorsRequestCharged = a});
+
+-- | Indicates the path in the provided S3 output location where Select results will be restored to.
+rorsRestoreOutputPath :: Lens' RestoreObjectResponse (Maybe Text)
+rorsRestoreOutputPath = lens _rorsRestoreOutputPath (\ s a -> s{_rorsRestoreOutputPath = a});
 
 -- | -- | The response status code.
 rorsResponseStatus :: Lens' RestoreObjectResponse Int

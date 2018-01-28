@@ -21,6 +21,8 @@
 -- Returns tags for a resource. Tagging is currently supported only for directories with a limit of 50 tags per directory. All 50 tags are returned for a given directory with this API call.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.CloudDirectory.ListTagsForResource
     (
     -- * Creating a Request
@@ -43,6 +45,7 @@ module Network.AWS.CloudDirectory.ListTagsForResource
 import Network.AWS.CloudDirectory.Types
 import Network.AWS.CloudDirectory.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -86,6 +89,13 @@ ltfrMaxResults = lens _ltfrMaxResults (\ s a -> s{_ltfrMaxResults = a}) . mappin
 -- | The Amazon Resource Name (ARN) of the resource. Tagging is only supported for directories.
 ltfrResourceARN :: Lens' ListTagsForResource Text
 ltfrResourceARN = lens _ltfrResourceARN (\ s a -> s{_ltfrResourceARN = a});
+
+instance AWSPager ListTagsForResource where
+        page rq rs
+          | stop (rs ^. ltfrrsNextToken) = Nothing
+          | stop (rs ^. ltfrrsTags) = Nothing
+          | otherwise =
+            Just $ rq & ltfrNextToken .~ rs ^. ltfrrsNextToken
 
 instance AWSRequest ListTagsForResource where
         type Rs ListTagsForResource =

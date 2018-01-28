@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Lists the tags for the specified Amazon Kinesis stream.
+-- Lists the tags for the specified Kinesis stream.
 --
 --
 module Network.AWS.Kinesis.ListTagsForStream

@@ -41,9 +41,11 @@ module Network.AWS.APIGateway.CreateDomainName
     , domainName
     , DomainName
     -- * Response Lenses
+    , dnRegionalHostedZoneId
     , dnCertificateName
     , dnRegionalCertificateARN
     , dnCertificateARN
+    , dnDistributionHostedZoneId
     , dnDomainName
     , dnRegionalCertificateName
     , dnRegionalDomainName

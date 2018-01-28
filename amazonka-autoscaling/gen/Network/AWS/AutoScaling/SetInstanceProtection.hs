@@ -61,7 +61,7 @@ data SetInstanceProtection = SetInstanceProtection'
 --
 -- * 'sipInstanceIds' - One or more instance IDs.
 --
--- * 'sipAutoScalingGroupName' - The name of the group.
+-- * 'sipAutoScalingGroupName' - The name of the Auto Scaling group.
 --
 -- * 'sipProtectedFromScaleIn' - Indicates whether the instance is protected from termination by Auto Scaling when scaling in.
 setInstanceProtection
@@ -80,7 +80,7 @@ setInstanceProtection pAutoScalingGroupName_ pProtectedFromScaleIn_ =
 sipInstanceIds :: Lens' SetInstanceProtection [Text]
 sipInstanceIds = lens _sipInstanceIds (\ s a -> s{_sipInstanceIds = a}) . _Coerce;
 
--- | The name of the group.
+-- | The name of the Auto Scaling group.
 sipAutoScalingGroupName :: Lens' SetInstanceProtection Text
 sipAutoScalingGroupName = lens _sipAutoScalingGroupName (\ s a -> s{_sipAutoScalingGroupName = a});
 
