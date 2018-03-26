@@ -29,6 +29,8 @@
 --
 -- Snapshots that are taken from encrypted volumes are automatically encrypted. Volumes that are created from encrypted snapshots are also automatically encrypted. Your encrypted volumes and any associated snapshots always remain protected.
 --
+-- You can tag your snapshots during creation. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html Tagging Your Amazon EC2 Resources> .
+--
 -- For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html Amazon Elastic Block Store> and <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html Amazon EBS Encryption> in the /Amazon Elastic Compute Cloud User Guide/ .
 --
 module Network.AWS.EC2.CreateSnapshot
@@ -37,6 +39,7 @@ module Network.AWS.EC2.CreateSnapshot
       createSnapshot
     , CreateSnapshot
     -- * Request Lenses
+    , ccTagSpecifications
     , ccDescription
     , ccDryRun
     , ccVolumeId
@@ -74,7 +77,8 @@ import Network.AWS.Response
 --
 -- /See:/ 'createSnapshot' smart constructor.
 data CreateSnapshot = CreateSnapshot'
-  { _ccDescription :: !(Maybe Text)
+  { _ccTagSpecifications :: !(Maybe [TagSpecification])
+  , _ccDescription :: !(Maybe Text)
   , _ccDryRun :: !(Maybe Bool)
   , _ccVolumeId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -83,6 +87,8 @@ data CreateSnapshot = CreateSnapshot'
 -- | Creates a value of 'CreateSnapshot' with the minimum fields required to make a request.
 --
 -- Use one of the following lenses to modify other fields as desired:
+--
+-- * 'ccTagSpecifications' - The tags to apply to the snapshot during creation.
 --
 -- * 'ccDescription' - A description for the snapshot.
 --
@@ -94,8 +100,16 @@ createSnapshot
     -> CreateSnapshot
 createSnapshot pVolumeId_ =
   CreateSnapshot'
-  {_ccDescription = Nothing, _ccDryRun = Nothing, _ccVolumeId = pVolumeId_}
+  { _ccTagSpecifications = Nothing
+  , _ccDescription = Nothing
+  , _ccDryRun = Nothing
+  , _ccVolumeId = pVolumeId_
+  }
 
+
+-- | The tags to apply to the snapshot during creation.
+ccTagSpecifications :: Lens' CreateSnapshot [TagSpecification]
+ccTagSpecifications = lens _ccTagSpecifications (\ s a -> s{_ccTagSpecifications = a}) . _Default . _Coerce;
 
 -- | A description for the snapshot.
 ccDescription :: Lens' CreateSnapshot (Maybe Text)
@@ -129,5 +143,8 @@ instance ToQuery CreateSnapshot where
           = mconcat
               ["Action" =: ("CreateSnapshot" :: ByteString),
                "Version" =: ("2016-11-15" :: ByteString),
+               toQuery
+                 (toQueryList "TagSpecification" <$>
+                    _ccTagSpecifications),
                "Description" =: _ccDescription,
                "DryRun" =: _ccDryRun, "VolumeId" =: _ccVolumeId]

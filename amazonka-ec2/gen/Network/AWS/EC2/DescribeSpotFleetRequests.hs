@@ -18,10 +18,10 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Describes your Spot fleet requests.
+-- Describes your Spot Fleet requests.
 --
 --
--- Spot fleet requests are deleted 48 hours after they are canceled and their instances are terminated.
+-- Spot Fleet requests are deleted 48 hours after they are canceled and their instances are terminated.
 --
 --
 -- This operation returns paginated results.
@@ -70,7 +70,7 @@ data DescribeSpotFleetRequests = DescribeSpotFleetRequests'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dsfrSpotFleetRequestIds' - The IDs of the Spot fleet requests.
+-- * 'dsfrSpotFleetRequestIds' - The IDs of the Spot Fleet requests.
 --
 -- * 'dsfrNextToken' - The token for the next set of results.
 --
@@ -88,7 +88,7 @@ describeSpotFleetRequests =
   }
 
 
--- | The IDs of the Spot fleet requests.
+-- | The IDs of the Spot Fleet requests.
 dsfrSpotFleetRequestIds :: Lens' DescribeSpotFleetRequests [Text]
 dsfrSpotFleetRequestIds = lens _dsfrSpotFleetRequestIds (\ s a -> s{_dsfrSpotFleetRequestIds = a}) . _Default . _Coerce;
 
@@ -167,7 +167,7 @@ data DescribeSpotFleetRequestsResponse = DescribeSpotFleetRequestsResponse'
 --
 -- * 'dsfrrsResponseStatus' - -- | The response status code.
 --
--- * 'dsfrrsSpotFleetRequestConfigs' - Information about the configuration of your Spot fleet.
+-- * 'dsfrrsSpotFleetRequestConfigs' - Information about the configuration of your Spot Fleet.
 describeSpotFleetRequestsResponse
     :: Int -- ^ 'dsfrrsResponseStatus'
     -> DescribeSpotFleetRequestsResponse
@@ -187,7 +187,7 @@ dsfrrsNextToken = lens _dsfrrsNextToken (\ s a -> s{_dsfrrsNextToken = a});
 dsfrrsResponseStatus :: Lens' DescribeSpotFleetRequestsResponse Int
 dsfrrsResponseStatus = lens _dsfrrsResponseStatus (\ s a -> s{_dsfrrsResponseStatus = a});
 
--- | Information about the configuration of your Spot fleet.
+-- | Information about the configuration of your Spot Fleet.
 dsfrrsSpotFleetRequestConfigs :: Lens' DescribeSpotFleetRequestsResponse [SpotFleetRequestConfig]
 dsfrrsSpotFleetRequestConfigs = lens _dsfrrsSpotFleetRequestConfigs (\ s a -> s{_dsfrrsSpotFleetRequestConfigs = a}) . _Coerce;
 

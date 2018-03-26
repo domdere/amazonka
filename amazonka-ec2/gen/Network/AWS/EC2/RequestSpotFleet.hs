@@ -18,14 +18,16 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Creates a Spot fleet request.
+-- Creates a Spot Fleet request.
 --
 --
 -- You can submit a single request that includes multiple launch specifications that vary by instance type, AMI, Availability Zone, or subnet.
 --
--- By default, the Spot fleet requests Spot instances in the Spot pool where the price per unit is the lowest. Each launch specification can include its own instance weighting that reflects the value of the instance type to your application workload.
+-- By default, the Spot Fleet requests Spot Instances in the Spot pool where the price per unit is the lowest. Each launch specification can include its own instance weighting that reflects the value of the instance type to your application workload.
 --
--- Alternatively, you can specify that the Spot fleet distribute the target capacity across the Spot pools included in its launch specifications. By ensuring that the Spot instances in your Spot fleet are in different Spot pools, you can improve the availability of your fleet.
+-- Alternatively, you can specify that the Spot Fleet distribute the target capacity across the Spot pools included in its launch specifications. By ensuring that the Spot Instances in your Spot Fleet are in different Spot pools, you can improve the availability of your fleet.
+--
+-- You can specify tags for the Spot Instances. You cannot tag other resource types in a Spot Fleet request; only the @instance@ resource type is supported.
 --
 -- For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet-requests.html Spot Fleet Requests> in the /Amazon Elastic Compute Cloud User Guide/ .
 --
@@ -70,7 +72,7 @@ data RequestSpotFleet = RequestSpotFleet'
 --
 -- * 'rsfDryRun' - Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is @DryRunOperation@ . Otherwise, it is @UnauthorizedOperation@ .
 --
--- * 'rsfSpotFleetRequestConfig' - The configuration for the Spot fleet request.
+-- * 'rsfSpotFleetRequestConfig' - The configuration for the Spot Fleet request.
 requestSpotFleet
     :: SpotFleetRequestConfigData -- ^ 'rsfSpotFleetRequestConfig'
     -> RequestSpotFleet
@@ -83,7 +85,7 @@ requestSpotFleet pSpotFleetRequestConfig_ =
 rsfDryRun :: Lens' RequestSpotFleet (Maybe Bool)
 rsfDryRun = lens _rsfDryRun (\ s a -> s{_rsfDryRun = a});
 
--- | The configuration for the Spot fleet request.
+-- | The configuration for the Spot Fleet request.
 rsfSpotFleetRequestConfig :: Lens' RequestSpotFleet SpotFleetRequestConfigData
 rsfSpotFleetRequestConfig = lens _rsfSpotFleetRequestConfig (\ s a -> s{_rsfSpotFleetRequestConfig = a});
 
@@ -132,7 +134,7 @@ data RequestSpotFleetResponse = RequestSpotFleetResponse'
 --
 -- * 'rsfrsResponseStatus' - -- | The response status code.
 --
--- * 'rsfrsSpotFleetRequestId' - The ID of the Spot fleet request.
+-- * 'rsfrsSpotFleetRequestId' - The ID of the Spot Fleet request.
 requestSpotFleetResponse
     :: Int -- ^ 'rsfrsResponseStatus'
     -> Text -- ^ 'rsfrsSpotFleetRequestId'
@@ -148,7 +150,7 @@ requestSpotFleetResponse pResponseStatus_ pSpotFleetRequestId_ =
 rsfrsResponseStatus :: Lens' RequestSpotFleetResponse Int
 rsfrsResponseStatus = lens _rsfrsResponseStatus (\ s a -> s{_rsfrsResponseStatus = a});
 
--- | The ID of the Spot fleet request.
+-- | The ID of the Spot Fleet request.
 rsfrsSpotFleetRequestId :: Lens' RequestSpotFleetResponse Text
 rsfrsSpotFleetRequestId = lens _rsfrsSpotFleetRequestId (\ s a -> s{_rsfrsSpotFleetRequestId = a});
 

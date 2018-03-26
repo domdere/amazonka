@@ -25,7 +25,7 @@
 --
 --     * @default-vpc@ : The ID of the default VPC for your account, or @none@ .
 --
---     * @max-instances@ : The maximum number of On-Demand instances that you can run.
+--     * @max-instances@ : The maximum number of On-Demand Instances that you can run.
 --
 --     * @vpc-max-security-groups-per-interface@ : The maximum number of security groups that you can assign to a network interface.
 --

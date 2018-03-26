@@ -21,6 +21,8 @@
 -- Describes your IAM instance profile associations.
 --
 --
+--
+-- This operation returns paginated results.
 module Network.AWS.EC2.DescribeIAMInstanceProfileAssociations
     (
     -- * Creating a Request
@@ -44,6 +46,7 @@ module Network.AWS.EC2.DescribeIAMInstanceProfileAssociations
 import Network.AWS.EC2.Types
 import Network.AWS.EC2.Types.Product
 import Network.AWS.Lens
+import Network.AWS.Pager
 import Network.AWS.Prelude
 import Network.AWS.Request
 import Network.AWS.Response
@@ -94,6 +97,16 @@ diapaAssociationIds = lens _diapaAssociationIds (\ s a -> s{_diapaAssociationIds
 -- | The maximum number of results to return in a single call. To retrieve the remaining results, make another call with the returned @NextToken@ value.
 diapaMaxResults :: Lens' DescribeIAMInstanceProfileAssociations (Maybe Natural)
 diapaMaxResults = lens _diapaMaxResults (\ s a -> s{_diapaMaxResults = a}) . mapping _Nat;
+
+instance AWSPager
+           DescribeIAMInstanceProfileAssociations
+         where
+        page rq rs
+          | stop (rs ^. diaparsNextToken) = Nothing
+          | stop (rs ^. diaparsIAMInstanceProfileAssociations)
+            = Nothing
+          | otherwise =
+            Just $ rq & diapaNextToken .~ rs ^. diaparsNextToken
 
 instance AWSRequest
            DescribeIAMInstanceProfileAssociations

@@ -84,7 +84,7 @@ data DescribeSecurityGroups = DescribeSecurityGroups'
 --
 -- * 'dsgsDryRun' - Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is @DryRunOperation@ . Otherwise, it is @UnauthorizedOperation@ .
 --
--- * 'dsgsMaxResults' - The maximum number of results to return in a single call. To retrieve the remaining results, make another request with the returned @NextToken@ value. This value can be between 5 and 1000.
+-- * 'dsgsMaxResults' - The maximum number of results to return in a single call. To retrieve the remaining results, make another request with the returned @NextToken@ value. This value can be between 5 and 1000. If this parameter is not specified, then all results are returned.
 describeSecurityGroups
     :: DescribeSecurityGroups
 describeSecurityGroups =
@@ -118,7 +118,7 @@ dsgsNextToken = lens _dsgsNextToken (\ s a -> s{_dsgsNextToken = a});
 dsgsDryRun :: Lens' DescribeSecurityGroups (Maybe Bool)
 dsgsDryRun = lens _dsgsDryRun (\ s a -> s{_dsgsDryRun = a});
 
--- | The maximum number of results to return in a single call. To retrieve the remaining results, make another request with the returned @NextToken@ value. This value can be between 5 and 1000.
+-- | The maximum number of results to return in a single call. To retrieve the remaining results, make another request with the returned @NextToken@ value. This value can be between 5 and 1000. If this parameter is not specified, then all results are returned.
 dsgsMaxResults :: Lens' DescribeSecurityGroups (Maybe Int)
 dsgsMaxResults = lens _dsgsMaxResults (\ s a -> s{_dsgsMaxResults = a});
 

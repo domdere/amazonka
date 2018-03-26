@@ -74,7 +74,7 @@ data ModifyVolume = ModifyVolume'
 --
 -- * 'mvDryRun' - Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is @DryRunOperation@ . Otherwise, it is @UnauthorizedOperation@ .
 --
--- * 'mvVolumeId' - Undocumented member.
+-- * 'mvVolumeId' - The ID of the volume.
 modifyVolume
     :: Text -- ^ 'mvVolumeId'
     -> ModifyVolume
@@ -104,7 +104,7 @@ mvVolumeType = lens _mvVolumeType (\ s a -> s{_mvVolumeType = a});
 mvDryRun :: Lens' ModifyVolume (Maybe Bool)
 mvDryRun = lens _mvDryRun (\ s a -> s{_mvDryRun = a});
 
--- | Undocumented member.
+-- | The ID of the volume.
 mvVolumeId :: Lens' ModifyVolume Text
 mvVolumeId = lens _mvVolumeId (\ s a -> s{_mvVolumeId = a});
 

@@ -80,7 +80,7 @@ data DescribeSpotPriceHistory = DescribeSpotPriceHistory'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dsphInstanceTypes' - Filters the results by the specified instance types. Note that T2 and HS1 instance types are not supported.
+-- * 'dsphInstanceTypes' - Filters the results by the specified instance types.
 --
 -- * 'dsphStartTime' - The date and time, up to the past 90 days, from which to start retrieving the price history data, in UTC format (for example, /YYYY/ -/MM/ -/DD/ T/HH/ :/MM/ :/SS/ Z).
 --
@@ -113,7 +113,7 @@ describeSpotPriceHistory =
   }
 
 
--- | Filters the results by the specified instance types. Note that T2 and HS1 instance types are not supported.
+-- | Filters the results by the specified instance types.
 dsphInstanceTypes :: Lens' DescribeSpotPriceHistory [InstanceType]
 dsphInstanceTypes = lens _dsphInstanceTypes (\ s a -> s{_dsphInstanceTypes = a}) . _Default . _Coerce;
 
@@ -214,7 +214,7 @@ data DescribeSpotPriceHistoryResponse = DescribeSpotPriceHistoryResponse'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dsphrsNextToken' - The token required to retrieve the next set of results. This value is @null@ when there are no more results to return.
+-- * 'dsphrsNextToken' - The token required to retrieve the next set of results. This value is null or an empty string when there are no more results to return.
 --
 -- * 'dsphrsSpotPriceHistory' - The historical Spot prices.
 --
@@ -230,7 +230,7 @@ describeSpotPriceHistoryResponse pResponseStatus_ =
   }
 
 
--- | The token required to retrieve the next set of results. This value is @null@ when there are no more results to return.
+-- | The token required to retrieve the next set of results. This value is null or an empty string when there are no more results to return.
 dsphrsNextToken :: Lens' DescribeSpotPriceHistoryResponse (Maybe Text)
 dsphrsNextToken = lens _dsphrsNextToken (\ s a -> s{_dsphrsNextToken = a});
 

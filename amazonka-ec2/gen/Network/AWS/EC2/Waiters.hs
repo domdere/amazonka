@@ -35,6 +35,7 @@ import Network.AWS.EC2.DescribeSnapshots
 import Network.AWS.EC2.DescribeSpotInstanceRequests
 import Network.AWS.EC2.DescribeSubnets
 import Network.AWS.EC2.DescribeVPCPeeringConnections
+import Network.AWS.EC2.DescribeVPCPeeringConnections
 import Network.AWS.EC2.DescribeVPCs
 import Network.AWS.EC2.DescribeVPCs
 import Network.AWS.EC2.DescribeVPNConnections
@@ -324,6 +325,11 @@ spotInstanceRequestFulfilled =
           AcceptSuccess
           (folding (concatOf dsirrsSpotInstanceRequests) .
            sirStatus . _Just . sisCode . _Just . to toTextCI)
+      , matchAll
+          "request-canceled-and-instance-running"
+          AcceptSuccess
+          (folding (concatOf dsirrsSpotInstanceRequests) .
+           sirStatus . _Just . sisCode . _Just . to toTextCI)
       , matchAny
           "schedule-expired"
           AcceptFailure
@@ -344,6 +350,7 @@ spotInstanceRequestFulfilled =
           AcceptFailure
           (folding (concatOf dsirrsSpotInstanceRequests) .
            sirStatus . _Just . sisCode . _Just . to toTextCI)
+      , matchError "InvalidSpotInstanceRequestID.NotFound" AcceptRetry
       ]
   }
 
@@ -376,6 +383,24 @@ exportTaskCompleted =
           "completed"
           AcceptSuccess
           (folding (concatOf detrsExportTasks) . etState . to toTextCI)
+      ]
+  }
+
+
+-- | Polls 'Network.AWS.EC2.DescribeVPCPeeringConnections' every 15 seconds until a successful state is reached. An error is returned after 40 failed checks.
+vpcPeeringConnectionDeleted :: Wait DescribeVPCPeeringConnections
+vpcPeeringConnectionDeleted =
+  Wait
+  { _waitName = "VpcPeeringConnectionDeleted"
+  , _waitAttempts = 40
+  , _waitDelay = 15
+  , _waitAcceptors =
+      [ matchAll
+          "deleted"
+          AcceptSuccess
+          (folding (concatOf dvpcpcrsVPCPeeringConnections) .
+           vpcpcStatus . _Just . vpcsrCode . _Just . to toTextCI)
+      , matchError "InvalidVpcPeeringConnectionID.NotFound" AcceptSuccess
       ]
   }
 

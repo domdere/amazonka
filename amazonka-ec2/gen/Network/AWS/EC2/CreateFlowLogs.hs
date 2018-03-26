@@ -23,6 +23,8 @@
 --
 -- In your request, you must also specify an IAM role that has permission to publish logs to CloudWatch Logs.
 --
+-- For more information, see <http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/flow-logs.html VPC Flow Logs> in the /Amazon Virtual Private Cloud User Guide/ .
+--
 module Network.AWS.EC2.CreateFlowLogs
     (
     -- * Creating a Request

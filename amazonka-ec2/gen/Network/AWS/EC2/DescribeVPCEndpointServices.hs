@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Describes all supported AWS services that can be specified when creating a VPC endpoint.
+-- Describes available services to which you can create a VPC endpoint.
 --
 --
 module Network.AWS.EC2.DescribeVPCEndpointServices
@@ -167,7 +167,7 @@ data DescribeVPCEndpointServicesResponse = DescribeVPCEndpointServicesResponse'
 --
 -- * 'dvesrsServiceDetails' - Information about the service.
 --
--- * 'dvesrsServiceNames' - A list of supported AWS services.
+-- * 'dvesrsServiceNames' - A list of supported services.
 --
 -- * 'dvesrsNextToken' - The token to use when requesting the next set of items. If there are no additional items to return, the string is empty.
 --
@@ -188,7 +188,7 @@ describeVPCEndpointServicesResponse pResponseStatus_ =
 dvesrsServiceDetails :: Lens' DescribeVPCEndpointServicesResponse [ServiceDetail]
 dvesrsServiceDetails = lens _dvesrsServiceDetails (\ s a -> s{_dvesrsServiceDetails = a}) . _Default . _Coerce;
 
--- | A list of supported AWS services.
+-- | A list of supported services.
 dvesrsServiceNames :: Lens' DescribeVPCEndpointServicesResponse [Text]
 dvesrsServiceNames = lens _dvesrsServiceNames (\ s a -> s{_dvesrsServiceNames = a}) . _Default . _Coerce;
 

@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Describes one or more of your placement groups. For more information about placement groups and cluster instances, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using_cluster_computing.html Cluster Instances> in the /Amazon Elastic Compute Cloud User Guide/ .
+-- Describes one or more of your placement groups. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html Placement Groups> in the /Amazon Elastic Compute Cloud User Guide/ .
 --
 --
 module Network.AWS.EC2.DescribePlacementGroups
@@ -62,7 +62,7 @@ data DescribePlacementGroups = DescribePlacementGroups'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dpgsFilters' - One or more filters.     * @group-name@ - The name of the placement group.     * @state@ - The state of the placement group (@pending@ | @available@ | @deleting@ | @deleted@ ).     * @strategy@ - The strategy of the placement group (@cluster@ ).
+-- * 'dpgsFilters' - One or more filters.     * @group-name@ - The name of the placement group.     * @state@ - The state of the placement group (@pending@ | @available@ | @deleting@ | @deleted@ ).     * @strategy@ - The strategy of the placement group (@cluster@ | @spread@ ).
 --
 -- * 'dpgsGroupNames' - One or more placement group names. Default: Describes all your placement groups, or only those otherwise specified.
 --
@@ -74,7 +74,7 @@ describePlacementGroups =
   {_dpgsFilters = Nothing, _dpgsGroupNames = Nothing, _dpgsDryRun = Nothing}
 
 
--- | One or more filters.     * @group-name@ - The name of the placement group.     * @state@ - The state of the placement group (@pending@ | @available@ | @deleting@ | @deleted@ ).     * @strategy@ - The strategy of the placement group (@cluster@ ).
+-- | One or more filters.     * @group-name@ - The name of the placement group.     * @state@ - The state of the placement group (@pending@ | @available@ | @deleting@ | @deleted@ ).     * @strategy@ - The strategy of the placement group (@cluster@ | @spread@ ).
 dpgsFilters :: Lens' DescribePlacementGroups [Filter]
 dpgsFilters = lens _dpgsFilters (\ s a -> s{_dpgsFilters = a}) . _Default . _Coerce;
 

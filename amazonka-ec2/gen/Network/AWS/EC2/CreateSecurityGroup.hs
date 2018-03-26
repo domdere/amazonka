@@ -82,7 +82,7 @@ data CreateSecurityGroup = CreateSecurityGroup'
 --
 -- * 'csgDescription' - A description for the security group. This is informational only. Constraints: Up to 255 characters in length Constraints for EC2-Classic: ASCII characters Constraints for EC2-VPC: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&;{}!$*
 --
--- * 'csgGroupName' - The name of the security group. Constraints: Up to 255 characters in length Constraints for EC2-Classic: ASCII characters Constraints for EC2-VPC: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&;{}!$*
+-- * 'csgGroupName' - The name of the security group. Constraints: Up to 255 characters in length. Cannot start with @sg-@ . Constraints for EC2-Classic: ASCII characters Constraints for EC2-VPC: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&;{}!$*
 createSecurityGroup
     :: Text -- ^ 'csgDescription'
     -> Text -- ^ 'csgGroupName'
@@ -108,7 +108,7 @@ csgDryRun = lens _csgDryRun (\ s a -> s{_csgDryRun = a});
 csgDescription :: Lens' CreateSecurityGroup Text
 csgDescription = lens _csgDescription (\ s a -> s{_csgDescription = a});
 
--- | The name of the security group. Constraints: Up to 255 characters in length Constraints for EC2-Classic: ASCII characters Constraints for EC2-VPC: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&;{}!$*
+-- | The name of the security group. Constraints: Up to 255 characters in length. Cannot start with @sg-@ . Constraints for EC2-Classic: ASCII characters Constraints for EC2-VPC: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&;{}!$*
 csgGroupName :: Lens' CreateSecurityGroup Text
 csgGroupName = lens _csgGroupName (\ s a -> s{_csgGroupName = a});
 
