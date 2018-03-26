@@ -14,11 +14,11 @@
 module Test.AWS.Gen.EC2 where
 
 import Data.Proxy
-import Network.AWS.EC2
-import Test.AWS.EC2.Internal
 import Test.AWS.Fixture
 import Test.AWS.Prelude
 import Test.Tasty
+import Network.AWS.EC2
+import Test.AWS.EC2.Internal
 
 -- Auto-generated: the actual test selection needs to be manually placed into
 -- the top-level so that real test data can be incrementally added.

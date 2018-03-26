@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Deletes a VPC peering connection. Either the owner of the requester VPC or the owner of the peer VPC can delete the VPC peering connection if it's in the @active@ state. The owner of the requester VPC can delete a VPC peering connection in the @pending-acceptance@ state.
+-- Deletes a VPC peering connection. Either the owner of the requester VPC or the owner of the peer VPC can delete the VPC peering connection if it's in the @active@ state. The owner of the requester VPC can delete a VPC peering connection in the @pending-acceptance@ state. 
 --
 --
 module Network.AWS.EC2.DeleteVPCPeeringConnection
@@ -51,7 +51,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'deleteVPCPeeringConnection' smart constructor.
 data DeleteVPCPeeringConnection = DeleteVPCPeeringConnection'
-  { _dvpcDryRun                 :: !(Maybe Bool)
+  { _dvpcDryRun :: !(Maybe Bool)
   , _dvpcVPCPeeringConnectionId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -117,7 +117,7 @@ instance ToQuery DeleteVPCPeeringConnection where
 --
 -- /See:/ 'deleteVPCPeeringConnectionResponse' smart constructor.
 data DeleteVPCPeeringConnectionResponse = DeleteVPCPeeringConnectionResponse'
-  { _dvpcrsReturn         :: !(Maybe Bool)
+  { _dvpcrsReturn :: !(Maybe Bool)
   , _dvpcrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

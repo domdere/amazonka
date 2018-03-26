@@ -61,7 +61,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'getConsoleOutput' smart constructor.
 data GetConsoleOutput = GetConsoleOutput'
-  { _gcoDryRun     :: !(Maybe Bool)
+  { _gcoDryRun :: !(Maybe Bool)
   , _gcoInstanceId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -123,9 +123,9 @@ instance ToQuery GetConsoleOutput where
 --
 -- /See:/ 'getConsoleOutputResponse' smart constructor.
 data GetConsoleOutputResponse = GetConsoleOutputResponse'
-  { _gcorsInstanceId     :: !(Maybe Text)
-  , _gcorsOutput         :: !(Maybe Text)
-  , _gcorsTimestamp      :: !(Maybe ISO8601)
+  { _gcorsInstanceId :: !(Maybe Text)
+  , _gcorsOutput :: !(Maybe Text)
+  , _gcorsTimestamp :: !(Maybe ISO8601)
   , _gcorsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

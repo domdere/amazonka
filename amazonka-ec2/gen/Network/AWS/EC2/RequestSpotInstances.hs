@@ -61,18 +61,18 @@ import Network.AWS.Response
 --
 -- /See:/ 'requestSpotInstances' smart constructor.
 data RequestSpotInstances = RequestSpotInstances'
-  { _rsisBlockDurationMinutes         :: !(Maybe Int)
-  , _rsisClientToken                  :: !(Maybe Text)
-  , _rsisInstanceCount                :: !(Maybe Int)
+  { _rsisBlockDurationMinutes :: !(Maybe Int)
+  , _rsisClientToken :: !(Maybe Text)
+  , _rsisInstanceCount :: !(Maybe Int)
   , _rsisInstanceInterruptionBehavior :: !(Maybe InstanceInterruptionBehavior)
-  , _rsisLaunchSpecification          :: !(Maybe RequestSpotLaunchSpecification)
-  , _rsisAvailabilityZoneGroup        :: !(Maybe Text)
-  , _rsisValidUntil                   :: !(Maybe ISO8601)
-  , _rsisLaunchGroup                  :: !(Maybe Text)
-  , _rsisType                         :: !(Maybe SpotInstanceType)
-  , _rsisValidFrom                    :: !(Maybe ISO8601)
-  , _rsisDryRun                       :: !(Maybe Bool)
-  , _rsisSpotPrice                    :: !Text
+  , _rsisLaunchSpecification :: !(Maybe RequestSpotLaunchSpecification)
+  , _rsisAvailabilityZoneGroup :: !(Maybe Text)
+  , _rsisValidUntil :: !(Maybe ISO8601)
+  , _rsisLaunchGroup :: !(Maybe Text)
+  , _rsisType :: !(Maybe SpotInstanceType)
+  , _rsisValidFrom :: !(Maybe ISO8601)
+  , _rsisDryRun :: !(Maybe Bool)
+  , _rsisSpotPrice :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -96,7 +96,7 @@ data RequestSpotInstances = RequestSpotInstances'
 --
 -- * 'rsisLaunchGroup' - The instance launch group. Launch groups are Spot instances that launch together and terminate together. Default: Instances are launched and terminated individually
 --
--- * 'rsisType' - The Spot instance request type. Default: @one-time@
+-- * 'rsisType' - The Spot instance request type. Default: @one-time@ 
 --
 -- * 'rsisValidFrom' - The start date of the request. If this is a one-time request, the request becomes active at this date and time and remains active until all instances launch, the request expires, or the request is canceled. If the request is persistent, the request becomes active at this date and time and remains active until it expires or is canceled. Default: The request is effective indefinitely.
 --
@@ -155,7 +155,7 @@ rsisValidUntil = lens _rsisValidUntil (\ s a -> s{_rsisValidUntil = a}) . mappin
 rsisLaunchGroup :: Lens' RequestSpotInstances (Maybe Text)
 rsisLaunchGroup = lens _rsisLaunchGroup (\ s a -> s{_rsisLaunchGroup = a});
 
--- | The Spot instance request type. Default: @one-time@
+-- | The Spot instance request type. Default: @one-time@ 
 rsisType :: Lens' RequestSpotInstances (Maybe SpotInstanceType)
 rsisType = lens _rsisType (\ s a -> s{_rsisType = a});
 
@@ -219,7 +219,7 @@ instance ToQuery RequestSpotInstances where
 -- /See:/ 'requestSpotInstancesResponse' smart constructor.
 data RequestSpotInstancesResponse = RequestSpotInstancesResponse'
   { _rsirsSpotInstanceRequests :: !(Maybe [SpotInstanceRequest])
-  , _rsirsResponseStatus       :: !Int
+  , _rsirsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

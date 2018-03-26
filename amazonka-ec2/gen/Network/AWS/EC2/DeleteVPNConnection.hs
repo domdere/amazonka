@@ -50,7 +50,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'deleteVPNConnection' smart constructor.
 data DeleteVPNConnection = DeleteVPNConnection'
-  { _dvcDryRun          :: !(Maybe Bool)
+  { _dvcDryRun :: !(Maybe Bool)
   , _dvcVPNConnectionId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

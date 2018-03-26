@@ -48,7 +48,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'deleteNetworkACL' smart constructor.
 data DeleteNetworkACL = DeleteNetworkACL'
-  { _dnaDryRun       :: !(Maybe Bool)
+  { _dnaDryRun :: !(Maybe Bool)
   , _dnaNetworkACLId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

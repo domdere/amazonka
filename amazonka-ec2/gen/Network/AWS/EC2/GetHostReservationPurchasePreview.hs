@@ -52,7 +52,7 @@ import Network.AWS.Response
 
 -- | /See:/ 'getHostReservationPurchasePreview' smart constructor.
 data GetHostReservationPurchasePreview = GetHostReservationPurchasePreview'
-  { _ghrppHostIdSet  :: ![Text]
+  { _ghrppHostIdSet :: ![Text]
   , _ghrppOfferingId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -122,11 +122,11 @@ instance ToQuery GetHostReservationPurchasePreview
 
 -- | /See:/ 'getHostReservationPurchasePreviewResponse' smart constructor.
 data GetHostReservationPurchasePreviewResponse = GetHostReservationPurchasePreviewResponse'
-  { _ghrpprsCurrencyCode      :: !(Maybe CurrencyCodeValues)
-  , _ghrpprsTotalHourlyPrice  :: !(Maybe Text)
+  { _ghrpprsCurrencyCode :: !(Maybe CurrencyCodeValues)
+  , _ghrpprsTotalHourlyPrice :: !(Maybe Text)
   , _ghrpprsTotalUpfrontPrice :: !(Maybe Text)
-  , _ghrpprsPurchase          :: !(Maybe [Purchase])
-  , _ghrpprsResponseStatus    :: !Int
+  , _ghrpprsPurchase :: !(Maybe [Purchase])
+  , _ghrpprsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

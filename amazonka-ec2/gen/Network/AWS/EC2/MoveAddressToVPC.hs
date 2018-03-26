@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Moves an Elastic IP address from the EC2-Classic platform to the EC2-VPC platform. The Elastic IP address must be allocated to your account for more than 24 hours, and it must not be associated with an instance. After the Elastic IP address is moved, it is no longer available for use in the EC2-Classic platform, unless you move it back using the 'RestoreAddressToClassic' request. You cannot move an Elastic IP address that was originally allocated for use in the EC2-VPC platform to the EC2-Classic platform.
+-- Moves an Elastic IP address from the EC2-Classic platform to the EC2-VPC platform. The Elastic IP address must be allocated to your account for more than 24 hours, and it must not be associated with an instance. After the Elastic IP address is moved, it is no longer available for use in the EC2-Classic platform, unless you move it back using the 'RestoreAddressToClassic' request. You cannot move an Elastic IP address that was originally allocated for use in the EC2-VPC platform to the EC2-Classic platform. 
 --
 --
 module Network.AWS.EC2.MoveAddressToVPC
@@ -52,7 +52,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'moveAddressToVPC' smart constructor.
 data MoveAddressToVPC = MoveAddressToVPC'
-  { _matvDryRun   :: !(Maybe Bool)
+  { _matvDryRun :: !(Maybe Bool)
   , _matvPublicIP :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -112,8 +112,8 @@ instance ToQuery MoveAddressToVPC where
 --
 -- /See:/ 'moveAddressToVPCResponse' smart constructor.
 data MoveAddressToVPCResponse = MoveAddressToVPCResponse'
-  { _matvrsStatus         :: !(Maybe AddressStatus)
-  , _matvrsAllocationId   :: !(Maybe Text)
+  { _matvrsStatus :: !(Maybe AddressStatus)
+  , _matvrsAllocationId :: !(Maybe Text)
   , _matvrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

@@ -50,8 +50,8 @@ import Network.AWS.Response
 -- /See:/ 'modifySubnetAttribute' smart constructor.
 data ModifySubnetAttribute = ModifySubnetAttribute'
   { _msaAssignIPv6AddressOnCreation :: !(Maybe AttributeBooleanValue)
-  , _msaMapPublicIPOnLaunch         :: !(Maybe AttributeBooleanValue)
-  , _msaSubnetId                    :: !Text
+  , _msaMapPublicIPOnLaunch :: !(Maybe AttributeBooleanValue)
+  , _msaSubnetId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

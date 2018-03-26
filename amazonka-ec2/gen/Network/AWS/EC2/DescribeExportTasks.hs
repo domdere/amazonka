@@ -104,7 +104,7 @@ instance ToQuery DescribeExportTasks where
 --
 -- /See:/ 'describeExportTasksResponse' smart constructor.
 data DescribeExportTasksResponse = DescribeExportTasksResponse'
-  { _detrsExportTasks    :: !(Maybe [ExportTask])
+  { _detrsExportTasks :: !(Maybe [ExportTask])
   , _detrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

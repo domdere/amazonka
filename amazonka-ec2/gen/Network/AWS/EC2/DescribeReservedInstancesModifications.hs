@@ -58,9 +58,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'describeReservedInstancesModifications' smart constructor.
 data DescribeReservedInstancesModifications = DescribeReservedInstancesModifications'
-  { _drimFilters                          :: !(Maybe [Filter])
+  { _drimFilters :: !(Maybe [Filter])
   , _drimReservedInstancesModificationIds :: !(Maybe [Text])
-  , _drimNextToken                        :: !(Maybe Text)
+  , _drimNextToken :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

@@ -48,7 +48,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'enableVolumeIO' smart constructor.
 data EnableVolumeIO = EnableVolumeIO'
-  { _evioDryRun   :: !(Maybe Bool)
+  { _evioDryRun :: !(Maybe Bool)
   , _evioVolumeId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

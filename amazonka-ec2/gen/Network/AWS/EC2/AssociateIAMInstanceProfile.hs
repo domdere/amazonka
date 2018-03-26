@@ -48,7 +48,7 @@ import Network.AWS.Response
 -- | /See:/ 'associateIAMInstanceProfile' smart constructor.
 data AssociateIAMInstanceProfile = AssociateIAMInstanceProfile'
   { _aiapIAMInstanceProfile :: !IAMInstanceProfileSpecification
-  , _aiapInstanceId         :: !Text
+  , _aiapInstanceId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

@@ -21,7 +21,7 @@
 -- Creates a default VPC with a size @/16@ IPv4 CIDR block and a default subnet in each Availability Zone. For more information about the components of a default VPC, see <http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/default-vpc.html Default VPC and Default Subnets> in the /Amazon Virtual Private Cloud User Guide/ . You cannot specify the components of the default VPC yourself.
 --
 --
--- You can create a default VPC if you deleted your previous default VPC. You cannot have more than one default VPC per region.
+-- You can create a default VPC if you deleted your previous default VPC. You cannot have more than one default VPC per region. 
 --
 -- If your account supports EC2-Classic, you cannot use this action to create a default VPC in a region that supports EC2-Classic. If you want a default VPC in a region that supports EC2-Classic, see "I really want a default VPC for my existing EC2 account. Is that possible?" in the <http://aws.amazon.com/vpc/faqs/#Default_VPCs Default VPCs FAQ> .
 --
@@ -104,7 +104,7 @@ instance ToQuery CreateDefaultVPC where
 --
 -- /See:/ 'createDefaultVPCResponse' smart constructor.
 data CreateDefaultVPCResponse = CreateDefaultVPCResponse'
-  { _cdvrsVPC            :: !(Maybe VPC)
+  { _cdvrsVPC :: !(Maybe VPC)
   , _cdvrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

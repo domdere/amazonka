@@ -102,7 +102,7 @@ instance ToQuery DeleteFlowLogs where
 --
 -- /See:/ 'deleteFlowLogsResponse' smart constructor.
 data DeleteFlowLogsResponse = DeleteFlowLogsResponse'
-  { _dflrsUnsuccessful   :: !(Maybe [UnsuccessfulItem])
+  { _dflrsUnsuccessful :: !(Maybe [UnsuccessfulItem])
   , _dflrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

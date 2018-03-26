@@ -50,7 +50,7 @@ import Network.AWS.Response
 -- | /See:/ 'replaceIAMInstanceProfileAssociation' smart constructor.
 data ReplaceIAMInstanceProfileAssociation = ReplaceIAMInstanceProfileAssociation'
   { _riapaIAMInstanceProfile :: !IAMInstanceProfileSpecification
-  , _riapaAssociationId      :: !Text
+  , _riapaAssociationId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

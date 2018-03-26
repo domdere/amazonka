@@ -62,10 +62,10 @@ import Network.AWS.Response
 --
 -- /See:/ 'describeVolumes' smart constructor.
 data DescribeVolumes = DescribeVolumes'
-  { _desFilters    :: !(Maybe [Filter])
-  , _desVolumeIds  :: !(Maybe [Text])
-  , _desNextToken  :: !(Maybe Text)
-  , _desDryRun     :: !(Maybe Bool)
+  { _desFilters :: !(Maybe [Filter])
+  , _desVolumeIds :: !(Maybe [Text])
+  , _desNextToken :: !(Maybe Text)
+  , _desDryRun :: !(Maybe Bool)
   , _desMaxResults :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -160,8 +160,8 @@ instance ToQuery DescribeVolumes where
 --
 -- /See:/ 'describeVolumesResponse' smart constructor.
 data DescribeVolumesResponse = DescribeVolumesResponse'
-  { _dvvrsNextToken      :: !(Maybe Text)
-  , _dvvrsVolumes        :: !(Maybe [Volume])
+  { _dvvrsNextToken :: !(Maybe Text)
+  , _dvvrsVolumes :: !(Maybe [Volume])
   , _dvvrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

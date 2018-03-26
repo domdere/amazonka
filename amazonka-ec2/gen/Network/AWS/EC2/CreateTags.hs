@@ -51,9 +51,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'createTags' smart constructor.
 data CreateTags = CreateTags'
-  { _cDryRun    :: !(Maybe Bool)
+  { _cDryRun :: !(Maybe Bool)
   , _cResources :: ![Text]
-  , _cTags      :: ![Tag]
+  , _cTags :: ![Tag]
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -65,7 +65,7 @@ data CreateTags = CreateTags'
 --
 -- * 'cResources' - The IDs of one or more resources to tag. For example, ami-1a2b3c4d.
 --
--- * 'cTags' - One or more tags. The @value@ parameter is required, but if you don't want the tag to have a value, specify the parameter with no value, and we set the value to an empty string.
+-- * 'cTags' - One or more tags. The @value@ parameter is required, but if you don't want the tag to have a value, specify the parameter with no value, and we set the value to an empty string. 
 createTags
     :: CreateTags
 createTags =
@@ -80,7 +80,7 @@ cDryRun = lens _cDryRun (\ s a -> s{_cDryRun = a});
 cResources :: Lens' CreateTags [Text]
 cResources = lens _cResources (\ s a -> s{_cResources = a}) . _Coerce;
 
--- | One or more tags. The @value@ parameter is required, but if you don't want the tag to have a value, specify the parameter with no value, and we set the value to an empty string.
+-- | One or more tags. The @value@ parameter is required, but if you don't want the tag to have a value, specify the parameter with no value, and we set the value to an empty string. 
 cTags :: Lens' CreateTags [Tag]
 cTags = lens _cTags (\ s a -> s{_cTags = a}) . _Coerce;
 

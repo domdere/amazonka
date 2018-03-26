@@ -47,7 +47,7 @@ import Network.AWS.Response
 
 -- | /See:/ 'describeSecurityGroupReferences' smart constructor.
 data DescribeSecurityGroupReferences = DescribeSecurityGroupReferences'
-  { _dsgrDryRun  :: !(Maybe Bool)
+  { _dsgrDryRun :: !(Maybe Bool)
   , _dsgrGroupId :: ![Text]
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -112,7 +112,7 @@ instance ToQuery DescribeSecurityGroupReferences
 -- | /See:/ 'describeSecurityGroupReferencesResponse' smart constructor.
 data DescribeSecurityGroupReferencesResponse = DescribeSecurityGroupReferencesResponse'
   { _dsgrrsSecurityGroupReferenceSet :: !(Maybe [SecurityGroupReference])
-  , _dsgrrsResponseStatus            :: !Int
+  , _dsgrrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

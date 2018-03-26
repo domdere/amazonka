@@ -49,7 +49,7 @@ import Network.AWS.Response
 -- | /See:/ 'associateSubnetCidrBlock' smart constructor.
 data AssociateSubnetCidrBlock = AssociateSubnetCidrBlock'
   { _ascbIPv6CidrBlock :: !Text
-  , _ascbSubnetId      :: !Text
+  , _ascbSubnetId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -110,9 +110,9 @@ instance ToQuery AssociateSubnetCidrBlock where
 
 -- | /See:/ 'associateSubnetCidrBlockResponse' smart constructor.
 data AssociateSubnetCidrBlockResponse = AssociateSubnetCidrBlockResponse'
-  { _ascbrsSubnetId                 :: !(Maybe Text)
+  { _ascbrsSubnetId :: !(Maybe Text)
   , _ascbrsIPv6CidrBlockAssociation :: !(Maybe SubnetIPv6CidrBlockAssociation)
-  , _ascbrsResponseStatus           :: !Int
+  , _ascbrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

@@ -56,8 +56,8 @@ import Network.AWS.Response
 --
 -- /See:/ 'modifyVPCTenancy' smart constructor.
 data ModifyVPCTenancy = ModifyVPCTenancy'
-  { _mvtDryRun          :: !(Maybe Bool)
-  , _mvtVPCId           :: !Text
+  { _mvtDryRun :: !(Maybe Bool)
+  , _mvtVPCId :: !Text
   , _mvtInstanceTenancy :: !VPCTenancy
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -70,7 +70,7 @@ data ModifyVPCTenancy = ModifyVPCTenancy'
 --
 -- * 'mvtVPCId' - The ID of the VPC.
 --
--- * 'mvtInstanceTenancy' - The instance tenancy attribute for the VPC.
+-- * 'mvtInstanceTenancy' - The instance tenancy attribute for the VPC. 
 modifyVPCTenancy
     :: Text -- ^ 'mvtVPCId'
     -> VPCTenancy -- ^ 'mvtInstanceTenancy'
@@ -91,7 +91,7 @@ mvtDryRun = lens _mvtDryRun (\ s a -> s{_mvtDryRun = a});
 mvtVPCId :: Lens' ModifyVPCTenancy Text
 mvtVPCId = lens _mvtVPCId (\ s a -> s{_mvtVPCId = a});
 
--- | The instance tenancy attribute for the VPC.
+-- | The instance tenancy attribute for the VPC. 
 mvtInstanceTenancy :: Lens' ModifyVPCTenancy VPCTenancy
 mvtInstanceTenancy = lens _mvtInstanceTenancy (\ s a -> s{_mvtInstanceTenancy = a});
 
@@ -128,7 +128,7 @@ instance ToQuery ModifyVPCTenancy where
 --
 -- /See:/ 'modifyVPCTenancyResponse' smart constructor.
 data ModifyVPCTenancyResponse = ModifyVPCTenancyResponse'
-  { _mvtrsReturnValue    :: !(Maybe Bool)
+  { _mvtrsReturnValue :: !(Maybe Bool)
   , _mvtrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

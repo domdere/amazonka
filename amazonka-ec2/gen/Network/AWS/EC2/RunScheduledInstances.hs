@@ -58,9 +58,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'runScheduledInstances' smart constructor.
 data RunScheduledInstances = RunScheduledInstances'
-  { _rsiClientToken         :: !(Maybe Text)
-  , _rsiInstanceCount       :: !(Maybe Int)
-  , _rsiDryRun              :: !(Maybe Bool)
+  { _rsiClientToken :: !(Maybe Text)
+  , _rsiInstanceCount :: !(Maybe Int)
+  , _rsiDryRun :: !(Maybe Bool)
   , _rsiLaunchSpecification :: !ScheduledInstancesLaunchSpecification
   , _rsiScheduledInstanceId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -152,7 +152,7 @@ instance ToQuery RunScheduledInstances where
 --
 -- /See:/ 'runScheduledInstancesResponse' smart constructor.
 data RunScheduledInstancesResponse = RunScheduledInstancesResponse'
-  { _rrsInstanceIdSet  :: !(Maybe [Text])
+  { _rrsInstanceIdSet :: !(Maybe [Text])
   , _rrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

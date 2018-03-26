@@ -51,7 +51,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'rejectVPCPeeringConnection' smart constructor.
 data RejectVPCPeeringConnection = RejectVPCPeeringConnection'
-  { _rvpcDryRun                 :: !(Maybe Bool)
+  { _rvpcDryRun :: !(Maybe Bool)
   , _rvpcVPCPeeringConnectionId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -117,7 +117,7 @@ instance ToQuery RejectVPCPeeringConnection where
 --
 -- /See:/ 'rejectVPCPeeringConnectionResponse' smart constructor.
 data RejectVPCPeeringConnectionResponse = RejectVPCPeeringConnectionResponse'
-  { _rvpcrsReturn         :: !(Maybe Bool)
+  { _rvpcrsReturn :: !(Maybe Bool)
   , _rvpcrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

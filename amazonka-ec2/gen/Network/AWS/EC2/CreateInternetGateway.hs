@@ -104,7 +104,7 @@ instance ToQuery CreateInternetGateway where
 -- /See:/ 'createInternetGatewayResponse' smart constructor.
 data CreateInternetGatewayResponse = CreateInternetGatewayResponse'
   { _cigrsInternetGateway :: !(Maybe InternetGateway)
-  , _cigrsResponseStatus  :: !Int
+  , _cigrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

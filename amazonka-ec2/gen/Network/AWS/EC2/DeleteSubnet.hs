@@ -48,7 +48,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'deleteSubnet' smart constructor.
 data DeleteSubnet = DeleteSubnet'
-  { _ddDryRun   :: !(Maybe Bool)
+  { _ddDryRun :: !(Maybe Bool)
   , _ddSubnetId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

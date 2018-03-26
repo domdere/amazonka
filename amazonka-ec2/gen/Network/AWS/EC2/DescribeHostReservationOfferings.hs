@@ -21,7 +21,7 @@
 -- Describes the Dedicated Host Reservations that are available to purchase.
 --
 --
--- The results describe all the Dedicated Host Reservation offerings, including offerings that may not match the instance family and region of your Dedicated Hosts. When purchasing an offering, ensure that the the instance family and region of the offering matches that of the Dedicated Host/s it will be associated with. For an overview of supported instance types, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html Dedicated Hosts Overview> in the /Amazon Elastic Compute Cloud User Guide/ .
+-- The results describe all the Dedicated Host Reservation offerings, including offerings that may not match the instance family and region of your Dedicated Hosts. When purchasing an offering, ensure that the the instance family and region of the offering matches that of the Dedicated Host/s it will be associated with. For an overview of supported instance types, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/dedicated-hosts-overview.html Dedicated Hosts Overview> in the /Amazon Elastic Compute Cloud User Guide/ . 
 --
 module Network.AWS.EC2.DescribeHostReservationOfferings
     (
@@ -55,11 +55,11 @@ import Network.AWS.Response
 -- | /See:/ 'describeHostReservationOfferings' smart constructor.
 data DescribeHostReservationOfferings = DescribeHostReservationOfferings'
   { _dhroMaxDuration :: !(Maybe Int)
-  , _dhroNextToken   :: !(Maybe Text)
+  , _dhroNextToken :: !(Maybe Text)
   , _dhroMinDuration :: !(Maybe Int)
-  , _dhroOfferingId  :: !(Maybe Text)
-  , _dhroFilter      :: !(Maybe [Filter])
-  , _dhroMaxResults  :: !(Maybe Int)
+  , _dhroOfferingId :: !(Maybe Text)
+  , _dhroFilter :: !(Maybe [Filter])
+  , _dhroMaxResults :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -159,8 +159,8 @@ instance ToQuery DescribeHostReservationOfferings
 
 -- | /See:/ 'describeHostReservationOfferingsResponse' smart constructor.
 data DescribeHostReservationOfferingsResponse = DescribeHostReservationOfferingsResponse'
-  { _dhrorsOfferingSet    :: !(Maybe [HostOffering])
-  , _dhrorsNextToken      :: !(Maybe Text)
+  { _dhrorsOfferingSet :: !(Maybe [HostOffering])
+  , _dhrorsNextToken :: !(Maybe Text)
   , _dhrorsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

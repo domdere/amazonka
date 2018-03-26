@@ -51,9 +51,9 @@ import Network.AWS.Response
 -- | /See:/ 'describeEgressOnlyInternetGateways' smart constructor.
 data DescribeEgressOnlyInternetGateways = DescribeEgressOnlyInternetGateways'
   { _deoigEgressOnlyInternetGatewayIds :: !(Maybe [Text])
-  , _deoigNextToken                    :: !(Maybe Text)
-  , _deoigDryRun                       :: !(Maybe Bool)
-  , _deoigMaxResults                   :: !(Maybe Int)
+  , _deoigNextToken :: !(Maybe Text)
+  , _deoigDryRun :: !(Maybe Bool)
+  , _deoigMaxResults :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -141,8 +141,8 @@ instance ToQuery DescribeEgressOnlyInternetGateways
 -- | /See:/ 'describeEgressOnlyInternetGatewaysResponse' smart constructor.
 data DescribeEgressOnlyInternetGatewaysResponse = DescribeEgressOnlyInternetGatewaysResponse'
   { _deoigrsEgressOnlyInternetGateways :: !(Maybe [EgressOnlyInternetGateway])
-  , _deoigrsNextToken                  :: !(Maybe Text)
-  , _deoigrsResponseStatus             :: !Int
+  , _deoigrsNextToken :: !(Maybe Text)
+  , _deoigrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

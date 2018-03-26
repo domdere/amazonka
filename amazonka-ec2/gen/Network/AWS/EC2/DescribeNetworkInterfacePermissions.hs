@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Describes the permissions for your network interfaces.
+-- Describes the permissions for your network interfaces. 
 --
 --
 module Network.AWS.EC2.DescribeNetworkInterfacePermissions
@@ -54,10 +54,10 @@ import Network.AWS.Response
 --
 -- /See:/ 'describeNetworkInterfacePermissions' smart constructor.
 data DescribeNetworkInterfacePermissions = DescribeNetworkInterfacePermissions'
-  { _dnipFilters                       :: !(Maybe [Filter])
-  , _dnipNextToken                     :: !(Maybe Text)
+  { _dnipFilters :: !(Maybe [Filter])
+  , _dnipNextToken :: !(Maybe Text)
   , _dnipNetworkInterfacePermissionIds :: !(Maybe [Text])
-  , _dnipMaxResults                    :: !(Maybe Int)
+  , _dnipMaxResults :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -151,8 +151,8 @@ instance ToQuery DescribeNetworkInterfacePermissions
 -- /See:/ 'describeNetworkInterfacePermissionsResponse' smart constructor.
 data DescribeNetworkInterfacePermissionsResponse = DescribeNetworkInterfacePermissionsResponse'
   { _drsNetworkInterfacePermissions :: !(Maybe [NetworkInterfacePermission])
-  , _drsNextToken                   :: !(Maybe Text)
-  , _drsResponseStatus              :: !Int
+  , _drsNextToken :: !(Maybe Text)
+  , _drsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

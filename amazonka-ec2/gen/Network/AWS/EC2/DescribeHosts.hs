@@ -56,9 +56,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'describeHosts' smart constructor.
 data DescribeHosts = DescribeHosts'
-  { _dhNextToken  :: !(Maybe Text)
-  , _dhFilter     :: !(Maybe [Filter])
-  , _dhHostIds    :: !(Maybe [Text])
+  { _dhNextToken :: !(Maybe Text)
+  , _dhFilter :: !(Maybe [Filter])
+  , _dhHostIds :: !(Maybe [Text])
   , _dhMaxResults :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -139,8 +139,8 @@ instance ToQuery DescribeHosts where
 --
 -- /See:/ 'describeHostsResponse' smart constructor.
 data DescribeHostsResponse = DescribeHostsResponse'
-  { _dhrsHosts          :: !(Maybe [Host])
-  , _dhrsNextToken      :: !(Maybe Text)
+  { _dhrsHosts :: !(Maybe [Host])
+  , _dhrsNextToken :: !(Maybe Text)
   , _dhrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

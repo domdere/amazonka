@@ -52,9 +52,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'describeInternetGateways' smart constructor.
 data DescribeInternetGateways = DescribeInternetGateways'
-  { _dFilters            :: !(Maybe [Filter])
+  { _dFilters :: !(Maybe [Filter])
   , _dInternetGatewayIds :: !(Maybe [Text])
-  , _dDryRun             :: !(Maybe Bool)
+  , _dDryRun :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -127,7 +127,7 @@ instance ToQuery DescribeInternetGateways where
 -- /See:/ 'describeInternetGatewaysResponse' smart constructor.
 data DescribeInternetGatewaysResponse = DescribeInternetGatewaysResponse'
   { _digrsInternetGateways :: !(Maybe [InternetGateway])
-  , _digrsResponseStatus   :: !Int
+  , _digrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

@@ -61,9 +61,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'modifyInstancePlacement' smart constructor.
 data ModifyInstancePlacement = ModifyInstancePlacement'
-  { _mipAffinity   :: !(Maybe Affinity)
-  , _mipHostId     :: !(Maybe Text)
-  , _mipTenancy    :: !(Maybe HostTenancy)
+  { _mipAffinity :: !(Maybe Affinity)
+  , _mipHostId :: !(Maybe Text)
+  , _mipTenancy :: !(Maybe HostTenancy)
   , _mipInstanceId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -143,7 +143,7 @@ instance ToQuery ModifyInstancePlacement where
 --
 -- /See:/ 'modifyInstancePlacementResponse' smart constructor.
 data ModifyInstancePlacementResponse = ModifyInstancePlacementResponse'
-  { _miprsReturn         :: !(Maybe Bool)
+  { _miprsReturn :: !(Maybe Bool)
   , _miprsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

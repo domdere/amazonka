@@ -48,9 +48,9 @@ import Network.AWS.Response
 
 -- | /See:/ 'describeFpgaImageAttribute' smart constructor.
 data DescribeFpgaImageAttribute = DescribeFpgaImageAttribute'
-  { _dfiaDryRun      :: !(Maybe Bool)
+  { _dfiaDryRun :: !(Maybe Bool)
   , _dfiaFpgaImageId :: !Text
-  , _dfiaAttribute   :: !FpgaImageAttributeName
+  , _dfiaAttribute :: !FpgaImageAttributeName
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -120,7 +120,7 @@ instance ToQuery DescribeFpgaImageAttribute where
 -- | /See:/ 'describeFpgaImageAttributeResponse' smart constructor.
 data DescribeFpgaImageAttributeResponse = DescribeFpgaImageAttributeResponse'
   { _dfiarsFpgaImageAttribute :: !(Maybe FpgaImageAttribute)
-  , _dfiarsResponseStatus     :: !Int
+  , _dfiarsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

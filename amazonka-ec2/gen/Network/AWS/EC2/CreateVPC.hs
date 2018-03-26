@@ -60,9 +60,9 @@ import Network.AWS.Response
 -- /See:/ 'createVPC' smart constructor.
 data CreateVPC = CreateVPC'
   { _cvAmazonProvidedIPv6CidrBlock :: !(Maybe Bool)
-  , _cvInstanceTenancy             :: !(Maybe Tenancy)
-  , _cvDryRun                      :: !(Maybe Bool)
-  , _cvCidrBlock                   :: !Text
+  , _cvInstanceTenancy :: !(Maybe Tenancy)
+  , _cvDryRun :: !(Maybe Bool)
+  , _cvCidrBlock :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -72,7 +72,7 @@ data CreateVPC = CreateVPC'
 --
 -- * 'cvAmazonProvidedIPv6CidrBlock' - Requests an Amazon-provided IPv6 CIDR block with a /56 prefix length for the VPC. You cannot specify the range of IP addresses, or the size of the CIDR block.
 --
--- * 'cvInstanceTenancy' - The tenancy options for instances launched into the VPC. For @default@ , instances are launched with shared tenancy by default. You can launch instances with any tenancy into a shared tenancy VPC. For @dedicated@ , instances are launched as dedicated tenancy instances by default. You can only launch instances with a tenancy of @dedicated@ or @host@ into a dedicated tenancy VPC.  __Important:__ The @host@ value cannot be used with this parameter. Use the @default@ or @dedicated@ values only. Default: @default@
+-- * 'cvInstanceTenancy' - The tenancy options for instances launched into the VPC. For @default@ , instances are launched with shared tenancy by default. You can launch instances with any tenancy into a shared tenancy VPC. For @dedicated@ , instances are launched as dedicated tenancy instances by default. You can only launch instances with a tenancy of @dedicated@ or @host@ into a dedicated tenancy VPC.  __Important:__ The @host@ value cannot be used with this parameter. Use the @default@ or @dedicated@ values only. Default: @default@ 
 --
 -- * 'cvDryRun' - Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is @DryRunOperation@ . Otherwise, it is @UnauthorizedOperation@ .
 --
@@ -93,7 +93,7 @@ createVPC pCidrBlock_ =
 cvAmazonProvidedIPv6CidrBlock :: Lens' CreateVPC (Maybe Bool)
 cvAmazonProvidedIPv6CidrBlock = lens _cvAmazonProvidedIPv6CidrBlock (\ s a -> s{_cvAmazonProvidedIPv6CidrBlock = a});
 
--- | The tenancy options for instances launched into the VPC. For @default@ , instances are launched with shared tenancy by default. You can launch instances with any tenancy into a shared tenancy VPC. For @dedicated@ , instances are launched as dedicated tenancy instances by default. You can only launch instances with a tenancy of @dedicated@ or @host@ into a dedicated tenancy VPC.  __Important:__ The @host@ value cannot be used with this parameter. Use the @default@ or @dedicated@ values only. Default: @default@
+-- | The tenancy options for instances launched into the VPC. For @default@ , instances are launched with shared tenancy by default. You can launch instances with any tenancy into a shared tenancy VPC. For @dedicated@ , instances are launched as dedicated tenancy instances by default. You can only launch instances with a tenancy of @dedicated@ or @host@ into a dedicated tenancy VPC.  __Important:__ The @host@ value cannot be used with this parameter. Use the @default@ or @dedicated@ values only. Default: @default@ 
 cvInstanceTenancy :: Lens' CreateVPC (Maybe Tenancy)
 cvInstanceTenancy = lens _cvInstanceTenancy (\ s a -> s{_cvInstanceTenancy = a});
 
@@ -140,7 +140,7 @@ instance ToQuery CreateVPC where
 --
 -- /See:/ 'createVPCResponse' smart constructor.
 data CreateVPCResponse = CreateVPCResponse'
-  { _cvrsVPC            :: !(Maybe VPC)
+  { _cvrsVPC :: !(Maybe VPC)
   , _cvrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

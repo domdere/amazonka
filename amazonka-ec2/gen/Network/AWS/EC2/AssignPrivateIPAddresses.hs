@@ -52,10 +52,10 @@ import Network.AWS.Response
 --
 -- /See:/ 'assignPrivateIPAddresses' smart constructor.
 data AssignPrivateIPAddresses = AssignPrivateIPAddresses'
-  { _apiaPrivateIPAddresses             :: !(Maybe [Text])
-  , _apiaAllowReassignment              :: !(Maybe Bool)
+  { _apiaPrivateIPAddresses :: !(Maybe [Text])
+  , _apiaAllowReassignment :: !(Maybe Bool)
   , _apiaSecondaryPrivateIPAddressCount :: !(Maybe Int)
-  , _apiaNetworkInterfaceId             :: !Text
+  , _apiaNetworkInterfaceId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

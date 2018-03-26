@@ -53,9 +53,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'associateDHCPOptions' smart constructor.
 data AssociateDHCPOptions = AssociateDHCPOptions'
-  { _adoDryRun        :: !(Maybe Bool)
+  { _adoDryRun :: !(Maybe Bool)
   , _adoDHCPOptionsId :: !Text
-  , _adoVPCId         :: !Text
+  , _adoVPCId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

@@ -57,9 +57,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'purchaseReservedInstancesOffering' smart constructor.
 data PurchaseReservedInstancesOffering = PurchaseReservedInstancesOffering'
-  { _prioLimitPrice                  :: !(Maybe ReservedInstanceLimitPrice)
-  , _prioDryRun                      :: !(Maybe Bool)
-  , _prioInstanceCount               :: !Int
+  { _prioLimitPrice :: !(Maybe ReservedInstanceLimitPrice)
+  , _prioDryRun :: !(Maybe Bool)
+  , _prioInstanceCount :: !Int
   , _prioReservedInstancesOfferingId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -150,7 +150,7 @@ instance ToQuery PurchaseReservedInstancesOffering
 -- /See:/ 'purchaseReservedInstancesOfferingResponse' smart constructor.
 data PurchaseReservedInstancesOfferingResponse = PurchaseReservedInstancesOfferingResponse'
   { _priorsReservedInstancesId :: !(Maybe Text)
-  , _priorsResponseStatus      :: !Int
+  , _priorsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

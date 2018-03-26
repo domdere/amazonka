@@ -55,9 +55,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'updateSecurityGroupRuleDescriptionsIngress' smart constructor.
 data UpdateSecurityGroupRuleDescriptionsIngress = UpdateSecurityGroupRuleDescriptionsIngress'
-  { _usgrdiGroupId       :: !(Maybe Text)
-  , _usgrdiGroupName     :: !(Maybe Text)
-  , _usgrdiDryRun        :: !(Maybe Bool)
+  { _usgrdiGroupId :: !(Maybe Text)
+  , _usgrdiGroupName :: !(Maybe Text)
+  , _usgrdiDryRun :: !(Maybe Bool)
   , _usgrdiIPPermissions :: ![IPPermission]
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -72,7 +72,7 @@ data UpdateSecurityGroupRuleDescriptionsIngress = UpdateSecurityGroupRuleDescrip
 --
 -- * 'usgrdiDryRun' - Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is @DryRunOperation@ . Otherwise, it is @UnauthorizedOperation@ .
 --
--- * 'usgrdiIPPermissions' - The IP permissions for the security group rule.
+-- * 'usgrdiIPPermissions' - The IP permissions for the security group rule. 
 updateSecurityGroupRuleDescriptionsIngress
     :: UpdateSecurityGroupRuleDescriptionsIngress
 updateSecurityGroupRuleDescriptionsIngress =
@@ -96,7 +96,7 @@ usgrdiGroupName = lens _usgrdiGroupName (\ s a -> s{_usgrdiGroupName = a});
 usgrdiDryRun :: Lens' UpdateSecurityGroupRuleDescriptionsIngress (Maybe Bool)
 usgrdiDryRun = lens _usgrdiDryRun (\ s a -> s{_usgrdiDryRun = a});
 
--- | The IP permissions for the security group rule.
+-- | The IP permissions for the security group rule. 
 usgrdiIPPermissions :: Lens' UpdateSecurityGroupRuleDescriptionsIngress [IPPermission]
 usgrdiIPPermissions = lens _usgrdiIPPermissions (\ s a -> s{_usgrdiIPPermissions = a}) . _Coerce;
 
@@ -151,7 +151,7 @@ instance ToQuery
 --
 -- /See:/ 'updateSecurityGroupRuleDescriptionsIngressResponse' smart constructor.
 data UpdateSecurityGroupRuleDescriptionsIngressResponse = UpdateSecurityGroupRuleDescriptionsIngressResponse'
-  { _usgrdirsReturn         :: !(Maybe Bool)
+  { _usgrdirsReturn :: !(Maybe Bool)
   , _usgrdirsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

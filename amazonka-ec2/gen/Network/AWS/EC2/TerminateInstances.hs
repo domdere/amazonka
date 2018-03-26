@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Shuts down one or more instances. This operation is idempotent; if you terminate an instance more than once, each call succeeds.
+-- Shuts down one or more instances. This operation is idempotent; if you terminate an instance more than once, each call succeeds. 
 --
 --
 -- If you specify multiple instances and the request fails (for example, because of a single incorrect instance ID), none of the instances are terminated.
@@ -61,7 +61,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'terminateInstances' smart constructor.
 data TerminateInstances = TerminateInstances'
-  { _tiDryRun      :: !(Maybe Bool)
+  { _tiDryRun :: !(Maybe Bool)
   , _tiInstanceIds :: ![Text]
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -124,7 +124,7 @@ instance ToQuery TerminateInstances where
 -- /See:/ 'terminateInstancesResponse' smart constructor.
 data TerminateInstancesResponse = TerminateInstancesResponse'
   { _tirsTerminatingInstances :: !(Maybe [InstanceStateChange])
-  , _tirsResponseStatus       :: !Int
+  , _tirsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

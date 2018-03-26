@@ -48,7 +48,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'deleteVPNGateway' smart constructor.
 data DeleteVPNGateway = DeleteVPNGateway'
-  { _dvgDryRun       :: !(Maybe Bool)
+  { _dvgDryRun :: !(Maybe Bool)
   , _dvgVPNGatewayId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

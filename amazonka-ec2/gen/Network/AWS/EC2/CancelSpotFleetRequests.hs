@@ -55,9 +55,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'cancelSpotFleetRequests' smart constructor.
 data CancelSpotFleetRequests = CancelSpotFleetRequests'
-  { _csfrDryRun              :: !(Maybe Bool)
+  { _csfrDryRun :: !(Maybe Bool)
   , _csfrSpotFleetRequestIds :: ![Text]
-  , _csfrTerminateInstances  :: !Bool
+  , _csfrTerminateInstances :: !Bool
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

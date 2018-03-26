@@ -110,8 +110,8 @@ instance ToQuery ReleaseHosts where
 --
 -- /See:/ 'releaseHostsResponse' smart constructor.
 data ReleaseHostsResponse = ReleaseHostsResponse'
-  { _rhrsUnsuccessful   :: !(Maybe [UnsuccessfulItem])
-  , _rhrsSuccessful     :: !(Maybe [Text])
+  { _rhrsUnsuccessful :: !(Maybe [UnsuccessfulItem])
+  , _rhrsSuccessful :: !(Maybe [Text])
   , _rhrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

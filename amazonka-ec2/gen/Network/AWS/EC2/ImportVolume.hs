@@ -56,11 +56,11 @@ import Network.AWS.Response
 --
 -- /See:/ 'importVolume' smart constructor.
 data ImportVolume = ImportVolume'
-  { _ivDescription      :: !(Maybe Text)
-  , _ivDryRun           :: !(Maybe Bool)
+  { _ivDescription :: !(Maybe Text)
+  , _ivDryRun :: !(Maybe Bool)
   , _ivAvailabilityZone :: !Text
-  , _ivImage            :: !DiskImageDetail
-  , _ivVolume           :: !VolumeDetail
+  , _ivImage :: !DiskImageDetail
+  , _ivVolume :: !VolumeDetail
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

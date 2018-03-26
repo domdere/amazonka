@@ -21,9 +21,9 @@
 -- Reports the current modification status of EBS volumes.
 --
 --
--- Current-generation EBS volumes support modification of attributes including type, size, and (for @io1@ volumes) IOPS provisioning while either attached to or detached from an instance. Following an action from the API or the console to modify a volume, the status of the modification may be @modifying@ , @optimizing@ , @completed@ , or @failed@ . If a volume has never been modified, then certain elements of the returned @VolumeModification@ objects are null.
+-- Current-generation EBS volumes support modification of attributes including type, size, and (for @io1@ volumes) IOPS provisioning while either attached to or detached from an instance. Following an action from the API or the console to modify a volume, the status of the modification may be @modifying@ , @optimizing@ , @completed@ , or @failed@ . If a volume has never been modified, then certain elements of the returned @VolumeModification@ objects are null. 
 --
--- You can also use CloudWatch Events to check the status of a modification to an EBS volume. For information about CloudWatch Events, see the <http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ Amazon CloudWatch Events User Guide> . For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#monitoring_mods Monitoring Volume Modifications"> .
+-- You can also use CloudWatch Events to check the status of a modification to an EBS volume. For information about CloudWatch Events, see the <http://docs.aws.amazon.com/AmazonCloudWatch/latest/events/ Amazon CloudWatch Events User Guide> . For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-expand-volume.html#monitoring_mods Monitoring Volume Modifications"> . 
 --
 module Network.AWS.EC2.DescribeVolumesModifications
     (
@@ -55,10 +55,10 @@ import Network.AWS.Response
 
 -- | /See:/ 'describeVolumesModifications' smart constructor.
 data DescribeVolumesModifications = DescribeVolumesModifications'
-  { _dvmFilters    :: !(Maybe [Filter])
-  , _dvmVolumeIds  :: !(Maybe [Text])
-  , _dvmNextToken  :: !(Maybe Text)
-  , _dvmDryRun     :: !(Maybe Bool)
+  { _dvmFilters :: !(Maybe [Filter])
+  , _dvmVolumeIds :: !(Maybe [Text])
+  , _dvmNextToken :: !(Maybe Text)
+  , _dvmDryRun :: !(Maybe Bool)
   , _dvmMaxResults :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -67,7 +67,7 @@ data DescribeVolumesModifications = DescribeVolumesModifications'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'dvmFilters' - One or more filters. Supported filters: @volume-id@ , @modification-state@ , @target-size@ , @target-iops@ , @target-volume-type@ , @original-size@ , @original-iops@ , @original-volume-type@ , @start-time@ .
+-- * 'dvmFilters' - One or more filters. Supported filters: @volume-id@ , @modification-state@ , @target-size@ , @target-iops@ , @target-volume-type@ , @original-size@ , @original-iops@ , @original-volume-type@ , @start-time@ . 
 --
 -- * 'dvmVolumeIds' - One or more volume IDs for which in-progress modifications will be described.
 --
@@ -88,7 +88,7 @@ describeVolumesModifications =
   }
 
 
--- | One or more filters. Supported filters: @volume-id@ , @modification-state@ , @target-size@ , @target-iops@ , @target-volume-type@ , @original-size@ , @original-iops@ , @original-volume-type@ , @start-time@ .
+-- | One or more filters. Supported filters: @volume-id@ , @modification-state@ , @target-size@ , @target-iops@ , @target-volume-type@ , @original-size@ , @original-iops@ , @original-volume-type@ , @start-time@ . 
 dvmFilters :: Lens' DescribeVolumesModifications [Filter]
 dvmFilters = lens _dvmFilters (\ s a -> s{_dvmFilters = a}) . _Default . _Coerce;
 
@@ -146,8 +146,8 @@ instance ToQuery DescribeVolumesModifications where
 -- | /See:/ 'describeVolumesModificationsResponse' smart constructor.
 data DescribeVolumesModificationsResponse = DescribeVolumesModificationsResponse'
   { _dvmrsVolumesModifications :: !(Maybe [VolumeModification])
-  , _dvmrsNextToken            :: !(Maybe Text)
-  , _dvmrsResponseStatus       :: !Int
+  , _dvmrsNextToken :: !(Maybe Text)
+  , _dvmrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -157,7 +157,7 @@ data DescribeVolumesModificationsResponse = DescribeVolumesModificationsResponse
 --
 -- * 'dvmrsVolumesModifications' - A list of returned 'VolumeModification' objects.
 --
--- * 'dvmrsNextToken' - Token for pagination, null if there are no more results
+-- * 'dvmrsNextToken' - Token for pagination, null if there are no more results 
 --
 -- * 'dvmrsResponseStatus' - -- | The response status code.
 describeVolumesModificationsResponse
@@ -175,7 +175,7 @@ describeVolumesModificationsResponse pResponseStatus_ =
 dvmrsVolumesModifications :: Lens' DescribeVolumesModificationsResponse [VolumeModification]
 dvmrsVolumesModifications = lens _dvmrsVolumesModifications (\ s a -> s{_dvmrsVolumesModifications = a}) . _Default . _Coerce;
 
--- | Token for pagination, null if there are no more results
+-- | Token for pagination, null if there are no more results 
 dvmrsNextToken :: Lens' DescribeVolumesModificationsResponse (Maybe Text)
 dvmrsNextToken = lens _dvmrsNextToken (\ s a -> s{_dvmrsNextToken = a});
 

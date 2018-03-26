@@ -64,15 +64,15 @@ import Network.AWS.Response
 --
 -- /See:/ 'describeSpotPriceHistory' smart constructor.
 data DescribeSpotPriceHistory = DescribeSpotPriceHistory'
-  { _dsphInstanceTypes       :: !(Maybe [InstanceType])
-  , _dsphStartTime           :: !(Maybe ISO8601)
-  , _dsphFilters             :: !(Maybe [Filter])
-  , _dsphNextToken           :: !(Maybe Text)
-  , _dsphAvailabilityZone    :: !(Maybe Text)
-  , _dsphEndTime             :: !(Maybe ISO8601)
+  { _dsphInstanceTypes :: !(Maybe [InstanceType])
+  , _dsphStartTime :: !(Maybe ISO8601)
+  , _dsphFilters :: !(Maybe [Filter])
+  , _dsphNextToken :: !(Maybe Text)
+  , _dsphAvailabilityZone :: !(Maybe Text)
+  , _dsphEndTime :: !(Maybe ISO8601)
   , _dsphProductDescriptions :: !(Maybe [Text])
-  , _dsphDryRun              :: !(Maybe Bool)
-  , _dsphMaxResults          :: !(Maybe Int)
+  , _dsphDryRun :: !(Maybe Bool)
+  , _dsphMaxResults :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -204,9 +204,9 @@ instance ToQuery DescribeSpotPriceHistory where
 --
 -- /See:/ 'describeSpotPriceHistoryResponse' smart constructor.
 data DescribeSpotPriceHistoryResponse = DescribeSpotPriceHistoryResponse'
-  { _dsphrsNextToken        :: !(Maybe Text)
+  { _dsphrsNextToken :: !(Maybe Text)
   , _dsphrsSpotPriceHistory :: !(Maybe [SpotPrice])
-  , _dsphrsResponseStatus   :: !Int
+  , _dsphrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

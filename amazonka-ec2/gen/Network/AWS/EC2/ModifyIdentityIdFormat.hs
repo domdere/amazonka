@@ -18,12 +18,12 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Modifies the ID format of a resource for a specified IAM user, IAM role, or the root user for an account; or all IAM users, IAM roles, and the root user for an account. You can specify that resources should receive longer IDs (17-character IDs) when they are created.
+-- Modifies the ID format of a resource for a specified IAM user, IAM role, or the root user for an account; or all IAM users, IAM roles, and the root user for an account. You can specify that resources should receive longer IDs (17-character IDs) when they are created. 
 --
 --
--- The following resource types support longer IDs: @instance@ | @reservation@ | @snapshot@ | @volume@ . For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resource-ids.html Resource IDs> in the /Amazon Elastic Compute Cloud User Guide/ .
+-- The following resource types support longer IDs: @instance@ | @reservation@ | @snapshot@ | @volume@ . For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resource-ids.html Resource IDs> in the /Amazon Elastic Compute Cloud User Guide/ . 
 --
--- This setting applies to the principal specified in the request; it does not apply to the principal that makes the request.
+-- This setting applies to the principal specified in the request; it does not apply to the principal that makes the request. 
 --
 -- Resources created with longer IDs are visible to all IAM roles and users, regardless of these settings and provided that they have permission to use the relevant @Describe@ command for the resource type.
 --
@@ -56,8 +56,8 @@ import Network.AWS.Response
 -- /See:/ 'modifyIdentityIdFormat' smart constructor.
 data ModifyIdentityIdFormat = ModifyIdentityIdFormat'
   { _miifPrincipalARN :: !Text
-  , _miifResource     :: !Text
-  , _miifUseLongIds   :: !Bool
+  , _miifResource :: !Text
+  , _miifUseLongIds :: !Bool
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -67,7 +67,7 @@ data ModifyIdentityIdFormat = ModifyIdentityIdFormat'
 --
 -- * 'miifPrincipalARN' - The ARN of the principal, which can be an IAM user, IAM role, or the root user. Specify @all@ to modify the ID format for all IAM users, IAM roles, and the root user of the account.
 --
--- * 'miifResource' - The type of resource: @instance@ | @reservation@ | @snapshot@ | @volume@
+-- * 'miifResource' - The type of resource: @instance@ | @reservation@ | @snapshot@ | @volume@ 
 --
 -- * 'miifUseLongIds' - Indicates whether the resource should use longer IDs (17-character IDs)
 modifyIdentityIdFormat
@@ -87,7 +87,7 @@ modifyIdentityIdFormat pPrincipalARN_ pResource_ pUseLongIds_ =
 miifPrincipalARN :: Lens' ModifyIdentityIdFormat Text
 miifPrincipalARN = lens _miifPrincipalARN (\ s a -> s{_miifPrincipalARN = a});
 
--- | The type of resource: @instance@ | @reservation@ | @snapshot@ | @volume@
+-- | The type of resource: @instance@ | @reservation@ | @snapshot@ | @volume@ 
 miifResource :: Lens' ModifyIdentityIdFormat Text
 miifResource = lens _miifResource (\ s a -> s{_miifResource = a});
 

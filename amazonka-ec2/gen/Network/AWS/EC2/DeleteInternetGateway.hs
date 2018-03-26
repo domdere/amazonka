@@ -48,7 +48,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'deleteInternetGateway' smart constructor.
 data DeleteInternetGateway = DeleteInternetGateway'
-  { _digiDryRun            :: !(Maybe Bool)
+  { _digiDryRun :: !(Maybe Bool)
   , _digiInternetGatewayId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

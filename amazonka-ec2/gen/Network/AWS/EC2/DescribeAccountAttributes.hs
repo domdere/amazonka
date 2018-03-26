@@ -29,7 +29,7 @@
 --
 --     * @vpc-max-security-groups-per-interface@ : The maximum number of security groups that you can assign to a network interface.
 --
---     * @max-elastic-ips@ : The maximum number of Elastic IP addresses that you can allocate for use with EC2-Classic.
+--     * @max-elastic-ips@ : The maximum number of Elastic IP addresses that you can allocate for use with EC2-Classic. 
 --
 --     * @vpc-max-elastic-ips@ : The maximum number of Elastic IP addresses that you can allocate for use with EC2-VPC.
 --
@@ -66,7 +66,7 @@ import Network.AWS.Response
 -- /See:/ 'describeAccountAttributes' smart constructor.
 data DescribeAccountAttributes = DescribeAccountAttributes'
   { _daaAttributeNames :: !(Maybe [AccountAttributeName])
-  , _daaDryRun         :: !(Maybe Bool)
+  , _daaDryRun :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -131,7 +131,7 @@ instance ToQuery DescribeAccountAttributes where
 -- /See:/ 'describeAccountAttributesResponse' smart constructor.
 data DescribeAccountAttributesResponse = DescribeAccountAttributesResponse'
   { _daarsAccountAttributes :: !(Maybe [AccountAttribute])
-  , _daarsResponseStatus    :: !Int
+  , _daarsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

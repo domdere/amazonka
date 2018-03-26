@@ -54,11 +54,11 @@ import Network.AWS.Response
 --
 -- /See:/ 'allocateHosts' smart constructor.
 data AllocateHosts = AllocateHosts'
-  { _ahClientToken      :: !(Maybe Text)
-  , _ahAutoPlacement    :: !(Maybe AutoPlacement)
+  { _ahClientToken :: !(Maybe Text)
+  , _ahAutoPlacement :: !(Maybe AutoPlacement)
   , _ahAvailabilityZone :: !Text
-  , _ahInstanceType     :: !Text
-  , _ahQuantity         :: !Int
+  , _ahInstanceType :: !Text
+  , _ahQuantity :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -66,7 +66,7 @@ data AllocateHosts = AllocateHosts'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'ahClientToken' - Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html How to Ensure Idempotency> in the /Amazon Elastic Compute Cloud User Guide/ .
+-- * 'ahClientToken' - Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html How to Ensure Idempotency> in the /Amazon Elastic Compute Cloud User Guide/ . 
 --
 -- * 'ahAutoPlacement' - This is enabled by default. This property allows instances to be automatically placed onto available Dedicated Hosts, when you are launching instances without specifying a host ID. Default: Enabled
 --
@@ -90,7 +90,7 @@ allocateHosts pAvailabilityZone_ pInstanceType_ pQuantity_ =
   }
 
 
--- | Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html How to Ensure Idempotency> in the /Amazon Elastic Compute Cloud User Guide/ .
+-- | Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html How to Ensure Idempotency> in the /Amazon Elastic Compute Cloud User Guide/ . 
 ahClientToken :: Lens' AllocateHosts (Maybe Text)
 ahClientToken = lens _ahClientToken (\ s a -> s{_ahClientToken = a});
 
@@ -148,7 +148,7 @@ instance ToQuery AllocateHosts where
 --
 -- /See:/ 'allocateHostsResponse' smart constructor.
 data AllocateHostsResponse = AllocateHostsResponse'
-  { _ahrsHostIds        :: !(Maybe [Text])
+  { _ahrsHostIds :: !(Maybe [Text])
   , _ahrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

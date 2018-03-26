@@ -53,7 +53,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'cancelSpotInstanceRequests' smart constructor.
 data CancelSpotInstanceRequests = CancelSpotInstanceRequests'
-  { _csirDryRun                 :: !(Maybe Bool)
+  { _csirDryRun :: !(Maybe Bool)
   , _csirSpotInstanceRequestIds :: ![Text]
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

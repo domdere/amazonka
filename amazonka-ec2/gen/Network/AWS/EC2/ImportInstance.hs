@@ -57,10 +57,10 @@ import Network.AWS.Response
 -- /See:/ 'importInstance' smart constructor.
 data ImportInstance = ImportInstance'
   { _iiLaunchSpecification :: !(Maybe ImportInstanceLaunchSpecification)
-  , _iiDiskImages          :: !(Maybe [DiskImage])
-  , _iiDescription         :: !(Maybe Text)
-  , _iiDryRun              :: !(Maybe Bool)
-  , _iiPlatform            :: !PlatformValues
+  , _iiDiskImages :: !(Maybe [DiskImage])
+  , _iiDescription :: !(Maybe Text)
+  , _iiDryRun :: !(Maybe Bool)
+  , _iiPlatform :: !PlatformValues
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

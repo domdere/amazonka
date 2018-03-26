@@ -77,10 +77,10 @@ import Network.AWS.Response
 --
 -- /See:/ 'attachVolume' smart constructor.
 data AttachVolume = AttachVolume'
-  { _avDryRun     :: !(Maybe Bool)
-  , _avDevice     :: !Text
+  { _avDryRun :: !(Maybe Bool)
+  , _avDevice :: !Text
   , _avInstanceId :: !Text
-  , _avVolumeId   :: !Text
+  , _avVolumeId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

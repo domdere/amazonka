@@ -48,7 +48,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'enableVGWRoutePropagation' smart constructor.
 data EnableVGWRoutePropagation = EnableVGWRoutePropagation'
-  { _evrpGatewayId    :: !Text
+  { _evrpGatewayId :: !Text
   , _evrpRouteTableId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

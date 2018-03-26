@@ -55,10 +55,10 @@ import Network.AWS.Response
 -- | /See:/ 'purchaseHostReservation' smart constructor.
 data PurchaseHostReservation = PurchaseHostReservation'
   { _phrCurrencyCode :: !(Maybe CurrencyCodeValues)
-  , _phrClientToken  :: !(Maybe Text)
-  , _phrLimitPrice   :: !(Maybe Text)
-  , _phrHostIdSet    :: ![Text]
-  , _phrOfferingId   :: !Text
+  , _phrClientToken :: !(Maybe Text)
+  , _phrLimitPrice :: !(Maybe Text)
+  , _phrHostIdSet :: ![Text]
+  , _phrOfferingId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -148,12 +148,12 @@ instance ToQuery PurchaseHostReservation where
 
 -- | /See:/ 'purchaseHostReservationResponse' smart constructor.
 data PurchaseHostReservationResponse = PurchaseHostReservationResponse'
-  { _phrrsCurrencyCode      :: !(Maybe CurrencyCodeValues)
-  , _phrrsClientToken       :: !(Maybe Text)
-  , _phrrsTotalHourlyPrice  :: !(Maybe Text)
+  { _phrrsCurrencyCode :: !(Maybe CurrencyCodeValues)
+  , _phrrsClientToken :: !(Maybe Text)
+  , _phrrsTotalHourlyPrice :: !(Maybe Text)
   , _phrrsTotalUpfrontPrice :: !(Maybe Text)
-  , _phrrsPurchase          :: !(Maybe [Purchase])
-  , _phrrsResponseStatus    :: !Int
+  , _phrrsPurchase :: !(Maybe [Purchase])
+  , _phrrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -163,7 +163,7 @@ data PurchaseHostReservationResponse = PurchaseHostReservationResponse'
 --
 -- * 'phrrsCurrencyCode' - The currency in which the @totalUpfrontPrice@ and @totalHourlyPrice@ amounts are specified. At this time, the only supported currency is @USD@ .
 --
--- * 'phrrsClientToken' - Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html How to Ensure Idempotency> in the /Amazon Elastic Compute Cloud User Guide/
+-- * 'phrrsClientToken' - Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html How to Ensure Idempotency> in the /Amazon Elastic Compute Cloud User Guide/ 
 --
 -- * 'phrrsTotalHourlyPrice' - The total hourly price of the reservation calculated per hour.
 --
@@ -190,7 +190,7 @@ purchaseHostReservationResponse pResponseStatus_ =
 phrrsCurrencyCode :: Lens' PurchaseHostReservationResponse (Maybe CurrencyCodeValues)
 phrrsCurrencyCode = lens _phrrsCurrencyCode (\ s a -> s{_phrrsCurrencyCode = a});
 
--- | Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html How to Ensure Idempotency> in the /Amazon Elastic Compute Cloud User Guide/
+-- | Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html How to Ensure Idempotency> in the /Amazon Elastic Compute Cloud User Guide/ 
 phrrsClientToken :: Lens' PurchaseHostReservationResponse (Maybe Text)
 phrrsClientToken = lens _phrrsClientToken (\ s a -> s{_phrrsClientToken = a});
 

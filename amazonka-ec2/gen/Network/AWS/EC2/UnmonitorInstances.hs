@@ -51,7 +51,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'unmonitorInstances' smart constructor.
 data UnmonitorInstances = UnmonitorInstances'
-  { _uiDryRun      :: !(Maybe Bool)
+  { _uiDryRun :: !(Maybe Bool)
   , _uiInstanceIds :: ![Text]
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -114,7 +114,7 @@ instance ToQuery UnmonitorInstances where
 -- /See:/ 'unmonitorInstancesResponse' smart constructor.
 data UnmonitorInstancesResponse = UnmonitorInstancesResponse'
   { _uirsInstanceMonitorings :: !(Maybe [InstanceMonitoring])
-  , _uirsResponseStatus      :: !Int
+  , _uirsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

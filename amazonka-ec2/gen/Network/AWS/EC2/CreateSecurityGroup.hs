@@ -65,10 +65,10 @@ import Network.AWS.Response
 --
 -- /See:/ 'createSecurityGroup' smart constructor.
 data CreateSecurityGroup = CreateSecurityGroup'
-  { _csgVPCId       :: !(Maybe Text)
-  , _csgDryRun      :: !(Maybe Bool)
+  { _csgVPCId :: !(Maybe Text)
+  , _csgDryRun :: !(Maybe Bool)
   , _csgDescription :: !Text
-  , _csgGroupName   :: !Text
+  , _csgGroupName :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -148,7 +148,7 @@ instance ToQuery CreateSecurityGroup where
 -- /See:/ 'createSecurityGroupResponse' smart constructor.
 data CreateSecurityGroupResponse = CreateSecurityGroupResponse'
   { _csgrsResponseStatus :: !Int
-  , _csgrsGroupId        :: !Text
+  , _csgrsGroupId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

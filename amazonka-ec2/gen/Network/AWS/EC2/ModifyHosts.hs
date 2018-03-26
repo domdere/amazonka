@@ -53,7 +53,7 @@ import Network.AWS.Response
 -- /See:/ 'modifyHosts' smart constructor.
 data ModifyHosts = ModifyHosts'
   { _mhAutoPlacement :: !AutoPlacement
-  , _mhHostIds       :: ![Text]
+  , _mhHostIds :: ![Text]
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -117,8 +117,8 @@ instance ToQuery ModifyHosts where
 --
 -- /See:/ 'modifyHostsResponse' smart constructor.
 data ModifyHostsResponse = ModifyHostsResponse'
-  { _mhrsUnsuccessful   :: !(Maybe [UnsuccessfulItem])
-  , _mhrsSuccessful     :: !(Maybe [Text])
+  { _mhrsUnsuccessful :: !(Maybe [UnsuccessfulItem])
+  , _mhrsSuccessful :: !(Maybe [Text])
   , _mhrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

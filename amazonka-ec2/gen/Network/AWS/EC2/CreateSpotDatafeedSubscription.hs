@@ -127,7 +127,7 @@ instance ToQuery CreateSpotDatafeedSubscription where
 -- /See:/ 'createSpotDatafeedSubscriptionResponse' smart constructor.
 data CreateSpotDatafeedSubscriptionResponse = CreateSpotDatafeedSubscriptionResponse'
   { _csdsrsSpotDatafeedSubscription :: !(Maybe SpotDatafeedSubscription)
-  , _csdsrsResponseStatus           :: !Int
+  , _csdsrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

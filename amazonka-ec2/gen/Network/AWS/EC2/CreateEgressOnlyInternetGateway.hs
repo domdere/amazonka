@@ -50,8 +50,8 @@ import Network.AWS.Response
 -- | /See:/ 'createEgressOnlyInternetGateway' smart constructor.
 data CreateEgressOnlyInternetGateway = CreateEgressOnlyInternetGateway'
   { _ceoigClientToken :: !(Maybe Text)
-  , _ceoigDryRun      :: !(Maybe Bool)
-  , _ceoigVPCId       :: !Text
+  , _ceoigDryRun :: !(Maybe Bool)
+  , _ceoigVPCId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -121,9 +121,9 @@ instance ToQuery CreateEgressOnlyInternetGateway
 
 -- | /See:/ 'createEgressOnlyInternetGatewayResponse' smart constructor.
 data CreateEgressOnlyInternetGatewayResponse = CreateEgressOnlyInternetGatewayResponse'
-  { _ceoigrsClientToken               :: !(Maybe Text)
+  { _ceoigrsClientToken :: !(Maybe Text)
   , _ceoigrsEgressOnlyInternetGateway :: !(Maybe EgressOnlyInternetGateway)
-  , _ceoigrsResponseStatus            :: !Int
+  , _ceoigrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

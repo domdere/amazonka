@@ -48,7 +48,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'deleteDHCPOptions' smart constructor.
 data DeleteDHCPOptions = DeleteDHCPOptions'
-  { _ddhcpoDryRun        :: !(Maybe Bool)
+  { _ddhcpoDryRun :: !(Maybe Bool)
   , _ddhcpoDHCPOptionsId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

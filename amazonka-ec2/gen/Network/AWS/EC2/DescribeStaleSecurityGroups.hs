@@ -50,10 +50,10 @@ import Network.AWS.Response
 
 -- | /See:/ 'describeStaleSecurityGroups' smart constructor.
 data DescribeStaleSecurityGroups = DescribeStaleSecurityGroups'
-  { _dssgNextToken  :: !(Maybe Text)
-  , _dssgDryRun     :: !(Maybe Bool)
+  { _dssgNextToken :: !(Maybe Text)
+  , _dssgDryRun :: !(Maybe Bool)
   , _dssgMaxResults :: !(Maybe Nat)
-  , _dssgVPCId      :: !Text
+  , _dssgVPCId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -133,8 +133,8 @@ instance ToQuery DescribeStaleSecurityGroups where
 -- | /See:/ 'describeStaleSecurityGroupsResponse' smart constructor.
 data DescribeStaleSecurityGroupsResponse = DescribeStaleSecurityGroupsResponse'
   { _dssgrsStaleSecurityGroupSet :: !(Maybe [StaleSecurityGroup])
-  , _dssgrsNextToken             :: !(Maybe Text)
-  , _dssgrsResponseStatus        :: !Int
+  , _dssgrsNextToken :: !(Maybe Text)
+  , _dssgrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

@@ -21,7 +21,7 @@
 -- Copies a point-in-time snapshot of an EBS volume and stores it in Amazon S3. You can copy the snapshot within the same region or from one region to another. You can use the snapshot to create EBS volumes or Amazon Machine Images (AMIs). The snapshot is copied to the regional endpoint that you send the HTTP request to.
 --
 --
--- Copies of encrypted EBS snapshots remain encrypted. Copies of unencrypted snapshots remain unencrypted, unless the @Encrypted@ flag is specified during the snapshot copy operation. By default, encrypted snapshot copies use the default AWS Key Management Service (AWS KMS) customer master key (CMK); however, you can specify a non-default CMK with the @KmsKeyId@ parameter.
+-- Copies of encrypted EBS snapshots remain encrypted. Copies of unencrypted snapshots remain unencrypted, unless the @Encrypted@ flag is specified during the snapshot copy operation. By default, encrypted snapshot copies use the default AWS Key Management Service (AWS KMS) customer master key (CMK); however, you can specify a non-default CMK with the @KmsKeyId@ parameter. 
 --
 -- For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-copy-snapshot.html Copying an Amazon EBS Snapshot> in the /Amazon Elastic Compute Cloud User Guide/ .
 --
@@ -61,14 +61,14 @@ import Network.AWS.Response
 --
 -- /See:/ 'copySnapshot' smart constructor.
 data CopySnapshot = CopySnapshot'
-  { _csPresignedURL      :: !(Maybe Text)
-  , _csEncrypted         :: !(Maybe Bool)
+  { _csPresignedURL :: !(Maybe Text)
+  , _csEncrypted :: !(Maybe Bool)
   , _csDestinationRegion :: !(Maybe Text)
-  , _csKMSKeyId          :: !(Maybe Text)
-  , _csDescription       :: !(Maybe Text)
-  , _csDryRun            :: !(Maybe Bool)
-  , _csSourceRegion      :: !Text
-  , _csSourceSnapshotId  :: !Text
+  , _csKMSKeyId :: !(Maybe Text)
+  , _csDescription :: !(Maybe Text)
+  , _csDryRun :: !(Maybe Bool)
+  , _csSourceRegion :: !Text
+  , _csSourceSnapshotId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -179,7 +179,7 @@ instance ToQuery CopySnapshot where
 --
 -- /See:/ 'copySnapshotResponse' smart constructor.
 data CopySnapshotResponse = CopySnapshotResponse'
-  { _csrsSnapshotId     :: !(Maybe Text)
+  { _csrsSnapshotId :: !(Maybe Text)
   , _csrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

@@ -52,7 +52,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'rebootInstances' smart constructor.
 data RebootInstances = RebootInstances'
-  { _rebDryRun      :: !(Maybe Bool)
+  { _rebDryRun :: !(Maybe Bool)
   , _rebInstanceIds :: ![Text]
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

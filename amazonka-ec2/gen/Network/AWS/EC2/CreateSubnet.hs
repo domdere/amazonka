@@ -23,7 +23,7 @@
 --
 -- When you create each subnet, you provide the VPC ID and the IPv4 CIDR block you want for the subnet. After you create a subnet, you can't change its CIDR block. The size of the subnet's IPv4 CIDR block can be the same as a VPC's IPv4 CIDR block, or a subset of a VPC's IPv4 CIDR block. If you create more than one subnet in a VPC, the subnets' CIDR blocks must not overlap. The smallest IPv4 subnet (and VPC) you can create uses a /28 netmask (16 IPv4 addresses), and the largest uses a /16 netmask (65,536 IPv4 addresses).
 --
--- If you've associated an IPv6 CIDR block with your VPC, you can create a subnet with an IPv6 CIDR block that uses a /64 prefix length.
+-- If you've associated an IPv6 CIDR block with your VPC, you can create a subnet with an IPv6 CIDR block that uses a /64 prefix length. 
 --
 -- /Important:/ AWS reserves both the first four and the last IPv4 address in each subnet's CIDR block. They're not available for use.
 --
@@ -66,11 +66,11 @@ import Network.AWS.Response
 --
 -- /See:/ 'createSubnet' smart constructor.
 data CreateSubnet = CreateSubnet'
-  { _cssIPv6CidrBlock    :: !(Maybe Text)
+  { _cssIPv6CidrBlock :: !(Maybe Text)
   , _cssAvailabilityZone :: !(Maybe Text)
-  , _cssDryRun           :: !(Maybe Bool)
-  , _cssCidrBlock        :: !Text
-  , _cssVPCId            :: !Text
+  , _cssDryRun :: !(Maybe Bool)
+  , _cssCidrBlock :: !Text
+  , _cssVPCId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -156,7 +156,7 @@ instance ToQuery CreateSubnet where
 --
 -- /See:/ 'createSubnetResponse' smart constructor.
 data CreateSubnetResponse = CreateSubnetResponse'
-  { _crersSubnet         :: !(Maybe Subnet)
+  { _crersSubnet :: !(Maybe Subnet)
   , _crersResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

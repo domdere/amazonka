@@ -54,9 +54,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'describeVPNGateways' smart constructor.
 data DescribeVPNGateways = DescribeVPNGateways'
-  { _dvgsFilters       :: !(Maybe [Filter])
+  { _dvgsFilters :: !(Maybe [Filter])
   , _dvgsVPNGatewayIds :: !(Maybe [Text])
-  , _dvgsDryRun        :: !(Maybe Bool)
+  , _dvgsDryRun :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -126,7 +126,7 @@ instance ToQuery DescribeVPNGateways where
 --
 -- /See:/ 'describeVPNGatewaysResponse' smart constructor.
 data DescribeVPNGatewaysResponse = DescribeVPNGatewaysResponse'
-  { _dvgrsVPNGateways    :: !(Maybe [VPNGateway])
+  { _dvgrsVPNGateways :: !(Maybe [VPNGateway])
   , _dvgrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

@@ -102,7 +102,7 @@ instance ToQuery DeleteNatGateway where
 --
 -- /See:/ 'deleteNatGatewayResponse' smart constructor.
 data DeleteNatGatewayResponse = DeleteNatGatewayResponse'
-  { _dngnrsNatGatewayId   :: !(Maybe Text)
+  { _dngnrsNatGatewayId :: !(Maybe Text)
   , _dngnrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

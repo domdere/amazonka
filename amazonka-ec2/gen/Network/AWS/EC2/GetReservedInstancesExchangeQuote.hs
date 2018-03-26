@@ -61,8 +61,8 @@ import Network.AWS.Response
 -- /See:/ 'getReservedInstancesExchangeQuote' smart constructor.
 data GetReservedInstancesExchangeQuote = GetReservedInstancesExchangeQuote'
   { _grieqTargetConfigurations :: !(Maybe [TargetConfigurationRequest])
-  , _grieqDryRun               :: !(Maybe Bool)
-  , _grieqReservedInstanceIds  :: ![Text]
+  , _grieqDryRun :: !(Maybe Bool)
+  , _grieqReservedInstanceIds :: ![Text]
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

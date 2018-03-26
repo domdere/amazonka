@@ -49,9 +49,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'detachInternetGateway' smart constructor.
 data DetachInternetGateway = DetachInternetGateway'
-  { _digDryRun            :: !(Maybe Bool)
+  { _digDryRun :: !(Maybe Bool)
   , _digInternetGatewayId :: !Text
-  , _digVPCId             :: !Text
+  , _digVPCId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

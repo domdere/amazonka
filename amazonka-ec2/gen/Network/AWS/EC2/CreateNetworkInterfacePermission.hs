@@ -56,11 +56,11 @@ import Network.AWS.Response
 --
 -- /See:/ 'createNetworkInterfacePermission' smart constructor.
 data CreateNetworkInterfacePermission = CreateNetworkInterfacePermission'
-  { _cnipAWSAccountId       :: !(Maybe Text)
-  , _cnipAWSService         :: !(Maybe Text)
-  , _cnipDryRun             :: !(Maybe Bool)
+  { _cnipAWSAccountId :: !(Maybe Text)
+  , _cnipAWSService :: !(Maybe Text)
+  , _cnipDryRun :: !(Maybe Bool)
   , _cnipNetworkInterfaceId :: !Text
-  , _cnipPermission         :: !InterfacePermissionType
+  , _cnipPermission :: !InterfacePermissionType
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -157,7 +157,7 @@ instance ToQuery CreateNetworkInterfacePermission
 -- /See:/ 'createNetworkInterfacePermissionResponse' smart constructor.
 data CreateNetworkInterfacePermissionResponse = CreateNetworkInterfacePermissionResponse'
   { _cniprsInterfacePermission :: !(Maybe NetworkInterfacePermission)
-  , _cniprsResponseStatus      :: !Int
+  , _cniprsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

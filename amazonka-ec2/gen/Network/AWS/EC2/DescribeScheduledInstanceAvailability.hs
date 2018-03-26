@@ -62,14 +62,14 @@ import Network.AWS.Response
 --
 -- /See:/ 'describeScheduledInstanceAvailability' smart constructor.
 data DescribeScheduledInstanceAvailability = DescribeScheduledInstanceAvailability'
-  { _dsiaMinSlotDurationInHours  :: !(Maybe Int)
-  , _dsiaFilters                 :: !(Maybe [Filter])
-  , _dsiaNextToken               :: !(Maybe Text)
-  , _dsiaMaxSlotDurationInHours  :: !(Maybe Int)
-  , _dsiaDryRun                  :: !(Maybe Bool)
-  , _dsiaMaxResults              :: !(Maybe Int)
+  { _dsiaMinSlotDurationInHours :: !(Maybe Int)
+  , _dsiaFilters :: !(Maybe [Filter])
+  , _dsiaNextToken :: !(Maybe Text)
+  , _dsiaMaxSlotDurationInHours :: !(Maybe Int)
+  , _dsiaDryRun :: !(Maybe Bool)
+  , _dsiaMaxResults :: !(Maybe Int)
   , _dsiaFirstSlotStartTimeRange :: !SlotDateTimeRangeRequest
-  , _dsiaRecurrence              :: !ScheduledInstanceRecurrenceRequest
+  , _dsiaRecurrence :: !ScheduledInstanceRecurrenceRequest
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

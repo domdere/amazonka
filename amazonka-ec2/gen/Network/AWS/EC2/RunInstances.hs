@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Launches the specified number of instances using an AMI for which you have permissions.
+-- Launches the specified number of instances using an AMI for which you have permissions. 
 --
 --
 -- You can specify a number of options, or leave the default options. The following rules apply:
@@ -147,7 +147,7 @@ data RunInstances = RunInstances'
 --
 -- * 'rClientToken' - Unique, case-sensitive identifier you provide to ensure the idempotency of the request. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html Ensuring Idempotency> . Constraints: Maximum 64 ASCII characters
 --
--- * 'rDisableAPITermination' - If you set this parameter to @true@ , you can't terminate the instance using the Amazon EC2 console, CLI, or API; otherwise, you can. To change this attribute to @false@ after launch, use 'ModifyInstanceAttribute' . Alternatively, if you set @InstanceInitiatedShutdownBehavior@ to @terminate@ , you can terminate the instance by running the shutdown command from the instance. Default: @false@
+-- * 'rDisableAPITermination' - If you set this parameter to @true@ , you can't terminate the instance using the Amazon EC2 console, CLI, or API; otherwise, you can. To change this attribute to @false@ after launch, use 'ModifyInstanceAttribute' . Alternatively, if you set @InstanceInitiatedShutdownBehavior@ to @terminate@ , you can terminate the instance by running the shutdown command from the instance. Default: @false@ 
 --
 -- * 'rKeyName' - The name of the key pair. You can create a key pair using 'CreateKeyPair' or 'ImportKeyPair' . /Important:/ If you do not specify a key pair, you can't connect to the instance unless you choose an AMI that is configured to allow users another way to log in.
 --
@@ -159,9 +159,9 @@ data RunInstances = RunInstances'
 --
 -- * 'rKernelId' - The ID of the kernel. /Important:/ We recommend that you use PV-GRUB instead of kernels and RAM disks. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UserProvidedkernels.html PV-GRUB> in the /Amazon Elastic Compute Cloud User Guide/ .
 --
--- * 'rInstanceType' - The instance type. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html Instance Types> in the /Amazon Elastic Compute Cloud User Guide/ . Default: @m1.small@
+-- * 'rInstanceType' - The instance type. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html Instance Types> in the /Amazon Elastic Compute Cloud User Guide/ . Default: @m1.small@ 
 --
--- * 'rEBSOptimized' - Indicates whether the instance is optimized for Amazon EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal Amazon EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS-optimized instance. Default: @false@
+-- * 'rEBSOptimized' - Indicates whether the instance is optimized for Amazon EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal Amazon EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS-optimized instance. Default: @false@ 
 --
 -- * 'rUserData' - The user data to make available to the instance. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/user-data.html Running Commands on Your Linux Instance at Launch> (Linux) and <http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/ec2-instance-metadata.html#instancedata-add-user-data Adding User Data> (Windows). If you are using a command line tool, base64-encoding is performed for you, and you can load the text from a file. Otherwise, you must provide base64-encoded text.
 --
@@ -177,7 +177,7 @@ data RunInstances = RunInstances'
 --
 -- * 'rPrivateIPAddress' - [EC2-VPC] The primary IPv4 address. You must specify a value from the IPv4 address range of the subnet. Only one private IP address can be designated as primary. You can't specify this option if you've specified the option to designate a private IP address as the primary IP address in a network interface specification. You cannot specify this option if you're launching more than one instance in the request.
 --
--- * 'rInstanceInitiatedShutdownBehavior' - Indicates whether an instance stops or terminates when you initiate shutdown from the instance (using the operating system command for system shutdown). Default: @stop@
+-- * 'rInstanceInitiatedShutdownBehavior' - Indicates whether an instance stops or terminates when you initiate shutdown from the instance (using the operating system command for system shutdown). Default: @stop@ 
 --
 -- * 'rBlockDeviceMappings' - One or more block device mapping entries. You can't specify both a snapshot ID and an encryption value. This is because only blank volumes can be encrypted on creation. If a snapshot is the basis for a volume, it is not blank and its encryption status is used for the volume encryption status.
 --
@@ -245,7 +245,7 @@ rSecurityGroups = lens _rSecurityGroups (\ s a -> s{_rSecurityGroups = a}) . _De
 rClientToken :: Lens' RunInstances (Maybe Text)
 rClientToken = lens _rClientToken (\ s a -> s{_rClientToken = a});
 
--- | If you set this parameter to @true@ , you can't terminate the instance using the Amazon EC2 console, CLI, or API; otherwise, you can. To change this attribute to @false@ after launch, use 'ModifyInstanceAttribute' . Alternatively, if you set @InstanceInitiatedShutdownBehavior@ to @terminate@ , you can terminate the instance by running the shutdown command from the instance. Default: @false@
+-- | If you set this parameter to @true@ , you can't terminate the instance using the Amazon EC2 console, CLI, or API; otherwise, you can. To change this attribute to @false@ after launch, use 'ModifyInstanceAttribute' . Alternatively, if you set @InstanceInitiatedShutdownBehavior@ to @terminate@ , you can terminate the instance by running the shutdown command from the instance. Default: @false@ 
 rDisableAPITermination :: Lens' RunInstances (Maybe Bool)
 rDisableAPITermination = lens _rDisableAPITermination (\ s a -> s{_rDisableAPITermination = a});
 
@@ -269,11 +269,11 @@ rSubnetId = lens _rSubnetId (\ s a -> s{_rSubnetId = a});
 rKernelId :: Lens' RunInstances (Maybe Text)
 rKernelId = lens _rKernelId (\ s a -> s{_rKernelId = a});
 
--- | The instance type. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html Instance Types> in the /Amazon Elastic Compute Cloud User Guide/ . Default: @m1.small@
+-- | The instance type. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html Instance Types> in the /Amazon Elastic Compute Cloud User Guide/ . Default: @m1.small@ 
 rInstanceType :: Lens' RunInstances (Maybe InstanceType)
 rInstanceType = lens _rInstanceType (\ s a -> s{_rInstanceType = a});
 
--- | Indicates whether the instance is optimized for Amazon EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal Amazon EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS-optimized instance. Default: @false@
+-- | Indicates whether the instance is optimized for Amazon EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal Amazon EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS-optimized instance. Default: @false@ 
 rEBSOptimized :: Lens' RunInstances (Maybe Bool)
 rEBSOptimized = lens _rEBSOptimized (\ s a -> s{_rEBSOptimized = a});
 
@@ -305,7 +305,7 @@ rElasticGpuSpecification = lens _rElasticGpuSpecification (\ s a -> s{_rElasticG
 rPrivateIPAddress :: Lens' RunInstances (Maybe Text)
 rPrivateIPAddress = lens _rPrivateIPAddress (\ s a -> s{_rPrivateIPAddress = a});
 
--- | Indicates whether an instance stops or terminates when you initiate shutdown from the instance (using the operating system command for system shutdown). Default: @stop@
+-- | Indicates whether an instance stops or terminates when you initiate shutdown from the instance (using the operating system command for system shutdown). Default: @stop@ 
 rInstanceInitiatedShutdownBehavior :: Lens' RunInstances (Maybe ShutdownBehavior)
 rInstanceInitiatedShutdownBehavior = lens _rInstanceInitiatedShutdownBehavior (\ s a -> s{_rInstanceInitiatedShutdownBehavior = a});
 

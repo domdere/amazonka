@@ -50,7 +50,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'disassociateRouteTable' smart constructor.
 data DisassociateRouteTable = DisassociateRouteTable'
-  { _drtDryRun        :: !(Maybe Bool)
+  { _drtDryRun :: !(Maybe Bool)
   , _drtAssociationId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

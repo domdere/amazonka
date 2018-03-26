@@ -49,8 +49,8 @@ import Network.AWS.Response
 
 -- | /See:/ 'assignIPv6Addresses' smart constructor.
 data AssignIPv6Addresses = AssignIPv6Addresses'
-  { _aiaIPv6AddressCount   :: !(Maybe Int)
-  , _aiaIPv6Addresses      :: !(Maybe [Text])
+  { _aiaIPv6AddressCount :: !(Maybe Int)
+  , _aiaIPv6Addresses :: !(Maybe [Text])
   , _aiaNetworkInterfaceId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -122,9 +122,9 @@ instance ToQuery AssignIPv6Addresses where
 
 -- | /See:/ 'assignIPv6AddressesResponse' smart constructor.
 data AssignIPv6AddressesResponse = AssignIPv6AddressesResponse'
-  { _aiarsNetworkInterfaceId    :: !(Maybe Text)
+  { _aiarsNetworkInterfaceId :: !(Maybe Text)
   , _aiarsAssignedIPv6Addresses :: !(Maybe [Text])
-  , _aiarsResponseStatus        :: !Int
+  , _aiarsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

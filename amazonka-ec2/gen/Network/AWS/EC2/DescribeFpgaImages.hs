@@ -52,11 +52,11 @@ import Network.AWS.Response
 
 -- | /See:/ 'describeFpgaImages' smart constructor.
 data DescribeFpgaImages = DescribeFpgaImages'
-  { _dfisOwners       :: !(Maybe [Text])
-  , _dfisFilters      :: !(Maybe [Filter])
-  , _dfisNextToken    :: !(Maybe Text)
-  , _dfisDryRun       :: !(Maybe Bool)
-  , _dfisMaxResults   :: !(Maybe Nat)
+  { _dfisOwners :: !(Maybe [Text])
+  , _dfisFilters :: !(Maybe [Filter])
+  , _dfisNextToken :: !(Maybe Text)
+  , _dfisDryRun :: !(Maybe Bool)
+  , _dfisMaxResults :: !(Maybe Nat)
   , _dfisFpgaImageIds :: !(Maybe [Text])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -151,8 +151,8 @@ instance ToQuery DescribeFpgaImages where
 
 -- | /See:/ 'describeFpgaImagesResponse' smart constructor.
 data DescribeFpgaImagesResponse = DescribeFpgaImagesResponse'
-  { _dfirsFpgaImages     :: !(Maybe [FpgaImage])
-  , _dfirsNextToken      :: !(Maybe Text)
+  { _dfirsFpgaImages :: !(Maybe [FpgaImage])
+  , _dfirsNextToken :: !(Maybe Text)
   , _dfirsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

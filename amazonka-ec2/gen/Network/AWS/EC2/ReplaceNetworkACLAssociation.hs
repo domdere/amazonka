@@ -52,9 +52,9 @@ import Network.AWS.Response
 --
 -- /See:/ 'replaceNetworkACLAssociation' smart constructor.
 data ReplaceNetworkACLAssociation = ReplaceNetworkACLAssociation'
-  { _rnaaDryRun        :: !(Maybe Bool)
+  { _rnaaDryRun :: !(Maybe Bool)
   , _rnaaAssociationId :: !Text
-  , _rnaaNetworkACLId  :: !Text
+  , _rnaaNetworkACLId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -129,7 +129,7 @@ instance ToQuery ReplaceNetworkACLAssociation where
 -- /See:/ 'replaceNetworkACLAssociationResponse' smart constructor.
 data ReplaceNetworkACLAssociationResponse = ReplaceNetworkACLAssociationResponse'
   { _rnaarsNewAssociationId :: !(Maybe Text)
-  , _rnaarsResponseStatus   :: !Int
+  , _rnaarsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

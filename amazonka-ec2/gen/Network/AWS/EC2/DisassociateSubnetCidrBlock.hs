@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Disassociates a CIDR block from a subnet. Currently, you can disassociate an IPv6 CIDR block only. You must detach or delete all gateways and resources that are associated with the CIDR block before you can disassociate it.
+-- Disassociates a CIDR block from a subnet. Currently, you can disassociate an IPv6 CIDR block only. You must detach or delete all gateways and resources that are associated with the CIDR block before you can disassociate it. 
 --
 --
 module Network.AWS.EC2.DisassociateSubnetCidrBlock
@@ -99,9 +99,9 @@ instance ToQuery DisassociateSubnetCidrBlock where
 
 -- | /See:/ 'disassociateSubnetCidrBlockResponse' smart constructor.
 data DisassociateSubnetCidrBlockResponse = DisassociateSubnetCidrBlockResponse'
-  { _dscbrsSubnetId                 :: !(Maybe Text)
+  { _dscbrsSubnetId :: !(Maybe Text)
   , _dscbrsIPv6CidrBlockAssociation :: !(Maybe SubnetIPv6CidrBlockAssociation)
-  , _dscbrsResponseStatus           :: !Int
+  , _dscbrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

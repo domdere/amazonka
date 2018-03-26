@@ -62,8 +62,8 @@ import Network.AWS.Response
 --
 -- /See:/ 'stopInstances' smart constructor.
 data StopInstances = StopInstances'
-  { _siForce       :: !(Maybe Bool)
-  , _siDryRun      :: !(Maybe Bool)
+  { _siForce :: !(Maybe Bool)
+  , _siDryRun :: !(Maybe Bool)
   , _siInstanceIds :: ![Text]
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -72,7 +72,7 @@ data StopInstances = StopInstances'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'siForce' - Forces the instances to stop. The instances do not have an opportunity to flush file system caches or file system metadata. If you use this option, you must perform file system check and repair procedures. This option is not recommended for Windows instances. Default: @false@
+-- * 'siForce' - Forces the instances to stop. The instances do not have an opportunity to flush file system caches or file system metadata. If you use this option, you must perform file system check and repair procedures. This option is not recommended for Windows instances. Default: @false@ 
 --
 -- * 'siDryRun' - Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is @DryRunOperation@ . Otherwise, it is @UnauthorizedOperation@ .
 --
@@ -84,7 +84,7 @@ stopInstances =
   {_siForce = Nothing, _siDryRun = Nothing, _siInstanceIds = mempty}
 
 
--- | Forces the instances to stop. The instances do not have an opportunity to flush file system caches or file system metadata. If you use this option, you must perform file system check and repair procedures. This option is not recommended for Windows instances. Default: @false@
+-- | Forces the instances to stop. The instances do not have an opportunity to flush file system caches or file system metadata. If you use this option, you must perform file system check and repair procedures. This option is not recommended for Windows instances. Default: @false@ 
 siForce :: Lens' StopInstances (Maybe Bool)
 siForce = lens _siForce (\ s a -> s{_siForce = a});
 
@@ -132,7 +132,7 @@ instance ToQuery StopInstances where
 -- /See:/ 'stopInstancesResponse' smart constructor.
 data StopInstancesResponse = StopInstancesResponse'
   { _sirsStoppingInstances :: !(Maybe [InstanceStateChange])
-  , _sirsResponseStatus    :: !Int
+  , _sirsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

@@ -21,7 +21,7 @@
 -- Modifies the ID format for the specified resource on a per-region basis. You can specify that resources should receive longer IDs (17-character IDs) when they are created. The following resource types support longer IDs: @instance@ | @reservation@ | @snapshot@ | @volume@ .
 --
 --
--- This setting applies to the IAM user who makes the request; it does not apply to the entire AWS account. By default, an IAM user defaults to the same settings as the root user. If you're using this action as the root user, then these settings apply to the entire account, unless an IAM user explicitly overrides these settings for themselves. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resource-ids.html Resource IDs> in the /Amazon Elastic Compute Cloud User Guide/ .
+-- This setting applies to the IAM user who makes the request; it does not apply to the entire AWS account. By default, an IAM user defaults to the same settings as the root user. If you're using this action as the root user, then these settings apply to the entire account, unless an IAM user explicitly overrides these settings for themselves. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/resource-ids.html Resource IDs> in the /Amazon Elastic Compute Cloud User Guide/ . 
 --
 -- Resources created with longer IDs are visible to all IAM roles and users, regardless of these settings and provided that they have permission to use the relevant @Describe@ command for the resource type.
 --
@@ -52,7 +52,7 @@ import Network.AWS.Response
 --
 -- /See:/ 'modifyIdFormat' smart constructor.
 data ModifyIdFormat = ModifyIdFormat'
-  { _mifResource   :: !Text
+  { _mifResource :: !Text
   , _mifUseLongIds :: !Bool
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -61,7 +61,7 @@ data ModifyIdFormat = ModifyIdFormat'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'mifResource' - The type of resource: @instance@ | @reservation@ | @snapshot@ | @volume@
+-- * 'mifResource' - The type of resource: @instance@ | @reservation@ | @snapshot@ | @volume@ 
 --
 -- * 'mifUseLongIds' - Indicate whether the resource should use longer IDs (17-character IDs).
 modifyIdFormat
@@ -72,7 +72,7 @@ modifyIdFormat pResource_ pUseLongIds_ =
   ModifyIdFormat' {_mifResource = pResource_, _mifUseLongIds = pUseLongIds_}
 
 
--- | The type of resource: @instance@ | @reservation@ | @snapshot@ | @volume@
+-- | The type of resource: @instance@ | @reservation@ | @snapshot@ | @volume@ 
 mifResource :: Lens' ModifyIdFormat Text
 mifResource = lens _mifResource (\ s a -> s{_mifResource = a});
 

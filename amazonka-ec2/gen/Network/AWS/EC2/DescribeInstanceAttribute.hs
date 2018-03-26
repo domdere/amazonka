@@ -18,7 +18,7 @@
 -- Stability   : auto-generated
 -- Portability : non-portable (GHC extensions)
 --
--- Describes the specified attribute of the specified instance. You can specify only one attribute at a time. Valid attribute values are: @instanceType@ | @kernel@ | @ramdisk@ | @userData@ | @disableApiTermination@ | @instanceInitiatedShutdownBehavior@ | @rootDeviceName@ | @blockDeviceMapping@ | @productCodes@ | @sourceDestCheck@ | @groupSet@ | @ebsOptimized@ | @sriovNetSupport@
+-- Describes the specified attribute of the specified instance. You can specify only one attribute at a time. Valid attribute values are: @instanceType@ | @kernel@ | @ramdisk@ | @userData@ | @disableApiTermination@ | @instanceInitiatedShutdownBehavior@ | @rootDeviceName@ | @blockDeviceMapping@ | @productCodes@ | @sourceDestCheck@ | @groupSet@ | @ebsOptimized@ | @sriovNetSupport@ 
 --
 --
 module Network.AWS.EC2.DescribeInstanceAttribute
@@ -66,8 +66,8 @@ import Network.AWS.Response
 --
 -- /See:/ 'describeInstanceAttribute' smart constructor.
 data DescribeInstanceAttribute = DescribeInstanceAttribute'
-  { _diaDryRun     :: !(Maybe Bool)
-  , _diaAttribute  :: !InstanceAttributeName
+  { _diaDryRun :: !(Maybe Bool)
+  , _diaAttribute :: !InstanceAttributeName
   , _diaInstanceId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

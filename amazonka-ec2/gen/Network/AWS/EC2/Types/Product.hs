@@ -29,7 +29,7 @@ import Network.AWS.Prelude
 -- /See:/ 'accountAttribute' smart constructor.
 data AccountAttribute = AccountAttribute'
   { _aaAttributeValues :: !(Maybe [AccountAttributeValue])
-  , _aaAttributeName   :: !(Maybe Text)
+  , _aaAttributeName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -103,9 +103,9 @@ instance NFData AccountAttributeValue where
 --
 -- /See:/ 'activeInstance' smart constructor.
 data ActiveInstance = ActiveInstance'
-  { _aiInstanceId            :: !(Maybe Text)
-  , _aiInstanceHealth        :: !(Maybe InstanceHealthStatus)
-  , _aiInstanceType          :: !(Maybe Text)
+  { _aiInstanceId :: !(Maybe Text)
+  , _aiInstanceHealth :: !(Maybe InstanceHealthStatus)
+  , _aiInstanceType :: !(Maybe Text)
   , _aiSpotInstanceRequestId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -165,14 +165,14 @@ instance NFData ActiveInstance where
 --
 -- /See:/ 'address' smart constructor.
 data Address = Address'
-  { _aAssociationId           :: !(Maybe Text)
-  , _aInstanceId              :: !(Maybe Text)
+  { _aAssociationId :: !(Maybe Text)
+  , _aInstanceId :: !(Maybe Text)
   , _aNetworkInterfaceOwnerId :: !(Maybe Text)
-  , _aAllocationId            :: !(Maybe Text)
-  , _aDomain                  :: !(Maybe DomainType)
-  , _aNetworkInterfaceId      :: !(Maybe Text)
-  , _aPrivateIPAddress        :: !(Maybe Text)
-  , _aPublicIP                :: !(Maybe Text)
+  , _aAllocationId :: !(Maybe Text)
+  , _aDomain :: !(Maybe DomainType)
+  , _aNetworkInterfaceId :: !(Maybe Text)
+  , _aPrivateIPAddress :: !(Maybe Text)
+  , _aPublicIP :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -334,10 +334,10 @@ instance ToQuery AttributeValue where
 --
 -- /See:/ 'availabilityZone' smart constructor.
 data AvailabilityZone = AvailabilityZone'
-  { _azState      :: !(Maybe AvailabilityZoneState)
+  { _azState :: !(Maybe AvailabilityZoneState)
   , _azRegionName :: !(Maybe Text)
-  , _azZoneName   :: !(Maybe Text)
-  , _azMessages   :: !(Maybe [AvailabilityZoneMessage])
+  , _azZoneName :: !(Maybe Text)
+  , _azMessages :: !(Maybe [AvailabilityZoneMessage])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -431,7 +431,7 @@ instance NFData AvailabilityZoneMessage where
 -- /See:/ 'availableCapacity' smart constructor.
 data AvailableCapacity = AvailableCapacity'
   { _acAvailableInstanceCapacity :: !(Maybe [InstanceCapacity])
-  , _acAvailableVCPUs            :: !(Maybe Int)
+  , _acAvailableVCPUs :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -503,9 +503,9 @@ instance ToQuery BlobAttributeValue where
 -- /See:/ 'blockDeviceMapping' smart constructor.
 data BlockDeviceMapping = BlockDeviceMapping'
   { _bdmVirtualName :: !(Maybe Text)
-  , _bdmNoDevice    :: !(Maybe Text)
-  , _bdmEBS         :: !(Maybe EBSBlockDevice)
-  , _bdmDeviceName  :: !Text
+  , _bdmNoDevice :: !(Maybe Text)
+  , _bdmEBS :: !(Maybe EBSBlockDevice)
+  , _bdmDeviceName :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -573,13 +573,13 @@ instance ToQuery BlockDeviceMapping where
 -- /See:/ 'bundleTask' smart constructor.
 data BundleTask = BundleTask'
   { _btBundleTaskError :: !(Maybe BundleTaskError)
-  , _btBundleId        :: !Text
-  , _btInstanceId      :: !Text
-  , _btProgress        :: !Text
-  , _btStartTime       :: !ISO8601
-  , _btState           :: !BundleTaskState
-  , _btStorage         :: !Storage
-  , _btUpdateTime      :: !ISO8601
+  , _btBundleId :: !Text
+  , _btInstanceId :: !Text
+  , _btProgress :: !Text
+  , _btStartTime :: !ISO8601
+  , _btState :: !BundleTaskState
+  , _btStorage :: !Storage
+  , _btUpdateTime :: !ISO8601
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -677,7 +677,7 @@ instance NFData BundleTask where
 --
 -- /See:/ 'bundleTaskError' smart constructor.
 data BundleTaskError = BundleTaskError'
-  { _bteCode    :: !(Maybe Text)
+  { _bteCode :: !(Maybe Text)
   , _bteMessage :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -717,7 +717,7 @@ instance NFData BundleTaskError where
 --
 -- /See:/ 'cancelSpotFleetRequestsError' smart constructor.
 data CancelSpotFleetRequestsError = CancelSpotFleetRequestsError'
-  { _csfreCode    :: !CancelBatchErrorCode
+  { _csfreCode :: !CancelBatchErrorCode
   , _csfreMessage :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -760,7 +760,7 @@ instance NFData CancelSpotFleetRequestsError where
 --
 -- /See:/ 'cancelSpotFleetRequestsErrorItem' smart constructor.
 data CancelSpotFleetRequestsErrorItem = CancelSpotFleetRequestsErrorItem'
-  { _csfreiError              :: !CancelSpotFleetRequestsError
+  { _csfreiError :: !CancelSpotFleetRequestsError
   , _csfreiSpotFleetRequestId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -807,9 +807,9 @@ instance NFData CancelSpotFleetRequestsErrorItem
 --
 -- /See:/ 'cancelSpotFleetRequestsSuccessItem' smart constructor.
 data CancelSpotFleetRequestsSuccessItem = CancelSpotFleetRequestsSuccessItem'
-  { _csfrsiCurrentSpotFleetRequestState  :: !BatchState
+  { _csfrsiCurrentSpotFleetRequestState :: !BatchState
   , _csfrsiPreviousSpotFleetRequestState :: !BatchState
-  , _csfrsiSpotFleetRequestId            :: !Text
+  , _csfrsiSpotFleetRequestId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -867,7 +867,7 @@ instance NFData CancelSpotFleetRequestsSuccessItem
 --
 -- /See:/ 'cancelledSpotInstanceRequest' smart constructor.
 data CancelledSpotInstanceRequest = CancelledSpotInstanceRequest'
-  { _csirState                 :: !(Maybe CancelSpotInstanceRequestState)
+  { _csirState :: !(Maybe CancelSpotInstanceRequestState)
   , _csirSpotInstanceRequestId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -940,7 +940,7 @@ instance NFData CidrBlock where
 --
 -- /See:/ 'classicLinkDNSSupport' smart constructor.
 data ClassicLinkDNSSupport = ClassicLinkDNSSupport'
-  { _cldsVPCId                   :: !(Maybe Text)
+  { _cldsVPCId :: !(Maybe Text)
   , _cldsClassicLinkDNSSupported :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -983,9 +983,9 @@ instance NFData ClassicLinkDNSSupport where
 -- /See:/ 'classicLinkInstance' smart constructor.
 data ClassicLinkInstance = ClassicLinkInstance'
   { _cliInstanceId :: !(Maybe Text)
-  , _cliGroups     :: !(Maybe [GroupIdentifier])
-  , _cliVPCId      :: !(Maybe Text)
-  , _cliTags       :: !(Maybe [Tag])
+  , _cliGroups :: !(Maybe [GroupIdentifier])
+  , _cliVPCId :: !(Maybe Text)
+  , _cliTags :: !(Maybe [Tag])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1128,9 +1128,9 @@ instance ToQuery ClassicLoadBalancersConfig where
 -- /See:/ 'clientData' smart constructor.
 data ClientData = ClientData'
   { _cdUploadStart :: !(Maybe ISO8601)
-  , _cdUploadSize  :: !(Maybe Double)
-  , _cdUploadEnd   :: !(Maybe ISO8601)
-  , _cdComment     :: !(Maybe Text)
+  , _cdUploadSize :: !(Maybe Double)
+  , _cdUploadEnd :: !(Maybe ISO8601)
+  , _cdComment :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1189,13 +1189,13 @@ instance ToQuery ClientData where
 --
 -- /See:/ 'conversionTask' smart constructor.
 data ConversionTask = ConversionTask'
-  { _ctImportInstance   :: !(Maybe ImportInstanceTaskDetails)
-  , _ctStatusMessage    :: !(Maybe Text)
-  , _ctImportVolume     :: !(Maybe ImportVolumeTaskDetails)
-  , _ctExpirationTime   :: !(Maybe Text)
-  , _ctTags             :: !(Maybe [Tag])
+  { _ctImportInstance :: !(Maybe ImportInstanceTaskDetails)
+  , _ctStatusMessage :: !(Maybe Text)
+  , _ctImportVolume :: !(Maybe ImportVolumeTaskDetails)
+  , _ctExpirationTime :: !(Maybe Text)
+  , _ctTags :: !(Maybe [Tag])
   , _ctConversionTaskId :: !Text
-  , _ctState            :: !ConversionTaskState
+  , _ctState :: !ConversionTaskState
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1282,7 +1282,7 @@ instance NFData ConversionTask where
 --
 -- /See:/ 'createVolumePermission' smart constructor.
 data CreateVolumePermission = CreateVolumePermission'
-  { _cvpGroup  :: !(Maybe PermissionGroup)
+  { _cvpGroup :: !(Maybe PermissionGroup)
   , _cvpUserId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -1329,7 +1329,7 @@ instance ToQuery CreateVolumePermission where
 -- /See:/ 'createVolumePermissionModifications' smart constructor.
 data CreateVolumePermissionModifications = CreateVolumePermissionModifications'
   { _cvpmRemove :: !(Maybe [CreateVolumePermission])
-  , _cvpmAdd    :: !(Maybe [CreateVolumePermission])
+  , _cvpmAdd :: !(Maybe [CreateVolumePermission])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1374,12 +1374,12 @@ instance ToQuery CreateVolumePermissionModifications
 --
 -- /See:/ 'customerGateway' smart constructor.
 data CustomerGateway = CustomerGateway'
-  { _cgTags              :: !(Maybe [Tag])
-  , _cgBGPASN            :: !Text
+  { _cgTags :: !(Maybe [Tag])
+  , _cgBGPASN :: !Text
   , _cgCustomerGatewayId :: !Text
-  , _cgIPAddress         :: !Text
-  , _cgState             :: !Text
-  , _cgType              :: !Text
+  , _cgIPAddress :: !Text
+  , _cgState :: !Text
+  , _cgType :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1462,7 +1462,7 @@ instance NFData CustomerGateway where
 -- /See:/ 'dhcpConfiguration' smart constructor.
 data DHCPConfiguration = DHCPConfiguration'
   { _dcValues :: !(Maybe [AttributeValue])
-  , _dcKey    :: !(Maybe Text)
+  , _dcKey :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1504,8 +1504,8 @@ instance NFData DHCPConfiguration where
 -- /See:/ 'dhcpOptions' smart constructor.
 data DHCPOptions = DHCPOptions'
   { _doDHCPConfigurations :: !(Maybe [DHCPConfiguration])
-  , _doDHCPOptionsId      :: !(Maybe Text)
-  , _doTags               :: !(Maybe [Tag])
+  , _doDHCPOptionsId :: !(Maybe Text)
+  , _doTags :: !(Maybe [Tag])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1561,7 +1561,7 @@ instance NFData DHCPOptions where
 -- /See:/ 'dnsEntry' smart constructor.
 data DNSEntry = DNSEntry'
   { _deHostedZoneId :: !(Maybe Text)
-  , _deDNSName      :: !(Maybe Text)
+  , _deDNSName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1600,8 +1600,8 @@ instance NFData DNSEntry where
 --
 -- /See:/ 'diskImage' smart constructor.
 data DiskImage = DiskImage'
-  { _diImage       :: !(Maybe DiskImageDetail)
-  , _diVolume      :: !(Maybe VolumeDetail)
+  { _diImage :: !(Maybe DiskImageDetail)
+  , _diVolume :: !(Maybe VolumeDetail)
   , _diDescription :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -1649,10 +1649,10 @@ instance ToQuery DiskImage where
 --
 -- /See:/ 'diskImageDescription' smart constructor.
 data DiskImageDescription = DiskImageDescription'
-  { _dChecksum          :: !(Maybe Text)
-  , _dFormat            :: !DiskImageFormat
+  { _dChecksum :: !(Maybe Text)
+  , _dFormat :: !DiskImageFormat
   , _dImportManifestURL :: !Text
-  , _dSize              :: !Integer
+  , _dSize :: !Integer
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1714,8 +1714,8 @@ instance NFData DiskImageDescription where
 --
 -- /See:/ 'diskImageDetail' smart constructor.
 data DiskImageDetail = DiskImageDetail'
-  { _didBytes             :: !Integer
-  , _didFormat            :: !DiskImageFormat
+  { _didBytes :: !Integer
+  , _didFormat :: !DiskImageFormat
   , _didImportManifestURL :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -1771,7 +1771,7 @@ instance ToQuery DiskImageDetail where
 -- /See:/ 'diskImageVolumeDescription' smart constructor.
 data DiskImageVolumeDescription = DiskImageVolumeDescription'
   { _divdSize :: !(Maybe Integer)
-  , _divdId   :: !Text
+  , _divdId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1813,11 +1813,11 @@ instance NFData DiskImageVolumeDescription where
 -- /See:/ 'ebsBlockDevice' smart constructor.
 data EBSBlockDevice = EBSBlockDevice'
   { _ebdDeleteOnTermination :: !(Maybe Bool)
-  , _ebdVolumeSize          :: !(Maybe Int)
-  , _ebdIOPS                :: !(Maybe Int)
-  , _ebdEncrypted           :: !(Maybe Bool)
-  , _ebdVolumeType          :: !(Maybe VolumeType)
-  , _ebdSnapshotId          :: !(Maybe Text)
+  , _ebdVolumeSize :: !(Maybe Int)
+  , _ebdIOPS :: !(Maybe Int)
+  , _ebdEncrypted :: !(Maybe Bool)
+  , _ebdVolumeType :: !(Maybe VolumeType)
+  , _ebdSnapshotId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1833,7 +1833,7 @@ data EBSBlockDevice = EBSBlockDevice'
 --
 -- * 'ebdEncrypted' - Indicates whether the EBS volume is encrypted. Encrypted volumes can only be attached to instances that support Amazon EBS encryption. If you are creating a volume from a snapshot, you can't specify an encryption value. This is because only blank volumes can be encrypted on creation.
 --
--- * 'ebdVolumeType' - The volume type: @gp2@ , @io1@ , @st1@ , @sc1@ , or @standard@ . Default: @standard@
+-- * 'ebdVolumeType' - The volume type: @gp2@ , @io1@ , @st1@ , @sc1@ , or @standard@ . Default: @standard@ 
 --
 -- * 'ebdSnapshotId' - The ID of the snapshot.
 ebsBlockDevice
@@ -1865,7 +1865,7 @@ ebdIOPS = lens _ebdIOPS (\ s a -> s{_ebdIOPS = a});
 ebdEncrypted :: Lens' EBSBlockDevice (Maybe Bool)
 ebdEncrypted = lens _ebdEncrypted (\ s a -> s{_ebdEncrypted = a});
 
--- | The volume type: @gp2@ , @io1@ , @st1@ , @sc1@ , or @standard@ . Default: @standard@
+-- | The volume type: @gp2@ , @io1@ , @st1@ , @sc1@ , or @standard@ . Default: @standard@ 
 ebdVolumeType :: Lens' EBSBlockDevice (Maybe VolumeType)
 ebdVolumeType = lens _ebdVolumeType (\ s a -> s{_ebdVolumeType = a});
 
@@ -1902,10 +1902,10 @@ instance ToQuery EBSBlockDevice where
 --
 -- /See:/ 'ebsInstanceBlockDevice' smart constructor.
 data EBSInstanceBlockDevice = EBSInstanceBlockDevice'
-  { _eibdStatus              :: !(Maybe AttachmentStatus)
+  { _eibdStatus :: !(Maybe AttachmentStatus)
   , _eibdDeleteOnTermination :: !(Maybe Bool)
-  , _eibdVolumeId            :: !(Maybe Text)
-  , _eibdAttachTime          :: !(Maybe ISO8601)
+  , _eibdVolumeId :: !(Maybe Text)
+  , _eibdAttachTime :: !(Maybe ISO8601)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -1965,7 +1965,7 @@ instance NFData EBSInstanceBlockDevice where
 -- /See:/ 'ebsInstanceBlockDeviceSpecification' smart constructor.
 data EBSInstanceBlockDeviceSpecification = EBSInstanceBlockDeviceSpecification'
   { _eibdsDeleteOnTermination :: !(Maybe Bool)
-  , _eibdsVolumeId            :: !(Maybe Text)
+  , _eibdsVolumeId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -2011,7 +2011,7 @@ instance ToQuery EBSInstanceBlockDeviceSpecification
 -- /See:/ 'egressOnlyInternetGateway' smart constructor.
 data EgressOnlyInternetGateway = EgressOnlyInternetGateway'
   { _eoigEgressOnlyInternetGatewayId :: !(Maybe Text)
-  , _eoigAttachments                 :: !(Maybe [InternetGatewayAttachment])
+  , _eoigAttachments :: !(Maybe [InternetGatewayAttachment])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -2054,9 +2054,9 @@ instance NFData EgressOnlyInternetGateway where
 --
 -- /See:/ 'elasticGpuAssociation' smart constructor.
 data ElasticGpuAssociation = ElasticGpuAssociation'
-  { _egaElasticGpuId               :: !(Maybe Text)
-  , _egaElasticGpuAssociationId    :: !(Maybe Text)
-  , _egaElasticGpuAssociationTime  :: !(Maybe Text)
+  { _egaElasticGpuId :: !(Maybe Text)
+  , _egaElasticGpuAssociationId :: !(Maybe Text)
+  , _egaElasticGpuAssociationTime :: !(Maybe Text)
   , _egaElasticGpuAssociationState :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -2181,10 +2181,10 @@ instance ToQuery ElasticGpuSpecification where
 --
 -- /See:/ 'elasticGpus' smart constructor.
 data ElasticGpus = ElasticGpus'
-  { _egInstanceId       :: !(Maybe Text)
-  , _egElasticGpuType   :: !(Maybe Text)
-  , _egElasticGpuId     :: !(Maybe Text)
-  , _egElasticGpuState  :: !(Maybe ElasticGpuState)
+  { _egInstanceId :: !(Maybe Text)
+  , _egElasticGpuType :: !(Maybe Text)
+  , _egElasticGpuId :: !(Maybe Text)
+  , _egElasticGpuState :: !(Maybe ElasticGpuState)
   , _egElasticGpuHealth :: !(Maybe ElasticGpuHealth)
   , _egAvailabilityZone :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
@@ -2261,9 +2261,9 @@ instance NFData ElasticGpus where
 --
 -- /See:/ 'eventInformation' smart constructor.
 data EventInformation = EventInformation'
-  { _eiInstanceId       :: !(Maybe Text)
+  { _eiInstanceId :: !(Maybe Text)
   , _eiEventDescription :: !(Maybe Text)
-  , _eiEventSubType     :: !(Maybe Text)
+  , _eiEventSubType :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -2314,12 +2314,12 @@ instance NFData EventInformation where
 --
 -- /See:/ 'exportTask' smart constructor.
 data ExportTask = ExportTask'
-  { _etDescription           :: !Text
-  , _etExportTaskId          :: !Text
-  , _etExportToS3Task        :: !ExportToS3Task
+  { _etDescription :: !Text
+  , _etExportTaskId :: !Text
+  , _etExportToS3Task :: !ExportToS3Task
   , _etInstanceExportDetails :: !InstanceExportDetails
-  , _etState                 :: !ExportTaskState
-  , _etStatusMessage         :: !Text
+  , _etState :: !ExportTaskState
+  , _etStatusMessage :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -2400,9 +2400,9 @@ instance NFData ExportTask where
 --
 -- /See:/ 'exportToS3Task' smart constructor.
 data ExportToS3Task = ExportToS3Task'
-  { _etstS3Key           :: !(Maybe Text)
+  { _etstS3Key :: !(Maybe Text)
   , _etstContainerFormat :: !(Maybe ContainerFormat)
-  , _etstS3Bucket        :: !(Maybe Text)
+  , _etstS3Bucket :: !(Maybe Text)
   , _etstDiskImageFormat :: !(Maybe DiskImageFormat)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -2463,8 +2463,8 @@ instance NFData ExportToS3Task where
 -- /See:/ 'exportToS3TaskSpecification' smart constructor.
 data ExportToS3TaskSpecification = ExportToS3TaskSpecification'
   { _etstsContainerFormat :: !(Maybe ContainerFormat)
-  , _etstsS3Prefix        :: !(Maybe Text)
-  , _etstsS3Bucket        :: !(Maybe Text)
+  , _etstsS3Prefix :: !(Maybe Text)
+  , _etstsS3Bucket :: !(Maybe Text)
   , _etstsDiskImageFormat :: !(Maybe DiskImageFormat)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -2526,7 +2526,7 @@ instance ToQuery ExportToS3TaskSpecification where
 -- /See:/ 'filter'' smart constructor.
 data Filter = Filter'
   { _fValues :: !(Maybe [Text])
-  , _fName   :: !Text
+  , _fName :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -2567,15 +2567,15 @@ instance ToQuery Filter where
 --
 -- /See:/ 'flowLog' smart constructor.
 data FlowLog = FlowLog'
-  { _flCreationTime             :: !(Maybe ISO8601)
-  , _flResourceId               :: !(Maybe Text)
-  , _flFlowLogStatus            :: !(Maybe Text)
-  , _flTrafficType              :: !(Maybe TrafficType)
-  , _flDeliverLogsStatus        :: !(Maybe Text)
-  , _flDeliverLogsErrorMessage  :: !(Maybe Text)
-  , _flLogGroupName             :: !(Maybe Text)
+  { _flCreationTime :: !(Maybe ISO8601)
+  , _flResourceId :: !(Maybe Text)
+  , _flFlowLogStatus :: !(Maybe Text)
+  , _flTrafficType :: !(Maybe TrafficType)
+  , _flDeliverLogsStatus :: !(Maybe Text)
+  , _flDeliverLogsErrorMessage :: !(Maybe Text)
+  , _flLogGroupName :: !(Maybe Text)
   , _flDeliverLogsPermissionARN :: !(Maybe Text)
-  , _flFlowLogId                :: !(Maybe Text)
+  , _flFlowLogId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -2674,19 +2674,19 @@ instance NFData FlowLog where
 --
 -- /See:/ 'fpgaImage' smart constructor.
 data FpgaImage = FpgaImage'
-  { _fiShellVersion      :: !(Maybe Text)
-  , _fiPciId             :: !(Maybe PciId)
-  , _fiState             :: !(Maybe FpgaImageState)
-  , _fiOwnerAlias        :: !(Maybe Text)
-  , _fiFpgaImageId       :: !(Maybe Text)
-  , _fiOwnerId           :: !(Maybe Text)
-  , _fiUpdateTime        :: !(Maybe ISO8601)
-  , _fiName              :: !(Maybe Text)
-  , _fiProductCodes      :: !(Maybe [ProductCode])
-  , _fiDescription       :: !(Maybe Text)
-  , _fiCreateTime        :: !(Maybe ISO8601)
-  , _fiTags              :: !(Maybe [Tag])
-  , _fiPublic            :: !(Maybe Bool)
+  { _fiShellVersion :: !(Maybe Text)
+  , _fiPciId :: !(Maybe PciId)
+  , _fiState :: !(Maybe FpgaImageState)
+  , _fiOwnerAlias :: !(Maybe Text)
+  , _fiFpgaImageId :: !(Maybe Text)
+  , _fiOwnerId :: !(Maybe Text)
+  , _fiUpdateTime :: !(Maybe ISO8601)
+  , _fiName :: !(Maybe Text)
+  , _fiProductCodes :: !(Maybe [ProductCode])
+  , _fiDescription :: !(Maybe Text)
+  , _fiCreateTime :: !(Maybe ISO8601)
+  , _fiTags :: !(Maybe [Tag])
+  , _fiPublic :: !(Maybe Bool)
   , _fiFpgaImageGlobalId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -2830,10 +2830,10 @@ instance NFData FpgaImage where
 --
 -- /See:/ 'fpgaImageAttribute' smart constructor.
 data FpgaImageAttribute = FpgaImageAttribute'
-  { _fiaFpgaImageId     :: !(Maybe Text)
-  , _fiaName            :: !(Maybe Text)
-  , _fiaProductCodes    :: !(Maybe [ProductCode])
-  , _fiaDescription     :: !(Maybe Text)
+  { _fiaFpgaImageId :: !(Maybe Text)
+  , _fiaName :: !(Maybe Text)
+  , _fiaProductCodes :: !(Maybe [ProductCode])
+  , _fiaDescription :: !(Maybe Text)
   , _fiaLoadPermissions :: !(Maybe [LoadPermission])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -2904,7 +2904,7 @@ instance NFData FpgaImageAttribute where
 --
 -- /See:/ 'fpgaImageState' smart constructor.
 data FpgaImageState = FpgaImageState'
-  { _fisCode    :: !(Maybe FpgaImageStateCode)
+  { _fisCode :: !(Maybe FpgaImageStateCode)
   , _fisMessage :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -2944,7 +2944,7 @@ instance NFData FpgaImageState where
 --
 -- /See:/ 'groupIdentifier' smart constructor.
 data GroupIdentifier = GroupIdentifier'
-  { _giGroupId   :: !(Maybe Text)
+  { _giGroupId :: !(Maybe Text)
   , _giGroupName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -2992,8 +2992,8 @@ instance ToQuery GroupIdentifier where
 -- /See:/ 'historyRecord' smart constructor.
 data HistoryRecord = HistoryRecord'
   { _hrEventInformation :: !EventInformation
-  , _hrEventType        :: !EventType
-  , _hrTimestamp        :: !ISO8601
+  , _hrEventType :: !EventType
+  , _hrTimestamp :: !ISO8601
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -3047,15 +3047,15 @@ instance NFData HistoryRecord where
 --
 -- /See:/ 'host' smart constructor.
 data Host = Host'
-  { _hState             :: !(Maybe AllocationState)
-  , _hClientToken       :: !(Maybe Text)
-  , _hHostId            :: !(Maybe Text)
+  { _hState :: !(Maybe AllocationState)
+  , _hClientToken :: !(Maybe Text)
+  , _hHostId :: !(Maybe Text)
   , _hAvailableCapacity :: !(Maybe AvailableCapacity)
   , _hHostReservationId :: !(Maybe Text)
-  , _hHostProperties    :: !(Maybe HostProperties)
-  , _hAvailabilityZone  :: !(Maybe Text)
-  , _hInstances         :: !(Maybe [HostInstance])
-  , _hAutoPlacement     :: !(Maybe AutoPlacement)
+  , _hHostProperties :: !(Maybe HostProperties)
+  , _hAvailabilityZone :: !(Maybe Text)
+  , _hInstances :: !(Maybe [HostInstance])
+  , _hAutoPlacement :: !(Maybe AutoPlacement)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -3065,7 +3065,7 @@ data Host = Host'
 --
 -- * 'hState' - The Dedicated Host's state.
 --
--- * 'hClientToken' - Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html How to Ensure Idempotency> in the /Amazon Elastic Compute Cloud User Guide/ .
+-- * 'hClientToken' - Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html How to Ensure Idempotency> in the /Amazon Elastic Compute Cloud User Guide/ . 
 --
 -- * 'hHostId' - The ID of the Dedicated Host.
 --
@@ -3100,7 +3100,7 @@ host =
 hState :: Lens' Host (Maybe AllocationState)
 hState = lens _hState (\ s a -> s{_hState = a});
 
--- | Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html How to Ensure Idempotency> in the /Amazon Elastic Compute Cloud User Guide/ .
+-- | Unique, case-sensitive identifier you provide to ensure idempotency of the request. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html How to Ensure Idempotency> in the /Amazon Elastic Compute Cloud User Guide/ . 
 hClientToken :: Lens' Host (Maybe Text)
 hClientToken = lens _hClientToken (\ s a -> s{_hClientToken = a});
 
@@ -3156,7 +3156,7 @@ instance NFData Host where
 --
 -- /See:/ 'hostInstance' smart constructor.
 data HostInstance = HostInstance'
-  { _hiInstanceId   :: !(Maybe Text)
+  { _hiInstanceId :: !(Maybe Text)
   , _hiInstanceType :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -3198,12 +3198,12 @@ instance NFData HostInstance where
 -- /See:/ 'hostOffering' smart constructor.
 data HostOffering = HostOffering'
   { _hoInstanceFamily :: !(Maybe Text)
-  , _hoCurrencyCode   :: !(Maybe CurrencyCodeValues)
-  , _hoHourlyPrice    :: !(Maybe Text)
-  , _hoUpfrontPrice   :: !(Maybe Text)
-  , _hoOfferingId     :: !(Maybe Text)
-  , _hoDuration       :: !(Maybe Int)
-  , _hoPaymentOption  :: !(Maybe PaymentOption)
+  , _hoCurrencyCode :: !(Maybe CurrencyCodeValues)
+  , _hoHourlyPrice :: !(Maybe Text)
+  , _hoUpfrontPrice :: !(Maybe Text)
+  , _hoOfferingId :: !(Maybe Text)
+  , _hoDuration :: !(Maybe Int)
+  , _hoPaymentOption :: !(Maybe PaymentOption)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -3287,9 +3287,9 @@ instance NFData HostOffering where
 -- /See:/ 'hostProperties' smart constructor.
 data HostProperties = HostProperties'
   { _hpInstanceType :: !(Maybe Text)
-  , _hpTotalVCPUs   :: !(Maybe Int)
-  , _hpCores        :: !(Maybe Int)
-  , _hpSockets      :: !(Maybe Int)
+  , _hpTotalVCPUs :: !(Maybe Int)
+  , _hpCores :: !(Maybe Int)
+  , _hpSockets :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -3348,19 +3348,19 @@ instance NFData HostProperties where
 --
 -- /See:/ 'hostReservation' smart constructor.
 data HostReservation = HostReservation'
-  { _hrState             :: !(Maybe ReservationState)
-  , _hrInstanceFamily    :: !(Maybe Text)
-  , _hrCurrencyCode      :: !(Maybe CurrencyCodeValues)
+  { _hrState :: !(Maybe ReservationState)
+  , _hrInstanceFamily :: !(Maybe Text)
+  , _hrCurrencyCode :: !(Maybe CurrencyCodeValues)
   , _hrHostReservationId :: !(Maybe Text)
-  , _hrStart             :: !(Maybe ISO8601)
-  , _hrHourlyPrice       :: !(Maybe Text)
-  , _hrCount             :: !(Maybe Int)
-  , _hrUpfrontPrice      :: !(Maybe Text)
-  , _hrEnd               :: !(Maybe ISO8601)
-  , _hrHostIdSet         :: !(Maybe [Text])
-  , _hrOfferingId        :: !(Maybe Text)
-  , _hrDuration          :: !(Maybe Int)
-  , _hrPaymentOption     :: !(Maybe PaymentOption)
+  , _hrStart :: !(Maybe ISO8601)
+  , _hrHourlyPrice :: !(Maybe Text)
+  , _hrCount :: !(Maybe Int)
+  , _hrUpfrontPrice :: !(Maybe Text)
+  , _hrEnd :: !(Maybe ISO8601)
+  , _hrHostIdSet :: !(Maybe [Text])
+  , _hrOfferingId :: !(Maybe Text)
+  , _hrDuration :: !(Maybe Int)
+  , _hrPaymentOption :: !(Maybe PaymentOption)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -3494,7 +3494,7 @@ instance NFData HostReservation where
 -- /See:/ 'iamInstanceProfile' smart constructor.
 data IAMInstanceProfile = IAMInstanceProfile'
   { _iapARN :: !(Maybe Text)
-  , _iapId  :: !(Maybe Text)
+  , _iapId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -3533,11 +3533,11 @@ instance NFData IAMInstanceProfile where
 --
 -- /See:/ 'iamInstanceProfileAssociation' smart constructor.
 data IAMInstanceProfileAssociation = IAMInstanceProfileAssociation'
-  { _iapaAssociationId      :: !(Maybe Text)
-  , _iapaInstanceId         :: !(Maybe Text)
-  , _iapaState              :: !(Maybe IAMInstanceProfileAssociationState)
+  { _iapaAssociationId :: !(Maybe Text)
+  , _iapaInstanceId :: !(Maybe Text)
+  , _iapaState :: !(Maybe IAMInstanceProfileAssociationState)
   , _iapaIAMInstanceProfile :: !(Maybe IAMInstanceProfile)
-  , _iapaTimestamp          :: !(Maybe ISO8601)
+  , _iapaTimestamp :: !(Maybe ISO8601)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -3604,7 +3604,7 @@ instance NFData IAMInstanceProfileAssociation where
 --
 -- /See:/ 'iamInstanceProfileSpecification' smart constructor.
 data IAMInstanceProfileSpecification = IAMInstanceProfileSpecification'
-  { _iapsARN  :: !(Maybe Text)
+  { _iapsARN :: !(Maybe Text)
   , _iapsName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -3695,13 +3695,13 @@ instance ToQuery ICMPTypeCode where
 --
 -- /See:/ 'ipPermission' smart constructor.
 data IPPermission = IPPermission'
-  { _ipFromPort         :: !(Maybe Int)
+  { _ipFromPort :: !(Maybe Int)
   , _ipUserIdGroupPairs :: !(Maybe [UserIdGroupPair])
-  , _ipPrefixListIds    :: !(Maybe [PrefixListId])
-  , _ipToPort           :: !(Maybe Int)
-  , _ipIPv6Ranges       :: !(Maybe [IPv6Range])
-  , _ipIPRanges         :: !(Maybe [IPRange])
-  , _ipIPProtocol       :: !Text
+  , _ipPrefixListIds :: !(Maybe [PrefixListId])
+  , _ipToPort :: !(Maybe Int)
+  , _ipIPv6Ranges :: !(Maybe [IPv6Range])
+  , _ipIPRanges :: !(Maybe [IPRange])
+  , _ipIPProtocol :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -3721,7 +3721,7 @@ data IPPermission = IPPermission'
 --
 -- * 'ipIPRanges' - One or more IPv4 ranges.
 --
--- * 'ipIPProtocol' - The IP protocol name (@tcp@ , @udp@ , @icmp@ ) or number (see <http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml Protocol Numbers> ).  [EC2-VPC only] Use @-1@ to specify all protocols. When authorizing security group rules, specifying @-1@ or a protocol number other than @tcp@ , @udp@ , @icmp@ , or @58@ (ICMPv6) allows traffic on all ports, regardless of any port range you specify. For @tcp@ , @udp@ , and @icmp@ , you must specify a port range. For @58@ (ICMPv6), you can optionally specify a port range; if you don't, traffic for all types and codes is allowed when authorizing rules.
+-- * 'ipIPProtocol' - The IP protocol name (@tcp@ , @udp@ , @icmp@ ) or number (see <http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml Protocol Numbers> ).  [EC2-VPC only] Use @-1@ to specify all protocols. When authorizing security group rules, specifying @-1@ or a protocol number other than @tcp@ , @udp@ , @icmp@ , or @58@ (ICMPv6) allows traffic on all ports, regardless of any port range you specify. For @tcp@ , @udp@ , and @icmp@ , you must specify a port range. For @58@ (ICMPv6), you can optionally specify a port range; if you don't, traffic for all types and codes is allowed when authorizing rules. 
 ipPermission
     :: Text -- ^ 'ipIPProtocol'
     -> IPPermission
@@ -3761,7 +3761,7 @@ ipIPv6Ranges = lens _ipIPv6Ranges (\ s a -> s{_ipIPv6Ranges = a}) . _Default . _
 ipIPRanges :: Lens' IPPermission [IPRange]
 ipIPRanges = lens _ipIPRanges (\ s a -> s{_ipIPRanges = a}) . _Default . _Coerce;
 
--- | The IP protocol name (@tcp@ , @udp@ , @icmp@ ) or number (see <http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml Protocol Numbers> ).  [EC2-VPC only] Use @-1@ to specify all protocols. When authorizing security group rules, specifying @-1@ or a protocol number other than @tcp@ , @udp@ , @icmp@ , or @58@ (ICMPv6) allows traffic on all ports, regardless of any port range you specify. For @tcp@ , @udp@ , and @icmp@ , you must specify a port range. For @58@ (ICMPv6), you can optionally specify a port range; if you don't, traffic for all types and codes is allowed when authorizing rules.
+-- | The IP protocol name (@tcp@ , @udp@ , @icmp@ ) or number (see <http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml Protocol Numbers> ).  [EC2-VPC only] Use @-1@ to specify all protocols. When authorizing security group rules, specifying @-1@ or a protocol number other than @tcp@ , @udp@ , @icmp@ , or @58@ (ICMPv6) allows traffic on all ports, regardless of any port range you specify. For @tcp@ , @udp@ , and @icmp@ , you must specify a port range. For @58@ (ICMPv6), you can optionally specify a port range; if you don't, traffic for all types and codes is allowed when authorizing rules. 
 ipIPProtocol :: Lens' IPPermission Text
 ipIPProtocol = lens _ipIPProtocol (\ s a -> s{_ipIPProtocol = a});
 
@@ -3807,7 +3807,7 @@ instance ToQuery IPPermission where
 -- /See:/ 'ipRange' smart constructor.
 data IPRange = IPRange'
   { _iprDescription :: !(Maybe Text)
-  , _iprCidrIP      :: !Text
+  , _iprCidrIP :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -3885,7 +3885,7 @@ instance NFData IPv6CidrBlock where
 --
 -- /See:/ 'ipv6Range' smart constructor.
 data IPv6Range = IPv6Range'
-  { _irCidrIPv6    :: !(Maybe Text)
+  { _irCidrIPv6 :: !(Maybe Text)
   , _irDescription :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -3932,8 +3932,8 @@ instance ToQuery IPv6Range where
 -- /See:/ 'idFormat' smart constructor.
 data IdFormat = IdFormat'
   { _ifUseLongIds :: !(Maybe Bool)
-  , _ifDeadline   :: !(Maybe ISO8601)
-  , _ifResource   :: !(Maybe Text)
+  , _ifDeadline :: !(Maybe ISO8601)
+  , _ifResource :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -3981,30 +3981,30 @@ instance NFData IdFormat where
 --
 -- /See:/ 'image' smart constructor.
 data Image = Image'
-  { _iPlatform            :: !(Maybe PlatformValues)
-  , _iEnaSupport          :: !(Maybe Bool)
-  , _iImageOwnerAlias     :: !(Maybe Text)
-  , _iRAMDiskId           :: !(Maybe Text)
-  , _iKernelId            :: !(Maybe Text)
-  , _iRootDeviceName      :: !(Maybe Text)
-  , _iSRIOVNetSupport     :: !(Maybe Text)
-  , _iName                :: !(Maybe Text)
-  , _iCreationDate        :: !(Maybe Text)
-  , _iProductCodes        :: !(Maybe [ProductCode])
-  , _iStateReason         :: !(Maybe StateReason)
-  , _iDescription         :: !(Maybe Text)
+  { _iPlatform :: !(Maybe PlatformValues)
+  , _iEnaSupport :: !(Maybe Bool)
+  , _iImageOwnerAlias :: !(Maybe Text)
+  , _iRAMDiskId :: !(Maybe Text)
+  , _iKernelId :: !(Maybe Text)
+  , _iRootDeviceName :: !(Maybe Text)
+  , _iSRIOVNetSupport :: !(Maybe Text)
+  , _iName :: !(Maybe Text)
+  , _iCreationDate :: !(Maybe Text)
+  , _iProductCodes :: !(Maybe [ProductCode])
+  , _iStateReason :: !(Maybe StateReason)
+  , _iDescription :: !(Maybe Text)
   , _iBlockDeviceMappings :: !(Maybe [BlockDeviceMapping])
-  , _iTags                :: !(Maybe [Tag])
-  , _iImageId             :: !Text
-  , _iImageLocation       :: !Text
-  , _iState               :: !ImageState
-  , _iOwnerId             :: !Text
-  , _iPublic              :: !Bool
-  , _iArchitecture        :: !ArchitectureValues
-  , _iImageType           :: !ImageTypeValues
-  , _iRootDeviceType      :: !DeviceType
-  , _iVirtualizationType  :: !VirtualizationType
-  , _iHypervisor          :: !HypervisorType
+  , _iTags :: !(Maybe [Tag])
+  , _iImageId :: !Text
+  , _iImageLocation :: !Text
+  , _iState :: !ImageState
+  , _iOwnerId :: !Text
+  , _iPublic :: !Bool
+  , _iArchitecture :: !ArchitectureValues
+  , _iImageType :: !ImageTypeValues
+  , _iRootDeviceType :: !DeviceType
+  , _iVirtualizationType :: !VirtualizationType
+  , _iHypervisor :: !HypervisorType
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -4239,12 +4239,12 @@ instance NFData Image where
 --
 -- /See:/ 'imageDiskContainer' smart constructor.
 data ImageDiskContainer = ImageDiskContainer'
-  { _idcFormat      :: !(Maybe Text)
-  , _idcURL         :: !(Maybe Text)
-  , _idcDeviceName  :: !(Maybe Text)
-  , _idcUserBucket  :: !(Maybe UserBucket)
+  { _idcFormat :: !(Maybe Text)
+  , _idcURL :: !(Maybe Text)
+  , _idcDeviceName :: !(Maybe Text)
+  , _idcUserBucket :: !(Maybe UserBucket)
   , _idcDescription :: !(Maybe Text)
-  , _idcSnapshotId  :: !(Maybe Text)
+  , _idcSnapshotId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -4252,7 +4252,7 @@ data ImageDiskContainer = ImageDiskContainer'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'idcFormat' - The format of the disk image being imported. Valid values: @RAW@ | @VHD@ | @VMDK@ | @OVA@
+-- * 'idcFormat' - The format of the disk image being imported. Valid values: @RAW@ | @VHD@ | @VMDK@ | @OVA@ 
 --
 -- * 'idcURL' - The URL to the Amazon S3-based disk image being imported. The URL can either be a https URL (https://..) or an Amazon S3 URL (s3://..)
 --
@@ -4276,7 +4276,7 @@ imageDiskContainer =
   }
 
 
--- | The format of the disk image being imported. Valid values: @RAW@ | @VHD@ | @VMDK@ | @OVA@
+-- | The format of the disk image being imported. Valid values: @RAW@ | @VHD@ | @VMDK@ | @OVA@ 
 idcFormat :: Lens' ImageDiskContainer (Maybe Text)
 idcFormat = lens _idcFormat (\ s a -> s{_idcFormat = a});
 
@@ -4319,17 +4319,17 @@ instance ToQuery ImageDiskContainer where
 --
 -- /See:/ 'importImageTask' smart constructor.
 data ImportImageTask = ImportImageTask'
-  { _iitStatus          :: !(Maybe Text)
-  , _iitHypervisor      :: !(Maybe Text)
-  , _iitPlatform        :: !(Maybe Text)
-  , _iitProgress        :: !(Maybe Text)
-  , _iitLicenseType     :: !(Maybe Text)
+  { _iitStatus :: !(Maybe Text)
+  , _iitHypervisor :: !(Maybe Text)
+  , _iitPlatform :: !(Maybe Text)
+  , _iitProgress :: !(Maybe Text)
+  , _iitLicenseType :: !(Maybe Text)
   , _iitSnapshotDetails :: !(Maybe [SnapshotDetail])
-  , _iitStatusMessage   :: !(Maybe Text)
-  , _iitImageId         :: !(Maybe Text)
-  , _iitImportTaskId    :: !(Maybe Text)
-  , _iitArchitecture    :: !(Maybe Text)
-  , _iitDescription     :: !(Maybe Text)
+  , _iitStatusMessage :: !(Maybe Text)
+  , _iitImageId :: !(Maybe Text)
+  , _iitImportTaskId :: !(Maybe Text)
+  , _iitArchitecture :: !(Maybe Text)
+  , _iitDescription :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -4339,7 +4339,7 @@ data ImportImageTask = ImportImageTask'
 --
 -- * 'iitStatus' - A brief status for the import image task.
 --
--- * 'iitHypervisor' - The target hypervisor for the import task. Valid values: @xen@
+-- * 'iitHypervisor' - The target hypervisor for the import task. Valid values: @xen@ 
 --
 -- * 'iitPlatform' - The description string for the import image task.
 --
@@ -4355,7 +4355,7 @@ data ImportImageTask = ImportImageTask'
 --
 -- * 'iitImportTaskId' - The ID of the import image task.
 --
--- * 'iitArchitecture' - The architecture of the virtual machine. Valid values: @i386@ | @x86_64@
+-- * 'iitArchitecture' - The architecture of the virtual machine. Valid values: @i386@ | @x86_64@ 
 --
 -- * 'iitDescription' - A description of the import task.
 importImageTask
@@ -4380,7 +4380,7 @@ importImageTask =
 iitStatus :: Lens' ImportImageTask (Maybe Text)
 iitStatus = lens _iitStatus (\ s a -> s{_iitStatus = a});
 
--- | The target hypervisor for the import task. Valid values: @xen@
+-- | The target hypervisor for the import task. Valid values: @xen@ 
 iitHypervisor :: Lens' ImportImageTask (Maybe Text)
 iitHypervisor = lens _iitHypervisor (\ s a -> s{_iitHypervisor = a});
 
@@ -4412,7 +4412,7 @@ iitImageId = lens _iitImageId (\ s a -> s{_iitImageId = a});
 iitImportTaskId :: Lens' ImportImageTask (Maybe Text)
 iitImportTaskId = lens _iitImportTaskId (\ s a -> s{_iitImportTaskId = a});
 
--- | The architecture of the virtual machine. Valid values: @i386@ | @x86_64@
+-- | The architecture of the virtual machine. Valid values: @i386@ | @x86_64@ 
 iitArchitecture :: Lens' ImportImageTask (Maybe Text)
 iitArchitecture = lens _iitArchitecture (\ s a -> s{_iitArchitecture = a});
 
@@ -4446,17 +4446,17 @@ instance NFData ImportImageTask where
 --
 -- /See:/ 'importInstanceLaunchSpecification' smart constructor.
 data ImportInstanceLaunchSpecification = ImportInstanceLaunchSpecification'
-  { _iilsAdditionalInfo                    :: !(Maybe Text)
-  , _iilsGroupNames                        :: !(Maybe [Text])
-  , _iilsSubnetId                          :: !(Maybe Text)
-  , _iilsInstanceType                      :: !(Maybe InstanceType)
-  , _iilsGroupIds                          :: !(Maybe [Text])
-  , _iilsUserData                          :: !(Maybe UserData)
-  , _iilsMonitoring                        :: !(Maybe Bool)
-  , _iilsPrivateIPAddress                  :: !(Maybe Text)
+  { _iilsAdditionalInfo :: !(Maybe Text)
+  , _iilsGroupNames :: !(Maybe [Text])
+  , _iilsSubnetId :: !(Maybe Text)
+  , _iilsInstanceType :: !(Maybe InstanceType)
+  , _iilsGroupIds :: !(Maybe [Text])
+  , _iilsUserData :: !(Maybe UserData)
+  , _iilsMonitoring :: !(Maybe Bool)
+  , _iilsPrivateIPAddress :: !(Maybe Text)
   , _iilsInstanceInitiatedShutdownBehavior :: !(Maybe ShutdownBehavior)
-  , _iilsArchitecture                      :: !(Maybe ArchitectureValues)
-  , _iilsPlacement                         :: !(Maybe Placement)
+  , _iilsArchitecture :: !(Maybe ArchitectureValues)
+  , _iilsPlacement :: !(Maybe Placement)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -4577,10 +4577,10 @@ instance ToQuery ImportInstanceLaunchSpecification
 --
 -- /See:/ 'importInstanceTaskDetails' smart constructor.
 data ImportInstanceTaskDetails = ImportInstanceTaskDetails'
-  { _iitdInstanceId  :: !(Maybe Text)
-  , _iitdPlatform    :: !(Maybe PlatformValues)
+  { _iitdInstanceId :: !(Maybe Text)
+  , _iitdPlatform :: !(Maybe PlatformValues)
   , _iitdDescription :: !(Maybe Text)
-  , _iitdVolumes     :: ![ImportInstanceVolumeDetailItem]
+  , _iitdVolumes :: ![ImportInstanceVolumeDetailItem]
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -4640,13 +4640,13 @@ instance NFData ImportInstanceTaskDetails where
 --
 -- /See:/ 'importInstanceVolumeDetailItem' smart constructor.
 data ImportInstanceVolumeDetailItem = ImportInstanceVolumeDetailItem'
-  { _iivdiStatusMessage    :: !(Maybe Text)
-  , _iivdiDescription      :: !(Maybe Text)
+  { _iivdiStatusMessage :: !(Maybe Text)
+  , _iivdiDescription :: !(Maybe Text)
   , _iivdiAvailabilityZone :: !Text
-  , _iivdiBytesConverted   :: !Integer
-  , _iivdiImage            :: !DiskImageDescription
-  , _iivdiStatus           :: !Text
-  , _iivdiVolume           :: !DiskImageVolumeDescription
+  , _iivdiBytesConverted :: !Integer
+  , _iivdiImage :: !DiskImageDescription
+  , _iivdiStatus :: !Text
+  , _iivdiVolume :: !DiskImageVolumeDescription
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -4736,8 +4736,8 @@ instance NFData ImportInstanceVolumeDetailItem where
 -- /See:/ 'importSnapshotTask' smart constructor.
 data ImportSnapshotTask = ImportSnapshotTask'
   { _istSnapshotTaskDetail :: !(Maybe SnapshotTaskDetail)
-  , _istImportTaskId       :: !(Maybe Text)
-  , _istDescription        :: !(Maybe Text)
+  , _istImportTaskId :: !(Maybe Text)
+  , _istDescription :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -4789,11 +4789,11 @@ instance NFData ImportSnapshotTask where
 --
 -- /See:/ 'importVolumeTaskDetails' smart constructor.
 data ImportVolumeTaskDetails = ImportVolumeTaskDetails'
-  { _ivtdDescription      :: !(Maybe Text)
+  { _ivtdDescription :: !(Maybe Text)
   , _ivtdAvailabilityZone :: !Text
-  , _ivtdBytesConverted   :: !Integer
-  , _ivtdImage            :: !DiskImageDescription
-  , _ivtdVolume           :: !DiskImageVolumeDescription
+  , _ivtdBytesConverted :: !Integer
+  , _ivtdImage :: !DiskImageDescription
+  , _ivtdVolume :: !DiskImageVolumeDescription
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -4864,45 +4864,45 @@ instance NFData ImportVolumeTaskDetails where
 --
 -- /See:/ 'instance'' smart constructor.
 data Instance = Instance'
-  { _insPublicDNSName          :: !(Maybe Text)
-  , _insPlatform               :: !(Maybe PlatformValues)
-  , _insSecurityGroups         :: !(Maybe [GroupIdentifier])
-  , _insClientToken            :: !(Maybe Text)
-  , _insEnaSupport             :: !(Maybe Bool)
-  , _insSourceDestCheck        :: !(Maybe Bool)
+  { _insPublicDNSName :: !(Maybe Text)
+  , _insPlatform :: !(Maybe PlatformValues)
+  , _insSecurityGroups :: !(Maybe [GroupIdentifier])
+  , _insClientToken :: !(Maybe Text)
+  , _insEnaSupport :: !(Maybe Bool)
+  , _insSourceDestCheck :: !(Maybe Bool)
   , _insElasticGpuAssociations :: !(Maybe [ElasticGpuAssociation])
-  , _insVPCId                  :: !(Maybe Text)
-  , _insKeyName                :: !(Maybe Text)
-  , _insNetworkInterfaces      :: !(Maybe [InstanceNetworkInterface])
-  , _insRAMDiskId              :: !(Maybe Text)
-  , _insSubnetId               :: !(Maybe Text)
-  , _insKernelId               :: !(Maybe Text)
-  , _insRootDeviceName         :: !(Maybe Text)
-  , _insSRIOVNetSupport        :: !(Maybe Text)
-  , _insEBSOptimized           :: !(Maybe Bool)
-  , _insStateTransitionReason  :: !(Maybe Text)
-  , _insInstanceLifecycle      :: !(Maybe InstanceLifecycleType)
-  , _insIAMInstanceProfile     :: !(Maybe IAMInstanceProfile)
-  , _insPrivateIPAddress       :: !(Maybe Text)
-  , _insProductCodes           :: !(Maybe [ProductCode])
-  , _insSpotInstanceRequestId  :: !(Maybe Text)
-  , _insPrivateDNSName         :: !(Maybe Text)
-  , _insStateReason            :: !(Maybe StateReason)
-  , _insBlockDeviceMappings    :: !(Maybe [InstanceBlockDeviceMapping])
-  , _insPublicIPAddress        :: !(Maybe Text)
-  , _insTags                   :: !(Maybe [Tag])
-  , _insInstanceId             :: !Text
-  , _insImageId                :: !Text
-  , _insAMILaunchIndex         :: !Int
-  , _insInstanceType           :: !InstanceType
-  , _insLaunchTime             :: !ISO8601
-  , _insPlacement              :: !Placement
-  , _insMonitoring             :: !Monitoring
-  , _insArchitecture           :: !ArchitectureValues
-  , _insRootDeviceType         :: !DeviceType
-  , _insVirtualizationType     :: !VirtualizationType
-  , _insHypervisor             :: !HypervisorType
-  , _insState                  :: !InstanceState
+  , _insVPCId :: !(Maybe Text)
+  , _insKeyName :: !(Maybe Text)
+  , _insNetworkInterfaces :: !(Maybe [InstanceNetworkInterface])
+  , _insRAMDiskId :: !(Maybe Text)
+  , _insSubnetId :: !(Maybe Text)
+  , _insKernelId :: !(Maybe Text)
+  , _insRootDeviceName :: !(Maybe Text)
+  , _insSRIOVNetSupport :: !(Maybe Text)
+  , _insEBSOptimized :: !(Maybe Bool)
+  , _insStateTransitionReason :: !(Maybe Text)
+  , _insInstanceLifecycle :: !(Maybe InstanceLifecycleType)
+  , _insIAMInstanceProfile :: !(Maybe IAMInstanceProfile)
+  , _insPrivateIPAddress :: !(Maybe Text)
+  , _insProductCodes :: !(Maybe [ProductCode])
+  , _insSpotInstanceRequestId :: !(Maybe Text)
+  , _insPrivateDNSName :: !(Maybe Text)
+  , _insStateReason :: !(Maybe StateReason)
+  , _insBlockDeviceMappings :: !(Maybe [InstanceBlockDeviceMapping])
+  , _insPublicIPAddress :: !(Maybe Text)
+  , _insTags :: !(Maybe [Tag])
+  , _insInstanceId :: !Text
+  , _insImageId :: !Text
+  , _insAMILaunchIndex :: !Int
+  , _insInstanceType :: !InstanceType
+  , _insLaunchTime :: !ISO8601
+  , _insPlacement :: !Placement
+  , _insMonitoring :: !Monitoring
+  , _insArchitecture :: !ArchitectureValues
+  , _insRootDeviceType :: !DeviceType
+  , _insVirtualizationType :: !VirtualizationType
+  , _insHypervisor :: !HypervisorType
+  , _insState :: !InstanceState
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -5264,7 +5264,7 @@ instance NFData Instance where
 --
 -- /See:/ 'instanceBlockDeviceMapping' smart constructor.
 data InstanceBlockDeviceMapping = InstanceBlockDeviceMapping'
-  { _ibdmEBS        :: !(Maybe EBSInstanceBlockDevice)
+  { _ibdmEBS :: !(Maybe EBSInstanceBlockDevice)
   , _ibdmDeviceName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -5306,9 +5306,9 @@ instance NFData InstanceBlockDeviceMapping where
 -- /See:/ 'instanceBlockDeviceMappingSpecification' smart constructor.
 data InstanceBlockDeviceMappingSpecification = InstanceBlockDeviceMappingSpecification'
   { _ibdmsVirtualName :: !(Maybe Text)
-  , _ibdmsNoDevice    :: !(Maybe Text)
-  , _ibdmsEBS         :: !(Maybe EBSInstanceBlockDeviceSpecification)
-  , _ibdmsDeviceName  :: !(Maybe Text)
+  , _ibdmsNoDevice :: !(Maybe Text)
+  , _ibdmsEBS :: !(Maybe EBSInstanceBlockDeviceSpecification)
+  , _ibdmsDeviceName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -5374,8 +5374,8 @@ instance ToQuery
 -- /See:/ 'instanceCapacity' smart constructor.
 data InstanceCapacity = InstanceCapacity'
   { _icAvailableCapacity :: !(Maybe Int)
-  , _icInstanceType      :: !(Maybe Text)
-  , _icTotalCapacity     :: !(Maybe Int)
+  , _icInstanceType :: !(Maybe Text)
+  , _icTotalCapacity :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -5427,7 +5427,7 @@ instance NFData InstanceCapacity where
 --
 -- /See:/ 'instanceCount' smart constructor.
 data InstanceCount = InstanceCount'
-  { _icState         :: !(Maybe ListingState)
+  { _icState :: !(Maybe ListingState)
   , _icInstanceCount :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -5468,7 +5468,7 @@ instance NFData InstanceCount where
 -- /See:/ 'instanceExportDetails' smart constructor.
 data InstanceExportDetails = InstanceExportDetails'
   { _iedTargetEnvironment :: !(Maybe ExportEnvironment)
-  , _iedInstanceId        :: !(Maybe Text)
+  , _iedInstanceId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -5586,21 +5586,21 @@ instance NFData InstanceMonitoring where
 --
 -- /See:/ 'instanceNetworkInterface' smart constructor.
 data InstanceNetworkInterface = InstanceNetworkInterface'
-  { _iniGroups             :: !(Maybe [GroupIdentifier])
-  , _iniStatus             :: !(Maybe NetworkInterfaceStatus)
+  { _iniGroups :: !(Maybe [GroupIdentifier])
+  , _iniStatus :: !(Maybe NetworkInterfaceStatus)
   , _iniPrivateIPAddresses :: !(Maybe [InstancePrivateIPAddress])
-  , _iniSourceDestCheck    :: !(Maybe Bool)
-  , _iniVPCId              :: !(Maybe Text)
+  , _iniSourceDestCheck :: !(Maybe Bool)
+  , _iniVPCId :: !(Maybe Text)
   , _iniNetworkInterfaceId :: !(Maybe Text)
-  , _iniSubnetId           :: !(Maybe Text)
-  , _iniMACAddress         :: !(Maybe Text)
-  , _iniAttachment         :: !(Maybe InstanceNetworkInterfaceAttachment)
-  , _iniOwnerId            :: !(Maybe Text)
-  , _iniPrivateIPAddress   :: !(Maybe Text)
-  , _iniPrivateDNSName     :: !(Maybe Text)
-  , _iniDescription        :: !(Maybe Text)
-  , _iniAssociation        :: !(Maybe InstanceNetworkInterfaceAssociation)
-  , _iniIPv6Addresses      :: !(Maybe [InstanceIPv6Address])
+  , _iniSubnetId :: !(Maybe Text)
+  , _iniMACAddress :: !(Maybe Text)
+  , _iniAttachment :: !(Maybe InstanceNetworkInterfaceAttachment)
+  , _iniOwnerId :: !(Maybe Text)
+  , _iniPrivateIPAddress :: !(Maybe Text)
+  , _iniPrivateDNSName :: !(Maybe Text)
+  , _iniDescription :: !(Maybe Text)
+  , _iniAssociation :: !(Maybe InstanceNetworkInterfaceAssociation)
+  , _iniIPv6Addresses :: !(Maybe [InstanceIPv6Address])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -5754,8 +5754,8 @@ instance NFData InstanceNetworkInterface where
 -- /See:/ 'instanceNetworkInterfaceAssociation' smart constructor.
 data InstanceNetworkInterfaceAssociation = InstanceNetworkInterfaceAssociation'
   { _iniaPublicDNSName :: !(Maybe Text)
-  , _iniaIPOwnerId     :: !(Maybe Text)
-  , _iniaPublicIP      :: !(Maybe Text)
+  , _iniaIPOwnerId :: !(Maybe Text)
+  , _iniaPublicIP :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -5809,11 +5809,11 @@ instance NFData InstanceNetworkInterfaceAssociation
 --
 -- /See:/ 'instanceNetworkInterfaceAttachment' smart constructor.
 data InstanceNetworkInterfaceAttachment = InstanceNetworkInterfaceAttachment'
-  { _iniaStatus              :: !(Maybe AttachmentStatus)
+  { _iniaStatus :: !(Maybe AttachmentStatus)
   , _iniaDeleteOnTermination :: !(Maybe Bool)
-  , _iniaAttachmentId        :: !(Maybe Text)
-  , _iniaAttachTime          :: !(Maybe ISO8601)
-  , _iniaDeviceIndex         :: !(Maybe Int)
+  , _iniaAttachmentId :: !(Maybe Text)
+  , _iniaAttachTime :: !(Maybe ISO8601)
+  , _iniaDeviceIndex :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -6052,10 +6052,10 @@ instance ToQuery
 --
 -- /See:/ 'instancePrivateIPAddress' smart constructor.
 data InstancePrivateIPAddress = InstancePrivateIPAddress'
-  { _ipiaPrimary          :: !(Maybe Bool)
+  { _ipiaPrimary :: !(Maybe Bool)
   , _ipiaPrivateIPAddress :: !(Maybe Text)
-  , _ipiaPrivateDNSName   :: !(Maybe Text)
-  , _ipiaAssociation      :: !(Maybe InstanceNetworkInterfaceAssociation)
+  , _ipiaPrivateDNSName :: !(Maybe Text)
+  , _ipiaAssociation :: !(Maybe InstanceNetworkInterfaceAssociation)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -6125,7 +6125,7 @@ data InstanceState = InstanceState'
 --
 -- * 'isName' - The current state of the instance.
 --
--- * 'isCode' - The low byte represents the state. The high byte is an opaque internal value and should be ignored.     * @0@ : @pending@      * @16@ : @running@      * @32@ : @shutting-down@      * @48@ : @terminated@      * @64@ : @stopping@      * @80@ : @stopped@
+-- * 'isCode' - The low byte represents the state. The high byte is an opaque internal value and should be ignored.     * @0@ : @pending@      * @16@ : @running@      * @32@ : @shutting-down@      * @48@ : @terminated@      * @64@ : @stopping@      * @80@ : @stopped@ 
 instanceState
     :: InstanceStateName -- ^ 'isName'
     -> Int -- ^ 'isCode'
@@ -6138,7 +6138,7 @@ instanceState pName_ pCode_ =
 isName :: Lens' InstanceState InstanceStateName
 isName = lens _isName (\ s a -> s{_isName = a});
 
--- | The low byte represents the state. The high byte is an opaque internal value and should be ignored.     * @0@ : @pending@      * @16@ : @running@      * @32@ : @shutting-down@      * @48@ : @terminated@      * @64@ : @stopping@      * @80@ : @stopped@
+-- | The low byte represents the state. The high byte is an opaque internal value and should be ignored.     * @0@ : @pending@      * @16@ : @running@      * @32@ : @shutting-down@      * @48@ : @terminated@      * @64@ : @stopping@      * @80@ : @stopped@ 
 isCode :: Lens' InstanceState Int
 isCode = lens _isCode (\ s a -> s{_isCode = a});
 
@@ -6156,8 +6156,8 @@ instance NFData InstanceState where
 --
 -- /See:/ 'instanceStateChange' smart constructor.
 data InstanceStateChange = InstanceStateChange'
-  { _iscInstanceId    :: !(Maybe Text)
-  , _iscCurrentState  :: !(Maybe InstanceState)
+  { _iscInstanceId :: !(Maybe Text)
+  , _iscCurrentState :: !(Maybe InstanceState)
   , _iscPreviousState :: !(Maybe InstanceState)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -6209,12 +6209,12 @@ instance NFData InstanceStateChange where
 --
 -- /See:/ 'instanceStatus' smart constructor.
 data InstanceStatus = InstanceStatus'
-  { _isInstanceId       :: !(Maybe Text)
-  , _isSystemStatus     :: !(Maybe InstanceStatusSummary)
-  , _isEvents           :: !(Maybe [InstanceStatusEvent])
+  { _isInstanceId :: !(Maybe Text)
+  , _isSystemStatus :: !(Maybe InstanceStatusSummary)
+  , _isEvents :: !(Maybe [InstanceStatusEvent])
   , _isAvailabilityZone :: !(Maybe Text)
-  , _isInstanceStatus   :: !(Maybe InstanceStatusSummary)
-  , _isInstanceState    :: !(Maybe InstanceState)
+  , _isInstanceStatus :: !(Maybe InstanceStatusSummary)
+  , _isInstanceState :: !(Maybe InstanceState)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -6290,9 +6290,9 @@ instance NFData InstanceStatus where
 --
 -- /See:/ 'instanceStatusDetails' smart constructor.
 data InstanceStatusDetails = InstanceStatusDetails'
-  { _isdStatus        :: !(Maybe StatusType)
+  { _isdStatus :: !(Maybe StatusType)
   , _isdImpairedSince :: !(Maybe ISO8601)
-  , _isdName          :: !(Maybe StatusName)
+  , _isdName :: !(Maybe StatusName)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -6340,10 +6340,10 @@ instance NFData InstanceStatusDetails where
 --
 -- /See:/ 'instanceStatusEvent' smart constructor.
 data InstanceStatusEvent = InstanceStatusEvent'
-  { _iseNotBefore   :: !(Maybe ISO8601)
-  , _iseCode        :: !(Maybe EventCode)
+  { _iseNotBefore :: !(Maybe ISO8601)
+  , _iseCode :: !(Maybe EventCode)
   , _iseDescription :: !(Maybe Text)
-  , _iseNotAfter    :: !(Maybe ISO8601)
+  , _iseNotAfter :: !(Maybe ISO8601)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -6403,7 +6403,7 @@ instance NFData InstanceStatusEvent where
 -- /See:/ 'instanceStatusSummary' smart constructor.
 data InstanceStatusSummary = InstanceStatusSummary'
   { _issDetails :: !(Maybe [InstanceStatusDetails])
-  , _issStatus  :: !SummaryStatus
+  , _issStatus :: !SummaryStatus
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -6446,8 +6446,8 @@ instance NFData InstanceStatusSummary where
 --
 -- /See:/ 'internetGateway' smart constructor.
 data InternetGateway = InternetGateway'
-  { _igAttachments       :: !(Maybe [InternetGatewayAttachment])
-  , _igTags              :: !(Maybe [Tag])
+  { _igAttachments :: !(Maybe [InternetGatewayAttachment])
+  , _igTags :: !(Maybe [Tag])
   , _igInternetGatewayId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -6548,7 +6548,7 @@ instance NFData InternetGatewayAttachment where
 -- /See:/ 'keyPairInfo' smart constructor.
 data KeyPairInfo = KeyPairInfo'
   { _kpiKeyFingerprint :: !(Maybe Text)
-  , _kpiKeyName        :: !(Maybe Text)
+  , _kpiKeyName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -6587,7 +6587,7 @@ instance NFData KeyPairInfo where
 --
 -- /See:/ 'launchPermission' smart constructor.
 data LaunchPermission = LaunchPermission'
-  { _lGroup  :: !(Maybe PermissionGroup)
+  { _lGroup :: !(Maybe PermissionGroup)
   , _lUserId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -6632,7 +6632,7 @@ instance ToQuery LaunchPermission where
 -- /See:/ 'launchPermissionModifications' smart constructor.
 data LaunchPermissionModifications = LaunchPermissionModifications'
   { _lRemove :: !(Maybe [LaunchPermission])
-  , _lAdd    :: !(Maybe [LaunchPermission])
+  , _lAdd :: !(Maybe [LaunchPermission])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -6673,21 +6673,21 @@ instance ToQuery LaunchPermissionModifications where
 --
 -- /See:/ 'launchSpecification' smart constructor.
 data LaunchSpecification = LaunchSpecification'
-  { _lsSecurityGroups      :: !(Maybe [GroupIdentifier])
-  , _lsKeyName             :: !(Maybe Text)
-  , _lsNetworkInterfaces   :: !(Maybe [InstanceNetworkInterfaceSpecification])
-  , _lsRAMDiskId           :: !(Maybe Text)
-  , _lsSubnetId            :: !(Maybe Text)
-  , _lsKernelId            :: !(Maybe Text)
-  , _lsInstanceType        :: !(Maybe InstanceType)
-  , _lsEBSOptimized        :: !(Maybe Bool)
-  , _lsUserData            :: !(Maybe Text)
-  , _lsMonitoring          :: !(Maybe RunInstancesMonitoringEnabled)
-  , _lsIAMInstanceProfile  :: !(Maybe IAMInstanceProfileSpecification)
-  , _lsImageId             :: !(Maybe Text)
-  , _lsAddressingType      :: !(Maybe Text)
+  { _lsSecurityGroups :: !(Maybe [GroupIdentifier])
+  , _lsKeyName :: !(Maybe Text)
+  , _lsNetworkInterfaces :: !(Maybe [InstanceNetworkInterfaceSpecification])
+  , _lsRAMDiskId :: !(Maybe Text)
+  , _lsSubnetId :: !(Maybe Text)
+  , _lsKernelId :: !(Maybe Text)
+  , _lsInstanceType :: !(Maybe InstanceType)
+  , _lsEBSOptimized :: !(Maybe Bool)
+  , _lsUserData :: !(Maybe Text)
+  , _lsMonitoring :: !(Maybe RunInstancesMonitoringEnabled)
+  , _lsIAMInstanceProfile :: !(Maybe IAMInstanceProfileSpecification)
+  , _lsImageId :: !(Maybe Text)
+  , _lsAddressingType :: !(Maybe Text)
   , _lsBlockDeviceMappings :: !(Maybe [BlockDeviceMapping])
-  , _lsPlacement           :: !(Maybe SpotPlacement)
+  , _lsPlacement :: !(Maybe SpotPlacement)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -6709,7 +6709,7 @@ data LaunchSpecification = LaunchSpecification'
 --
 -- * 'lsInstanceType' - The instance type.
 --
--- * 'lsEBSOptimized' - Indicates whether the instance is optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS Optimized instance. Default: @false@
+-- * 'lsEBSOptimized' - Indicates whether the instance is optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS Optimized instance. Default: @false@ 
 --
 -- * 'lsUserData' - The user data to make available to the instances. If you are using an AWS SDK or command line tool, Base64-encoding is performed for you, and you can load the text from a file. Otherwise, you must provide Base64-encoded text.
 --
@@ -6774,7 +6774,7 @@ lsKernelId = lens _lsKernelId (\ s a -> s{_lsKernelId = a});
 lsInstanceType :: Lens' LaunchSpecification (Maybe InstanceType)
 lsInstanceType = lens _lsInstanceType (\ s a -> s{_lsInstanceType = a});
 
--- | Indicates whether the instance is optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS Optimized instance. Default: @false@
+-- | Indicates whether the instance is optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS Optimized instance. Default: @false@ 
 lsEBSOptimized :: Lens' LaunchSpecification (Maybe Bool)
 lsEBSOptimized = lens _lsEBSOptimized (\ s a -> s{_lsEBSOptimized = a});
 
@@ -6841,7 +6841,7 @@ instance NFData LaunchSpecification where
 -- /See:/ 'loadBalancersConfig' smart constructor.
 data LoadBalancersConfig = LoadBalancersConfig'
   { _lbcClassicLoadBalancersConfig :: !(Maybe ClassicLoadBalancersConfig)
-  , _lbcTargetGroupsConfig         :: !(Maybe TargetGroupsConfig)
+  , _lbcTargetGroupsConfig :: !(Maybe TargetGroupsConfig)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -6890,7 +6890,7 @@ instance ToQuery LoadBalancersConfig where
 --
 -- /See:/ 'loadPermission' smart constructor.
 data LoadPermission = LoadPermission'
-  { _lpGroup  :: !(Maybe PermissionGroup)
+  { _lpGroup :: !(Maybe PermissionGroup)
   , _lpUserId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -6931,7 +6931,7 @@ instance NFData LoadPermission where
 -- /See:/ 'loadPermissionModifications' smart constructor.
 data LoadPermissionModifications = LoadPermissionModifications'
   { _lpmRemove :: !(Maybe [LoadPermissionRequest])
-  , _lpmAdd    :: !(Maybe [LoadPermissionRequest])
+  , _lpmAdd :: !(Maybe [LoadPermissionRequest])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -6972,7 +6972,7 @@ instance ToQuery LoadPermissionModifications where
 --
 -- /See:/ 'loadPermissionRequest' smart constructor.
 data LoadPermissionRequest = LoadPermissionRequest'
-  { _lprGroup  :: !(Maybe PermissionGroup)
+  { _lprGroup :: !(Maybe PermissionGroup)
   , _lprUserId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -7045,7 +7045,7 @@ instance NFData Monitoring where
 -- /See:/ 'movingAddressStatus' smart constructor.
 data MovingAddressStatus = MovingAddressStatus'
   { _masMoveStatus :: !(Maybe MoveStatus)
-  , _masPublicIP   :: !(Maybe Text)
+  , _masPublicIP :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -7085,17 +7085,17 @@ instance NFData MovingAddressStatus where
 --
 -- /See:/ 'natGateway' smart constructor.
 data NatGateway = NatGateway'
-  { _ngState                :: !(Maybe NatGatewayState)
-  , _ngFailureCode          :: !(Maybe Text)
-  , _ngVPCId                :: !(Maybe Text)
-  , _ngFailureMessage       :: !(Maybe Text)
-  , _ngNatGatewayId         :: !(Maybe Text)
-  , _ngSubnetId             :: !(Maybe Text)
-  , _ngDeleteTime           :: !(Maybe ISO8601)
+  { _ngState :: !(Maybe NatGatewayState)
+  , _ngFailureCode :: !(Maybe Text)
+  , _ngVPCId :: !(Maybe Text)
+  , _ngFailureMessage :: !(Maybe Text)
+  , _ngNatGatewayId :: !(Maybe Text)
+  , _ngSubnetId :: !(Maybe Text)
+  , _ngDeleteTime :: !(Maybe ISO8601)
   , _ngProvisionedBandwidth :: !(Maybe ProvisionedBandwidth)
-  , _ngNatGatewayAddresses  :: !(Maybe [NatGatewayAddress])
-  , _ngCreateTime           :: !(Maybe ISO8601)
-  , _ngTags                 :: !(Maybe [Tag])
+  , _ngNatGatewayAddresses :: !(Maybe [NatGatewayAddress])
+  , _ngCreateTime :: !(Maybe ISO8601)
+  , _ngTags :: !(Maybe [Tag])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -7214,10 +7214,10 @@ instance NFData NatGateway where
 --
 -- /See:/ 'natGatewayAddress' smart constructor.
 data NatGatewayAddress = NatGatewayAddress'
-  { _ngaPrivateIP          :: !(Maybe Text)
-  , _ngaAllocationId       :: !(Maybe Text)
+  { _ngaPrivateIP :: !(Maybe Text)
+  , _ngaAllocationId :: !(Maybe Text)
   , _ngaNetworkInterfaceId :: !(Maybe Text)
-  , _ngaPublicIP           :: !(Maybe Text)
+  , _ngaPublicIP :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -7276,12 +7276,12 @@ instance NFData NatGatewayAddress where
 --
 -- /See:/ 'networkACL' smart constructor.
 data NetworkACL = NetworkACL'
-  { _naEntries      :: !(Maybe [NetworkACLEntry])
+  { _naEntries :: !(Maybe [NetworkACLEntry])
   , _naNetworkACLId :: !(Maybe Text)
-  , _naVPCId        :: !(Maybe Text)
+  , _naVPCId :: !(Maybe Text)
   , _naAssociations :: !(Maybe [NetworkACLAssociation])
-  , _naTags         :: !(Maybe [Tag])
-  , _naIsDefault    :: !(Maybe Bool)
+  , _naTags :: !(Maybe [Tag])
+  , _naIsDefault :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -7362,8 +7362,8 @@ instance NFData NetworkACL where
 --
 -- /See:/ 'networkACLAssociation' smart constructor.
 data NetworkACLAssociation = NetworkACLAssociation'
-  { _naaNetworkACLId            :: !(Maybe Text)
-  , _naaSubnetId                :: !(Maybe Text)
+  { _naaNetworkACLId :: !(Maybe Text)
+  , _naaSubnetId :: !(Maybe Text)
   , _naaNetworkACLAssociationId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -7416,13 +7416,13 @@ instance NFData NetworkACLAssociation where
 -- /See:/ 'networkACLEntry' smart constructor.
 data NetworkACLEntry = NetworkACLEntry'
   { _naeIPv6CidrBlock :: !(Maybe Text)
-  , _naeICMPTypeCode  :: !(Maybe ICMPTypeCode)
-  , _naeRuleNumber    :: !(Maybe Int)
-  , _naeRuleAction    :: !(Maybe RuleAction)
-  , _naeProtocol      :: !(Maybe Text)
-  , _naePortRange     :: !(Maybe PortRange)
-  , _naeCidrBlock     :: !(Maybe Text)
-  , _naeEgress        :: !(Maybe Bool)
+  , _naeICMPTypeCode :: !(Maybe ICMPTypeCode)
+  , _naeRuleNumber :: !(Maybe Int)
+  , _naeRuleAction :: !(Maybe RuleAction)
+  , _naeProtocol :: !(Maybe Text)
+  , _naePortRange :: !(Maybe PortRange)
+  , _naeCidrBlock :: !(Maybe Text)
+  , _naeEgress :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -7513,26 +7513,26 @@ instance NFData NetworkACLEntry where
 --
 -- /See:/ 'networkInterface' smart constructor.
 data NetworkInterface = NetworkInterface'
-  { _niGroups             :: !(Maybe [GroupIdentifier])
-  , _niStatus             :: !(Maybe NetworkInterfaceStatus)
+  { _niGroups :: !(Maybe [GroupIdentifier])
+  , _niStatus :: !(Maybe NetworkInterfaceStatus)
   , _niPrivateIPAddresses :: !(Maybe [NetworkInterfacePrivateIPAddress])
-  , _niSourceDestCheck    :: !(Maybe Bool)
-  , _niInterfaceType      :: !(Maybe NetworkInterfaceType)
-  , _niVPCId              :: !(Maybe Text)
-  , _niTagSet             :: !(Maybe [Tag])
-  , _niRequesterManaged   :: !(Maybe Bool)
+  , _niSourceDestCheck :: !(Maybe Bool)
+  , _niInterfaceType :: !(Maybe NetworkInterfaceType)
+  , _niVPCId :: !(Maybe Text)
+  , _niTagSet :: !(Maybe [Tag])
+  , _niRequesterManaged :: !(Maybe Bool)
   , _niNetworkInterfaceId :: !(Maybe Text)
-  , _niSubnetId           :: !(Maybe Text)
-  , _niMACAddress         :: !(Maybe Text)
-  , _niAttachment         :: !(Maybe NetworkInterfaceAttachment)
-  , _niOwnerId            :: !(Maybe Text)
-  , _niAvailabilityZone   :: !(Maybe Text)
-  , _niPrivateIPAddress   :: !(Maybe Text)
-  , _niPrivateDNSName     :: !(Maybe Text)
-  , _niRequesterId        :: !(Maybe Text)
-  , _niDescription        :: !(Maybe Text)
-  , _niAssociation        :: !(Maybe NetworkInterfaceAssociation)
-  , _niIPv6Addresses      :: !(Maybe [NetworkInterfaceIPv6Address])
+  , _niSubnetId :: !(Maybe Text)
+  , _niMACAddress :: !(Maybe Text)
+  , _niAttachment :: !(Maybe NetworkInterfaceAttachment)
+  , _niOwnerId :: !(Maybe Text)
+  , _niAvailabilityZone :: !(Maybe Text)
+  , _niPrivateIPAddress :: !(Maybe Text)
+  , _niPrivateDNSName :: !(Maybe Text)
+  , _niRequesterId :: !(Maybe Text)
+  , _niDescription :: !(Maybe Text)
+  , _niAssociation :: !(Maybe NetworkInterfaceAssociation)
+  , _niIPv6Addresses :: !(Maybe [NetworkInterfaceIPv6Address])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -7729,9 +7729,9 @@ instance NFData NetworkInterface where
 data NetworkInterfaceAssociation = NetworkInterfaceAssociation'
   { _niaAssociationId :: !(Maybe Text)
   , _niaPublicDNSName :: !(Maybe Text)
-  , _niaAllocationId  :: !(Maybe Text)
-  , _niaIPOwnerId     :: !(Maybe Text)
-  , _niaPublicIP      :: !(Maybe Text)
+  , _niaAllocationId :: !(Maybe Text)
+  , _niaIPOwnerId :: !(Maybe Text)
+  , _niaPublicIP :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -7798,13 +7798,13 @@ instance NFData NetworkInterfaceAssociation where
 --
 -- /See:/ 'networkInterfaceAttachment' smart constructor.
 data NetworkInterfaceAttachment = NetworkInterfaceAttachment'
-  { _niaInstanceId          :: !(Maybe Text)
-  , _niaStatus              :: !(Maybe AttachmentStatus)
+  { _niaInstanceId :: !(Maybe Text)
+  , _niaStatus :: !(Maybe AttachmentStatus)
   , _niaDeleteOnTermination :: !(Maybe Bool)
-  , _niaAttachmentId        :: !(Maybe Text)
-  , _niaInstanceOwnerId     :: !(Maybe Text)
-  , _niaAttachTime          :: !(Maybe ISO8601)
-  , _niaDeviceIndex         :: !(Maybe Int)
+  , _niaAttachmentId :: !(Maybe Text)
+  , _niaInstanceOwnerId :: !(Maybe Text)
+  , _niaAttachTime :: !(Maybe ISO8601)
+  , _niaDeviceIndex :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -7888,7 +7888,7 @@ instance NFData NetworkInterfaceAttachment where
 -- /See:/ 'networkInterfaceAttachmentChanges' smart constructor.
 data NetworkInterfaceAttachmentChanges = NetworkInterfaceAttachmentChanges'
   { _niacDeleteOnTermination :: !(Maybe Bool)
-  , _niacAttachmentId        :: !(Maybe Text)
+  , _niacAttachmentId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -7967,12 +7967,12 @@ instance NFData NetworkInterfaceIPv6Address where
 --
 -- /See:/ 'networkInterfacePermission' smart constructor.
 data NetworkInterfacePermission = NetworkInterfacePermission'
-  { _nipPermissionState              :: !(Maybe NetworkInterfacePermissionState)
+  { _nipPermissionState :: !(Maybe NetworkInterfacePermissionState)
   , _nipNetworkInterfacePermissionId :: !(Maybe Text)
-  , _nipNetworkInterfaceId           :: !(Maybe Text)
-  , _nipAWSAccountId                 :: !(Maybe Text)
-  , _nipAWSService                   :: !(Maybe Text)
-  , _nipPermission                   :: !(Maybe InterfacePermissionType)
+  , _nipNetworkInterfaceId :: !(Maybe Text)
+  , _nipAWSAccountId :: !(Maybe Text)
+  , _nipAWSService :: !(Maybe Text)
+  , _nipPermission :: !(Maybe InterfacePermissionType)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -8048,7 +8048,7 @@ instance NFData NetworkInterfacePermission where
 --
 -- /See:/ 'networkInterfacePermissionState' smart constructor.
 data NetworkInterfacePermissionState = NetworkInterfacePermissionState'
-  { _nipsState         :: !(Maybe NetworkInterfacePermissionStateCode)
+  { _nipsState :: !(Maybe NetworkInterfacePermissionStateCode)
   , _nipsStatusMessage :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -8092,10 +8092,10 @@ instance NFData NetworkInterfacePermissionState where
 --
 -- /See:/ 'networkInterfacePrivateIPAddress' smart constructor.
 data NetworkInterfacePrivateIPAddress = NetworkInterfacePrivateIPAddress'
-  { _nipiaPrimary          :: !(Maybe Bool)
+  { _nipiaPrimary :: !(Maybe Bool)
   , _nipiaPrivateIPAddress :: !(Maybe Text)
-  , _nipiaPrivateDNSName   :: !(Maybe Text)
-  , _nipiaAssociation      :: !(Maybe NetworkInterfaceAssociation)
+  , _nipiaPrivateDNSName :: !(Maybe Text)
+  , _nipiaAssociation :: !(Maybe NetworkInterfaceAssociation)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -8154,7 +8154,7 @@ instance NFData NetworkInterfacePrivateIPAddress
 -- | /See:/ 'newDHCPConfiguration' smart constructor.
 data NewDHCPConfiguration = NewDHCPConfiguration'
   { _ndcValues :: !(Maybe [Text])
-  , _ndcKey    :: !(Maybe Text)
+  , _ndcKey :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -8195,10 +8195,10 @@ instance ToQuery NewDHCPConfiguration where
 --
 -- /See:/ 'pciId' smart constructor.
 data PciId = PciId'
-  { _piSubsystemId       :: !(Maybe Text)
-  , _piDeviceId          :: !(Maybe Text)
+  { _piSubsystemId :: !(Maybe Text)
+  , _piDeviceId :: !(Maybe Text)
   , _piSubsystemVendorId :: !(Maybe Text)
-  , _piVendorId          :: !(Maybe Text)
+  , _piVendorId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -8259,7 +8259,7 @@ instance NFData PciId where
 data PeeringConnectionOptions = PeeringConnectionOptions'
   { _pcoAllowEgressFromLocalVPCToRemoteClassicLink :: !(Maybe Bool)
   , _pcoAllowEgressFromLocalClassicLinkToRemoteVPC :: !(Maybe Bool)
-  , _pcoAllowDNSResolutionFromRemoteVPC            :: !(Maybe Bool)
+  , _pcoAllowDNSResolutionFromRemoteVPC :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -8314,7 +8314,7 @@ instance NFData PeeringConnectionOptions where
 data PeeringConnectionOptionsRequest = PeeringConnectionOptionsRequest'
   { _pcorAllowEgressFromLocalVPCToRemoteClassicLink :: !(Maybe Bool)
   , _pcorAllowEgressFromLocalClassicLinkToRemoteVPC :: !(Maybe Bool)
-  , _pcorAllowDNSResolutionFromRemoteVPC            :: !(Maybe Bool)
+  , _pcorAllowDNSResolutionFromRemoteVPC :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -8371,12 +8371,12 @@ instance ToQuery PeeringConnectionOptionsRequest
 --
 -- /See:/ 'placement' smart constructor.
 data Placement = Placement'
-  { _pAffinity         :: !(Maybe Text)
-  , _pHostId           :: !(Maybe Text)
-  , _pSpreadDomain     :: !(Maybe Text)
+  { _pAffinity :: !(Maybe Text)
+  , _pHostId :: !(Maybe Text)
+  , _pSpreadDomain :: !(Maybe Text)
   , _pAvailabilityZone :: !(Maybe Text)
-  , _pTenancy          :: !(Maybe Tenancy)
-  , _pGroupName        :: !(Maybe Text)
+  , _pTenancy :: !(Maybe Tenancy)
+  , _pGroupName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -8459,8 +8459,8 @@ instance ToQuery Placement where
 --
 -- /See:/ 'placementGroup' smart constructor.
 data PlacementGroup = PlacementGroup'
-  { _pgState     :: !(Maybe PlacementGroupState)
-  , _pgStrategy  :: !(Maybe PlacementStrategy)
+  { _pgState :: !(Maybe PlacementGroupState)
+  , _pgStrategy :: !(Maybe PlacementStrategy)
   , _pgGroupName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -8509,7 +8509,7 @@ instance NFData PlacementGroup where
 --
 -- /See:/ 'portRange' smart constructor.
 data PortRange = PortRange'
-  { _prTo   :: !(Maybe Int)
+  { _prTo :: !(Maybe Int)
   , _prFrom :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -8552,8 +8552,8 @@ instance ToQuery PortRange where
 --
 -- /See:/ 'prefixList' smart constructor.
 data PrefixList = PrefixList'
-  { _plCidrs          :: !(Maybe [Text])
-  , _plPrefixListId   :: !(Maybe Text)
+  { _plCidrs :: !(Maybe [Text])
+  , _plPrefixListId :: !(Maybe Text)
   , _plPrefixListName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -8605,7 +8605,7 @@ instance NFData PrefixList where
 -- /See:/ 'prefixListId' smart constructor.
 data PrefixListId = PrefixListId'
   { _pliPrefixListId :: !(Maybe Text)
-  , _pliDescription  :: !(Maybe Text)
+  , _pliDescription :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -8652,9 +8652,9 @@ instance ToQuery PrefixListId where
 -- /See:/ 'priceSchedule' smart constructor.
 data PriceSchedule = PriceSchedule'
   { _psCurrencyCode :: !(Maybe CurrencyCodeValues)
-  , _psTerm         :: !(Maybe Integer)
-  , _psActive       :: !(Maybe Bool)
-  , _psPrice        :: !(Maybe Double)
+  , _psTerm :: !(Maybe Integer)
+  , _psActive :: !(Maybe Bool)
+  , _psPrice :: !(Maybe Double)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -8714,8 +8714,8 @@ instance NFData PriceSchedule where
 -- /See:/ 'priceScheduleSpecification' smart constructor.
 data PriceScheduleSpecification = PriceScheduleSpecification'
   { _pssCurrencyCode :: !(Maybe CurrencyCodeValues)
-  , _pssTerm         :: !(Maybe Integer)
-  , _pssPrice        :: !(Maybe Double)
+  , _pssTerm :: !(Maybe Integer)
+  , _pssPrice :: !(Maybe Double)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -8803,7 +8803,7 @@ instance NFData PricingDetail where
 --
 -- /See:/ 'privateIPAddressSpecification' smart constructor.
 data PrivateIPAddressSpecification = PrivateIPAddressSpecification'
-  { _piasPrimary          :: !(Maybe Bool)
+  { _piasPrimary :: !(Maybe Bool)
   , _piasPrivateIPAddress :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -8853,7 +8853,7 @@ instance ToQuery PrivateIPAddressSpecification where
 -- /See:/ 'productCode' smart constructor.
 data ProductCode = ProductCode'
   { _pcProductCodeType :: !(Maybe ProductCodeValues)
-  , _pcProductCodeId   :: !(Maybe Text)
+  , _pcProductCodeId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -8924,10 +8924,10 @@ instance NFData PropagatingVGW where
 --
 -- /See:/ 'provisionedBandwidth' smart constructor.
 data ProvisionedBandwidth = ProvisionedBandwidth'
-  { _pbStatus        :: !(Maybe Text)
-  , _pbRequested     :: !(Maybe Text)
-  , _pbProvisioned   :: !(Maybe Text)
-  , _pbRequestTime   :: !(Maybe ISO8601)
+  { _pbStatus :: !(Maybe Text)
+  , _pbRequested :: !(Maybe Text)
+  , _pbProvisioned :: !(Maybe Text)
+  , _pbRequestTime :: !(Maybe ISO8601)
   , _pbProvisionTime :: !(Maybe ISO8601)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -8995,14 +8995,14 @@ instance NFData ProvisionedBandwidth where
 --
 -- /See:/ 'purchase' smart constructor.
 data Purchase = Purchase'
-  { _pInstanceFamily    :: !(Maybe Text)
-  , _pCurrencyCode      :: !(Maybe CurrencyCodeValues)
+  { _pInstanceFamily :: !(Maybe Text)
+  , _pCurrencyCode :: !(Maybe CurrencyCodeValues)
   , _pHostReservationId :: !(Maybe Text)
-  , _pHourlyPrice       :: !(Maybe Text)
-  , _pUpfrontPrice      :: !(Maybe Text)
-  , _pHostIdSet         :: !(Maybe [Text])
-  , _pDuration          :: !(Maybe Int)
-  , _pPaymentOption     :: !(Maybe PaymentOption)
+  , _pHourlyPrice :: !(Maybe Text)
+  , _pUpfrontPrice :: !(Maybe Text)
+  , _pHostIdSet :: !(Maybe [Text])
+  , _pDuration :: !(Maybe Int)
+  , _pPaymentOption :: !(Maybe PaymentOption)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -9140,7 +9140,7 @@ instance ToQuery PurchaseRequest where
 --
 -- /See:/ 'recurringCharge' smart constructor.
 data RecurringCharge = RecurringCharge'
-  { _rcAmount    :: !(Maybe Double)
+  { _rcAmount :: !(Maybe Double)
   , _rcFrequency :: !(Maybe RecurringChargeFrequency)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -9181,7 +9181,7 @@ instance NFData RecurringCharge where
 -- /See:/ 'regionInfo' smart constructor.
 data RegionInfo = RegionInfo'
   { _riRegionName :: !(Maybe Text)
-  , _riEndpoint   :: !(Maybe Text)
+  , _riEndpoint :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -9220,22 +9220,22 @@ instance NFData RegionInfo where
 --
 -- /See:/ 'requestSpotLaunchSpecification' smart constructor.
 data RequestSpotLaunchSpecification = RequestSpotLaunchSpecification'
-  { _rslsSecurityGroupIds    :: !(Maybe [Text])
-  , _rslsSecurityGroups      :: !(Maybe [Text])
-  , _rslsKeyName             :: !(Maybe Text)
-  , _rslsNetworkInterfaces   :: !(Maybe [InstanceNetworkInterfaceSpecification])
-  , _rslsRAMDiskId           :: !(Maybe Text)
-  , _rslsSubnetId            :: !(Maybe Text)
-  , _rslsKernelId            :: !(Maybe Text)
-  , _rslsInstanceType        :: !(Maybe InstanceType)
-  , _rslsEBSOptimized        :: !(Maybe Bool)
-  , _rslsUserData            :: !(Maybe Text)
-  , _rslsMonitoring          :: !(Maybe RunInstancesMonitoringEnabled)
-  , _rslsIAMInstanceProfile  :: !(Maybe IAMInstanceProfileSpecification)
-  , _rslsImageId             :: !(Maybe Text)
-  , _rslsAddressingType      :: !(Maybe Text)
+  { _rslsSecurityGroupIds :: !(Maybe [Text])
+  , _rslsSecurityGroups :: !(Maybe [Text])
+  , _rslsKeyName :: !(Maybe Text)
+  , _rslsNetworkInterfaces :: !(Maybe [InstanceNetworkInterfaceSpecification])
+  , _rslsRAMDiskId :: !(Maybe Text)
+  , _rslsSubnetId :: !(Maybe Text)
+  , _rslsKernelId :: !(Maybe Text)
+  , _rslsInstanceType :: !(Maybe InstanceType)
+  , _rslsEBSOptimized :: !(Maybe Bool)
+  , _rslsUserData :: !(Maybe Text)
+  , _rslsMonitoring :: !(Maybe RunInstancesMonitoringEnabled)
+  , _rslsIAMInstanceProfile :: !(Maybe IAMInstanceProfileSpecification)
+  , _rslsImageId :: !(Maybe Text)
+  , _rslsAddressingType :: !(Maybe Text)
   , _rslsBlockDeviceMappings :: !(Maybe [BlockDeviceMapping])
-  , _rslsPlacement           :: !(Maybe SpotPlacement)
+  , _rslsPlacement :: !(Maybe SpotPlacement)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -9259,7 +9259,7 @@ data RequestSpotLaunchSpecification = RequestSpotLaunchSpecification'
 --
 -- * 'rslsInstanceType' - The instance type.
 --
--- * 'rslsEBSOptimized' - Indicates whether the instance is optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS Optimized instance. Default: @false@
+-- * 'rslsEBSOptimized' - Indicates whether the instance is optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS Optimized instance. Default: @false@ 
 --
 -- * 'rslsUserData' - The user data to make available to the instances. If you are using an AWS SDK or command line tool, Base64-encoding is performed for you, and you can load the text from a file. Otherwise, you must provide Base64-encoded text.
 --
@@ -9329,7 +9329,7 @@ rslsKernelId = lens _rslsKernelId (\ s a -> s{_rslsKernelId = a});
 rslsInstanceType :: Lens' RequestSpotLaunchSpecification (Maybe InstanceType)
 rslsInstanceType = lens _rslsInstanceType (\ s a -> s{_rslsInstanceType = a});
 
--- | Indicates whether the instance is optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS Optimized instance. Default: @false@
+-- | Indicates whether the instance is optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS Optimized instance. Default: @false@ 
 rslsEBSOptimized :: Lens' RequestSpotLaunchSpecification (Maybe Bool)
 rslsEBSOptimized = lens _rslsEBSOptimized (\ s a -> s{_rslsEBSOptimized = a});
 
@@ -9400,11 +9400,11 @@ instance ToQuery RequestSpotLaunchSpecification where
 --
 -- /See:/ 'reservation' smart constructor.
 data Reservation = Reservation'
-  { _rGroups        :: !(Maybe [GroupIdentifier])
-  , _rInstances     :: !(Maybe [Instance])
-  , _rRequesterId   :: !(Maybe Text)
+  { _rGroups :: !(Maybe [GroupIdentifier])
+  , _rInstances :: !(Maybe [Instance])
+  , _rRequesterId :: !(Maybe Text)
   , _rReservationId :: !Text
-  , _rOwnerId       :: !Text
+  , _rOwnerId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -9477,8 +9477,8 @@ instance NFData Reservation where
 --
 -- /See:/ 'reservationValue' smart constructor.
 data ReservationValue = ReservationValue'
-  { _rvHourlyPrice           :: !(Maybe Text)
-  , _rvRemainingTotalValue   :: !(Maybe Text)
+  { _rvHourlyPrice :: !(Maybe Text)
+  , _rvRemainingTotalValue :: !(Maybe Text)
   , _rvRemainingUpfrontValue :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -9531,7 +9531,7 @@ instance NFData ReservationValue where
 --
 -- /See:/ 'reservedInstanceLimitPrice' smart constructor.
 data ReservedInstanceLimitPrice = ReservedInstanceLimitPrice'
-  { _rilpAmount       :: !(Maybe Double)
+  { _rilpAmount :: !(Maybe Double)
   , _rilpCurrencyCode :: !(Maybe CurrencyCodeValues)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -9574,7 +9574,7 @@ instance ToQuery ReservedInstanceLimitPrice where
 --
 -- /See:/ 'reservedInstanceReservationValue' smart constructor.
 data ReservedInstanceReservationValue = ReservedInstanceReservationValue'
-  { _rirvReservationValue   :: !(Maybe ReservationValue)
+  { _rirvReservationValue :: !(Maybe ReservationValue)
   , _rirvReservedInstanceId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -9620,24 +9620,24 @@ instance NFData ReservedInstanceReservationValue
 --
 -- /See:/ 'reservedInstances' smart constructor.
 data ReservedInstances = ReservedInstances'
-  { _riState               :: !(Maybe ReservedInstanceState)
-  , _riCurrencyCode        :: !(Maybe CurrencyCodeValues)
-  , _riInstanceCount       :: !(Maybe Int)
-  , _riProductDescription  :: !(Maybe RIProductDescription)
-  , _riStart               :: !(Maybe ISO8601)
-  , _riInstanceType        :: !(Maybe InstanceType)
-  , _riEnd                 :: !(Maybe ISO8601)
-  , _riAvailabilityZone    :: !(Maybe Text)
-  , _riScope               :: !(Maybe Scope)
-  , _riRecurringCharges    :: !(Maybe [RecurringCharge])
-  , _riOfferingType        :: !(Maybe OfferingTypeValues)
-  , _riUsagePrice          :: !(Maybe Double)
-  , _riFixedPrice          :: !(Maybe Double)
+  { _riState :: !(Maybe ReservedInstanceState)
+  , _riCurrencyCode :: !(Maybe CurrencyCodeValues)
+  , _riInstanceCount :: !(Maybe Int)
+  , _riProductDescription :: !(Maybe RIProductDescription)
+  , _riStart :: !(Maybe ISO8601)
+  , _riInstanceType :: !(Maybe InstanceType)
+  , _riEnd :: !(Maybe ISO8601)
+  , _riAvailabilityZone :: !(Maybe Text)
+  , _riScope :: !(Maybe Scope)
+  , _riRecurringCharges :: !(Maybe [RecurringCharge])
+  , _riOfferingType :: !(Maybe OfferingTypeValues)
+  , _riUsagePrice :: !(Maybe Double)
+  , _riFixedPrice :: !(Maybe Double)
   , _riReservedInstancesId :: !(Maybe Text)
-  , _riInstanceTenancy     :: !(Maybe Tenancy)
-  , _riOfferingClass       :: !(Maybe OfferingClassType)
-  , _riDuration            :: !(Maybe Integer)
-  , _riTags                :: !(Maybe [Tag])
+  , _riInstanceTenancy :: !(Maybe Tenancy)
+  , _riOfferingClass :: !(Maybe OfferingClassType)
+  , _riDuration :: !(Maybe Integer)
+  , _riTags :: !(Maybe [Tag])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -9812,11 +9812,11 @@ instance NFData ReservedInstances where
 --
 -- /See:/ 'reservedInstancesConfiguration' smart constructor.
 data ReservedInstancesConfiguration = ReservedInstancesConfiguration'
-  { _ricPlatform         :: !(Maybe Text)
-  , _ricInstanceCount    :: !(Maybe Int)
-  , _ricInstanceType     :: !(Maybe InstanceType)
+  { _ricPlatform :: !(Maybe Text)
+  , _ricInstanceCount :: !(Maybe Int)
+  , _ricInstanceType :: !(Maybe InstanceType)
   , _ricAvailabilityZone :: !(Maybe Text)
-  , _ricScope            :: !(Maybe Scope)
+  , _ricScope :: !(Maybe Scope)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -9926,15 +9926,15 @@ instance NFData ReservedInstancesId where
 --
 -- /See:/ 'reservedInstancesListing' smart constructor.
 data ReservedInstancesListing = ReservedInstancesListing'
-  { _rilStatus                     :: !(Maybe ListingStatus)
-  , _rilClientToken                :: !(Maybe Text)
-  , _rilUpdateDate                 :: !(Maybe ISO8601)
-  , _rilCreateDate                 :: !(Maybe ISO8601)
-  , _rilPriceSchedules             :: !(Maybe [PriceSchedule])
-  , _rilStatusMessage              :: !(Maybe Text)
-  , _rilReservedInstancesId        :: !(Maybe Text)
-  , _rilTags                       :: !(Maybe [Tag])
-  , _rilInstanceCounts             :: !(Maybe [InstanceCount])
+  { _rilStatus :: !(Maybe ListingStatus)
+  , _rilClientToken :: !(Maybe Text)
+  , _rilUpdateDate :: !(Maybe ISO8601)
+  , _rilCreateDate :: !(Maybe ISO8601)
+  , _rilPriceSchedules :: !(Maybe [PriceSchedule])
+  , _rilStatusMessage :: !(Maybe Text)
+  , _rilReservedInstancesId :: !(Maybe Text)
+  , _rilTags :: !(Maybe [Tag])
+  , _rilInstanceCounts :: !(Maybe [InstanceCount])
   , _rilReservedInstancesListingId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -10205,21 +10205,21 @@ instance NFData ReservedInstancesModificationResult
 --
 -- /See:/ 'reservedInstancesOffering' smart constructor.
 data ReservedInstancesOffering = ReservedInstancesOffering'
-  { _rioMarketplace                 :: !(Maybe Bool)
-  , _rioCurrencyCode                :: !(Maybe CurrencyCodeValues)
-  , _rioProductDescription          :: !(Maybe RIProductDescription)
-  , _rioInstanceType                :: !(Maybe InstanceType)
-  , _rioAvailabilityZone            :: !(Maybe Text)
-  , _rioPricingDetails              :: !(Maybe [PricingDetail])
-  , _rioScope                       :: !(Maybe Scope)
-  , _rioRecurringCharges            :: !(Maybe [RecurringCharge])
-  , _rioOfferingType                :: !(Maybe OfferingTypeValues)
-  , _rioUsagePrice                  :: !(Maybe Double)
-  , _rioFixedPrice                  :: !(Maybe Double)
-  , _rioInstanceTenancy             :: !(Maybe Tenancy)
+  { _rioMarketplace :: !(Maybe Bool)
+  , _rioCurrencyCode :: !(Maybe CurrencyCodeValues)
+  , _rioProductDescription :: !(Maybe RIProductDescription)
+  , _rioInstanceType :: !(Maybe InstanceType)
+  , _rioAvailabilityZone :: !(Maybe Text)
+  , _rioPricingDetails :: !(Maybe [PricingDetail])
+  , _rioScope :: !(Maybe Scope)
+  , _rioRecurringCharges :: !(Maybe [RecurringCharge])
+  , _rioOfferingType :: !(Maybe OfferingTypeValues)
+  , _rioUsagePrice :: !(Maybe Double)
+  , _rioFixedPrice :: !(Maybe Double)
+  , _rioInstanceTenancy :: !(Maybe Tenancy)
   , _rioReservedInstancesOfferingId :: !(Maybe Text)
-  , _rioOfferingClass               :: !(Maybe OfferingClassType)
-  , _rioDuration                    :: !(Maybe Integer)
+  , _rioOfferingClass :: !(Maybe OfferingClassType)
+  , _rioDuration :: !(Maybe Integer)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -10370,18 +10370,18 @@ instance NFData ReservedInstancesOffering where
 --
 -- /See:/ 'route' smart constructor.
 data Route = Route'
-  { _rVPCPeeringConnectionId      :: !(Maybe Text)
-  , _rInstanceId                  :: !(Maybe Text)
-  , _rOrigin                      :: !(Maybe RouteOrigin)
-  , _rState                       :: !(Maybe RouteState)
+  { _rVPCPeeringConnectionId :: !(Maybe Text)
+  , _rInstanceId :: !(Maybe Text)
+  , _rOrigin :: !(Maybe RouteOrigin)
+  , _rState :: !(Maybe RouteState)
   , _rEgressOnlyInternetGatewayId :: !(Maybe Text)
-  , _rDestinationIPv6CidrBlock    :: !(Maybe Text)
-  , _rNatGatewayId                :: !(Maybe Text)
-  , _rNetworkInterfaceId          :: !(Maybe Text)
-  , _rGatewayId                   :: !(Maybe Text)
-  , _rInstanceOwnerId             :: !(Maybe Text)
-  , _rDestinationPrefixListId     :: !(Maybe Text)
-  , _rDestinationCidrBlock        :: !(Maybe Text)
+  , _rDestinationIPv6CidrBlock :: !(Maybe Text)
+  , _rNatGatewayId :: !(Maybe Text)
+  , _rNetworkInterfaceId :: !(Maybe Text)
+  , _rGatewayId :: !(Maybe Text)
+  , _rInstanceOwnerId :: !(Maybe Text)
+  , _rDestinationPrefixListId :: !(Maybe Text)
+  , _rDestinationCidrBlock :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -10505,12 +10505,12 @@ instance NFData Route where
 --
 -- /See:/ 'routeTable' smart constructor.
 data RouteTable = RouteTable'
-  { _rtRouteTableId    :: !(Maybe Text)
-  , _rtRoutes          :: !(Maybe [Route])
-  , _rtVPCId           :: !(Maybe Text)
+  { _rtRouteTableId :: !(Maybe Text)
+  , _rtRoutes :: !(Maybe [Route])
+  , _rtVPCId :: !(Maybe Text)
   , _rtPropagatingVGWs :: !(Maybe [PropagatingVGW])
-  , _rtAssociations    :: !(Maybe [RouteTableAssociation])
-  , _rtTags            :: !(Maybe [Tag])
+  , _rtAssociations :: !(Maybe [RouteTableAssociation])
+  , _rtTags :: !(Maybe [Tag])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -10593,10 +10593,10 @@ instance NFData RouteTable where
 --
 -- /See:/ 'routeTableAssociation' smart constructor.
 data RouteTableAssociation = RouteTableAssociation'
-  { _rtaRouteTableId            :: !(Maybe Text)
+  { _rtaRouteTableId :: !(Maybe Text)
   , _rtaRouteTableAssociationId :: !(Maybe Text)
-  , _rtaMain                    :: !(Maybe Bool)
-  , _rtaSubnetId                :: !(Maybe Text)
+  , _rtaMain :: !(Maybe Bool)
+  , _rtaSubnetId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -10694,11 +10694,11 @@ instance ToQuery RunInstancesMonitoringEnabled where
 --
 -- /See:/ 's3Storage' smart constructor.
 data S3Storage = S3Storage'
-  { _ssPrefix                :: !(Maybe Text)
-  , _ssUploadPolicy          :: !(Maybe Base64)
-  , _ssBucket                :: !(Maybe Text)
+  { _ssPrefix :: !(Maybe Text)
+  , _ssUploadPolicy :: !(Maybe Base64)
+  , _ssBucket :: !(Maybe Text)
   , _ssUploadPolicySignature :: !(Maybe Text)
-  , _ssAWSAccessKeyId        :: !(Maybe Text)
+  , _ssAWSAccessKeyId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -10774,21 +10774,21 @@ instance ToQuery S3Storage where
 --
 -- /See:/ 'scheduledInstance' smart constructor.
 data ScheduledInstance = ScheduledInstance'
-  { _siPreviousSlotEndTime         :: !(Maybe ISO8601)
-  , _siPlatform                    :: !(Maybe Text)
-  , _siTermStartDate               :: !(Maybe ISO8601)
-  , _siInstanceCount               :: !(Maybe Int)
-  , _siScheduledInstanceId         :: !(Maybe Text)
-  , _siHourlyPrice                 :: !(Maybe Text)
-  , _siCreateDate                  :: !(Maybe ISO8601)
-  , _siSlotDurationInHours         :: !(Maybe Int)
+  { _siPreviousSlotEndTime :: !(Maybe ISO8601)
+  , _siPlatform :: !(Maybe Text)
+  , _siTermStartDate :: !(Maybe ISO8601)
+  , _siInstanceCount :: !(Maybe Int)
+  , _siScheduledInstanceId :: !(Maybe Text)
+  , _siHourlyPrice :: !(Maybe Text)
+  , _siCreateDate :: !(Maybe ISO8601)
+  , _siSlotDurationInHours :: !(Maybe Int)
   , _siTotalScheduledInstanceHours :: !(Maybe Int)
-  , _siInstanceType                :: !(Maybe Text)
-  , _siRecurrence                  :: !(Maybe ScheduledInstanceRecurrence)
-  , _siAvailabilityZone            :: !(Maybe Text)
-  , _siTermEndDate                 :: !(Maybe ISO8601)
-  , _siNextSlotStartTime           :: !(Maybe ISO8601)
-  , _siNetworkPlatform             :: !(Maybe Text)
+  , _siInstanceType :: !(Maybe Text)
+  , _siRecurrence :: !(Maybe ScheduledInstanceRecurrence)
+  , _siAvailabilityZone :: !(Maybe Text)
+  , _siTermEndDate :: !(Maybe ISO8601)
+  , _siNextSlotStartTime :: !(Maybe ISO8601)
+  , _siNetworkPlatform :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -10935,19 +10935,19 @@ instance NFData ScheduledInstance where
 --
 -- /See:/ 'scheduledInstanceAvailability' smart constructor.
 data ScheduledInstanceAvailability = ScheduledInstanceAvailability'
-  { _siaMaxTermDurationInDays       :: !(Maybe Int)
-  , _siaPlatform                    :: !(Maybe Text)
-  , _siaPurchaseToken               :: !(Maybe Text)
-  , _siaHourlyPrice                 :: !(Maybe Text)
-  , _siaAvailableInstanceCount      :: !(Maybe Int)
-  , _siaSlotDurationInHours         :: !(Maybe Int)
+  { _siaMaxTermDurationInDays :: !(Maybe Int)
+  , _siaPlatform :: !(Maybe Text)
+  , _siaPurchaseToken :: !(Maybe Text)
+  , _siaHourlyPrice :: !(Maybe Text)
+  , _siaAvailableInstanceCount :: !(Maybe Int)
+  , _siaSlotDurationInHours :: !(Maybe Int)
   , _siaTotalScheduledInstanceHours :: !(Maybe Int)
-  , _siaInstanceType                :: !(Maybe Text)
-  , _siaRecurrence                  :: !(Maybe ScheduledInstanceRecurrence)
-  , _siaAvailabilityZone            :: !(Maybe Text)
-  , _siaMinTermDurationInDays       :: !(Maybe Int)
-  , _siaFirstSlotStartTime          :: !(Maybe ISO8601)
-  , _siaNetworkPlatform             :: !(Maybe Text)
+  , _siaInstanceType :: !(Maybe Text)
+  , _siaRecurrence :: !(Maybe ScheduledInstanceRecurrence)
+  , _siaAvailabilityZone :: !(Maybe Text)
+  , _siaMinTermDurationInDays :: !(Maybe Int)
+  , _siaFirstSlotStartTime :: !(Maybe ISO8601)
+  , _siaNetworkPlatform :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -11079,11 +11079,11 @@ instance NFData ScheduledInstanceAvailability where
 --
 -- /See:/ 'scheduledInstanceRecurrence' smart constructor.
 data ScheduledInstanceRecurrence = ScheduledInstanceRecurrence'
-  { _sirFrequency               :: !(Maybe Text)
+  { _sirFrequency :: !(Maybe Text)
   , _sirOccurrenceRelativeToEnd :: !(Maybe Bool)
-  , _sirOccurrenceUnit          :: !(Maybe Text)
-  , _sirInterval                :: !(Maybe Int)
-  , _sirOccurrenceDaySet        :: !(Maybe [Int])
+  , _sirOccurrenceUnit :: !(Maybe Text)
+  , _sirInterval :: !(Maybe Int)
+  , _sirOccurrenceDaySet :: !(Maybe [Int])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -11153,11 +11153,11 @@ instance NFData ScheduledInstanceRecurrence where
 --
 -- /See:/ 'scheduledInstanceRecurrenceRequest' smart constructor.
 data ScheduledInstanceRecurrenceRequest = ScheduledInstanceRecurrenceRequest'
-  { _sirrFrequency               :: !(Maybe Text)
+  { _sirrFrequency :: !(Maybe Text)
   , _sirrOccurrenceRelativeToEnd :: !(Maybe Bool)
-  , _sirrOccurrenceDays          :: !(Maybe [Int])
-  , _sirrOccurrenceUnit          :: !(Maybe Text)
-  , _sirrInterval                :: !(Maybe Int)
+  , _sirrOccurrenceDays :: !(Maybe [Int])
+  , _sirrOccurrenceUnit :: !(Maybe Text)
+  , _sirrInterval :: !(Maybe Int)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -11232,9 +11232,9 @@ instance ToQuery ScheduledInstanceRecurrenceRequest
 -- /See:/ 'scheduledInstancesBlockDeviceMapping' smart constructor.
 data ScheduledInstancesBlockDeviceMapping = ScheduledInstancesBlockDeviceMapping'
   { _sibdmVirtualName :: !(Maybe Text)
-  , _sibdmNoDevice    :: !(Maybe Text)
-  , _sibdmEBS         :: !(Maybe ScheduledInstancesEBS)
-  , _sibdmDeviceName  :: !(Maybe Text)
+  , _sibdmNoDevice :: !(Maybe Text)
+  , _sibdmEBS :: !(Maybe ScheduledInstancesEBS)
+  , _sibdmDeviceName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -11298,11 +11298,11 @@ instance ToQuery ScheduledInstancesBlockDeviceMapping
 -- /See:/ 'scheduledInstancesEBS' smart constructor.
 data ScheduledInstancesEBS = ScheduledInstancesEBS'
   { _sieDeleteOnTermination :: !(Maybe Bool)
-  , _sieVolumeSize          :: !(Maybe Int)
-  , _sieIOPS                :: !(Maybe Int)
-  , _sieEncrypted           :: !(Maybe Bool)
-  , _sieVolumeType          :: !(Maybe Text)
-  , _sieSnapshotId          :: !(Maybe Text)
+  , _sieVolumeSize :: !(Maybe Int)
+  , _sieIOPS :: !(Maybe Int)
+  , _sieEncrypted :: !(Maybe Bool)
+  , _sieVolumeType :: !(Maybe Text)
+  , _sieSnapshotId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -11318,7 +11318,7 @@ data ScheduledInstancesEBS = ScheduledInstancesEBS'
 --
 -- * 'sieEncrypted' - Indicates whether the volume is encrypted. You can attached encrypted volumes only to instances that support them.
 --
--- * 'sieVolumeType' - The volume type. @gp2@ for General Purpose SSD, @io1@ for Provisioned IOPS SSD, Throughput Optimized HDD for @st1@ , Cold HDD for @sc1@ , or @standard@ for Magnetic. Default: @standard@
+-- * 'sieVolumeType' - The volume type. @gp2@ for General Purpose SSD, @io1@ for Provisioned IOPS SSD, Throughput Optimized HDD for @st1@ , Cold HDD for @sc1@ , or @standard@ for Magnetic. Default: @standard@ 
 --
 -- * 'sieSnapshotId' - The ID of the snapshot.
 scheduledInstancesEBS
@@ -11350,7 +11350,7 @@ sieIOPS = lens _sieIOPS (\ s a -> s{_sieIOPS = a});
 sieEncrypted :: Lens' ScheduledInstancesEBS (Maybe Bool)
 sieEncrypted = lens _sieEncrypted (\ s a -> s{_sieEncrypted = a});
 
--- | The volume type. @gp2@ for General Purpose SSD, @io1@ for Provisioned IOPS SSD, Throughput Optimized HDD for @st1@ , Cold HDD for @sc1@ , or @standard@ for Magnetic. Default: @standard@
+-- | The volume type. @gp2@ for General Purpose SSD, @io1@ for Provisioned IOPS SSD, Throughput Optimized HDD for @st1@ , Cold HDD for @sc1@ , or @standard@ for Magnetic. Default: @standard@ 
 sieVolumeType :: Lens' ScheduledInstancesEBS (Maybe Text)
 sieVolumeType = lens _sieVolumeType (\ s a -> s{_sieVolumeType = a});
 
@@ -11377,7 +11377,7 @@ instance ToQuery ScheduledInstancesEBS where
 --
 -- /See:/ 'scheduledInstancesIAMInstanceProfile' smart constructor.
 data ScheduledInstancesIAMInstanceProfile = ScheduledInstancesIAMInstanceProfile'
-  { _siiapARN  :: !(Maybe Text)
+  { _siiapARN :: !(Maybe Text)
   , _siiapName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -11457,20 +11457,20 @@ instance ToQuery ScheduledInstancesIPv6Address where
 --
 -- /See:/ 'scheduledInstancesLaunchSpecification' smart constructor.
 data ScheduledInstancesLaunchSpecification = ScheduledInstancesLaunchSpecification'
-  { _silsSecurityGroupIds    :: !(Maybe [Text])
-  , _silsKeyName             :: !(Maybe Text)
-  , _silsNetworkInterfaces   :: !(Maybe [ScheduledInstancesNetworkInterface])
-  , _silsRAMDiskId           :: !(Maybe Text)
-  , _silsSubnetId            :: !(Maybe Text)
-  , _silsKernelId            :: !(Maybe Text)
-  , _silsInstanceType        :: !(Maybe Text)
-  , _silsEBSOptimized        :: !(Maybe Bool)
-  , _silsUserData            :: !(Maybe Text)
-  , _silsMonitoring          :: !(Maybe ScheduledInstancesMonitoring)
-  , _silsIAMInstanceProfile  :: !(Maybe ScheduledInstancesIAMInstanceProfile)
+  { _silsSecurityGroupIds :: !(Maybe [Text])
+  , _silsKeyName :: !(Maybe Text)
+  , _silsNetworkInterfaces :: !(Maybe [ScheduledInstancesNetworkInterface])
+  , _silsRAMDiskId :: !(Maybe Text)
+  , _silsSubnetId :: !(Maybe Text)
+  , _silsKernelId :: !(Maybe Text)
+  , _silsInstanceType :: !(Maybe Text)
+  , _silsEBSOptimized :: !(Maybe Bool)
+  , _silsUserData :: !(Maybe Text)
+  , _silsMonitoring :: !(Maybe ScheduledInstancesMonitoring)
+  , _silsIAMInstanceProfile :: !(Maybe ScheduledInstancesIAMInstanceProfile)
   , _silsBlockDeviceMappings :: !(Maybe [ScheduledInstancesBlockDeviceMapping])
-  , _silsPlacement           :: !(Maybe ScheduledInstancesPlacement)
-  , _silsImageId             :: !Text
+  , _silsPlacement :: !(Maybe ScheduledInstancesPlacement)
+  , _silsImageId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -11492,7 +11492,7 @@ data ScheduledInstancesLaunchSpecification = ScheduledInstancesLaunchSpecificati
 --
 -- * 'silsInstanceType' - The instance type.
 --
--- * 'silsEBSOptimized' - Indicates whether the instances are optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS-optimized instance. Default: @false@
+-- * 'silsEBSOptimized' - Indicates whether the instances are optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS-optimized instance. Default: @false@ 
 --
 -- * 'silsUserData' - The base64-encoded MIME user data.
 --
@@ -11555,7 +11555,7 @@ silsKernelId = lens _silsKernelId (\ s a -> s{_silsKernelId = a});
 silsInstanceType :: Lens' ScheduledInstancesLaunchSpecification (Maybe Text)
 silsInstanceType = lens _silsInstanceType (\ s a -> s{_silsInstanceType = a});
 
--- | Indicates whether the instances are optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS-optimized instance. Default: @false@
+-- | Indicates whether the instances are optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS-optimized instance. Default: @false@ 
 silsEBSOptimized :: Lens' ScheduledInstancesLaunchSpecification (Maybe Bool)
 silsEBSOptimized = lens _silsEBSOptimized (\ s a -> s{_silsEBSOptimized = a});
 
@@ -11799,7 +11799,7 @@ instance ToQuery ScheduledInstancesNetworkInterface
 -- /See:/ 'scheduledInstancesPlacement' smart constructor.
 data ScheduledInstancesPlacement = ScheduledInstancesPlacement'
   { _sipAvailabilityZone :: !(Maybe Text)
-  , _sipGroupName        :: !(Maybe Text)
+  , _sipGroupName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -11841,7 +11841,7 @@ instance ToQuery ScheduledInstancesPlacement where
 --
 -- /See:/ 'scheduledInstancesPrivateIPAddressConfig' smart constructor.
 data ScheduledInstancesPrivateIPAddressConfig = ScheduledInstancesPrivateIPAddressConfig'
-  { _sipiacPrimary          :: !(Maybe Bool)
+  { _sipiacPrimary :: !(Maybe Bool)
   , _sipiacPrivateIPAddress :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -11890,14 +11890,14 @@ instance ToQuery
 --
 -- /See:/ 'securityGroup' smart constructor.
 data SecurityGroup = SecurityGroup'
-  { _sgVPCId               :: !(Maybe Text)
-  , _sgIPPermissions       :: !(Maybe [IPPermission])
+  { _sgVPCId :: !(Maybe Text)
+  , _sgIPPermissions :: !(Maybe [IPPermission])
   , _sgIPPermissionsEgress :: !(Maybe [IPPermission])
-  , _sgTags                :: !(Maybe [Tag])
-  , _sgOwnerId             :: !Text
-  , _sgGroupId             :: !Text
-  , _sgGroupName           :: !Text
-  , _sgDescription         :: !Text
+  , _sgTags :: !(Maybe [Tag])
+  , _sgOwnerId :: !Text
+  , _sgGroupId :: !Text
+  , _sgGroupName :: !Text
+  , _sgDescription :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -11998,7 +11998,7 @@ instance NFData SecurityGroup where
 --
 -- /See:/ 'securityGroupIdentifier' smart constructor.
 data SecurityGroupIdentifier = SecurityGroupIdentifier'
-  { _sgiGroupId   :: !(Maybe Text)
+  { _sgiGroupId :: !(Maybe Text)
   , _sgiGroupName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -12040,8 +12040,8 @@ instance NFData SecurityGroupIdentifier where
 -- /See:/ 'securityGroupReference' smart constructor.
 data SecurityGroupReference = SecurityGroupReference'
   { _sgrVPCPeeringConnectionId :: !(Maybe Text)
-  , _sgrGroupId                :: !Text
-  , _sgrReferencingVPCId       :: !Text
+  , _sgrGroupId :: !Text
+  , _sgrReferencingVPCId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -12095,13 +12095,13 @@ instance NFData SecurityGroupReference where
 -- /See:/ 'serviceDetail' smart constructor.
 data ServiceDetail = ServiceDetail'
   { _sdVPCEndpointPolicySupported :: !(Maybe Bool)
-  , _sdBaseEndpointDNSNames       :: !(Maybe [Text])
-  , _sdOwner                      :: !(Maybe Text)
-  , _sdAvailabilityZones          :: !(Maybe [Text])
-  , _sdServiceName                :: !(Maybe Text)
-  , _sdServiceType                :: !(Maybe [ServiceTypeDetail])
-  , _sdAcceptanceRequired         :: !(Maybe Bool)
-  , _sdPrivateDNSName             :: !(Maybe Text)
+  , _sdBaseEndpointDNSNames :: !(Maybe [Text])
+  , _sdOwner :: !(Maybe Text)
+  , _sdAvailabilityZones :: !(Maybe [Text])
+  , _sdServiceName :: !(Maybe Text)
+  , _sdServiceType :: !(Maybe [ServiceTypeDetail])
+  , _sdAcceptanceRequired :: !(Maybe Bool)
+  , _sdPrivateDNSName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -12231,7 +12231,7 @@ instance NFData ServiceTypeDetail where
 -- /See:/ 'slotDateTimeRangeRequest' smart constructor.
 data SlotDateTimeRangeRequest = SlotDateTimeRangeRequest'
   { _sdtrrEarliestTime :: !ISO8601
-  , _sdtrrLatestTime   :: !ISO8601
+  , _sdtrrLatestTime :: !ISO8601
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -12277,7 +12277,7 @@ instance ToQuery SlotDateTimeRangeRequest where
 --
 -- /See:/ 'slotStartTimeRangeRequest' smart constructor.
 data SlotStartTimeRangeRequest = SlotStartTimeRangeRequest'
-  { _sstrrLatestTime   :: !(Maybe ISO8601)
+  { _sstrrLatestTime :: !(Maybe ISO8601)
   , _sstrrEarliestTime :: !(Maybe ISO8601)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -12320,20 +12320,20 @@ instance ToQuery SlotStartTimeRangeRequest where
 --
 -- /See:/ 'snapshot' smart constructor.
 data Snapshot = Snapshot'
-  { _sStateMessage        :: !(Maybe Text)
-  , _sOwnerAlias          :: !(Maybe Text)
+  { _sStateMessage :: !(Maybe Text)
+  , _sOwnerAlias :: !(Maybe Text)
   , _sDataEncryptionKeyId :: !(Maybe Text)
-  , _sKMSKeyId            :: !(Maybe Text)
-  , _sTags                :: !(Maybe [Tag])
-  , _sSnapshotId          :: !Text
-  , _sOwnerId             :: !Text
-  , _sVolumeId            :: !Text
-  , _sVolumeSize          :: !Int
-  , _sDescription         :: !Text
-  , _sStartTime           :: !ISO8601
-  , _sProgress            :: !Text
-  , _sState               :: !SnapshotState
-  , _sEncrypted           :: !Bool
+  , _sKMSKeyId :: !(Maybe Text)
+  , _sTags :: !(Maybe [Tag])
+  , _sSnapshotId :: !Text
+  , _sOwnerId :: !Text
+  , _sVolumeId :: !Text
+  , _sVolumeSize :: !Int
+  , _sDescription :: !Text
+  , _sStartTime :: !ISO8601
+  , _sProgress :: !Text
+  , _sState :: !SnapshotState
+  , _sEncrypted :: !Bool
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -12343,7 +12343,7 @@ data Snapshot = Snapshot'
 --
 -- * 'sStateMessage' - Encrypted Amazon EBS snapshots are copied asynchronously. If a snapshot copy operation fails (for example, if the proper AWS Key Management Service (AWS KMS) permissions are not obtained) this field displays error state details to help you diagnose why the error occurred. This parameter is only returned by the 'DescribeSnapshots' API operation.
 --
--- * 'sOwnerAlias' - Value from an Amazon-maintained list (@amazon@ | @aws-marketplace@ | @microsoft@ ) of snapshot owners. Not to be confused with the user-configured AWS account alias, which is set from the IAM console.
+-- * 'sOwnerAlias' - Value from an Amazon-maintained list (@amazon@ | @aws-marketplace@ | @microsoft@ ) of snapshot owners. Not to be confused with the user-configured AWS account alias, which is set from the IAM console. 
 --
 -- * 'sDataEncryptionKeyId' - The data encryption key identifier for the snapshot. This value is a unique identifier that corresponds to the data encryption key that was used to encrypt the original volume or snapshot copy. Because data encryption keys are inherited by volumes created from snapshots, and vice versa, if snapshots share the same data encryption key identifier, then they belong to the same volume/snapshot lineage. This parameter is only returned by the 'DescribeSnapshots' API operation.
 --
@@ -12402,7 +12402,7 @@ snapshot pSnapshotId_ pOwnerId_ pVolumeId_ pVolumeSize_ pDescription_ pStartTime
 sStateMessage :: Lens' Snapshot (Maybe Text)
 sStateMessage = lens _sStateMessage (\ s a -> s{_sStateMessage = a});
 
--- | Value from an Amazon-maintained list (@amazon@ | @aws-marketplace@ | @microsoft@ ) of snapshot owners. Not to be confused with the user-configured AWS account alias, which is set from the IAM console.
+-- | Value from an Amazon-maintained list (@amazon@ | @aws-marketplace@ | @microsoft@ ) of snapshot owners. Not to be confused with the user-configured AWS account alias, which is set from the IAM console. 
 sOwnerAlias :: Lens' Snapshot (Maybe Text)
 sOwnerAlias = lens _sOwnerAlias (\ s a -> s{_sOwnerAlias = a});
 
@@ -12483,16 +12483,16 @@ instance NFData Snapshot where
 --
 -- /See:/ 'snapshotDetail' smart constructor.
 data SnapshotDetail = SnapshotDetail'
-  { _sdStatus        :: !(Maybe Text)
-  , _sdProgress      :: !(Maybe Text)
-  , _sdFormat        :: !(Maybe Text)
-  , _sdURL           :: !(Maybe Text)
-  , _sdDeviceName    :: !(Maybe Text)
+  { _sdStatus :: !(Maybe Text)
+  , _sdProgress :: !(Maybe Text)
+  , _sdFormat :: !(Maybe Text)
+  , _sdURL :: !(Maybe Text)
+  , _sdDeviceName :: !(Maybe Text)
   , _sdStatusMessage :: !(Maybe Text)
-  , _sdUserBucket    :: !(Maybe UserBucketDetails)
+  , _sdUserBucket :: !(Maybe UserBucketDetails)
   , _sdDiskImageSize :: !(Maybe Double)
-  , _sdDescription   :: !(Maybe Text)
-  , _sdSnapshotId    :: !(Maybe Text)
+  , _sdDescription :: !(Maybe Text)
+  , _sdSnapshotId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -12599,9 +12599,9 @@ instance NFData SnapshotDetail where
 --
 -- /See:/ 'snapshotDiskContainer' smart constructor.
 data SnapshotDiskContainer = SnapshotDiskContainer'
-  { _sdcFormat      :: !(Maybe Text)
-  , _sdcURL         :: !(Maybe Text)
-  , _sdcUserBucket  :: !(Maybe UserBucket)
+  { _sdcFormat :: !(Maybe Text)
+  , _sdcURL :: !(Maybe Text)
+  , _sdcUserBucket :: !(Maybe UserBucket)
   , _sdcDescription :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -12610,7 +12610,7 @@ data SnapshotDiskContainer = SnapshotDiskContainer'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'sdcFormat' - The format of the disk image being imported. Valid values: @RAW@ | @VHD@ | @VMDK@ | @OVA@
+-- * 'sdcFormat' - The format of the disk image being imported. Valid values: @RAW@ | @VHD@ | @VMDK@ | @OVA@ 
 --
 -- * 'sdcURL' - The URL to the Amazon S3-based disk image being imported. It can either be a https URL (https://..) or an Amazon S3 URL (s3://..).
 --
@@ -12628,7 +12628,7 @@ snapshotDiskContainer =
   }
 
 
--- | The format of the disk image being imported. Valid values: @RAW@ | @VHD@ | @VMDK@ | @OVA@
+-- | The format of the disk image being imported. Valid values: @RAW@ | @VHD@ | @VMDK@ | @OVA@ 
 sdcFormat :: Lens' SnapshotDiskContainer (Maybe Text)
 sdcFormat = lens _sdcFormat (\ s a -> s{_sdcFormat = a});
 
@@ -12661,15 +12661,15 @@ instance ToQuery SnapshotDiskContainer where
 --
 -- /See:/ 'snapshotTaskDetail' smart constructor.
 data SnapshotTaskDetail = SnapshotTaskDetail'
-  { _stdStatus        :: !(Maybe Text)
-  , _stdProgress      :: !(Maybe Text)
-  , _stdFormat        :: !(Maybe Text)
-  , _stdURL           :: !(Maybe Text)
+  { _stdStatus :: !(Maybe Text)
+  , _stdProgress :: !(Maybe Text)
+  , _stdFormat :: !(Maybe Text)
+  , _stdURL :: !(Maybe Text)
   , _stdStatusMessage :: !(Maybe Text)
-  , _stdUserBucket    :: !(Maybe UserBucketDetails)
+  , _stdUserBucket :: !(Maybe UserBucketDetails)
   , _stdDiskImageSize :: !(Maybe Double)
-  , _stdDescription   :: !(Maybe Text)
-  , _stdSnapshotId    :: !(Maybe Text)
+  , _stdDescription :: !(Maybe Text)
+  , _stdSnapshotId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -12768,11 +12768,11 @@ instance NFData SnapshotTaskDetail where
 --
 -- /See:/ 'spotDatafeedSubscription' smart constructor.
 data SpotDatafeedSubscription = SpotDatafeedSubscription'
-  { _sdsState   :: !(Maybe DatafeedSubscriptionState)
-  , _sdsPrefix  :: !(Maybe Text)
-  , _sdsBucket  :: !(Maybe Text)
+  { _sdsState :: !(Maybe DatafeedSubscriptionState)
+  , _sdsPrefix :: !(Maybe Text)
+  , _sdsBucket :: !(Maybe Text)
   , _sdsOwnerId :: !(Maybe Text)
-  , _sdsFault   :: !(Maybe SpotInstanceStateFault)
+  , _sdsFault :: !(Maybe SpotInstanceStateFault)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -12839,24 +12839,24 @@ instance NFData SpotDatafeedSubscription where
 --
 -- /See:/ 'spotFleetLaunchSpecification' smart constructor.
 data SpotFleetLaunchSpecification = SpotFleetLaunchSpecification'
-  { _sflsSecurityGroups      :: !(Maybe [GroupIdentifier])
-  , _sflsSpotPrice           :: !(Maybe Text)
-  , _sflsWeightedCapacity    :: !(Maybe Double)
-  , _sflsKeyName             :: !(Maybe Text)
-  , _sflsNetworkInterfaces   :: !(Maybe [InstanceNetworkInterfaceSpecification])
-  , _sflsRAMDiskId           :: !(Maybe Text)
-  , _sflsSubnetId            :: !(Maybe Text)
-  , _sflsKernelId            :: !(Maybe Text)
-  , _sflsInstanceType        :: !(Maybe InstanceType)
-  , _sflsEBSOptimized        :: !(Maybe Bool)
-  , _sflsUserData            :: !(Maybe Text)
-  , _sflsMonitoring          :: !(Maybe SpotFleetMonitoring)
-  , _sflsTagSpecifications   :: !(Maybe [SpotFleetTagSpecification])
-  , _sflsIAMInstanceProfile  :: !(Maybe IAMInstanceProfileSpecification)
-  , _sflsImageId             :: !(Maybe Text)
-  , _sflsAddressingType      :: !(Maybe Text)
+  { _sflsSecurityGroups :: !(Maybe [GroupIdentifier])
+  , _sflsSpotPrice :: !(Maybe Text)
+  , _sflsWeightedCapacity :: !(Maybe Double)
+  , _sflsKeyName :: !(Maybe Text)
+  , _sflsNetworkInterfaces :: !(Maybe [InstanceNetworkInterfaceSpecification])
+  , _sflsRAMDiskId :: !(Maybe Text)
+  , _sflsSubnetId :: !(Maybe Text)
+  , _sflsKernelId :: !(Maybe Text)
+  , _sflsInstanceType :: !(Maybe InstanceType)
+  , _sflsEBSOptimized :: !(Maybe Bool)
+  , _sflsUserData :: !(Maybe Text)
+  , _sflsMonitoring :: !(Maybe SpotFleetMonitoring)
+  , _sflsTagSpecifications :: !(Maybe [SpotFleetTagSpecification])
+  , _sflsIAMInstanceProfile :: !(Maybe IAMInstanceProfileSpecification)
+  , _sflsImageId :: !(Maybe Text)
+  , _sflsAddressingType :: !(Maybe Text)
   , _sflsBlockDeviceMappings :: !(Maybe [BlockDeviceMapping])
-  , _sflsPlacement           :: !(Maybe SpotPlacement)
+  , _sflsPlacement :: !(Maybe SpotPlacement)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -12882,7 +12882,7 @@ data SpotFleetLaunchSpecification = SpotFleetLaunchSpecification'
 --
 -- * 'sflsInstanceType' - The instance type. Note that T2 and HS1 instance types are not supported.
 --
--- * 'sflsEBSOptimized' - Indicates whether the instances are optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS Optimized instance. Default: @false@
+-- * 'sflsEBSOptimized' - Indicates whether the instances are optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS Optimized instance. Default: @false@ 
 --
 -- * 'sflsUserData' - The user data to make available to the instances. If you are using an AWS SDK or command line tool, Base64-encoding is performed for you, and you can load the text from a file. Otherwise, you must provide Base64-encoded text.
 --
@@ -12960,7 +12960,7 @@ sflsKernelId = lens _sflsKernelId (\ s a -> s{_sflsKernelId = a});
 sflsInstanceType :: Lens' SpotFleetLaunchSpecification (Maybe InstanceType)
 sflsInstanceType = lens _sflsInstanceType (\ s a -> s{_sflsInstanceType = a});
 
--- | Indicates whether the instances are optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS Optimized instance. Default: @false@
+-- | Indicates whether the instances are optimized for EBS I/O. This optimization provides dedicated throughput to Amazon EBS and an optimized configuration stack to provide optimal EBS I/O performance. This optimization isn't available with all instance types. Additional usage charges apply when using an EBS Optimized instance. Default: @false@ 
 sflsEBSOptimized :: Lens' SpotFleetLaunchSpecification (Maybe Bool)
 sflsEBSOptimized = lens _sflsEBSOptimized (\ s a -> s{_sflsEBSOptimized = a});
 
@@ -13072,13 +13072,13 @@ newtype SpotFleetMonitoring = SpotFleetMonitoring'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'sfmEnabled' - Enables monitoring for the instance. Default: @false@
+-- * 'sfmEnabled' - Enables monitoring for the instance. Default: @false@ 
 spotFleetMonitoring
     :: SpotFleetMonitoring
 spotFleetMonitoring = SpotFleetMonitoring' {_sfmEnabled = Nothing}
 
 
--- | Enables monitoring for the instance. Default: @false@
+-- | Enables monitoring for the instance. Default: @false@ 
 sfmEnabled :: Lens' SpotFleetMonitoring (Maybe Bool)
 sfmEnabled = lens _sfmEnabled (\ s a -> s{_sfmEnabled = a});
 
@@ -13100,11 +13100,11 @@ instance ToQuery SpotFleetMonitoring where
 --
 -- /See:/ 'spotFleetRequestConfig' smart constructor.
 data SpotFleetRequestConfig = SpotFleetRequestConfig'
-  { _sfrcActivityStatus         :: !(Maybe ActivityStatus)
-  , _sfrcCreateTime             :: !ISO8601
+  { _sfrcActivityStatus :: !(Maybe ActivityStatus)
+  , _sfrcCreateTime :: !ISO8601
   , _sfrcSpotFleetRequestConfig :: !SpotFleetRequestConfigData
-  , _sfrcSpotFleetRequestId     :: !Text
-  , _sfrcSpotFleetRequestState  :: !BatchState
+  , _sfrcSpotFleetRequestId :: !Text
+  , _sfrcSpotFleetRequestState :: !BatchState
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -13367,7 +13367,7 @@ instance ToQuery SpotFleetRequestConfigData where
 -- /See:/ 'spotFleetTagSpecification' smart constructor.
 data SpotFleetTagSpecification = SpotFleetTagSpecification'
   { _sftsResourceType :: !(Maybe ResourceType)
-  , _sftsTags         :: !(Maybe [Tag])
+  , _sftsTags :: !(Maybe [Tag])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -13415,25 +13415,25 @@ instance ToQuery SpotFleetTagSpecification where
 --
 -- /See:/ 'spotInstanceRequest' smart constructor.
 data SpotInstanceRequest = SpotInstanceRequest'
-  { _sirInstanceId                   :: !(Maybe Text)
-  , _sirStatus                       :: !(Maybe SpotInstanceStatus)
-  , _sirState                        :: !(Maybe SpotInstanceState)
-  , _sirActualBlockHourlyPrice       :: !(Maybe Text)
-  , _sirBlockDurationMinutes         :: !(Maybe Int)
+  { _sirInstanceId :: !(Maybe Text)
+  , _sirStatus :: !(Maybe SpotInstanceStatus)
+  , _sirState :: !(Maybe SpotInstanceState)
+  , _sirActualBlockHourlyPrice :: !(Maybe Text)
+  , _sirBlockDurationMinutes :: !(Maybe Int)
   , _sirInstanceInterruptionBehavior :: !(Maybe InstanceInterruptionBehavior)
-  , _sirProductDescription           :: !(Maybe RIProductDescription)
-  , _sirSpotPrice                    :: !(Maybe Text)
-  , _sirLaunchSpecification          :: !(Maybe LaunchSpecification)
-  , _sirAvailabilityZoneGroup        :: !(Maybe Text)
-  , _sirLaunchedAvailabilityZone     :: !(Maybe Text)
-  , _sirValidUntil                   :: !(Maybe ISO8601)
-  , _sirLaunchGroup                  :: !(Maybe Text)
-  , _sirFault                        :: !(Maybe SpotInstanceStateFault)
-  , _sirSpotInstanceRequestId        :: !(Maybe Text)
-  , _sirType                         :: !(Maybe SpotInstanceType)
-  , _sirValidFrom                    :: !(Maybe ISO8601)
-  , _sirCreateTime                   :: !(Maybe ISO8601)
-  , _sirTags                         :: !(Maybe [Tag])
+  , _sirProductDescription :: !(Maybe RIProductDescription)
+  , _sirSpotPrice :: !(Maybe Text)
+  , _sirLaunchSpecification :: !(Maybe LaunchSpecification)
+  , _sirAvailabilityZoneGroup :: !(Maybe Text)
+  , _sirLaunchedAvailabilityZone :: !(Maybe Text)
+  , _sirValidUntil :: !(Maybe ISO8601)
+  , _sirLaunchGroup :: !(Maybe Text)
+  , _sirFault :: !(Maybe SpotInstanceStateFault)
+  , _sirSpotInstanceRequestId :: !(Maybe Text)
+  , _sirType :: !(Maybe SpotInstanceType)
+  , _sirValidFrom :: !(Maybe ISO8601)
+  , _sirCreateTime :: !(Maybe ISO8601)
+  , _sirTags :: !(Maybe [Tag])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -13614,7 +13614,7 @@ instance NFData SpotInstanceRequest where
 --
 -- /See:/ 'spotInstanceStateFault' smart constructor.
 data SpotInstanceStateFault = SpotInstanceStateFault'
-  { _sisfCode    :: !(Maybe Text)
+  { _sisfCode :: !(Maybe Text)
   , _sisfMessage :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -13656,8 +13656,8 @@ instance NFData SpotInstanceStateFault where
 -- /See:/ 'spotInstanceStatus' smart constructor.
 data SpotInstanceStatus = SpotInstanceStatus'
   { _sisUpdateTime :: !(Maybe ISO8601)
-  , _sisCode       :: !(Maybe Text)
-  , _sisMessage    :: !(Maybe Text)
+  , _sisCode :: !(Maybe Text)
+  , _sisMessage :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -13706,8 +13706,8 @@ instance NFData SpotInstanceStatus where
 -- /See:/ 'spotPlacement' smart constructor.
 data SpotPlacement = SpotPlacement'
   { _spAvailabilityZone :: !(Maybe Text)
-  , _spTenancy          :: !(Maybe Tenancy)
-  , _spGroupName        :: !(Maybe Text)
+  , _spTenancy :: !(Maybe Tenancy)
+  , _spGroupName :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -13762,10 +13762,10 @@ instance ToQuery SpotPlacement where
 -- /See:/ 'spotPrice' smart constructor.
 data SpotPrice = SpotPrice'
   { _sProductDescription :: !(Maybe RIProductDescription)
-  , _sSpotPrice          :: !(Maybe Text)
-  , _sInstanceType       :: !(Maybe InstanceType)
-  , _sAvailabilityZone   :: !(Maybe Text)
-  , _sTimestamp          :: !(Maybe ISO8601)
+  , _sSpotPrice :: !(Maybe Text)
+  , _sInstanceType :: !(Maybe InstanceType)
+  , _sAvailabilityZone :: !(Maybe Text)
+  , _sTimestamp :: !(Maybe ISO8601)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -13832,12 +13832,12 @@ instance NFData SpotPrice where
 --
 -- /See:/ 'staleIPPermission' smart constructor.
 data StaleIPPermission = StaleIPPermission'
-  { _sipFromPort         :: !(Maybe Int)
+  { _sipFromPort :: !(Maybe Int)
   , _sipUserIdGroupPairs :: !(Maybe [UserIdGroupPair])
-  , _sipPrefixListIds    :: !(Maybe [Text])
-  , _sipIPProtocol       :: !(Maybe Text)
-  , _sipToPort           :: !(Maybe Int)
-  , _sipIPRanges         :: !(Maybe [Text])
+  , _sipPrefixListIds :: !(Maybe [Text])
+  , _sipIPProtocol :: !(Maybe Text)
+  , _sipToPort :: !(Maybe Int)
+  , _sipIPRanges :: !(Maybe [Text])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -13845,7 +13845,7 @@ data StaleIPPermission = StaleIPPermission'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'sipFromPort' - The start of the port range for the TCP and UDP protocols, or an ICMP type number. A value of @-1@ indicates all ICMP types.
+-- * 'sipFromPort' - The start of the port range for the TCP and UDP protocols, or an ICMP type number. A value of @-1@ indicates all ICMP types. 
 --
 -- * 'sipUserIdGroupPairs' - One or more security group pairs. Returns the ID of the referenced security group and VPC, and the ID and status of the VPC peering connection.
 --
@@ -13853,7 +13853,7 @@ data StaleIPPermission = StaleIPPermission'
 --
 -- * 'sipIPProtocol' - The IP protocol name (for @tcp@ , @udp@ , and @icmp@ ) or number (see <http://www.iana.org/assignments/protocol-numbers/protocol-numbers.xhtml Protocol Numbers)> .
 --
--- * 'sipToPort' - The end of the port range for the TCP and UDP protocols, or an ICMP type number. A value of @-1@ indicates all ICMP types.
+-- * 'sipToPort' - The end of the port range for the TCP and UDP protocols, or an ICMP type number. A value of @-1@ indicates all ICMP types. 
 --
 -- * 'sipIPRanges' - One or more IP ranges. Not applicable for stale security group rules.
 staleIPPermission
@@ -13869,7 +13869,7 @@ staleIPPermission =
   }
 
 
--- | The start of the port range for the TCP and UDP protocols, or an ICMP type number. A value of @-1@ indicates all ICMP types.
+-- | The start of the port range for the TCP and UDP protocols, or an ICMP type number. A value of @-1@ indicates all ICMP types. 
 sipFromPort :: Lens' StaleIPPermission (Maybe Int)
 sipFromPort = lens _sipFromPort (\ s a -> s{_sipFromPort = a});
 
@@ -13885,7 +13885,7 @@ sipPrefixListIds = lens _sipPrefixListIds (\ s a -> s{_sipPrefixListIds = a}) . 
 sipIPProtocol :: Lens' StaleIPPermission (Maybe Text)
 sipIPProtocol = lens _sipIPProtocol (\ s a -> s{_sipIPProtocol = a});
 
--- | The end of the port range for the TCP and UDP protocols, or an ICMP type number. A value of @-1@ indicates all ICMP types.
+-- | The end of the port range for the TCP and UDP protocols, or an ICMP type number. A value of @-1@ indicates all ICMP types. 
 sipToPort :: Lens' StaleIPPermission (Maybe Int)
 sipToPort = lens _sipToPort (\ s a -> s{_sipToPort = a});
 
@@ -13918,12 +13918,12 @@ instance NFData StaleIPPermission where
 --
 -- /See:/ 'staleSecurityGroup' smart constructor.
 data StaleSecurityGroup = StaleSecurityGroup'
-  { _ssgVPCId                    :: !(Maybe Text)
-  , _ssgGroupName                :: !(Maybe Text)
+  { _ssgVPCId :: !(Maybe Text)
+  , _ssgGroupName :: !(Maybe Text)
   , _ssgStaleIPPermissionsEgress :: !(Maybe [StaleIPPermission])
-  , _ssgStaleIPPermissions       :: !(Maybe [StaleIPPermission])
-  , _ssgDescription              :: !(Maybe Text)
-  , _ssgGroupId                  :: !Text
+  , _ssgStaleIPPermissions :: !(Maybe [StaleIPPermission])
+  , _ssgDescription :: !(Maybe Text)
+  , _ssgGroupId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -14002,7 +14002,7 @@ instance NFData StaleSecurityGroup where
 --
 -- /See:/ 'stateReason' smart constructor.
 data StateReason = StateReason'
-  { _srCode    :: !(Maybe Text)
+  { _srCode :: !(Maybe Text)
   , _srMessage :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -14077,7 +14077,7 @@ instance ToQuery Storage where
 -- /See:/ 'storageLocation' smart constructor.
 data StorageLocation = StorageLocation'
   { _slBucket :: !(Maybe Text)
-  , _slKey    :: !(Maybe Text)
+  , _slKey :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -14117,15 +14117,15 @@ instance ToQuery StorageLocation where
 data Subnet = Subnet'
   { _subIPv6CidrBlockAssociationSet :: !(Maybe [SubnetIPv6CidrBlockAssociation])
   , _subAssignIPv6AddressOnCreation :: !(Maybe Bool)
-  , _subMapPublicIPOnLaunch         :: !(Maybe Bool)
-  , _subDefaultForAz                :: !(Maybe Bool)
-  , _subTags                        :: !(Maybe [Tag])
-  , _subAvailabilityZone            :: !Text
-  , _subAvailableIPAddressCount     :: !Int
-  , _subCidrBlock                   :: !Text
-  , _subState                       :: !SubnetState
-  , _subSubnetId                    :: !Text
-  , _subVPCId                       :: !Text
+  , _subMapPublicIPOnLaunch :: !(Maybe Bool)
+  , _subDefaultForAz :: !(Maybe Bool)
+  , _subTags :: !(Maybe [Tag])
+  , _subAvailabilityZone :: !Text
+  , _subAvailableIPAddressCount :: !Int
+  , _subCidrBlock :: !Text
+  , _subState :: !SubnetState
+  , _subSubnetId :: !Text
+  , _subVPCId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -14250,7 +14250,7 @@ instance NFData Subnet where
 --
 -- /See:/ 'subnetCidrBlockState' smart constructor.
 data SubnetCidrBlockState = SubnetCidrBlockState'
-  { _scbsState         :: !(Maybe SubnetCidrBlockStateCode)
+  { _scbsState :: !(Maybe SubnetCidrBlockStateCode)
   , _scbsStatusMessage :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -14291,8 +14291,8 @@ instance NFData SubnetCidrBlockState where
 --
 -- /See:/ 'subnetIPv6CidrBlockAssociation' smart constructor.
 data SubnetIPv6CidrBlockAssociation = SubnetIPv6CidrBlockAssociation'
-  { _sicbaAssociationId      :: !(Maybe Text)
-  , _sicbaIPv6CidrBlock      :: !(Maybe Text)
+  { _sicbaAssociationId :: !(Maybe Text)
+  , _sicbaIPv6CidrBlock :: !(Maybe Text)
   , _sicbaIPv6CidrBlockState :: !(Maybe SubnetCidrBlockState)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -14345,7 +14345,7 @@ instance NFData SubnetIPv6CidrBlockAssociation where
 --
 -- /See:/ 'tag' smart constructor.
 data Tag = Tag'
-  { _tagKey   :: !Text
+  { _tagKey :: !Text
   , _tagValue :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -14354,7 +14354,7 @@ data Tag = Tag'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'tagKey' - The key of the tag. Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with @aws:@
+-- * 'tagKey' - The key of the tag. Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with @aws:@ 
 --
 -- * 'tagValue' - The value of the tag. Constraints: Tag values are case-sensitive and accept a maximum of 255 Unicode characters.
 tag
@@ -14364,7 +14364,7 @@ tag
 tag pKey_ pValue_ = Tag' {_tagKey = pKey_, _tagValue = pValue_}
 
 
--- | The key of the tag. Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with @aws:@
+-- | The key of the tag. Constraints: Tag keys are case-sensitive and accept a maximum of 127 Unicode characters. May not begin with @aws:@ 
 tagKey :: Lens' Tag Text
 tagKey = lens _tagKey (\ s a -> s{_tagKey = a});
 
@@ -14389,10 +14389,10 @@ instance ToQuery Tag where
 --
 -- /See:/ 'tagDescription' smart constructor.
 data TagDescription = TagDescription'
-  { _tdResourceId   :: !Text
+  { _tdResourceId :: !Text
   , _tdResourceType :: !ResourceType
-  , _tdKey          :: !Text
-  , _tdValue        :: !Text
+  , _tdKey :: !Text
+  , _tdValue :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -14456,7 +14456,7 @@ instance NFData TagDescription where
 -- /See:/ 'tagSpecification' smart constructor.
 data TagSpecification = TagSpecification'
   { _tsResourceType :: !(Maybe ResourceType)
-  , _tsTags         :: !(Maybe [Tag])
+  , _tsTags :: !(Maybe [Tag])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -14464,7 +14464,7 @@ data TagSpecification = TagSpecification'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'tsResourceType' - The type of resource to tag. Currently, the resource types that support tagging on creation are @instance@ and @volume@ .
+-- * 'tsResourceType' - The type of resource to tag. Currently, the resource types that support tagging on creation are @instance@ and @volume@ . 
 --
 -- * 'tsTags' - The tags to apply to the resource.
 tagSpecification
@@ -14473,7 +14473,7 @@ tagSpecification =
   TagSpecification' {_tsResourceType = Nothing, _tsTags = Nothing}
 
 
--- | The type of resource to tag. Currently, the resource types that support tagging on creation are @instance@ and @volume@ .
+-- | The type of resource to tag. Currently, the resource types that support tagging on creation are @instance@ and @volume@ . 
 tsResourceType :: Lens' TagSpecification (Maybe ResourceType)
 tsResourceType = lens _tsResourceType (\ s a -> s{_tsResourceType = a});
 
@@ -14498,7 +14498,7 @@ instance ToQuery TagSpecification where
 -- /See:/ 'targetConfiguration' smart constructor.
 data TargetConfiguration = TargetConfiguration'
   { _tcInstanceCount :: !(Maybe Int)
-  , _tcOfferingId    :: !(Maybe Text)
+  , _tcOfferingId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -14539,7 +14539,7 @@ instance NFData TargetConfiguration where
 -- /See:/ 'targetConfigurationRequest' smart constructor.
 data TargetConfigurationRequest = TargetConfigurationRequest'
   { _tcrInstanceCount :: !(Maybe Int)
-  , _tcrOfferingId    :: !Text
+  , _tcrOfferingId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -14658,7 +14658,7 @@ instance ToQuery TargetGroupsConfig where
 --
 -- /See:/ 'targetReservationValue' smart constructor.
 data TargetReservationValue = TargetReservationValue'
-  { _trvReservationValue    :: !(Maybe ReservationValue)
+  { _trvReservationValue :: !(Maybe ReservationValue)
   , _trvTargetConfiguration :: !(Maybe TargetConfiguration)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -14702,7 +14702,7 @@ instance NFData TargetReservationValue where
 -- /See:/ 'unsuccessfulItem' smart constructor.
 data UnsuccessfulItem = UnsuccessfulItem'
   { _uiResourceId :: !(Maybe Text)
-  , _uiError      :: !UnsuccessfulItemError
+  , _uiError :: !UnsuccessfulItemError
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -14743,7 +14743,7 @@ instance NFData UnsuccessfulItem where
 --
 -- /See:/ 'unsuccessfulItemError' smart constructor.
 data UnsuccessfulItemError = UnsuccessfulItemError'
-  { _uieCode    :: !Text
+  { _uieCode :: !Text
   , _uieMessage :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -14786,7 +14786,7 @@ instance NFData UnsuccessfulItemError where
 --
 -- /See:/ 'userBucket' smart constructor.
 data UserBucket = UserBucket'
-  { _ubS3Key    :: !(Maybe Text)
+  { _ubS3Key :: !(Maybe Text)
   , _ubS3Bucket :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -14826,7 +14826,7 @@ instance ToQuery UserBucket where
 --
 -- /See:/ 'userBucketDetails' smart constructor.
 data UserBucketDetails = UserBucketDetails'
-  { _ubdS3Key    :: !(Maybe Text)
+  { _ubdS3Key :: !(Maybe Text)
   , _ubdS3Bucket :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -14899,12 +14899,12 @@ instance ToQuery UserData where
 -- /See:/ 'userIdGroupPair' smart constructor.
 data UserIdGroupPair = UserIdGroupPair'
   { _uigpVPCPeeringConnectionId :: !(Maybe Text)
-  , _uigpVPCId                  :: !(Maybe Text)
-  , _uigpUserId                 :: !(Maybe Text)
-  , _uigpGroupId                :: !(Maybe Text)
-  , _uigpGroupName              :: !(Maybe Text)
-  , _uigpDescription            :: !(Maybe Text)
-  , _uigpPeeringStatus          :: !(Maybe Text)
+  , _uigpVPCId :: !(Maybe Text)
+  , _uigpUserId :: !(Maybe Text)
+  , _uigpGroupId :: !(Maybe Text)
+  , _uigpGroupName :: !(Maybe Text)
+  , _uigpDescription :: !(Maybe Text)
+  , _uigpPeeringStatus :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -14998,11 +14998,11 @@ instance ToQuery UserIdGroupPair where
 --
 -- /See:/ 'vgwTelemetry' smart constructor.
 data VGWTelemetry = VGWTelemetry'
-  { _vtStatus             :: !(Maybe TelemetryStatus)
-  , _vtOutsideIPAddress   :: !(Maybe Text)
-  , _vtLastStatusChange   :: !(Maybe ISO8601)
+  { _vtStatus :: !(Maybe TelemetryStatus)
+  , _vtOutsideIPAddress :: !(Maybe Text)
+  , _vtLastStatusChange :: !(Maybe ISO8601)
   , _vtAcceptedRouteCount :: !(Maybe Int)
-  , _vtStatusMessage      :: !(Maybe Text)
+  , _vtStatusMessage :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -15070,14 +15070,14 @@ instance NFData VGWTelemetry where
 -- /See:/ 'vpc' smart constructor.
 data VPC = VPC'
   { _vpcIPv6CidrBlockAssociationSet :: !(Maybe [VPCIPv6CidrBlockAssociation])
-  , _vpcCidrBlockAssociationSet     :: !(Maybe [VPCCidrBlockAssociation])
-  , _vpcTags                        :: !(Maybe [Tag])
-  , _vpcIsDefault                   :: !(Maybe Bool)
-  , _vpcCidrBlock                   :: !Text
-  , _vpcDHCPOptionsId               :: !Text
-  , _vpcInstanceTenancy             :: !Tenancy
-  , _vpcState                       :: !VPCState
-  , _vpcVPCId                       :: !Text
+  , _vpcCidrBlockAssociationSet :: !(Maybe [VPCCidrBlockAssociation])
+  , _vpcTags :: !(Maybe [Tag])
+  , _vpcIsDefault :: !(Maybe Bool)
+  , _vpcCidrBlock :: !Text
+  , _vpcDHCPOptionsId :: !Text
+  , _vpcInstanceTenancy :: !Tenancy
+  , _vpcState :: !VPCState
+  , _vpcVPCId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -15227,9 +15227,9 @@ instance NFData VPCAttachment where
 --
 -- /See:/ 'vpcCidrBlockAssociation' smart constructor.
 data VPCCidrBlockAssociation = VPCCidrBlockAssociation'
-  { _vcbaAssociationId  :: !(Maybe Text)
+  { _vcbaAssociationId :: !(Maybe Text)
   , _vcbaCidrBlockState :: !(Maybe VPCCidrBlockState)
-  , _vcbaCidrBlock      :: !(Maybe Text)
+  , _vcbaCidrBlock :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -15280,7 +15280,7 @@ instance NFData VPCCidrBlockAssociation where
 --
 -- /See:/ 'vpcCidrBlockState' smart constructor.
 data VPCCidrBlockState = VPCCidrBlockState'
-  { _vcbsState         :: !(Maybe VPCCidrBlockStateCode)
+  { _vcbsState :: !(Maybe VPCCidrBlockStateCode)
   , _vcbsStatusMessage :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -15321,8 +15321,8 @@ instance NFData VPCCidrBlockState where
 --
 -- /See:/ 'vpcClassicLink' smart constructor.
 data VPCClassicLink = VPCClassicLink'
-  { _vclVPCId              :: !(Maybe Text)
-  , _vclTags               :: !(Maybe [Tag])
+  { _vclVPCId :: !(Maybe Text)
+  , _vclTags :: !(Maybe [Tag])
   , _vclClassicLinkEnabled :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -15373,19 +15373,19 @@ instance NFData VPCClassicLink where
 --
 -- /See:/ 'vpcEndpoint' smart constructor.
 data VPCEndpoint = VPCEndpoint'
-  { _veGroups              :: !(Maybe [SecurityGroupIdentifier])
-  , _veState               :: !(Maybe State)
-  , _vePolicyDocument      :: !(Maybe Text)
-  , _veSubnetIds           :: !(Maybe [Text])
+  { _veGroups :: !(Maybe [SecurityGroupIdentifier])
+  , _veState :: !(Maybe State)
+  , _vePolicyDocument :: !(Maybe Text)
+  , _veSubnetIds :: !(Maybe [Text])
   , _veNetworkInterfaceIds :: !(Maybe [Text])
-  , _veVPCId               :: !(Maybe Text)
-  , _veDNSEntries          :: !(Maybe [DNSEntry])
-  , _veVPCEndpointType     :: !(Maybe VPCEndpointType)
-  , _vePrivateDNSEnabled   :: !(Maybe Bool)
-  , _veCreationTimestamp   :: !(Maybe ISO8601)
-  , _veServiceName         :: !(Maybe Text)
-  , _veVPCEndpointId       :: !(Maybe Text)
-  , _veRouteTableIds       :: !(Maybe [Text])
+  , _veVPCId :: !(Maybe Text)
+  , _veDNSEntries :: !(Maybe [DNSEntry])
+  , _veVPCEndpointType :: !(Maybe VPCEndpointType)
+  , _vePrivateDNSEnabled :: !(Maybe Bool)
+  , _veCreationTimestamp :: !(Maybe ISO8601)
+  , _veServiceName :: !(Maybe Text)
+  , _veVPCEndpointId :: !(Maybe Text)
+  , _veRouteTableIds :: !(Maybe [Text])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -15526,8 +15526,8 @@ instance NFData VPCEndpoint where
 --
 -- /See:/ 'vpcIPv6CidrBlockAssociation' smart constructor.
 data VPCIPv6CidrBlockAssociation = VPCIPv6CidrBlockAssociation'
-  { _vicbaAssociationId      :: !(Maybe Text)
-  , _vicbaIPv6CidrBlock      :: !(Maybe Text)
+  { _vicbaAssociationId :: !(Maybe Text)
+  , _vicbaIPv6CidrBlock :: !(Maybe Text)
   , _vicbaIPv6CidrBlockState :: !(Maybe VPCCidrBlockState)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -15580,11 +15580,11 @@ instance NFData VPCIPv6CidrBlockAssociation where
 -- /See:/ 'vpcPeeringConnection' smart constructor.
 data VPCPeeringConnection = VPCPeeringConnection'
   { _vpcpcVPCPeeringConnectionId :: !(Maybe Text)
-  , _vpcpcStatus                 :: !(Maybe VPCPeeringConnectionStateReason)
-  , _vpcpcAccepterVPCInfo        :: !(Maybe VPCPeeringConnectionVPCInfo)
-  , _vpcpcRequesterVPCInfo       :: !(Maybe VPCPeeringConnectionVPCInfo)
-  , _vpcpcExpirationTime         :: !(Maybe ISO8601)
-  , _vpcpcTags                   :: !(Maybe [Tag])
+  , _vpcpcStatus :: !(Maybe VPCPeeringConnectionStateReason)
+  , _vpcpcAccepterVPCInfo :: !(Maybe VPCPeeringConnectionVPCInfo)
+  , _vpcpcRequesterVPCInfo :: !(Maybe VPCPeeringConnectionVPCInfo)
+  , _vpcpcExpirationTime :: !(Maybe ISO8601)
+  , _vpcpcTags :: !(Maybe [Tag])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -15663,7 +15663,7 @@ instance NFData VPCPeeringConnection where
 data VPCPeeringConnectionOptionsDescription = VPCPeeringConnectionOptionsDescription'
   { _vpcodAllowEgressFromLocalVPCToRemoteClassicLink :: !(Maybe Bool)
   , _vpcodAllowEgressFromLocalClassicLinkToRemoteVPC :: !(Maybe Bool)
-  , _vpcodAllowDNSResolutionFromRemoteVPC            :: !(Maybe Bool)
+  , _vpcodAllowDNSResolutionFromRemoteVPC :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -15722,7 +15722,7 @@ instance NFData
 --
 -- /See:/ 'vpcPeeringConnectionStateReason' smart constructor.
 data VPCPeeringConnectionStateReason = VPCPeeringConnectionStateReason'
-  { _vpcsrCode    :: !(Maybe VPCPeeringConnectionStateReasonCode)
+  { _vpcsrCode :: !(Maybe VPCPeeringConnectionStateReasonCode)
   , _vpcsrMessage :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -15766,11 +15766,11 @@ instance NFData VPCPeeringConnectionStateReason where
 --
 -- /See:/ 'vpcPeeringConnectionVPCInfo' smart constructor.
 data VPCPeeringConnectionVPCInfo = VPCPeeringConnectionVPCInfo'
-  { _vpcviCidrBlockSet     :: !(Maybe [CidrBlock])
-  , _vpcviVPCId            :: !(Maybe Text)
-  , _vpcviOwnerId          :: !(Maybe Text)
-  , _vpcviPeeringOptions   :: !(Maybe VPCPeeringConnectionOptionsDescription)
-  , _vpcviCidrBlock        :: !(Maybe Text)
+  { _vpcviCidrBlockSet :: !(Maybe [CidrBlock])
+  , _vpcviVPCId :: !(Maybe Text)
+  , _vpcviOwnerId :: !(Maybe Text)
+  , _vpcviPeeringOptions :: !(Maybe VPCPeeringConnectionOptionsDescription)
+  , _vpcviCidrBlock :: !(Maybe Text)
   , _vpcviIPv6CidrBlockSet :: !(Maybe [IPv6CidrBlock])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -15851,16 +15851,16 @@ instance NFData VPCPeeringConnectionVPCInfo where
 -- /See:/ 'vpnConnection' smart constructor.
 data VPNConnection = VPNConnection'
   { _vcCustomerGatewayConfiguration :: !(Maybe Text)
-  , _vcRoutes                       :: !(Maybe [VPNStaticRoute])
-  , _vcVPNGatewayId                 :: !(Maybe Text)
-  , _vcCategory                     :: !(Maybe Text)
-  , _vcOptions                      :: !(Maybe VPNConnectionOptions)
-  , _vcTags                         :: !(Maybe [Tag])
-  , _vcVGWTelemetry                 :: !(Maybe [VGWTelemetry])
-  , _vcVPNConnectionId              :: !Text
-  , _vcCustomerGatewayId            :: !Text
-  , _vcState                        :: !VPNState
-  , _vcType                         :: !GatewayType
+  , _vcRoutes :: !(Maybe [VPNStaticRoute])
+  , _vcVPNGatewayId :: !(Maybe Text)
+  , _vcCategory :: !(Maybe Text)
+  , _vcOptions :: !(Maybe VPNConnectionOptions)
+  , _vcTags :: !(Maybe [Tag])
+  , _vcVGWTelemetry :: !(Maybe [VGWTelemetry])
+  , _vcVPNConnectionId :: !Text
+  , _vcCustomerGatewayId :: !Text
+  , _vcState :: !VPNState
+  , _vcType :: !GatewayType
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -16018,7 +16018,7 @@ instance NFData VPNConnectionOptions where
 --
 -- /See:/ 'vpnConnectionOptionsSpecification' smart constructor.
 data VPNConnectionOptionsSpecification = VPNConnectionOptionsSpecification'
-  { _vcosTunnelOptions    :: !(Maybe [VPNTunnelOptionsSpecification])
+  { _vcosTunnelOptions :: !(Maybe [VPNTunnelOptionsSpecification])
   , _vcosStaticRoutesOnly :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -16029,7 +16029,7 @@ data VPNConnectionOptionsSpecification = VPNConnectionOptionsSpecification'
 --
 -- * 'vcosTunnelOptions' - The tunnel options for the VPN connection.
 --
--- * 'vcosStaticRoutesOnly' - Indicate whether the VPN connection uses static routes only. If you are creating a VPN connection for a device that does not support BGP, you must specify @true@ . Default: @false@
+-- * 'vcosStaticRoutesOnly' - Indicate whether the VPN connection uses static routes only. If you are creating a VPN connection for a device that does not support BGP, you must specify @true@ . Default: @false@ 
 vpnConnectionOptionsSpecification
     :: VPNConnectionOptionsSpecification
 vpnConnectionOptionsSpecification =
@@ -16041,7 +16041,7 @@ vpnConnectionOptionsSpecification =
 vcosTunnelOptions :: Lens' VPNConnectionOptionsSpecification [VPNTunnelOptionsSpecification]
 vcosTunnelOptions = lens _vcosTunnelOptions (\ s a -> s{_vcosTunnelOptions = a}) . _Default . _Coerce;
 
--- | Indicate whether the VPN connection uses static routes only. If you are creating a VPN connection for a device that does not support BGP, you must specify @true@ . Default: @false@
+-- | Indicate whether the VPN connection uses static routes only. If you are creating a VPN connection for a device that does not support BGP, you must specify @true@ . Default: @false@ 
 vcosStaticRoutesOnly :: Lens' VPNConnectionOptionsSpecification (Maybe Bool)
 vcosStaticRoutesOnly = lens _vcosStaticRoutesOnly (\ s a -> s{_vcosStaticRoutesOnly = a});
 
@@ -16065,13 +16065,13 @@ instance ToQuery VPNConnectionOptionsSpecification
 --
 -- /See:/ 'vpnGateway' smart constructor.
 data VPNGateway = VPNGateway'
-  { _vgState            :: !(Maybe VPNState)
-  , _vgVPCAttachments   :: !(Maybe [VPCAttachment])
-  , _vgVPNGatewayId     :: !(Maybe Text)
-  , _vgAmazonSideASN    :: !(Maybe Integer)
+  { _vgState :: !(Maybe VPNState)
+  , _vgVPCAttachments :: !(Maybe [VPCAttachment])
+  , _vgVPNGatewayId :: !(Maybe Text)
+  , _vgAmazonSideASN :: !(Maybe Integer)
   , _vgAvailabilityZone :: !(Maybe Text)
-  , _vgType             :: !(Maybe GatewayType)
-  , _vgTags             :: !(Maybe [Tag])
+  , _vgType :: !(Maybe GatewayType)
+  , _vgTags :: !(Maybe [Tag])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -16158,8 +16158,8 @@ instance NFData VPNGateway where
 --
 -- /See:/ 'vpnStaticRoute' smart constructor.
 data VPNStaticRoute = VPNStaticRoute'
-  { _vsrState                :: !(Maybe VPNState)
-  , _vsrSource               :: !(Maybe VPNStaticRouteSource)
+  { _vsrState :: !(Maybe VPNState)
+  , _vsrSource :: !(Maybe VPNStaticRouteSource)
   , _vsrDestinationCidrBlock :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -16212,7 +16212,7 @@ instance NFData VPNStaticRoute where
 -- /See:/ 'vpnTunnelOptionsSpecification' smart constructor.
 data VPNTunnelOptionsSpecification = VPNTunnelOptionsSpecification'
   { _vtosTunnelInsideCidr :: !(Maybe Text)
-  , _vtosPreSharedKey     :: !(Maybe Text)
+  , _vtosPreSharedKey :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -16220,7 +16220,7 @@ data VPNTunnelOptionsSpecification = VPNTunnelOptionsSpecification'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'vtosTunnelInsideCidr' - The range of inside IP addresses for the tunnel. Any specified CIDR blocks must be unique across all VPN connections that use the same virtual private gateway.  Constraints: A size /30 CIDR block from the @169.254.0.0/16@ range. The following CIDR blocks are reserved and cannot be used:     * @169.254.0.0/30@      * @169.254.1.0/30@      * @169.254.2.0/30@      * @169.254.3.0/30@      * @169.254.4.0/30@      * @169.254.5.0/30@      * @169.254.169.252/30@
+-- * 'vtosTunnelInsideCidr' - The range of inside IP addresses for the tunnel. Any specified CIDR blocks must be unique across all VPN connections that use the same virtual private gateway.  Constraints: A size /30 CIDR block from the @169.254.0.0/16@ range. The following CIDR blocks are reserved and cannot be used:     * @169.254.0.0/30@      * @169.254.1.0/30@      * @169.254.2.0/30@      * @169.254.3.0/30@      * @169.254.4.0/30@      * @169.254.5.0/30@      * @169.254.169.252/30@ 
 --
 -- * 'vtosPreSharedKey' - The pre-shared key (PSK) to establish initial authentication between the virtual private gateway and customer gateway. Constraints: Allowed characters are alphanumeric characters and ._. Must be between 8 and 64 characters in length and cannot start with zero (0).
 vpnTunnelOptionsSpecification
@@ -16230,7 +16230,7 @@ vpnTunnelOptionsSpecification =
   {_vtosTunnelInsideCidr = Nothing, _vtosPreSharedKey = Nothing}
 
 
--- | The range of inside IP addresses for the tunnel. Any specified CIDR blocks must be unique across all VPN connections that use the same virtual private gateway.  Constraints: A size /30 CIDR block from the @169.254.0.0/16@ range. The following CIDR blocks are reserved and cannot be used:     * @169.254.0.0/30@      * @169.254.1.0/30@      * @169.254.2.0/30@      * @169.254.3.0/30@      * @169.254.4.0/30@      * @169.254.5.0/30@      * @169.254.169.252/30@
+-- | The range of inside IP addresses for the tunnel. Any specified CIDR blocks must be unique across all VPN connections that use the same virtual private gateway.  Constraints: A size /30 CIDR block from the @169.254.0.0/16@ range. The following CIDR blocks are reserved and cannot be used:     * @169.254.0.0/30@      * @169.254.1.0/30@      * @169.254.2.0/30@      * @169.254.3.0/30@      * @169.254.4.0/30@      * @169.254.5.0/30@      * @169.254.169.252/30@ 
 vtosTunnelInsideCidr :: Lens' VPNTunnelOptionsSpecification (Maybe Text)
 vtosTunnelInsideCidr = lens _vtosTunnelInsideCidr (\ s a -> s{_vtosTunnelInsideCidr = a});
 
@@ -16254,18 +16254,18 @@ instance ToQuery VPNTunnelOptionsSpecification where
 --
 -- /See:/ 'volume' smart constructor.
 data Volume = Volume'
-  { _vAttachments      :: !(Maybe [VolumeAttachment])
-  , _vIOPS             :: !(Maybe Int)
-  , _vKMSKeyId         :: !(Maybe Text)
-  , _vTags             :: !(Maybe [Tag])
+  { _vAttachments :: !(Maybe [VolumeAttachment])
+  , _vIOPS :: !(Maybe Int)
+  , _vKMSKeyId :: !(Maybe Text)
+  , _vTags :: !(Maybe [Tag])
   , _vAvailabilityZone :: !Text
-  , _vCreateTime       :: !ISO8601
-  , _vEncrypted        :: !Bool
-  , _vSize             :: !Int
-  , _vSnapshotId       :: !Text
-  , _vState            :: !VolumeState
-  , _vVolumeId         :: !Text
-  , _vVolumeType       :: !VolumeType
+  , _vCreateTime :: !ISO8601
+  , _vEncrypted :: !Bool
+  , _vSize :: !Int
+  , _vSnapshotId :: !Text
+  , _vState :: !VolumeState
+  , _vVolumeId :: !Text
+  , _vVolumeType :: !VolumeType
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -16400,12 +16400,12 @@ instance NFData Volume where
 --
 -- /See:/ 'volumeAttachment' smart constructor.
 data VolumeAttachment = VolumeAttachment'
-  { _volInstanceId          :: !(Maybe Text)
+  { _volInstanceId :: !(Maybe Text)
   , _volDeleteOnTermination :: !(Maybe Bool)
-  , _volState               :: !(Maybe VolumeAttachmentState)
-  , _volDevice              :: !(Maybe Text)
-  , _volVolumeId            :: !(Maybe Text)
-  , _volAttachTime          :: !(Maybe ISO8601)
+  , _volState :: !(Maybe VolumeAttachmentState)
+  , _volDevice :: !(Maybe Text)
+  , _volVolumeId :: !(Maybe Text)
+  , _volAttachTime :: !(Maybe ISO8601)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -16516,18 +16516,18 @@ instance ToQuery VolumeDetail where
 --
 -- /See:/ 'volumeModification' smart constructor.
 data VolumeModification = VolumeModification'
-  { _vmProgress           :: !(Maybe Integer)
-  , _vmStartTime          :: !(Maybe ISO8601)
-  , _vmModificationState  :: !(Maybe VolumeModificationState)
-  , _vmTargetVolumeType   :: !(Maybe VolumeType)
+  { _vmProgress :: !(Maybe Integer)
+  , _vmStartTime :: !(Maybe ISO8601)
+  , _vmModificationState :: !(Maybe VolumeModificationState)
+  , _vmTargetVolumeType :: !(Maybe VolumeType)
   , _vmOriginalVolumeType :: !(Maybe VolumeType)
-  , _vmTargetSize         :: !(Maybe Int)
-  , _vmTargetIOPS         :: !(Maybe Int)
-  , _vmOriginalSize       :: !(Maybe Int)
-  , _vmOriginalIOPS       :: !(Maybe Int)
-  , _vmStatusMessage      :: !(Maybe Text)
-  , _vmEndTime            :: !(Maybe ISO8601)
-  , _vmVolumeId           :: !(Maybe Text)
+  , _vmTargetSize :: !(Maybe Int)
+  , _vmTargetIOPS :: !(Maybe Int)
+  , _vmOriginalSize :: !(Maybe Int)
+  , _vmOriginalIOPS :: !(Maybe Int)
+  , _vmStatusMessage :: !(Maybe Text)
+  , _vmEndTime :: !(Maybe ISO8601)
+  , _vmVolumeId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -16537,9 +16537,9 @@ data VolumeModification = VolumeModification'
 --
 -- * 'vmProgress' - Modification progress from 0 to 100%.
 --
--- * 'vmStartTime' - Modification start time
+-- * 'vmStartTime' - Modification start time 
 --
--- * 'vmModificationState' - Current state of modification. Modification state is null for unmodified volumes.
+-- * 'vmModificationState' - Current state of modification. Modification state is null for unmodified volumes. 
 --
 -- * 'vmTargetVolumeType' - Target EBS volume type of the volume being modified.
 --
@@ -16581,11 +16581,11 @@ volumeModification =
 vmProgress :: Lens' VolumeModification (Maybe Integer)
 vmProgress = lens _vmProgress (\ s a -> s{_vmProgress = a});
 
--- | Modification start time
+-- | Modification start time 
 vmStartTime :: Lens' VolumeModification (Maybe UTCTime)
 vmStartTime = lens _vmStartTime (\ s a -> s{_vmStartTime = a}) . mapping _Time;
 
--- | Current state of modification. Modification state is null for unmodified volumes.
+-- | Current state of modification. Modification state is null for unmodified volumes. 
 vmModificationState :: Lens' VolumeModification (Maybe VolumeModificationState)
 vmModificationState = lens _vmModificationState (\ s a -> s{_vmModificationState = a});
 
@@ -16650,10 +16650,10 @@ instance NFData VolumeModification where
 --
 -- /See:/ 'volumeStatusAction' smart constructor.
 data VolumeStatusAction = VolumeStatusAction'
-  { _vsaEventType   :: !(Maybe Text)
-  , _vsaCode        :: !(Maybe Text)
+  { _vsaEventType :: !(Maybe Text)
+  , _vsaCode :: !(Maybe Text)
   , _vsaDescription :: !(Maybe Text)
-  , _vsaEventId     :: !(Maybe Text)
+  , _vsaEventId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -16713,7 +16713,7 @@ instance NFData VolumeStatusAction where
 -- /See:/ 'volumeStatusDetails' smart constructor.
 data VolumeStatusDetails = VolumeStatusDetails'
   { _vsdStatus :: !(Maybe Text)
-  , _vsdName   :: !(Maybe VolumeStatusName)
+  , _vsdName :: !(Maybe VolumeStatusName)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -16753,11 +16753,11 @@ instance NFData VolumeStatusDetails where
 --
 -- /See:/ 'volumeStatusEvent' smart constructor.
 data VolumeStatusEvent = VolumeStatusEvent'
-  { _vseNotBefore   :: !(Maybe ISO8601)
-  , _vseEventType   :: !(Maybe Text)
+  { _vseNotBefore :: !(Maybe ISO8601)
+  , _vseEventType :: !(Maybe Text)
   , _vseDescription :: !(Maybe Text)
-  , _vseNotAfter    :: !(Maybe ISO8601)
-  , _vseEventId     :: !(Maybe Text)
+  , _vseNotAfter :: !(Maybe ISO8601)
+  , _vseEventId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -16824,7 +16824,7 @@ instance NFData VolumeStatusEvent where
 --
 -- /See:/ 'volumeStatusInfo' smart constructor.
 data VolumeStatusInfo = VolumeStatusInfo'
-  { _vsiStatus  :: !(Maybe VolumeStatusInfoStatus)
+  { _vsiStatus :: !(Maybe VolumeStatusInfoStatus)
   , _vsiDetails :: !(Maybe [VolumeStatusDetails])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -16867,11 +16867,11 @@ instance NFData VolumeStatusInfo where
 --
 -- /See:/ 'volumeStatusItem' smart constructor.
 data VolumeStatusItem = VolumeStatusItem'
-  { _vsiVolumeStatus     :: !(Maybe VolumeStatusInfo)
-  , _vsiActions          :: !(Maybe [VolumeStatusAction])
-  , _vsiEvents           :: !(Maybe [VolumeStatusEvent])
+  { _vsiVolumeStatus :: !(Maybe VolumeStatusInfo)
+  , _vsiActions :: !(Maybe [VolumeStatusAction])
+  , _vsiEvents :: !(Maybe [VolumeStatusEvent])
   , _vsiAvailabilityZone :: !(Maybe Text)
-  , _vsiVolumeId         :: !(Maybe Text)
+  , _vsiVolumeId :: !(Maybe Text)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

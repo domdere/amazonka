@@ -54,7 +54,7 @@ import Network.AWS.Response
 -- /See:/ 'createRouteTable' smart constructor.
 data CreateRouteTable = CreateRouteTable'
   { _crtDryRun :: !(Maybe Bool)
-  , _crtVPCId  :: !Text
+  , _crtVPCId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -112,7 +112,7 @@ instance ToQuery CreateRouteTable where
 --
 -- /See:/ 'createRouteTableResponse' smart constructor.
 data CreateRouteTableResponse = CreateRouteTableResponse'
-  { _crtrsRouteTable     :: !(Maybe RouteTable)
+  { _crtrsRouteTable :: !(Maybe RouteTable)
   , _crtrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

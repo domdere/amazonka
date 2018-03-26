@@ -69,15 +69,15 @@ import Network.AWS.Response
 --
 -- /See:/ 'importImage' smart constructor.
 data ImportImage = ImportImage'
-  { _impHypervisor     :: !(Maybe Text)
-  , _impPlatform       :: !(Maybe Text)
-  , _impClientToken    :: !(Maybe Text)
-  , _impLicenseType    :: !(Maybe Text)
-  , _impRoleName       :: !(Maybe Text)
-  , _impArchitecture   :: !(Maybe Text)
-  , _impDescription    :: !(Maybe Text)
-  , _impDryRun         :: !(Maybe Bool)
-  , _impClientData     :: !(Maybe ClientData)
+  { _impHypervisor :: !(Maybe Text)
+  , _impPlatform :: !(Maybe Text)
+  , _impClientToken :: !(Maybe Text)
+  , _impLicenseType :: !(Maybe Text)
+  , _impRoleName :: !(Maybe Text)
+  , _impArchitecture :: !(Maybe Text)
+  , _impDescription :: !(Maybe Text)
+  , _impDryRun :: !(Maybe Bool)
+  , _impClientData :: !(Maybe ClientData)
   , _impDiskContainers :: !(Maybe [ImageDiskContainer])
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -86,17 +86,17 @@ data ImportImage = ImportImage'
 --
 -- Use one of the following lenses to modify other fields as desired:
 --
--- * 'impHypervisor' - The target hypervisor platform. Valid values: @xen@
+-- * 'impHypervisor' - The target hypervisor platform. Valid values: @xen@ 
 --
--- * 'impPlatform' - The operating system of the virtual machine. Valid values: @Windows@ | @Linux@
+-- * 'impPlatform' - The operating system of the virtual machine. Valid values: @Windows@ | @Linux@ 
 --
 -- * 'impClientToken' - The token to enable idempotency for VM import requests.
 --
--- * 'impLicenseType' - The license type to be used for the Amazon Machine Image (AMI) after importing. __Note:__ You may only use BYOL if you have existing licenses with rights to use these licenses in a third party cloud like AWS. For more information, see <http://docs.aws.amazon.com/vm-import/latest/userguide/vmimport-image-import.html#prerequisites-image Prerequisites> in the VM Import/Export User Guide. Valid values: @AWS@ | @BYOL@
+-- * 'impLicenseType' - The license type to be used for the Amazon Machine Image (AMI) after importing. __Note:__ You may only use BYOL if you have existing licenses with rights to use these licenses in a third party cloud like AWS. For more information, see <http://docs.aws.amazon.com/vm-import/latest/userguide/vmimport-image-import.html#prerequisites-image Prerequisites> in the VM Import/Export User Guide. Valid values: @AWS@ | @BYOL@ 
 --
 -- * 'impRoleName' - The name of the role to use when not using the default role, 'vmimport'.
 --
--- * 'impArchitecture' - The architecture of the virtual machine. Valid values: @i386@ | @x86_64@
+-- * 'impArchitecture' - The architecture of the virtual machine. Valid values: @i386@ | @x86_64@ 
 --
 -- * 'impDescription' - A description string for the import image task.
 --
@@ -122,11 +122,11 @@ importImage =
   }
 
 
--- | The target hypervisor platform. Valid values: @xen@
+-- | The target hypervisor platform. Valid values: @xen@ 
 impHypervisor :: Lens' ImportImage (Maybe Text)
 impHypervisor = lens _impHypervisor (\ s a -> s{_impHypervisor = a});
 
--- | The operating system of the virtual machine. Valid values: @Windows@ | @Linux@
+-- | The operating system of the virtual machine. Valid values: @Windows@ | @Linux@ 
 impPlatform :: Lens' ImportImage (Maybe Text)
 impPlatform = lens _impPlatform (\ s a -> s{_impPlatform = a});
 
@@ -134,7 +134,7 @@ impPlatform = lens _impPlatform (\ s a -> s{_impPlatform = a});
 impClientToken :: Lens' ImportImage (Maybe Text)
 impClientToken = lens _impClientToken (\ s a -> s{_impClientToken = a});
 
--- | The license type to be used for the Amazon Machine Image (AMI) after importing. __Note:__ You may only use BYOL if you have existing licenses with rights to use these licenses in a third party cloud like AWS. For more information, see <http://docs.aws.amazon.com/vm-import/latest/userguide/vmimport-image-import.html#prerequisites-image Prerequisites> in the VM Import/Export User Guide. Valid values: @AWS@ | @BYOL@
+-- | The license type to be used for the Amazon Machine Image (AMI) after importing. __Note:__ You may only use BYOL if you have existing licenses with rights to use these licenses in a third party cloud like AWS. For more information, see <http://docs.aws.amazon.com/vm-import/latest/userguide/vmimport-image-import.html#prerequisites-image Prerequisites> in the VM Import/Export User Guide. Valid values: @AWS@ | @BYOL@ 
 impLicenseType :: Lens' ImportImage (Maybe Text)
 impLicenseType = lens _impLicenseType (\ s a -> s{_impLicenseType = a});
 
@@ -142,7 +142,7 @@ impLicenseType = lens _impLicenseType (\ s a -> s{_impLicenseType = a});
 impRoleName :: Lens' ImportImage (Maybe Text)
 impRoleName = lens _impRoleName (\ s a -> s{_impRoleName = a});
 
--- | The architecture of the virtual machine. Valid values: @i386@ | @x86_64@
+-- | The architecture of the virtual machine. Valid values: @i386@ | @x86_64@ 
 impArchitecture :: Lens' ImportImage (Maybe Text)
 impArchitecture = lens _impArchitecture (\ s a -> s{_impArchitecture = a});
 
@@ -216,18 +216,18 @@ instance ToQuery ImportImage where
 --
 -- /See:/ 'importImageResponse' smart constructor.
 data ImportImageResponse = ImportImageResponse'
-  { _irsStatus          :: !(Maybe Text)
-  , _irsHypervisor      :: !(Maybe Text)
-  , _irsPlatform        :: !(Maybe Text)
-  , _irsProgress        :: !(Maybe Text)
-  , _irsLicenseType     :: !(Maybe Text)
+  { _irsStatus :: !(Maybe Text)
+  , _irsHypervisor :: !(Maybe Text)
+  , _irsPlatform :: !(Maybe Text)
+  , _irsProgress :: !(Maybe Text)
+  , _irsLicenseType :: !(Maybe Text)
   , _irsSnapshotDetails :: !(Maybe [SnapshotDetail])
-  , _irsStatusMessage   :: !(Maybe Text)
-  , _irsImageId         :: !(Maybe Text)
-  , _irsImportTaskId    :: !(Maybe Text)
-  , _irsArchitecture    :: !(Maybe Text)
-  , _irsDescription     :: !(Maybe Text)
-  , _irsResponseStatus  :: !Int
+  , _irsStatusMessage :: !(Maybe Text)
+  , _irsImageId :: !(Maybe Text)
+  , _irsImportTaskId :: !(Maybe Text)
+  , _irsArchitecture :: !(Maybe Text)
+  , _irsDescription :: !(Maybe Text)
+  , _irsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

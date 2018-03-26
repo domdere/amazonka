@@ -58,8 +58,8 @@ import Network.AWS.Response
 -- /See:/ 'releaseAddress' smart constructor.
 data ReleaseAddress = ReleaseAddress'
   { _raAllocationId :: !(Maybe Text)
-  , _raPublicIP     :: !(Maybe Text)
-  , _raDryRun       :: !(Maybe Bool)
+  , _raPublicIP :: !(Maybe Text)
+  , _raDryRun :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

@@ -133,7 +133,7 @@ instance ToQuery ModifySpotFleetRequest where
 --
 -- /See:/ 'modifySpotFleetRequestResponse' smart constructor.
 data ModifySpotFleetRequestResponse = ModifySpotFleetRequestResponse'
-  { _msfrrsReturn         :: !(Maybe Bool)
+  { _msfrrsReturn :: !(Maybe Bool)
   , _msfrrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

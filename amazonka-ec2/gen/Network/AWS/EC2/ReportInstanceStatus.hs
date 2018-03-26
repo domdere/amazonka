@@ -55,13 +55,13 @@ import Network.AWS.Response
 --
 -- /See:/ 'reportInstanceStatus' smart constructor.
 data ReportInstanceStatus = ReportInstanceStatus'
-  { _risStartTime   :: !(Maybe ISO8601)
-  , _risEndTime     :: !(Maybe ISO8601)
+  { _risStartTime :: !(Maybe ISO8601)
+  , _risEndTime :: !(Maybe ISO8601)
   , _risDescription :: !(Maybe Text)
-  , _risDryRun      :: !(Maybe Bool)
-  , _risInstances   :: ![Text]
+  , _risDryRun :: !(Maybe Bool)
+  , _risInstances :: ![Text]
   , _risReasonCodes :: ![ReportInstanceReasonCodes]
-  , _risStatus      :: !ReportStatusType
+  , _risStatus :: !ReportStatusType
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 

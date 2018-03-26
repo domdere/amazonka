@@ -55,8 +55,8 @@ import Network.AWS.Response
 -- /See:/ 'describeSubnets' smart constructor.
 data DescribeSubnets = DescribeSubnets'
   { _dsSubnetIds :: !(Maybe [Text])
-  , _dsFilters   :: !(Maybe [Filter])
-  , _dsDryRun    :: !(Maybe Bool)
+  , _dsFilters :: !(Maybe [Filter])
+  , _dsDryRun :: !(Maybe Bool)
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -124,7 +124,7 @@ instance ToQuery DescribeSubnets where
 --
 -- /See:/ 'describeSubnetsResponse' smart constructor.
 data DescribeSubnetsResponse = DescribeSubnetsResponse'
-  { _dsrsSubnets        :: !(Maybe [Subnet])
+  { _dsrsSubnets :: !(Maybe [Subnet])
   , _dsrsResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 

@@ -76,15 +76,15 @@ import Network.AWS.Response
 --
 -- /See:/ 'createVolume' smart constructor.
 data CreateVolume = CreateVolume'
-  { _cvvSize              :: !(Maybe Int)
-  , _cvvIOPS              :: !(Maybe Int)
-  , _cvvEncrypted         :: !(Maybe Bool)
+  { _cvvSize :: !(Maybe Int)
+  , _cvvIOPS :: !(Maybe Int)
+  , _cvvEncrypted :: !(Maybe Bool)
   , _cvvTagSpecifications :: !(Maybe [TagSpecification])
-  , _cvvKMSKeyId          :: !(Maybe Text)
-  , _cvvVolumeType        :: !(Maybe VolumeType)
-  , _cvvDryRun            :: !(Maybe Bool)
-  , _cvvSnapshotId        :: !(Maybe Text)
-  , _cvvAvailabilityZone  :: !Text
+  , _cvvKMSKeyId :: !(Maybe Text)
+  , _cvvVolumeType :: !(Maybe VolumeType)
+  , _cvvDryRun :: !(Maybe Bool)
+  , _cvvSnapshotId :: !(Maybe Text)
+  , _cvvAvailabilityZone :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
 
@@ -94,7 +94,7 @@ data CreateVolume = CreateVolume'
 --
 -- * 'cvvSize' - The size of the volume, in GiBs. Constraints: 1-16384 for @gp2@ , 4-16384 for @io1@ , 500-16384 for @st1@ , 500-16384 for @sc1@ , and 1-1024 for @standard@ . If you specify a snapshot, the volume size must be equal to or larger than the snapshot size. Default: If you're creating the volume from a snapshot and don't specify a volume size, the default is the snapshot size.
 --
--- * 'cvvIOPS' - Only valid for Provisioned IOPS SSD volumes. The number of I/O operations per second (IOPS) to provision for the volume, with a maximum ratio of 50 IOPS/GiB. Constraint: Range is 100 to 20000 for Provisioned IOPS SSD volumes
+-- * 'cvvIOPS' - Only valid for Provisioned IOPS SSD volumes. The number of I/O operations per second (IOPS) to provision for the volume, with a maximum ratio of 50 IOPS/GiB. Constraint: Range is 100 to 20000 for Provisioned IOPS SSD volumes 
 --
 -- * 'cvvEncrypted' - Specifies whether the volume should be encrypted. Encrypted Amazon EBS volumes may only be attached to instances that support Amazon EBS encryption. Volumes that are created from encrypted snapshots are automatically encrypted. There is no way to create an encrypted volume from an unencrypted snapshot or vice versa. If your AMI uses encrypted volumes, you can only launch it on supported instance types. For more information, see <http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html Amazon EBS Encryption> in the /Amazon Elastic Compute Cloud User Guide/ .
 --
@@ -102,7 +102,7 @@ data CreateVolume = CreateVolume'
 --
 -- * 'cvvKMSKeyId' - The full ARN of the AWS Key Management Service (AWS KMS) customer master key (CMK) to use when creating the encrypted volume. This parameter is only required if you want to use a non-default CMK; if this parameter is not specified, the default CMK for EBS is used. The ARN contains the @arn:aws:kms@ namespace, followed by the region of the CMK, the AWS account ID of the CMK owner, the @key@ namespace, and then the CMK ID. For example, arn:aws:kms:/us-east-1/ :/012345678910/ :key//abcd1234-a123-456a-a12b-a123b4cd56ef/ . If a @KmsKeyId@ is specified, the @Encrypted@ flag must also be set.
 --
--- * 'cvvVolumeType' - The volume type. This can be @gp2@ for General Purpose SSD, @io1@ for Provisioned IOPS SSD, @st1@ for Throughput Optimized HDD, @sc1@ for Cold HDD, or @standard@ for Magnetic volumes. Default: @standard@
+-- * 'cvvVolumeType' - The volume type. This can be @gp2@ for General Purpose SSD, @io1@ for Provisioned IOPS SSD, @st1@ for Throughput Optimized HDD, @sc1@ for Cold HDD, or @standard@ for Magnetic volumes. Default: @standard@ 
 --
 -- * 'cvvDryRun' - Checks whether you have the required permissions for the action, without actually making the request, and provides an error response. If you have the required permissions, the error response is @DryRunOperation@ . Otherwise, it is @UnauthorizedOperation@ .
 --
@@ -130,7 +130,7 @@ createVolume pAvailabilityZone_ =
 cvvSize :: Lens' CreateVolume (Maybe Int)
 cvvSize = lens _cvvSize (\ s a -> s{_cvvSize = a});
 
--- | Only valid for Provisioned IOPS SSD volumes. The number of I/O operations per second (IOPS) to provision for the volume, with a maximum ratio of 50 IOPS/GiB. Constraint: Range is 100 to 20000 for Provisioned IOPS SSD volumes
+-- | Only valid for Provisioned IOPS SSD volumes. The number of I/O operations per second (IOPS) to provision for the volume, with a maximum ratio of 50 IOPS/GiB. Constraint: Range is 100 to 20000 for Provisioned IOPS SSD volumes 
 cvvIOPS :: Lens' CreateVolume (Maybe Int)
 cvvIOPS = lens _cvvIOPS (\ s a -> s{_cvvIOPS = a});
 
@@ -146,7 +146,7 @@ cvvTagSpecifications = lens _cvvTagSpecifications (\ s a -> s{_cvvTagSpecificati
 cvvKMSKeyId :: Lens' CreateVolume (Maybe Text)
 cvvKMSKeyId = lens _cvvKMSKeyId (\ s a -> s{_cvvKMSKeyId = a});
 
--- | The volume type. This can be @gp2@ for General Purpose SSD, @io1@ for Provisioned IOPS SSD, @st1@ for Throughput Optimized HDD, @sc1@ for Cold HDD, or @standard@ for Magnetic volumes. Default: @standard@
+-- | The volume type. This can be @gp2@ for General Purpose SSD, @io1@ for Provisioned IOPS SSD, @st1@ for Throughput Optimized HDD, @sc1@ for Cold HDD, or @standard@ for Magnetic volumes. Default: @standard@ 
 cvvVolumeType :: Lens' CreateVolume (Maybe VolumeType)
 cvvVolumeType = lens _cvvVolumeType (\ s a -> s{_cvvVolumeType = a});
 

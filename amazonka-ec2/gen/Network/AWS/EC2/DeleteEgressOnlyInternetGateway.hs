@@ -47,7 +47,7 @@ import Network.AWS.Response
 
 -- | /See:/ 'deleteEgressOnlyInternetGateway' smart constructor.
 data DeleteEgressOnlyInternetGateway = DeleteEgressOnlyInternetGateway'
-  { _deoigeDryRun                      :: !(Maybe Bool)
+  { _deoigeDryRun :: !(Maybe Bool)
   , _deoigeEgressOnlyInternetGatewayId :: !Text
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
@@ -113,7 +113,7 @@ instance ToQuery DeleteEgressOnlyInternetGateway
 
 -- | /See:/ 'deleteEgressOnlyInternetGatewayResponse' smart constructor.
 data DeleteEgressOnlyInternetGatewayResponse = DeleteEgressOnlyInternetGatewayResponse'
-  { _deoigersReturnCode     :: !(Maybe Bool)
+  { _deoigersReturnCode :: !(Maybe Bool)
   , _deoigersResponseStatus :: !Int
   } deriving (Eq, Read, Show, Data, Typeable, Generic)
 
